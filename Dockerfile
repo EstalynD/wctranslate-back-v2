@@ -9,7 +9,7 @@ FROM node:22-alpine AS base
 # Instalar dependencias del sistema necesarias para bcrypt (compilación nativa)
 RUN apk add --no-cache libc6-compat python3 make g++
 
-# Habilitar corepack para pnpm (versión fija que coincide con lockfileVersion 9.0)
+# Habilitar corepack para pnpm con versión fija
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
@@ -23,7 +23,7 @@ FROM base AS deps
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Instalar TODAS las dependencias (incluidas devDependencies para build)
-# Sin cache mount para mayor compatibilidad con CI/CD
+# Nota: No usar --mount=type=cache para compatibilidad con CI/CD
 RUN pnpm install --frozen-lockfile
 
 # ---- Etapa de build ----
