@@ -64,6 +64,33 @@ export class ProgressService {
       .exec();
   }
 
+  /**
+   * Recalcula los porcentajes de progreso de un CourseProgress
+   * Se ejecuta en memoria, sin guardar en BD
+   */
+  private recalculateCourseProgressPercentages(courseProgress: CourseProgress): void {
+    // Recalcular progreso de cada tema
+    for (const themeProgress of courseProgress.themesProgress) {
+      const completedLessons = themeProgress.lessonsProgress.filter(
+        (l) => l.status === ProgressStatus.COMPLETED,
+      ).length;
+      const totalLessons = themeProgress.lessonsProgress.length;
+
+      themeProgress.progressPercentage = totalLessons > 0
+        ? Math.round((completedLessons / totalLessons) * 100)
+        : 0;
+    }
+
+    // Recalcular progreso del curso como promedio de los temas
+    const totalThemeProgress = courseProgress.themesProgress.reduce(
+      (sum, t) => sum + t.progressPercentage,
+      0,
+    );
+    courseProgress.progressPercentage = courseProgress.themesProgress.length > 0
+      ? Math.round(totalThemeProgress / courseProgress.themesProgress.length)
+      : 0;
+  }
+
   // ==================== GET PROGRESS ====================
 
   async getUserProgress(userId: string): Promise<UserProgress> {
@@ -76,6 +103,11 @@ export class ProgressService {
         courses: [],
       });
       await progress.save();
+    }
+
+    // Recalcular porcentajes antes de devolver
+    for (const courseProgress of progress.courses) {
+      this.recalculateCourseProgressPercentages(courseProgress);
     }
 
     return progress;
@@ -94,6 +126,11 @@ export class ProgressService {
     const courseProgress = progressDoc.courses.find(
       (c) => c.courseId.toString() === courseId,
     ) || null;
+
+    // Recalcular porcentajes antes de devolver
+    if (courseProgress) {
+      this.recalculateCourseProgressPercentages(courseProgress);
+    }
 
     return {
       enrolled: courseProgress !== null,
@@ -318,14 +355,19 @@ export class ProgressService {
     }
 
     // ─── Actualizar progreso del curso ───
+    // Calcular progreso como promedio de los progresos de todos los temas
+    const totalThemeProgress = courseProgress.themesProgress.reduce(
+      (sum, t) => sum + t.progressPercentage,
+      0,
+    );
+    courseProgress.progressPercentage = Math.round(
+      totalThemeProgress / courseProgress.themesProgress.length,
+    );
+
     const completedThemes = courseProgress.themesProgress.filter(
       (t) => t.status === ProgressStatus.COMPLETED,
     ).length;
-    courseProgress.progressPercentage = Math.round(
-      (completedThemes / courseProgress.themesProgress.length) * 100,
-    );
-
-    const courseCompleted = courseProgress.progressPercentage === 100;
+    const courseCompleted = completedThemes === courseProgress.themesProgress.length;
     if (courseCompleted && courseProgress.status !== ProgressStatus.COMPLETED) {
       courseProgress.status = ProgressStatus.COMPLETED;
       courseProgress.completedAt = new Date();
@@ -769,6 +811,32 @@ export class ProgressService {
   }
 
   /**
+   * Batch: Verifica acceso a múltiples lecciones en una sola llamada
+   * Optimización para evitar N+1 queries desde el frontend
+   */
+  async canAccessLessonsBatch(
+    userId: string,
+    lessonIds: string[],
+  ): Promise<Record<string, LessonAccessResponse>> {
+    // Ejecutar todas las verificaciones en paralelo
+    const accessResults = await Promise.all(
+      lessonIds.map(async (lessonId) => {
+        const access = await this.canAccessLesson(userId, lessonId);
+        return { lessonId, access };
+      }),
+    );
+
+    // Convertir a mapa para fácil acceso en el frontend
+    return accessResults.reduce<Record<string, LessonAccessResponse>>(
+      (acc, { lessonId, access }) => {
+        acc[lessonId] = access;
+        return acc;
+      },
+      {},
+    );
+  }
+
+  /**
    * Verifica si el usuario puede ver el contenido de una lección
    * (después de hacer el PRE_QUIZ si es requerido)
    */
@@ -819,7 +887,93 @@ export class ProgressService {
   // ==================== ADDITIONAL METHODS ====================
 
   async findByUser(userId: string): Promise<UserProgress | null> {
-    return this.findProgressByUserId(userId);
+    const progress = await this.findProgressByUserId(userId);
+
+    // Recalcular porcentajes antes de devolver
+    if (progress) {
+      for (const courseProgress of progress.courses) {
+        this.recalculateCourseProgressPercentages(courseProgress);
+      }
+    }
+
+    return progress;
+  }
+
+  /**
+   * Recalcula el progreso de todos los cursos del usuario
+   * Útil para corregir inconsistencias en los porcentajes
+   */
+  async recalculateUserProgress(userId: string): Promise<{
+    success: boolean;
+    coursesUpdated: number;
+    details: Array<{ courseId: string; oldProgress: number; newProgress: number }>;
+  }> {
+    const progress = await this.findProgressByUserId(userId);
+    if (!progress) {
+      return { success: false, coursesUpdated: 0, details: [] };
+    }
+
+    const details: Array<{ courseId: string; oldProgress: number; newProgress: number }> = [];
+
+    for (const courseProgress of progress.courses) {
+      const oldProgress = courseProgress.progressPercentage;
+
+      // Recalcular progreso de cada tema
+      for (const themeProgress of courseProgress.themesProgress) {
+        const completedLessons = themeProgress.lessonsProgress.filter(
+          (l) => l.status === ProgressStatus.COMPLETED,
+        ).length;
+        const totalLessons = themeProgress.lessonsProgress.length;
+
+        themeProgress.progressPercentage = totalLessons > 0
+          ? Math.round((completedLessons / totalLessons) * 100)
+          : 0;
+
+        // Actualizar estado del tema si es necesario
+        if (themeProgress.progressPercentage === 100 && themeProgress.status !== ProgressStatus.COMPLETED) {
+          themeProgress.status = ProgressStatus.COMPLETED;
+          themeProgress.completedAt = themeProgress.completedAt || new Date();
+        } else if (themeProgress.progressPercentage > 0 && themeProgress.status === ProgressStatus.NOT_STARTED) {
+          themeProgress.status = ProgressStatus.IN_PROGRESS;
+          themeProgress.startedAt = themeProgress.startedAt || new Date();
+        }
+      }
+
+      // Recalcular progreso del curso como promedio de los temas
+      const totalThemeProgress = courseProgress.themesProgress.reduce(
+        (sum, t) => sum + t.progressPercentage,
+        0,
+      );
+      courseProgress.progressPercentage = courseProgress.themesProgress.length > 0
+        ? Math.round(totalThemeProgress / courseProgress.themesProgress.length)
+        : 0;
+
+      // Actualizar estado del curso si es necesario
+      const allThemesCompleted = courseProgress.themesProgress.every(
+        (t) => t.status === ProgressStatus.COMPLETED,
+      );
+      if (allThemesCompleted && courseProgress.status !== ProgressStatus.COMPLETED) {
+        courseProgress.status = ProgressStatus.COMPLETED;
+        courseProgress.completedAt = courseProgress.completedAt || new Date();
+      } else if (courseProgress.progressPercentage > 0 && courseProgress.status === ProgressStatus.NOT_STARTED) {
+        courseProgress.status = ProgressStatus.IN_PROGRESS;
+        courseProgress.startedAt = courseProgress.startedAt || new Date();
+      }
+
+      details.push({
+        courseId: courseProgress.courseId.toString(),
+        oldProgress,
+        newProgress: courseProgress.progressPercentage,
+      });
+    }
+
+    await progress.save();
+
+    return {
+      success: true,
+      coursesUpdated: details.filter((d) => d.oldProgress !== d.newProgress).length,
+      details,
+    };
   }
 
   async getLessonProgress(
@@ -1355,7 +1509,7 @@ export class ProgressService {
     lessonId: string,
     themeId: string,
     courseId: string,
-  ): Promise<{ nextLesson?: string; nextTheme?: string }> {
+  ): Promise<{ nextLesson?: string; nextTheme?: string; nextCourse?: string }> {
     // Obtener lecciones del tema actual ordenadas
     const lessons = await this.lessonModel
       .find({ themeId: new Types.ObjectId(themeId) })
@@ -1392,7 +1546,40 @@ export class ProgressService {
       };
     }
 
-    // Curso completado
+    // Curso completado: buscar el siguiente curso por displayOrder
+    const currentCourse = await this.courseModel.findById(courseId).exec();
+    if (currentCourse) {
+      const nextCourse = await this.courseModel
+        .findOne({
+          displayOrder: { $gt: currentCourse.displayOrder },
+          status: 'PUBLISHED',
+        })
+        .sort({ displayOrder: 1 })
+        .exec();
+
+      if (nextCourse) {
+        // Obtener el primer tema y primera lección del siguiente curso
+        const firstTheme = await this.themeModel
+          .findOne({ courseId: nextCourse._id })
+          .sort({ order: 1 })
+          .exec();
+
+        const firstLesson = firstTheme
+          ? await this.lessonModel
+              .findOne({ themeId: firstTheme._id })
+              .sort({ order: 1 })
+              .exec()
+          : null;
+
+        return {
+          nextCourse: nextCourse._id.toString(),
+          nextTheme: firstTheme?._id.toString(),
+          nextLesson: firstLesson?._id.toString(),
+        };
+      }
+    }
+
+    // Último curso completado, no hay siguiente
     return {};
   }
 

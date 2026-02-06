@@ -13,6 +13,7 @@ import {
   MarkLessonCompleteDto,
   SubmitExerciseDto,
   SubmitQuizDto,
+  BatchLessonsAccessDto,
 } from './dto/progress.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -133,6 +134,18 @@ export class ProgressController {
     return this.progressService.canAccessTheme(user._id.toString(), themeId, courseId);
   }
 
+  /**
+   * Batch: Verificar acceso a múltiples lecciones en una sola llamada
+   * Optimización para evitar N+1 queries desde el frontend
+   */
+  @Post('lessons/access-batch')
+  async checkLessonsAccessBatch(
+    @CurrentUser() user: any,
+    @Body() dto: BatchLessonsAccessDto,
+  ) {
+    return this.progressService.canAccessLessonsBatch(user._id.toString(), dto.lessonIds);
+  }
+
   // ==================== LESSON COMPLETION ====================
 
   @Post('lesson/:lessonId/complete')
@@ -191,6 +204,15 @@ export class ProgressController {
   }
 
   // ==================== ADMIN ENDPOINTS ====================
+
+  /**
+   * Recalcular el progreso de todos los cursos del usuario actual
+   * Útil para corregir inconsistencias en los porcentajes
+   */
+  @Post('my/recalculate')
+  async recalculateMyProgress(@CurrentUser() user: any) {
+    return this.progressService.recalculateUserProgress(user._id.toString());
+  }
 
   @Get('admin/user/:userId')
   @UseGuards(RolesGuard)

@@ -63,6 +63,13 @@ export class MarkLessonCompleteDto {
   completedBlocks?: number[];
 }
 
+// --- Batch Lessons Access DTO ---
+export class BatchLessonsAccessDto {
+  @IsArray()
+  @IsMongoId({ each: true })
+  lessonIds: string[];
+}
+
 // --- Tipo interno con lessonId garantizado (usado por el service) ---
 export interface MarkLessonCompletePayload extends MarkLessonCompleteDto {
   lessonId: string;
@@ -86,6 +93,7 @@ export interface ProgressUpdateResponse {
   unlockedContent?: {
     nextLesson?: string;
     nextTheme?: string;
+    nextCourse?: string;
   };
   // Información del POST_QUIZ si no se puede completar
   postQuizRequired?: {

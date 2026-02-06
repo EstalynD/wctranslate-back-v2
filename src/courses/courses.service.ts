@@ -337,7 +337,7 @@ export class CoursesService {
 
     // ========== CASO 1: Modelo con plataforma específica ==========
     // Ve todos los cursos EXCEPTO el módulo "General"
-    // Solo el de su plataforma está desbloqueado, los demás bloqueados
+    // Su módulo de plataforma siempre desbloqueado, los demás con desbloqueo progresivo
     if (platformId) {
       // Obtener todos los cursos EXCEPTO el curso "General" (slug: 'general')
       const allCoursesRaw = await this.courseModel
@@ -348,22 +348,49 @@ export class CoursesService {
         .sort({ displayOrder: 1 })
         .exec();
 
-      // Convertir a CourseWithLockStatus
-      const coursesWithLockStatus: CourseWithLockStatus[] = allCoursesRaw.map(
-        (course) => {
-          // Solo desbloqueado si es el módulo de su plataforma
-          const isUserPlatformModule =
-            course.platformId?.toString() === platformId.toString();
+      // Obtener cursos completados del usuario para desbloqueo progresivo
+      const completedCourseIds = await this.getCompletedCourseIds(user._id.toString());
 
-          return {
-            ...course.toObject(),
-            isLocked: !isUserPlatformModule,
-            lockReason: isUserPlatformModule
-              ? undefined
-              : 'Solo tienes acceso al módulo de tu plataforma',
-          };
-        },
+      // Separar: módulo de plataforma del usuario vs. los demás
+      const userPlatformCourse = allCoursesRaw.find(
+        (c) => c.platformId?.toString() === platformId.toString(),
       );
+      const otherCoursesRaw = allCoursesRaw.filter(
+        (c) => c.platformId?.toString() !== platformId.toString(),
+      );
+
+      const coursesWithLockStatus: CourseWithLockStatus[] = [];
+
+      // El módulo de la plataforma del usuario siempre desbloqueado
+      if (userPlatformCourse) {
+        coursesWithLockStatus.push({
+          ...userPlatformCourse.toObject(),
+          isLocked: false,
+        });
+      }
+
+      // Los demás módulos: desbloqueo progresivo
+      // El primero se desbloquea al completar el módulo de plataforma
+      let previousCompleted = userPlatformCourse
+        ? completedCourseIds.has(userPlatformCourse._id.toString())
+        : false;
+
+      for (const course of otherCoursesRaw) {
+        const isCompleted = completedCourseIds.has(course._id.toString());
+
+        // Si ya está completado, nunca bloquearlo
+        const isLocked = !previousCompleted && !isCompleted;
+
+        coursesWithLockStatus.push({
+          ...course.toObject(),
+          isLocked,
+          lockReason: isLocked
+            ? 'Completa el módulo anterior para desbloquear'
+            : undefined,
+        });
+
+        previousCompleted = isCompleted;
+      }
 
       // Separar para compatibilidad
       const platformCourses = coursesWithLockStatus.filter(
@@ -410,8 +437,9 @@ export class CoursesService {
       let isLocked = false;
       let lockReason: string | undefined;
 
-      if (course.slug === 'general') {
-        // El curso General siempre está desbloqueado
+      if (course.slug === 'general' || isCompleted) {
+        // El curso General siempre desbloqueado
+        // Los cursos ya completados nunca se bloquean
         isLocked = false;
       } else if (!previousCourseCompleted) {
         // El curso anterior no está completado
