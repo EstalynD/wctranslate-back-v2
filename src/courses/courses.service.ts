@@ -153,7 +153,9 @@ export class CoursesService {
         populate: {
           path: 'lessons',
           options: { sort: { order: 1 } },
-          select: '-submissionConfig -contentBlocks.content -contentBlocks.settings', // Optimización: no traer contenido pesado
+          // Optimización agresiva: Excluimos contentBlocks, descripción larga y configuración de envío
+          // Solo se envían metadatos ligeros para construir el menú lateral
+          select: '-contentBlocks -description -submissionConfig -resources',
         },
       })
       .exec();

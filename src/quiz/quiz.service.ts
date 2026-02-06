@@ -729,11 +729,13 @@ export class QuizService {
     }
 
     return {
+      _id: quiz._id.toString(),
       id: quiz._id.toString(),
       title: quiz.title,
       description: quiz.description,
       instructions: quiz.instructions,
       type: quiz.type,
+      questionsCount: orderedQuestions.length,
       totalQuestions: quiz.totalQuestions,
       totalPoints: quiz.totalPoints,
       settings: {
@@ -742,6 +744,7 @@ export class QuizService {
         allowSkip: quiz.settings.allowSkip,
         allowReview: quiz.settings.allowReview,
         allowBackNavigation: quiz.settings.allowBackNavigation,
+        passingScore: quiz.settings.passingScore,
       },
       questions: orderedQuestions,
     };
