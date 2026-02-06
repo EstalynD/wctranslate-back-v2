@@ -17,6 +17,8 @@ async function bootstrap() {
       'http://localhost:3555',  // Frontend modelo
       'http://localhost:3556',  // Backend (para testing)
       'http://localhost:3557',  // Frontend admin
+      'https://wctraininng.daostech.com', // Frontend modelo (produccion)
+      'https://wctraining-admin.daostech.com', // Frontend admin (produccion)
     ],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     credentials: true,

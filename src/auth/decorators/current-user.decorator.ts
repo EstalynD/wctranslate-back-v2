@@ -10,6 +10,11 @@ export const CurrentUser = createParamDecorator(
       return null;
     }
 
+    // Si se solicita _id, convertir a string para consistencia
+    if (data === '_id') {
+      return user._id?.toString();
+    }
+
     return data ? user[data] : user;
   },
 );

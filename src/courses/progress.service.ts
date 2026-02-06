@@ -21,6 +21,9 @@ import {
   DailyStatusResponse,
   ThemeAccessResponse,
   LessonAccessResponse,
+  DashboardHomeResponse,
+  DashboardCourseItem,
+  DashboardNextTask,
 } from './dto/progress.dto';
 
 // Quiz Service para integración
@@ -422,7 +425,7 @@ export class ProgressService {
       throw new NotFoundException('Lección no encontrada en progreso');
     }
 
-    // Guardar submission
+    // Guardar submission (sin marcar como completada, markLessonComplete se encarga)
     lessonProgress.submission = {
       fileUrl: dto.fileUrl,
       fileName: dto.fileName,
@@ -432,13 +435,10 @@ export class ProgressService {
       feedback: null,
     };
 
-    // Marcar como completada (pendiente de calificación)
-    lessonProgress.status = ProgressStatus.COMPLETED;
-    lessonProgress.completedAt = new Date();
-
     await progress.save();
 
-    // Recalcular progresos
+    // Delegar la completación real a markLessonComplete
+    // (actualiza status, progreso, streak, daily, gamificación)
     return this.markLessonComplete(userId, { lessonId: dto.lessonId });
   }
 
@@ -495,14 +495,11 @@ export class ProgressService {
       passed,
     };
 
-    if (passed) {
-      lessonProgress.status = ProgressStatus.COMPLETED;
-      lessonProgress.completedAt = new Date();
-    }
-
     await progress.save();
 
     if (passed) {
+      // Delegar la completación real a markLessonComplete
+      // (actualiza status, progreso, streak, daily, gamificación)
       return this.markLessonComplete(userId, { lessonId: dto.lessonId });
     }
 
@@ -1270,6 +1267,10 @@ export class ProgressService {
     };
 
     try {
+      // Capturar nivel antes de otorgar recompensas
+      const userBefore = await this.userModel.findById(userId).exec();
+      const levelBefore = userBefore?.gamification?.level ?? 1;
+
       // Recompensa base por completar lección: 10 tokens + 20 XP
       const lessonReward = await this.gamificationService.rewardLessonComplete(
         userId,
@@ -1329,12 +1330,12 @@ export class ProgressService {
         rewards.xpEarned += streakReward.xpAmount;
       }
 
-      // Verificar si subió de nivel
-      const xpProgress = await this.gamificationService.getXpProgress(userId);
-      const user = await this.userModel.findById(userId).exec();
-      if (user && user.gamification.level > 1) {
+      // Verificar si subió de nivel comparando antes vs después
+      const userAfter = await this.userModel.findById(userId).exec();
+      const levelAfter = userAfter?.gamification?.level ?? levelBefore;
+      if (levelAfter > levelBefore) {
         rewards.leveledUp = true;
-        rewards.newLevel = user.gamification.level;
+        rewards.newLevel = levelAfter;
       }
     } catch (error) {
       // No fallar la operación principal si la gamificación falla
@@ -1514,6 +1515,160 @@ export class ProgressService {
       contentStatus,
       dailyStatus,
       lessonProgress,
+    };
+  }
+
+  // ==================== DASHBOARD HOME ====================
+
+  /**
+   * Obtiene los datos necesarios para el dashboard home
+   * Incluye: usuario, cursos en progreso (con populate), próxima tarea, estadísticas
+   */
+  async getDashboardHome(userId: string): Promise<DashboardHomeResponse> {
+    // Obtener usuario con perfil
+    const user = await this.userModel.findById(userId).select('profile').exec();
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Obtener progreso del usuario
+    const progress = await this.findProgressByUserId(userId);
+
+    // Si no tiene progreso, retornar datos vacíos
+    if (!progress || progress.courses.length === 0) {
+      return {
+        user: {
+          firstName: user.profile?.firstName || 'Usuario',
+          lastName: user.profile?.lastName || '',
+          nickName: user.profile?.nickName,
+          avatarUrl: user.profile?.avatarUrl,
+        },
+        stats: {
+          totalProgress: 0,
+          coursesEnrolled: 0,
+          coursesCompleted: 0,
+          lessonsCompleted: 0,
+          currentStreak: 0,
+          pendingTasks: 0,
+          modulesRemaining: 0,
+        },
+        coursesInProgress: [],
+        nextTask: null,
+      };
+    }
+
+    // Obtener cursos en progreso (no completados) con populate
+    const coursesInProgress = progress.courses.filter(
+      (c) => c.status !== ProgressStatus.COMPLETED,
+    );
+
+    // Obtener IDs de cursos para populate
+    const courseIds = coursesInProgress.map((c) => c.courseId);
+
+    // Populate de cursos
+    const courses = await this.courseModel
+      .find({ _id: { $in: courseIds } })
+      .select('title slug level thumbnail')
+      .exec();
+
+    // Mapear cursos con su progreso
+    const coursesMap = new Map(
+      courses.map((c) => [c._id.toString(), c]),
+    );
+
+    const mappedCourses = coursesInProgress
+      .map((cp) => {
+        const course = coursesMap.get(cp.courseId.toString());
+        if (!course) return null;
+
+        return {
+          id: cp.courseId.toString(),
+          title: course.title,
+          slug: course.slug,
+          level: course.level as string,
+          thumbnail: course.thumbnail,
+          progress: cp.progressPercentage,
+          status: cp.status as string,
+          lastAccessedAt: cp.lastAccessedAt,
+        };
+      })
+      .filter((c) => c !== null);
+
+    const dashboardCourses: DashboardCourseItem[] = mappedCourses
+      .sort((a, b) => {
+        // Ordenar por último acceso (más reciente primero)
+        const dateA = a.lastAccessedAt ? new Date(a.lastAccessedAt).getTime() : 0;
+        const dateB = b.lastAccessedAt ? new Date(b.lastAccessedAt).getTime() : 0;
+        return dateB - dateA;
+      })
+      .slice(0, 4); // Máximo 4 cursos
+
+    // Obtener próxima tarea
+    let nextTask: DashboardNextTask | null = null;
+    try {
+      const startingPoint = await this.getStartingPoint(userId);
+      if (startingPoint) {
+        // Obtener descripción de la lección
+        const lesson = await this.lessonModel
+          .findById(startingPoint.lessonId)
+          .select('description slug')
+          .exec();
+
+        nextTask = {
+          lessonId: startingPoint.lessonId,
+          lessonTitle: startingPoint.lessonName,
+          lessonSlug: lesson?.slug || '',
+          lessonDescription: lesson?.description || '',
+          themeId: startingPoint.themeId,
+          themeName: startingPoint.themeName,
+          courseId: startingPoint.courseId,
+          courseName: startingPoint.courseName,
+        };
+      }
+    } catch {
+      // Sin próxima tarea disponible
+      nextTask = null;
+    }
+
+    // Calcular estadísticas
+    const totalProgress = progress.courses.length > 0
+      ? Math.round(
+          progress.courses.reduce((sum, c) => sum + c.progressPercentage, 0) /
+            progress.courses.length,
+        )
+      : 0;
+
+    // Contar lecciones pendientes
+    let pendingTasks = 0;
+    for (const cp of coursesInProgress) {
+      for (const tp of cp.themesProgress) {
+        pendingTasks += tp.lessonsProgress.filter(
+          (l) => l.status !== ProgressStatus.COMPLETED,
+        ).length;
+      }
+    }
+
+    // Calcular módulos restantes para completar nivel (cursos no completados)
+    const modulesRemaining = coursesInProgress.length;
+
+    return {
+      user: {
+        firstName: user.profile?.firstName || 'Usuario',
+        lastName: user.profile?.lastName || '',
+        nickName: user.profile?.nickName,
+        avatarUrl: user.profile?.avatarUrl,
+      },
+      stats: {
+        totalProgress,
+        coursesEnrolled: progress.courses.length,
+        coursesCompleted: progress.totalCoursesCompleted,
+        lessonsCompleted: progress.totalLessonsCompleted,
+        currentStreak: progress.currentStreak,
+        pendingTasks,
+        modulesRemaining,
+      },
+      coursesInProgress: dashboardCourses,
+      nextTask,
     };
   }
 }

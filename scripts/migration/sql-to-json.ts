@@ -22,7 +22,7 @@ const CONFIG = {
 
   // Archivos SQL a procesar (en orden)
   SQL_FILES: {
-    modules: 'u280021736_gDPoM.sql',
+    modules: 'u659030826_GMeRd.sql',
     // También puede usar archivos individuales si existen
   },
 };

@@ -32,6 +32,13 @@ export class ProgressController {
     return this.progressService.findByUser(user._id.toString());
   }
 
+  // ==================== DASHBOARD HOME ====================
+
+  @Get('my/dashboard')
+  async getMyDashboard(@CurrentUser() user: any) {
+    return this.progressService.getDashboardHome(user._id.toString());
+  }
+
   @Get('my/course/:courseId')
   async getMyCourseProgress(
     @CurrentUser() user: any,

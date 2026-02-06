@@ -9,6 +9,7 @@ import { Model, Types } from 'mongoose';
 import { Course, CourseDocument, CourseStatus, CourseType } from './schemas/course.schema';
 import { Theme, ThemeDocument } from './schemas/theme.schema';
 import { Lesson, LessonDocument } from './schemas/lesson.schema';
+import { UserProgress, UserProgressDocument, ProgressStatus } from './schemas/user-progress.schema';
 import {
   CreateCourseDto,
   UpdateCourseDto,
@@ -19,6 +20,12 @@ import { PlanType, UserRole, UserDocument } from '../users/schemas/user.schema';
 import { CloudinaryService } from '../cloudinary';
 import { Platform, PlatformDocument } from '../platforms/schemas/platform.schema';
 
+// Interfaz para cursos con estado de bloqueo
+export interface CourseWithLockStatus extends Course {
+  isLocked: boolean;
+  lockReason?: string;
+}
+
 @Injectable()
 export class CoursesService {
   constructor(
@@ -26,6 +33,7 @@ export class CoursesService {
     @InjectModel(Theme.name) private themeModel: Model<ThemeDocument>,
     @InjectModel(Lesson.name) private lessonModel: Model<LessonDocument>,
     @InjectModel(Platform.name) private platformModel: Model<PlatformDocument>,
+    @InjectModel(UserProgress.name) private progressModel: Model<UserProgressDocument>,
     private readonly cloudinaryService: CloudinaryService,
   ) {}
 
@@ -276,15 +284,38 @@ export class CoursesService {
   // ==================== CURSOS POR PLATAFORMA (REGLA DE NEGOCIO) ====================
 
   /**
+   * Obtiene los IDs de cursos completados por el usuario
+   */
+  private async getCompletedCourseIds(userId: string): Promise<Set<string>> {
+    const progress = await this.progressModel
+      .findOne({ userId: new Types.ObjectId(userId) })
+      .exec();
+
+    if (!progress) {
+      return new Set();
+    }
+
+    const completedIds = progress.courses
+      .filter((c) => c.status === ProgressStatus.COMPLETED)
+      .map((c) => c.courseId.toString());
+
+    return new Set(completedIds);
+  }
+
+  /**
    * Obtiene los cursos ordenados según la regla:
-   * - Si la modelo tiene streaming_platform → primero su módulo específico, luego generales
-   * - Si no tiene plataforma → solo cursos generales
+   * - Si la modelo tiene plataforma específica → Todos los cursos EXCEPTO "General":
+   *   - Su módulo de plataforma desbloqueado (y primero)
+   *   - Los demás cursos bloqueados
+   * - Si la modelo es general (sin plataforma) → TODOS los módulos:
+   *   - Módulo "General" siempre desbloqueado
+   *   - Los demás módulos bloqueados hasta completar el anterior (por displayOrder)
    * - Admin/Studio → retorna lista vacía (no tienen cursos)
    */
   async getCoursesForUser(user: UserDocument): Promise<{
-    platformCourses: Course[];
-    generalCourses: Course[];
-    allCourses: Course[];
+    platformCourses: CourseWithLockStatus[];
+    generalCourses: CourseWithLockStatus[];
+    allCourses: CourseWithLockStatus[];
   }> {
     // Usuarios administrativos no tienen cursos asignados
     if (user.role === UserRole.ADMIN || user.role === UserRole.STUDIO) {
@@ -299,46 +330,117 @@ export class CoursesService {
     const platformId = user.modelConfig?.platformId || null;
 
     // Filtro base: solo cursos publicados
-    // Por ahora, si el plan es FREE no filtramos por allowedPlans
     const baseFilter: Record<string, any> = {
       status: CourseStatus.PUBLISHED,
       ...(userPlan === PlanType.FREE ? {} : { allowedPlans: userPlan }),
     };
 
-    // Cursos generales (sin plataforma específica o courseType = GENERAL)
-    const generalCourses = await this.courseModel
-      .find({
-        ...baseFilter,
-        $or: [
-          { courseType: CourseType.GENERAL },
-          { courseType: { $exists: false } },
-        ],
-        platformId: null,
-      })
-      .sort({ displayOrder: 1 })
-      .exec();
-
-    // Si la modelo tiene plataforma asignada, buscar su módulo específico
-    let platformCourses: Course[] = [];
-
+    // ========== CASO 1: Modelo con plataforma específica ==========
+    // Ve todos los cursos EXCEPTO el módulo "General"
+    // Solo el de su plataforma está desbloqueado, los demás bloqueados
     if (platformId) {
-      platformCourses = await this.courseModel
+      // Obtener todos los cursos EXCEPTO el curso "General" (slug: 'general')
+      const allCoursesRaw = await this.courseModel
         .find({
           ...baseFilter,
-          courseType: CourseType.MODULE,
-          platformId,
+          slug: { $ne: 'general' }, // Excluir solo el curso General
         })
         .sort({ displayOrder: 1 })
         .exec();
+
+      // Convertir a CourseWithLockStatus
+      const coursesWithLockStatus: CourseWithLockStatus[] = allCoursesRaw.map(
+        (course) => {
+          // Solo desbloqueado si es el módulo de su plataforma
+          const isUserPlatformModule =
+            course.platformId?.toString() === platformId.toString();
+
+          return {
+            ...course.toObject(),
+            isLocked: !isUserPlatformModule,
+            lockReason: isUserPlatformModule
+              ? undefined
+              : 'Solo tienes acceso al módulo de tu plataforma',
+          };
+        },
+      );
+
+      // Separar para compatibilidad
+      const platformCourses = coursesWithLockStatus.filter(
+        (c) => c.platformId?.toString() === platformId.toString(),
+      );
+      const otherCourses = coursesWithLockStatus.filter(
+        (c) => c.platformId?.toString() !== platformId.toString(),
+      );
+
+      // El módulo de la plataforma del usuario va primero, luego los demás
+      const allCoursesSorted = [...platformCourses, ...otherCourses];
+
+      return {
+        platformCourses,
+        generalCourses: otherCourses,
+        allCourses: allCoursesSorted,
+      };
     }
 
-    // Orden final: primero módulos de plataforma, luego generales
-    const allCourses = [...platformCourses, ...generalCourses];
+    // ========== CASO 2: Modelo general (sin plataforma) ==========
+    // Ve TODOS los módulos con sistema de desbloqueo progresivo
+
+    // Obtener TODOS los cursos (generales + módulos de plataforma)
+    const allCoursesRaw = await this.courseModel
+      .find(baseFilter)
+      .sort({ displayOrder: 1 })
+      .exec();
+
+    // Obtener cursos completados del usuario
+    const completedCourseIds = await this.getCompletedCourseIds(user._id.toString());
+
+    // Aplicar lógica de desbloqueo progresivo
+    const coursesWithLockStatus: CourseWithLockStatus[] = [];
+    let previousCourseCompleted = true; // El primero siempre está desbloqueado
+
+    for (const course of allCoursesRaw) {
+      const courseId = course._id.toString();
+      const isCompleted = completedCourseIds.has(courseId);
+      const isGeneralCourse = course.courseType === CourseType.GENERAL && course.platformId === null;
+
+      // Determinar si está bloqueado:
+      // - El módulo "General" (slug: 'general') siempre desbloqueado
+      // - Los demás se desbloquean cuando el anterior está completado
+      let isLocked = false;
+      let lockReason: string | undefined;
+
+      if (course.slug === 'general') {
+        // El curso General siempre está desbloqueado
+        isLocked = false;
+      } else if (!previousCourseCompleted) {
+        // El curso anterior no está completado
+        isLocked = true;
+        lockReason = 'Completa el módulo anterior para desbloquear';
+      }
+
+      coursesWithLockStatus.push({
+        ...course.toObject(),
+        isLocked,
+        lockReason,
+      });
+
+      // Actualizar estado para el siguiente curso
+      previousCourseCompleted = isCompleted;
+    }
+
+    // Separar en categorías para compatibilidad
+    const generalCourses = coursesWithLockStatus.filter(
+      (c) => c.courseType === CourseType.GENERAL || !c.platformId,
+    );
+    const platformCourses = coursesWithLockStatus.filter(
+      (c) => c.courseType === CourseType.MODULE && c.platformId,
+    );
 
     return {
       platformCourses,
       generalCourses,
-      allCourses,
+      allCourses: coursesWithLockStatus,
     };
   }
 
@@ -346,7 +448,7 @@ export class CoursesService {
    * Retorna cursos accesibles para el usuario autenticado
    */
   async getMyCoursesForUser(user: UserDocument): Promise<{
-    courses: Course[];
+    courses: CourseWithLockStatus[];
     total: number;
     page: number;
     totalPages: number;

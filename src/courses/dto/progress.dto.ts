@@ -165,3 +165,46 @@ export interface LessonAccessResponse {
     message: string;
   };
 }
+
+// --- Dashboard Home Response ---
+export interface DashboardCourseItem {
+  id: string;
+  title: string;
+  slug: string;
+  level: string;
+  thumbnail: string | null;
+  progress: number;
+  status: string;
+  lastAccessedAt: Date | null;
+}
+
+export interface DashboardNextTask {
+  lessonId: string;
+  lessonTitle: string;
+  lessonSlug: string;
+  lessonDescription: string;
+  themeId: string;
+  themeName: string;
+  courseId: string;
+  courseName: string;
+}
+
+export interface DashboardHomeResponse {
+  user: {
+    firstName: string;
+    lastName: string;
+    nickName?: string;
+    avatarUrl?: string;
+  };
+  stats: {
+    totalProgress: number;         // Porcentaje general
+    coursesEnrolled: number;       // Cursos inscritos
+    coursesCompleted: number;      // Cursos completados
+    lessonsCompleted: number;      // Lecciones completadas
+    currentStreak: number;         // Racha actual
+    pendingTasks: number;          // Tareas/lecciones pendientes
+    modulesRemaining: number;      // Módulos para completar nivel
+  };
+  coursesInProgress: DashboardCourseItem[];  // Cursos activos con progreso
+  nextTask: DashboardNextTask | null;        // Próxima tarea a completar
+}
