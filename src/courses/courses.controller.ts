@@ -56,6 +56,11 @@ export class CoursesController {
     return this.coursesService.findBySlug(slug);
   }
 
+  @Get('slug/:slug/program')
+  async findProgramBySlug(@Param('slug') slug: string) {
+    return this.coursesService.findProgramBySlug(slug);
+  }
+
   @Get(':id/with-themes')
   async findWithThemes(@Param('id') id: string) {
     return this.coursesService.findWithThemes(id);

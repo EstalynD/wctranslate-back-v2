@@ -140,6 +140,32 @@ export class CoursesService {
     return course as unknown as Course & { themes: Theme[] };
   }
 
+  /**
+   * Obtiene el programa completo del curso (Curso -> Temas -> Lecciones)
+   * Altamente optimizado para cargar todo el árbol en una sola query
+   */
+  async findProgramBySlug(slug: string): Promise<Course> {
+    const course = await this.courseModel
+      .findOne({ slug })
+      .populate({
+        path: 'themes',
+        options: { sort: { order: 1 } },
+        populate: {
+          path: 'lessons',
+          options: { sort: { order: 1 } },
+          select: '-submissionConfig -contentBlocks.content -contentBlocks.settings', // Optimización: no traer contenido pesado
+        },
+      })
+      .exec();
+
+    if (!course) {
+      throw new NotFoundException('Curso no encontrado');
+    }
+
+    return course;
+  }
+
+
   async update(
     id: string,
     updateCourseDto: UpdateCourseDto,

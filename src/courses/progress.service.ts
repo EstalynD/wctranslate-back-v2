@@ -818,15 +818,180 @@ export class ProgressService {
     userId: string,
     lessonIds: string[],
   ): Promise<Record<string, LessonAccessResponse>> {
-    // Ejecutar todas las verificaciones en paralelo
+    if (!lessonIds || lessonIds.length === 0) return {};
+
+    // 1. Obtener todas las lecciones y el progreso del usuario de una sola vez
+    const [lessons, progress] = await Promise.all([
+      this.lessonModel.find({ _id: { $in: lessonIds } }).exec(),
+      this.findProgressByUserId(userId),
+    ]);
+
+    // 2. Identificar temas únicos y cargarlos
+    const themeIds = [...new Set(lessons.map((l) => l.themeId.toString()))];
+    const themes = await this.themeModel.find({ _id: { $in: themeIds } }).exec();
+    const themeMap = new Map(themes.map((t) => [t._id.toString(), t]));
+
+    // 3. Cache para resultados de acceso a temas
+    const themeAccessCache: Record<string, ThemeAccessResponse> = {};
+
+    // 4. Procesar accesos en paralelo
     const accessResults = await Promise.all(
-      lessonIds.map(async (lessonId) => {
-        const access = await this.canAccessLesson(userId, lessonId);
-        return { lessonId, access };
+      lessons.map(async (lesson) => {
+        const lessonId = lesson._id.toString();
+        const themeId = lesson.themeId.toString();
+        const theme = themeMap.get(themeId);
+
+        if (!theme) {
+          return { lessonId, access: { canAccess: false, reason: 'Tema no encontrado' } };
+        }
+
+        // --- Verificar acceso al TEMA (con caché) ---
+        let themeAccess = themeAccessCache[themeId];
+        if (!themeAccess) {
+          // Usamos la función existente para la lógica compleja de temas
+          // pero al cachear evitamos recalcular para lecciones del mismo tema
+          themeAccess = await this.canAccessTheme(
+            userId,
+            themeId,
+            theme.courseId.toString(),
+          );
+          themeAccessCache[themeId] = themeAccess;
+        }
+
+        if (!themeAccess.canAccess) {
+          return {
+            lessonId,
+            access: {
+              canAccess: false,
+              reason: themeAccess.reason,
+              themeAccessible: false,
+            },
+          };
+        }
+
+        // --- Verificar acceso a la LECCIÓN ---
+
+        // Si no requiere completar anterior, verificar solo PRE_QUIZ
+        if (!lesson.requiresPreviousCompletion) {
+          const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+          if (preQuizStatus.mustTakeQuiz) {
+            return {
+              lessonId,
+              access: {
+                canAccess: true,
+                preQuizRequired: true,
+                preQuizId: preQuizStatus.quizId,
+                reason: preQuizStatus.message,
+                themeAccessible: true,
+              },
+            };
+          }
+          return { lessonId, access: { canAccess: true, themeAccessible: true } };
+        }
+
+        // Verificar progreso secuencial (usando el objeto progress ya cargado si es posible,
+        // pero para mantener consistencia con canAccessLesson usaremos la lógica local aquí)
+
+        if (!progress) {
+          return { lessonId, access: { canAccess: false, reason: 'No estás inscrito', themeAccessible: true } };
+        }
+
+        const courseProgress = progress.courses.find(
+          (c) => c.courseId.toString() === theme.courseId.toString(),
+        );
+
+        if (!courseProgress) {
+          return {
+            lessonId,
+            access: { canAccess: false, reason: 'No estás inscrito en este curso', themeAccessible: true },
+          };
+        }
+
+        const themeProgress = courseProgress.themesProgress.find(
+          (t) => t.themeId.toString() === themeId,
+        );
+
+        if (!themeProgress) {
+          return {
+            lessonId,
+            access: { canAccess: false, reason: 'Tema no encontrado en progreso', themeAccessible: true },
+          };
+        }
+
+        const lessonIndex = themeProgress.lessonsProgress.findIndex(
+          (l) => l.lessonId.toString() === lessonId,
+        );
+
+        if (lessonIndex === 0) {
+          // Primera lección: solo Pre-Quiz
+          const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+          if (preQuizStatus.mustTakeQuiz) {
+            return {
+              lessonId,
+              access: {
+                canAccess: true,
+                preQuizRequired: true,
+                preQuizId: preQuizStatus.quizId,
+                reason: preQuizStatus.message,
+                themeAccessible: true,
+              },
+            };
+          }
+          return { lessonId, access: { canAccess: true, themeAccessible: true } };
+        }
+
+        // Verificar lección anterior en memoria
+        const previousLessonProgress = themeProgress.lessonsProgress[lessonIndex - 1];
+        if (previousLessonProgress.status !== ProgressStatus.COMPLETED) {
+          return {
+            lessonId,
+            access: {
+              canAccess: false,
+              reason: 'Debes completar la lección anterior para continuar',
+              themeAccessible: true,
+            },
+          };
+        }
+
+        // Verificar POST_QUIZ de lección anterior
+        // Nota: Esto sigue haciendo query a DB, optimización futura en QuizService
+        const prevLessonId = previousLessonProgress.lessonId.toString();
+        const postQuizCheck = await this.quizService.hasPassedPreviousLessonPostQuiz(
+          userId,
+          prevLessonId,
+        );
+
+        if (!postQuizCheck.canProceed) {
+          return {
+            lessonId,
+            access: {
+              canAccess: false,
+              reason: postQuizCheck.reason || 'Debes aprobar el quiz de la lección anterior',
+              themeAccessible: true,
+            },
+          };
+        }
+
+        // Verificar PRE_QUIZ actual
+        const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+        if (preQuizStatus.mustTakeQuiz) {
+          return {
+            lessonId,
+            access: {
+              canAccess: true,
+              preQuizRequired: true,
+              preQuizId: preQuizStatus.quizId,
+              reason: preQuizStatus.message,
+              themeAccessible: true,
+            },
+          };
+        }
+
+        return { lessonId, access: { canAccess: true, themeAccessible: true } };
       }),
     );
 
-    // Convertir a mapa para fácil acceso en el frontend
+    // Convertir a mapa
     return accessResults.reduce<Record<string, LessonAccessResponse>>(
       (acc, { lessonId, access }) => {
         acc[lessonId] = access;
