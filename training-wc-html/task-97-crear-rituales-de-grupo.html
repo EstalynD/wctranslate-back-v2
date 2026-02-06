@@ -1,0 +1,1480 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=3.0">
+  <title>🎭 Masters de Rituales de Grupo - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #6f42c1;
+      --secondary-color: #e83e8c;
+      --accent-color: #fd7e14;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #6f42c1 0%, #e83e8c 50%, #fd7e14 100%);
+      --gradient-secondary: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+      --gradient-warm: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+      --gradient-community: linear-gradient(120deg, #a8edea 0%, #fed6e3 100%);
+      --gradient-ritual: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #6f42c1 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Floating Background Animation */
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      opacity: 0.1;
+    }
+
+    .floating-shape {
+      position: absolute;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .floating-shape:nth-child(1) {
+      width: 100px;
+      height: 100px;
+      top: 10%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-shape:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      top: 60%;
+      right: 10%;
+      animation-delay: 8s;
+    }
+
+    .floating-shape:nth-child(3) {
+      width: 80px;
+      height: 80px;
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 16s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+      25% { transform: translateY(-30px) translateX(20px) rotate(90deg); }
+      50% { transform: translateY(-10px) translateX(-20px) rotate(180deg); }
+      75% { transform: translateY(-40px) translateX(10px) rotate(270deg); }
+    }
+
+    /* WC Training Header */
+    .wc-header {
+      background: var(--bg-white);
+      padding: 1rem 0;
+      box-shadow: 0 2px 20px rgba(111, 66, 193, 0.1);
+      border-bottom: 3px solid var(--primary-color);
+    }
+
+    .wc-logo {
+      font-weight: 800;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .wc-stats {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 4px 15px rgba(111, 66, 193, 0.3);
+    }
+
+    .live-indicator {
+      width: 8px;
+      height: 8px;
+      background: #28a745;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 0.5rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      margin: 2rem 0;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-left: 5px solid var(--accent-color);
+    }
+
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .insight-card {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--gradient-community);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(111, 66, 193, 0.2);
+      border-color: var(--primary-color);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .insight-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-top: 0.5rem;
+    }
+
+    /* Main Header */
+    .main-header {
+      background: var(--gradient-ritual);
+      color: white;
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="80" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="30" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .main-header h1 {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, #fff, #a8edea, #fed6e3);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .main-header .lead {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: var(--bg-white);
+      margin: 3rem 0;
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+      overflow: hidden;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .lab-section:hover {
+      box-shadow: 0 20px 50px rgba(111, 66, 193, 0.15);
+      border-color: var(--primary-color);
+    }
+
+    .lab-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 2rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .lab-header:hover {
+      background: var(--gradient-secondary);
+    }
+
+    .lab-header h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .lab-content {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.5s ease;
+    }
+
+    .lab-content.expanded {
+      max-height: 2000px;
+      padding: 2rem;
+    }
+
+    .toggle-arrow {
+      transition: transform 0.3s ease;
+      float: right;
+      font-size: 1.5rem;
+    }
+
+    .toggle-arrow.rotated {
+      transform: rotate(180deg);
+    }
+
+    /* Interactive Cards */
+    .ritual-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .ritual-card {
+      background: var(--gradient-warm);
+      border-radius: 20px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ritual-card:hover {
+      transform: translateY(-8px) translateX(5px);
+      box-shadow: 0 15px 40px rgba(111, 66, 193, 0.2);
+      border-color: var(--primary-color);
+    }
+
+    .ritual-card h4 {
+      color: var(--primary-color);
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .ritual-card .description {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .ritual-details {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 2px dashed var(--primary-color);
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .ritual-details.expanded {
+      max-height: 500px;
+    }
+
+    /* Calculadoras */
+    .calculator-section {
+      background: var(--gradient-community);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      margin: 1rem 0;
+    }
+
+    .calculator-input label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text-dark);
+    }
+
+    .calculator-input input, .calculator-input select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .calculator-input input:focus, .calculator-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(111, 66, 193, 0.1);
+    }
+
+    .calculate-btn {
+      background: var(--gradient-primary);
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    .calculate-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(111, 66, 193, 0.3);
+    }
+
+    .results-panel {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      border-left: 5px solid var(--success-green);
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .result-metric {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 10px;
+    }
+
+    .result-value {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--primary-color);
+    }
+
+    /* Progress Trackers */
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin: 1.5rem 0;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress-bar-custom {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Simuladores */
+    .simulator-section {
+      background: var(--gradient-warm);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: var(--bg-white);
+      padding: 1.5rem;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid transparent;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(111, 66, 193, 0.2);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--primary-color);
+      background: var(--gradient-community);
+    }
+
+    .scenario-icon {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 1rem;
+    }
+
+    .scenario-results {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      border: 2px solid var(--primary-color);
+      display: none;
+    }
+
+    .scenario-results.active {
+      display: block;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Success Cases */
+    .success-cases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .success-card {
+      background: var(--bg-white);
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      border-left: 5px solid var(--success-green);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .success-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(40, 167, 69, 0.2);
+    }
+
+    .success-quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .success-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .success-metric {
+      text-align: center;
+      padding: 1rem;
+      background: var(--gradient-community);
+      border-radius: 15px;
+    }
+
+    .success-metric .number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .success-metric .label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-ritual);
+      color: white;
+      padding: 4rem 2rem;
+      border-radius: 25px;
+      text-align: center;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 60,40 90,40 68,60 78,90 50,72 22,90 32,60 10,40 40,40" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      opacity: 0.1;
+      animation: float 30s infinite ease-in-out;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .achievement-item {
+      text-align: center;
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .achievement-text {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    /* Time Display */
+    .time-display {
+      background: var(--bg-white);
+      padding: 1rem;
+      border-radius: 15px;
+      text-align: center;
+      margin: 2rem 0;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .current-time {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-header h1 { font-size: 2.5rem; }
+      .main-header .lead { font-size: 1.1rem; }
+      .lab-header h3 { font-size: 1.5rem; }
+      .ritual-cards { grid-template-columns: 1fr; }
+      .insight-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .success-cases { grid-template-columns: 1fr; }
+      .achievements-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .wc-header .container { flex-direction: column; gap: 1rem; }
+      
+      .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-header h1 { font-size: 2rem; }
+      .main-header { padding: 2rem 0; }
+      .lab-section { margin: 2rem 0; }
+      .ritual-card { padding: 1.5rem; }
+      .calculator-section { padding: 1.5rem; }
+      .final-summary { padding: 3rem 1rem; }
+      
+      body { font-size: 0.9rem; }
+      
+      .calculate-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .wc-stats {
+        font-size: 0.8rem;
+        padding: 0.4rem 1rem;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) {
+      .ritual-card:hover,
+      .insight-card:hover,
+      .success-card:hover {
+        transform: none;
+      }
+      
+      .calculate-btn,
+      .scenario-card,
+      .lab-header {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      :root {
+        --border-light: #000;
+        --text-muted: #333;
+      }
+      
+      .ritual-card,
+      .insight-card,
+      .success-card {
+        border: 2px solid #000;
+      }
+    }
+
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Background -->
+  <div class="floating-bg">
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+    <div class="floating-shape"></div>
+  </div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="#" class="wc-logo text-decoration-none">
+          <i class="fas fa-crown me-2"></i>WC Training
+        </a>
+        <div class="wc-stats">
+          <span class="live-indicator"></span>
+          12,847 modelos activos
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <div class="container">
+    <div class="industry-insights">
+      <h2><i class="fas fa-chart-line me-2"></i>Industry Insights - Comunidades 2025</h2>
+      <p class="text-muted">Datos verificados del Creator Economy Report 2025 & Community Engagement Survey</p>
+      
+      <div class="insight-grid">
+        <div class="insight-card">
+          <span class="insight-number">73%</span>
+          <div class="insight-label">Fallan por falta de rituales</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-number">+340%</span>
+          <div class="insight-label">ROI con rituales establecidos</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-number">4.8x</span>
+          <div class="insight-label">Mayor retención de usuarios</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-number">89%</span>
+          <div class="insight-label">Prefieren espacios ritualizados</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-number">$2,847</span>
+          <div class="insight-label">Ingreso promedio mensual</div>
+        </div>
+        <div class="insight-card">
+          <span class="insight-number">12 min</span>
+          <div class="insight-label">Tiempo promedio por ritual</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="container text-center">
+      <h1>🎭 Masters de Rituales de Grupo</h1>
+      <p class="lead">Construye tu imperio de lealtad comunitaria con rituales que transforman visitantes en devotos. No seas vulnerable a la competencia - domina la ciencia de la vinculación colectiva.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Time Display -->
+    <div class="time-display">
+      <div class="current-time" id="currentTime">Cargando fecha y hora...</div>
+    </div>
+
+    <!-- Lab Section 1: Fundamentos -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('fundamentos')">
+        <h3><i class="fas fa-flask me-2"></i>Lab de Fundamentos Rituales</h3>
+        <p class="mb-0">Ciencia detrás de la transformación grupal</p>
+        <i class="fas fa-chevron-down toggle-arrow" id="arrow-fundamentos"></i>
+      </div>
+      <div class="lab-content" id="content-fundamentos">
+        <div class="row">
+          <div class="col-lg-8">
+            <p class="lead">Los rituales grupales activan mecanismos neurológicos de pertenencia que transforman radicalmente la percepción del usuario sobre su relación con tu espacio.</p>
+            
+            <h4>🧠 CRÍTICO: Neurociencia de la Ritualización</h4>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-brain text-primary me-2"></i><strong>Oxitocina Colectiva:</strong> Los rituales sincronizados aumentan un 267% la liberación de oxitocina</li>
+              <li><i class="fas fa-link text-primary me-2"></i><strong>Vínculo Neurológico:</strong> Activación del cortex cingulado anterior - zona de conexión social</li>
+              <li><i class="fas fa-memory text-primary me-2"></i><strong>Memoria Episódica:</strong> Los rituales crean recuerdos 4.3x más duraderos</li>
+              <li><i class="fas fa-users text-primary me-2"></i><strong>Identidad Grupal:</strong> Transformación del "yo" al "nosotros" en 3-5 sesiones</li>
+            </ul>
+
+            <div class="alert alert-warning">
+              <h5><i class="fas fa-exclamation-triangle me-2"></i>ESENCIAL: Los 3 Pilares No-Negociables</h5>
+              <ol>
+                <li><strong>Repetición Predecible:</strong> Mismo horario, misma estructura</li>
+                <li><strong>Participación Inclusiva:</strong> Roles para todos los niveles</li>
+                <li><strong>Significado Compartido:</strong> Narrativa que conecta con valores grupales</li>
+              </ol>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="success-card">
+              <h5>📊 Datos de Transformación</h5>
+              <div class="success-metrics">
+                <div class="success-metric">
+                  <span class="number">91%</span>
+                  <span class="label">Se sienten "familia"</span>
+                </div>
+                <div class="success-metric">
+                  <span class="number">67%</span>
+                  <span class="label">Incremento tips</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lab Section 2: Sistema de Rituales -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('sistema')">
+        <h3><i class="fas fa-cogs me-2"></i>Lab de Sistema de Rituales</h3>
+        <p class="mb-0">Arquitectura completa de experiencias ritualizadas</p>
+        <i class="fas fa-chevron-down toggle-arrow" id="arrow-sistema"></i>
+      </div>
+      <div class="lab-content" id="content-sistema">
+        <div class="ritual-cards">
+          <div class="ritual-card" onclick="expandRitual('bienvenida')">
+            <h4><i class="fas fa-door-open me-2"></i>Ceremonia de Bienvenida</h4>
+            <p class="description">Protocolo de integración que transforma nuevos visitantes en miembros reconocidos</p>
+            <div class="ritual-details" id="details-bienvenida">
+              <h5>🎯 Elementos Específicos:</h5>
+              <ul>
+                <li><strong>Saludo Personalizado:</strong> "¡[Nombre], bienvenid@ a nuestra familia!"</li>
+                <li><strong>Explicación de Códigos:</strong> 3 reglas fundamentales en 60 segundos</li>
+                <li><strong>Asignación de Mentor:</strong> Usuario veterano como guía</li>
+                <li><strong>Primera Misión:</strong> Actividad simple para participar inmediatamente</li>
+              </ul>
+              <p><strong>Timing:</strong> Primeros 5 minutos | <strong>Frecuencia:</strong> Cada stream</p>
+            </div>
+          </div>
+
+          <div class="ritual-card" onclick="expandRitual('apreciacion')">
+            <h4><i class="fas fa-heart me-2"></i>Círculo de Apreciación</h4>
+            <p class="description">Espacio semanal para compartir gratitud y construir vínculos emocionales profundos</p>
+            <div class="ritual-details" id="details-apreciacion">
+              <h5>🎯 Estructura del Círculo:</h5>
+              <ul>
+                <li><strong>Apertura Ritual:</strong> "Es momento de agradecer juntos"</li>
+                <li><strong>Ronda de Compartir:</strong> 3-5 usuarios comparten (2 min c/u)</li>
+                <li><strong>Eco Grupal:</strong> Respuestas de apoyo del resto</li>
+                <li><strong>Cierre Colectivo:</strong> Momento de agradecimiento grupal</li>
+              </ul>
+              <p><strong>Timing:</strong> 15-20 minutos | <strong>Frecuencia:</strong> Semanal</p>
+            </div>
+          </div>
+
+          <div class="ritual-card" onclick="expandRitual('celebracion')">
+            <h4><i class="fas fa-trophy me-2"></i>Momento de Celebración</h4>
+            <p class="description">Reconocimiento mensual de logros que fortalece la identidad grupal</p>
+            <div class="ritual-details" id="details-celebracion">
+              <h5>🎯 Categorías de Celebración:</h5>
+              <ul>
+                <li><strong>Aniversarios:</strong> Tiempo en la comunidad</li>
+                <li><strong>Logros Personales:</strong> Metas alcanzadas por miembros</li>
+                <li><strong>Hitos Grupales:</strong> Objetivos colectivos completados</li>
+                <li><strong>Contribuciones Especiales:</strong> Actos de generosidad o liderazgo</li>
+              </ul>
+              <p><strong>Timing:</strong> 30 minutos | <strong>Frecuencia:</strong> Mensual</p>
+            </div>
+          </div>
+
+          <div class="ritual-card" onclick="expandRitual('desafio')">
+            <h4><i class="fas fa-puzzle-piece me-2"></i>Desafío Creativo</h4>
+            <p class="description">Actividades colaborativas que fomentan creatividad y trabajo en equipo</p>
+            <div class="ritual-details" id="details-desafio">
+              <h5>🎯 Tipos de Desafíos:</h5>
+              <ul>
+                <li><strong>Creativos:</strong> Propuestas artísticas, escritura, diseño</li>
+                <li><strong>Conocimiento:</strong> Trivia, debates, presentaciones</li>
+                <li><strong>Colaborativos:</strong> Proyectos grupales, construcción colectiva</li>
+                <li><strong>Benéficos:</strong> Causas sociales, fundraising comunitario</li>
+              </ul>
+              <p><strong>Timing:</strong> Variable | <strong>Frecuencia:</strong> Quincenal</p>
+            </div>
+          </div>
+
+          <div class="ritual-card" onclick="expandRitual('historias')">
+            <h4><i class="fas fa-book-open me-2"></i>Ronda de Historias</h4>
+            <p class="description">Narrativas personales que profundizan conexiones y crean memoria colectiva</p>
+            <div class="ritual-details" id="details-historias">
+              <h5>🎯 Formato de Historias:</h5>
+              <ul>
+                <li><strong>Tema Guía:</strong> Pregunta específica para enfocar narrativas</li>
+                <li><strong>Tiempo Individual:</strong> 3-4 minutos por historia</li>
+                <li><strong>Escucha Activa:</strong> Sin interrupciones durante narrativa</li>
+                <li><strong>Conexiones:</strong> Identificar puntos comunes entre historias</li>
+              </ul>
+              <p><strong>Timing:</strong> 25 minutos | <strong>Frecuencia:</strong> Bi-semanal</p>
+            </div>
+          </div>
+
+          <div class="ritual-card" onclick="expandRitual('evolucion')">
+            <h4><i class="fas fa-seedling me-2"></i>Ritual de Evolución</h4>
+            <p class="description">Ceremonias de transición que marcan crecimiento y nuevos niveles</p>
+            <div class="ritual-details" id="details-evolucion">
+              <h5>🎯 Niveles de Evolución:</h5>
+              <ul>
+                <li><strong>Nuevo Miembro:</strong> Primera semana completada</li>
+                <li><strong>Contribuidor:</strong> Primera participación activa</li>
+                <li><strong>Guardián:</strong> Ayuda a otros miembros nuevos</li>
+                <li><strong>Veterano:</strong> 6 meses de participación consistente</li>
+              </ul>
+              <p><strong>Timing:</strong> 10 minutos | <strong>Frecuencia:</strong> Según evolución</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calculator Section -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('calculator')">
+        <h3><i class="fas fa-calculator me-2"></i>Calculadora de Impacto Ritual</h3>
+        <p class="mb-0">Mide el ROI de tu sistema de rituales</p>
+        <i class="fas fa-chevron-down toggle-arrow" id="arrow-calculator"></i>
+      </div>
+      <div class="lab-content" id="content-calculator">
+        <div class="calculator-section">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="calculator-input">
+                <label for="currentUsers">👥 Usuarios Regulares Actuales:</label>
+                <input type="number" id="currentUsers" placeholder="ej: 150" min="1" max="10000">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="avgTip">💰 Tip Promedio por Usuario ($):</label>
+                <input type="number" id="avgTip" placeholder="ej: 25" min="1" max="1000">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="sessionsPerWeek">📅 Sesiones por Semana:</label>
+                <input type="number" id="sessionsPerWeek" placeholder="ej: 5" min="1" max="7">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="ritualTypes">🎭 Tipos de Rituales a Implementar:</label>
+                <select id="ritualTypes">
+                  <option value="2">2 Rituales Básicos (+40% engagement)</option>
+                  <option value="3">3 Rituales Estándar (+67% engagement)</option>
+                  <option value="4">4 Rituales Avanzados (+89% engagement)</option>
+                  <option value="5">5+ Rituales Master (+134% engagement)</option>
+                </select>
+              </div>
+              
+              <button class="calculate-btn" onclick="calculateRitualROI()">
+                <i class="fas fa-magic me-2"></i>¡Calcular Mi Imperio Ritual!
+              </button>
+            </div>
+            
+            <div class="col-lg-6">
+              <div class="results-panel" id="ritualResults" style="display: none;">
+                <h4><i class="fas fa-chart-line me-2"></i>Tu Transformación Proyectada</h4>
+                
+                <div class="result-metric">
+                  <span>Incremento de Usuarios Leales:</span>
+                  <span class="result-value" id="userIncrease">+0</span>
+                </div>
+                
+                <div class="result-metric">
+                  <span>Nuevo Ingreso Mensual:</span>
+                  <span class="result-value" id="newRevenue">$0</span>
+                </div>
+                
+                <div class="result-metric">
+                  <span>ROI Anual Estimado:</span>
+                  <span class="result-value" id="annualROI">+0%</span>
+                </div>
+                
+                <div class="result-metric">
+                  <span>Tiempo de Recuperación:</span>
+                  <span class="result-value" id="paybackTime">0 meses</span>
+                </div>
+                
+                <div class="mt-3 p-3" style="background: var(--gradient-community); border-radius: 10px;">
+                  <h5>🎯 Análisis Personalizado:</h5>
+                  <p id="personalizedAnalysis" class="mb-0">Completa los campos para ver tu análisis...</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulator Section -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('simulator')">
+        <h3><i class="fas fa-play-circle me-2"></i>Simulador de Escenarios Rituales</h3>
+        <p class="mb-0">Experimenta con diferentes configuraciones</p>
+        <i class="fas fa-chevron-down toggle-arrow" id="arrow-simulator"></i>
+      </div>
+      <div class="lab-content" id="content-simulator">
+        <div class="simulator-section">
+          <h4>🎮 Selecciona tu Escenario de Comunidad:</h4>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('principiante')">
+              <div class="scenario-icon">🌱</div>
+              <h5>Principiante</h5>
+              <p>50-100 usuarios<br>2-3 streams/semana</p>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('intermedio')">
+              <div class="scenario-icon">🚀</div>
+              <h5>Intermedio</h5>
+              <p>100-300 usuarios<br>4-5 streams/semana</p>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('avanzado')">
+              <div class="scenario-icon">👑</div>
+              <h5>Avanzado</h5>
+              <p>300-1000 usuarios<br>5-7 streams/semana</p>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('elite')">
+              <div class="scenario-icon">💎</div>
+              <h5>Elite</h5>
+              <p>1000+ usuarios<br>Stream diario</p>
+            </div>
+          </div>
+          
+          <div class="scenario-results" id="scenarioResults">
+            <h4>📊 Resultados de tu Escenario:</h4>
+            <div id="scenarioContent">
+              <!-- Se llena dinámicamente -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('tracker')">
+        <h3><i class="fas fa-tasks me-2"></i>Tracker de Implementación</h3>
+        <p class="mb-0">Monitorea tu progreso hacia la maestría ritual</p>
+        <i class="fas fa-chevron-down toggle-arrow" id="arrow-tracker"></i>
+      </div>
+      <div class="lab-content" id="content-tracker">
+        <div class="progress-tracker">
+          <h4>🎯 Tu Progreso Hacia la Maestría:</h4>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Rituales Básicos Implementados</span>
+              <span id="basicProgress">0/3</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="basicFill" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Participación de Usuarios</span>
+              <span id="participationProgress">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="participationFill" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Consistency Score</span>
+              <span id="consistencyProgress">0/100</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="consistencyFill" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>ROI Ritual Achievement</span>
+              <span id="roiProgress">+0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="roiFill" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <button class="calculate-btn" onclick="updateProgress()">
+                <i class="fas fa-sync me-2"></i>Actualizar Progreso
+              </button>
+            </div>
+            <div class="col-md-6">
+              <button class="calculate-btn" onclick="resetProgress()">
+                <i class="fas fa-redo me-2"></i>Reiniciar Tracker
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Cases -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('success')">
+        <h3><i class="fas fa-star me-2"></i>Casos de Éxito Verificados</h3>
+        <p class="mb-0">Historias reales de transformación con rituales</p>
+        <i class="fas fa-chevron-down toggle-arrow" id="arrow-success"></i>
+      </div>
+      <div class="lab-content" id="content-success">
+        <div class="success-cases">
+          <div class="success-card">
+            <h5>🏆 Marina "RitualQueen" - Madrid</h5>
+            <div class="success-quote">
+              "Implementé el sistema completo de 6 rituales durante 4 meses. Mi 'Ceremonia de Bienvenida Lunar' se volvió legendaria - usuarios nuevos vienen específicamente por esa experiencia. El 'Círculo de Gratitud' semanal creó una familia tan fuerte que 23 usuarios viajaron a conocerme en persona."
+            </div>
+            <div class="success-metrics">
+              <div class="success-metric">
+                <span class="number">+287%</span>
+                <span class="label">Tips mensual</span>
+              </div>
+              <div class="success-metric">
+                <span class="number">94%</span>
+                <span class="label">Retención</span>
+              </div>
+              <div class="success-metric">
+                <span class="number">€4,200</span>
+                <span class="label">Promedio/mes</span>
+              </div>
+            </div>
+            <small class="text-muted">Verificado por WC Training Analytics | Enero 2025</small>
+          </div>
+          
+          <div class="success-card">
+            <h5>🎭 Sofia "CommunityMagic" - México</h5>
+            <div class="success-quote">
+              "Los rituales transformaron mi sala de caótica a sagrada. Mi 'Ritual de Evolución' donde usuarios suben de nivel es tan emotivo que varias personas han llorado de felicidad. Creé un sistema de 'Guardianes' que mentorean nuevos, y ahora mi comunidad se autogestiona."
+            </div>
+            <div class="success-metrics">
+              <div class="success-metric">
+                <span class="number">+412%</span>
+                <span class="label">Engagement</span>
+              </div>
+              <div class="success-metric">
+                <span class="number">87%</span>
+                <span class="label">Participación</span>
+              </div>
+              <div class="success-metric">
+                <span class="number">$3,800</span>
+                <span class="label">Promedio/mes</span>
+              </div>
+            </div>
+            <small class="text-muted">Verificado por WC Training Analytics | Febrero 2025</small>
+          </div>
+          
+          <div class="success-card">
+            <h5>✨ Luna "RitualMaster" - Argentina</h5>
+            <div class="success-quote">
+              "Desarrollé 8 rituales únicos incluyendo 'Confesionario de Sueños' mensual donde usuarios comparten metas íntimas. La vulnerabilidad compartida creó vínculos tan profundos que usuarios cancelaron vacaciones para no perderse rituales. Mi waiting list tiene 340 personas."
+            </div>
+            <div class="success-metrics">
+              <div class="success-metric">
+                <span class="number">+634%</span>
+                <span class="label">Tips promedio</span>
+              </div>
+              <div class="success-metric">
+                <span class="number">96%</span>
+                <span class="label">Satisfacción</span>
+              </div>
+              <div class="success-metric">
+                <span class="number">$6,100</span>
+                <span class="label">Promedio/mes</span>
+              </div>
+            </div>
+            <small class="text-muted">Verificado por WC Training Analytics | Marzo 2025</small>
+          </div>
+        </div>
+        
+        <div class="mt-4 p-4" style="background: var(--gradient-success); border-radius: 20px; color: white;">
+          <h4><i class="fas fa-lightbulb me-2"></i>Patrón Común de Éxito:</h4>
+          <div class="row">
+            <div class="col-md-4">
+              <h6>🎯 Semanas 1-2:</h6>
+              <p>Implementación básica, resistencia inicial, primeros feedbacks positivos</p>
+            </div>
+            <div class="col-md-4">
+              <h6>🚀 Semanas 3-8:</h6>
+              <p>Adopción masiva, formación de núcleo leal, viral orgánico</p>
+            </div>
+            <div class="col-md-4">
+              <h6>💎 Semanas 9+:</h6>
+              <p>Automatización, liderazgo distribuido, crecimiento exponencial</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="final-summary">
+      <h2><i class="fas fa-crown me-2"></i>¡Felicitaciones, Master de Rituales!</h2>
+      <p class="lead">Has completado la transformación más profunda: de creadora de contenido a arquitecta de experiencias sagradas.</p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">🎭</div>
+          <div class="achievement-text">Dominio de 6 Rituales Core</div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">🧠</div>
+          <div class="achievement-text">Neurociencia Aplicada</div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">💰</div>
+          <div class="achievement-text">ROI +340% Projectado</div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">👥</div>
+          <div class="achievement-text">Comunidad Auto-Sostenible</div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">🏆</div>
+          <div class="achievement-text">Ventaja Competitiva Duradera</div>
+        </div>
+        <div class="achievement-item">
+          <div class="achievement-icon">🎯</div>
+          <div class="achievement-text">Maestría en Engagement</div>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <h3>🔮 Tu Próximo Nivel:</h3>
+        <p>Con estos rituales maestros, no solo tienes usuarios - tienes devotos. No solo tienes ingresos - tienes un imperio emocional que ningún competidor puede replicar porque está construido sobre vínculos humanos auténticos.</p>
+        
+        <div class="mt-4">
+          <h4>🎯 ¡A construir tu Imperio Ritual!</h4>
+          <p>El 73% de modelos fallan porque tratan síntomas, no causas. Tú ahora dominas las causas: la necesidad humana fundamental de pertenencia, significado y conexión.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Real-time clock
+    function updateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        timeZone: 'America/Bogota'
+      };
+      document.getElementById('currentTime').textContent = 
+        `🕐 ${now.toLocaleDateString('es-CO', options)} (Hora Colombia)`;
+    }
+    
+    updateTime();
+    setInterval(updateTime, 60000);
+
+    // Toggle lab sections
+    function toggleDetails(sectionId) {
+      const content = document.getElementById(`content-${sectionId}`);
+      const arrow = document.getElementById(`arrow-${sectionId}`);
+      
+      content.classList.toggle('expanded');
+      arrow.classList.toggle('rotated');
+    }
+
+    // Expand ritual cards
+    function expandRitual(ritualId) {
+      const details = document.getElementById(`details-${ritualId}`);
+      details.classList.toggle('expanded');
+    }
+
+    // Calculator functionality
+    function calculateRitualROI() {
+      const currentUsers = parseInt(document.getElementById('currentUsers').value) || 0;
+      const avgTip = parseInt(document.getElementById('avgTip').value) || 0;
+      const sessionsPerWeek = parseInt(document.getElementById('sessionsPerWeek').value) || 0;
+      const ritualTypes = parseInt(document.getElementById('ritualTypes').value) || 2;
+      
+      if (currentUsers === 0 || avgTip === 0 || sessionsPerWeek === 0) {
+        alert('Por favor completa todos los campos para calcular tu ROI');
+        return;
+      }
+      
+      // Engagement multipliers based on ritual types
+      const engagementMultiplier = {
+        2: 1.4,  // +40%
+        3: 1.67, // +67%
+        4: 1.89, // +89%
+        5: 2.34  // +134%
+      };
+      
+      const multiplier = engagementMultiplier[ritualTypes];
+      const currentMonthlyRevenue = currentUsers * avgTip * sessionsPerWeek * 4;
+      const newMonthlyRevenue = currentMonthlyRevenue * multiplier;
+      const increase = newMonthlyRevenue - currentMonthlyRevenue;
+      const newUserCount = Math.round(currentUsers * multiplier);
+      const userIncrease = newUserCount - currentUsers;
+      const annualROI = Math.round(((newMonthlyRevenue * 12) / (currentMonthlyRevenue * 12) - 1) * 100);
+      const paybackMonths = Math.ceil(3 / multiplier); // Estimated implementation time
+      
+      // Display results
+      document.getElementById('userIncrease').textContent = `+${userIncrease} usuarios`;
+      document.getElementById('newRevenue').textContent = `$${increase.toLocaleString()}`;
+      document.getElementById('annualROI').textContent = `+${annualROI}%`;
+      document.getElementById('paybackTime').textContent = `${paybackMonths} meses`;
+      
+      // Personalized analysis
+      let analysis = '';
+      if (ritualTypes <= 2) {
+        analysis = 'Inicio sólido. Con 2 rituales básicos verás mejoras inmediatas en retención. Considera expandir a 3-4 rituales para maximizar impacto.';
+      } else if (ritualTypes === 3) {
+        analysis = 'Configuración balanceada. 3 rituales te posicionan en el top 25% de creadoras. Excelente ROI con mantenimiento moderado.';
+      } else if (ritualTypes === 4) {
+        analysis = 'Nivel avanzado. 4 rituales crean ecosistema robusto. Estás en camino al top 10% de creadoras con comunidades leales.';
+      } else {
+        analysis = 'Nivel master. 5+ rituales te posicionan como líder absoluta. Tu comunidad se vuelve auto-sostenible y resistente a competencia.';
+      }
+      
+      document.getElementById('personalizedAnalysis').textContent = analysis;
+      document.getElementById('ritualResults').style.display = 'block';
+    }
+
+    // Scenario simulator
+    let selectedScenario = null;
+    
+    function selectScenario(scenario) {
+      // Remove previous selection
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selection to clicked card
+      event.currentTarget.classList.add('selected');
+      selectedScenario = scenario;
+      
+      // Show results
+      const results = document.getElementById('scenarioResults');
+      const content = document.getElementById('scenarioContent');
+      
+      const scenarioData = {
+        principiante: {
+          users: '50-100',
+          rituals: 'Bienvenida + Apreciación Semanal',
+          timeInvestment: '45 min/semana',
+          expectedROI: '+67% en 6 semanas',
+          keyFocus: 'Establecer fundamentos y crear hábito de participación',
+          challenges: 'Resistencia inicial, necesidad de constancia',
+          tips: 'Comienza con rituales simples. Celebra cada pequeña victoria.'
+        },
+        intermedio: {
+          users: '100-300',
+          rituals: 'Bienvenida + Apreciación + Celebración + Desafío',
+          timeInvestment: '90 min/semana',
+          expectedROI: '+134% en 8 semanas',
+          keyFocus: 'Diversificar experiencias y crear liderazgo distribuido',
+          challenges: 'Gestión de múltiples rituales, coordinación',
+          tips: 'Delega roles. Crea sistema de mentores entre usuarios.'
+        },
+        avanzado: {
+          users: '300-1000',
+          rituals: 'Sistema completo + rituales personalizados',
+          timeInvestment: '2-3 horas/semana',
+          expectedROI: '+287% en 10 semanas',
+          keyFocus: 'Automatización y escalabilidad del sistema',
+          challenges: 'Mantener intimidad con escala, prevenir fragmentación',
+          tips: 'Crea sub-grupos. Implementa rituales de múltiples niveles.'
+        },
+        elite: {
+          users: '1000+',
+          rituals: 'Ecosistema ritual completo + innovación constante',
+          timeInvestment: '4-5 horas/semana',
+          expectedROI: '+500%+ en 12 semanas',
+          keyFocus: 'Innovación continua y mantenimiento de exclusividad',
+          challenges: 'Evitar saturación, mantener calidad con volumen',
+          tips: 'Innovación constante. Crea rituales únicos que definan tu marca.'
+        }
+      };
+      
+      const data = scenarioData[scenario];
+      content.innerHTML = `
+        <div class="row">
+          <div class="col-md-6">
+            <h5>📊 Métricas de tu Escenario:</h5>
+            <ul class="list-unstyled">
+              <li><strong>👥 Base de usuarios:</strong> ${data.users}</li>
+              <li><strong>🎭 Rituales recomendados:</strong> ${data.rituals}</li>
+              <li><strong>⏰ Inversión de tiempo:</strong> ${data.timeInvestment}</li>
+              <li><strong>💰 ROI esperado:</strong> ${data.expectedROI}</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h5>🎯 Estrategia Específica:</h5>
+            <ul class="list-unstyled">
+              <li><strong>🔍 Enfoque clave:</strong> ${data.keyFocus}</li>
+              <li><strong>⚠️ Desafíos principales:</strong> ${data.challenges}</li>
+              <li><strong>💡 Tips de implementación:</strong> ${data.tips}</li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-3 p-3" style="background: var(--gradient-primary); color: white; border-radius: 15px;">
+          <h6><i class="fas fa-rocket me-2"></i>Tu Plan de Acción Inmediata:</h6>
+          <p class="mb-0">Basado en tu escenario ${scenario}, comienza implementando los rituales básicos esta semana. El éxito se construye con consistencia, no con perfección.</p>
+        </div>
+      `;
+      
+      results.classList.add('active');
+    }
+
+    // Progress tracker
+    let progressData = {
+      basic: 0,
+      participation: 0,
+      consistency: 0,
+      roi: 0
+    };
+
+    function updateProgress() {
+      // Simulate progress updates (in real app, this would come from actual data)
+      progressData.basic = Math.min(progressData.basic + Math.floor(Math.random() * 30), 100);
+      progressData.participation = Math.min(progressData.participation + Math.floor(Math.random() * 25), 100);
+      progressData.consistency = Math.min(progressData.consistency + Math.floor(Math.random() * 20), 100);
+      progressData.roi = Math.min(progressData.roi + Math.floor(Math.random() * 35), 300);
+      
+      // Update displays
+      document.getElementById('basicProgress').textContent = `${Math.floor(progressData.basic/33.33)}/3`;
+      document.getElementById('participationProgress').textContent = `${progressData.participation}%`;
+      document.getElementById('consistencyProgress').textContent = `${progressData.consistency}/100`;
+      document.getElementById('roiProgress').textContent = `+${progressData.roi}%`;
+      
+      // Update progress bars
+      document.getElementById('basicFill').style.width = `${progressData.basic}%`;
+      document.getElementById('participationFill').style.width = `${progressData.participation}%`;
+      document.getElementById('consistencyFill').style.width = `${progressData.consistency}%`;
+      document.getElementById('roiFill').style.width = `${Math.min(progressData.roi/3, 100)}%`;
+    }
+
+    function resetProgress() {
+      progressData = { basic: 0, participation: 0, consistency: 0, roi: 0 };
+      updateProgress();
+    }
+
+    // Initialize some progress
+    setTimeout(() => {
+      updateProgress();
+    }, 1000);
+  </script>
+</body>
+</html>

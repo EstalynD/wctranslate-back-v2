@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Afinidad para Modelos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #6a11cb;
+            --secondary-color: #2575fc;
+            --accent-color: #FF6B6B;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --success-color: #20c997;
+            --connection-color: #6a11cb;
+            --experience-color: #2575fc;
+            --casual-color: #ff9a3c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-color);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--dark-color);
+            opacity: 0.8;
+        }
+
+        .app-section {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: all 0.3s ease;
+            min-height: 400px;
+        }
+
+        .app-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .section-header {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .section-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .profile-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .profile-card-header {
+            padding: 1.5rem;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.9;
+        }
+
+        .profile-card-body {
+            padding: 1.5rem;
+        }
+
+        .profile-card-footer {
+            padding: 1rem 1.5rem;
+            background: rgba(0, 0, 0, 0.03);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .connection .profile-card-header {
+            background: linear-gradient(135deg, var(--connection-color), #8e2de2);
+        }
+
+        .experience .profile-card-header {
+            background: linear-gradient(135deg, var(--experience-color), #4facfe);
+        }
+
+        .casual .profile-card-header {
+            background: linear-gradient(135deg, var(--casual-color), #ff6a88);
+        }
+
+        .percentage-indicator {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .quiz-container {
+            padding: 2rem 0;
+        }
+
+        .question-card {
+            display: none;
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .question-card.active {
+            display: block;
+        }
+
+        .question-text {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: left;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn:hover {
+            border-color: var(--secondary-color);
+            background: #f8f9ff;
+        }
+
+        .option-btn.selected {
+            border-color: var(--primary-color);
+            background: rgba(106, 17, 203, 0.05);
+        }
+
+        .option-btn.selected::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: var(--primary-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+
+        .nav-btn {
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.2);
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.3);
+        }
+
+        .nav-btn:disabled {
+            background: #e9ecef;
+            color: #adb5bd;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        .progress-container {
+            height: 8px;
+            width: 100%;
+            background: #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        .results-container {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .results-profile {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .results-profile h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .results-profile p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin: 2rem 0;
+        }
+
+        .profile-traits {
+            margin-top: 2rem;
+        }
+
+        .profile-trait {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+        }
+
+        .trait-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .connection-badge {
+            background: linear-gradient(135deg, var(--connection-color), #8e2de2);
+        }
+
+        .experience-badge {
+            background: linear-gradient(135deg, var(--experience-color), #4facfe);
+        }
+
+        .casual-badge {
+            background: linear-gradient(135deg, var(--casual-color), #ff6a88);
+        }
+
+        .result-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            color: white;
+            font-weight: 600;
+            margin-left: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .reset-btn {
+            display: block;
+            margin: 2rem auto;
+            background: var(--dark-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .reset-btn:hover {
+            background: #23272b;
+            transform: translateY(-3px);
+        }
+
+        .strategy-section {
+            margin-top: 2rem;
+            border-top: 1px solid #e9ecef;
+            padding-top: 2rem;
+        }
+
+        .strategy-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .strategy-item {
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .strategy-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .profile-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .section-content {
+                padding: 1.5rem;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Test de Afinidad para Modelos</h1>
+            <p>Descubre con qué perfil de usuario tendrás mayor compatibilidad y potencial de ventas. Este test analizará tus preferencias, estilo y personalidad para determinar con qué tipo de audiencia conectarás mejor.</p>
+        </header>
+
+        <div class="app-section">
+            <div class="section-header">
+                <h2>Perfiles de Usuarios</h2>
+            </div>
+            <div class="section-content">
+                <p>Nuestro análisis ha identificado tres perfiles distintos de usuarios en la plataforma. Cada uno con motivaciones y comportamientos de compra únicos:</p>
+
+                <div class="profile-cards">
+                    <div class="profile-card connection">
+                        <div class="profile-card-header">
+                            <h3>Buscadores de Conexión</h3>
+                            <span class="percentage-indicator">45%</span>
+                        </div>
+                        <div class="profile-card-body">
+                            <p>Buscan principalmente una experiencia de intimidad emocional más allá de lo físico. Valoran la autenticidad y las relaciones significativas a largo plazo.</p>
+                        </div>
+                        <div class="profile-card-footer">
+                            <span>Conversión: Alta fidelidad</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-card experience">
+                        <div class="profile-card-header">
+                            <h3>Coleccionistas de Experiencias</h3>
+                            <span class="percentage-indicator">30%</span>
+                        </div>
+                        <div class="profile-card-body">
+                            <p>Buscan vivencias únicas y personalizadas que no pueden encontrar en otros lugares. Dispuestos a pagar más por experiencias exclusivas.</p>
+                        </div>
+                        <div class="profile-card-footer">
+                            <span>Conversión: Alto valor</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-card casual">
+                        <div class="profile-card-header">
+                            <h3>Espectadores Casuales</h3>
+                            <span class="percentage-indicator">25%</span>
+                        </div>
+                        <div class="profile-card-body">
+                            <p>Navegan sin un objetivo claro pero pueden convertirse en seguidores regulares si encuentran contenido que resuene con ellos. Conversión más lenta pero alto volumen.</p>
+                        </div>
+                        <div class="profile-card-footer">
+                            <span>Conversión: Alto volumen</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-section">
+            <div class="section-header">
+                <h2>Descubre Tu Audiencia Ideal</h2>
+            </div>
+            <div class="section-content">
+                <p>Responde a las siguientes preguntas para descubrir con qué perfil de usuario tendrás mayor afinidad y potencial de ventas. No hay respuestas correctas o incorrectas, simplemente sé honesta sobre tu estilo y preferencias.</p>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="quiz-progress"></div>
+                </div>
+
+                <div class="quiz-container">
+                    <div class="question-card active" data-question="1">
+                        <div class="question-text">1. Al crear contenido, lo que más te motiva es:</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Establecer conexiones emocionales profundas con mi audiencia</button>
+                            <button class="option-btn" data-type="experience">Ofrecer experiencias únicas y contenido que sorprenda</button>
+                            <button class="option-btn" data-type="casual">Crear contenido accesible que atraiga a una amplia audiencia</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn" disabled>Anterior</button>
+                            <button class="nav-btn next-btn">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="2">
+                        <div class="question-text">2. ¿Qué tipo de interacción prefieres con tu audiencia?</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Conversaciones profundas y mensajes personalizados</button>
+                            <button class="option-btn" data-type="experience">Crear momentos exclusivos y experiencias personalizadas</button>
+                            <button class="option-btn" data-type="casual">Interacciones ligeras y casuales con muchos usuarios</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn">Anterior</button>
+                            <button class="nav-btn next-btn">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="3">
+                        <div class="question-text">3. ¿Cómo describirías tu estilo de comunicación?</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Íntimo, auténtico y centrado en crear vínculos emocionales</button>
+                            <button class="option-btn" data-type="experience">Creativo, sorprendente y enfocado en ofrecer algo único</button>
+                            <button class="option-btn" data-type="casual">Accesible, amigable y sencillo de entender</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn">Anterior</button>
+                            <button class="nav-btn next-btn">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="4">
+                        <div class="question-text">4. ¿Qué tipo de contenido te resulta más natural crear?</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Contenido personal y emotivo que genera conversación</button>
+                            <button class="option-btn" data-type="experience">Contenido innovador, temático o de fantasía que sorprende</button>
+                            <button class="option-btn" data-type="casual">Contenido variado y accesible para diferentes gustos</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn">Anterior</button>
+                            <button class="nav-btn next-btn">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="5">
+                        <div class="question-text">5. ¿Qué estrategia de monetización te resulta más cómoda?</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Suscripciones a largo plazo y mensajes personalizados</button>
+                            <button class="option-btn" data-type="experience">Experiencias premium y contenido exclusivo a precios más altos</button>
+                            <button class="option-btn" data-type="casual">Mayor volumen de ventas con precios más accesibles</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn">Anterior</button>
+                            <button class="nav-btn next-btn">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="6">
+                        <div class="question-text">6. ¿Cómo prefieres gestionar tu tiempo en la plataforma?</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Dedicar más tiempo a pocos usuarios pero con interacciones profundas</button>
+                            <button class="option-btn" data-type="experience">Invertir tiempo en crear experiencias elaboradas y contenido único</button>
+                            <button class="option-btn" data-type="casual">Distribuir mi tiempo entre muchos usuarios con interacciones más breves</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn">Anterior</button>
+                            <button class="nav-btn next-btn">Siguiente</button>
+                        </div>
+                    </div>
+
+                    <div class="question-card" data-question="7">
+                        <div class="question-text">7. ¿Qué te hace sentir más realizada profesionalmente?</div>
+                        <div class="options-container">
+                            <button class="option-btn" data-type="connection">Construir relaciones duraderas y significativas con mis seguidores</button>
+                            <button class="option-btn" data-type="experience">Sorprender con creatividad y recibir reconocimiento por la originalidad</button>
+                            <button class="option-btn" data-type="casual">Llegar a una audiencia amplia y diversa</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <button class="nav-btn prev-btn">Anterior</button>
+                            <button class="nav-btn next-btn">Finalizar</button>
+                        </div>
+                    </div>
+
+                    <div class="results-container">
+                        <div class="results-header">
+                            <h2>Tu Audiencia Ideal</h2>
+                            <p>Basado en tus respuestas, hemos identificado con qué perfil de usuario tendrás mayor afinidad y potencial de ventas</p>
+                        </div>
+
+                        <div class="results-profile">
+                            <h3>Tu Perfil de Audiencia Ideal: <span id="primary-profile"></span> <span id="profile-badge" class="result-badge"></span></h3>
+                            <p id="profile-description"></p>
+
+                            <div class="chart-container">
+                                <canvas id="results-chart"></canvas>
+                            </div>
+
+                            <div class="profile-traits">
+                                <h4>Características de tu audiencia ideal:</h4>
+                                <div id="traits-container"></div>
+                            </div>
+
+                            <div class="strategy-section">
+                                <h4>Estrategia de Ventas Recomendada:</h4>
+                                <ul class="strategy-list" id="strategy-list"></ul>
+                            </div>
+                        </div>
+
+                        <button class="reset-btn" id="reset-quiz">Realizar Nuevamente el Test</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Quiz variables
+            const questionCards = document.querySelectorAll('.question-card');
+            const prevButtons = document.querySelectorAll('.prev-btn');
+            const nextButtons = document.querySelectorAll('.next-btn');
+            const optionButtons = document.querySelectorAll('.option-btn');
+            const progressBar = document.getElementById('quiz-progress');
+            const resultsContainer = document.querySelector('.results-container');
+            const resetButton = document.getElementById('reset-quiz');
+            
+            let currentQuestion = 1;
+            const totalQuestions = questionCards.length;
+            let userAnswers = {
+                connection: 0,
+                experience: 0,
+                casual: 0
+            };
+
+            // Update progress bar
+            function updateProgress() {
+                const progress = (currentQuestion / totalQuestions) * 100;
+                progressBar.style.width = `${progress}%`;
+            }
+
+            // Show question
+            function showQuestion(questionNumber) {
+                questionCards.forEach(card => {
+                    card.classList.remove('active');
+                    if (parseInt(card.dataset.question) === questionNumber) {
+                        card.classList.add('active');
+                    }
+                });
+                
+                updateProgress();
+            }
+
+            // Handle option selection
+            optionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove selected class from all options in this question
+                    const parentCard = this.closest('.question-card');
+                    const options = parentCard.querySelectorAll('.option-btn');
+                    options.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Add selected class to clicked option
+                    this.classList.add('selected');
+                });
+            });
+
+            // Handle navigation
+            prevButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (currentQuestion > 1) {
+                        currentQuestion--;
+                        showQuestion(currentQuestion);
+                    }
+                });
+            });
+
+            nextButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const parentCard = this.closest('.question-card');
+                    const selectedOption = parentCard.querySelector('.option-btn.selected');
+                    
+                    if (selectedOption) {
+                        // Record answer
+                        const profileType = selectedOption.dataset.type;
+                        userAnswers[profileType]++;
+                        
+                        // Move to next question or show results
+                        if (currentQuestion < totalQuestions) {
+                            currentQuestion++;
+                            showQuestion(currentQuestion);
+                        } else {
+                            // Calculate results
+                            showResults();
+                        }
+                    } else {
+                        // Alert user to select an option
+                        alert('Por favor, selecciona una opción para continuar.');
+                    }
+                });
+            });
+
+            // Show results
+            function showResults() {
+                // Hide all question cards
+                questionCards.forEach(card => {
+                    card.classList.remove('active');
+                });
+                
+                // Calculate dominant profile
+                let dominantProfile = 'connection';
+                let maxScore = userAnswers.connection;
+                
+                if (userAnswers.experience > maxScore) {
+                    dominantProfile = 'experience';
+                    maxScore = userAnswers.experience;
+                }
+                
+                if (userAnswers.casual > maxScore) {
+                    dominantProfile = 'casual';
+                }
+                
+                // Calculate percentages
+                const total = userAnswers.connection + userAnswers.experience + userAnswers.casual;
+                const connectionPercent = Math.round((userAnswers.connection / total) * 100);
+                const experiencePercent = Math.round((userAnswers.experience / total) * 100);
+                const casualPercent = Math.round((userAnswers.casual / total) * 100);
+                
+                // Update DOM with results
+                const primaryProfile = document.getElementById('primary-profile');
+                const profileBadge = document.getElementById('profile-badge');
+                const profileDescription = document.getElementById('profile-description');
+                const traitsContainer = document.getElementById('traits-container');
+                const strategyList = document.getElementById('strategy-list');
+                
+                if (dominantProfile === 'connection') {
+                    primaryProfile.textContent = 'Buscadores de Conexión';
+                    profileBadge.textContent = `${connectionPercent}%`;
+                    profileBadge.className = 'result-badge connection-badge';
+                    
+                    profileDescription.textContent = 'Tu autenticidad y estilo de comunicación íntimo te hace perfecta para conectar con usuarios que buscan relaciones significativas y conexiones emocionales profundas. Este perfil representa el 45% de los usuarios en la plataforma y son quienes generan mayor fidelidad y suscripciones a largo plazo.';
+                    
+                    traitsContainer.innerHTML = `
+                        <div class="profile-trait">
+                            <div class="trait-icon connection-badge">💖</div>
+                            <div class="trait-content">
+                                <h5>Buscan intimidad emocional</h5>
+                                <p>Valoran conversaciones profundas y conexiones auténticas.</p>
+                            </div>
+                        </div>
+                        <div class="profile-trait">
+                            <div class="trait-icon connection-badge">🤝</div>
+                            <div class="trait-content">
+                                <h5>Alta fidelidad</h5>
+                                <p>Permanecen más tiempo como suscriptores y generan ingresos constantes.</p>
+                            </div>
+                        </div>
+                        <div class="profile-trait">
+                            <div class="trait-icon connection-badge">✉️</div>
+                            <div class="trait-content">
+                                <h5>Valoran la comunicación personal</h5>
+                                <p>Responden positivamente a mensajes personalizados y atención individual.</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    strategyList.innerHTML = `
+                        <li class="strategy-item">Dedica tiempo a crear conexiones genuinas con tus seguidores más fieles</li>
+                        <li class="strategy-item">Ofrece paquetes de suscripción a largo plazo con beneficios exclusivos</li>
+                        <li class="strategy-item">Comparte aspectos auténticos de tu personalidad y emociones</li>
+                        <li class="strategy-item">Envía mensajes personalizados que demuestren que los conoces individualmente</li>
+                        <li class="strategy-item">Crea rituales de conexión regular como sesiones de chat programadas</li>
+                        <li class="strategy-item">Desarrolla contenido que cuente historias y genere conversaciones profundas</li>
+                    `;
+                    
+                } else if (dominantProfile === 'experience') {
+                    primaryProfile.textContent = 'Coleccionistas de Experiencias';
+                    profileBadge.textContent = `${experiencePercent}%`;
+                    profileBadge.className = 'result-badge experience-badge';
+                    
+                    profileDescription.textContent = 'Tu creatividad y originalidad te hacen ideal para atraer a usuarios que buscan experiencias únicas y contenido exclusivo. Este perfil representa el 30% de la audiencia y son quienes están dispuestos a pagar más por experiencias premium y contenido diferenciado.';
+                    
+                    traitsContainer.innerHTML = `
+                        <div class="profile-trait">
+                            <div class="trait-icon experience-badge">🌟</div>
+                            <div class="trait-content">
+                                <h5>Buscan experiencias únicas</h5>
+                                <p>Valoran el contenido original, temático y diferenciado.</p>
+                            </div>
+                        </div>
+                        <div class="profile-trait">
+                            <div class="trait-icon experience-badge">💎</div>
+                            <div class="trait-content">
+                                <h5>Mayor valor por compra</h5>
+                                <p>Dispuestos a pagar más por experiencias exclusivas y premium.</p>
+                            </div>
+                        </div>
+                        <div class="profile-trait">
+                            <div class="trait-icon experience-badge">🎭</div>
+                            <div class="trait-content">
+                                <h5>Aprecian la creatividad</h5>
+                                <p>Responden positivamente a conceptos innovadores y propuestas originales.</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    strategyList.innerHTML = `
+                        <li class="strategy-item">Desarrolla contenido temático, creativo y distintivo que no encuentren en otros perfiles</li>
+                        <li class="strategy-item">Crea niveles premium con experiencias exclusivas a precios más altos</li>
+                        <li class="strategy-item">Ofrece colecciones limitadas o experiencias por tiempo limitado</li>
+                        <li class="strategy-item">Sorprende constantemente con nuevas propuestas e ideas innovadoras</li>
+                        <li class="strategy-item">Desarrolla conceptos visuales elaborados y sesiones temáticas</li>
+                        <li class="strategy-item">Enfócate en la calidad y exclusividad más que en la cantidad</li>
+                    `;
+                    
+                } else {
+                    primaryProfile.textContent = 'Espectadores Casuales';
+                    profileBadge.textContent = `${casualPercent}%`;
+                    profileBadge.className = 'result-badge casual-badge';
+                    
+                    profileDescription.textContent = 'Tu estilo accesible y versatilidad te hacen perfecta para atraer a una amplia audiencia de usuarios que navegan sin objetivo específico. Aunque representan el 25% de los usuarios, su potencial de volumen es alto y pueden convertirse en seguidores regulares si encuentran contenido que resuene con ellos.';
+                    
+                    traitsContainer.innerHTML = `
+                        <div class="profile-trait">
+                            <div class="trait-icon casual-badge">🌊</div>
+                            <div class="trait-content">
+                                <h5>Navegan sin objetivo fijo</h5>
+                                <p>Exploran diversos contenidos y pueden convertirse en seguidores si algo les impacta.</p>
+                            </div>
+                        </div>
+                        <div class="profile-trait">
+                            <div class="trait-icon casual-badge">🔄</div>
+                            <div class="trait-content">
+                                <h5>Alto potencial de volumen</h5>
+                                <p>Aunque con menor tasa de conversión individual, su volumen total puede ser significativo.</p>
+                            </div>
+                        </div>
+                        <div class="profile-trait">
+                            <div class="trait-icon casual-badge">🔍</div>
+                            <div class="trait-content">
+                                <h5>Valoran la accesibilidad</h5>
+                                <p>Prefieren interacciones sencillas y contenido fácil de consumir.</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    strategyList.innerHTML = `
+                        <li class="strategy-item">Crea contenido variado para captar distintos intereses</li>
+                        <li class="strategy-item">Ofrece opciones de compra accesibles para facilitar la conversión inicial</li>
+                        <li class="strategy-item">Mantén una presencia activa y visible en la plataforma</li>
+                        <li class="strategy-item">Utiliza promociones temporales para incentivar primeras compras</li>
+                        <li class="strategy-item">Desarrolla una estrategia de contenido gratuito atractivo que lleve a conversiones</li>
+                        <li class="strategy-item">Aprovecha las tendencias y temas populares para aumentar tu visibilidad</li>
+                    `;
+                }
+                
+                // Create chart
+                const ctx = document.getElementById('results-chart').getContext('2d');
+                const resultsChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Buscadores de Conexión', 'Coleccionistas de Experiencias', 'Espectadores Casuales'],
+                        datasets: [{
+                            data: [connectionPercent, experiencePercent, casualPercent],
+                            backgroundColor: [
+                                'rgba(106, 17, 203, 0.8)',
+                                'rgba(37, 117, 252, 0.8)',
+                                'rgba(255, 154, 60, 0.8)'
+                            ],
+                            borderColor: [
+                                'rgba(106, 17, 203, 1)',
+                                'rgba(37, 117, 252, 1)',
+                                'rgba(255, 154, 60, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '70%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: {
+                                        family: 'Montserrat',
+                                        size: 14
+                                    },
+                                    padding: 20
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.raw + '%';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+                
+                // Show results container
+                resultsContainer.style.display = 'block';
+                progressBar.style.width = '100%';
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+            
+            // Reset quiz
+            resetButton.addEventListener('click', function() {
+                // Reset variables
+                currentQuestion = 1;
+                userAnswers = {
+                    connection: 0,
+                    experience: 0,
+                    casual: 0
+                };
+                
+                // Reset UI
+                optionButtons.forEach(button => {
+                    button.classList.remove('selected');
+                });
+                
+                // Hide results and show first question
+                resultsContainer.style.display = 'none';
+                showQuestion(1);
+                
+                // Scroll to quiz
+                document.querySelector('.quiz-container').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Initialize quiz
+            updateProgress();
+        });
+    </script>
+</body>
+</html>

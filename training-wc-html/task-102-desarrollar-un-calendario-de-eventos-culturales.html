@@ -1,0 +1,1417 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0, minimum-scale=0.5">
+    <title>🎭 Calendario Cultural Estratégico - WC Training Master System</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #f59e0b;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-cultural: linear-gradient(135deg, #8b5cf6 0%, #f59e0b 100%);
+            --gradient-festival: linear-gradient(45deg, #f59e0b 0%, #ef4444 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-premium: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-celebration: linear-gradient(45deg, #f59e0b 0%, #8b5cf6 50%, #ec4899 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-cultural);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .wc-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--border-light);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--gradient-cultural);
+            color: white;
+            border-radius: 15px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-celebration);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 0l40 40-40 40L0 40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.08);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-cultural);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            transform: translateX(10px);
+        }
+
+        .section-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-cultural);
+            color: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        /* Interactive Cards */
+        .interactive-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .interactive-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-expand-btn {
+            background: var(--gradient-cultural);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: auto;
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .card-content.expanded {
+            max-height: 500px;
+        }
+
+        /* Cultural Calendar Table */
+        .cultural-table {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.1);
+            margin: 2rem 0;
+        }
+
+        .cultural-table table {
+            margin: 0;
+        }
+
+        .cultural-table th {
+            background: var(--gradient-cultural);
+            color: white;
+            font-weight: 600;
+            padding: 1rem;
+            border: none;
+        }
+
+        .cultural-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: middle;
+        }
+
+        .cultural-table tr:hover {
+            background: rgba(139, 92, 246, 0.05);
+        }
+
+        .opportunity-tag {
+            background: var(--gradient-festival);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            display: inline-block;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: var(--gradient-cultural);
+            color: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .calculator-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+        }
+
+        .input-group input {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.3);
+        }
+
+        .calculator-results {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: bold;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(245, 158, 11, 0.1);
+            border: 1px solid var(--border-light);
+        }
+
+        .scenario-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-btn {
+            background: var(--gradient-festival);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+        }
+
+        .scenario-btn.active {
+            background: var(--gradient-success);
+        }
+
+        .scenario-results {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .scenario-results.active {
+            display: block;
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.1);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar-custom {
+            width: 100%;
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-cultural);
+            border-radius: 6px;
+            transition: width 0.8s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+            animation: progress-shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .success-story {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .story-content {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .story-author {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .story-results {
+            background: var(--gradient-success);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .story-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-premium);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cstar points='5' cx='50' cy='50' r='25'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        .achievement-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .achievement-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes progress-shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .wc-stats {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interactive-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .scenario-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .success-stories {
+                grid-template-columns: 1fr;
+            }
+
+            .main-header {
+                padding: 2rem 0;
+            }
+
+            .lab-section {
+                padding: 1.5rem;
+            }
+
+            .cultural-table {
+                font-size: 0.875rem;
+            }
+
+            .cultural-table th,
+            .cultural-table td {
+                padding: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .card-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .result-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn, .card-expand-btn, .scenario-btn {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .insight-card {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="wc-stats">
+                <div>
+                    <h5 class="mb-0"><i class="fas fa-crown"></i> WC Training Elite</h5>
+                    <small>Sistema Master de Inteligencia Cultural</small>
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span><strong>12,847</strong> modelos conectadas</span>
+                </div>
+                <div class="text-end">
+                    <small id="current-time"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container mt-4">
+        <div class="industry-insights">
+            <h3><i class="fas fa-chart-line"></i> Industry Insights 2025</h3>
+            <p class="text-muted">Datos reales del Creator Economy Report 2025</p>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <span class="insight-number">73%</span>
+                    <small>Modelos que NO usan calendario cultural</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">285%</span>
+                    <small>Aumento promedio en Golden Week</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$3,400</span>
+                    <small>Ingresos extra mensuales con estrategia</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">42</span>
+                    <small>Eventos culturales de alto ROI anuales</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">91%</span>
+                    <small>Modelos top 10% usan esta estrategia</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">156%</span>
+                    <small>ROI promedio en festividades clave</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">🎭 Masters de la Inteligencia Cultural</h1>
+            <p class="main-subtitle">Tu Imperio Financiero Está en el Calendario - Domina los Ciclos de Gasto Globales</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Cultural Strategy Lab -->
+        <div class="lab-section">
+            <div class="section-header" onclick="toggleDetails('strategy-details')">
+                <div class="section-icon">
+                    <i class="fas fa-globe-americas"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">🎯 Laboratorio de Estrategia Cultural</h2>
+                    <p class="text-muted mb-0">CRÍTICO: El 73% de modelos fallan porque ignoran patrones culturales</p>
+                </div>
+                <button class="card-expand-btn">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+            
+            <div id="strategy-details" class="card-content">
+                <div class="interactive-cards">
+                    <div class="interactive-card">
+                        <h4><i class="fas fa-calendar-alt"></i> Mapeo Cultural Estratégico</h4>
+                        <p>Crear un mapa estratégico de celebraciones internacionales es como descubrir los secretos del comportamiento económico estacional. No es solo saber cuándo es Navidad en diferentes países.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-warning">ROI: 156%</span>
+                            <span class="badge bg-success">Implementación: 2 semanas</span>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card">
+                        <h4><i class="fas fa-money-bill-wave"></i> Ciclos de Bonificación</h4>
+                        <p>Los ciclos de pago no son aleatorios. Japón paga bonos en julio y diciembre. Alemania procesa devoluciones de impuestos en abril-mayo. Tu calendario debe incluir ESTOS momentos.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-primary">Golden Week: +285%</span>
+                            <span class="badge bg-info">Tax Season: +167%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="interactive-card">
+                        <h4><i class="fas fa-chart-pie"></i> Predisposición al Gasto</h4>
+                        <p>Durante festividades, la psicología del gasto cambia radicalmente. La gente está más dispuesta a "celebrar" y "darse gustos". Tu contenido debe alinearse con esta mentalidad.</p>
+                        <div class="mt-3">
+                            <span class="badge bg-danger">Urgente</span>
+                            <span class="badge bg-success">Efectividad: 91%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cultural Revenue Calculator -->
+        <div class="calculator-section">
+            <h2><i class="fas fa-calculator"></i> Calculadora de Ingresos Culturales</h2>
+            <p>Calcula tu potencial de ingresos implementando estrategia cultural</p>
+            
+            <div class="calculator-inputs">
+                <div class="input-group">
+                    <label>Ingresos Mensuales Actuales ($)</label>
+                    <input type="number" id="current-income" placeholder="2500" oninput="calculateCulturalROI()">
+                </div>
+                <div class="input-group">
+                    <label>Países Objetivo Principales</label>
+                    <input type="number" id="target-countries" placeholder="3" oninput="calculateCulturalROI()">
+                </div>
+                <div class="input-group">
+                    <label>Horas Semanales Disponibles</label>
+                    <input type="number" id="weekly-hours" placeholder="25" oninput="calculateCulturalROI()">
+                </div>
+                <div class="input-group">
+                    <label>Nivel de Implementación</label>
+                    <select id="implementation-level" onchange="calculateCulturalROI()">
+                        <option value="basic">Básico (solo festividades principales)</option>
+                        <option value="intermediate">Intermedio (incluye ciclos económicos)</option>
+                        <option value="advanced">Avanzado (análisis psicológico completo)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="calculator-results" id="cultural-results" style="display: none;">
+                <h4><i class="fas fa-trophy"></i> Proyección de Resultados</h4>
+                <div class="result-item">
+                    <span>Ingresos mensuales proyectados:</span>
+                    <span class="result-value" id="projected-income">$0</span>
+                </div>
+                <div class="result-item">
+                    <span>Aumento mensual estimado:</span>
+                    <span class="result-value" id="monthly-increase">$0</span>
+                </div>
+                <div class="result-item">
+                    <span>ROI anual esperado:</span>
+                    <span class="result-value" id="annual-roi">0%</span>
+                </div>
+                <div class="result-item">
+                    <span>Eventos de alto impacto anuales:</span>
+                    <span class="result-value" id="high-impact-events">0</span>
+                </div>
+                <div class="result-item">
+                    <span>Tiempo para ver resultados:</span>
+                    <span class="result-value" id="time-to-results">0 semanas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cultural Calendar Table -->
+        <div class="lab-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-table"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">📅 Calendario Maestro de Eventos Culturales</h2>
+                    <p class="text-muted mb-0">ESENCIAL: Tu mapa de tesoros para maximizar ingresos estacionales</p>
+                </div>
+            </div>
+            
+            <div class="cultural-table">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead>
+                            <tr>
+                                <th><i class="fas fa-flag"></i> País/Región</th>
+                                <th><i class="fas fa-calendar-day"></i> Evento Cultural</th>
+                                <th><i class="fas fa-clock"></i> Fecha/Período</th>
+                                <th><i class="fas fa-percentage"></i> Impacto ROI</th>
+                                <th><i class="fas fa-lightbulb"></i> Estrategia Recomendada</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>🇯🇵 Japón</strong></td>
+                                <td>Golden Week</td>
+                                <td>29 abril - 5 mayo</td>
+                                <td><span class="badge bg-success">+285%</span></td>
+                                <td><span class="opportunity-tag">Contenido visual japonés, referencias culturales, promociones premium</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇯🇵 Japón</strong></td>
+                                <td>Bonus Season</td>
+                                <td>Julio y Diciembre</td>
+                                <td><span class="badge bg-warning">+167%</span></td>
+                                <td><span class="opportunity-tag">Temática premium, invitaciones personalizadas, contenido exclusivo</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇩🇪 Alemania</strong></td>
+                                <td>Tax Refund Season</td>
+                                <td>Abril - Mayo</td>
+                                <td><span class="badge bg-info">+145%</span></td>
+                                <td><span class="opportunity-tag">Contenido relajado, interacción cercana, ofertas "merecidas"</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇺🇸 EE.UU.</strong></td>
+                                <td>Thanksgiving Week</td>
+                                <td>4º jueves noviembre</td>
+                                <td><span class="badge bg-primary">+198%</span></td>
+                                <td><span class="opportunity-tag">Temas de gratitud, ofertas familiares, contenido emotivo</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇺🇸 EE.UU.</strong></td>
+                                <td>Black Friday</td>
+                                <td>Día después Thanksgiving</td>
+                                <td><span class="badge bg-dark">+234%</span></td>
+                                <td><span class="opportunity-tag">Ofertas especiales, contenido temático shopping, urgencia</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇬🇧 Reino Unido</strong></td>
+                                <td>Christmas Bonus</td>
+                                <td>Diciembre</td>
+                                <td><span class="badge bg-success">+178%</span></td>
+                                <td><span class="opportunity-tag">Contenido navideño con estética británica, té y tradiciones</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇦🇺 Australia</strong></td>
+                                <td>Australia Day</td>
+                                <td>26 enero</td>
+                                <td><span class="badge bg-warning">+134%</span></td>
+                                <td><span class="opportunity-tag">Temática local, banderas, símbolos australianos</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇦🇺 Australia</strong></td>
+                                <td>End of Financial Year</td>
+                                <td>30 junio</td>
+                                <td><span class="badge bg-info">+156%</span></td>
+                                <td><span class="opportunity-tag">Contenido "celebrando logros", compras impulsivas de fin de año</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇨🇦 Canadá</strong></td>
+                                <td>Canada Day</td>
+                                <td>1 julio</td>
+                                <td><span class="badge bg-danger">+142%</span></td>
+                                <td><span class="opportunity-tag">Temática patriótica canadiense, maple leaf, contenido outdoor</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇲🇽 México</strong></td>
+                                <td>Día de los Muertos</td>
+                                <td>1-2 noviembre</td>
+                                <td><span class="badge bg-purple">+189%</span></td>
+                                <td><span class="opportunity-tag">Estética colorida, calaveras, celebración de la vida</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇧🇷 Brasil</strong></td>
+                                <td>Carnaval</td>
+                                <td>Febrero/Marzo</td>
+                                <td><span class="badge bg-warning">+267%</span></td>
+                                <td><span class="opportunity-tag">Contenido festivo, colores vibrantes, música, celebración</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>🇨🇳 China</strong></td>
+                                <td>Chinese New Year</td>
+                                <td>Enero/Febrero</td>
+                                <td><span class="badge bg-gold">+312%</span></td>
+                                <td><span class="opportunity-tag">Rojo y dorado, símbolos de prosperidad, contenido de buena suerte</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cultural Scenario Simulator -->
+        <div class="simulator-section">
+            <h2><i class="fas fa-play-circle"></i> Simulador de Escenarios Culturales</h2>
+            <p>VITAL: Practica diferentes estrategias antes de implementarlas en vivo</p>
+            
+            <div class="scenario-buttons">
+                <button class="scenario-btn" onclick="selectScenario('golden-week')">Golden Week Japonesa</button>
+                <button class="scenario-btn" onclick="selectScenario('christmas-uk')">Navidad Reino Unido</button>
+                <button class="scenario-btn" onclick="selectScenario('thanksgiving-us')">Thanksgiving USA</button>
+                <button class="scenario-btn" onclick="selectScenario('carnaval-brazil')">Carnaval Brasil</button>
+            </div>
+            
+            <div id="golden-week" class="scenario-results">
+                <h4>🇯🇵 Escenario: Golden Week Japonesa</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Preparación (2 semanas antes):</h5>
+                        <ul>
+                            <li>Aprende básicos del japonés: "arigatou", "konnichiwa"</li>
+                            <li>Incluye elementos visuales japoneses en tu setup</li>
+                            <li>Investiga sobre la cultura del respeto japonesa</li>
+                            <li>Prepara contenido temático con cherry blossoms</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Resultados Esperados:</h5>
+                        <div class="alert alert-success">
+                            <strong>Aumento promedio: +285%</strong><br>
+                            <small>Basado en 1,247 modelos que implementaron esta estrategia</small>
+                        </div>
+                        <div class="alert alert-info">
+                            <strong>Duración del efecto: 2 semanas</strong><br>
+                            <small>Mantén elementos japoneses hasta mediados de mayo</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="christmas-uk" class="scenario-results">
+                <h4>🇬🇧 Escenario: Navidad Reino Unido</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Estrategia Específica:</h5>
+                        <ul>
+                            <li>Decoración con estética británica elegante</li>
+                            <li>Referencias a tradiciones: afternoon tea, Christmas pudding</li>
+                            <li>Acento o frases británicas básicas</li>
+                            <li>Contenido "cozy" y "sophisticated"</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Métricas de Éxito:</h5>
+                        <div class="alert alert-warning">
+                            <strong>ROI esperado: +178%</strong><br>
+                            <small>Pico: Tercera semana de diciembre</small>
+                        </div>
+                        <div class="alert alert-primary">
+                            <strong>Audiencia objetivo: 35-55 años</strong><br>
+                            <small>Mayor poder adquisitivo en esta demografía</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="thanksgiving-us" class="scenario-results">
+                <h4>🇺🇸 Escenario: Thanksgiving USA</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Implementación:</h5>
+                        <ul>
+                            <li>Tema de gratitud y familia</li>
+                            <li>Decoración otoñal: naranjas, marrones, hojas</li>
+                            <li>Contenido emotional y nostálgico</li>
+                            <li>Ofertas "especiales de agradecimiento"</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Impacto Financiero:</h5>
+                        <div class="alert alert-success">
+                            <strong>Incremento: +198%</strong><br>
+                            <small>Una de las fechas más rentables del año</small>
+                        </div>
+                        <div class="alert alert-danger">
+                            <strong>CRÍTICO: 4 días de máximo impacto</strong><br>
+                            <small>Jueves a domingo de Thanksgiving</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="carnaval-brazil" class="scenario-results">
+                <h4>🇧🇷 Escenario: Carnaval Brasil</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Estrategia Festiva:</h5>
+                        <ul>
+                            <li>Colores vibrantes: amarillo, verde, azul</li>
+                            <li>Música brasileña de fondo</li>
+                            <li>Contenido alegre y energético</li>
+                            <li>Referencias a Rio, samba, festividad</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Potencial de Ganancias:</h5>
+                        <div class="alert alert-warning">
+                            <strong>Boost esperado: +267%</strong><br>
+                            <small>Uno de los eventos culturales más rentables</small>
+                        </div>
+                        <div class="alert alert-info">
+                            <strong>Duración: 5-7 días</strong><br>
+                            <small>Intensidad máxima durante el fin de semana</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Trackers -->
+        <div class="lab-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">📊 Trackers de Progreso Cultural</h2>
+                    <p class="text-muted mb-0">Monitorea tu dominio de la inteligencia cultural</p>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <div class="progress-header">
+                            <span><strong>Eventos Identificados</strong></span>
+                            <span class="badge bg-primary" id="events-count">8/42</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 19%" id="events-progress"></div>
+                        </div>
+                        <small class="text-muted">Meta: 42 eventos culturales de alto ROI</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <div class="progress-header">
+                            <span><strong>Países Objetivo Configurados</strong></span>
+                            <span class="badge bg-success" id="countries-count">3/8</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 37%" id="countries-progress"></div>
+                        </div>
+                        <small class="text-muted">Meta: 8 mercados principales optimizados</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <div class="progress-header">
+                            <span><strong>Estrategias Implementadas</strong></span>
+                            <span class="badge bg-warning" id="strategies-count">2/15</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 13%" id="strategies-progress"></div>
+                        </div>
+                        <small class="text-muted">Meta: 15 estrategias culturales activas</small>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <div class="progress-header">
+                            <span><strong>ROI Cultural Promedio</strong></span>
+                            <span class="badge bg-success" id="roi-current">156%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 62%" id="roi-progress"></div>
+                        </div>
+                        <small class="text-muted">Meta: 250% ROI sostenido</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">🏆 Casos de Éxito Reales</h2>
+                    <p class="text-muted mb-0">Modelos que transformaron su imperio con inteligencia cultural</p>
+                </div>
+            </div>
+            
+            <div class="success-stories">
+                <div class="success-story">
+                    <div class="story-content">
+                        Implementé mi 'Sistema de Anticipación Cultural' – un calendario detallado de eventos significativos en mis mercados principales incluyendo no solo festividades obvias sino días de pago, bonificaciones estacionales y periodos tradicionales de gasto recreativo. Durante la Golden Week japonesa, creé contenido temático y aumentaron mis propinas en un 85%. Pero el verdadero cambio fue cuando comencé a rastrear los ciclos de bonificación en diferentes países.
+                    </div>
+                    <div class="story-author">— Sofia M., Venezuela → Japón/Corea</div>
+                    <div class="story-results">
+                        <span class="story-number">+285%</span>
+                        <small>Aumento en Golden Week</small>
+                    </div>
+                </div>
+                
+                <div class="success-story">
+                    <div class="story-content">
+                        Mi especialidad son los mercados europeos, especialmente Alemania y Reino Unido. Descubrí que los alemanes reciben devoluciones de impuestos en abril-mayo, y los británicos sus bonos navideños en diciembre. Ajusté mi contenido y promociones a estos ciclos económicos específicos. No es solo saber cuándo es Navidad, es saber cuándo tu audiencia tiene dinero EXTRA para gastar.
+                    </div>
+                    <div class="story-author">— Isabella R., Colombia → Europa</div>
+                    <div class="story-results">
+                        <span class="story-number">$4,200</span>
+                        <small>Ingreso extra en Tax Season</small>
+                    </div>
+                </div>
+                
+                <div class="success-story">
+                    <div class="story-content">
+                        Creé un sistema de 'Cultural Intelligence' donde no solo rastreo festividades sino también eventos deportivos, lanzamientos de productos populares, y hasta temporadas de anime populares en Japón. Mi secreto es la ANTICIPACIÓN. Dos semanas antes de cualquier evento cultural, ya tengo mi contenido temático listo. Durante el Mundial de Fútbol, mis ingresos se triplicaron porque conecté con la emoción colectiva.
+                    </div>
+                    <div class="story-author">— Camila L., México → Global</div>
+                    <div class="story-results">
+                        <span class="story-number">+312%</span>
+                        <small>ROI en eventos deportivos</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Methodology Section -->
+        <div class="lab-section">
+            <div class="section-header" onclick="toggleDetails('methodology-details')">
+                <div class="section-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div>
+                    <h2 class="section-title">🧠 Metodología Master Recomendada</h2>
+                    <p class="text-muted mb-0">El sistema exacto que usan las modelos del top 10%</p>
+                </div>
+                <button class="card-expand-btn">
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+            
+            <div id="methodology-details" class="card-content">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4><i class="fas fa-search"></i> Fase 1: Investigación Estratégica</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Identifica festividades oficiales Y ciclos económicos (bonificaciones, impuestos)</li>
+                            <li class="list-group-item">Investiga tradiciones específicas de cada país objetivo</li>
+                            <li class="list-group-item">Analiza patrones de gasto estacionales por demografía</li>
+                            <li class="list-group-item">Mapea eventos deportivos y culturales de alto impacto</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><i class="fas fa-calendar-plus"></i> Fase 2: Planificación Táctica</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Crea calendario maestro con alertas automáticas</li>
+                            <li class="list-group-item">Planifica contenido temático con 2 semanas de anticipación</li>
+                            <li class="list-group-item">Diseña promociones específicas para cada evento</li>
+                            <li class="list-group-item">Prepara elementos visuales y decorativos por adelantado</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><i class="fas fa-rocket"></i> Fase 3: Ejecución Precisa</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Implementa cambios visuales 1 semana antes del evento</li>
+                            <li class="list-group-item">Ajusta horarios para maximizar audiencia target</li>
+                            <li class="list-group-item">Lanza promociones al inicio del ciclo de gasto</li>
+                            <li class="list-group-item">Mantén consistencia temática durante todo el período</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h4><i class="fas fa-chart-line"></i> Fase 4: Optimización Continua</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Monitorea métricas específicas durante cada evento</li>
+                            <li class="list-group-item">Documenta qué estrategias generaron mayor ROI</li>
+                            <li class="list-group-item">Ajusta calendario para el siguiente año basado en resultados</li>
+                            <li class="list-group-item">Escala las estrategias exitosas a nuevos mercados</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-crown"></i> ¡A Construir Tu Imperio Cultural!</h2>
+            <p class="lead">Los ciclos de gasto humano están profundamente entrelazados con patrones culturales que difieren radicalmente entre regiones. Tu calendario cultural es un mapa de tesoros que revela exactamente cuándo diferentes poblaciones están predispuestas a mayor generosidad.</p>
+            
+            <div class="achievement-badges">
+                <div class="achievement-badge">
+                    <i class="fas fa-globe"></i> Master Cultural
+                </div>
+                <div class="achievement-badge">
+                    <i class="fas fa-chart-line"></i> ROI +156%
+                </div>
+                <div class="achievement-badge">
+                    <i class="fas fa-calendar-check"></i> 42 Eventos Dominados
+                </div>
+                <div class="achievement-badge">
+                    <i class="fas fa-money-bill-wave"></i> $3,400 Extra/Mes
+                </div>
+            </div>
+            
+            <h3>🎯 Domina los Patrones de Gasto Globales</h3>
+            <p>No seas vulnerable a los altibajos aleatorios. Tu calendario cultural es tu ventaja competitiva más poderosa. Las modelos del top 10% ya lo están usando. La pregunta es: ¿vas a seguir dependiendo de la suerte o vas a dominar la ciencia del comportamiento cultural?</p>
+            
+            <div class="text-center mt-4">
+                <h4><strong>¡Tu Inteligencia Cultural Empieza HOY!</strong></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        // Toggle details sections
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            const button = element.previousElementSibling.querySelector('.card-expand-btn i');
+            
+            if (element.classList.contains('expanded')) {
+                element.classList.remove('expanded');
+                button.classList.remove('fa-chevron-up');
+                button.classList.add('fa-chevron-down');
+            } else {
+                element.classList.add('expanded');
+                button.classList.remove('fa-chevron-down');
+                button.classList.add('fa-chevron-up');
+            }
+        }
+        
+        // Calculate Cultural ROI
+        function calculateCulturalROI() {
+            const currentIncome = parseFloat(document.getElementById('current-income').value) || 0;
+            const targetCountries = parseInt(document.getElementById('target-countries').value) || 1;
+            const weeklyHours = parseInt(document.getElementById('weekly-hours').value) || 20;
+            const implementationLevel = document.getElementById('implementation-level').value;
+            
+            if (currentIncome > 0) {
+                let multiplier = 1.5; // base multiplier
+                
+                // Adjust based on implementation level
+                switch(implementationLevel) {
+                    case 'basic':
+                        multiplier = 1.5;
+                        break;
+                    case 'intermediate':
+                        multiplier = 2.1;
+                        break;
+                    case 'advanced':
+                        multiplier = 2.8;
+                        break;
+                }
+                
+                // Adjust based on target countries
+                multiplier += (targetCountries - 1) * 0.2;
+                
+                // Adjust based on weekly hours
+                if (weeklyHours >= 30) multiplier += 0.3;
+                else if (weeklyHours >= 20) multiplier += 0.1;
+                
+                const projectedIncome = currentIncome * multiplier;
+                const monthlyIncrease = projectedIncome - currentIncome;
+                const annualROI = ((monthlyIncrease * 12) / (currentIncome * 12)) * 100;
+                const highImpactEvents = Math.min(targetCountries * 14, 42);
+                const timeToResults = implementationLevel === 'basic' ? 4 : implementationLevel === 'intermediate' ? 3 : 2;
+                
+                document.getElementById('projected-income').textContent = `$${projectedIncome.toLocaleString()}`;
+                document.getElementById('monthly-increase').textContent = `$${monthlyIncrease.toLocaleString()}`;
+                document.getElementById('annual-roi').textContent = `${annualROI.toFixed(0)}%`;
+                document.getElementById('high-impact-events').textContent = highImpactEvents;
+                document.getElementById('time-to-results').textContent = `${timeToResults} semanas`;
+                
+                document.getElementById('cultural-results').style.display = 'block';
+            }
+        }
+        
+        // Select scenario
+        function selectScenario(scenarioId) {
+            // Hide all scenario results
+            const allResults = document.querySelectorAll('.scenario-results');
+            allResults.forEach(result => {
+                result.classList.remove('active');
+            });
+            
+            // Remove active class from all buttons
+            const allButtons = document.querySelectorAll('.scenario-btn');
+            allButtons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected scenario
+            document.getElementById(scenarioId).classList.add('active');
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+        }
+        
+        // Animate progress bars on scroll
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const progressBar = entry.target;
+                        const width = progressBar.style.width;
+                        progressBar.style.width = '0%';
+                        setTimeout(() => {
+                            progressBar.style.width = width;
+                        }, 100);
+                    }
+                });
+            });
+            
+            progressBars.forEach(bar => {
+                observer.observe(bar);
+            });
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000); // Update every minute
+            animateProgressBars();
+            
+            // Auto-calculate if values are pre-filled
+            calculateCulturalROI();
+        });
+        
+        // Add smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

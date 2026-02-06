@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Overlays Academy - Sistema de Presencia Visual Profesional</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6610f2;
+            --secondary-color: #6f42c1;
+            --accent-color: #e83e8c;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --info-blue: #17a2b8;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --border-light: #e0e0e0;
+            --design-gradient: linear-gradient(135deg, #6610f2 0%, #e83e8c 50%, #fd7e14 100%);
+            --creative-gradient: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            --brand-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            --visual-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --overlay-gradient: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .wc-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #6610f2 0%, #e83e8c 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: perspective(1000px) rotateY(5deg) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--design-gradient);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-10 0a10 10 0 1 1 20 0a10 10 0 1 1 -20 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--creative-gradient);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--design-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 40px rgba(102, 16, 242, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .card-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 0;
+        }
+
+        .card-details.active {
+            max-height: 600px;
+            margin-top: 1rem;
+        }
+
+        /* Calculators */
+        .calculator {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Design Tools */
+        .design-tool {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .color-sample {
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .color-sample:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-progress {
+            margin: 1rem 0;
+        }
+
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--design-gradient);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            font-family: serif;
+            color: var(--primary-color);
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Simulators */
+        .simulator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scenario-card:hover,
+        .scenario-card.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        .scenario-result {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .scenario-result.active {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        /* Overlay Preview */
+        .overlay-preview {
+            background: #000;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            min-height: 200px;
+            overflow: hidden;
+        }
+
+        .preview-frame {
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+        }
+
+        /* Typography Showcase */
+        .typography-showcase {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .font-sample {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .font-sample:hover {
+            background: var(--bg-light);
+            transform: translateX(10px);
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--visual-gradient);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(1deg); }
+            66% { transform: translateY(-15px) rotate(-1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .main-subtitle {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .lab-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .interactive-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .color-palette {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .wc-header {
+                padding: 0.5rem 0;
+            }
+
+            .wc-logo {
+                font-size: 1.5rem;
+            }
+
+            .lab-section {
+                padding: 1rem;
+            }
+
+            .calculator,
+            .simulator,
+            .success-story {
+                padding: 1.5rem;
+            }
+
+            .insight-card {
+                padding: 1rem;
+            }
+
+            .insight-number {
+                font-size: 1.8rem;
+            }
+
+            .color-palette {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Touch-friendly elements */
+        .interactive-card,
+        .scenario-card,
+        .card-toggle {
+            min-height: 44px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #000;
+                --secondary-color: #333;
+                --text-muted: #666;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo text-decoration-none">
+                    <i class="fas fa-video me-2"></i>WC Training
+                </a>
+                <div class="wc-stats">
+                    <div class="live-indicator"></div>
+                    <span><strong>12,847</strong> modelos activos</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-4 text-dark">📊 Insights de Branding Visual 2025</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">247%</div>
+                        <div class="insight-label">Mayor retención con overlays profesionales</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">$2.3K</div>
+                        <div class="insight-label">Incremento promedio en ingresos con branding</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">84%</div>
+                        <div class="insight-label">Streamers top tienen identidad visual única</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 mt-3">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">67%</div>
+                        <div class="insight-label">Viewers recuerdan streams con branding consistente</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">3.8x</div>
+                        <div class="insight-label">Más probabilidad de suscripción con marca sólida</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">91%</div>
+                        <div class="insight-label">Sponsors prefieren creators con identidad visual</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted"><em>Fuente: Visual Branding Report 2025, Creator Economy Survey</em></p>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🎨 Overlays Academy</h1>
+            <p class="main-subtitle">
+                Construye tu territorio visual distintivo que convierte transmisiones genéricas en experiencias de marca memorables. Domina la arquitectura de presencia visual que separa creators profesionales de amateurs intercambiables.
+            </p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <!-- Diseño Visual Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-palette"></i>
+                </div>
+                🎨 LAB de Diseño Visual: Identidad de Marca
+            </div>
+            <p class="mb-4">Tu sistema de diseño es tu firma visual única. Cada elemento debe trabajar silenciosamente para construir reconocimiento de marca y diferenciación competitiva.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('brand-identity')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🏗️ Sistema de Identidad Visual Completo</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="brand-identity">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>ELEMENTOS CORE:</h6>
+                            <ul>
+                                <li><strong>Logo/Monogram:</strong> Identificador principal único</li>
+                                <li><strong>Paleta de Colores:</strong> 3-5 colores consistentes</li>
+                                <li><strong>Tipografía:</strong> Fonts primario y secundario</li>
+                                <li><strong>Iconografía:</strong> Estilo visual consistente</li>
+                                <li><strong>Patrones:</strong> Elementos decorativos distintivos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>APLICACIONES CRÍTICAS:</h6>
+                            <ul>
+                                <li><strong>Frame Overlay:</strong> Marco principal de transmisión</li>
+                                <li><strong>Lower Thirds:</strong> Información de contacto/social</li>
+                                <li><strong>Alert Graphics:</strong> Notificaciones follow/donate</li>
+                                <li><strong>Scene Transitions:</strong> Elementos de conexión</li>
+                                <li><strong>Chat Overlay:</strong> Integración visual del chat</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ Regla de Oro:</strong> Cada elemento visual debe responder la pregunta: "¿Esto refuerza mi identidad única o genera ruido visual?"
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('design-principles')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>📐 Principios de Diseño Estratégico</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="design-principles">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>JERARQUÍA VISUAL:</h6>
+                            <ol>
+                                <li><strong>Contenido Principal</strong> - 60% del espacio visual</li>
+                                <li><strong>Cara/Personalidad</strong> - 25% del espacio</li>
+                                <li><strong>Información/Chat</strong> - 10% del espacio</li>
+                                <li><strong>Branding/Decoración</strong> - 5% del espacio</li>
+                            </ol>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>REGLAS DE LEGIBILIDAD:</h6>
+                            <ul>
+                                <li><strong>Contraste:</strong> Mínimo 4.5:1 ratio</li>
+                                <li><strong>Tamaño de Texto:</strong> Mínimo 18px para lectura</li>
+                                <li><strong>Espaciado:</strong> Respira entre elementos</li>
+                                <li><strong>Consistencia:</strong> Mismos elementos, misma ubicación</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <strong>💡 Pro Tip:</strong> Test tu overlay en resolución móvil. 40% de viewers ven streams en dispositivos móviles.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Herramienta de Paleta de Colores -->
+        <section class="design-tool">
+            <h3 class="text-center mb-4">🌈 Generador de Paleta de Marca</h3>
+            <p class="text-center mb-4">Selecciona tu color base y genera una paleta cohesiva para tu identidad visual:</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Color Principal:</label>
+                    <input type="color" class="form-control form-control-color" id="primaryColor" value="#6610f2" onchange="generatePalette()">
+                    
+                    <label class="form-label mt-3">Intensidad:</label>
+                    <input type="range" class="form-range" id="intensity" min="20" max="80" value="50" onchange="generatePalette()">
+                </div>
+                <div class="col-md-6">
+                    <div class="color-palette" id="colorPalette">
+                        <!-- Colors will be generated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculadora ROI de Branding -->
+        <section class="calculator">
+            <h3 class="text-center mb-4">💎 Calculadora ROI de Branding Visual</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Inversión en Diseño ($):</label>
+                    <input type="number" class="calc-input" id="designInvestment" placeholder="ej: 500" oninput="calculateBrandROI()">
+                    
+                    <label class="form-label">Ingresos Mensuales Actuales ($):</label>
+                    <input type="number" class="calc-input" id="currentIncome" placeholder="ej: 1200" oninput="calculateBrandROI()">
+                    
+                    <label class="form-label">Meta de Crecimiento (%):</label>
+                    <input type="number" class="calc-input" id="growthTarget" placeholder="ej: 150" oninput="calculateBrandROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result">
+                        <div class="result-value" id="roiResult">0x</div>
+                        <div>ROI Proyectado en 6 meses</div>
+                        <div class="mt-2">
+                            <small id="roiAnalysis">Ingresa tus datos para calcular ROI</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tipos de Overlays Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                🖼️ LAB de Tipos de Overlays: Catálogo Profesional
+            </div>
+            <p class="mb-4">Cada tipo de overlay tiene un propósito estratégico específico. Domina cuándo y cómo usar cada uno para máximo impacto visual.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('overlay-types')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>📺 Overlays Esenciales por Función</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="overlay-types">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>OVERLAYS de INFORMACIÓN:</h6>
+                            <ul>
+                                <li><strong>Starting Soon:</strong> Pre-stream con countdown</li>
+                                <li><strong>BRB (Be Right Back):</strong> Pausa profesional</li>
+                                <li><strong>End Screen:</strong> Conclusión con call-to-action</li>
+                                <li><strong>Intermission:</strong> Breaks largos con entretenimiento</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>OVERLAYS INTERACTIVOS:</h6>
+                            <ul>
+                                <li><strong>Goal Tracker:</strong> Progreso visual de objetivos</li>
+                                <li><strong>Recent Followers:</strong> Reconocimiento en tiempo real</li>
+                                <li><strong>Donation Alerts:</strong> Celebración de contribuciones</li>
+                                <li><strong>Social Media:</strong> Links y handles actualizados</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="overlay-preview mt-4">
+                        <div class="preview-frame">
+                            <h5>🎮 LIVE - Gaming Stream</h5>
+                            <p>Preview de overlay principal con chat integration</p>
+                            <div class="d-flex justify-content-between mt-3">
+                                <span>Followers: 2,847</span>
+                                <span>Goal: $450/$500</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('overlay-advanced')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🚀 Overlays Avanzados para Diferenciación</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="overlay-advanced">
+                    <h6>ELEMENTOS DISTINTIVOS:</h6>
+                    <ul>
+                        <li><strong>Animated Borders:</strong> Frames dinámicos que responden a actividad</li>
+                        <li><strong>Weather Widget:</strong> Información contextual personal</li>
+                        <li><strong>Music Now Playing:</strong> Track actual con visualizador</li>
+                        <li><strong>Chat Reactions:</strong> Emojis flotantes en respuesta a engagement</li>
+                        <li><strong>Achievement Popups:</strong> Celebración de milestones instantánea</li>
+                        <li><strong>Activity Feed:</strong> Stream de eventos sociales en tiempo real</li>
+                    </ul>
+                    <div class="alert alert-success mt-3">
+                        <strong>🎯 Estrategia Avanzada:</strong> Elementos que responden a datos en tiempo real crean sensación de experiencia "viva" y única.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simulador de Configuración de Overlay -->
+        <section class="simulator">
+            <h3 class="text-center mb-4">🎭 Simulador de Configuración de Overlay</h3>
+            <p class="text-center mb-4">Selecciona tu tipo de contenido y obtén configuración de overlay optimizada:</p>
+            
+            <div class="scenario-grid">
+                <div class="scenario-card" onclick="selectOverlayType('gaming')">
+                    <i class="fas fa-gamepad fa-2x mb-2"></i>
+                    <h6>Gaming</h6>
+                    <p>Overlays para streams de videojuegos</p>
+                </div>
+                <div class="scenario-card" onclick="selectOverlayType('chatting')">
+                    <i class="fas fa-comments fa-2x mb-2"></i>
+                    <h6>Just Chatting</h6>
+                    <p>Conversación y interacción</p>
+                </div>
+                <div class="scenario-card" onclick="selectOverlayType('creative')">
+                    <i class="fas fa-brush fa-2x mb-2"></i>
+                    <h6>Creativo</h6>
+                    <p>Arte, diseño y creación</p>
+                </div>
+                <div class="scenario-card" onclick="selectOverlayType('music')">
+                    <i class="fas fa-music fa-2x mb-2"></i>
+                    <h6>Música</h6>
+                    <p>Performance musical</p>
+                </div>
+            </div>
+
+            <div class="scenario-result" id="overlay-result">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Tipografía Lab -->
+        <section class="typography-showcase">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-font"></i>
+                </div>
+                ✍️ LAB de Tipografía: Jerarquía Visual
+            </div>
+            <p class="mb-4">La tipografía comunica personalidad antes que las palabras. Cada font choice es una decisión de branding.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('typography-rules')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>📝 Reglas de Tipografía para Streaming</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="typography-rules">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>FONTS RECOMENDADOS:</h6>
+                            <div class="font-sample" style="font-family: 'Montserrat', sans-serif; font-weight: 700;">
+                                <strong>Montserrat Bold</strong> - Headers principales
+                            </div>
+                            <div class="font-sample" style="font-family: 'Open Sans', sans-serif;">
+                                <strong>Open Sans</strong> - Texto de información
+                            </div>
+                            <div class="font-sample" style="font-family: 'Poppins', sans-serif; font-weight: 600;">
+                                <strong>Poppins SemiBold</strong> - Elementos destacados
+                            </div>
+                            <div class="font-sample" style="font-family: 'Roboto', sans-serif;">
+                                <strong>Roboto</strong> - Chat y texto corrido
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>JERARQUÍA DE TAMAÑOS:</h6>
+                            <ul>
+                                <li><strong>H1 - Título Principal:</strong> 36-48px</li>
+                                <li><strong>H2 - Subtítulos:</strong> 24-32px</li>
+                                <li><strong>H3 - Secciones:</strong> 18-24px</li>
+                                <li><strong>Body - Información:</strong> 14-18px</li>
+                                <li><strong>Small - Detalles:</strong> 12-14px</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ CRÍTICO:</strong> Nunca uses más de 2-3 fonts diferentes. Consistencia tipográfica = profesionalismo.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section class="progress-tracker">
+            <h3 class="text-center mb-4">📈 Tracker de Dominio Visual</h3>
+            <p class="text-center mb-4">Tu progreso hacia maestría completa en branding visual:</p>
+            
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Identidad de Marca</span>
+                    <span id="brand-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="brand-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Diseño de Overlays</span>
+                    <span id="overlay-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="overlay-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Tipografía y Color</span>
+                    <span id="design-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="design-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Implementación Técnica</span>
+                    <span id="technical-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="technical-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg" onclick="updateDesignProgress()" style="background: var(--design-gradient); border: none; border-radius: 15px; padding: 1rem 2rem;">
+                    🚀 Actualizar Progreso Visual
+                </button>
+            </div>
+        </section>
+
+        <!-- Casos de Éxito -->
+        <section class="success-story">
+            <h3 class="text-center mb-4">🏆 Casos de Éxito en Branding Visual</h3>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">428%</div>
+                            <div class="metric-label">Incremento en Follows</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">$6.8K</div>
+                            <div class="metric-label">Ingresos Mensuales</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Sofia, Art Streamer:</strong> "Mi 'Sistema de Presencia Visual' transformó completamente mi percepción. Desarrollé overlays animados únicos que reflejan mi estilo artístico. En 5 meses, los sponsors me contactan específicamente por mi identidad visual distintiva."</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">312%</div>
+                            <div class="metric-label">Retención de Audiencia</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">89%</div>
+                            <div class="metric-label">Reconocimiento de Marca</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Diego, Gaming Streamer:</strong> "Implementé sistema coherente de colores y tipografía. Los viewers ahora dicen 'inmediatamente reconozco tu stream' incluso en clips sin audio. Mi marca se volvió instantly recognizable."</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">$12K</div>
+                            <div class="metric-label">Primer Contrato de Branding</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">156%</div>
+                            <div class="metric-label">Incremento en Donaciones</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Carmen, Variety Streamer:</strong> "Mi overlays personalizados generaron tanta atención que otras streamers comenzaron a pedirme diseños. Ahora tengo una segunda fuente de ingresos diseñando identidades visuales."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Herramientas y Recursos Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                🛠️ LAB de Herramientas: Arsenal de Diseño
+            </div>
+            <p class="mb-4">Las herramientas correctas aceleran tu workflow de diseño. Domina el ecosistema de software que usan los profesionales.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('design-tools')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>💻 Software Esencial para Overlays</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="design-tools">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>SOFTWARE GRATUITO:</h6>
+                            <ul>
+                                <li><strong>GIMP:</strong> Edición de imágenes completa</li>
+                                <li><strong>Canva:</strong> Templates y diseño rápido</li>
+                                <li><strong>OBS Studio:</strong> Configuración de overlays</li>
+                                <li><strong>Streamlabs:</strong> Widgets y alertas</li>
+                                <li><strong>Google Fonts:</strong> Tipografías gratuitas</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>SOFTWARE PROFESIONAL:</h6>
+                            <ul>
+                                <li><strong>Adobe After Effects:</strong> Animaciones complejas</li>
+                                <li><strong>Adobe Photoshop:</strong> Diseño de overlays</li>
+                                <li><strong>Figma:</strong> Prototipado y colaboración</li>
+                                <li><strong>Cinema 4D:</strong> Elementos 3D</li>
+                                <li><strong>StreamFX:</strong> Efectos avanzados para OBS</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <strong>💡 Workflow Óptimo:</strong> Diseña en Photoshop/Figma → Anima en After Effects → Implementa en OBS → Test en múltiples resoluciones.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('resources-list')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>📚 Recursos y Assets Profesionales</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="resources-list">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>RECURSOS GRATUITOS:</h6>
+                            <ul>
+                                <li><strong>Freepik:</strong> Elementos gráficos (con atribución)</li>
+                                <li><strong>Unsplash:</strong> Fotografías de alta calidad</li>
+                                <li><strong>Pexels:</strong> Videos y fotos gratuitas</li>
+                                <li><strong>Flaticon:</strong> Iconos vectoriales</li>
+                                <li><strong>Pixabay:</strong> Multimedia sin copyright</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>RECURSOS PREMIUM:</h6>
+                            <ul>
+                                <li><strong>Envato Elements:</strong> Templates profesionales</li>
+                                <li><strong>Motion Array:</strong> Animaciones y overlays</li>
+                                <li><strong>VideoHive:</strong> Templates After Effects</li>
+                                <li><strong>Creative Market:</strong> Diseños únicos</li>
+                                <li><strong>Adobe Stock:</strong> Assets oficiales Adobe</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ IMPORTANTE:</strong> Siempre verifica licencias. Usar assets sin licencia adecuada puede resultar en strikes de copyright.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="final-summary">
+            <h2 class="mb-4">🎨 Tu Imperio de Identidad Visual</h2>
+            <p class="lead mb-4">
+                Has dominado el sistema completo de presencia visual profesional. Esta infraestructura de marca es tu diferenciador permanente - la arquitectura silenciosa que transforma streams genéricos en territorio visual distintivamente tuyo.
+            </p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h5>Arquitecto de Marca Visual</h5>
+                    <p>Construyes sistemas de identidad que funcionan silenciosamente para diferenciarte competitivamente.</p>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <h5>Diseñador de Experiencias</h5>
+                    <p>Transformas interacciones genéricas en momentos memorables distintivamente tuyos.</p>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h5>Master de Presencia Digital</h5>
+                    <p>Tu identidad visual genera reconocimiento instantáneo y lealtad específica de audiencia.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h4 class="text-primary mb-3">🚀 ¡A construir tu territorio visual distintivo!</h4>
+                <p class="text-muted">Fecha de dominio visual: <span id="current-date"></span></p>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle card details
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            const button = details.previousElementSibling.querySelector('.card-toggle i');
+            
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                button.className = 'fas fa-plus';
+            } else {
+                details.classList.add('active');
+                button.className = 'fas fa-minus';
+            }
+        }
+
+        // Color palette generator
+        function generatePalette() {
+            const baseColor = document.getElementById('primaryColor').value;
+            const intensity = document.getElementById('intensity').value;
+            const palette = document.getElementById('colorPalette');
+            
+            // Convert hex to HSL
+            const hex = baseColor.replace('#', '');
+            const r = parseInt(hex.substr(0, 2), 16) / 255;
+            const g = parseInt(hex.substr(2, 2), 16) / 255;
+            const b = parseInt(hex.substr(4, 2), 16) / 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l;
+            
+            l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            
+            // Generate complementary colors
+            const colors = [
+                { h: h, s: s, l: l * 0.3, name: 'Dark' },
+                { h: h, s: s, l: l * 0.6, name: 'Medium' },
+                { h: h, s: s, l: l, name: 'Base' },
+                { h: h, s: s * 0.5, l: l * 1.2, name: 'Light' },
+                { h: (h + 0.5) % 1, s: s, l: l, name: 'Complement' },
+                { h: (h + 0.33) % 1, s: s, l: l, name: 'Triad' }
+            ];
+            
+            palette.innerHTML = colors.map(color => {
+                const hsl = `hsl(${Math.round(color.h * 360)}, ${Math.round(color.s * 100)}%, ${Math.round(color.l * 100)}%)`;
+                return `<div class="color-sample" style="background: ${hsl}" onclick="copyColor('${hsl}')">${color.name}</div>`;
+            }).join('');
+        }
+
+        // Copy color to clipboard
+        function copyColor(color) {
+            navigator.clipboard.writeText(color).then(() => {
+                alert(`Color ${color} copiado al clipboard!`);
+            });
+        }
+
+        // Brand ROI calculator
+        function calculateBrandROI() {
+            const investment = parseFloat(document.getElementById('designInvestment').value) || 0;
+            const currentIncome = parseFloat(document.getElementById('currentIncome').value) || 0;
+            const growthTarget = parseFloat(document.getElementById('growthTarget').value) || 0;
+            
+            if (investment === 0) {
+                document.getElementById('roiResult').textContent = '0x';
+                document.getElementById('roiAnalysis').textContent = 'Ingresa tu inversión para calcular ROI';
+                return;
+            }
+            
+            const projectedIncome = currentIncome * (1 + growthTarget / 100);
+            const additionalIncome = projectedIncome - currentIncome;
+            const sixMonthReturn = additionalIncome * 6;
+            const roi = sixMonthReturn / investment;
+            
+            document.getElementById('roiResult').textContent = `${roi.toFixed(1)}x`;
+            
+            let analysis = '';
+            if (roi > 10) {
+                analysis = '🔥 ¡ROI EXCEPCIONAL! Tu inversión en branding se pagará múltiples veces.';
+            } else if (roi > 5) {
+                analysis = '⭐ Excelente retorno. El branding profesional justifica completamente la inversión.';
+            } else if (roi > 2) {
+                analysis = '📈 Buen ROI. La identidad visual profesional generará retorno positivo.';
+            } else if (roi > 1) {
+                analysis = '🌱 Retorno positivo. Considera incrementar tu meta de crecimiento.';
+            } else {
+                analysis = '⚠️ Revisa tus proyecciones. Considera empezar con inversión menor o meta más ambiciosa.';
+            }
+            
+            document.getElementById('roiAnalysis').textContent = analysis;
+        }
+
+        // Overlay type simulator
+        function selectOverlayType(type) {
+            // Remove active class from all cards
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected card
+            event.currentTarget.classList.add('active');
+            
+            const resultDiv = document.getElementById('overlay-result');
+            let content = '';
+            
+            switch(type) {
+                case 'gaming':
+                    content = `
+                        <h5>🎮 Configuración Óptima: Gaming Overlays</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Overlays Esenciales:</h6>
+                                <ul>
+                                    <li><strong>Stream Starting:</strong> Countdown + próximo juego</li>
+                                    <li><strong>Gameplay Frame:</strong> Webcam + chat + alerts</li>
+                                    <li><strong>Full Screen Gaming:</strong> Solo alerts mínimos</li>
+                                    <li><strong>BRB Screen:</strong> Timer + música/video</li>
+                                    <li><strong>End Stream:</strong> Agradecimientos + schedule</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Elementos Críticos:</h6>
+                                <ul>
+                                    <li><strong>Killcount/Stats:</strong> Métricas del juego</li>
+                                    <li><strong>Recent Followers:</strong> Lista actualizada</li>
+                                    <li><strong>Donation Goal:</strong> Progreso visual</li>
+                                    <li><strong>Social Links:</strong> Fácil acceso</li>
+                                    <li><strong>Game Title:</strong> Qué estás jugando</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>💡 Gaming Pro Tip:</strong> Overlays deben ser mínimos durante gameplay intenso, máximos durante loading screens.
+                        </div>
+                    `;
+                    break;
+                case 'chatting':
+                    content = `
+                        <h5>💬 Configuración Óptima: Just Chatting Overlays</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Overlays Principales:</h6>
+                                <ul>
+                                    <li><strong>Welcome Screen:</strong> Tema del día + horario</li>
+                                    <li><strong>Main Chat:</strong> Webcam grande + chat prominente</li>
+                                    <li><strong>Q&A Mode:</strong> Preguntas destacadas</li>
+                                    <li><strong>Topic Change:</strong> Transición entre temas</li>
+                                    <li><strong>Goodbye:</strong> Resumen + próximo stream</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Elementos Interactivos:</h6>
+                                <ul>
+                                    <li><strong>Chat Integration:</strong> Mensajes destacados</li>
+                                    <li><strong>Polls/Votes:</strong> Decisiones comunitarias</li>
+                                    <li><strong>Social Media:</strong> Instagram, Twitter feeds</li>
+                                    <li><strong>Topic List:</strong> Agenda visible</li>
+                                    <li><strong>Mood Indicator:</strong> Estado actual del streamer</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                            <strong>🎯 Chat Focus:</strong> En just chatting, el chat es co-protagonista. Dale máxima visibilidad y atención.
+                        </div>
+                    `;
+                    break;
+                case 'creative':
+                    content = `
+                        <h5>🎨 Configuración Óptima: Creative Overlays</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Overlays Especializados:</h6>
+                                <ul>
+                                    <li><strong>Project Intro:</strong> Qué vas a crear hoy</li>
+                                    <li><strong>Process View:</strong> Workspace + herramientas</li>
+                                    <li><strong>Detail Cam:</strong> Close-up del trabajo</li>
+                                    <li><strong>Time-lapse Mode:</strong> Progreso acelerado</li>
+                                    <li><strong>Finished Work:</strong> Showcase del resultado</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Herramientas Visuales:</h6>
+                                <ul>
+                                    <li><strong>Tools Overlay:</strong> Qué estás usando</li>
+                                    <li><strong>Color Palette:</strong> Colores actuales</li>
+                                    <li><strong>Progress Bar:</strong> % completado</li>
+                                    <li><strong>Tutorial Steps:</strong> Proceso paso a paso</li>
+                                    <li><strong>Music Visualizer:</strong> Ambiente creativo</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning mt-3">
+                            <strong>⚡ Creative Essential:</strong> Multiple camera angles crucial. Overhead + front + detail shots para mostrar el proceso completo.
+                        </div>
+                    `;
+                    break;
+                case 'music':
+                    content = `
+                        <h5>🎵 Configuración Óptima: Music Overlays</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Overlays Musicales:</h6>
+                                <ul>
+                                    <li><strong>Pre-Show:</strong> Setlist + countdown</li>
+                                    <li><strong>Performance:</strong> Visualizador + minimal UI</li>
+                                    <li><strong>Between Songs:</strong> Chat + requests</li>
+                                    <li><strong>Request Mode:</strong> Lista de canciones pedidas</li>
+                                    <li><strong>End Show:</strong> Agradecimientos + próximas fechas</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Elementos Audio-Visuales:</h6>
+                                <ul>
+                                    <li><strong>Now Playing:</strong> Canción actual</li>
+                                    <li><strong>Audio Visualizer:</strong> Respuesta a la música</li>
+                                    <li><strong>Lyrics Display:</strong> Letra actual (opcional)</li>
+                                    <li><strong>Request Queue:</strong> Próximas canciones</li>
+                                    <li><strong>Tip Goal:</strong> Para requests especiales</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>🎼 Music Pro Tip:</strong> Audio quality es CRÍTICO. Invierte en overlays que complementen, nunca compitan con la música.
+                        </div>
+                    `;
+                    break;
+            }
+            
+            resultDiv.innerHTML = content;
+            resultDiv.classList.add('active');
+        }
+
+        // Progress tracker for design skills
+        function updateDesignProgress() {
+            const progressBars = [
+                { id: 'brand', max: 92 },
+                { id: 'overlay', max: 87 },
+                { id: 'design', max: 89 },
+                { id: 'technical', max: 84 }
+            ];
+            
+            progressBars.forEach(bar => {
+                const progress = Math.min(bar.max, Math.floor(Math.random() * bar.max) + 25);
+                const progressElement = document.getElementById(`${bar.id}-progress`);
+                const percentElement = document.getElementById(`${bar.id}-percent`);
+                
+                setTimeout(() => {
+                    progressElement.style.width = `${progress}%`;
+                    percentElement.textContent = `${progress}%`;
+                }, Math.random() * 1000);
+            });
+        }
+
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            generatePalette();
+            
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
+            
+            // Initialize progress with some random values
+            setTimeout(updateDesignProgress, 1000);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

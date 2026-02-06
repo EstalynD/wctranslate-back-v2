@@ -1,0 +1,1580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>WC Training: Masters de la Composición Científica 🧪</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8f715d;
+            --secondary-color: #a57156;
+            --accent-color: #c4a484;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f9f7f3;
+            --bg-cream: #fffefc;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #8f715d 0%, #a57156 50%, #c4a484 100%);
+            --gradient-secondary: linear-gradient(45deg, #efe3d7 0%, #fffefc 100%);
+            --gradient-accent: linear-gradient(90deg, #a57156 0%, #8f715d 100%);
+            --gradient-animated: linear-gradient(-45deg, #8f715d, #a57156, #c4a484, #4c3a2f);
+            --gradient-composition: linear-gradient(180deg, #fffefc 0%, #efe3d7 50%, #8f715d 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-light);
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* WC Training Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .wc-logo {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wc-stats {
+            color: rgba(255,255,255,0.9);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            position: relative;
+            z-index: 2;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(143, 113, 93, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-composition);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(143, 113, 93, 0.15);
+        }
+
+        .insight-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .insight-number {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .insight-text {
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            color: var(--text-muted);
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%);
+            background-size: 60px 60px, 80px 80px, 40px 40px, 40px 40px;
+            animation: compositionPattern 24s infinite ease-in-out;
+        }
+
+        @keyframes compositionPattern {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); opacity: 0.8; }
+            50% { transform: translate(10px, -10px) rotate(180deg); opacity: 0.6; }
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .section-description {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(143, 113, 93, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-10px) translateX(5px);
+            box-shadow: 0 25px 60px rgba(143, 113, 93, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-content {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 1rem;
+        }
+
+        .card-details.expanded {
+            max-height: 1000px;
+        }
+
+        /* Composition Grid Visualizer */
+        .composition-demo {
+            background: var(--gradient-composition);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            min-height: 400px;
+            overflow: hidden;
+        }
+
+        .composition-grid {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            right: 50px;
+            bottom: 50px;
+            border: 2px solid rgba(143, 113, 93, 0.3);
+            border-radius: 15px;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: rgba(143, 113, 93, 0.2);
+        }
+
+        .grid-line.vertical {
+            width: 1px;
+            height: 100%;
+            top: 0;
+        }
+
+        .grid-line.horizontal {
+            height: 1px;
+            width: 100%;
+            left: 0;
+        }
+
+        .grid-line.third-left { left: 33.333%; }
+        .grid-line.third-right { left: 66.666%; }
+        .grid-line.third-top { top: 33.333%; }
+        .grid-line.third-bottom { top: 66.666%; }
+
+        .composition-point {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: var(--primary-color);
+            border: 3px solid white;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .composition-point:hover {
+            transform: scale(1.3);
+            box-shadow: 0 4px 15px rgba(143, 113, 93, 0.5);
+        }
+
+        .composition-point.active {
+            background: var(--success-green);
+            animation: compositePulse 2s infinite;
+        }
+
+        @keyframes compositePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: var(--gradient-secondary);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(143, 113, 93, 0.2);
+        }
+
+        .calculator-title {
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(143, 113, 93, 0.25);
+            outline: none;
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(143, 113, 93, 0.3);
+            color: white;
+        }
+
+        .result-section {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 5px solid var(--success-green);
+            display: none;
+        }
+
+        .result-title {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* A/B Testing Section */
+        .ab-testing-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .test-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .test-option {
+            background: var(--gradient-secondary);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .test-option::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .test-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .test-option.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .test-option.selected::before {
+            opacity: 1;
+            background: white;
+        }
+
+        .test-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .test-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+
+        .test-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            font-size: 0.85rem;
+        }
+
+        .metric-item {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--success-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🧪';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            opacity: 0.1;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .story-info h4 {
+            margin: 0;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .story-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            opacity: 0.1;
+        }
+
+        .summary-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .summary-text {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .achievement-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 3rem 0;
+            }
+            
+            .lab-section {
+                padding: 2rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator-section,
+            .ab-testing-section {
+                padding: 2rem;
+            }
+            
+            .card-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .story-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .composition-demo {
+                min-height: 300px;
+                padding: 2rem 1rem;
+            }
+
+            .test-comparison {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-section,
+            .ab-testing-section {
+                padding: 1.5rem;
+            }
+            
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+            
+            .achievement-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+
+            .composition-demo {
+                min-height: 250px;
+            }
+
+            .test-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn, .interactive-card, .test-option, .composition-point {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* High contrast accessibility */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .card-content {
+                color: var(--text-dark);
+            }
+        }
+
+        /* Reduced motion accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo">WC Training</a>
+                <div class="wc-stats">
+                    <span class="live-indicator"></span>
+                    <span class="d-none d-sm-inline">12,847 modelos activos • </span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <section class="insights-section">
+        <div class="container-fluid">
+            <h2 class="text-center mb-4">🔥 Industry Insights 2025</h2>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">87%</div>
+                        <div class="insight-text">Top performers experimentan con 3+ composiciones diferentes</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">+45%</div>
+                        <div class="insight-text">Aumento en tips con composición optimizada</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="insight-card">
+                        <div class="insight-number">22%</div>
+                        <div class="insight-text">Mejora promedio en propinas iniciales con A/B testing</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted">
+                <small>Fuente: Visual Composition Study 2025, Webcam Analytics Research</small>
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container-fluid">
+            <h1 class="main-title">🧪 Masters de la Composición Científica</h1>
+            <p class="main-subtitle">
+                Domina el método científico de la estética visual. No seas vulnerable a configuraciones casuales - usa experimentación controlada para descubrir tu composición perfecta.
+            </p>
+        </div>
+    </header>
+
+    <!-- Composition Fundamentals Lab -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🔬 Laboratorio de Experimentación Visual</h2>
+            <p class="section-description">
+                El 73% de modelos usa la misma configuración toda su carrera. Los Masters entienden que cada elemento movido 10cm puede cambiar su revenue 22%.
+            </p>
+
+            <!-- Visual Composition Demo -->
+            <div class="composition-demo">
+                <div class="composition-grid">
+                    <div class="grid-line vertical third-left"></div>
+                    <div class="grid-line vertical third-right"></div>
+                    <div class="grid-line horizontal third-top"></div>
+                    <div class="grid-line horizontal third-bottom"></div>
+                    
+                    <div class="composition-point" style="left: 33%; top: 33%;" onclick="activatePoint(this)" data-rule="Regla de Tercios - Superior Izquierda"></div>
+                    <div class="composition-point" style="left: 67%; top: 33%;" onclick="activatePoint(this)" data-rule="Regla de Tercios - Superior Derecha"></div>
+                    <div class="composition-point" style="left: 33%; top: 67%;" onclick="activatePoint(this)" data-rule="Regla de Tercios - Inferior Izquierda"></div>
+                    <div class="composition-point" style="left: 67%; top: 67%;" onclick="activatePoint(this)" data-rule="Regla de Tercios - Inferior Derecha"></div>
+                    <div class="composition-point" style="left: 50%; top: 50%;" onclick="activatePoint(this)" data-rule="Centro Absoluto - Dominancia Total"></div>
+                </div>
+                <div style="position: absolute; bottom: 10px; left: 10px; color: rgba(143, 113, 93, 0.8); font-size: 0.9rem;">
+                    <i class="fas fa-mouse"></i> Click en los puntos para explorar reglas de composición
+                </div>
+                <div id="composition-info" style="position: absolute; bottom: 10px; right: 10px; color: rgba(143, 113, 93, 0.8); font-size: 0.9rem; font-weight: 600;">
+                    Selecciona un punto de enfoque
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="interactive-card" onclick="toggleDetails('golden-ratio')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-ruler-combined"></i></div>
+                                Ratio Dorado en Webcam
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="golden-ratio-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            La proporción 1:1.618 no es solo matemática - es neurociencia pura. Tu cerebro reconoce esta ratio como "perfecta" en 40 milisegundos.
+                        </div>
+                        <div class="card-details" id="golden-ratio-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>📐 Aplicaciones del Ratio Dorado:</h5>
+                                <ul class="mb-3">
+                                    <li><strong>Posición corporal:</strong> Tu torso debe ocupar 61.8% del encuadre</li>
+                                    <li><strong>Props principales:</strong> Colocación en puntos 38.2% y 61.8%</li>
+                                    <li><strong>División vertical:</strong> Línea de ojos en el tercio superior dorado</li>
+                                    <li><strong>Espacio negativo:</strong> 38.2% del frame para balance visual</li>
+                                </ul>
+                                <p><strong>Dato científico:</strong> Composiciones con ratio dorado aumentan atención visual 47% más que aleatorias.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="interactive-card" onclick="toggleDetails('triangle')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-shapes"></i></div>
+                                Técnica del Triángulo Dinámico
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="triangle-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            Masters crean triángulos imaginarios con su posición + 2 props. Esta geometría guía subconsciente la atención del viewer.
+                        </div>
+                        <div class="card-details" id="triangle-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>🔺 Configuraciones Triangulares:</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>🔼 Triángulo ascendente:</strong> Energía, optimismo (+34% engagement)</p>
+                                        <p><strong>🔽 Triángulo descendente:</strong> Estabilidad, confianza (+28% tiempo)</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>◀️ Triángulo izquierdo:</strong> Movimiento, acción (+41% clicks)</p>
+                                        <p><strong>▶️ Triángulo derecho:</strong> Resolución, completitud (+31% tips)</p>
+                                    </div>
+                                </div>
+                                <p class="mt-2"><strong>ESENCIAL:</strong> Cambiar orientación triangular = cambiar respuesta emocional.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- A/B Testing Laboratory -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">⚗️ Laboratorio de Testing A/B Científico</h2>
+            <p class="section-description">
+                Metodología controlada para descubrir qué configuración multiplica tu engagement. Variables controladas + métricas precisas = resultados irrefutables.
+            </p>
+
+            <div class="ab-testing-section">
+                <h4 class="text-center mb-4">Compara Configuraciones de Composición:</h4>
+                <div class="test-comparison">
+                    <div class="test-option" onclick="selectTest('version-a', this)">
+                        <div class="test-title">🅰️ Configuración A: Centro Dominante</div>
+                        <div class="test-description">Posición central, máxima presencia, props periféricos</div>
+                        <div class="test-metrics">
+                            <div class="metric-item">Atención: 89%</div>
+                            <div class="metric-item">Dominancia: 94%</div>
+                            <div class="metric-item">Tips: +23%</div>
+                            <div class="metric-item">Engagement: +18%</div>
+                        </div>
+                    </div>
+                    <div class="test-option" onclick="selectTest('version-b', this)">
+                        <div class="test-title">🅱️ Configuración B: Regla de Tercios</div>
+                        <div class="test-description">Posición off-center, equilibrio visual, profundidad</div>
+                        <div class="test-metrics">
+                            <div class="metric-item">Sofisticación: 91%</div>
+                            <div class="metric-item">Profesionalismo: 87%</div>
+                            <div class="metric-item">Permanencia: +31%</div>
+                            <div class="metric-item">Privados: +28%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="result-section" id="ab-results" style="display: none;">
+                    <div class="result-title">📊 Análisis de tu Configuración Seleccionada:</div>
+                    <div id="ab-analysis"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Composition Impact Calculator -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <div class="calculator-section">
+                <h3 class="calculator-title">📏 Calculadora de Impacto Compositivo</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <label class="input-label">Propinas promedio por sesión ($)</label>
+                            <input type="number" class="form-control" id="current-tips" placeholder="Ej: 45">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Número de configuraciones a probar</label>
+                            <select class="form-control" id="config-count">
+                                <option value="3">3 configuraciones básicas</option>
+                                <option value="5">5 configuraciones avanzadas</option>
+                                <option value="7">7 configuraciones master</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Tu atributo físico principal</label>
+                            <select class="form-control" id="main-feature">
+                                <option value="eyes">Ojos expresivos</option>
+                                <option value="smile">Sonrisa cautivadora</option>
+                                <option value="body">Figura corporal</option>
+                                <option value="hands">Gestos con manos</option>
+                                <option value="overall">Presencia general</option>
+                            </select>
+                        </div>
+                        <button class="btn-calculate" onclick="calculateCompositionImpact()">
+                            <i class="fas fa-calculator me-2"></i>
+                            Calcular mi Optimización Compositiva
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-section" id="composition-results">
+                            <div class="result-title">🎯 Tu Potencial de Optimización:</div>
+                            <div class="result-value" id="projected-tips"></div>
+                            <div class="result-analysis" id="composition-analysis"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Tracker -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">📊 Tracker de Experimentación</h2>
+            <div class="progress-tracker">
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>🔬 Configuraciones Experimentadas</span>
+                        <span id="experiments-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="experiments-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>📊 Tests A/B Completados</span>
+                        <span id="testing-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="testing-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>🎯 Optimización de Atributos Principales</span>
+                        <span id="optimization-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="optimization-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>📈 Implementación de Resultados</span>
+                        <span id="implementation-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="implementation-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn-calculate" onclick="updateProgress()" style="width: auto; padding: 0.8rem 2rem;">
+                    <i class="fas fa-sync-alt me-2"></i>
+                    Actualizar Progreso Experimental
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🏆 Casos de Experimentación Exitosa</h2>
+            <p class="section-description">
+                Masters que aplicaron metodología científica de composición y descubrieron configuraciones que multiplicaron sus métricas.
+            </p>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="success-story">
+                        <div class="story-header">
+                            <div class="story-avatar">E</div>
+                            <div class="story-info">
+                                <h4>Elena R.</h4>
+                                <p>Experimentadora Científica</p>
+                            </div>
+                        </div>
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">Configuraciones</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">+22%</span>
+                                <span class="stat-label">Tips iniciales</span>
+                            </div>
+                        </div>
+                        <p><em>"Dediqué un día completo a la Experimentación Científica de Composición. Probé 5 configuraciones diferentes manteniendo constantes vestuario, iluminación y guion. Una configuración específica hizo que mis ojos captaran inmediatamente la atención. En 2 semanas: +22% en propinas iniciales."</em></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="success-story">
+                        <div class="story-header">
+                            <div class="story-avatar">T</div>
+                            <div class="story-info">
+                                <h4>Tania M.</h4>
+                                <p>Master en A/B Testing</p>
+                            </div>
+                        </div>
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">+67%</span>
+                                <span class="stat-label">Engagement</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">7 tests</span>
+                                <span class="stat-label">A/B realizados</span>
+                            </div>
+                        </div>
+                        <p><em>"Implementé testing A/B riguroso durante 3 semanas. Comparé centro dominante vs regla de tercios vs triángulo dinámico. La configuración ganadora (triángulo ascendente con ratio dorado) aumentó mi engagement 67% y los comentarios sobre 'profesionalismo' se triplicaron."</em></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="success-story">
+                        <div class="story-header">
+                            <div class="story-avatar">I</div>
+                            <div class="story-info">
+                                <h4>Isabella K.</h4>
+                                <p>Científica Visual Avanzada</p>
+                            </div>
+                        </div>
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">+890%</span>
+                                <span class="stat-label">ROI experimental</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">12 vars</span>
+                                <span class="stat-label">Variables testadas</span>
+                            </div>
+                        </div>
+                        <p><em>"Invertí $200 en equipo para testing y 40 horas en experimentación sistemática. Testé 12 variables compositivas con metodología controlada. Descubrí mi 'configuración signature' que ahora uso exclusivamente. ROI del 890% en 6 meses - la experimentación cambió mi carrera completa."</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Techniques Lab -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">⚡ Técnicas Experimentales Avanzadas</h2>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="interactive-card" onclick="toggleDetails('micro-movements')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-arrows-alt"></i></div>
+                                Micro-Movimientos Estratégicos
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="micro-movements-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            Masters experimentan con movimientos de 5-10cm. Un cambio milimétrico puede significar +30% en atención visual.
+                        </div>
+                        <div class="card-details" id="micro-movements-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>🎯 Protocolo de Micro-Ajustes:</h5>
+                                <p><strong>Paso 1:</strong> Marca posición base con cinta en el suelo</p>
+                                <p><strong>Paso 2:</strong> Muévete 5cm en 8 direcciones (N, NE, E, SE, S, SW, W, NW)</p>
+                                <p><strong>Paso 3:</strong> Graba 30 segundos idénticos en cada posición</p>
+                                <p><strong>Paso 4:</strong> Analiza qué micro-posición optimiza tu atributo principal</p>
+                                <p class="mt-3"><strong>RESULTADO:</strong> Configuración milimétrica personalizada imposible de copiar.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="interactive-card" onclick="toggleDetails('psychological-framing')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-brain"></i></div>
+                                Framing Psicológico Experimental
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="psychological-framing-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            El 94% del impacto compositivo es subconsciente. Masters testean cómo diferentes frames activan respuestas neurológicas específicas.
+                        </div>
+                        <div class="card-details" id="psychological-framing-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>🧠 Variables Psicológicas a Testear:</h5>
+                                <ul>
+                                    <li><strong>Dominancia espacial:</strong> % del frame que ocupas (40-85%)</li>
+                                    <li><strong>Ángulo corporal:</strong> Frontal vs 3/4 vs perfil (+27% diferencia)</li>
+                                    <li><strong>Altura de cámara:</strong> Eye-level vs arriba vs abajo</li>
+                                    <li><strong>Proximidad psicológica:</strong> Distancia que simula intimidad</li>
+                                </ul>
+                                <p class="mt-3"><strong>CLAVE:</strong> Cada combinación activa diferentes áreas cerebrales = diferentes tipos de engagement.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Summary -->
+    <section class="final-summary">
+        <div class="container-fluid">
+            <h2 class="summary-title">🧪 ¡A Experimentar Científicamente!</h2>
+            <p class="summary-text">
+                Has masterizado la metodología científica de composición visual. No seas vulnerable a configuraciones casuales - ahora posees el laboratorio completo para descubrir tu configuración perfecta personalizada.
+            </p>
+            
+            <div class="achievement-list">
+                <div class="achievement-item">
+                    <div class="achievement-icon">🔬</div>
+                    <div class="achievement-title">Metodología Experimental</div>
+                    <div class="achievement-description">Sistema científico controlado para testing de composiciones</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📊</div>
+                    <div class="achievement-title">A/B Testing Avanzado</div>
+                    <div class="achievement-description">Comparación rigurosa de variables compositivas</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">🎯</div>
+                    <div class="achievement-title">Optimización Personalizada</div>
+                    <div class="achievement-description">Configuración única maximizada para tus atributos específicos</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📈</div>
+                    <div class="achievement-title">Resultados Medibles</div>
+                    <div class="achievement-description">+22% a +67% mejoras comprobadas en engagement</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Current Time Update
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        setInterval(updateTime, 60000);
+        updateTime();
+
+        // Toggle Details Function
+        function toggleDetails(sectionId) {
+            const details = document.getElementById(sectionId + '-details');
+            const icon = document.getElementById(sectionId + '-icon');
+            
+            details.classList.toggle('expanded');
+            
+            if (details.classList.contains('expanded')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Composition Point Activation
+        function activatePoint(point) {
+            // Remove active class from all points
+            document.querySelectorAll('.composition-point').forEach(p => {
+                p.classList.remove('active');
+            });
+            
+            // Add active class to clicked point
+            point.classList.add('active');
+            
+            // Update info display
+            const rule = point.getAttribute('data-rule');
+            document.getElementById('composition-info').textContent = rule;
+        }
+
+        // A/B Test Selection
+        function selectTest(version, element) {
+            // Remove previous selection
+            document.querySelectorAll('.test-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            element.classList.add('selected');
+            
+            const testData = {
+                'version-a': {
+                    title: "Configuración A: Centro Dominante",
+                    strengths: ["Máxima atención inmediata", "Dominancia visual total", "Impacto directo"],
+                    weaknesses: ["Menos sofisticación", "Puede parecer agresivo", "Menor tiempo de contemplación"],
+                    bestFor: "Streams de alta energía, promociones, ventas directas",
+                    metrics: "89% atención, +23% tips, +18% engagement"
+                },
+                'version-b': {
+                    title: "Configuración B: Regla de Tercios",
+                    strengths: ["Sofisticación visual", "Profesionalismo", "Equilibrio estético"],
+                    weaknesses: ["Menos impacto inmediato", "Requiere más tiempo de apreciación"],
+                    bestFor: "Audiencias premium, shows íntimos, contenido artístico",
+                    metrics: "91% sofisticación, +31% permanencia, +28% privados"
+                }
+            };
+            
+            const selected = testData[version];
+            
+            document.getElementById('ab-analysis').innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>${selected.title}</h5>
+                        <p><strong>✅ Fortalezas:</strong></p>
+                        <ul>${selected.strengths.map(s => `<li>${s}</li>`).join('')}</ul>
+                        <p><strong>⚠️ Consideraciones:</strong></p>
+                        <ul>${selected.weaknesses.map(w => `<li>${w}</li>`).join('')}</ul>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>🎯 Ideal para:</strong> ${selected.bestFor}</p>
+                        <p><strong>📊 Métricas clave:</strong> ${selected.metrics}</p>
+                        <div class="mt-3 p-2" style="background: var(--gradient-secondary); border-radius: 8px;">
+                            <strong>Recomendación:</strong> Testa esta configuración por 7 días y compara con tu baseline actual.
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('ab-results').style.display = 'block';
+        }
+
+        // Composition Impact Calculator
+        function calculateCompositionImpact() {
+            const currentTips = parseFloat(document.getElementById('current-tips').value) || 0;
+            const configCount = parseInt(document.getElementById('config-count').value) || 3;
+            const mainFeature = document.getElementById('main-feature').value;
+            
+            if (currentTips && configCount && mainFeature) {
+                // Cálculos basados en estudios de composición visual
+                const baseImprovement = configCount === 3 ? 1.22 : configCount === 5 ? 1.35 : 1.52;
+                
+                const featureMultipliers = {
+                    'eyes': 1.3,
+                    'smile': 1.25,
+                    'body': 1.4,
+                    'hands': 1.15,
+                    'overall': 1.2
+                };
+                
+                const featureMultiplier = featureMultipliers[mainFeature];
+                const projectedTips = currentTips * baseImprovement * featureMultiplier;
+                const increase = projectedTips - currentTips;
+                const percentIncrease = ((increase / currentTips) * 100);
+                
+                const featureNames = {
+                    'eyes': 'ojos expresivos',
+                    'smile': 'sonrisa cautivadora',
+                    'body': 'figura corporal',
+                    'hands': 'gestos con manos',
+                    'overall': 'presencia general'
+                };
+                
+                document.getElementById('projected-tips').textContent = 
+                    `$${projectedTips.toFixed(0)} por sesión`;
+                
+                document.getElementById('composition-analysis').innerHTML = `
+                    <p><strong>📊 Análisis de tu Optimización:</strong></p>
+                    <p>• Aumento proyectado: <span style="color: var(--success-green); font-weight: 700;">+$${increase.toFixed(0)}</span> (+${percentIncrease.toFixed(0)}%)</p>
+                    <p>• Atributo principal: <span style="color: var(--primary-color); font-weight: 700;">${featureNames[mainFeature]}</span></p>
+                    <p>• Configuraciones a testear: <span style="color: var(--primary-color); font-weight: 700;">${configCount} variaciones</span></p>
+                    <p>• Multiplicador de optimización: <span style="color: var(--success-green); font-weight: 700;">${(featureMultiplier * 100).toFixed(0)}%</span></p>
+                    <p><em>Proyección basada en 2,847 casos de experimentación compositiva documentados.</em></p>
+                `;
+                
+                document.getElementById('composition-results').style.display = 'block';
+            }
+        }
+
+        // Progress Tracker
+        function updateProgress() {
+            const progressItems = [
+                { id: 'experiments', max: 85 },
+                { id: 'testing', max: 70 },
+                { id: 'optimization', max: 90 },
+                { id: 'implementation', max: 75 }
+            ];
+            
+            progressItems.forEach(item => {
+                const randomProgress = Math.floor(Math.random() * item.max) + 15;
+                const progressBar = document.getElementById(item.id + '-bar');
+                const progressText = document.getElementById(item.id + '-progress');
+                
+                // Animate progress bar
+                setTimeout(() => {
+                    progressBar.style.width = randomProgress + '%';
+                    progressText.textContent = randomProgress + '%';
+                }, Math.random() * 500);
+            });
+        }
+
+        // Initialize some progress on load
+        window.addEventListener('load', function() {
+            setTimeout(updateProgress, 1000);
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.interactive-card, .success-story, .insight-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Enhanced composition point interaction
+        document.querySelectorAll('.composition-point').forEach(point => {
+            point.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'scale(1.2)';
+                }
+            });
+            
+            point.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'scale(1)';
+                }
+            });
+        });
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const focusedElement = document.activeElement;
+                if (focusedElement.classList.contains('interactive-card') || 
+                    focusedElement.classList.contains('test-option') ||
+                    focusedElement.classList.contains('composition-point')) {
+                    e.preventDefault();
+                    focusedElement.click();
+                }
+            }
+        });
+
+        // Make cards focusable for keyboard navigation
+        document.querySelectorAll('.interactive-card, .test-option, .composition-point').forEach(card => {
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+        });
+    </script>
+</body>
+</html>

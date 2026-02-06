@@ -17,7 +17,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/app.module';
 import { UsersService } from '../src/users/users.service';
-import { UserRole, PlanType, UserStage, StreamingPlatform } from '../src/users/schemas/user.schema';
+import { UserRole, PlanType, UserStage } from '../src/users/schemas/user.schema';
 import { Model } from 'mongoose';
 import { getModelToken } from '@nestjs/mongoose';
 
@@ -33,7 +33,8 @@ const DEMO_USER_CONFIG = {
   role: UserRole.MODEL,
   // Configuración opcional adicional (se aplicará después de crear)
   modelConfig: {
-    streamingPlatform: StreamingPlatform.CHATURBATE,
+    platformId: null, // Se asignará después buscando la plataforma por nombre
+    platformName: 'Chaturbate', // Nombre para buscar en la colección platforms
     stage: UserStage.INTERMEDIO,
     isSuperUser: false,
     isDemo: true,
@@ -108,11 +109,23 @@ async function createDemoUser() {
     });
 
     // Actualizar campos adicionales directamente en la BD
+    // Buscar plataforma por nombre para asignar platformId
+    const platformModel = app.get(getModelToken('Platform')) as Model<any>;
+    const platform = await platformModel.findOne({
+      name: { $regex: new RegExp(`^${DEMO_USER_CONFIG.modelConfig.platformName}$`, 'i') },
+    });
+
     await userModel.updateOne(
       { _id: newUser._id },
       {
         $set: {
-          modelConfig: DEMO_USER_CONFIG.modelConfig,
+          modelConfig: {
+            platformId: platform?._id || null,
+            stage: DEMO_USER_CONFIG.modelConfig.stage,
+            isSuperUser: DEMO_USER_CONFIG.modelConfig.isSuperUser,
+            isDemo: DEMO_USER_CONFIG.modelConfig.isDemo,
+            studioId: null,
+          },
           subscriptionAccess: DEMO_USER_CONFIG.subscriptionAccess,
           gamification: DEMO_USER_CONFIG.gamification,
         },
@@ -148,7 +161,7 @@ async function createDemoUser() {
     console.log('━'.repeat(60));
     console.log('🎬 CONFIGURACIÓN MODELO');
     console.log('━'.repeat(60));
-    console.log(`📺 Plataforma:     ${updatedUser.modelConfig.streamingPlatform || 'N/A'}`);
+    console.log(`📺 Plataforma:     ${updatedUser.modelConfig.platformId || 'N/A'}`);
     console.log(`📊 Etapa:          ${updatedUser.modelConfig.stage}`);
     console.log(`👑 Super User:     ${updatedUser.modelConfig.isSuperUser ? 'Sí' : 'No'}`);
     console.log(`🎭 Es Demo:        ${updatedUser.modelConfig.isDemo ? 'Sí' : 'No'}`);

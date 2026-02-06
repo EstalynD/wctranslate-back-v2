@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎮 Juguetes Interactivos y Extensiones StripChat - Automatización Total</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-dark: #1a1a1a;
+      --secondary-dark: #2d2d2d;
+      --accent-red: #e53e3e;
+      --accent-pink: #ed64a6;
+      --text-light: #e2e8f0;
+      --text-muted: #a0aec0;
+      --bg-dark: #121212;
+      --card-dark: #1e1e1e;
+      --border-dark: #3a3a3a;
+      --success-green: #38a169;
+      --warning-orange: #dd6b20;
+      --money-gold: #f6e05e;
+      --tech-blue: #3182ce;
+      --game-purple: #805ad5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+      color: var(--text-light);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--card-dark);
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      overflow: hidden;
+      border: 1px solid var(--border-dark);
+    }
+
+    .hero-header {
+      background: linear-gradient(135deg, var(--secondary-dark), var(--primary-dark));
+      color: var(--text-light);
+      padding: 40px;
+      text-align: center;
+      position: relative;
+      border-bottom: 2px solid var(--accent-red);
+    }
+
+    .hero-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(229, 62, 62, 0.1) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-card {
+      background: linear-gradient(135deg, var(--secondary-dark), var(--card-dark));
+      border-radius: 1rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      margin-bottom: 2.5rem;
+      border: 1px solid var(--border-dark);
+      overflow: hidden;
+      padding: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--accent-red);
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .section-desc {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .step-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .step-list li {
+      background: rgba(45, 45, 45, 0.6);
+      border-left: 4px solid var(--accent-red);
+      padding: 1rem;
+      margin: 1rem 0;
+      border-radius: 0 8px 8px 0;
+      transition: all 0.3s ease;
+    }
+
+    .step-list li:hover {
+      background: rgba(229, 62, 62, 0.1);
+      transform: translateX(5px);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-pink));
+      color: white;
+      border-radius: 50%;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 0.9rem;
+    }
+
+    .img-container {
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      border: 3px solid var(--accent-red);
+      box-shadow: 0 10px 25px rgba(229, 62, 62, 0.2);
+    }
+
+    .img-container:hover {
+      transform: scale(1.05);
+      box-shadow: 0 15px 35px rgba(229, 62, 62, 0.4);
+      border-color: var(--accent-pink);
+    }
+
+    .img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .tech-highlight {
+      background: linear-gradient(135deg, rgba(49, 130, 206, 0.2), rgba(49, 130, 206, 0.1));
+      border: 1px solid var(--tech-blue);
+      border-left: 4px solid var(--tech-blue);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .money-highlight {
+      background: linear-gradient(135deg, rgba(246, 224, 94, 0.2), rgba(246, 224, 94, 0.1));
+      border: 1px solid var(--money-gold);
+      border-left: 4px solid var(--money-gold);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .game-highlight {
+      background: linear-gradient(135deg, rgba(128, 90, 213, 0.2), rgba(128, 90, 213, 0.1));
+      border: 1px solid var(--game-purple);
+      border-left: 4px solid var(--game-purple);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .bot-highlight {
+      background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(56, 161, 105, 0.1));
+      border: 1px solid var(--success-green);
+      border-left: 4px solid var(--success-green);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .extensions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .extension-card {
+      background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(237, 100, 166, 0.1));
+      border: 1px solid var(--accent-red);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .extension-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(229, 62, 62, 0.3);
+    }
+
+    .extension-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      display: block;
+      text-align: center;
+    }
+
+    .extension-name {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--accent-red);
+      margin-bottom: 0.5rem;
+      text-align: center;
+    }
+
+    .extension-type {
+      background: var(--accent-red);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      margin-bottom: 1rem;
+      display: inline-block;
+    }
+
+    .price-tag {
+      background: var(--money-gold);
+      color: var(--primary-dark);
+      padding: 6px 12px;
+      border-radius: 15px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 1rem;
+    }
+
+    .setup-steps {
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid var(--border-dark);
+    }
+
+    .icon-tech { color: var(--tech-blue); margin-right: 8px; }
+    .icon-money { color: var(--money-gold); margin-right: 8px; }
+    .icon-game { color: var(--game-purple); margin-right: 8px; }
+    .icon-bot { color: var(--success-green); margin-right: 8px; }
+
+    .header-gradient {
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-pink));
+      box-shadow: 0 4px 20px rgba(229, 62, 62, 0.3);
+    }
+
+    .connection-status {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .status-disconnected {
+      background: rgba(229, 62, 62, 0.2);
+      color: var(--accent-red);
+      border: 1px solid var(--accent-red);
+    }
+
+    .status-connected {
+      background: rgba(56, 161, 105, 0.2);
+      color: var(--success-green);
+      border: 1px solid var(--success-green);
+    }
+
+    .emoji-large {
+      font-size: 2rem;
+      margin: 0 10px;
+    }
+
+    @media (max-width: 768px) {
+      .extensions-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .section-card {
+        padding: 1.5rem;
+      }
+
+      .hero-header {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero-header">
+    <div class="hero-content">
+      <h1 class="mb-3 text-white">
+        <span class="emoji-large">🎮</span>
+        Juguetes Interactivos y Extensiones StripChat
+        <span class="emoji-large">🤖</span>
+      </h1>
+      <p class="text-white-50 fs-5 mb-0">
+        Automatización total: Bots + Juguetes + Juegos = Engagement máximo y ventas automáticas 24/7
+      </p>
+    </div>
+  </header>
+
+  <main class="container-fluid p-4">
+    
+    <!-- Sección: Juguetes Interactivos -->
+    <section class="section-card">
+      <div class="row g-4 align-items-start">
+        <div class="col-md-5">
+          <div class="img-container">
+            <img src="https://iam.jcstudios.com.co/wp-content/uploads/2025/06/Conexion-de-juguetes-interactivos.png" alt="Configuración Juguetes Interactivos" />
+          </div>
+        </div>
+        <div class="col-md-7">
+          <h2 class="section-title">Juguetes Interactivos - El Futuro del Cam</h2>
+          <p class="section-desc">
+            Lovense y Kiiroo convierten propinas en sensaciones reales. Usuarios gastan 400% más cuando controlan tu placer directamente.
+          </p>
+
+          <div class="connection-status status-disconnected">
+            <i class="fas fa-times-circle"></i> Lovense no está conectado
+          </div>
+          <div class="connection-status status-disconnected">
+            <i class="fas fa-times-circle"></i> Kiiroo no está conectado
+          </div>
+
+          <div class="tech-highlight">
+            <h5><i class="fas fa-robot icon-tech"></i>¿Por qué Juguetes Interactivos?</h5>
+            <ul class="mb-0">
+              <li><strong>Control remoto:</strong> Usuarios controlan intensidad con tokens</li>
+              <li><strong>Reacciones reales:</strong> Tu placer auténtico = más propinas</li>
+              <li><strong>Engagement automático:</strong> Juguete responde a cada tip</li>
+              <li><strong>Premium positioning:</strong> Te diferencias de modelos básicas</li>
+            </ul>
+          </div>
+
+          <div class="setup-steps">
+            <h6><i class="fas fa-cog icon-tech"></i>Configuración Paso a Paso:</h6>
+            <ol class="step-list">
+              <li><span class="step-number">1</span><strong>Descargar App:</strong> Lovense Connect o Kiiroo FeelConnect</li>
+              <li><span class="step-number">2</span><strong>Conectar Juguete:</strong> Bluetooth/USB según modelo</li>
+              <li><span class="step-number">3</span><strong>Vincular StripChat:</strong> Código QR o token de conexión</li>
+              <li><span class="step-number">4</span><strong>Configurar Sensibilidad:</strong> 1-20 tokens = vibración baja/alta</li>
+              <li><span class="step-number">5</span><strong>Test en Vivo:</strong> Verificar respuesta a propinas</li>
+            </ol>
+          </div>
+
+          <div class="money-highlight">
+            <h5><i class="fas fa-chart-line icon-money"></i>Precios Recomendados por Token:</h5>
+            <ul class="mb-0">
+              <li><strong>1-10 tokens:</strong> Vibración suave (1-3 segundos)</li>
+              <li><strong>11-25 tokens:</strong> Vibración media (4-8 segundos)</li>
+              <li><strong>26-50 tokens:</strong> Vibración fuerte (10-15 segundos)</li>
+              <li><strong>51+ tokens:</strong> Patrón especial (15-30 segundos)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Librería de Extensiones -->
+    <section class="section-card">
+      <div class="row g-4 align-items-start flex-md-row-reverse">
+        <div class="col-md-5">
+          <div class="img-container">
+            <img src="https://iam.jcstudios.com.co/wp-content/uploads/2025/06/Galeria-de-juegos-para-chat.png" alt="Librería de Extensiones StripChat" />
+          </div>
+        </div>
+        <div class="col-md-7">
+          <h2 class="section-title">Extensions Library - Tu Arsenal de Engagement</h2>
+          <p class="section-desc">
+            7 herramientas poderosas que automatizan interacción, gamifican tu room y mantienen usuarios enganchados sin esfuerzo.
+          </p>
+
+          <div class="bot-highlight">
+            <h5><i class="fas fa-magic icon-bot"></i>Impacto en Conversiones:</h5>
+            <ul class="mb-0">
+              <li><strong>Bots activos:</strong> +200% retención de usuarios</li>
+              <li><strong>Juegos integrados:</strong> +300% tiempo en room</li>
+              <li><strong>Mensajes automáticos:</strong> +150% propinas espontáneas</li>
+              <li><strong>Engagement continuo:</strong> +400% usuarios recurrentes</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid de Extensiones -->
+      <div class="extensions-grid">
+        
+        <!-- Welcome Bot -->
+        <div class="extension-card">
+          <div class="extension-icon">👋</div>
+          <div class="extension-name">Welcome Bot</div>
+          <div class="extension-type">CHATBOT</div>
+          <p><strong>Función:</strong> Saluda automáticamente a cada usuario que entra a tu room.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • Mensaje: "¡Hola {username}! Bienvenido a mi room 😘"<br>
+            • Activar para: Usuarios nuevos + suscriptores<br>
+            • Delay: 3 segundos después de entrar
+          </div>
+          <div class="price-tag">GRATIS</div>
+        </div>
+
+        <!-- Tip Reaction Bot -->
+        <div class="extension-card">
+          <div class="extension-icon">👍</div>
+          <div class="extension-name">Tip Reaction Bot</div>
+          <div class="extension-type">CHATBOT</div>
+          <p><strong>Función:</strong> Agradece automáticamente cada propina recibida.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • 1-25 tokens: "Gracias {username} 😊"<br>
+            • 26-100 tokens: "¡Wow! Gracias {username} 🔥"<br>
+            • 100+ tokens: "¡INCREÍBLE {username}! 😍💖"
+          </div>
+          <div class="price-tag">GRATIS</div>
+        </div>
+
+        <!-- Announcement Bot -->
+        <div class="extension-card">
+          <div class="extension-icon">📢</div>
+          <div class="extension-name">Announcement Bot</div>
+          <div class="extension-type">CHATBOT</div>
+          <p><strong>Función:</strong> Envía mensajes promocionales automáticos cada X minutos.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • Cada 5 min: "¿Te gustan mis tetas? 26 tokens 🍒"<br>
+            • Cada 8 min: "Show anal en privado 💦"<br>
+            • Cada 10 min: "¡Sígueme para no perderte nada! ❤️"
+          </div>
+          <div class="price-tag">GRATIS</div>
+        </div>
+
+        <!-- Wheel of Fortune -->
+        <div class="extension-card">
+          <div class="extension-icon">🎰</div>
+          <div class="extension-name">Wheel of Fortune</div>
+          <div class="extension-type">GAME</div>
+          <p><strong>Función:</strong> Ruleta con premios aleatorios por tokens.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • Costo: 25 tokens por giro<br>
+            • Premios: Flash, beso, baile, foto<br>
+            • Premio especial: Show gratis (5% probabilidad)
+          </div>
+          <div class="price-tag">25 TOKENS</div>
+        </div>
+
+        <!-- Polls -->
+        <div class="extension-card">
+          <div class="extension-icon">📊</div>
+          <div class="extension-name">Polls</div>
+          <div class="extension-type">GAME</div>
+          <p><strong>Función:</strong> Encuestas interactivas para decidir actividades.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • "¿Qué quieren ver?" <br>
+            • Opciones: Tetas, Culo, Strip, Baile<br>
+            • Votos: 5 tokens cada uno<br>
+            • Ganador: Se hace al llegar a 10 votos
+          </div>
+          <div class="price-tag">5 TOKENS/VOTO</div>
+        </div>
+
+        <!-- Reactions -->
+        <div class="extension-card">
+          <div class="extension-icon">😄</div>
+          <div class="extension-name">Reactions</div>
+          <div class="extension-type">GAME</div>
+          <p><strong>Función:</strong> Sistema de reacciones emoji con efectos visuales.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • 😍 = 10 tokens (efecto corazones)<br>
+            • 🔥 = 15 tokens (efecto fuego)<br>
+            • 💦 = 20 tokens (efecto agua)<br>
+            • 👑 = 50 tokens (efecto corona)
+          </div>
+          <div class="price-tag">10-50 TOKENS</div>
+        </div>
+
+        <!-- Battleship -->
+        <div class="extension-card">
+          <div class="extension-icon">🚢</div>
+          <div class="extension-name">Battleship</div>
+          <div class="extension-type">GAME</div>
+          <p><strong>Función:</strong> Juego de batalla naval con premio por acierto.</p>
+          <div class="setup-steps">
+            <strong>Setup:</strong><br>
+            • Disparo: 15 tokens<br>
+            • Acierto: Flash o foto sexy<br>
+            • Hundir barco: Show especial<br>
+            • Tablero: 5x5 con 3 barcos
+          </div>
+          <div class="price-tag">15 TOKENS/DISPARO</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Configuración Avanzada -->
+    <section class="section-card">
+      <h2 class="section-title">Configuración Avanzada para Máximas Ganancias</h2>
+
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="money-highlight">
+            <h5><i class="fas fa-cogs icon-money"></i>Automatización Inteligente</h5>
+            <ol class="step-list">
+              <li><span class="step-number">1</span><strong>Combinar Bots:</strong> Welcome + Tip Reaction + Announcement = trío perfecto</li>
+              <li><span class="step-number">2</span><strong>Timing Estratégico:</strong> Announcements cada 5-10 min, no spam</li>
+              <li><span class="step-number">3</span><strong>Mensajes Personalizados:</strong> Incluir nombres para conexión personal</li>
+              <li><span class="step-number">4</span><strong>A/B Testing:</strong> Probar diferentes mensajes y medir resultados</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="game-highlight">
+            <h5><i class="fas fa-gamepad icon-game"></i>Estrategia de Juegos</h5>
+            <ol class="step-list">
+              <li><span class="step-number">1</span><strong>Wheel como Gancho:</strong> Precio accesible para atraer usuarios nuevos</li>
+              <li><span class="step-number">2</span><strong>Polls para Engagement:</strong> Hacer que usuarios decidan = más inversión emocional</li>
+              <li><span class="step-number">3</span><strong>Reactions como Propinas:</strong> Alternativa visual a tips tradicionales</li>
+              <li><span class="step-number">4</span><strong>Battleship para Shows Largos:</strong> Mantiene audiencia entretenida</li>
+            </ol>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-highlight">
+        <h5><i class="fas fa-rocket icon-tech"></i>Configuración Pro Tips:</h5>
+        <ul class="mb-0">
+          <li><strong>Lovense + Welcome Bot:</strong> "¡Hola! Mi juguete reacciona a tus tokens 💦"</li>
+          <li><strong>Juegos + Announcements:</strong> "Nueva ronda de Wheel! 25 tokens para premios sexy 🎰"</li>
+          <li><strong>Tip Reaction + Juguetes:</strong> "Gracias! Mi Lovense está enloqueciendo 🔥"</li>
+          <li><strong>Polls + Shows:</strong> "Ganó ANAL! Privado ahora con descuento 🍑"</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sección: ROI y Resultados -->
+    <section class="section-card text-center">
+      <h2 class="section-title mb-4">
+        <span class="emoji-large">📈</span>
+        Resultados Esperados con Setup Completo
+        <span class="emoji-large">💰</span>
+      </h2>
+
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="money-highlight">
+            <h4><i class="fas fa-coins icon-money"></i>+500%</h4>
+            <p class="mb-0"><strong>Aumento en propinas</strong> con juguetes interactivos</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="bot-highlight">
+            <h4><i class="fas fa-robot icon-bot"></i>+300%</h4>
+            <p class="mb-0"><strong>Engagement automático</strong> con bots activos</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="game-highlight">
+            <h4><i class="fas fa-gamepad icon-game"></i>+400%</h4>
+            <p class="mb-0"><strong>Tiempo en room</strong> con juegos integrados</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="tech-highlight">
+            <h4><i class="fas fa-chart-line icon-tech"></i>+600%</h4>
+            <p class="mb-0"><strong>Ganancias totales</strong> con setup completo</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 p-4" style="background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(237, 100, 166, 0.1)); border-radius: 1rem; border: 2px solid var(--accent-red);">
+        <h4 style="color: var(--accent-red); margin-bottom: 1rem;">
+          <i class="fas fa-crown"></i> La Fórmula del Éxito Total
+        </h4>
+        <p class="mb-0 fs-5">
+          <strong>Juguetes Interactivos + Bots Automáticos + Juegos Engagement = Máquina de Dinero 24/7</strong><br>
+          <em>Tu room funcionará como un casino: entretenimiento continuo, recompensas instantáneas y ganancias automáticas</em>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Animaciones de carga
+    document.addEventListener('DOMContentLoaded', function() {
+      const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+          }
+        });
+      }, observerOptions);
+
+      // Animar cards de extensiones
+      document.querySelectorAll('.extension-card').forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+        observer.observe(card);
+      });
+
+      // Animar secciones
+      document.querySelectorAll('.section-card').forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease';
+        observer.observe(card);
+      });
+
+      // Lazy loading para imágenes
+      document.querySelectorAll('.img-container img').forEach(img => {
+        img.addEventListener('load', function() {
+          this.style.opacity = '1';
+        });
+        
+        img.addEventListener('error', function() {
+          console.log('Error cargando imagen:', this.src);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

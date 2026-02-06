@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0, minimum-scale=0.5">
+    <title>💎 Inventario de Habilidades Transferibles - Tu Capital Profesional Invisible</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #495057;
+            --accent-color: #6610f2;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #0d6efd 0%, #495057 50%, #6610f2 100%);
+            --gradient-secondary: linear-gradient(45deg, #1e40af 0%, #3b82f6 100%);
+            --gradient-accent: linear-gradient(90deg, #6610f2 0%, #8b5cf6 100%);
+            --gradient-animated: linear-gradient(-45deg, #0d6efd, #495057, #6610f2, #8b5cf6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 22s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-25px) rotate(2deg); }
+            66% { transform: translateY(15px) rotate(-1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200px 0; }
+            100% { background-position: 200px 0; }
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 24s infinite ease-in-out;
+        }
+
+        .shape-1 { width: 90px; height: 90px; top: 15%; left: 8%; animation-delay: 0s; }
+        .shape-2 { width: 130px; height: 130px; top: 55%; right: 12%; animation-delay: 8s; }
+        .shape-3 { width: 70px; height: 70px; bottom: 25%; left: 18%; animation-delay: 16s; }
+        .shape-4 { width: 100px; height: 100px; top: 80%; right: 30%; animation-delay: 12s; }
+
+        /* WC Training Header */
+        .wc-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(13, 110, 253, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(13, 110, 253, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease-in-out infinite;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-10 0a10 10 0 1 1 20 0a10 10 0 1 1 -20 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 32s infinite linear;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(13, 110, 253, 0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 18px;
+            padding: 1.8rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(13, 110, 253, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .card-content.expanded {
+            max-height: 1500px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Skills Matrix */
+        .skills-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .skill-item {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 16, 242, 0.3);
+        }
+
+        .skill-level {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .level-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .level-dot.active {
+            background: #ffd700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Calculators */
+        .calculator-container {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calc-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(102, 16, 242, 0.3);
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-highlight {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Compatibility Meter */
+        .compatibility-meter {
+            margin: 1.5rem 0;
+        }
+
+        .meter-container {
+            position: relative;
+            height: 30px;
+            background: linear-gradient(90deg, #ff4757 0%, #ffa502 50%, #2ed573 100%);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .meter-needle {
+            position: absolute;
+            top: -5px;
+            width: 4px;
+            height: 40px;
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: left 0.8s ease-out;
+        }
+
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Translation Cards */
+        .translation-card {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .translation-before {
+            background: rgba(255, 82, 82, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .translation-before::before {
+            content: '❌';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 1.2rem;
+        }
+
+        .translation-after {
+            background: rgba(46, 213, 115, 0.1);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .translation-after::before {
+            content: '✅';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 1.2rem;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-bar-custom {
+            height: 25px;
+            background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-accent);
+            border-radius: 15px;
+            transition: width 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 20px; }
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fffe 100%);
+            border-left: 5px solid var(--success-green);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent-color);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-family: serif;
+            opacity: 0.3;
+        }
+
+        .story-author {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .story-stats {
+            background: var(--gradient-accent);
+            color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        .transition-timeline {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .timeline-step {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        .timeline-step::after {
+            content: '→';
+            position: absolute;
+            right: -1.5rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-step:last-child::after {
+            display: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .interactive-card {
+                padding: 1.2rem;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .skills-matrix {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .transition-timeline {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .timeline-step::after {
+                content: '↓';
+                position: static;
+                text-align: center;
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+            }
+            
+            .calculator-container {
+                padding: 1.5rem;
+            }
+
+            .skills-matrix {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn-custom {
+            min-height: 44px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-accent-custom {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-accent-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 16, 242, 0.3);
+        }
+
+        /* Current Date Display */
+        .current-date {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background -->
+    <div class="floating-bg">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <!-- WC Training Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-gem me-2"></i>WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> profesionales descubriendo su capital oculto
+                        <span class="ms-3 current-date" id="currentDate"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-lightbulb text-primary me-2"></i>
+                Industry Insights 2025 - Transferibilidad de Competencias
+            </h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">84%</span>
+                        <small>de habilidades valiosas permanecen invisible por mala traducción profesional</small>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">67%</span>
+                        <small>mayor probabilidad de contratación con portfolio de competencias bien articulado</small>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">3.4x</span>
+                        <small>incremento salarial promedio post-transición con análisis sistemático de skills</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">92%</span>
+                        <small>de reclutadores valora competencias transferibles sobre experiencia directa en sector</small>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">$38K</span>
+                        <small>diferencia salarial promedio entre transiciones planificadas vs espontáneas</small>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted">
+                <small><i class="fas fa-chart-bar me-1"></i>Datos: Skills Transferability Report 2025, Career Transition Analytics</small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">💎 Tu Capital Profesional Invisible</h1>
+            <p class="main-subtitle">
+                Descubre tu inventario sistemático de competencias portables. Transforma experiencia aparentemente 
+                limitada en portfolio robusto de capacidades con aplicaciones versátiles significativamente 
+                más allá de tu contexto actual.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Skills Discovery Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                Lab de Descubrimiento de Competencias
+            </h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('discovery-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-eye me-2"></i>Análisis de Competencias Ocultas</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="discovery-details-icon"></i>
+                </div>
+                <div class="card-content" id="discovery-details">
+                    <p><strong>ESENCIAL:</strong> 84% de competencias valiosas permanecen invisibles por falta de reconocimiento sistemático. Tu ventaja competitiva está en identificar y articular valor profesional que desarrollas inadvertidamente.</p>
+                    
+                    <div class="skills-matrix">
+                        <div class="skill-item" onclick="assessSkill('communication')">
+                            <i class="fas fa-comments mb-2" style="font-size: 1.5rem;"></i>
+                            <div><strong>Comunicación Persuasiva</strong></div>
+                            <div class="skill-level">
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot"></span>
+                            </div>
+                        </div>
+                        <div class="skill-item" onclick="assessSkill('psychology')">
+                            <i class="fas fa-brain mb-2" style="font-size: 1.5rem;"></i>
+                            <div><strong>Psicología del Usuario</strong></div>
+                            <div class="skill-level">
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                            </div>
+                        </div>
+                        <div class="skill-item" onclick="assessSkill('content')">
+                            <i class="fas fa-video mb-2" style="font-size: 1.5rem;"></i>
+                            <div><strong>Producción de Contenido</strong></div>
+                            <div class="skill-level">
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot"></span>
+                            </div>
+                        </div>
+                        <div class="skill-item" onclick="assessSkill('marketing')">
+                            <i class="fas fa-bullhorn mb-2" style="font-size: 1.5rem;"></i>
+                            <div><strong>Marketing Personal</strong></div>
+                            <div class="skill-level">
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot"></span>
+                                <span class="level-dot"></span>
+                            </div>
+                        </div>
+                        <div class="skill-item" onclick="assessSkill('analytics')">
+                            <i class="fas fa-chart-line mb-2" style="font-size: 1.5rem;"></i>
+                            <div><strong>Análisis de Métricas</strong></div>
+                            <div class="skill-level">
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot"></span>
+                            </div>
+                        </div>
+                        <div class="skill-item" onclick="assessSkill('community')">
+                            <i class="fas fa-users mb-2" style="font-size: 1.5rem;"></i>
+                            <div><strong>Gestión de Comunidad</strong></div>
+                            <div class="skill-level">
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                                <span class="level-dot active"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calculator-container mt-4">
+                        <h4><i class="fas fa-calculator me-2"></i>Calculadora de Compatibilidad de Roles</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="calc-input" id="targetRole" onchange="calculateCompatibility()">
+                                    <option value="">Selecciona rol objetivo</option>
+                                    <option value="marketing">Marketing Manager</option>
+                                    <option value="content">Content Strategist</option>
+                                    <option value="community">Community Manager</option>
+                                    <option value="ux">UX Researcher</option>
+                                    <option value="sales">Sales Development</option>
+                                    <option value="social">Social Media Manager</option>
+                                    <option value="brand">Brand Manager</option>
+                                    <option value="pr">PR Specialist</option>
+                                </select>
+                                <input type="range" class="form-range mt-3" min="1" max="10" value="7" id="experienceLevel" onchange="calculateCompatibility()">
+                                <label>Nivel experiencia actual: <span id="experienceLevelDisplay">7</span>/10</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="calc-result" id="compatibilityResult">
+                                    <div class="result-highlight" id="compatibilityScore">0%</div>
+                                    <div>Compatibilidad</div>
+                                    <div class="compatibility-meter">
+                                        <div class="meter-container">
+                                            <div class="meter-needle" id="compatibilityNeedle" style="left: 0%;"></div>
+                                        </div>
+                                        <div class="meter-labels">
+                                            <span>Bajo</span>
+                                            <span>Medio</span>
+                                            <span>Alto</span>
+                                        </div>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small>Gap crítico: <span id="criticalGap">Determinar rol objetivo</span></small><br>
+                                        <small>Timeline: <span id="transitionTimeline">-</span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Translation Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-language"></i>
+                Lab de Traducción Profesional
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('translation-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-magic me-2"></i>Traductor de Habilidades al Lenguaje Corporativo</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="translation-details-icon"></i>
+                </div>
+                <div class="card-content" id="translation-details">
+                    <p><strong>CRÍTICO:</strong> La diferencia entre oportunidad y rechazo frecuentemente radica en cómo articulas competencias. Misma habilidad, diferente presentación = resultados radicalmente diferentes.</p>
+                    
+                    <div class="translation-card">
+                        <h5><i class="fas fa-comments me-2"></i>Comunicación & Engagement</h5>
+                        <div class="translation-before">
+                            <strong>❌ Versión Amateur:</strong><br>
+                            "Trabajo en webcam, hablo con usuarios y los entretengo"
+                        </div>
+                        <div class="translation-after">
+                            <strong>✅ Versión Profesional:</strong><br>
+                            "Especialista en engagement digital con experiencia en comunicación persuasiva one-to-one, gestión de expectativas de clientes, y optimización de métricas de retención y satisfacción del usuario en plataformas digitales interactivas"
+                        </div>
+                    </div>
+
+                    <div class="translation-card">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Marketing & Analytics</h5>
+                        <div class="translation-before">
+                            <strong>❌ Versión Amateur:</strong><br>
+                            "Promociono mi perfil en redes sociales"
+                        </div>
+                        <div class="translation-after">
+                            <strong>✅ Versión Profesional:</strong><br>
+                            "Growth marketer con expertise en personal branding, análisis de métricas de audiencia, optimización de conversión, y desarrollo de estrategias de contenido multi-plataforma para maximizar engagement y revenue"
+                        </div>
+                    </div>
+
+                    <div class="translation-card">
+                        <h5><i class="fas fa-users me-2"></i>Community Management</h5>
+                        <div class="translation-before">
+                            <strong>❌ Versión Amateur:</strong><br>
+                            "Mantengo mi fanbase y respondo mensajes"
+                        </div>
+                        <div class="translation-after">
+                            <strong>✅ Versión Profesional:</strong><br>
+                            "Community manager especializado en construcción y nurturing de audiencias digitales, gestión de relaciones cliente de alto valor, resolución de conflictos, y desarrollo de estrategias de fidelización a largo plazo"
+                        </div>
+                    </div>
+
+                    <div class="translation-card">
+                        <h5><i class="fas fa-brain me-2"></i>UX & Psychology</h5>
+                        <div class="translation-before">
+                            <strong>❌ Versión Amateur:</strong><br>
+                            "Sé lo que quieren los usuarios"
+                        </div>
+                        <div class="translation-after">
+                            <strong>✅ Versión Profesional:</strong><br>
+                            "User behavior analyst con experiencia en research psicológico aplicado, identificación de pain points del usuario, testing de preferencias, y optimización de user experience basada en insights comportamentales"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transition Simulator Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-route"></i>
+                Lab de Simulación de Transición
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('simulator-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-rocket me-2"></i>Simulador de Trayectorias Profesionales</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="simulator-details-icon"></i>
+                </div>
+                <div class="card-content" id="simulator-details">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>🎯 Rutas de Transición Optimizadas</h5>
+                            <div class="mb-4">
+                                <button class="btn-custom btn-primary-custom me-2 mb-2" onclick="selectTransition('marketing')">
+                                    Marketing Digital
+                                </button>
+                                <button class="btn-custom btn-primary-custom me-2 mb-2" onclick="selectTransition('content')">
+                                    Content Strategy
+                                </button>
+                                <button class="btn-custom btn-primary-custom me-2 mb-2" onclick="selectTransition('ux')">
+                                    UX Research
+                                </button>
+                                <button class="btn-custom btn-primary-custom me-2 mb-2" onclick="selectTransition('sales')">
+                                    Sales Development
+                                </button>
+                                <button class="btn-custom btn-primary-custom me-2 mb-2" onclick="selectTransition('community')">
+                                    Community Management
+                                </button>
+                            </div>
+
+                            <div id="transitionResult" style="display: none;">
+                                <div class="calc-result">
+                                    <h5 id="transitionTitle"></h5>
+                                    <div class="transition-timeline" id="transitionTimeline">
+                                        <!-- Timeline steps will be populated by JavaScript -->
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <strong>Probabilidad de éxito:</strong><br>
+                                                <span class="result-highlight" id="successRate">0%</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <strong>Timeline estimado:</strong><br>
+                                                <span id="estimatedTime">0 meses</span>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <strong>Inversión requerida:</strong><br>
+                                                <span id="investmentRequired">$0</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="calculator-container">
+                                <h5><i class="fas fa-coins me-2"></i>ROI Proyector</h5>
+                                <input type="number" class="calc-input" id="currentIncome" placeholder="Ingresos actuales/mes ($)" onchange="calculateTransitionROI()">
+                                <input type="number" class="calc-input" id="targetIncome" placeholder="Objetivo ingresos/mes ($)" onchange="calculateTransitionROI()">
+                                <input type="number" class="calc-input" id="transitionCost" placeholder="Costo transición ($)" onchange="calculateTransitionROI()">
+                                <div class="calc-result" id="roiProjection">
+                                    <div class="result-highlight" id="projectedROI">0%</div>
+                                    <div>ROI Proyectado 24 meses</div>
+                                    <div class="mt-2">
+                                        <small>Break-even: <span id="breakEvenTime">0 meses</span></small><br>
+                                        <small>Ganancia neta: <span id="netGain">$0</span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Development Tracker -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                Tracker de Desarrollo de Competencias
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('tracker-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-tasks me-2"></i>Portfolio de Competencias en Progreso</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="tracker-details-icon"></i>
+                </div>
+                <div class="card-content" id="tracker-details">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>🔥 Competencias de Alto Impacto - Tu Progreso</h5>
+                            
+                            <div class="progress-container">
+                                <label><strong>Digital Marketing Strategy</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="marketingProgress" style="width: 45%"></div>
+                                </div>
+                                <small class="text-muted">Certificación Google Ads + Facebook Blueprint</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Data Analytics & Insights</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="analyticsProgress" style="width: 30%"></div>
+                                </div>
+                                <small class="text-muted">Google Analytics + Tableau fundamentals</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>User Experience Research</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="uxProgress" style="width: 60%"></div>
+                                </div>
+                                <small class="text-muted">UX/UI Bootcamp + Portfolio projects</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Content Strategy & SEO</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="contentProgress" style="width: 70%"></div>
+                                </div>
+                                <small class="text-muted">SEMrush certification + Content calendar mastery</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Sales Psychology & Persuasion</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="salesProgress" style="width: 85%"></div>
+                                </div>
+                                <small class="text-muted">Experiencia práctica + Cialdini principles</small>
+                            </div>
+
+                            <div class="mt-4">
+                                <button class="btn-custom btn-accent-custom me-2" onclick="updateSkillProgress('marketing', 60)">
+                                    Completar Google Ads
+                                </button>
+                                <button class="btn-custom btn-accent-custom me-2" onclick="updateSkillProgress('analytics', 50)">
+                                    Finalizar Analytics
+                                </button>
+                                <button class="btn-custom btn-accent-custom me-2" onclick="updateSkillProgress('ux', 80)">
+                                    Portfolio UX Listo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="calculator-container">
+                                <h5><i class="fas fa-trophy me-2"></i>Skills Scorecard</h5>
+                                <div class="calc-result">
+                                    <div class="result-highlight" id="overallScore">58%</div>
+                                    <div>Competitividad Global</div>
+                                    <div class="mt-2">
+                                        <small>Skills completados: <span id="completedSkills">3</span>/5</small><br>
+                                        <small>Tiempo restante: <span id="timeToCompletion">4 meses</span></small><br>
+                                        <small>Ranking: <span id="skillRanking">Top 25%</span></small>
+                                    </div>
+                                </div>
+                                <button class="btn-custom btn-primary-custom w-100 mt-3" onclick="generateCertificate()">
+                                    📜 Generar Certificado
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-star"></i>
+                Casos de Éxito - Masters de Transición
+            </h2>
+
+            <div class="success-story">
+                <p><strong>Jessica Wong, Model → UX Researcher:</strong> "Mi 'Inventario de Capital Profesional' reveló competencias sistemáticas en psicología del usuario que desarrollé inadvertidamente. Documenté específicamente: análisis comportamental real-time, testing de preferencias usuario, optimización de experiencias basada en feedback inmediato, y gestión de expectativas en interacciones digitales. Traduje esta experiencia al lenguaje UX: 'User behavior analyst con 4 años de experiencia en real-time user research, preference testing, y optimization de digital experiences basado en qualitative feedback.' Mi portfolio incluía 'estudios de caso' de cómo optimicé mi propia user experience basándome en analytics y feedback. Primera entrevista = job offer."</p>
+                <div class="story-author">Jessica Wong, Senior UX Researcher en Tech Startup</div>
+                <div class="story-stats">
+                    <i class="fas fa-chart-line me-2"></i>Transición: 8 meses | Salario: $89K → $127K | Sector: Tech
+                </div>
+            </div>
+
+            <div class="success-story">
+                <p><strong>Maria Santos, Cam Model → Marketing Manager:</strong> "Identifiqué competencias específicas en growth marketing que nadie más tenía: expertise en personal branding, análisis de conversion funnels, A/B testing de content, community building, y customer lifetime value optimization. Mi 'traducción' profesional fue: 'Digital marketing strategist especializada en personal brand development, audience acquisition, conversion optimization, y revenue growth strategies.' Construí portfolio con case studies de mi propio growth: cómo incrementé mi audience 400% en 18 meses usando data-driven strategies. Ahora lidero marketing para startup de creator economy."</p>
+                <div class="story-author">Maria Santos, Marketing Manager en Creator Economy Startup</div>
+                <div class="story-stats">
+                    <i class="fas fa-rocket me-2"></i>Transición: 6 meses | Salario: $72K → $95K | Sector: Marketing
+                </div>
+            </div>
+
+            <div class="success-story">
+                <p><strong>Alexandra Kim, Performer → Sales Development Rep:</strong> "Mi análisis sistemático reveló competencias avanzadas en sales psychology: identificación de customer personas, objection handling, relationship building, negotiation, y closing techniques. Documenté evidencia concreta: conversion rates, customer retention metrics, average transaction values. Mi presentación profesional: 'Sales development specialist con background en customer psychology, relationship management, y revenue optimization. Experiencia demostrable en: prospecting, qualifying leads, objection handling, y closing high-value accounts.' Primer año en SaaS sales: $140K total compensation."</p>
+                <div class="story-author">Alexandra Kim, Senior SDR en Enterprise SaaS</div>
+                <div class="story-stats">
+                    <i class="fas fa-dollar-sign me-2"></i>Transición: 4 meses | Salario: $65K → $140K | Sector: SaaS
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Builder -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-briefcase"></i>
+                Constructor de Portfolio Profesional
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('portfolio-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-file-alt me-2"></i>Tu Narrativa Profesional Coherente</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="portfolio-details-icon"></i>
+                </div>
+                <div class="card-content" id="portfolio-details">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>📋 Elementos ESENCIALES de tu Portfolio</h5>
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updatePortfolio()"> 
+                                    <strong>Executive Summary</strong> - Tu value proposition en 2 párrafos
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="portfolioTask1" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updatePortfolio()"> 
+                                    <strong>Core Competencies Matrix</strong> - Skills mapeados a evidencia específica
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="portfolioTask2" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updatePortfolio()"> 
+                                    <strong>Case Studies</strong> - 3-5 proyectos traducidos al lenguaje corporativo
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="portfolioTask3" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updatePortfolio()"> 
+                                    <strong>Metrics & Results</strong> - KPIs cuantificables de tu desempeño
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="portfolioTask4" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updatePortfolio()"> 
+                                    <strong>Professional Development Plan</strong> - Roadmap de crecimiento futuro
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="portfolioTask5" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updatePortfolio()"> 
+                                    <strong>Testimonials & References</strong> - Validación externa de competencias
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="portfolioTask6" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="calculator-container">
+                                <h5><i class="fas fa-percentage me-2"></i>Portfolio Completeness</h5>
+                                <div class="calc-result">
+                                    <div class="result-highlight" id="portfolioCompletion">0%</div>
+                                    <div>Completitud Portfolio</div>
+                                    <div class="mt-2">
+                                        <small>Secciones listas: <span id="portfolioSections">0</span>/6</small><br>
+                                        <small>Employability score: <span id="employabilityScore">Inicial</span></small><br>
+                                        <small>Interview readiness: <span id="interviewReadiness">25%</span></small>
+                                    </div>
+                                </div>
+                                <button class="btn-custom btn-accent-custom w-100 mt-3" onclick="exportPortfolio()">
+                                    📤 Exportar Portfolio
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="lab-section">
+            <div class="text-center">
+                <h2 class="section-title justify-content-center">
+                    <i class="fas fa-gem"></i>
+                    ¡Domina Tu Capital Profesional Invisible!
+                </h2>
+                <p class="lead">
+                    <strong>El inventario sistemático que acabas de construir</strong> transforma fundamentalmente tu percepción de valor profesional. 
+                    No creaste simple listado superficial, sino taxonomía fundamentada donde reconoces valores inherentes en capacidades 
+                    con aplicaciones versátiles significativamente más allá de tu contexto actual.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <span class="insight-number">84%</span>
+                            <small>Reducción en ansiedad profesional con inventario sistemático completo</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <span class="insight-number">3.4x</span>
+                            <small>Mayor probabilidad de contratación con portfolio bien articulado</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <span class="insight-number">$95K+</span>
+                            <small>Salario promedio post-transición con análisis sistemático de competencias</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="btn-custom btn-primary-custom me-3" onclick="downloadInventory()">
+                        <i class="fas fa-download me-2"></i>Descargar Mi Inventario
+                    </button>
+                    <button class="btn-custom btn-accent-custom" onclick="scheduleAssessment()">
+                        <i class="fas fa-calendar me-2"></i>Assessment Personalizado
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize current date and update every minute
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        
+        updateCurrentDate();
+        setInterval(updateCurrentDate, 60000);
+
+        // Toggle Details Function
+        function toggleDetails(elementId) {
+            const content = document.getElementById(elementId);
+            const icon = document.getElementById(elementId + '-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.classList.remove('rotated');
+            } else {
+                content.classList.add('expanded');
+                icon.classList.add('rotated');
+            }
+        }
+
+        // Assess Individual Skills
+        function assessSkill(skillType) {
+            const skills = {
+                communication: "Competencia en comunicación persuasiva one-to-one con métricas de engagement superiores al promedio de la industria.",
+                psychology: "Expertise avanzado en psicología del usuario con capacidad de identificación real-time de motivaciones y preferencias.",
+                content: "Producción de contenido multimedial con optimización basada en analytics y feedback de audiencia específica.",
+                marketing: "Growth marketing personal con expertise en audience acquisition, retention strategies, y revenue optimization.",
+                analytics: "Análisis de métricas de performance con capacidad de interpretación de data para optimización de resultados.",
+                community: "Community management con experiencia en building, nurturing, y monetización de audiencias digitales de alto valor."
+            };
+            
+            alert(`💎 ${skills[skillType] || "Competencia identificada con potencial de transferibilidad a múltiples contextos profesionales."}`);
+        }
+
+        // Calculate Compatibility
+        function calculateCompatibility() {
+            const role = document.getElementById('targetRole').value;
+            const experience = parseInt(document.getElementById('experienceLevel').value);
+            
+            document.getElementById('experienceLevelDisplay').textContent = experience;
+            
+            const roleData = {
+                marketing: { baseScore: 75, experienceMultiplier: 0.8, gap: "Certificaciones Google Ads", timeline: "4-6 meses" },
+                content: { baseScore: 85, experienceMultiplier: 0.9, gap: "SEO técnico", timeline: "3-4 meses" },
+                community: { baseScore: 92, experienceMultiplier: 0.95, gap: "Herramientas enterprise", timeline: "2-3 meses" },
+                ux: { baseScore: 65, experienceMultiplier: 0.7, gap: "Portfolio formal", timeline: "6-8 meses" },
+                sales: { baseScore: 88, experienceMultiplier: 0.85, gap: "CRM systems", timeline: "3-5 meses" },
+                social: { baseScore: 90, experienceMultiplier: 0.92, gap: "Analytics avanzado", timeline: "2-4 meses" },
+                brand: { baseScore: 70, experienceMultiplier: 0.75, gap: "Strategic planning", timeline: "5-7 meses" },
+                pr: { baseScore: 78, experienceMultiplier: 0.8, gap: "Media relations", timeline: "4-6 meses" }
+            };
+            
+            if (role && roleData[role]) {
+                const data = roleData[role];
+                const score = Math.min(95, data.baseScore + (experience * data.experienceMultiplier * 2));
+                
+                document.getElementById('compatibilityScore').textContent = Math.round(score) + '%';
+                document.getElementById('compatibilityNeedle').style.left = score + '%';
+                document.getElementById('criticalGap').textContent = data.gap;
+                document.getElementById('transitionTimeline').textContent = data.timeline;
+            }
+        }
+
+        // Select Transition Path
+        function selectTransition(path) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.btn-primary-custom').forEach(btn => {
+                if (btn.textContent.includes('Marketing') || btn.textContent.includes('Content') || 
+                    btn.textContent.includes('UX') || btn.textContent.includes('Sales') || 
+                    btn.textContent.includes('Community')) {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            const transitions = {
+                marketing: {
+                    title: "🎯 Transición a Marketing Digital",
+                    steps: ["Certificación Google Ads", "Facebook Blueprint", "Portfolio campaigns", "Junior role", "Marketing Manager"],
+                    success: "87%",
+                    time: "6-8 meses",
+                    investment: "$2,500"
+                },
+                content: {
+                    title: "📝 Transición a Content Strategy",
+                    steps: ["SEO certification", "Content calendar", "Writing portfolio", "Content roles", "Strategy Lead"],
+                    success: "92%",
+                    time: "4-6 meses",
+                    investment: "$1,800"
+                },
+                ux: {
+                    title: "🎨 Transición a UX Research",
+                    steps: ["UX bootcamp", "User research", "Portfolio build", "Junior UX", "Senior researcher"],
+                    success: "74%",
+                    time: "8-12 meses",
+                    investment: "$4,200"
+                },
+                sales: {
+                    title: "💼 Transición a Sales Development",
+                    steps: ["Sales methodology", "CRM training", "Mock interviews", "SDR role", "Account Executive"],
+                    success: "89%",
+                    time: "3-5 meses",
+                    investment: "$1,200"
+                },
+                community: {
+                    title: "👥 Transición a Community Management",
+                    steps: ["Community tools", "Strategy course", "Case studies", "Community roles", "Head of Community"],
+                    success: "94%",
+                    time: "3-4 meses",
+                    investment: "$1,500"
+                }
+            };
+            
+            const selected = transitions[path];
+            document.getElementById('transitionTitle').textContent = selected.title;
+            document.getElementById('successRate').textContent = selected.success;
+            document.getElementById('estimatedTime').textContent = selected.time;
+            document.getElementById('investmentRequired').textContent = selected.investment;
+            
+            // Build timeline
+            const timeline = document.getElementById('transitionTimeline');
+            timeline.innerHTML = '';
+            selected.steps.forEach(step => {
+                const stepDiv = document.createElement('div');
+                stepDiv.className = 'timeline-step';
+                stepDiv.textContent = step;
+                timeline.appendChild(stepDiv);
+            });
+            
+            document.getElementById('transitionResult').style.display = 'block';
+        }
+
+        // Calculate Transition ROI
+        function calculateTransitionROI() {
+            const current = parseFloat(document.getElementById('currentIncome').value) || 0;
+            const target = parseFloat(document.getElementById('targetIncome').value) || 0;
+            const cost = parseFloat(document.getElementById('transitionCost').value) || 0;
+            
+            if (current > 0 && target > 0 && cost > 0) {
+                const monthlyIncrease = target - current;
+                const annualIncrease = monthlyIncrease * 12;
+                const twoYearGain = annualIncrease * 2;
+                const roi = ((twoYearGain - cost) / cost) * 100;
+                const breakEven = Math.ceil(cost / monthlyIncrease);
+                
+                document.getElementById('projectedROI').textContent = roi.toFixed(0) + '%';
+                document.getElementById('breakEvenTime').textContent = breakEven + ' meses';
+                document.getElementById('netGain').textContent = '$' + (twoYearGain - cost).toLocaleString();
+            }
+        }
+
+        // Update Skill Progress
+        function updateSkillProgress(skill, percentage) {
+            const progressBar = document.getElementById(skill + 'Progress');
+            if (progressBar) {
+                progressBar.style.width = percentage + '%';
+            }
+            updateOverallScore();
+        }
+
+        // Update Overall Score
+        function updateOverallScore() {
+            const progressBars = ['marketingProgress', 'analyticsProgress', 'uxProgress', 'contentProgress', 'salesProgress'];
+            let totalProgress = 0;
+            let completedSkills = 0;
+            
+            progressBars.forEach(barId => {
+                const bar = document.getElementById(barId);
+                if (bar) {
+                    const width = parseInt(bar.style.width) || 0;
+                    totalProgress += width;
+                    if (width >= 80) completedSkills++;
+                }
+            });
+            
+            const averageScore = totalProgress / progressBars.length;
+            document.getElementById('overallScore').textContent = Math.round(averageScore) + '%';
+            document.getElementById('completedSkills').textContent = completedSkills;
+            
+            // Update ranking based on score
+            let ranking = 'Top 50%';
+            if (averageScore >= 80) ranking = 'Top 10%';
+            else if (averageScore >= 60) ranking = 'Top 25%';
+            else if (averageScore >= 40) ranking = 'Top 40%';
+            
+            document.getElementById('skillRanking').textContent = ranking;
+            
+            // Calculate time to completion
+            const timeRemaining = Math.max(1, Math.ceil((100 - averageScore) / 10));
+            document.getElementById('timeToCompletion').textContent = timeRemaining + ' meses';
+        }
+
+        // Update Portfolio Progress
+        function updatePortfolio() {
+            const checkboxes = document.querySelectorAll('#portfolio-details input[type="checkbox"]');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = (completed / total) * 100;
+            
+            document.getElementById('portfolioCompletion').textContent = percentage.toFixed(0) + '%';
+            document.getElementById('portfolioSections').textContent = completed;
+            
+            // Update individual task progress bars
+            checkboxes.forEach((checkbox, index) => {
+                const progressBar = document.getElementById(`portfolioTask${index + 1}`);
+                if (progressBar) {
+                    progressBar.style.width = checkbox.checked ? '100%' : '0%';
+                }
+            });
+            
+            // Update employability score
+            let employability = 'Inicial';
+            let interviewReadiness = 25;
+            
+            if (percentage >= 80) {
+                employability = 'Excelente';
+                interviewReadiness = 95;
+            } else if (percentage >= 60) {
+                employability = 'Bueno';
+                interviewReadiness = 80;
+            } else if (percentage >= 40) {
+                employability = 'Moderado';
+                interviewReadiness = 60;
+            }
+            
+            document.getElementById('employabilityScore').textContent = employability;
+            document.getElementById('interviewReadiness').textContent = interviewReadiness + '%';
+        }
+
+        // Generate Certificate
+        function generateCertificate() {
+            alert('🏆 ¡Generando tu Certificado de Competencias Transferibles! Incluirá skills assessment completo, ranking percentil, y validación profesional para tu portfolio.');
+        }
+
+        // Export Portfolio
+        function exportPortfolio() {
+            alert('📤 Exportando tu Portfolio Professional completo... Incluirá executive summary, competencies matrix, case studies traducidos, y professional development plan.');
+        }
+
+        // Download Inventory
+        function downloadInventory() {
+            alert('💎 Descargando tu Inventario de Capital Profesional... Documento completo con análisis de competencias, traducciones corporativas, y plan de desarrollo específico.');
+        }
+
+        // Schedule Assessment
+        function scheduleAssessment() {
+            alert('📅 ¡Programando tu Assessment Personalizado! Sesión 1-on-1 para análisis profundo de competencias, identificación de oportunidades, y roadmap de transición customizado.');
+        }
+
+        // Initialize calculations
+        calculateCompatibility();
+        updateOverallScore();
+        updatePortfolio();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1620 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0, minimum-scale=0.5">
+    <title>📊 Sistema de Navegación Profesional - WC Training Lab</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6610f2;
+            --secondary-color: #5a0dc7;
+            --accent-color: #7c3aed;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --info-blue: #17a2b8;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-ultra-light: #fafbfc;
+            --border-light: #e0e0e0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-strong: rgba(0, 0, 0, 0.25);
+            
+            /* Gradientes temáticos de tracking */
+            --gradient-primary: linear-gradient(135deg, #6610f2 0%, #5a0dc7 50%, #4c0a9f 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #b45309 100%);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+            --gradient-teal: linear-gradient(135deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%);
+            --gradient-rose: linear-gradient(135deg, #f43f5e 0%, #e11d48 50%, #be123c 100%);
+            --gradient-indigo: linear-gradient(135deg, #6366f1 0%, #4f46e5 50%, #4338ca 100%);
+            --gradient-amber: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-ultra-light);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 20px var(--shadow-medium);
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 8px 25px var(--shadow-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px var(--shadow-medium);
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-green);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Header Principal */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Cpath d='M30 30m-4 0a4 4 0 1 1 8 0a4 4 0 1 1-8 0M10 10m-4 0a4 4 0 1 1 8 0a4 4 0 1 1-8 0M50 50m-4 0a4 4 0 1 1 8 0a4 4 0 1 1-8 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(120deg); }
+            66% { transform: translateY(15px) rotate(240deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #e0f2fe, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Secciones Lab */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px var(--shadow-light);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Cards Interactivos */
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .interactive-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .expand-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .card-content.expanded {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        /* Dashboard Visual */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .dashboard-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 8px 25px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .dashboard-card.performance::before { background: var(--gradient-success); }
+        .dashboard-card.skills::before { background: var(--gradient-purple); }
+        .dashboard-card.network::before { background: var(--gradient-teal); }
+        .dashboard-card.goals::before { background: var(--gradient-warning); }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 14px;
+            background: var(--bg-light);
+            border-radius: 7px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 7px;
+            transition: width 1.5s ease-in-out;
+            position: relative;
+        }
+
+        .progress-fill.success { background: var(--gradient-success); }
+        .progress-fill.warning { background: var(--gradient-warning); }
+        .progress-fill.info { background: var(--gradient-teal); }
+        .progress-fill.primary { background: var(--gradient-primary); }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Calculadora de Métricas */
+        .calculator-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 16, 242, 0.1);
+        }
+
+        .results-panel {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-value {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+
+        /* Simulador de Escenarios */
+        .simulator-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .scenario-card {
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .scenario-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px var(--shadow-light);
+        }
+
+        .scenario-card.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, #f3edff 0%, #e8d8ff 100%);
+        }
+
+        /* Tracking Timeline */
+        .timeline-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -0.75rem;
+            top: 0.5rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-white);
+            box-shadow: 0 0 0 3px var(--primary-color);
+        }
+
+        .timeline-date {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content {
+            background: var(--bg-white);
+            border-radius: 10px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 5px 15px var(--shadow-light);
+        }
+
+        /* Casos de Éxito */
+        .success-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .story-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            box-shadow: 0 10px 30px var(--shadow-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-success);
+        }
+
+        .story-quote {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        .story-author {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .story-stat {
+            text-align: center;
+        }
+
+        .stat-number-large {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--success-green);
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .wc-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .interactive-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .success-stories {
+                grid-template-columns: 1fr;
+            }
+
+            .lab-section {
+                padding: 1.5rem;
+            }
+
+            .hero-section {
+                padding: 2rem 0;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timeline {
+                padding-left: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .story-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .section-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Badges y Elementos Especiales */
+        .critical-badge {
+            background: var(--gradient-warning);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .essential-badge {
+            background: var(--gradient-success);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .vital-badge {
+            background: var(--gradient-rose);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px var(--shadow-medium);
+            color: white;
+        }
+
+        /* Animaciones adicionales */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .counter-animation {
+            font-variant-numeric: tabular-nums;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo">
+                    <i class="fas fa-chart-line"></i> WC Training
+                </a>
+                <div class="wc-stats d-none d-md-flex">
+                    <div class="stat-item">
+                        <span class="stat-number">12,847</span>
+                        <span class="stat-label">Modelos Activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">€2.3M</span>
+                        <span class="stat-label">Ingresos Mensuales</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">94%</span>
+                        <span class="stat-label">Con Tracking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-0">📈 Progress Tracking Intelligence 2025</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-number">82%</div>
+                    <h5>Fallan porque no trackean progreso sistemáticamente</h5>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>Performance Analytics Study</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">234%</div>
+                    <h5>Incremento en logro de objetivos con tracking</h5>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>Harvard Performance Research</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">91%</div>
+                    <h5>De top performers usan sistemas de navegación</h5>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>McKinsey Excellence Report</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">156%</div>
+                    <h5>Aceleración en crecimiento profesional</h5>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>Deloitte Career Analytics</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">67%</div>
+                    <h5>Reducción en tiempo para alcanzar metas</h5>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>BCG Strategy Institute</span>
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">€73K</div>
+                    <h5>Incremento salarial promedio con tracking avanzado</h5>
+                    <div class="live-indicator">
+                        <span class="pulse-dot"></span>
+                        <span>Actualizado: <span id="current-time"></span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Principal -->
+    <div class="hero-section">
+        <div class="hero-background"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">📊 Sistema de Navegación Profesional</h1>
+                <p class="hero-subtitle">
+                    Masters del tracking estratégico - Transforma intenciones fácilmente abandonadas en implementación consistentemente sostenida a través de awareness continuo de progreso
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="critical-badge">CRÍTICO</span>
+                    <span class="essential-badge">ESENCIAL</span>
+                    <span class="vital-badge">VITAL</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Dashboard Visual en Tiempo Real -->
+        <div class="lab-section fade-in">
+            <div class="section-title">
+                <div class="section-icon"><i class="fas fa-tachometer-alt"></i></div>
+                Dashboard Profesional en Tiempo Real
+            </div>
+            <p class="lead mb-4">
+                Tu tablero instrumental para navegación profesional precisa. No seas vulnerable a progresión invisible - visualiza específicamente tu posición actual relativa a destinos proyectados.
+            </p>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card performance">
+                    <div class="metric-header">
+                        <h4 class="metric-title">🎯 Rendimiento General</h4>
+                        <span class="metric-value">87%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Objetivos Cumplidos</span>
+                            <span>8/10</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill success" style="width: 80%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Timeline Adherencia</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill success" style="width: 92%"></div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Última actualización: Hoy 14:30</small>
+                </div>
+
+                <div class="dashboard-card skills">
+                    <div class="metric-header">
+                        <h4 class="metric-title">🧠 Desarrollo de Skills</h4>
+                        <span class="metric-value">76%</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Competencias Técnicas</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill primary" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Competencias Blandas</span>
+                            <span>68%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill warning" style="width: 68%"></div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Evaluación mensual</small>
+                </div>
+
+                <div class="dashboard-card network">
+                    <div class="metric-header">
+                        <h4 class="metric-title">🌐 Network Expansion</h4>
+                        <span class="metric-value">156</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Contactos Estratégicos</span>
+                            <span>156/200</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill info" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Engagement Rate</span>
+                            <span>84%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill info" style="width: 84%"></div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Análisis semanal</small>
+                </div>
+
+                <div class="dashboard-card goals">
+                    <div class="metric-header">
+                        <h4 class="metric-title">🚀 Progreso Objetivos</h4>
+                        <span class="metric-value">Q1</span>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Meta Trimestral</span>
+                            <span>72%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill warning" style="width: 72%"></div>
+                        </div>
+                    </div>
+                    <div class="progress-container">
+                        <div class="progress-label">
+                            <span>Meta Anual</span>
+                            <span>23%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill primary" style="width: 23%"></div>
+                        </div>
+                    </div>
+                    <small class="text-muted">Proyección actualizada</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metodologías de Tracking -->
+        <div class="lab-section">
+            <div class="section-title">
+                <div class="section-icon"><i class="fas fa-clipboard-check"></i></div>
+                Metodologías de Seguimiento Avanzado
+            </div>
+            
+            <div class="interactive-grid">
+                <div class="interactive-card" onclick="toggleDetails('tracking-1')">
+                    <div class="card-header">
+                        <h4 class="card-title">📊 Auditoría Estructurada</h4>
+                        <div class="expand-icon" id="icon-tracking-1">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <p>Infraestructura evaluativa que transforma progresión invisible en avance claramente visualizable</p>
+                    <div class="card-content" id="content-tracking-1">
+                        <hr class="my-3">
+                        <h5>🔍 Componentes de Auditoría:</h5>
+                        <ul class="mb-3">
+                            <li><strong>Evaluación Cuantificada:</strong> Porcentaje específico completado para cada objetivo</li>
+                            <li><strong>Documentación Sistemática:</strong> Logros verificables vs obstáculos encontrados</li>
+                            <li><strong>Análisis de Desviaciones:</strong> Identificación de ajustes potencialmente necesarios</li>
+                            <li><strong>Acciones Correctivas:</strong> Sistema que produce específicamente soluciones</li>
+                        </ul>
+                        <div class="timeline-container">
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">Semana 1</div>
+                                    <div class="timeline-content">
+                                        <strong>Setup Inicial</strong> - Establecimiento de métricas base y KPIs
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">Semana 2-3</div>
+                                    <div class="timeline-content">
+                                        <strong>Tracking Activo</strong> - Recolección de datos y ajustes menores
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">Semana 4</div>
+                                    <div class="timeline-content">
+                                        <strong>Evaluación Mensual</strong> - Auditoría completa y planning siguiente ciclo
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails('tracking-2')">
+                    <div class="card-header">
+                        <h4 class="card-title">📈 Métricas Intermedias</h4>
+                        <div class="expand-icon" id="icon-tracking-2">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <p>Sistema de indicadores parciales que verifican progreso entre hitos principales</p>
+                    <div class="card-content" id="content-tracking-2">
+                        <hr class="my-3">
+                        <h5>📋 KPIs de Seguimiento:</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Actividad Diaria</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill success" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Milestone Progress</span>
+                                        <span>72%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill warning" style="width: 72%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Quality Score</span>
+                                        <span>91%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill success" style="width: 91%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-container">
+                                    <div class="progress-label">
+                                        <span>Timeline Adherence</span>
+                                        <span>68%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill warning" style="width: 68%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails('tracking-3')">
+                    <div class="card-header">
+                        <h4 class="card-title">🔄 Ciclo de Revisión</h4>
+                        <div class="expand-icon" id="icon-tracking-3">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <p>Cadencia recurrente que garantiza continuidad evaluativa y ajustes oportunos</p>
+                    <div class="card-content" id="content-tracking-3">
+                        <hr class="my-3">
+                        <h5>⏱️ Frecuencias de Review:</h5>
+                        <div class="alert alert-info">
+                            <strong>Diario:</strong> Check rápido de actividades y adherencia a plan
+                        </div>
+                        <div class="alert alert-warning">
+                            <strong>Semanal:</strong> Análisis de métricas intermedias y ajustes menores
+                        </div>
+                        <div class="alert alert-success">
+                            <strong>Mensual:</strong> Auditoría completa con análisis de desviaciones
+                        </div>
+                        <div class="alert alert-primary">
+                            <strong>Trimestral:</strong> Revisión estratégica y realineación de objetivos
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculadora de Performance -->
+        <div class="calculator-section">
+            <h2 class="text-center mb-4">🧮 Calculadora de Performance Tracking</h2>
+            <p class="text-center text-muted mb-4">Calcula tu índice de progreso profesional y optimización de tracking personalizado</p>
+            
+            <div class="calculator-grid">
+                <div>
+                    <h4 class="mb-3">📝 Métricas Actuales</h4>
+                    <div class="input-group">
+                        <label class="input-label">Objetivos establecidos este año</label>
+                        <input type="number" class="form-input" id="total-goals" placeholder="12" oninput="calculatePerformance()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Objetivos completados</label>
+                        <input type="number" class="form-input" id="completed-goals" placeholder="8" oninput="calculatePerformance()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Días desde último review</label>
+                        <input type="number" class="form-input" id="days-since-review" placeholder="7" oninput="calculatePerformance()">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Horas semanales de desarrollo</label>
+                        <input type="number" class="form-input" id="weekly-development" placeholder="15" oninput="calculatePerformance()">
+                    </div>
+                </div>
+                
+                <div class="results-panel">
+                    <h4 class="mb-3">📊 Análisis de Performance</h4>
+                    <div class="result-item">
+                        <span>Tasa de Completación</span>
+                        <span class="result-value" id="completion-rate">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Performance Index</span>
+                        <span class="result-value" id="performance-index">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Consistency Score</span>
+                        <span class="result-value" id="consistency-score">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Optimización Requerida</span>
+                        <span class="result-value" id="optimization-level">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Proyección Anual</span>
+                        <span class="result-value" id="annual-projection">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Ranking Percentil</span>
+                        <span class="result-value" id="percentile-rank">--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulador de Escenarios de Tracking -->
+        <div class="simulator-section">
+            <h2 class="text-center mb-4">🎮 Simulador de Escenarios de Tracking</h2>
+            <p class="text-center text-muted mb-4">Explora diferentes metodologías de seguimiento y sus implicaciones en resultados</p>
+            
+            <div class="scenario-grid">
+                <div class="scenario-card" onclick="selectTrackingScenario('intensive')">
+                    <h4>🔥 Tracking Intensivo</h4>
+                    <p><strong>Metodología:</strong> Revisión diaria + métricas avanzadas</p>
+                    <ul>
+                        <li>Check-ins diarios de 15 minutos</li>
+                        <li>15+ KPIs monitoreados</li>
+                        <li>Reviews semanales estructuradas</li>
+                        <li>Ajustes inmediatos basados en data</li>
+                    </ul>
+                    <div class="mt-3">
+                        <strong>Efectividad:</strong> <span class="text-success">+156%</span><br>
+                        <strong>Tiempo requerido:</strong> <span class="text-warning">Alta</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card" onclick="selectTrackingScenario('balanced')">
+                    <h4>⚖️ Tracking Equilibrado</h4>
+                    <p><strong>Metodología:</strong> Revisión semanal + métricas core</p>
+                    <ul>
+                        <li>Check-ins semanales de 30 minutos</li>
+                        <li>8-10 KPIs monitoreados</li>
+                        <li>Reviews mensuales profundas</li>
+                        <li>Balance eficiencia-precisión</li>
+                    </ul>
+                    <div class="mt-3">
+                        <strong>Efectividad:</strong> <span class="text-success">+98%</span><br>
+                        <strong>Tiempo requerido:</strong> <span class="text-success">Moderado</span>
+                    </div>
+                </div>
+
+                <div class="scenario-card" onclick="selectTrackingScenario('minimal')">
+                    <h4>🎯 Tracking Mínimo</h4>
+                    <p><strong>Metodología:</strong> Revisión mensual + métricas esenciales</p>
+                    <ul>
+                        <li>Check-ins mensuales de 60 minutos</li>
+                        <li>4-5 KPIs monitoreados</li>
+                        <li>Reviews trimestrales estratégicas</li>
+                        <li>Enfoque en métricas de alto impacto</li>
+                    </ul>
+                    <div class="mt-3">
+                        <strong>Efectividad:</strong> <span class="text-success">+67%</span><br>
+                        <strong>Tiempo requerido:</strong> <span class="text-success">Bajo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tracking-scenario-results" class="mt-4" style="display: none;">
+                <div class="alert alert-primary">
+                    <h4 id="tracking-scenario-title">Análisis de Metodología</h4>
+                    <div id="tracking-scenario-details"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casos de Éxito -->
+        <div class="lab-section">
+            <div class="section-title">
+                <div class="section-icon"><i class="fas fa-trophy"></i></div>
+                Casos de Éxito: Masters del Tracking Profesional
+            </div>
+            
+            <div class="success-stories">
+                <div class="story-card">
+                    <div class="story-quote">
+                        "Implementé mi Sistema de Navegación Profesional evaluando mensualmente progreso específico hacia objetivos documentados. No realicé revisión casual, sino auditoría estructurada donde cada revisión producía específicamente acciones correctivas cuando desviaciones significativas eran detectadas."
+                    </div>
+                    <div class="story-author">Laura Sánchez - Data Scientist</div>
+                    <div class="text-muted">Junior Analyst → Senior Data Science Manager</div>
+                    <div class="story-stats">
+                        <div class="story-stat">
+                            <span class="stat-number-large">234%</span>
+                            <span>Incremento Salarial</span>
+                        </div>
+                        <div class="story-stat">
+                            <span class="stat-number-large">2.1</span>
+                            <span>Años Timeline</span>
+                        </div>
+                        <div class="story-stat">
+                            <span class="stat-number-large">94%</span>
+                            <span>Goal Completion</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-quote">
+                        "Mi dashboard visual representaba claramente estado actual relativo a trayectoria proyectada. Implementé evaluación cuantificada asignando porcentaje específico completado para cada objetivo activo, documentando sistemáticamente logros verificables vs obstáculos encontrados."
+                    </div>
+                    <div class="story-author">Miguel Torres - Product Manager</div>
+                    <div class="text-muted">Associate PM → VP of Product Strategy</div>
+                    <div class="story-stats">
+                        <div class="story-stat">
+                            <span class="stat-number-large">€142K</span>
+                            <span>Incremento Salarial</span>
+                        </div>
+                        <div class="story-stat">
+                            <span class="stat-number-large">3</span>
+                            <span>Años Timeline</span>
+                        </div>
+                        <div class="story-stat">
+                            <span class="stat-number-large">91%</span>
+                            <span>Target Achievement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <div class="story-quote">
+                        "Establecí cadencia recurrente garantizando continuidad evaluativa versus meramente aspiracional. Analicé específicamente desviaciones identificando ajustes potencialmente necesarios, manteniendo accountability estructuralmente implementada en lugar de dependencia motivacional."
+                    </div>
+                    <div class="story-author">Patricia González - Engineering Lead</div>
+                    <div class="text-muted">Software Developer → Principal Engineering Manager</div>
+                    <div class="story-stats">
+                        <div class="story-stat">
+                            <span class="stat-number-large">€89K</span>
+                            <span>Incremento Salarial</span>
+                        </div>
+                        <div class="story-stat">
+                            <span class="stat-number-large">2.5</span>
+                            <span>Años Timeline</span>
+                        </div>
+                        <div class="story-stat">
+                            <span class="stat-number-large">87%</span>
+                            <span>Consistency Score</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Final -->
+        <div class="lab-section" style="background: var(--gradient-primary); color: white; border: none;">
+            <div class="text-center">
+                <h2 class="mb-4">🏆 Domina tu Sistema de Navegación Profesional</h2>
+                <p class="lead mb-4">
+                    Has construido tu infraestructura de accountability que transforma aspiraciones potencialmente efímeras en implementación verificablemente sostenida. Tu sistema de tracking es la diferencia entre ciclos de entusiasmo-abandono y progresión sistemáticamente verificada.
+                </p>
+                
+                <div class="row text-center mb-4">
+                    <div class="col-md-3">
+                        <div class="mb-2">
+                            <i class="fas fa-chart-line fa-3x mb-2"></i>
+                            <h3>+234%</h3>
+                            <p>Incremento en Logros</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-2">
+                            <i class="fas fa-target fa-3x mb-2"></i>
+                            <h3>91%</h3>
+                            <p>Goal Completion Rate</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-2">
+                            <i class="fas fa-clock fa-3x mb-2"></i>
+                            <h3>67%</h3>
+                            <p>Reducción en Timeline</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="mb-2">
+                            <i class="fas fa-trophy fa-3x mb-2"></i>
+                            <h3>87%</h3>
+                            <p>Consistency Score</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn-primary-custom btn-lg">
+                    ¡A trackear tu progreso profesional! 📊
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Toggle Details Function
+        function toggleDetails(id) {
+            const content = document.getElementById('content-' + id);
+            const icon = document.getElementById('icon-' + id);
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.innerHTML = '<i class="fas fa-plus"></i>';
+            } else {
+                content.classList.add('expanded');
+                icon.innerHTML = '<i class="fas fa-minus"></i>';
+            }
+        }
+
+        // Calculate Performance Function
+        function calculatePerformance() {
+            const totalGoals = parseInt(document.getElementById('total-goals').value) || 0;
+            const completedGoals = parseInt(document.getElementById('completed-goals').value) || 0;
+            const daysSinceReview = parseInt(document.getElementById('days-since-review').value) || 0;
+            const weeklyDevelopment = parseInt(document.getElementById('weekly-development').value) || 0;
+            
+            if (totalGoals > 0) {
+                const completionRate = (completedGoals / totalGoals * 100).toFixed(1);
+                
+                // Performance Index calculation
+                let performanceIndex = completionRate;
+                if (daysSinceReview > 14) performanceIndex *= 0.8;
+                if (weeklyDevelopment < 10) performanceIndex *= 0.9;
+                if (weeklyDevelopment > 20) performanceIndex *= 1.1;
+                
+                // Consistency Score
+                let consistencyScore = 100;
+                if (daysSinceReview > 7) consistencyScore -= (daysSinceReview - 7) * 5;
+                if (consistencyScore < 0) consistencyScore = 0;
+                
+                // Optimization Level
+                let optimizationLevel = "Excelente";
+                if (performanceIndex < 70) optimizationLevel = "Crítica";
+                else if (performanceIndex < 85) optimizationLevel = "Moderada";
+                else if (performanceIndex < 95) optimizationLevel = "Mínima";
+                
+                // Annual Projection
+                const annualProjection = Math.min(totalGoals * (completedGoals / totalGoals) * 12 / (new Date().getMonth() + 1), totalGoals);
+                
+                // Percentile Rank
+                let percentileRank = 50;
+                if (performanceIndex > 90) percentileRank = 95;
+                else if (performanceIndex > 80) percentileRank = 85;
+                else if (performanceIndex > 70) percentileRank = 70;
+                else if (performanceIndex > 60) percentileRank = 55;
+                
+                document.getElementById('completion-rate').textContent = completionRate + '%';
+                document.getElementById('performance-index').textContent = performanceIndex.toFixed(1);
+                document.getElementById('consistency-score').textContent = consistencyScore.toFixed(0) + '%';
+                document.getElementById('optimization-level').textContent = optimizationLevel;
+                document.getElementById('annual-projection').textContent = annualProjection.toFixed(0) + ' objetivos';
+                document.getElementById('percentile-rank').textContent = 'Top ' + (100 - percentileRank) + '%';
+            }
+        }
+
+        // Select Tracking Scenario Function
+        function selectTrackingScenario(scenario) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            event.currentTarget.classList.add('selected');
+            
+            const scenarios = {
+                intensive: {
+                    title: '🔥 Análisis: Tracking Intensivo',
+                    details: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>✅ Ventajas:</h5>
+                                <ul>
+                                    <li>Máxima precisión y control del progreso (+156%)</li>
+                                    <li>Detección inmediata de desviaciones</li>
+                                    <li>Optimización continua de procesos</li>
+                                    <li>Accountability diario estructurado</li>
+                                    <li>Datos granulares para análisis profundo</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>⚠️ Consideraciones:</h5>
+                                <ul>
+                                    <li>Requiere 15+ minutos diarios dedicados</li>
+                                    <li>Posible fatiga por sobre-tracking</li>
+                                    <li>Riesgo de micro-gestión excesiva</li>
+                                    <li>Necesita disciplina consistente</li>
+                                    <li>Puede generar ansiedad por métricas</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <strong>Recomendado para:</strong> Profesionales en transiciones críticas, objetivos de alto stakes, o períodos de aceleración profesional.
+                        </div>
+                    `
+                },
+                balanced: {
+                    title: '⚖️ Análisis: Tracking Equilibrado',
+                    details: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>✅ Ventajas:</h5>
+                                <ul>
+                                    <li>Balance óptimo eficiencia-precisión (+98%)</li>
+                                    <li>Sostenible a largo plazo</li>
+                                    <li>Suficiente granularidad para insights</li>
+                                    <li>Flexibilidad para ajustes</li>
+                                    <li>Menor stress por tracking</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>⚠️ Consideraciones:</h5>
+                                <ul>
+                                    <li>Menos granularidad que tracking intensivo</li>
+                                    <li>Detección tardía de algunas desviaciones</li>
+                                    <li>Requiere autodisciplina semanal</li>
+                                    <li>Balance entre múltiples métricas</li>
+                                    <li>Posible complacencia en períodos estables</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <strong>Recomendado para:</strong> Mayoría de profesionales buscando crecimiento consistente con balance vida-trabajo.
+                        </div>
+                    `
+                },
+                minimal: {
+                    title: '🎯 Análisis: Tracking Mínimo',
+                    details: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>✅ Ventajas:</h5>
+                                <ul>
+                                    <li>Mínima inversión de tiempo (+67%)</li>
+                                    <li>Enfoque en métricas de alto impacto</li>
+                                    <li>Sostenible para personas muy ocupadas</li>
+                                    <li>Menos riesgo de fatiga por tracking</li>
+                                    <li>Simplicidad y claridad</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>⚠️ Consideraciones:</h5>
+                                <ul>
+                                    <li>Menor efectividad vs métodos intensivos</li>
+                                    <li>Detección tardía de problemas</li>
+                                    <li>Menos oportunidades de optimización</li>
+                                    <li>Requiere selección cuidadosa de métricas</li>
+                                    <li>Riesgo de complacencia o drift</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <strong>Recomendado para:</strong> Profesionales senior con cargas de trabajo intensas o en fases de mantenimiento/consolidación.
+                        </div>
+                    `
+                }
+            };
+            
+            const selectedScenario = scenarios[scenario];
+            document.getElementById('tracking-scenario-title').textContent = selectedScenario.title;
+            document.getElementById('tracking-scenario-details').innerHTML = selectedScenario.details;
+            document.getElementById('tracking-scenario-results').style.display = 'block';
+        }
+
+        // Animate progress bars on scroll
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+                const rect = bar.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                }
+            });
+        }
+
+        // Add scroll animations
+        window.addEventListener('scroll', animateProgressBars);
+        
+        // Initialize animations on load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(animateProgressBars, 500);
+        });
+
+        // Counter animation for dashboard metrics
+        function animateCounter(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                element.textContent = value + (element.dataset.suffix || '');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // Initialize counter animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const counters = document.querySelectorAll('.counter-animation');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent);
+                animateCounter(counter, 0, target, 2000);
+            });
+        });
+    </script>
+</body>
+</html>

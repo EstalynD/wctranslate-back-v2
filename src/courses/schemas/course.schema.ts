@@ -17,7 +17,13 @@ export enum CourseLevel {
   ADVANCED = 'ADVANCED',
 }
 
+export enum CourseType {
+  GENERAL = 'GENERAL',
+  MODULE = 'MODULE',
+}
+
 export enum CourseCategory {
+  GENERAL = 'GENERAL',
   MARKETING = 'MARKETING',
   TECHNICAL = 'TECHNICAL',
   PSYCHOLOGY = 'PSYCHOLOGY',
@@ -54,6 +60,13 @@ export class Course {
 
   @Prop({
     type: String,
+    enum: CourseType,
+    default: CourseType.GENERAL,
+  })
+  courseType: CourseType;
+
+  @Prop({
+    type: String,
     enum: CourseLevel,
     default: CourseLevel.BASIC,
   })
@@ -84,6 +97,11 @@ export class Course {
   @Prop({ type: [{ type: Types.ObjectId, ref: 'Theme' }], default: [] })
   themes: Types.ObjectId[];
 
+  // --- 🎯 Relación con Plataforma (opcional) ---
+  // Para cursos específicos de una plataforma (ej: Módulo Stripchat)
+  @Prop({ type: Types.ObjectId, ref: 'Platform', default: null })
+  platformId: Types.ObjectId | null;
+
   // --- 📈 Metadata ---
   @Prop({ default: 0 })
   totalDurationMinutes: number;
@@ -110,3 +128,4 @@ CourseSchema.index({ status: 1, category: 1 });
 CourseSchema.index({ allowedPlans: 1 });
 CourseSchema.index({ displayOrder: 1 });
 CourseSchema.index({ isFeatured: 1, status: 1 });
+CourseSchema.index({ platformId: 1 });

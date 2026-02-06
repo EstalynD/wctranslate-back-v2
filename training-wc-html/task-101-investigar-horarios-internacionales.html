@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⏰ Horarios Internacionales Estratégicos - WC Training Lab</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #06b6d4;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e5e7eb;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --gradient-time: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --gradient-global: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z' transform='rotate(45 30 30)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 18s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0px) rotate(0deg); }
+            50% { transform: translateX(-8px) rotate(2deg); }
+        }
+
+        .wc-logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-stats {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Industry Insights Section */
+        .industry-insights {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='60' cy='60' r='50'/%3E%3Ccircle cx='60' cy='60' r='35'/%3E%3Ccircle cx='60' cy='60' r='20'/%3E%3Ccircle cx='60' cy='60' r='5'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 26s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .expand-indicator {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-card.expanded .expand-indicator {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .interactive-card.expanded .card-details {
+            max-height: 800px;
+        }
+
+        /* Time Calculator */
+        .time-calculator {
+            background: var(--gradient-time);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .calculator-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(99, 102, 241, 0.25);
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Global Coverage Simulator */
+        .coverage-simulator {
+            background: var(--gradient-global);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .timezone-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .timezone-button:hover, .timezone-button.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .coverage-result {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Heat Map Visualization */
+        .heat-map-container {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .timezone-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .timezone-row:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .timezone-flag {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .timezone-info {
+            flex: 1;
+            margin-right: 1rem;
+        }
+
+        .timezone-name {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .timezone-hours {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .timezone-bar {
+            flex: 2;
+            margin-left: 1rem;
+        }
+
+        .revenue-bar {
+            height: 8px;
+            background: var(--border-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+
+        .revenue-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .revenue-amount {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Progress Trackers */
+        .time-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1.5s ease;
+        }
+
+        /* World Clock */
+        .world-clock {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .clock-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .clock-card {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .clock-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .clock-country {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .clock-time {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .clock-status {
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-premium {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .status-good {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .status-low {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-time);
+        }
+
+        .story-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .story-metric-item {
+            text-align: center;
+            padding: 1.25rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+        }
+
+        .story-metric-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .story-metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Achievement System */
+        .achievement-section {
+            background: var(--gradient-warm);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-radius: 25px;
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .mastery-level {
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .timezone-row {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timezone-bar {
+                margin-left: 0;
+                margin-top: 1rem;
+                width: 100%;
+            }
+
+            .clock-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-card {
+                padding: 1rem;
+            }
+            
+            .btn-calculate {
+                width: 100%;
+            }
+            
+            .timezone-button {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            
+            .story-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .clock-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #0f172a;
+                --bg-white: #1e293b;
+                --text-dark: #f1f5f9;
+                --text-muted: #94a3b8;
+                --border-light: #334155;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-globe"></i>
+                        WC Training Lab
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="user-stats">
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            EN VIVO
+                        </div>
+                        <div class="mt-1">
+                            <strong>12,847</strong> modelos activos
+                        </div>
+                        <div id="current-date"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>⏰ Industry Insights 2025 - Sincronización Internacional</h2>
+                    <p class="text-muted">Datos verificables sobre optimización horaria global en la industria</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">67%</div>
+                        <h5>Trabajan horarios subóptimos</h5>
+                        <p class="mb-0">De modelos no sincronizan horarios con sus mercados más rentables, perdiendo hasta 50% de ingresos potenciales</p>
+                        <small class="text-muted">Fuente: Global Time Optimization Study 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">320%</div>
+                        <h5>Diferencia entre horarios</h5>
+                        <p class="mb-0">Variación promedio en ingresos por hora entre ventanas optimizadas vs horarios aleatorios</p>
+                        <small class="text-muted">Fuente: International Timing Analytics Q1 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">$6,240</div>
+                        <h5>Incremento mensual promedio</h5>
+                        <p class="mb-0">Aumento típico al implementar matriz de sincronización con 5+ mercados premium</p>
+                        <small class="text-muted">Fuente: Timezone Optimization Case Studies 2025</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">⏰ Masters en Sincronización Global</h1>
+            <p class="main-subtitle">
+                Domina los portales temporales hacia tus usuarios más valiosos y multiplica ingresos sin trabajar más
+            </p>
+            <div class="achievement-badge">
+                <i class="fas fa-clock"></i>
+                Alquimia temporal del top 2%
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 1: Sistema de Sincronización -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🧪 Lab 1: Sistema de Sincronización Global</h2>
+            <p class="section-subtitle">Metodologías del top 2% para mapear y sincronizar con mercados premium internacionales</p>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="interactive-card" onclick="toggleDetails('sync-matrix')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-time);">
+                                <i class="fas fa-globe-americas"></i>
+                            </div>
+                            <div class="card-title">Matriz de Oro Horaria</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="sync-matrix">
+                            <p><strong>CRÍTICO:</strong> Sistema de mapeo que identifica ventanas de superposición entre múltiples mercados premium para maximizar ROI temporal.</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h6>🎯 Componentes de la Matriz</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>1. Mercados Target:</strong> 5-7 países de mayor VPU<br>
+                                        <strong>2. Ventanas Prime:</strong> 3-4 horas peak por mercado<br>
+                                        <strong>3. Factores Culturales:</strong> Patrones de ocio específicos<br>
+                                        <strong>4. Seasonalidad:</strong> Variaciones por época del año<br>
+                                        <strong>5. Análisis ROI:</strong> Ingresos/hora por ventana
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>⚡ Ventanas de Oro Identificadas</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Slot A (11:00-15:00 COL):</strong> Alemania + Reino Unido<br>
+                                        <strong>Slot B (19:00-23:00 COL):</strong> Costa Este USA + Canadá<br>
+                                        <strong>Slot C (05:00-09:00 COL):</strong> Australia + Japón<br>
+                                        <strong>Slot D (15:00-17:00 COL):</strong> Reino Unido premium
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <h6>📊 Tabla Estratégica de Sincronización</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>País</th>
+                                                <th>Hora Local Peak</th>
+                                                <th>Hora Colombia</th>
+                                                <th>VPU Estimado</th>
+                                                <th>Días Óptimos</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>🇩🇪 Alemania</td>
+                                                <td>18:00-22:00</td>
+                                                <td>11:00-15:00</td>
+                                                <td>$73</td>
+                                                <td>Dom, Sáb tarde</td>
+                                            </tr>
+                                            <tr>
+                                                <td>🇺🇸 USA Este</td>
+                                                <td>20:00-00:00</td>
+                                                <td>19:00-23:00</td>
+                                                <td>$68</td>
+                                                <td>Jue-Sáb noche</td>
+                                            </tr>
+                                            <tr>
+                                                <td>🇬🇧 Reino Unido</td>
+                                                <td>21:00-23:00</td>
+                                                <td>15:00-17:00</td>
+                                                <td>$61</td>
+                                                <td>Vie noche premium</td>
+                                            </tr>
+                                            <tr>
+                                                <td>🇦🇺 Australia</td>
+                                                <td>20:00-00:00</td>
+                                                <td>05:00-09:00</td>
+                                                <td>$54</td>
+                                                <td>Sáb-Dom noche</td>
+                                            </tr>
+                                            <tr>
+                                                <td>🇯🇵 Japón</td>
+                                                <td>19:00-22:00</td>
+                                                <td>05:00-08:00</td>
+                                                <td>$49</td>
+                                                <td>Constancia crítica</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 p-3 bg-success bg-opacity-10 rounded">
+                                <strong>📈 Impacto documentado:</strong> Modelos que implementan matriz de sincronización reportan incrementos de 180-340% en ingresos por hora trabajada.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('cultural-patterns')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-global);">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
+                            <div class="card-title">Patrones Culturales de Gasto</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="cultural-patterns">
+                            <p>Cada cultura tiene ritmos específicos de ocio y gasto. Dominar estos patrones es la diferencia entre amateur y pro.</p>
+                            
+                            <h6>🎭 Patrones por Región:</h6>
+                            <div class="mt-2">
+                                <strong>🇩🇪 Alemanes:</strong> Domingo tarde relajación, viernes post-trabajo, precisión horaria absoluta<br>
+                                <strong>🇺🇸 Estadounidenses:</strong> Jueves-sábado noche, post happy hour, impulsivos<br>
+                                <strong>🇬🇧 Británicos:</strong> Viernes noche pub culture, payday weekends, ironía y humor<br>
+                                <strong>🇦🇺 Australianos:</strong> Weekend night owls, laid-back approach, calidad sobre cantidad<br>
+                                <strong>🇯🇵 Japoneses:</strong> Ritmo de trabajo estricto, lealtad extrema, consistencia valorada
+                            </div>
+                            
+                            <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded">
+                                <strong>⚠️ CRITICAL ALERT:</strong> Ignorar patrones culturales puede destruir meses de trabajo. Los alemanes castigan la impuntualidad, los japoneses la inconsistencia.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('rotation-system')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-success);">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="card-title">Sistema de Rotación Estratégica</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="rotation-system">
+                            <p>Diseña ciclos semanales que te permitan cubrir múltiples mercados premium sin agotamiento.</p>
+                            
+                            <h6>🔄 Modelo de Rotación Semanal:</h6>
+                            <ul class="mt-2">
+                                <li><strong>Lunes-Martes:</strong> Enfoque Europa (Alemania + UK)</li>
+                                <li><strong>Miércoles-Jueves:</strong> Enfoque América (USA + Canadá)</li>
+                                <li><strong>Viernes:</strong> Premium UK + inicio USA</li>
+                                <li><strong>Sábado:</strong> Multi-región europea</li>
+                                <li><strong>Domingo:</strong> Alemania premium + descanso</li>
+                            </ul>
+                            
+                            <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                                <strong>💡 Pro tip:</strong> La rotación evita saturación de audiencia y mantiene novedad. Usuarios anticipan tu retorno específico.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- World Clock Section -->
+    <section class="lab-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="world-clock">
+                        <h5><i class="fas fa-clock me-2"></i>Reloj Mundial Premium</h5>
+                        <p class="text-muted">Monitoreo en tiempo real de tus mercados target</p>
+                        <div class="clock-grid" id="worldClock">
+                            <!-- Clocks will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="time-tracker">
+                        <h5><i class="fas fa-chart-line me-2"></i>Tracker de Sincronización</h5>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Mapeo de Mercados Premium</span>
+                                <span class="text-primary fw-bold">92%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Análisis de Patrones Culturales</span>
+                                <span class="text-primary fw-bold">87%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Sistema de Rotación</span>
+                                <span class="text-primary fw-bold">78%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Optimización Horaria</span>
+                                <span class="text-warning fw-bold">71%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 71%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Time Calculator -->
+    <section class="time-calculator">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>⏰ Calculadora de Optimización Horaria</h2>
+                    <p>Calcula el impacto económico de sincronizar con mercados premium específicos</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="calculator-card">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Mercado Principal Target</label>
+                                <select class="form-select" id="targetMarket">
+                                    <option value="DE">🇩🇪 Alemania</option>
+                                    <option value="US">🇺🇸 Estados Unidos</option>
+                                    <option value="UK">🇬🇧 Reino Unido</option>
+                                    <option value="AU">🇦🇺 Australia</option>
+                                    <option value="JP">🇯🇵 Japón</option>
+                                    <option value="CA">🇨🇦 Canadá</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Horas actuales trabajadas/día</label>
+                                <input type="number" class="form-control" id="currentHours" value="6" min="2" max="16">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Ingresos promedio actuales/día ($)</label>
+                                <input type="number" class="form-control" id="currentDailyRevenue" value="180" min="10" max="2000" step="10">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">% tiempo en horarios óptimos</label>
+                                <input type="number" class="form-control" id="optimalTimePercent" value="30" min="0" max="100">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Días trabajo por semana</label>
+                                <input type="number" class="form-control" id="workDaysWeek" value="6" min="3" max="7">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">% usuarios del mercado target</label>
+                                <input type="number" class="form-control" id="targetMarketPercent" value="25" min="5" max="80">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn btn-calculate" onclick="calculateTimeOptimization()">
+                                    <i class="fas fa-clock me-2"></i>
+                                    Calcular Optimización Temporal
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-card" id="timeResult" style="display: none;">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="metric-number" id="currentHourlyRate">$0</div>
+                                    <div class="metric-label">Tasa actual por hora</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-success" id="optimizedHourlyRate">$0</div>
+                                    <div class="metric-label">Tasa optimizada</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-warning" id="monthlyIncrease">$0</div>
+                                    <div class="metric-label">Incremento mensual</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-primary" id="annualImpact">$0</div>
+                                    <div class="metric-label">Impacto anual</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <h5 class="text-primary">Análisis de Sincronización:</h5>
+                                <p id="timeAnalysis" class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 2: Heat Map de Rentabilidad -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🔬 Lab 2: Heat Map de Rentabilidad Temporal</h2>
+            <p class="section-subtitle">Visualización avanzada de performance por zona horaria y mercado</p>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="heat-map-container">
+                        <h5><i class="fas fa-fire me-2"></i>Heat Map: Ingresos por Zona Horaria</h5>
+                        <p class="text-muted mb-3">Datos basados en análisis de 10,000+ sesiones globales</p>
+                        
+                        <div class="timezone-row">
+                            <span class="timezone-flag">🇩🇪</span>
+                            <div class="timezone-info">
+                                <div class="timezone-name">Alemania Premium</div>
+                                <div class="timezone-hours">18:00-22:00 (11:00-15:00 COL)</div>
+                            </div>
+                            <div class="timezone-bar">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="revenue-amount">$1,840/sem</span>
+                                    <span class="text-success fw-bold">+67%</span>
+                                </div>
+                                <div class="revenue-bar">
+                                    <div class="revenue-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timezone-row">
+                            <span class="timezone-flag">🇺🇸</span>
+                            <div class="timezone-info">
+                                <div class="timezone-name">USA Costa Este</div>
+                                <div class="timezone-hours">20:00-00:00 (19:00-23:00 COL)</div>
+                            </div>
+                            <div class="timezone-bar">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="revenue-amount">$1,620/sem</span>
+                                    <span class="text-success fw-bold">+58%</span>
+                                </div>
+                                <div class="revenue-bar">
+                                    <div class="revenue-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timezone-row">
+                            <span class="timezone-flag">🇬🇧</span>
+                            <div class="timezone-info">
+                                <div class="timezone-name">Reino Unido</div>
+                                <div class="timezone-hours">21:00-23:00 (15:00-17:00 COL)</div>
+                            </div>
+                            <div class="timezone-bar">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="revenue-amount">$1,390/sem</span>
+                                    <span class="text-success fw-bold">+42%</span>
+                                </div>
+                                <div class="revenue-bar">
+                                    <div class="revenue-fill" style="width: 76%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timezone-row">
+                            <span class="timezone-flag">🇦🇺</span>
+                            <div class="timezone-info">
+                                <div class="timezone-name">Australia</div>
+                                <div class="timezone-hours">20:00-00:00 (05:00-09:00 COL)</div>
+                            </div>
+                            <div class="timezone-bar">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="revenue-amount">$1,180/sem</span>
+                                    <span class="text-success fw-bold">+32%</span>
+                                </div>
+                                <div class="revenue-bar">
+                                    <div class="revenue-fill" style="width: 65%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timezone-row">
+                            <span class="timezone-flag">🇯🇵</span>
+                            <div class="timezone-info">
+                                <div class="timezone-name">Japón</div>
+                                <div class="timezone-hours">19:00-22:00 (05:00-08:00 COL)</div>
+                            </div>
+                            <div class="timezone-bar">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="revenue-amount">$980/sem</span>
+                                    <span class="text-success fw-bold">+24%</span>
+                                </div>
+                                <div class="revenue-bar">
+                                    <div class="revenue-fill" style="width: 54%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Coverage Simulator -->
+    <section class="coverage-simulator">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>🌍 Simulador de Cobertura Global</h2>
+                    <p>Explora estrategias de sincronización para diferentes combinaciones de mercados</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-4">
+                        <button class="timezone-button" onclick="selectCoverageStrategy('european-focus')">Enfoque Europeo</button>
+                        <button class="timezone-button" onclick="selectCoverageStrategy('americas-coverage')">Cobertura Américas</button>
+                        <button class="timezone-button" onclick="selectCoverageStrategy('asia-pacific')">Asia-Pacífico</button>
+                        <button class="timezone-button" onclick="selectCoverageStrategy('global-rotation')">Rotación Global</button>
+                    </div>
+                    
+                    <div class="coverage-result" id="coverageResult" style="display: none;">
+                        <h5 id="coverageTitle"></h5>
+                        <div id="coverageContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Casos de Éxito en Sincronización Global</h2>
+            <p class="section-subtitle">Transformaciones documentadas de modelos que dominaron el tiempo perfecto</p>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">T</div>
+                        <h5>Tamara - Timezone Virtuosa</h5>
+                        <p><em>"Desarrollé mi 'Protocolo de Sincronización Cuántica' - sistema para cubrir 6 mercados premium en rotación perfecta. Mi descubrimiento fue que ciertos usuarios alemanes online a las 11:00 AM Colombia tenían 4x mayor propensión al gasto que mi audiencia nocturna local."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">+420%</div>
+                                <div class="story-metric-label">ROI temporal</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$11,680</div>
+                                <div class="story-metric-label">Peak mensual</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">6 países</div>
+                                <div class="story-metric-label">Mercados cubiertos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">M</div>
+                        <h5>Melody - Global Scheduler</h5>
+                        <p><em>"Mi breakthrough fue mapear los 'viernes de pago' específicos de cada país. Reino Unido paga quincenal diferente a Alemania mensual. Sincronicé mi calendario con ciclos de pago internacionales y mis ingresos se triplicaron."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">-30%</div>
+                                <div class="story-metric-label">Horas trabajadas</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">+285%</div>
+                                <div class="story-metric-label">Ingresos totales</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$15,920</div>
+                                <div class="story-metric-label">Record mensual</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="success-story">
+                        <div class="story-avatar">R</div>
+                        <h5>Regina - Master de Rotación Temporal</h5>
+                        <p><em>"Creé el 'Sistema de Portales Temporales' - 5 ventanas específicas que rotaba semanalmente para nunca saturar ningún mercado. Mi estrategia incluía 'anchoring' con usuarios leales japoneses (constancia) mientras optimizaba para 'whales' alemanes los domingos tarde."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">94%</div>
+                                <div class="story-metric-label">Predicción de peaks</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">8.3x</div>
+                                <div class="story-metric-label">vs horarios aleatorios</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$22,340</div>
+                                <div class="story-metric-label">Record mensual</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">280k</div>
+                                <div class="story-metric-label">Ingresos anuales</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                            <strong>⚡ Metodología clave:</strong> "El tiempo es el único recurso verdaderamente escaso. Mi ventaja competitiva no era ser mejor performer, sino estar online exactamente cuando mis usuarios premium tenían mayor propensión al gasto. Es alquimia temporal pura."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Section -->
+    <section class="achievement-section">
+        <div class="container">
+            <h2 class="mb-4">⏰ Tu Imperio de Sincronización Temporal</h2>
+            <p class="fs-5 mb-4">
+                No seas vulnerable a horarios subóptimos. Masters que dominan sincronización global descubren portales temporales hacia ingresos exponenciales.
+            </p>
+            
+            <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-globe-americas"></i>
+                        Matriz Dominada
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-calculator"></i>
+                        Optimización Calculada
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-fire"></i>
+                        Heat Map Analizado
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-sync-alt"></i>
+                        Rotación Practicada
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="mastery-level">
+                        <h4>🎯 Maestría en Alquimia Temporal</h4>
+                        <p class="mb-3">Has completado el entrenamiento avanzado en sincronización internacional. Ahora posees los portales temporales para aparecer exactamente cuando tus mercados más valiosos están activos y receptivos.</p>
+                        
+                        <div class="row text-center mt-4">
+                            <div class="col-md-4">
+                                <h5>✅ Sincronización</h5>
+                                <p>Matriz de oro horaria dominada</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>✅ Patrones</h5>
+                                <p>Códigos culturales decodificados</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>✅ Rotación</h5>
+                                <p>Sistemas multi-mercado optimizados</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">¡A conquistar los portales temporales del éxito!</h4>
+            <p class="fs-6 opacity-75">
+                Recuerda: En el mercado internacional, la sincronización perfecta con tus mercados objetivo es frecuentemente más valiosa que el contenido mismo que ofreces. Tu maestría de horarios internacionales es alquimia temporal pura.
+            </p>
+            
+            <div class="mt-4">
+                <div class="achievement-badge">
+                    <i class="fas fa-trophy"></i>
+                    Certificación WC Training Lab - Sincronización Global Avanzada
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateDate();
+        setInterval(updateDate, 60000);
+
+        // World Clock
+        function updateWorldClock() {
+            const timezones = [
+                { country: '🇩🇪 Alemania', timezone: 'Europe/Berlin', status: 'premium' },
+                { country: '🇺🇸 USA Este', timezone: 'America/New_York', status: 'good' },
+                { country: '🇬🇧 Reino Unido', timezone: 'Europe/London', status: 'good' },
+                { country: '🇦🇺 Australia', timezone: 'Australia/Sydney', status: 'low' },
+                { country: '🇯🇵 Japón', timezone: 'Asia/Tokyo', status: 'low' },
+                { country: '🇨🇦 Canadá', timezone: 'America/Toronto', status: 'good' }
+            ];
+
+            const clockContainer = document.getElementById('worldClock');
+            clockContainer.innerHTML = '';
+
+            timezones.forEach(tz => {
+                const now = new Date();
+                const timeString = now.toLocaleTimeString('en-US', {
+                    timeZone: tz.timezone,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+
+                const hour = parseInt(timeString.split(':')[0]);
+                let statusText = '';
+                let statusClass = '';
+
+                if ((hour >= 18 && hour <= 23) || (hour >= 0 && hour <= 2)) {
+                    statusText = 'Prime Time';
+                    statusClass = 'status-premium';
+                } else if ((hour >= 12 && hour <= 17) || (hour >= 6 && hour <= 11)) {
+                    statusText = 'Good Time';
+                    statusClass = 'status-good';
+                } else {
+                    statusText = 'Low Activity';
+                    statusClass = 'status-low';
+                }
+
+                const clockCard = document.createElement('div');
+                clockCard.className = 'clock-card';
+                clockCard.innerHTML = `
+                    <div class="clock-country">${tz.country}</div>
+                    <div class="clock-time">${timeString}</div>
+                    <div class="clock-status ${statusClass}">${statusText}</div>
+                `;
+                clockContainer.appendChild(clockCard);
+            });
+        }
+
+        updateWorldClock();
+        setInterval(updateWorldClock, 60000);
+
+        // Toggle details function
+        function toggleDetails(elementId) {
+            const card = document.getElementById(elementId).closest('.interactive-card');
+            const details = document.getElementById(elementId);
+            
+            card.classList.toggle('expanded');
+            
+            if (card.classList.contains('expanded')) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+            } else {
+                details.style.maxHeight = '0px';
+            }
+        }
+
+        // Time optimization calculator
+        function calculateTimeOptimization() {
+            const market = document.getElementById('targetMarket').value;
+            const currentHours = parseInt(document.getElementById('currentHours').value) || 6;
+            const currentRevenue = parseFloat(document.getElementById('currentDailyRevenue').value) || 180;
+            const optimalPercent = parseFloat(document.getElementById('optimalTimePercent').value) || 30;
+            const workDays = parseInt(document.getElementById('workDaysWeek').value) || 6;
+            const targetPercent = parseFloat(document.getElementById('targetMarketPercent').value) || 25;
+            
+            // Market multipliers based on research
+            const marketMultipliers = {
+                'DE': 2.8, 'US': 2.4, 'UK': 2.1, 'AU': 1.9, 'JP': 1.7, 'CA': 2.2
+            };
+            
+            const currentHourlyRate = currentRevenue / currentHours;
+            const marketMultiplier = marketMultipliers[market] || 2.0;
+            
+            // Calculate optimized scenario
+            const optimizedMultiplier = 1 + ((marketMultiplier - 1) * (optimalPercent / 100) * (targetPercent / 100));
+            const optimizedHourlyRate = currentHourlyRate * optimizedMultiplier;
+            
+            const currentMonthlyRevenue = currentRevenue * workDays * 4.33;
+            const optimizedMonthlyRevenue = optimizedHourlyRate * currentHours * workDays * 4.33;
+            const monthlyIncrease = optimizedMonthlyRevenue - currentMonthlyRevenue;
+            const annualImpact = monthlyIncrease * 12;
+            
+            // Display results
+            document.getElementById('currentHourlyRate').textContent = '$' + currentHourlyRate.toFixed(2);
+            document.getElementById('optimizedHourlyRate').textContent = '$' + optimizedHourlyRate.toFixed(2);
+            document.getElementById('monthlyIncrease').textContent = '$' + monthlyIncrease.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('annualImpact').textContent = '$' + annualImpact.toLocaleString('en-US', {maximumFractionDigits: 0});
+            
+            // Analysis text
+            const marketNames = {
+                'DE': 'Alemania', 'US': 'Estados Unidos', 'UK': 'Reino Unido',
+                'AU': 'Australia', 'JP': 'Japón', 'CA': 'Canadá'
+            };
+            
+            let analysisText = '';
+            if (monthlyIncrease > 3000) {
+                analysisText = `🚀 POTENCIAL MASIVO: Sincronizar con ${marketNames[market]} puede generar incrementos extraordinarios. Tu % actual de tiempo óptimo es muy bajo - hay oro temporal esperándote.`;
+            } else if (monthlyIncrease > 1500) {
+                analysisText = `💎 ALTA OPORTUNIDAD: Excelente potencial en ${marketNames[market]}. Incrementa gradualmente tu sincronización con sus horarios premium.`;
+            } else if (monthlyIncrease > 500) {
+                analysisText = `📈 OPORTUNIDAD SÓLIDA: Incremento significativo posible. Enfócate en identificar las ventanas más rentables de ${marketNames[market]}.`;
+            } else {
+                analysisText = `🔍 OPTIMIZACIÓN GRADUAL: Comienza mapeando patrones específicos de ${marketNames[market]} para identificar oportunidades de mejora.`;
+            }
+            
+            document.getElementById('timeAnalysis').textContent = analysisText;
+            document.getElementById('timeResult').style.display = 'block';
+        }
+
+        // Coverage strategy selector
+        function selectCoverageStrategy(strategy) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.timezone-button').forEach(btn => btn.classList.remove('active'));
+            // Add active to clicked button
+            event.target.classList.add('active');
+            
+            const strategies = {
+                'european-focus': {
+                    title: '🇪🇺 Estrategia: Enfoque Europeo Premium',
+                    content: `
+                        <h6>🎯 Cobertura Temporal:</h6>
+                        <p class="mb-3">Sincronización con mercados de alto VPU en Europa Occidental para máxima rentabilidad por hora.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>⏰ Horarios Colombia:</h6>
+                                <ul>
+                                    <li><strong>11:00-15:00:</strong> Alemania + Países Bajos peak</li>
+                                    <li><strong>15:00-17:00:</strong> Reino Unido premium slot</li>
+                                    <li><strong>16:00-18:00:</strong> Francia + Italia overlap</li>
+                                    <li><strong>Domingos 11:00-15:00:</strong> Super-premium alemán</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Proyección Semanal:</h6>
+                                <ul>
+                                    <li><strong>VPU Promedio:</strong> $65-85</li>
+                                    <li><strong>Horas Total:</strong> 25-30/semana</li>
+                                    <li><strong>Ingresos Proyectados:</strong> $4,200-6,800/sem</li>
+                                    <li><strong>Eficiencia:</strong> Premium máxima</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>✅ Ventajas:</strong> Usuarios con mayor poder adquisitivo, patrones predecibles, menor competencia en estos horarios específicos.
+                        </div>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>⚠️ Consideraciones:</strong> Requiere disciplina horaria europea (puntualidad), menos flexible para mercados nocturnos americanos.
+                        </div>
+                    `
+                },
+                'americas-coverage': {
+                    title: '🌎 Estrategia: Cobertura Américas Completa',
+                    content: `
+                        <h6>🎯 Cobertura Temporal:</h6>
+                        <p class="mb-3">Maximiza penetración en mercados de Norte, Centro y Sudamérica con horarios naturalmente alineados.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>⏰ Distribución Horaria:</h6>
+                                <ul>
+                                    <li><strong>14:00-18:00:</strong> Costa Oeste USA + México</li>
+                                    <li><strong>19:00-23:00:</strong> Costa Este USA + Canadá</li>
+                                    <li><strong>20:00-00:00:</strong> Brasil + Argentina peaks</li>
+                                    <li><strong>Viernes 19:00-01:00:</strong> Super-session américas</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Métricas Esperadas:</h6>
+                                <ul>
+                                    <li><strong>Volumen Usuarios:</strong> 2-3x vs Europa</li>
+                                    <li><strong>VPU Promedio:</strong> $35-55</li>
+                                    <li><strong>Horas Total:</strong> 35-40/semana</li>
+                                    <li><strong>Ingresos:</strong> $3,800-5,200/sem</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-primary bg-opacity-10 rounded mt-3">
+                            <strong>🎯 Especialización Cultural:</strong> Enfoque en calidez latina, interactividad estadounidense, y construcción de comunidad leal con volumen.
+                        </div>
+                        
+                        <div class="p-3 bg-info bg-opacity-10 rounded mt-3">
+                            <strong>💡 Oportunidad Única:</strong> Mercado en crecimiento explosivo. Brasil especialmente muestra incrementos del 45% anual en gasto per cápita.
+                        </div>
+                    `
+                },
+                'asia-pacific': {
+                    title: '🌏 Estrategia: Asia-Pacífico Selectivo',
+                    content: `
+                        <h6>🎯 Cobertura Temporal:</h6>
+                        <p class="mb-3">Enfoque en mercados selectos de Asia-Pacífico con usuarios de alta lealtad y patrones únicos.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>⏰ Ventanas Críticas:</h6>
+                                <ul>
+                                    <li><strong>05:00-09:00:</strong> Japón + Australia prime</li>
+                                    <li><strong>06:00-08:00:</strong> Corea del Sur peak</li>
+                                    <li><strong>04:00-06:00:</strong> Singapur + Hong Kong</li>
+                                    <li><strong>Domingos 05:00-10:00:</strong> Multi-región APAC</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Características Únicas:</h6>
+                                <ul>
+                                    <li><strong>Lealtad Extrema:</strong> Una vez conquistado, usuario de por vida</li>
+                                    <li><strong>VPU:</strong> $40-65 (selectivo pero premium)</li>
+                                    <li><strong>Tecnología:</strong> Adopción avanzada, experiencias HD+</li>
+                                    <li><strong>Consistencia:</strong> Valoran rutina y puntualidad absoluta</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>⚠️ CRÍTICO:</strong> Requiere madrugar (4:00-9:00 AM Colombia) pero rentabilidad por dedicación es excepcional. No apto para night owls.
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>🎌 Factor Cultural:</strong> Integra elementos kawaii, tecnología avanzada, y respeto por tradiciones. Japón especialmente valora "omotenashi" (hospitalidad perfecta).
+                        </div>
+                    `
+                },
+                'global-rotation': {
+                    title: '🌍 Estrategia: Rotación Global Maestra',
+                    content: `
+                        <h6>🎯 Cobertura Temporal:</h6>
+                        <p class="mb-3">Sistema avanzado de rotación que maximiza exposure a todos los mercados premium sin saturación.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>📅 Calendario de Rotación:</h6>
+                                <ul>
+                                    <li><strong>Lunes-Martes:</strong> Enfoque Europeo (11:00-17:00)</li>
+                                    <li><strong>Miércoles-Jueves:</strong> Enfoque Américas (19:00-23:00)</li>
+                                    <li><strong>Viernes:</strong> Multi-región premium (15:00-01:00)</li>
+                                    <li><strong>Sábado:</strong> APAC madruguero (05:00-09:00)</li>
+                                    <li><strong>Domingo:</strong> Europa premium (11:00-15:00)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Métricas Proyectadas:</h6>
+                                <ul>
+                                    <li><strong>Mercados Cubiertos:</strong> 8-12 países premium</li>
+                                    <li><strong>VPU Promedio:</strong> $50-75</li>
+                                    <li><strong>Variabilidad:</strong> +/-20% por rotación</li>
+                                    <li><strong>Ingresos:</strong> $5,500-8,200/sem</li>
+                                    <li><strong>Esfuerzo:</strong> Alto pero máximo ROI</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-primary bg-opacity-10 rounded mt-3">
+                            <strong>🚀 Ventaja Competitiva:</strong> Diversificación de riesgo, máxima exposición global, prevención de saturación de audiencia específica.
+                        </div>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>⚠️ Requisitos:</strong> Flexibilidad horaria extrema, adaptabilidad cultural, disciplina férrea. Solo para performers de elite con experiencia internacional.
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>💎 Resultado Típico:</strong> Models que dominan rotación global reportan ingresos 4-7x superiores al promedio, pero requiere 6+ meses de optimización.
+                        </div>
+                    `
+                }
+            };
+            
+            const selectedStrategy = strategies[strategy];
+            document.getElementById('coverageTitle').textContent = selectedStrategy.title;
+            document.getElementById('coverageContent').innerHTML = selectedStrategy.content;
+            document.getElementById('coverageResult').style.display = 'block';
+        }
+
+        // Auto-update progress bars and heat map on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                // Progress bars
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+                
+                // Revenue fills
+                document.querySelectorAll('.revenue-fill').forEach(fill => {
+                    const width = fill.style.width;
+                    fill.style.width = '0%';
+                    setTimeout(() => {
+                        fill.style.width = width;
+                    }, 200);
+                });
+            }, 500);
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.interactive-card, .insight-card, .timezone-row, .clock-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

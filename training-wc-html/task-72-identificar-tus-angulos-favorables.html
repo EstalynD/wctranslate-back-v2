@@ -1,0 +1,1554 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0">
+    <title>WC Training: Master de Ángulos Favorables - Cartografía Visual</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ec407a;
+            --secondary-color: #d81b60;
+            --accent-color: #f06292;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #fff8f2;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #ec407a 0%, #d81b60 50%, #f06292 100%);
+            --gradient-secondary: linear-gradient(45deg, #f06292, #f8bbd0);
+            --gradient-success: linear-gradient(135deg, #28a745, #20c997);
+            --gradient-header: linear-gradient(135deg, #ec407a, #d81b60, #f06292, #f8bbd0);
+            --shadow-light: 0 4px 15px rgba(236, 64, 122, 0.1);
+            --shadow-medium: 0 8px 25px rgba(236, 64, 122, 0.15);
+            --shadow-heavy: 0 15px 40px rgba(236, 64, 122, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* WC BRANDING HEADER */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpolygon points='30 0 60 30 30 60 0 30'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: floatPattern 24s infinite linear;
+        }
+
+        @keyframes floatPattern {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-60px) translateY(-60px); }
+        }
+
+        .wc-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* INDUSTRY INSIGHTS */
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .insight-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* MAIN HEADER */
+        .main-header {
+            background: var(--gradient-header);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 20L60 40L40 60L20 40z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: floatDiamonds 22s infinite ease-in-out;
+        }
+
+        @keyframes floatDiamonds {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(45deg); }
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* SECTION LABS */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .lab-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* INTERACTIVE CARDS */
+        .interactive-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--primary-color);
+        }
+
+        .interactive-card.expanded {
+            background: linear-gradient(135deg, #fdecef, #ffffff);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .card-details.show {
+            max-height: 1000px;
+        }
+
+        /* ANGLE MAPPER */
+        .angle-mapper {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border: 2px solid var(--accent-color);
+        }
+
+        .angle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 2rem 0;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .angle-position {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .angle-position:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .angle-position.optimal {
+            background: var(--gradient-success);
+            border: 3px solid #20c997;
+        }
+
+        .angle-position.selected {
+            background: var(--gradient-primary);
+            border: 3px solid var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .angle-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CALCULATORS */
+        .calculator-section {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .progress-custom {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--border-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-custom {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+
+        .progress-bar-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* CAMERA SIMULATOR */
+        .camera-simulator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .camera-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .camera-control {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .slider-container {
+            margin: 1rem 0;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        /* SUCCESS STORIES */
+        .success-story {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 8rem;
+            position: absolute;
+            top: -2rem;
+            left: 1rem;
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .success-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* BUTTONS */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+            color: white;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            border: none;
+            border-radius: 20px;
+            padding: 0.6rem 1.5rem;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+
+        /* ANGLE ANALYSIS */
+        .angle-analysis {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid var(--accent-color);
+        }
+
+        .angle-score {
+            text-align: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .score-excellent {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        .score-good {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            color: white;
+        }
+
+        .score-fair {
+            background: linear-gradient(135deg, #fd7e14, #dc3545);
+            color: white;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .lab-section, .insights-section, .calculator-section, .camera-simulator {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .success-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-brand {
+                font-size: 1.4rem;
+            }
+            
+            .angle-grid {
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 300px;
+            }
+            
+            .camera-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.4rem;
+            }
+            
+            .interactive-card {
+                padding: 0.8rem;
+            }
+            
+            .calculator-section, .camera-simulator, .success-story {
+                padding: 1rem;
+            }
+            
+            .angle-grid {
+                grid-template-columns: 1fr;
+                max-width: 250px;
+            }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* EMOJI STYLES */
+        .emoji {
+            font-style: normal;
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
+
+        /* RATING SYSTEM */
+        .rating-stars {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .star {
+            font-size: 1.5rem;
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .star.active {
+            color: #ffc107;
+        }
+
+        .star:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- WC BRANDING HEADER -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-brand">
+                        <i class="fas fa-crown me-2"></i>WC Training Academy
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <span id="currentDateTime"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- INDUSTRY INSIGHTS -->
+    <section class="container mt-4">
+        <div class="insights-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">📊</span>Industry Insights 2025: Impacto de Ángulos Óptimos
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+156%</div>
+                        <div>Mejora en engagement con ángulos optimizados</div>
+                        <small>Visual Performance Analytics 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">74%</div>
+                        <div>Usuarios no optimizan sus ángulos de cámara</div>
+                        <small>Creator Positioning Study</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">3.2x</div>
+                        <div>Más tips con posicionamiento estratégico</div>
+                        <small>Revenue Optimization Report</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">
+                <span class="emoji">📐</span>Master de Ángulos Favorables
+            </h1>
+            <p class="main-subtitle">
+                Cartografía visual para potenciar tu presencia en cámara
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- LAB SECTION: FACIAL MAPPING -->
+        <section class="lab-section fade-in">
+            <h2 class="lab-title">
+                <span class="emoji">🗺️</span>Lab de Cartografía Facial: Análisis 360°
+            </h2>
+            <p>CRÍTICO: Tu rostro tiene geometrías únicas que responden diferente según la posición de cámara. Mapear estos ángulos no es vanidad, es estrategia profesional para maximizar tu impacto visual.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('mapping1')">
+                <div class="card-header">
+                    <span><i class="fas fa-compass"></i> Sistema de Coordenadas Faciales</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="mapping1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>EJES PRINCIPALES DE ANÁLISIS:</h6>
+                            <ul>
+                                <li><strong>Eje Horizontal:</strong> Frontal, ¾ derecha, ¾ izquierda, perfil</li>
+                                <li><strong>Eje Vertical:</strong> Altura de cámara (baja, media, alta)</li>
+                                <li><strong>Eje de Distancia:</strong> Primer plano, plano medio, plano general</li>
+                                <li><strong>Eje de Inclinación:</strong> Neutral, diagonal sutil, dramática</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>MÉTRICAS DE EVALUACIÓN:</h6>
+                            <ul>
+                                <li><strong>Definición facial:</strong> Claridad de facciones (1-10)</li>
+                                <li><strong>Proporción corporal:</strong> Armonía visual (1-10)</li>
+                                <li><strong>Conexión visual:</strong> Intensidad de mirada (1-10)</li>
+                                <li><strong>Magnetismo general:</strong> Impacto total (1-10)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('mapping2')">
+                <div class="card-header">
+                    <span><i class="fas fa-camera"></i> Protocolo de Grabación Estratégica</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="mapping2">
+                    <h6>SECUENCIA DE ANÁLISIS COMPLETA:</h6>
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <h6 style="color: var(--primary-color);">FASE 1: BARRIDO</h6>
+                            <ul>
+                                <li>Movimiento lento 180° horizontal</li>
+                                <li>3 alturas de cámara diferentes</li>
+                                <li>Expresión neutra constante</li>
+                                <li>Grabación continua 5 minutos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 style="color: var(--secondary-color);">FASE 2: ANÁLISIS</h6>
+                            <ul>
+                                <li>Captura frames cada 15°</li>
+                                <li>Evaluación con métricas 1-10</li>
+                                <li>Identificación de top 5 ángulos</li>
+                                <li>Marcado físico del espacio</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6 style="color: var(--accent-color);">FASE 3: OPTIMIZACIÓN</h6>
+                            <ul>
+                                <li>Ajustes finos de posición</li>
+                                <li>Pruebas con diferentes expresiones</li>
+                                <li>Validación con variaciones lumínicas</li>
+                                <li>Mapa final de coordenadas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ANGLE MAPPER INTERACTIVE -->
+        <section class="angle-mapper fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🎯</span>Mapeador Interactivo de Ángulos
+            </h2>
+            <p class="text-center mb-4">Haz click en cada posición para evaluar y marcar tus ángulos óptimos.</p>
+            
+            <div class="angle-grid">
+                <div class="angle-position" onclick="selectAngle(this, 'top-left')">
+                    <div class="angle-icon">↖️</div>
+                    <div>Superior Izq</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'top-center')">
+                    <div class="angle-icon">⬆️</div>
+                    <div>Superior Centro</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'top-right')">
+                    <div class="angle-icon">↗️</div>
+                    <div>Superior Der</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'center-left')">
+                    <div class="angle-icon">⬅️</div>
+                    <div>Centro Izq</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'center-center')">
+                    <div class="angle-icon">⭐</div>
+                    <div>Frontal</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'center-right')">
+                    <div class="angle-icon">➡️</div>
+                    <div>Centro Der</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'bottom-left')">
+                    <div class="angle-icon">↙️</div>
+                    <div>Inferior Izq</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'bottom-center')">
+                    <div class="angle-icon">⬇️</div>
+                    <div>Inferior Centro</div>
+                </div>
+                <div class="angle-position" onclick="selectAngle(this, 'bottom-right')">
+                    <div class="angle-icon">↘️</div>
+                    <div>Inferior Der</div>
+                </div>
+            </div>
+
+            <div id="angleAnalysis" class="angle-analysis" style="display: none;">
+                <h4 id="angleTitle">Análisis de Ángulo</h4>
+                <div class="rating-stars">
+                    <span class="star" onclick="rateAngle(1)">⭐</span>
+                    <span class="star" onclick="rateAngle(2)">⭐</span>
+                    <span class="star" onclick="rateAngle(3)">⭐</span>
+                    <span class="star" onclick="rateAngle(4)">⭐</span>
+                    <span class="star" onclick="rateAngle(5)">⭐</span>
+                </div>
+                <div id="angleDescription"></div>
+                <button class="btn btn-primary-custom mt-3" onclick="markAsOptimal()">
+                    <i class="fas fa-star"></i> Marcar como Óptimo
+                </button>
+            </div>
+
+            <div class="text-center mt-4">
+                <div class="progress-container">
+                    <label>Ángulos Analizados:</label>
+                    <div class="progress-custom">
+                        <div class="progress-bar-custom" id="angleProgress" style="width: 0%"></div>
+                    </div>
+                    <p class="mt-2"><span id="angleCount">0</span>/9 Posiciones Evaluadas</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALCULATOR SECTION -->
+        <section class="calculator-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">💰</span>Calculadora de ROI por Optimización Angular
+            </h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Puntuación visual actual (1-10)</label>
+                    <input type="number" class="calculator-input" id="currentVisual" placeholder="6" min="1" max="10" oninput="calculateAngleROI()">
+                    
+                    <label>Ángulos óptimos identificados (#)</label>
+                    <input type="number" class="calculator-input" id="optimalAngles" placeholder="3" oninput="calculateAngleROI()">
+                    
+                    <label>Ingresos mensuales actuales ($)</label>
+                    <input type="number" class="calculator-input" id="currentIncome" placeholder="5200" oninput="calculateAngleROI()">
+                    
+                    <label>Horas de transmisión diarias</label>
+                    <input type="number" class="calculator-input" id="streamHours" placeholder="5" oninput="calculateAngleROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calculator-result">
+                        <h4>Proyección de Optimización Angular:</h4>
+                        <div id="angleROIResults">
+                            <p><strong>Mejora en impacto visual:</strong> <span id="visualImprovement">+0%</span></p>
+                            <p><strong>Ingresos proyectados:</strong> <span id="projectedIncome">$0</span></p>
+                            <p><strong>ROI por reposicionamiento:</strong> <span id="repositionROI">0%</span></p>
+                            <p><strong>Tiempo de implementación:</strong> <span id="implementationTime">0 días</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="angle-score" id="overallScore">
+                        <h5>Puntuación General</h5>
+                        <div style="font-size: 2rem;" id="scoreDisplay">-</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CAMERA SIMULATOR -->
+        <section class="camera-simulator fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🎥</span>Simulador de Posicionamiento de Cámara
+            </h2>
+            <p class="text-center mb-4">Experimenta con diferentes configuraciones virtuales para encontrar tu setup ideal.</p>
+            
+            <div class="camera-controls">
+                <div class="camera-control">
+                    <h5><i class="fas fa-arrows-alt-h"></i> Ángulo Horizontal</h5>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="180" value="90" class="slider" id="horizontalAngle" oninput="updateCameraSimulation()">
+                        <div class="text-center mt-2">
+                            <span id="horizontalValue">90°</span> - <span id="horizontalLabel">Frontal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="camera-control">
+                    <h5><i class="fas fa-arrows-alt-v"></i> Altura de Cámara</h5>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="cameraHeight" oninput="updateCameraSimulation()">
+                        <div class="text-center mt-2">
+                            <span id="heightValue">50%</span> - <span id="heightLabel">Nivel Medio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="camera-control">
+                    <h5><i class="fas fa-search"></i> Distancia</h5>
+                    <div class="slider-container">
+                        <input type="range" min="30" max="100" value="65" class="slider" id="cameraDistance" oninput="updateCameraSimulation()">
+                        <div class="text-center mt-2">
+                            <span id="distanceValue">65%</span> - <span id="distanceLabel">Plano Medio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="camera-control">
+                    <h5><i class="fas fa-redo"></i> Inclinación</h5>
+                    <div class="slider-container">
+                        <input type="range" min="-45" max="45" value="0" class="slider" id="cameraTilt" oninput="updateCameraSimulation()">
+                        <div class="text-center mt-2">
+                            <span id="tiltValue">0°</span> - <span id="tiltLabel">Neutral</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <div class="calculator-result">
+                    <h4>Configuración Actual</h4>
+                    <div id="cameraConfig">
+                        <p><strong>Posición:</strong> <span id="configSummary">Configuración estándar</span></p>
+                        <p><strong>Puntuación estimada:</strong> <span id="configScore">7.5/10</span></p>
+                        <p><strong>Recomendación:</strong> <span id="configAdvice">Ajustar altura para mejor definición facial</span></p>
+                    </div>
+                    <button class="btn btn-primary-custom mt-3" onclick="saveConfiguration()">
+                        <i class="fas fa-save"></i> Guardar Configuración
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUCCESS STORIES -->
+        <section class="fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">👑</span>Casos de Éxito: Masters de la Optimización Angular
+            </h2>
+
+            <div class="success-story">
+                <h4>Ariana - "La Emperatriz de los Ángulos Perfectos"</h4>
+                <p>"Mi cartografía facial completa reveló que una inclinación diagonal de 15° hacia la derecha con cámara 20% por encima del nivel de mis ojos creaba una definición facial espectacular. Reorganicé completamente mi setup basándome en esta data."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">+240%</span>
+                        <span>Aumento en engagement visual</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">15°</span>
+                        <span>Ángulo óptimo descubierto</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$9,800</span>
+                        <span>Ingresos mensuales</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>Natasha - "Master de la Geometría Facial"</h4>
+                <p>"Identifiqué 5 ángulos específicos para diferentes tipos de contenido: conversación íntima, poses sensuales, interacción grupal. Ahora cambio entre ellos estratégicamente según el momento de la transmisión. Es como tener superpoderes visuales."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">5</span>
+                        <span>Ángulos estratégicos</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">92%</span>
+                        <span>Retención de audiencia</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">+380%</span>
+                        <span>Tips por sesión</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>Camila - "La Arquitecta del Posicionamiento"</h4>
+                <p>"Creé un 'mapa de coordenadas' marcado en el suelo de mi estudio. Tengo posiciones exactas para cada tipo de interacción. Mis usuarios notan inmediatamente cuando cambio a un ángulo más favorecedor, y eso se traduce en tips instantáneos."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">8</span>
+                        <span>Posiciones marcadas</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$13,400</span>
+                        <span>Mes récord</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">100%</span>
+                        <span>Optimización espacial</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKING SECTION -->
+        <section class="lab-section fade-in">
+            <h2 class="lab-title">
+                <span class="emoji">📈</span>Tracker de Progreso: Dominio Angular
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <label>Precisión de Posicionamiento (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="positionProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('positionProgress', 20)">
+                            Actualizar Precisión
+                        </button>
+                    </div>
+
+                    <div class="progress-container">
+                        <label>Consistencia Angular (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="consistencyProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('consistencyProgress', 20)">
+                            Actualizar Consistencia
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <label>Adaptabilidad de Setup (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="adaptabilityProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('adaptabilityProgress', 20)">
+                            Actualizar Adaptabilidad
+                        </button>
+                    </div>
+
+                    <div class="progress-container">
+                        <label>Impacto Visual Global (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="impactProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('impactProgress', 20)">
+                            Actualizar Impacto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL SUMMARY -->
+        <section class="lab-section fade-in text-center">
+            <h2 class="lab-title justify-content-center">
+                <span class="emoji">🏆</span>Tu Imperio Angular: Resumen de Maestría
+            </h2>
+            <p class="lead">Has masterizado la ciencia de los ángulos favorables. Tu posicionamiento estratégico ahora es un arma secreta para maximizar tu impacto visual.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">360°</div>
+                        <div>Cartografía completa dominada</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">5+</div>
+                        <div>Ángulos óptimos identificados</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">∞</div>
+                        <div>Potencial de impacto visual</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button class="btn btn-primary-custom btn-lg" onclick="celebrateAngleCompletion()">
+                    <i class="fas fa-crown me-2"></i>¡A Construir Tu Imperio Angular!
+                </button>
+            </div>
+
+            <p class="mt-4 text-muted">
+                <strong>Mantra del Master Angular:</strong> "No existen rostros poco fotogénicos; solo existen ángulos incorrectos. Tu mejor versión está ahí, esperando ser iluminada desde la perspectiva correcta."
+            </p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="wc-header mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 WC Training Academy - Formando Masters de Ángulos Favorables</p>
+            <p><small>Fuentes: Visual Performance Analytics 2025, Creator Positioning Study, Revenue Optimization Report</small></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let anglesAnalyzed = 0;
+        let optimalAnglesFound = 0;
+        let selectedAngle = null;
+        let angleRatings = {};
+        let savedConfigurations = [];
+
+        // Update current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const card = details.parentElement;
+            const icon = card.querySelector('.fa-chevron-down');
+            
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                card.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                details.classList.add('show');
+                card.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Select angle for analysis
+        function selectAngle(angleElement, angleId) {
+            // Remove previous selections
+            document.querySelectorAll('.angle-position').forEach(pos => {
+                pos.classList.remove('selected');
+            });
+            
+            // Select current
+            angleElement.classList.add('selected');
+            selectedAngle = angleId;
+            
+            // Show analysis panel
+            const analysisPanel = document.getElementById('angleAnalysis');
+            const titleElement = document.getElementById('angleTitle');
+            const descriptionElement = document.getElementById('angleDescription');
+            
+            // Clear previous rating
+            document.querySelectorAll('.star').forEach(star => star.classList.remove('active'));
+            
+            const angleNames = {
+                'top-left': 'Superior Izquierda',
+                'top-center': 'Superior Centro',
+                'top-right': 'Superior Derecha',
+                'center-left': 'Centro Izquierda',
+                'center-center': 'Frontal',
+                'center-right': 'Centro Derecha',
+                'bottom-left': 'Inferior Izquierda',
+                'bottom-center': 'Inferior Centro',
+                'bottom-right': 'Inferior Derecha'
+            };
+            
+            const angleDescriptions = {
+                'top-left': 'Cámara elevada hacia la izquierda. Suele crear sombras interesantes y definir la mandíbula.',
+                'top-center': 'Cámara directamente arriba. Ideal para mostrar ojos grandes y definir facciones.',
+                'top-right': 'Cámara elevada hacia la derecha. Favorece perfiles específicos y crea dinamismo.',
+                'center-left': 'Perfil izquierdo parcial. Útil para mostrar contornos faciales únicos.',
+                'center-center': 'Ángulo frontal clásico. Base para evaluar simetría y expresión directa.',
+                'center-right': 'Perfil derecho parcial. Permite mostrar el lado más favorecedor.',
+                'bottom-left': 'Ángulo bajo hacia la izquierda. Puede crear presencia dominante.',
+                'bottom-center': 'Cámara desde abajo. Proyecta autoridad pero requiere cuidado con proporciones.',
+                'bottom-right': 'Ángulo bajo hacia la derecha. Útil para poses dramáticas específicas.'
+            };
+            
+            titleElement.textContent = `Análisis: ${angleNames[angleId]}`;
+            descriptionElement.innerHTML = `
+                <p>${angleDescriptions[angleId]}</p>
+                <p><strong>Califica este ángulo del 1 al 5:</strong></p>
+            `;
+            
+            analysisPanel.style.display = 'block';
+            analysisPanel.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Rate an angle
+        function rateAngle(rating) {
+            if (!selectedAngle) return;
+            
+            // Update star display
+            document.querySelectorAll('.star').forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+            
+            // Store rating
+            angleRatings[selectedAngle] = rating;
+            
+            // Update progress if this is first time rating this angle
+            if (!angleRatings[selectedAngle + '_counted']) {
+                anglesAnalyzed++;
+                angleRatings[selectedAngle + '_counted'] = true;
+                updateAngleProgress();
+            }
+            
+            showAchievement(`Ángulo calificado: ${rating}/5 ⭐`);
+        }
+
+        // Mark angle as optimal
+        function markAsOptimal() {
+            if (!selectedAngle || !angleRatings[selectedAngle]) {
+                showAchievement('Primero califica este ángulo ⭐');
+                return;
+            }
+            
+            const angleElement = document.querySelector(`.angle-position.selected`);
+            if (angleElement && !angleElement.classList.contains('optimal')) {
+                angleElement.classList.add('optimal');
+                optimalAnglesFound++;
+                document.getElementById('optimalAngles').value = optimalAnglesFound;
+                calculateAngleROI();
+                showAchievement('¡Ángulo marcado como ÓPTIMO! 🎯');
+            }
+        }
+
+        // Update angle progress
+        function updateAngleProgress() {
+            const progressPercentage = (anglesAnalyzed / 9) * 100;
+            document.getElementById('angleProgress').style.width = progressPercentage + '%';
+            document.getElementById('angleCount').textContent = anglesAnalyzed;
+        }
+
+        // Calculate angle ROI
+        function calculateAngleROI() {
+            const currentVisual = parseFloat(document.getElementById('currentVisual').value) || 0;
+            const optimalAngles = parseFloat(document.getElementById('optimalAngles').value) || 0;
+            const income = parseFloat(document.getElementById('currentIncome').value) || 0;
+            const hours = parseFloat(document.getElementById('streamHours').value) || 0;
+
+            if (currentVisual > 0 && income > 0 && hours > 0) {
+                const visualImprovement = Math.min(optimalAngles * 12 + (10 - currentVisual) * 8, 60);
+                const incomeMultiplier = 1 + (visualImprovement / 100) * 1.8;
+                const projectedIncome = income * incomeMultiplier;
+                const roi = ((projectedIncome - income) / income) * 100;
+                const implementationDays = Math.max(5 - optimalAngles, 1);
+
+                document.getElementById('visualImprovement').textContent = `+${visualImprovement.toFixed(1)}%`;
+                document.getElementById('projectedIncome').textContent = `$${projectedIncome.toFixed(0)}`;
+                document.getElementById('repositionROI').textContent = `${roi.toFixed(0)}%`;
+                document.getElementById('implementationTime').textContent = `${implementationDays} días`;
+
+                // Update overall score
+                const newScore = Math.min(currentVisual + (visualImprovement / 10), 10);
+                const scoreElement = document.getElementById('overallScore');
+                const scoreDisplay = document.getElementById('scoreDisplay');
+                
+                scoreDisplay.textContent = `${newScore.toFixed(1)}/10`;
+                
+                if (newScore >= 8.5) {
+                    scoreElement.className = 'angle-score score-excellent';
+                } else if (newScore >= 7) {
+                    scoreElement.className = 'angle-score score-good';
+                } else {
+                    scoreElement.className = 'angle-score score-fair';
+                }
+            }
+        }
+
+        // Update camera simulation
+        function updateCameraSimulation() {
+            const horizontal = document.getElementById('horizontalAngle').value;
+            const height = document.getElementById('cameraHeight').value;
+            const distance = document.getElementById('cameraDistance').value;
+            const tilt = document.getElementById('cameraTilt').value;
+
+            // Update display values
+            document.getElementById('horizontalValue').textContent = horizontal + '°';
+            document.getElementById('heightValue').textContent = height + '%';
+            document.getElementById('distanceValue').textContent = distance + '%';
+            document.getElementById('tiltValue').textContent = tilt + '°';
+
+            // Update labels
+            const horizontalLabels = {
+                0: 'Perfil Izquierdo', 45: '3/4 Izquierdo', 90: 'Frontal', 
+                135: '3/4 Derecho', 180: 'Perfil Derecho'
+            };
+            
+            const heightLabels = {
+                0: 'Muy Baja', 25: 'Baja', 50: 'Nivel Medio', 75: 'Alta', 100: 'Muy Alta'
+            };
+            
+            const distanceLabels = {
+                30: 'Primer Plano', 50: 'Plano Medio-Corto', 65: 'Plano Medio', 
+                80: 'Plano Americano', 100: 'Plano General'
+            };
+            
+            const tiltLabels = {
+                '-45': 'Inclinación Izq', '-15': 'Leve Izquierda', 0: 'Neutral', 
+                15: 'Leve Derecha', 45: 'Inclinación Der'
+            };
+
+            document.getElementById('horizontalLabel').textContent = 
+                horizontalLabels[Math.round(horizontal/45)*45] || 'Intermedio';
+            document.getElementById('heightLabel').textContent = 
+                heightLabels[Math.round(height/25)*25] || 'Intermedio';
+            document.getElementById('distanceLabel').textContent = 
+                distanceLabels[Math.round(distance/20)*20] || 'Intermedio';
+            document.getElementById('tiltLabel').textContent = 
+                tiltLabels[Math.round(tilt/15)*15] || 'Intermedio';
+
+            // Calculate score
+            let score = 5;
+            
+            // Optimal ranges
+            if (horizontal >= 75 && horizontal <= 105) score += 1; // Near frontal
+            if (height >= 40 && height <= 70) score += 1; // Good height
+            if (distance >= 50 && distance <= 80) score += 1; // Good distance
+            if (Math.abs(tilt) <= 15) score += 0.5; // Minimal tilt
+            
+            // Update configuration summary
+            document.getElementById('configSummary').textContent = 
+                `H:${horizontal}° V:${height}% D:${distance}% T:${tilt}°`;
+            document.getElementById('configScore').textContent = `${score.toFixed(1)}/10`;
+            
+            const advice = score >= 8 ? 'Configuración excelente' : 
+                         score >= 6.5 ? 'Configuración buena, pequeños ajustes' : 
+                         'Requiere optimización significativa';
+            document.getElementById('configAdvice').textContent = advice;
+        }
+
+        // Save camera configuration
+        function saveConfiguration() {
+            const config = {
+                horizontal: document.getElementById('horizontalAngle').value,
+                height: document.getElementById('cameraHeight').value,
+                distance: document.getElementById('cameraDistance').value,
+                tilt: document.getElementById('cameraTilt').value,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            savedConfigurations.push(config);
+            showAchievement(`¡Configuración #${savedConfigurations.length} guardada! 💾`);
+        }
+
+        // Update progress bars
+        function updateProgress(progressId, increment) {
+            const progressBar = document.getElementById(progressId);
+            const currentWidth = parseInt(progressBar.style.width) || 0;
+            const newWidth = Math.min(currentWidth + increment, 100);
+            progressBar.style.width = newWidth + '%';
+            
+            if (newWidth === 100) {
+                progressBar.style.background = 'var(--gradient-success)';
+                setTimeout(() => {
+                    showAchievement('¡Habilidad Angular Perfeccionada! 🎯');
+                }, 500);
+            }
+        }
+
+        // Show achievement notification
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-success);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 15px;
+                box-shadow: var(--shadow-heavy);
+                z-index: 9999;
+                animation: slideInRight 0.5s ease;
+                max-width: 300px;
+            `;
+            achievement.textContent = message;
+            document.body.appendChild(achievement);
+            
+            setTimeout(() => {
+                achievement.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => achievement.remove(), 500);
+            }, 3000);
+        }
+
+        // Celebrate completion
+        function celebrateAngleCompletion() {
+            showAchievement('¡Felicidades! Eres un Master de Ángulos Favorables 📐🏆');
+            
+            // Create celebration effect
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 100);
+            }
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                top: -10px;
+                left: ${Math.random() * 100}%;
+                width: 10px;
+                height: 10px;
+                background: ${['#ec407a', '#d81b60', '#f06292', '#28a745'][Math.floor(Math.random() * 4)]};
+                transform: rotate(${Math.random() * 360}deg);
+                animation: fall 3s linear infinite;
+                z-index: 9999;
+            `;
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes fall {
+                to { transform: translateY(100vh) rotate(720deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+            
+            // Observe all fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Initialize camera simulation
+            updateCameraSimulation();
+            
+            // Auto-populate initial values
+            setTimeout(() => {
+                document.getElementById('currentVisual').value = '6';
+                document.getElementById('optimalAngles').value = optimalAnglesFound;
+                document.getElementById('currentIncome').value = '5200';
+                document.getElementById('streamHours').value = '5';
+                calculateAngleROI();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

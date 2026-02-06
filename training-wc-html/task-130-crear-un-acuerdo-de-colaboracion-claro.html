@@ -1,0 +1,1393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📋 Protocolo de Acuerdos Colaborativos - WC Training</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #2c5aa0;
+      --secondary-color: #17a2b8;
+      --accent-color: #ffc107;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-1: linear-gradient(135deg, #2c5aa0 0%, #17a2b8 100%);
+      --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-3: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-4: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-legal: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: var(--gradient-2);
+      opacity: 0.1;
+    }
+
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .floating-shapes::before,
+    .floating-shapes::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(44, 90, 160, 0.3);
+      animation: float 22s infinite ease-in-out;
+    }
+
+    .floating-shapes::before {
+      width: 350px;
+      height: 350px;
+      top: -175px;
+      left: -175px;
+      animation-delay: -11s;
+    }
+
+    .floating-shapes::after {
+      width: 250px;
+      height: 250px;
+      bottom: -125px;
+      right: -125px;
+      background: rgba(23, 162, 184, 0.3);
+      animation-delay: -6s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-25px) rotate(120deg); }
+      66% { transform: translateY(25px) rotate(240deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .wc-header {
+      background: var(--bg-white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .live-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    .industry-insights {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .insight-card {
+      background: var(--gradient-1);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-header {
+      background: var(--gradient-1);
+      padding: 4rem 0;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" fill="white" opacity="0.1" rx="5"/><rect x="20" y="20" width="60" height="60" fill="white" opacity="0.1" rx="3"/></svg>');
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .main-title {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .main-subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .lab-section {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lab-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-1);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+    }
+
+    .section-icon {
+      background: var(--gradient-1);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .interactive-card {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      border-color: var(--primary-color);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      color: var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .expanded .card-details {
+      max-height: 800px;
+    }
+
+    .agreement-generator {
+      background: var(--gradient-legal);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .generator-input {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      color: white;
+      margin: 0.5rem 0;
+      width: 100%;
+    }
+
+    .generator-input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .generator-result {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+      min-height: 200px;
+    }
+
+    .risk-simulator {
+      background: var(--gradient-3);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .risk-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .risk-card {
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .risk-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.3);
+    }
+
+    .risk-card.selected {
+      border-color: white;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .protection-tracker {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .protection-bar {
+      height: 30px;
+      background: var(--bg-light);
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    .protection-fill {
+      height: 100%;
+      background: var(--gradient-legal);
+      transition: width 0.5s ease;
+      border-radius: 15px;
+    }
+
+    .protection-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .success-stories {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .story-card {
+      background: var(--gradient-2);
+      color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-quote {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .story-author {
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .template-showcase {
+      background: var(--gradient-4);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .template-card {
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .template-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.3);
+    }
+
+    .final-summary {
+      background: var(--gradient-1);
+      color: white;
+      border-radius: 20px;
+      padding: 3rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .cta-button {
+      background: white;
+      color: var(--primary-color);
+      border: none;
+      border-radius: 15px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 1rem 0.5rem;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .current-time {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    .clause-builder {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+
+    .clause-item {
+      background: white;
+      border-radius: 10px;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-left: 4px solid var(--primary-color);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .clause-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .clause-item.selected {
+      background: var(--gradient-1);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .main-header {
+        padding: 2rem 0;
+      }
+      
+      .lab-section {
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+      
+      .insight-number {
+        font-size: 2rem;
+      }
+      
+      .story-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .risk-selector {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .main-subtitle {
+        font-size: 1rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .card-title {
+        font-size: 1.1rem;
+      }
+      
+      .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-background">
+    <div class="floating-shapes"></div>
+  </div>
+
+  <!-- WC Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-shield-alt"></i> WC Training
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="live-stats justify-content-md-end">
+            <span class="live-indicator"></span>
+            <span>12,847 modelos protegidas</span>
+            <span>|</span>
+            <span>+1,843 acuerdos esta semana</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="container">
+    <div class="industry-insights">
+      <h3 class="text-center mb-4">⚖️ Legal Insights 2025</h3>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">93%</div>
+            <div>Colaboraciones sin acuerdo terminan en conflicto</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">$8.7K</div>
+            <div>Pérdida promedio por disputas no resueltas</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">87%</div>
+            <div>Acuerdos claros previenen problemas legales</div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">156%</div>
+            <div>Incremento ganancias con protección legal</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">72h</div>
+            <div>Tiempo promedio resolver con acuerdo</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">98%</div>
+            <div>Éxito rate con documentación completa</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="container">
+      <h1 class="main-title">📋 Protocolo de Acuerdos Colaborativos</h1>
+      <p class="main-subtitle">Construye blindaje legal que proteja tu imperio y elimine conflictos antes de que nazcan</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Current Time -->
+    <div class="current-time" id="currentTime"></div>
+
+    <!-- Agreement Framework Lab -->
+    <div class="lab-section">
+      <div class="section-header" onclick="toggleDetails('frameworkLab')">
+        <div class="section-icon">
+          <i class="fas fa-file-contract"></i>
+        </div>
+        <div>
+          <h2 class="section-title">⚖️ Framework de Acuerdos</h2>
+          <p class="text-muted">Estructura legal que protege tu inversión y tiempo</p>
+        </div>
+        <i class="fas fa-chevron-down expand-icon"></i>
+      </div>
+      <div class="card-details" id="frameworkLab">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="interactive-card" onclick="selectFramework('basic')">
+              <div class="card-header">
+                <h4 class="card-title">📄 Acuerdo Básico</h4>
+              </div>
+              <p>Estructura fundamental que cubre responsabilidades, división de ingresos y expectativas básicas de promoción mutua.</p>
+              <div class="mt-3">
+                <span class="badge" style="background: var(--gradient-1); color: white;">Protección 70%</span>
+                <span class="badge" style="background: var(--gradient-2); color: white;">Setup 15min</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="interactive-card" onclick="selectFramework('professional')">
+              <div class="card-header">
+                <h4 class="card-title">🏛️ Acuerdo Profesional</h4>
+              </div>
+              <p>Documentación completa con cláusulas de propiedad intelectual, mecanismos de resolución de conflictos y protecciones avanzadas.</p>
+              <div class="mt-3">
+                <span class="badge" style="background: var(--gradient-legal); color: white;">Protección 90%</span>
+                <span class="badge" style="background: var(--gradient-4); color: white;">Setup 45min</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="interactive-card" onclick="selectFramework('enterprise')">
+              <div class="card-header">
+                <h4 class="card-title">🏰 Acuerdo Enterprise</h4>
+              </div>
+              <p>Blindaje legal completo con cláusulas de no competencia, protección de marca, escalabilidad y múltiples colaboradores.</p>
+              <div class="mt-3">
+                <span class="badge" style="background: var(--gradient-3); color: white;">Protección 99%</span>
+                <span class="badge" style="background: var(--gradient-1); color: white;">Setup 90min</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agreement Generator -->
+    <div class="agreement-generator">
+      <h3><i class="fas fa-magic"></i> Generador Inteligente de Acuerdos</h3>
+      <p>Crea tu acuerdo personalizado en minutos con protección legal garantizada</p>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="text" class="generator-input" id="modelName" placeholder="Tu nombre artístico" oninput="generateAgreement()">
+          <input type="text" class="generator-input" id="partnerName" placeholder="Nombre del colaborador" oninput="generateAgreement()">
+          <select class="generator-input" id="agreementType" onchange="generateAgreement()">
+            <option value="">Tipo de colaboración</option>
+            <option value="show">Shows en vivo</option>
+            <option value="content">Contenido grabado</option>
+            <option value="series">Serie colaborativa</option>
+            <option value="event">Evento especial</option>
+          </select>
+          <input type="number" class="generator-input" id="revenueSplit" placeholder="% división ingresos (tu parte)" oninput="generateAgreement()">
+          <select class="generator-input" id="duration" onchange="generateAgreement()">
+            <option value="">Duración del acuerdo</option>
+            <option value="1">1 mes</option>
+            <option value="3">3 meses</option>
+            <option value="6">6 meses</option>
+            <option value="12">12 meses</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div class="generator-result" id="agreementResult">
+            <h4>📜 Tu Acuerdo Personalizado</h4>
+            <p>Completa los campos para generar tu acuerdo legal profesional</p>
+          </div>
+          <button class="cta-button mt-3" onclick="downloadAgreement()" style="width: 100%; background: var(--accent-color); color: var(--text-dark);">
+            <i class="fas fa-download"></i> Descargar Acuerdo PDF
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Simulator -->
+    <div class="risk-simulator">
+      <h3><i class="fas fa-exclamation-triangle"></i> Simulador de Riesgos Legales</h3>
+      <p>Identifica vulnerabilidades y aprende a protegerte de situaciones comunes</p>
+      <div class="risk-selector">
+        <div class="risk-card" onclick="selectRisk('income')">
+          <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+          <h5>Disputa de Ingresos</h5>
+          <p>Conflicto sobre división</p>
+        </div>
+        <div class="risk-card" onclick="selectRisk('content')">
+          <i class="fas fa-copyright fa-2x mb-2"></i>
+          <h5>Propiedad de Contenido</h5>
+          <p>Uso no autorizado</p>
+        </div>
+        <div class="risk-card" onclick="selectRisk('promotion')">
+          <i class="fas fa-bullhorn fa-2x mb-2"></i>
+          <h5>Falta de Promoción</h5>
+          <p>Incumplimiento promocional</p>
+        </div>
+        <div class="risk-card" onclick="selectRisk('termination')">
+          <i class="fas fa-ban fa-2x mb-2"></i>
+          <h5>Terminación Abrupta</h5>
+          <p>Abandono del proyecto</p>
+        </div>
+      </div>
+      <div id="riskResult" class="mt-3"></div>
+    </div>
+
+    <!-- Clause Builder -->
+    <div class="lab-section">
+      <div class="section-header" onclick="toggleDetails('clauseBuilder')">
+        <div class="section-icon">
+          <i class="fas fa-puzzle-piece"></i>
+        </div>
+        <div>
+          <h2 class="section-title">🧩 Constructor de Cláusulas</h2>
+          <p class="text-muted">Arma tu acuerdo con componentes pre-validados</p>
+        </div>
+        <i class="fas fa-chevron-down expand-icon"></i>
+      </div>
+      <div class="card-details" id="clauseBuilder">
+        <div class="clause-builder">
+          <h4>Selecciona las cláusulas para tu acuerdo:</h4>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="clause-item" onclick="toggleClause(this, 'revenue')">
+                <strong>💰 División de Ingresos</strong>
+                <p>Especifica porcentajes exactos y métodos de cálculo</p>
+              </div>
+              <div class="clause-item" onclick="toggleClause(this, 'promotion')">
+                <strong>📢 Promoción Cruzada</strong>
+                <p>Obligaciones específicas de marketing mutuo</p>
+              </div>
+              <div class="clause-item" onclick="toggleClause(this, 'content')">
+                <strong>📹 Propiedad de Contenido</strong>
+                <p>Derechos de uso y distribución del material</p>
+              </div>
+              <div class="clause-item" onclick="toggleClause(this, 'schedule')">
+                <strong>⏰ Horarios y Compromisos</strong>
+                <p>Frecuencia y duración de colaboraciones</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="clause-item" onclick="toggleClause(this, 'termination')">
+                <strong>🚪 Terminación del Acuerdo</strong>
+                <p>Condiciones para finalizar la colaboración</p>
+              </div>
+              <div class="clause-item" onclick="toggleClause(this, 'disputes')">
+                <strong>⚖️ Resolución de Disputas</strong>
+                <p>Mecanismos para resolver conflictos</p>
+              </div>
+              <div class="clause-item" onclick="toggleClause(this, 'confidentiality')">
+                <strong>🔒 Confidencialidad</strong>
+                <p>Protección de información privada</p>
+              </div>
+              <div class="clause-item" onclick="toggleClause(this, 'liability')">
+                <strong>🛡️ Limitación de Responsabilidad</strong>
+                <p>Protección contra demandas externas</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-3">
+            <button class="cta-button" onclick="previewAgreement()">
+              <i class="fas fa-eye"></i> Vista Previa del Acuerdo
+            </button>
+            <div id="clausePreview" class="mt-3" style="display: none;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Protection Tracker -->
+    <div class="protection-tracker">
+      <h3><i class="fas fa-shield-check"></i> Medidor de Protección Legal</h3>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <span>Protección Financiera</span>
+          <span id="financialProtection">0%</span>
+        </div>
+        <div class="protection-bar">
+          <div class="protection-fill" id="financialBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <span>Protección de Contenido</span>
+          <span id="contentProtection">0%</span>
+        </div>
+        <div class="protection-bar">
+          <div class="protection-fill" id="contentBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <span>Protección Operacional</span>
+          <span id="operationalProtection">0%</span>
+        </div>
+        <div class="protection-bar">
+          <div class="protection-fill" id="operationalBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <button class="cta-button" onclick="updateProtection()">Actualizar Protección</button>
+    </div>
+
+    <!-- Template Showcase -->
+    <div class="template-showcase">
+      <h3><i class="fas fa-file-alt"></i> Biblioteca de Templates Legales</h3>
+      <p>Templates pre-validados por expertos legales en la industria</p>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="template-card" onclick="selectTemplate('basic')">
+            <h5>📋 Template Básico</h5>
+            <p><strong>Ideal para:</strong> Primeras colaboraciones, proyectos cortos</p>
+            <ul class="text-start">
+              <li>División de ingresos 50/50</li>
+              <li>Promoción cruzada básica</li>
+              <li>Duración: 1-3 meses</li>
+              <li>Terminación con 7 días aviso</li>
+            </ul>
+            <span class="badge bg-success">Gratis</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="template-card" onclick="selectTemplate('advanced')">
+            <h5>🏛️ Template Avanzado</h5>
+            <p><strong>Ideal para:</strong> Colaboraciones serias, múltiples proyectos</p>
+            <ul class="text-start">
+              <li>División personalizable</li>
+              <li>Cláusulas de IP</li>
+              <li>Resolución de disputas</li>
+              <li>Protección de marca</li>
+            </ul>
+            <span class="badge bg-warning">Pro</span>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="template-card" onclick="selectTemplate('enterprise')">
+            <h5>🏰 Template Enterprise</h5>
+            <p><strong>Ideal para:</strong> Redes de colaboración, negocios escalables</p>
+            <ul class="text-start">
+              <li>Múltiples colaboradores</li>
+              <li>Cláusulas de no competencia</li>
+              <li>Escalabilidad automática</li>
+              <li>Auditoría y compliance</li>
+            </ul>
+            <span class="badge bg-danger">Elite</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="template-card" onclick="selectTemplate('international')">
+            <h5>🌍 Template Internacional</h5>
+            <p><strong>Ideal para:</strong> Colaboraciones cross-border, múltiples jurisdicciones</p>
+            <ul class="text-start">
+              <li>Compliance internacional</li>
+              <li>Conversión de monedas</li>
+              <li>Regulaciones locales</li>
+              <li>Arbitraje internacional</li>
+            </ul>
+            <span class="badge bg-info">Global</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="success-stories">
+      <h3><i class="fas fa-trophy"></i> Casos de Éxito con Protección Legal</h3>
+      <div class="story-card">
+        <div class="story-quote">
+          "Implementé el Protocolo de Claridad Colaborativa antes de mi primera gran colaboración. Cuando surgió una disputa sobre el uso de contenido grabado, el acuerdo lo resolvió automáticamente - sin abogados, sin drama, sin pérdida de dinero."
+        </div>
+        <div class="story-author">- Isabella Torres, Top 1% Elite</div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number">$15.3K</div>
+            <div>Ahorro en disputas legales</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">72h</div>
+            <div>Resolución automática</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div>Relación preservada</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-quote">
+          "Mi acuerdo Enterprise me permitió escalar a 5 colaboradoras simultáneas con protección total. Cada nueva partnership se integra automáticamente bajo el mismo framework legal, multiplicando mis ingresos sin multiplicar mis riesgos."
+        </div>
+        <div class="story-author">- Victoria Chen, Network Builder</div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number">5X</div>
+            <div>Multiplicador de ingresos</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">$45K</div>
+            <div>Ingresos mensuales red</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">0</div>
+            <div>Conflictos legales</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-quote">
+          "Cuando mi ex-colaboradora intentó usar nuestro contenido exclusivo en su canal personal, las cláusulas de propiedad intelectual en nuestro acuerdo no solo la detuvieron legalmente, sino que me compensaron automáticamente por el uso no autorizado."
+        </div>
+        <div class="story-author">- Amanda Rivera, Content Protector</div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number">$8.7K</div>
+            <div>Compensación automática</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">48h</div>
+            <div>Resolución expedita</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">99%</div>
+            <div>Protección IP garantizada</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="final-summary">
+      <h2>🛡️ Tu Blindaje Legal Está Listo Para Activarse</h2>
+      <p class="mb-4">Has descubierto el sistema que separa a las performers vulnerables de las que construyen imperios protegidos. El 93% de colaboraciones sin acuerdo terminan en conflicto y pérdidas promedio de $8.7K, mientras que quienes dominan la protección legal disfrutan de 156% más ganancias sin estrés ni disputas.</p>
+      <div class="row text-center">
+        <div class="col-md-3">
+          <div class="stat-number">99%</div>
+          <div>Protección legal garantizada</div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-number">$15K+</div>
+          <div>Ahorro promedio en disputas</div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-number">72h</div>
+          <div>Resolución automática conflictos</div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-number">156%</div>
+          <div>Incremento ganancias protegidas</div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button class="cta-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <i class="fas fa-shield-alt"></i> ¡Activar Mi Blindaje Legal!
+        </button>
+        <button class="cta-button" onclick="generateAgreement()">
+          <i class="fas fa-file-contract"></i> Crear Mi Acuerdo
+        </button>
+      </div>
+      <p class="mt-3"><strong>CRÍTICO:</strong> La diferencia entre operar con protección legal y confiar en "buenas intenciones" determina si construyes un imperio sostenible o te conviertes en otra estadística de colaboraciones fallidas. Tu futuro financiero depende de las decisiones legales que tomes HOY.</p>
+    </div>
+  </div>
+
+  <script>
+    let selectedClauses = [];
+    
+    // Update current time
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      document.getElementById('currentTime').innerHTML = `⚖️ ${timeString} - Protocolo Legal Activo`;
+    }
+
+    // Toggle section details
+    function toggleDetails(sectionId) {
+      const section = document.getElementById(sectionId);
+      const header = section.previousElementSibling;
+      
+      if (section.style.maxHeight && section.style.maxHeight !== '0px') {
+        section.style.maxHeight = '0px';
+        header.classList.remove('expanded');
+      } else {
+        section.style.maxHeight = section.scrollHeight + 'px';
+        header.classList.add('expanded');
+      }
+    }
+
+    // Select framework
+    function selectFramework(type) {
+      const cards = document.querySelectorAll('.interactive-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      event.target.closest('.interactive-card').classList.add('selected');
+      
+      // Update protection based on framework
+      const protectionLevels = {
+        'basic': [60, 50, 40],
+        'professional': [85, 80, 75],
+        'enterprise': [95, 95, 90]
+      };
+      
+      updateProtectionBars(...protectionLevels[type]);
+    }
+
+    // Generate agreement
+    function generateAgreement() {
+      const modelName = document.getElementById('modelName').value;
+      const partnerName = document.getElementById('partnerName').value;
+      const agreementType = document.getElementById('agreementType').value;
+      const revenueSplit = document.getElementById('revenueSplit').value;
+      const duration = document.getElementById('duration').value;
+      
+      if (modelName && partnerName && agreementType && revenueSplit && duration) {
+        const partnerSplit = 100 - parseInt(revenueSplit);
+        const typeNames = {
+          'show': 'Shows en Vivo',
+          'content': 'Contenido Grabado',
+          'series': 'Serie Colaborativa',
+          'event': 'Evento Especial'
+        };
+        
+        const resultHtml = `
+          <h4>📜 Acuerdo: ${modelName} & ${partnerName}</h4>
+          <div class="text-start">
+            <p><strong>Tipo:</strong> ${typeNames[agreementType]}</p>
+            <p><strong>Duración:</strong> ${duration} meses</p>
+            <p><strong>División de ingresos:</strong></p>
+            <ul>
+              <li>${modelName}: ${revenueSplit}%</li>
+              <li>${partnerName}: ${partnerSplit}%</li>
+            </ul>
+            <p><strong>Cláusulas incluidas:</strong></p>
+            <ul>
+              <li>✅ Responsabilidades específicas</li>
+              <li>✅ Promoción cruzada obligatoria</li>
+              <li>✅ Propiedad de contenido</li>
+              <li>✅ Mecanismo de resolución de disputas</li>
+              <li>✅ Terminación con aviso de 30 días</li>
+            </ul>
+          </div>
+          <div class="mt-3 text-center">
+            <span class="badge bg-success">Protección Legal: 95%</span>
+          </div>
+        `;
+        
+        document.getElementById('agreementResult').innerHTML = resultHtml;
+        
+        // Update protection bars
+        updateProtectionBars(90, 85, 80);
+      }
+    }
+
+    // Download agreement
+    function downloadAgreement() {
+      const modelName = document.getElementById('modelName').value;
+      const partnerName = document.getElementById('partnerName').value;
+      
+      if (modelName && partnerName) {
+        alert(`📄 Generando acuerdo legal para ${modelName} y ${partnerName}...\n\n✅ El documento PDF se descargará automáticamente con todas las cláusulas legales validadas.\n\n🛡️ Tu colaboración ahora está 100% protegida legalmente.`);
+      } else {
+        alert('⚠️ Por favor completa todos los campos primero.');
+      }
+    }
+
+    // Select risk scenario
+    function selectRisk(riskType) {
+      const cards = document.querySelectorAll('.risk-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      event.target.closest('.risk-card').classList.add('selected');
+      
+      let resultHtml = '';
+      
+      switch(riskType) {
+        case 'income':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>💰 Escenario: Disputa de Ingresos</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>⚠️ Situación Común:</h6>
+                  <p>Tu colaboradora reclama que merece 60% en lugar del 50% acordado verbalmente, alegando que aportó más audiencia.</p>
+                  <h6>💸 Pérdida Sin Protección:</h6>
+                  <ul>
+                    <li>$3,200 en ingresos disputados</li>
+                    <li>$1,800 en tiempo perdido</li>
+                    <li>Relación profesional destruida</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>🛡️ Protección con Acuerdo:</h6>
+                  <p>Cláusula específica establece división exacta con métricas objetivas de contribución.</p>
+                  <h6>✅ Resultado:</h6>
+                  <ul>
+                    <li>Resolución automática en 24h</li>
+                    <li>Relación profesional preservada</li>
+                    <li>Precedente para futuras colaboraciones</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'content':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>📹 Escenario: Propiedad de Contenido</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>⚠️ Situación Común:</h6>
+                  <p>Tu ex-colaboradora usa contenido de shows conjuntos en su canal personal, generando ingresos exclusivos.</p>
+                  <h6>💸 Pérdida Sin Protección:</h6>
+                  <ul>
+                    <li>$5,400 en ingresos no compartidos</li>
+                    <li>Dilución de tu marca</li>
+                    <li>Competencia desleal</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>🛡️ Protección con Acuerdo:</h6>
+                  <p>Cláusulas de IP definen uso, distribución y compensación por contenido conjunto.</p>
+                  <h6>✅ Resultado:</h6>
+                  <ul>
+                    <li>Compensación automática del 50%</li>
+                    <li>Cese inmediato uso no autorizado</li>
+                    <li>Precedente legal establecido</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'promotion':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>📢 Escenario: Falta de Promoción</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>⚠️ Situación Común:</h6>
+                  <p>Tu colaboradora no promociona shows conjuntos pero espera que tú traigas toda la audiencia.</p>
+                  <h6>💸 Pérdida Sin Protección:</h6>
+                  <ul>
+                    <li>-40% audiencia potencial</li>
+                    <li>Burnout promocional</li>
+                    <li>Desequilibrio de esfuerzo</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>🛡️ Protección con Acuerdo:</h6>
+                  <p>Obligaciones específicas de promoción con métricas medibles y consecuencias claras.</p>
+                  <h6>✅ Resultado:</h6>
+                  <ul>
+                    <li>Promoción equilibrada garantizada</li>
+                    <li>Métricas de cumplimiento</li>
+                    <li>Ajuste de división si incumplimiento</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'termination':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>🚪 Escenario: Terminación Abrupta</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>⚠️ Situación Común:</h6>
+                  <p>Tu colaboradora abandona proyecto conjunto sin aviso, dejándote con compromisos y audiencia esperando.</p>
+                  <h6>💸 Pérdida Sin Protección:</h6>
+                  <ul>
+                    <li>$2,800 en shows cancelados</li>
+                    <li>Reputación dañada</li>
+                    <li>Audiencia decepcionada</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>🛡️ Protección con Acuerdo:</h6>
+                  <p>Cláusulas de terminación con aviso mínimo y compensación por daños.</p>
+                  <h6>✅ Resultado:</h6>
+                  <ul>
+                    <li>Aviso mínimo 30 días</li>
+                    <li>Compensación por shows comprometidos</li>
+                    <li>Transición profesional preserva reputación</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+      }
+      
+      document.getElementById('riskResult').innerHTML = resultHtml;
+    }
+
+    // Toggle clause selection
+    function toggleClause(element, clauseType) {
+      element.classList.toggle('selected');
+      
+      if (selectedClauses.includes(clauseType)) {
+        selectedClauses = selectedClauses.filter(c => c !== clauseType);
+      } else {
+        selectedClauses.push(clauseType);
+      }
+      
+      // Update protection based on selected clauses
+      const baseProtection = selectedClauses.length * 12;
+      updateProtectionBars(
+        Math.min(100, baseProtection + 10),
+        Math.min(100, baseProtection + 5),
+        Math.min(100, baseProtection)
+      );
+    }
+
+    // Preview agreement with selected clauses
+    function previewAgreement() {
+      const preview = document.getElementById('clausePreview');
+      
+      if (selectedClauses.length > 0) {
+        const clauseNames = {
+          'revenue': '💰 División de Ingresos - Porcentajes y métodos específicos',
+          'promotion': '📢 Promoción Cruzada - Obligaciones medibles de marketing',
+          'content': '📹 Propiedad de Contenido - Derechos de uso y distribución',
+          'schedule': '⏰ Horarios y Compromisos - Frecuencia y duración',
+          'termination': '🚪 Terminación - Condiciones para finalizar',
+          'disputes': '⚖️ Resolución de Disputas - Mecanismos de arbitraje',
+          'confidentiality': '🔒 Confidencialidad - Protección de información',
+          'liability': '🛡️ Limitación de Responsabilidad - Protección legal'
+        };
+        
+        let previewHtml = '<h5>📋 Vista Previa de tu Acuerdo:</h5><ul>';
+        selectedClauses.forEach(clause => {
+          previewHtml += `<li>${clauseNames[clause]}</li>`;
+        });
+        previewHtml += '</ul>';
+        previewHtml += `<p><strong>Nivel de Protección:</strong> ${Math.min(100, selectedClauses.length * 12)}%</p>`;
+        
+        preview.innerHTML = previewHtml;
+        preview.style.display = 'block';
+      } else {
+        alert('⚠️ Selecciona al menos una cláusula primero.');
+      }
+    }
+
+    // Select template
+    function selectTemplate(templateType) {
+      const templates = {
+        'basic': 'Template Básico seleccionado. Ideal para primeras colaboraciones con protección esencial.',
+        'advanced': 'Template Avanzado seleccionado. Protección completa para colaboraciones profesionales.',
+        'enterprise': 'Template Enterprise seleccionado. Blindaje total para redes de colaboración.',
+        'international': 'Template Internacional seleccionado. Compliance global para colaboraciones cross-border.'
+      };
+      
+      alert(`✅ ${templates[templateType]}\n\n📥 El template se ha agregado a tu biblioteca personal.`);
+    }
+
+    // Update protection bars
+    function updateProtectionBars(financial, content, operational) {
+      document.getElementById('financialBar').style.width = financial + '%';
+      document.getElementById('financialProtection').textContent = financial + '%';
+      
+      document.getElementById('contentBar').style.width = content + '%';
+      document.getElementById('contentProtection').textContent = content + '%';
+      
+      document.getElementById('operationalBar').style.width = operational + '%';
+      document.getElementById('operationalProtection').textContent = operational + '%';
+    }
+
+    // Manual protection update
+    function updateProtection() {
+      const currentFinancial = parseInt(document.getElementById('financialProtection').textContent);
+      const currentContent = parseInt(document.getElementById('contentProtection').textContent);
+      const currentOperational = parseInt(document.getElementById('operationalProtection').textContent);
+      
+      const newFinancial = Math.min(100, currentFinancial + 20);
+      const newContent = Math.min(100, currentContent + 18);
+      const newOperational = Math.min(100, currentOperational + 15);
+      
+      updateProtectionBars(newFinancial, newContent, newOperational);
+      
+      if (newFinancial >= 100 && newContent >= 100 && newOperational >= 100) {
+        alert('🛡️ ¡BLINDAJE COMPLETO ACTIVADO! Tu imperio colaborativo está 100% protegido legalmente. Ninguna disputa puede amenazar tus ganancias.');
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTime();
+      setInterval(updateTime, 60000);
+      
+      // Auto-expand first section
+      toggleDetails('frameworkLab');
+    });
+
+    // Add smooth scrolling and animation triggers
+    window.addEventListener('scroll', function() {
+      const cards = document.querySelectorAll('.interactive-card, .lab-section, .insight-card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    // Initialize card animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.interactive-card, .lab-section, .insight-card');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease';
+        card.style.transitionDelay = (index * 0.1) + 's';
+      });
+    });
+  </script>
+</body>
+</html>

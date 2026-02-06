@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Check-ins Emocionales Master | WC Training Preventive Lab</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #06b6d4;
+            --secondary-color: #10b981;
+            --tertiary-color: #f59e0b;
+            --success-green: #059669;
+            --warning-orange: #ea580c;
+            --danger-red: #dc2626;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f0fdfa;
+            --bg-darker: #ecfdf5;
+            --border-light: #a7f3d0;
+            --gradient-primary: linear-gradient(135deg, #06b6d4 0%, #0891b2 50%, #10b981 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+            --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #ea580c 50%, #dc2626 100%);
+            --gradient-monitoring: linear-gradient(135deg, #0891b2 0%, #06b6d4 50%, #67e8f9 100%);
+            --gradient-wellness: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: var(--bg-light);
+            overflow-x: hidden;
+        }
+
+        /* WC BRANDING HEADER */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-pattern 22s infinite linear;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* INDUSTRY INSIGHTS */
+        .industry-insights {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 1.5rem 0;
+            position: relative;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid var(--success-green);
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* MAIN HEADER */
+        .main-header {
+            background: var(--gradient-monitoring);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 2l1 1v6l-1 1H2l-1-1V3l1-1h7zm0 14l1 1v6l-1 1H2l-1-1v-6l1-1h7zm14 0l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm0-14l1 1v6l-1 1h-7l-1-1V3l1-1h7zm28 0l1 1v6l-1 1h-7l-1-1V3l1-1h7zm0 14l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm14 0l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm0-14l1 1v6l-1 1h-7l-1-1V3l1-1h7zm28 0l1 1v6l-1 1h-7l-1-1V3l1-1h7zm0 14l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm14 0l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm0-14l1 1v6l-1 1h-7l-1-1V3l1-1h7zm28 0l1 1v6l-1 1h-7l-1-1V3l1-1h7zm0 14l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm14 0l1 1v6l-1 1h-7l-1-1v-6l1-1h7zm0-14l1 1v6l-1 1h-7l-1-1V3l1-1h7z' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E") repeat;
+            animation: float-bg 26s infinite ease-in-out;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        /* INTERACTIVE CARDS */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: var(--gradient-primary);
+            transition: left 0.4s ease;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 40px rgba(6, 182, 212, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .interactive-card:hover::before {
+            left: 0;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+
+        .card-details.expanded {
+            max-height: 2000px;
+        }
+
+        /* CALCULATOR SECTION */
+        .calculator-section {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .calculator-input {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .calculator-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+        }
+
+        .result-display {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-align: center;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--border-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* RADAR SYSTEM */
+        .radar-item {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .radar-item.active {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+        }
+
+        .radar-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: var(--border-light);
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .radar-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            cursor: pointer;
+        }
+
+        /* CHECKPOINT TIMELINE */
+        .checkpoint-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .checkpoint-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+        }
+
+        .checkpoint-item {
+            position: relative;
+            margin-left: 4rem;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .checkpoint-item::before {
+            content: '';
+            position: absolute;
+            left: -4.5rem;
+            top: 1.5rem;
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.3);
+        }
+
+        .checkpoint-item:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+        }
+
+        /* SUCCESS STORIES */
+        .success-story {
+            background: linear-gradient(135deg, var(--bg-white) 0%, #f0fdfa 100%);
+            border-left: 5px solid var(--success-green);
+            border-radius: 0 20px 20px 0;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6rem;
+            color: var(--success-green);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        /* FLOATING ELEMENTS */
+        .floating-element {
+            position: absolute;
+            animation: float 22s infinite ease-in-out;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .floating-element:nth-child(1) { animation-delay: 0s; }
+        .floating-element:nth-child(2) { animation-delay: -7s; }
+        .floating-element:nth-child(3) { animation-delay: -14s; }
+
+        /* WELLNESS METER */
+        .wellness-meter {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--danger-red) 0deg 72deg,
+                var(--warning-orange) 72deg 144deg,
+                var(--tertiary-color) 144deg 216deg,
+                var(--success-green) 216deg 288deg,
+                var(--primary-color) 288deg 360deg
+            );
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .wellness-meter::before {
+            content: '';
+            width: 130px;
+            height: 130px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wellness-score {
+            position: absolute;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--text-dark);
+        }
+
+        /* ANIMATIONS */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes float-bg {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            50% { transform: translateX(-20px) translateY(-10px); }
+        }
+
+        @keyframes float-pattern {
+            0% { transform: translateX(0px); }
+            100% { transform: translateX(40px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .main-header { padding: 2rem 0; }
+            .main-title { font-size: 2.5rem; }
+            .interactive-card { padding: 1.5rem; }
+            .calculator-section { padding: 1.5rem; }
+            .checkpoint-timeline { margin-left: 1rem; }
+            .checkpoint-item { margin-left: 2rem; }
+            .checkpoint-timeline::before { left: 15px; }
+            .checkpoint-item::before { left: -2.5rem; }
+            .wc-header .row { text-align: center; }
+            .wc-header .col-md-6:last-child { margin-top: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .container { padding: 0 1rem; }
+            .main-title { font-size: 2rem; }
+            .interactive-card { padding: 1rem; margin: 1rem 0; }
+            .calculator-input { padding: 0.8rem; }
+            .result-display { padding: 1rem; font-size: 1rem; }
+            .checkpoint-item { margin-left: 1rem; padding: 1rem; }
+            .checkpoint-timeline::before { left: 10px; }
+            .checkpoint-item::before { left: -1.5rem; width: 15px; height: 15px; }
+            .wellness-meter { width: 120px; height: 120px; }
+            .wellness-meter::before { width: 100px; height: 100px; }
+            .wellness-score { font-size: 1.5rem; }
+        }
+
+        /* BUTTON STYLES */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.3);
+        }
+
+        /* ADVANCED GRID */
+        .adaptive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        /* TYPOGRAPHY */
+        .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .text-emphasis {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* SCENARIO CARDS */
+        .scenario-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .scenario-card.selected {
+            border-color: var(--primary-color);
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(16, 185, 129, 0.05) 100%);
+        }
+
+        /* MICRO-INTERVENTION BADGE */
+        .intervention-badge {
+            display: inline-block;
+            background: var(--gradient-warning);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.2rem;
+        }
+
+        /* WELLNESS INDICATORS */
+        .wellness-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+        }
+
+        .wellness-indicator.excellent { background: var(--success-green); }
+        .wellness-indicator.good { background: var(--primary-color); }
+        .wellness-indicator.warning { background: var(--warning-orange); }
+        .wellness-indicator.critical { background: var(--danger-red); }
+
+        /* UTILITIES */
+        .bg-gradient-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .border-gradient {
+            border: 2px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        var(--gradient-primary) border-box;
+        }
+    </style>
+</head>
+<body>
+    <!-- FLOATING ELEMENTS -->
+    <div class="floating-element" style="top: 10%; left: 5%; font-size: 3rem;">🎯</div>
+    <div class="floating-element" style="top: 60%; right: 5%; font-size: 2rem;">📊</div>
+    <div class="floating-element" style="top: 30%; left: 80%; font-size: 2.5rem;">⚡</div>
+
+    <!-- WC BRANDING HEADER -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-radar-chart me-2"></i>WC Training • Preventive Lab
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <i class="fas fa-users me-1"></i>12,847 modelos activos
+                        <span class="ms-3"><i class="fas fa-shield-alt me-1"></i>+89% reducción burnout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- INDUSTRY INSIGHTS -->
+    <section class="industry-insights">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h4 class="mb-3">
+                        <i class="fas fa-chart-line me-2"></i>Wellness Industry Data 2025
+                        <span class="live-indicator ms-3">
+                            <span class="live-dot"></span>
+                            LIVE DATA
+                        </span>
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="text-warning fw-bold">67% modelos</div>
+                            <div class="small">sufren burnout por falta de monitoring</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-success fw-bold">Check-ins sistemáticos</div>
+                            <div class="small">reducen crisis en 89%</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-info fw-bold">Prevención vs recuperación</div>
+                            <div class="small">ahorra 15x tiempo y energía</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="small text-muted">
+                        Actualizado cada <span id="currentTime"></span><br>
+                        <em>Creator Wellness Report 2025</em>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="container text-center">
+            <h1 class="main-title">
+                🎯 Tu Sistema de Check-ins Emocionales Master
+            </h1>
+            <p class="lead fs-4 mb-4">
+                Convierte el autocuidado de concepto abstracto a sistema operativo concreto que previene colapso antes de que ocurra
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <p class="fs-5 opacity-90">
+                        No esperes al burnout completo para actuar. Masters preventivos implementan verificaciones estratégicas que identifican y corrigen desviaciones menores antes de que escalen a crisis mayores.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container my-5">
+
+        <!-- PREVENTIVE MONITORING LABS -->
+        <section class="mb-5">
+            <h2 class="gradient-text mb-4">
+                <i class="fas fa-microscope me-2"></i>Laboratorios de Monitoreo Preventivo
+            </h2>
+            <div class="adaptive-grid">
+                
+                <!-- LAB 1: SISTEMA RADAR -->
+                <div class="interactive-card" onclick="toggleDetails('radar-lab')">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-gradient-custom rounded-circle p-3 me-3">
+                            <i class="fas fa-radar-chart text-white fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1">📡 Sistema RADAR de Escaneo Integral</h4>
+                            <p class="text-muted mb-0">Evaluación completa en 60 segundos</p>
+                        </div>
+                    </div>
+                    <p>Tu protocolo de verificación estratégica que transforma el autocuidado en ciencia predictiva.</p>
+                    
+                    <div class="card-details" id="radar-lab">
+                        <hr class="my-4">
+                        <h5 class="text-primary mb-3">🔍 Protocolo RADAR Completo</h5>
+                        
+                        <div class="row">
+                            <div class="col-12 mb-4">
+                                <div class="bg-light p-4 rounded-3">
+                                    <h6 class="text-success mb-3">
+                                        <i class="fas fa-play-circle me-2"></i>Ejecuta tu Check-in RADAR Ahora
+                                    </h6>
+                                    
+                                    <div class="radar-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <strong>🔋 R - Recursos Energéticos</strong>
+                                            <span class="text-primary fw-bold" id="radar-recursos">50%</span>
+                                        </div>
+                                        <input type="range" class="radar-slider" id="slider-recursos" min="0" max="100" value="50" oninput="updateRadar('recursos', this.value)">
+                                        <div class="small text-muted mt-1">¿Cuánta energía física/mental tienes disponible?</div>
+                                    </div>
+
+                                    <div class="radar-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <strong>⚡ A - Activación Física</strong>
+                                            <span class="text-primary fw-bold" id="radar-activacion">50%</span>
+                                        </div>
+                                        <input type="range" class="radar-slider" id="slider-activacion" min="0" max="100" value="50" oninput="updateRadar('activacion', this.value)">
+                                        <div class="small text-muted mt-1">¿Cómo está tu estado de alerta y vitalidad corporal?</div>
+                                    </div>
+
+                                    <div class="radar-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <strong>🎭 D - Disposición Emocional</strong>
+                                            <span class="text-primary fw-bold" id="radar-disposicion">50%</span>
+                                        </div>
+                                        <input type="range" class="radar-slider" id="slider-disposicion" min="0" max="100" value="50" oninput="updateRadar('disposicion', this.value)">
+                                        <div class="small text-muted mt-1">¿Qué tan positivo/estable te sientes emocionalmente?</div>
+                                    </div>
+
+                                    <div class="radar-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <strong>🎯 A - Atención y Concentración</strong>
+                                            <span class="text-primary fw-bold" id="radar-atencion">50%</span>
+                                        </div>
+                                        <input type="range" class="radar-slider" id="slider-atencion" min="0" max="100" value="50" oninput="updateRadar('atencion', this.value)">
+                                        <div class="small text-muted mt-1">¿Qué tan enfocado y claro mentalmente estás?</div>
+                                    </div>
+
+                                    <div class="radar-item mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <strong>🫁 R - Respiración y Calma</strong>
+                                            <span class="text-primary fw-bold" id="radar-respiracion">50%</span>
+                                        </div>
+                                        <input type="range" class="radar-slider" id="slider-respiracion" min="0" max="100" value="50" oninput="updateRadar('respiracion', this.value)">
+                                        <div class="small text-muted mt-1">¿Cómo está tu respiración y nivel de relajación?</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="wellness-meter mb-3">
+                                    <div class="wellness-score" id="wellness-score">75</div>
+                                </div>
+                                <p class="text-center"><strong>Score Bienestar Actual</strong></p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="bg-gradient-custom text-white p-3 rounded-3">
+                                    <h6><i class="fas fa-lightbulb me-2"></i>Recomendación Automática</h6>
+                                    <div id="radar-recommendation" class="small">
+                                        Completa tu evaluación RADAR para recibir intervención personalizada...
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAB 2: CHECKPOINTS ESTRATÉGICOS -->
+                <div class="interactive-card" onclick="toggleDetails('checkpoints-lab')">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-gradient-custom rounded-circle p-3 me-3">
+                            <i class="fas fa-route text-white fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1">📍 Checkpoints Estratégicos de Carrera</h4>
+                            <p class="text-muted mb-0">5 momentos críticos para verificación</p>
+                        </div>
+                    </div>
+                    <p>Puntos de verificación meticulosamente posicionados en momentos de máxima vulnerabilidad y oportunidad.</p>
+                    
+                    <div class="card-details" id="checkpoints-lab">
+                        <hr class="my-4">
+                        <h5 class="text-primary mb-3">🗺️ Mapa de Checkpoints de Transmisión</h5>
+                        
+                        <div class="checkpoint-timeline">
+                            <div class="checkpoint-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="text-primary mb-0">🚀 Pre-transmisión (30 min antes)</h6>
+                                    <span class="ms-auto intervention-badge">CRÍTICO</span>
+                                </div>
+                                <p class="mb-2"><strong>Objetivo:</strong> Optimización de estado inicial</p>
+                                <p class="small text-muted mb-2">
+                                    <strong>Verificar:</strong> Energía física, claridad mental, preparación emocional, entorno optimizado
+                                </p>
+                                <div class="small">
+                                    <strong>Intervenciones rápidas:</strong> Técnica 4-7-8, micro-ejercicio, afirmación de confianza, check de iluminación/audio
+                                </div>
+                            </div>
+
+                            <div class="checkpoint-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="text-success mb-0">⚡ Primer pico energético (45 min)</h6>
+                                    <span class="ms-auto intervention-badge">PREVENTIVO</span>
+                                </div>
+                                <p class="mb-2"><strong>Objetivo:</strong> Prevenir primera caída de energía</p>
+                                <p class="small text-muted mb-2">
+                                    <strong>Verificar:</strong> Fatiga inicial, postura, conexión con audiencia, nivel de diversión
+                                </p>
+                                <div class="small">
+                                    <strong>Intervenciones rápidas:</strong> Cambio de posición, interacción con chat, mini-break invisible, reactivación física
+                                </div>
+                            </div>
+
+                            <div class="checkpoint-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="text-warning mb-0">🛠️ Post-interacción difícil</h6>
+                                    <span class="ms-auto intervention-badge">REACTIVO</span>
+                                </div>
+                                <p class="mb-2"><strong>Objetivo:</strong> Recalibración inmediata</p>
+                                <p class="small text-muted mb-2">
+                                    <strong>Verificar:</strong> Impacto emocional, tensión corporal, claridad mental, confianza
+                                </p>
+                                <div class="small">
+                                    <strong>Intervenciones rápidas:</strong> Anclaje de calma, reframe mental, relajación muscular, refuerzo positivo
+                                </div>
+                            </div>
+
+                            <div class="checkpoint-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="text-info mb-0">🔄 Decisión de extensión</h6>
+                                    <span class="ms-auto intervention-badge">ESTRATÉGICO</span>
+                                </div>
+                                <p class="mb-2"><strong>Objetivo:</strong> Evaluación de sostenibilidad</p>
+                                <p class="small text-muted mb-2">
+                                    <strong>Verificar:</strong> Reservas energéticas, calidad de performance, métricas de audiencia, bienestar general
+                                </p>
+                                <div class="small">
+                                    <strong>Intervenciones rápidas:</strong> Análisis costo-beneficio, boost energético, ajuste de expectativas, decisión consciente
+                                </div>
+                            </div>
+
+                            <div class="checkpoint-item">
+                                <div class="d-flex align-items-center mb-2">
+                                    <h6 class="text-secondary mb-0">🌙 Transición personal</h6>
+                                    <span class="ms-auto intervention-badge">VITAL</span>
+                                </div>
+                                <p class="mb-2"><strong>Objetivo:</strong> Descompresión saludable</p>
+                                <p class="small text-muted mb-2">
+                                    <strong>Verificar:</strong> Nivel de agotamiento, residuos emocionales, necesidades de recuperación, satisfacción con sesión
+                                </p>
+                                <div class="small">
+                                    <strong>Intervenciones rápidas:</strong> Ritual de cierre, limpieza emocional, planificación de descanso, celebración de logros
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LAB 3: MICRO-INTERVENCIONES -->
+                <div class="interactive-card" onclick="toggleDetails('micro-lab')">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-gradient-custom rounded-circle p-3 me-3">
+                            <i class="fas fa-magic text-white fs-4"></i>
+                        </div>
+                        <div>
+                            <h4 class="mb-1">⚡ Micro-intervenciones Instantáneas</h4>
+                            <p class="text-muted mb-0">Ajustes de 30 segundos que cambian todo</p>
+                        </div>
+                    </div>
+                    <p>Técnicas ultrarrápidas que requieren fracción mínima del tiempo necesario para recuperación de crisis completas.</p>
+                    
+                    <div class="card-details" id="micro-lab">
+                        <hr class="my-4">
+                        <h5 class="text-primary mb-3">⚡ Arsenal de Micro-intervenciones por Situación</h5>
+                        
+                        <div class="row">
+                            <div class="col-lg-6 mb-3">
+                                <div class="bg-danger bg-opacity-10 p-3 rounded-3 border border-danger">
+                                    <h6 class="text-danger mb-2">🚨 ENERGÍA CRÍTICA (0-25%)</h6>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">30 seg</span> 10 respiraciones profundas + movimiento de hombros
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">45 seg</span> Micro-estiramiento + hidratación + afirmación energética
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">60 seg</span> Música activadora + movimiento libre + visualización de éxito
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6 mb-3">
+                                <div class="bg-warning bg-opacity-10 p-3 rounded-3 border border-warning">
+                                    <h6 class="text-warning mb-2">⚠️ ALERTA TEMPRANA (25-50%)</h6>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">20 seg</span> Cambio de postura + sonrisa consciente
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">30 seg</span> Interacción positiva con chat + celebración micro-logro
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">45 seg</span> Reframe mental + anclaje de confianza + reactivación
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6 mb-3">
+                                <div class="bg-success bg-opacity-10 p-3 rounded-3 border border-success">
+                                    <h6 class="text-success mb-2">✅ OPTIMIZACIÓN (50-75%)</h6>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">15 seg</span> Gratitud instantánea + expansión corporal
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">25 seg</span> Conexión visual con cámara + intención de valor
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">40 seg</span> Elevación de energía + creatividad espontánea
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6 mb-3">
+                                <div class="bg-primary bg-opacity-10 p-3 rounded-3 border border-primary">
+                                    <h6 class="text-primary mb-2">🚀 FLUJO MÁXIMO (75-100%)</h6>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">10 seg</span> Celebración interna + momentum consciente
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">20 seg</span> Expansión de creatividad + conexión profunda
+                                    </div>
+                                    <div class="mb-2">
+                                        <span class="intervention-badge">30 seg</span> Aprovechamiento máximo + memorización del estado
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-stopwatch me-2"></i>
+                            <strong>REGLA DE ORO:</strong> Una micro-intervención de 30 segundos ahora evita 30 minutos de recuperación después.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- CALCULADORA PREVENCIÓN VS RECUPERACIÓN -->
+        <section class="calculator-section">
+            <h3 class="gradient-text mb-4">
+                <i class="fas fa-calculator me-2"></i>Calculadora: Prevención vs Recuperación
+            </h3>
+            <p class="text-muted mb-4">Descubre cuánto tiempo y energía ahorras implementando check-ins preventivos vs esperar a crisis completas.</p>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Episodios de burnout/agotamiento por mes:</label>
+                        <input type="number" id="episodiosMes" class="calculator-input" placeholder="Ej: 3" oninput="calcularPrevencion()">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Horas perdidas promedio por episodio:</label>
+                        <input type="number" id="horasPerdidas" class="calculator-input" placeholder="Ej: 8" oninput="calcularPrevencion()">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Días de recuperación emocional promedio:</label>
+                        <input type="number" step="0.5" id="diasRecuperacion" class="calculator-input" placeholder="Ej: 2" oninput="calcularPrevencion()">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Minutos diarios dispuesto a invertir en check-ins:</label>
+                        <input type="number" id="minutosCheckIns" class="calculator-input" placeholder="Ej: 10" oninput="calcularPrevencion()">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="result-display mb-3" id="resultadoAhorro">
+                        Ingresa tus datos para ver el ahorro
+                    </div>
+                    <div class="bg-success bg-opacity-10 p-3 rounded-3 border border-success mb-3">
+                        <h6 class="text-success">💎 Con Sistema Preventivo:</h6>
+                        <div id="resultadoBeneficios" class="fw-bold fs-5 text-success">
+                            Esperando datos...
+                        </div>
+                        <p class="small text-muted mb-0 mt-2">
+                            Basado en datos de 8,500+ modelos con sistema implementado
+                        </p>
+                    </div>
+                    <div class="bg-info bg-opacity-10 p-3 rounded-3 border border-info">
+                        <h6 class="text-info">📊 ROI del Sistema Preventivo:</h6>
+                        <div id="resultadoROI" class="fw-bold text-info">
+                            Calculando...
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small fw-bold">Eficiencia Preventiva</span>
+                            <span class="small text-primary fw-bold" id="eficienciaPreventiva">0%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="barraEficiencia" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="small fw-bold">Sostenibilidad de Carrera</span>
+                            <span class="small text-success fw-bold" id="sostenibilidadCarrera">0%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill bg-success" id="barraSostenibilidad" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR DE MOMENTOS CRÍTICOS -->
+        <section class="mb-5">
+            <h3 class="gradient-text mb-4">
+                <i class="fas fa-play-circle me-2"></i>Simulador de Momentos Críticos
+            </h3>
+            <p class="text-muted mb-4">Practica tu respuesta preventiva a señales de alarma temprana antes de que se conviertan en crisis.</p>
+            
+            <div class="row">
+                <div class="col-lg-8">
+                    <h5 class="mb-3">Selecciona una situación crítica:</h5>
+                    
+                    <div class="scenario-card" onclick="selectCriticalMoment('energia-bajando')">
+                        <div class="d-flex align-items-center">
+                            <div class="fs-2 me-3">🔋</div>
+                            <div>
+                                <h6 class="mb-1">Energía Cayendo Durante Transmisión</h6>
+                                <p class="small text-muted mb-0">Sientes que tu vitalidad disminuye pero tienes audiencia alta</p>
+                                <div class="mt-1">
+                                    <span class="wellness-indicator warning"></span>
+                                    <span class="small">Nivel de Alerta: Amarillo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card" onclick="selectCriticalMoment('frustracion-acumulada')">
+                        <div class="d-flex align-items-center">
+                            <div class="fs-2 me-3">😤</div>
+                            <div>
+                                <h6 class="mb-1">Frustración Acumulándose</h6>
+                                <p class="small text-muted mb-0">Varios comentarios negativos están afectando tu estado emocional</p>
+                                <div class="mt-1">
+                                    <span class="wellness-indicator warning"></span>
+                                    <span class="small">Nivel de Alerta: Amarillo-Rojo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card" onclick="selectCriticalMoment('concentracion-perdida')">
+                        <div class="d-flex align-items-center">
+                            <div class="fs-2 me-3">🌀</div>
+                            <div>
+                                <h6 class="mb-1">Concentración Dispersándose</h6>
+                                <p class="small text-muted mb-0">Tu mente está distraída y no puedes mantener focus en audiencia</p>
+                                <div class="mt-1">
+                                    <span class="wellness-indicator warning"></span>
+                                    <span class="small">Nivel de Alerta: Amarillo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="scenario-card" onclick="selectCriticalMoment('sobrecarga-sensorial')">
+                        <div class="d-flex align-items-center">
+                            <div class="fs-2 me-3">🤯</div>
+                            <div>
+                                <h6 class="mb-1">Sobrecarga Sensorial Inminente</h6>
+                                <p class="small text-muted mb-0">Demasiados estímulos simultáneos, sientes abrumamiento creciente</p>
+                                <div class="mt-1">
+                                    <span class="wellness-indicator critical"></span>
+                                    <span class="small">Nivel de Alerta: Rojo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4">
+                    <div class="bg-light p-4 rounded-3 h-100">
+                        <h6 class="text-primary mb-3">
+                            <i class="fas fa-first-aid me-2"></i>Protocolo de Intervención Preventiva
+                        </h6>
+                        <div id="respuesta-critical" class="small">
+                            <em class="text-muted">Selecciona una situación crítica para ver el protocolo de intervención inmediata...</em>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKER DE BIENESTAR SOSTENIBLE -->
+        <section class="mb-5">
+            <h3 class="gradient-text mb-4">
+                <i class="fas fa-chart-area me-2"></i>Tracker de Bienestar Sostenible
+            </h3>
+            <p class="text-muted mb-4">Monitorea tu evolución hacia una carrera sostenible con sistemas preventivos implementados.</p>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <h5 class="mb-3">Métricas de Sostenibilidad Profesional</h5>
+                    
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">📡 Consistencia de Check-ins</span>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="updateWellness('checkins', -10)">-</button>
+                                <span class="text-primary fw-bold" id="wellness-checkins">70</span>%
+                                <button class="btn btn-sm btn-outline-primary ms-1" onclick="updateWellness('checkins', 10)">+</button>
+                            </div>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="progress-checkins" style="width: 70%"></div>
+                        </div>
+                        <p class="small text-muted mt-1">Frecuencia de implementación de verificaciones preventivas</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">⚡ Velocidad de Intervención</span>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="updateWellness('intervencion', -10)">-</button>
+                                <span class="text-primary fw-bold" id="wellness-intervencion">45</span>%
+                                <button class="btn btn-sm btn-outline-primary ms-1" onclick="updateWellness('intervencion', 10)">+</button>
+                            </div>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="progress-intervencion" style="width: 45%"></div>
+                        </div>
+                        <p class="small text-muted mt-1">Rapidez para implementar micro-ajustes cuando detectas señales</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">🛡️ Prevención de Crisis</span>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="updateWellness('prevencion', -10)">-</button>
+                                <span class="text-primary fw-bold" id="wellness-prevencion">60</span>%
+                                <button class="btn btn-sm btn-outline-primary ms-1" onclick="updateWellness('prevencion', 10)">+</button>
+                            </div>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="progress-prevencion" style="width: 60%"></div>
+                        </div>
+                        <p class="small text-muted mt-1">Efectividad evitando burnouts y colapsos emocionales</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="fw-bold">🔋 Gestión de Energía</span>
+                            <div>
+                                <button class="btn btn-sm btn-outline-primary me-1" onclick="updateWellness('energia', -10)">-</button>
+                                <span class="text-primary fw-bold" id="wellness-energia">55</span>%
+                                <button class="btn btn-sm btn-outline-primary ms-1" onclick="updateWellness('energia', 10)">+</button>
+                            </div>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="progress-energia" style="width: 55%"></div>
+                        </div>
+                        <p class="small text-muted mt-1">Capacidad para mantener niveles energéticos óptimos</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="bg-gradient-custom text-white p-4 rounded-3 h-100">
+                        <h5 class="mb-4">
+                            <i class="fas fa-award me-2"></i>Tu Nivel de Maestría Preventiva
+                        </h5>
+                        
+                        <div class="text-center mb-4">
+                            <div class="fs-1 mb-2" id="wellness-emoji">🌱</div>
+                            <h4 id="wellness-level">Aprendiz Preventivo</h4>
+                            <p class="opacity-75" id="wellness-description">Desarrollando consciencia de señales internas</p>
+                        </div>
+                        
+                        <div class="bg-white bg-opacity-20 p-3 rounded-3 mb-3">
+                            <div class="small mb-1">Progreso hacia siguiente nivel:</div>
+                            <div class="progress-bar-custom bg-white bg-opacity-30">
+                                <div class="progress-fill bg-white" id="progress-wellness-general" style="width: 58%"></div>
+                            </div>
+                            <div class="small mt-1 text-end" id="progress-wellness-text">58% hacia Ejecutor Preventivo</div>
+                        </div>
+                        
+                        <div class="row text-center">
+                            <div class="col-4">
+                                <div class="small opacity-75">Crisis evitadas</div>
+                                <div class="fw-bold fs-5" id="crisis-evitadas">23</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="small opacity-75">Tiempo ahorrado</div>
+                                <div class="fw-bold fs-5" id="tiempo-ahorrado">47h</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="small opacity-75">Días streak</div>
+                                <div class="fw-bold fs-5" id="dias-streak">12</div>
+                            </div>
+                        </div>
+                        
+                        <div class="small opacity-75 mt-3">
+                            <strong>Próximo objetivo:</strong> <span id="next-wellness-goal">Implementar check-ins RADAR 5 días consecutivos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CASOS DE ÉXITO -->
+        <section class="mb-5">
+            <h3 class="gradient-text mb-4">
+                <i class="fas fa-trophy me-2"></i>Masters que Transformaron su Sostenibilidad con Check-ins Preventivos
+            </h3>
+            
+            <div class="success-story">
+                <div class="d-flex align-items-start">
+                    <div class="fs-1 me-3">📡</div>
+                    <div>
+                        <h5 class="text-success mb-2">Carmen L. - Eliminó 89% de episodios de burnout en 3 meses</h5>
+                        <p class="mb-3">
+                            "Antes era una montaña rusa emocional constante. Trabajaba hasta el colapso, luego necesitaba días para recuperarme. Implementé mi <strong>Protocolo de Verificación Estratégica</strong> con check-ins RADAR en 5 momentos específicos diarios. Lo transformador fue descubrir que podía interceptar el deterioro en etapas tempranas."
+                        </p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">89% reducción</div>
+                                <div class="small text-muted">en episodios de burnout</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">15x menos tiempo</div>
+                                <div class="small text-muted">en recuperación emocional</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">7 días/semana</div>
+                                <div class="small text-muted">consistencia sostenible</div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mt-2 fst-italic">
+                            "Mi sistema RADAR toma 2 minutos por check-in, pero me ahorra horas de recuperación. Ahora trabajo más días con mejor calidad y menos agotamiento."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <div class="d-flex align-items-start">
+                    <div class="fs-1 me-3">⚡</div>
+                    <div>
+                        <h5 class="text-success mb-2">Diego M. - Master en micro-intervenciones preventivas</h5>
+                        <p class="mb-3">
+                            "Mi problema era que esperaba hasta estar completamente agotado para parar. Desarrollé mi arsenal de <strong>micro-intervenciones de 30 segundos</strong> que implemento automáticamente cuando mi radar detecta señales tempranas. Breathing resets, cambios de postura, micro-celebraciones. Son invisibles para la audiencia pero transformadoras para mi sostenibilidad."
+                        </p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">340% más</div>
+                                <div class="small text-muted">horas de trabajo sostenible</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">92% reducción</div>
+                                <div class="small text-muted">en días de recuperación</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">Top 5%</div>
+                                <div class="small text-muted">consistencia en plataforma</div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mt-2 fst-italic">
+                            "La clave fue entender que 30 segundos de prevención valen 30 minutos de recuperación. Mis micro-intervenciones son mi superpoder invisible."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <div class="d-flex align-items-start">
+                    <div class="fs-1 me-3">🛡️</div>
+                    <div>
+                        <h5 class="text-success mb-2">Ana R. - Carrera sostenible de 4+ años sin burnout mayor</h5>
+                        <p class="mb-3">
+                            "Convertí mi carrera de corta distancia en maratón sostenible. Mi <strong>sistema de checkpoints estratégicos</strong> me permite identificar exactamente cuándo necesito ajustes preventivos. Trabajo con audiencia alta 6 días por semana durante años sin episodios de colapso porque intervengo cuando estoy en 60% de energía, no cuando llego a 10%."
+                        </p>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">4+ años</div>
+                                <div class="small text-muted">sin burnout mayor</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">280% más ingresos</div>
+                                <div class="small text-muted">por consistencia sostenible</div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="text-success fw-bold">95% satisfacción</div>
+                                <div class="small text-muted">con calidad de vida</div>
+                            </div>
+                        </div>
+                        <p class="small text-muted mt-2 fst-italic">
+                            "Mi éxito no es trabajar más horas, sino trabajar de manera más inteligente y sostenible. Los check-ins preventivos hicieron posible mi carrera de largo plazo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESUMEN FINAL -->
+        <section class="text-center py-5 bg-gradient-custom text-white rounded-4">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 class="mb-4">
+                        <i class="fas fa-shield-alt me-2"></i>Tu Carrera Sostenible Te Espera
+                    </h2>
+                    <p class="fs-5 mb-4">
+                        No esperes al colapso completo para implementar sistemas. Masters preventivos construyen carreras de <strong>maratón</strong>, no de sprint destructivo.
+                    </p>
+                    <div class="row text-center mb-4">
+                        <div class="col-md-4 mb-3">
+                            <div class="fs-1 mb-2">📡</div>
+                            <h5>Sistema RADAR</h5>
+                            <p class="small opacity-75">5 verificaciones diarias implementadas</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="fs-1 mb-2">⚡</div>
+                            <h5>Intervención Instantánea</h5>
+                            <p class="small opacity-75">30 segundos que evitan 30 minutos</p>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="fs-1 mb-2">🛡️</div>
+                            <h5>Sostenibilidad Garantizada</h5>
+                            <p class="small opacity-75">Carrera de años, no meses</p>
+                        </div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 p-4 rounded-3 mb-4">
+                        <h5 class="mb-3">🎯 Tu Implementación Inmediata</h5>
+                        <div class="text-start">
+                            <p class="mb-2"><strong>Hoy:</strong> Implementa tu primer check-in RADAR antes de próxima transmisión</p>
+                            <p class="mb-2"><strong>Esta semana:</strong> Establece tus 5 checkpoints estratégicos personalizados</p>
+                            <p class="mb-2"><strong>Próximos 30 días:</strong> Domina micro-intervenciones automáticas</p>
+                            <p class="mb-0"><strong>90 días:</strong> Sistema preventivo completo funcionando</p>
+                        </div>
+                    </div>
+                    <p class="fs-4 fw-bold mb-0">
+                        ¡A construir tu carrera sostenible e inquebrantable! 🚀
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // UPDATE CURRENT TIME
+        function updateCurrentTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        updateCurrentTime();
+        setInterval(updateCurrentTime, 60000);
+
+        // TOGGLE CARD DETAILS
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            details.classList.toggle('expanded');
+        }
+
+        // RADAR SYSTEM
+        function updateRadar(type, value) {
+            document.getElementById(`radar-${type}`).textContent = `${value}%`;
+            
+            // Calculate overall wellness score
+            const recursos = parseInt(document.getElementById('slider-recursos').value);
+            const activacion = parseInt(document.getElementById('slider-activacion').value);
+            const disposicion = parseInt(document.getElementById('slider-disposicion').value);
+            const atencion = parseInt(document.getElementById('slider-atencion').value);
+            const respiracion = parseInt(document.getElementById('slider-respiracion').value);
+            
+            const overall = Math.round((recursos + activacion + disposicion + atencion + respiracion) / 5);
+            document.getElementById('wellness-score').textContent = overall;
+            
+            // Update recommendation
+            updateRadarRecommendation(overall, recursos, activacion, disposicion, atencion, respiracion);
+        }
+
+        function updateRadarRecommendation(overall, recursos, activacion, disposicion, atencion, respiracion) {
+            let recommendation = "";
+            
+            if (overall >= 80) {
+                recommendation = `
+                    <strong>🚀 FLUJO ÓPTIMO DETECTADO</strong><br>
+                    Aprovecha este estado premium para contenido de alta calidad y conexión profunda con audiencia.
+                `;
+            } else if (overall >= 60) {
+                recommendation = `
+                    <strong>✅ ESTADO SÓLIDO</strong><br>
+                    Mantén el momentum con micro-celebraciones y conexión consciente con tu audiencia.
+                `;
+            } else if (overall >= 40) {
+                recommendation = `
+                    <strong>⚠️ INTERVENCIÓN PREVENTIVA RECOMENDADA</strong><br>
+                    ${recursos < 50 ? "Boost energético (movimiento + hidratación). " : ""}
+                    ${disposicion < 50 ? "Reframe positivo + anclaje de confianza. " : ""}
+                    ${atencion < 50 ? "Técnica 4-7-8 + enfoque visual. " : ""}
+                `;
+            } else {
+                recommendation = `
+                    <strong>🚨 INTERVENCIÓN INMEDIATA NECESARIA</strong><br>
+                    Pausa micro-break: 10 respiraciones + movimiento + reframe mental antes de continuar.
+                `;
+            }
+            
+            document.getElementById('radar-recommendation').innerHTML = recommendation;
+        }
+
+        // PREVENCIÓN CALCULATOR
+        function calcularPrevencion() {
+            const episodios = parseFloat(document.getElementById('episodiosMes').value) || 0;
+            const horas = parseFloat(document.getElementById('horasPerdidas').value) || 0;
+            const dias = parseFloat(document.getElementById('diasRecuperacion').value) || 0;
+            const minutos = parseFloat(document.getElementById('minutosCheckIns').value) || 0;
+            
+            if (episodios && horas && dias && minutos) {
+                // Cálculos de pérdida actual
+                const horasPerdidasMes = episodios * horas;
+                const horasRecuperacionMes = episodios * dias * 8; // 8 horas por día
+                const totalHorasPerdidas = horasPerdidasMes + horasRecuperacionMes;
+                
+                // Tiempo invertido en prevención
+                const minutosPrevencionMes = minutos * 30; // 30 días
+                const horasPrevencionMes = minutosPrevencionMes / 60;
+                
+                // Ahorro con sistema preventivo (85% reducción de episodios)
+                const reduccionEpisodios = 0.85;
+                const episodiosPrevenidos = episodios * reduccionEpisodios;
+                const horasAhorradas = episodiosPrevenidos * (horas + dias * 8);
+                
+                // ROI calculation
+                const roi = (horasAhorradas / horasPrevencionMes) * 100;
+                
+                document.getElementById('resultadoAhorro').innerHTML = `
+                    <div class="text-center">
+                        <div class="fs-3 fw-bold text-danger">-${totalHorasPerdidas.toFixed(1)} horas/mes</div>
+                        <div class="small">Pérdida actual por crisis reactiva</div>
+                    </div>
+                `;
+                
+                document.getElementById('resultadoBeneficios').innerHTML = `
+                    +${horasAhorradas.toFixed(1)} horas/mes recuperadas
+                `;
+                
+                document.getElementById('resultadoROI').innerHTML = `
+                    ROI: ${roi.toFixed(0)}x retorno por tiempo invertido
+                `;
+                
+                // Update progress bars
+                const eficiencia = Math.min(100, Math.max(10, roi));
+                const sostenibilidad = Math.min(100, Math.max(10, (horasAhorradas / totalHorasPerdidas) * 100));
+                
+                document.getElementById('eficienciaPreventiva').textContent = `${eficiencia.toFixed(0)}%`;
+                document.getElementById('barraEficiencia').style.width = `${eficiencia}%`;
+                
+                document.getElementById('sostenibilidadCarrera').textContent = `${sostenibilidad.toFixed(0)}%`;
+                document.getElementById('barraSostenibilidad').style.width = `${sostenibilidad}%`;
+            }
+        }
+
+        // CRITICAL MOMENT SIMULATOR
+        function selectCriticalMoment(moment) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            event.currentTarget.classList.add('selected');
+            
+            const responses = {
+                'energia-bajando': `
+                    <div class="small">
+                        <h6 class="text-primary">🔋 Protocolo: Boost Energético Invisible</h6>
+                        <p><strong>Detección:</strong> Energía 25-50%, postura decayendo, voice energy dropping</p>
+                        <p><strong>Micro-intervención (30 seg):</strong></p>
+                        <ol class="small">
+                            <li>5 respiraciones profundas mientras sonríes</li>
+                            <li>Micro-estiramiento de hombros "casual"</li>
+                            <li>Cambio de posición + expansión corporal</li>
+                            <li>Interacción energética con chat</li>
+                        </ol>
+                        <div class="bg-success bg-opacity-10 p-2 rounded mt-2">
+                            <strong>Resultado:</strong> Recuperación de 20-30% energía sin pausa visible
+                        </div>
+                    </div>
+                `,
+                'frustracion-acumulada': `
+                    <div class="small">
+                        <h6 class="text-primary">😤 Protocolo: Reset Emocional Rápido</h6>
+                        <p><strong>Detección:</strong> Tensión facial, respuestas más cortas, irritabilidad creciente</p>
+                        <p><strong>Micro-intervención (45 seg):</strong></p>
+                        <ol class="small">
+                            <li>Anclaje de calma (toque en muñeca)</li>
+                            <li>Reframe mental: "Esta es data valiosa sobre mi audiencia"</li>
+                            <li>Respiración 4-7-8 con sonrisa micro</li>
+                            <li>Enfoque en usuarios positivos presentes</li>
+                        </ol>
+                        <div class="bg-success bg-opacity-10 p-2 rounded mt-2">
+                            <strong>Resultado:</strong> Frustración neutralizada, confianza restaurada
+                        </div>
+                    </div>
+                `,
+                'concentracion-perdida': `
+                    <div class="small">
+                        <h6 class="text-primary">🌀 Protocolo: Reenfoque Instantáneo</h6>
+                        <p><strong>Detección:</strong> Mente divagando, respuestas genéricas, conexión superficial</p>
+                        <p><strong>Micro-intervención (40 seg):</strong></p>
+                        <ol class="small">
+                            <li>Contacto visual directo con cámara (3 seg)</li>
+                            <li>Pregunta específica a audiencia presente</li>
+                            <li>Enfoque en una conversación particular</li>
+                            <li>Intención consciente de valor genuino</li>
+                        </ol>
+                        <div class="bg-success bg-opacity-10 p-2 rounded mt-2">
+                            <strong>Resultado:</strong> Concentración restaurada, conexión reestablecida
+                        </div>
+                    </div>
+                `,
+                'sobrecarga-sensorial': `
+                    <div class="small">
+                        <h6 class="text-primary">🤯 Protocolo: Simplificación de Emergencia</h6>
+                        <p><strong>Detección:</strong> Abrumamiento, dificultad procesando múltiples inputs</p>
+                        <p><strong>Micro-intervención (60 seg):</strong></p>
+                        <ol class="small">
+                            <li>Pausa micro-break: "Un segundo, bellezas"</li>
+                            <li>Disociación momentánea: vista desde exterior</li>
+                            <li>Simplificación: enfoque en UNA cosa</li>
+                            <li>Control respiratorio consciente</li>
+                        </ol>
+                        <div class="bg-success bg-opacity-10 p-2 rounded mt-2">
+                            <strong>Resultado:</strong> Claridad mental restaurada, sobrecarga eliminada
+                        </div>
+                    </div>
+                `
+            };
+            
+            document.getElementById('respuesta-critical').innerHTML = responses[moment];
+        }
+
+        // WELLNESS TRACKER
+        const wellnessMetrics = {
+            checkins: 70,
+            intervencion: 45,
+            prevencion: 60,
+            energia: 55
+        };
+
+        function updateWellness(metric, change) {
+            wellnessMetrics[metric] = Math.max(0, Math.min(100, wellnessMetrics[metric] + change));
+            
+            // Update display
+            document.getElementById(`wellness-${metric}`).textContent = wellnessMetrics[metric];
+            document.getElementById(`progress-${metric}`).style.width = `${wellnessMetrics[metric]}%`;
+            
+            // Update general wellness level
+            updateWellnessLevel();
+        }
+
+        function updateWellnessLevel() {
+            const average = (wellnessMetrics.checkins + wellnessMetrics.intervencion + wellnessMetrics.prevencion + wellnessMetrics.energia) / 4;
+            
+            let level, emoji, description, nextGoal;
+            
+            if (average < 25) {
+                level = "Aprendiz Preventivo";
+                emoji = "🌱";
+                description = "Desarrollando consciencia de señales internas";
+                nextGoal = "Implementar check-in RADAR diario durante 7 días";
+            } else if (average < 50) {
+                level = "Ejecutor Preventivo";
+                emoji = "⚡";
+                description = "Implementando sistemas de monitoreo básico";
+                nextGoal = "Dominar micro-intervenciones automáticas";
+            } else if (average < 75) {
+                level = "Especialista en Prevención";
+                emoji = "🛡️";
+                description = "Sistema preventivo funcionando consistentemente";
+                nextGoal = "Optimizar checkpoints para máxima eficiencia";
+            } else {
+                level = "Master Preventivo";
+                emoji = "👑";
+                description = "Sostenibilidad profesional garantizada";
+                nextGoal = "Mentorear a otros en sistemas preventivos";
+            }
+            
+            document.getElementById('wellness-emoji').textContent = emoji;
+            document.getElementById('wellness-level').textContent = level;
+            document.getElementById('wellness-description').textContent = description;
+            document.getElementById('next-wellness-goal').textContent = nextGoal;
+            
+            document.getElementById('progress-wellness-general').style.width = `${average}%`;
+            document.getElementById('progress-wellness-text').textContent = `${Math.round(average)}% hacia siguiente nivel`;
+            
+            // Update achievements
+            const crisisEvitadas = Math.round(average * 0.5 + 10);
+            const tiempoAhorrado = Math.round(average * 0.8 + 20);
+            const diasStreak = Math.round(average * 0.3 + 5);
+            
+            document.getElementById('crisis-evitadas').textContent = crisisEvitadas;
+            document.getElementById('tiempo-ahorrado').textContent = `${tiempoAhorrado}h`;
+            document.getElementById('dias-streak').textContent = diasStreak;
+        }
+
+        // Initialize wellness level
+        updateWellnessLevel();
+
+        // SMOOTH SCROLLING FOR MOBILE
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.innerWidth <= 768) {
+                document.body.style.overflowX = 'hidden';
+            }
+        });
+
+        // TOUCH IMPROVEMENTS FOR MOBILE
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.interactive-card, .scenario-card, .checkpoint-item').forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                card.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

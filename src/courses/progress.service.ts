@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import {
@@ -15,9 +15,27 @@ import { Lesson, LessonDocument } from './schemas/lesson.schema';
 import {
   SubmitExerciseDto,
   SubmitQuizDto,
-  MarkLessonCompleteDto,
+  MarkLessonCompletePayload,
   ProgressUpdateResponse,
+  StartingPointResponse,
+  DailyStatusResponse,
+  ThemeAccessResponse,
+  LessonAccessResponse,
 } from './dto/progress.dto';
+
+// Quiz Service para integración
+import { QuizService } from '../quiz/quiz.service';
+import { QuizType } from '../quiz/schemas/quiz.schema';
+
+// Gamification Service para recompensas
+import { GamificationService } from '../gamification/gamification.service';
+import { TransactionType, ReferenceType } from '../gamification/schemas/token-transaction.schema';
+
+// User model para límite diario
+import { User, UserDocument } from '../users/schemas/user.schema';
+
+// Settings Service para configuración global del sistema
+import { SettingsService } from '../settings/settings.service';
 
 @Injectable()
 export class ProgressService {
@@ -27,12 +45,26 @@ export class ProgressService {
     @InjectModel(Course.name) private courseModel: Model<CourseDocument>,
     @InjectModel(Theme.name) private themeModel: Model<ThemeDocument>,
     @InjectModel(Lesson.name) private lessonModel: Model<LessonDocument>,
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @Inject(forwardRef(() => QuizService))
+    private quizService: QuizService,
+    private gamificationService: GamificationService,
+    private settingsService: SettingsService,
   ) {}
+
+  // ==================== HELPERS ====================
+
+  /** Busca el documento de progreso por userId (convierte string a ObjectId) */
+  private findProgressByUserId(userId: string) {
+    return this.progressModel
+      .findOne({ userId: new Types.ObjectId(userId) })
+      .exec();
+  }
 
   // ==================== GET PROGRESS ====================
 
   async getUserProgress(userId: string): Promise<UserProgress> {
-    let progress = await this.progressModel.findOne({ userId }).exec();
+    let progress = await this.findProgressByUserId(userId);
 
     if (!progress) {
       // Crear documento de progreso si no existe
@@ -49,14 +81,21 @@ export class ProgressService {
   async getCourseProgress(
     userId: string,
     courseId: string,
-  ): Promise<CourseProgress | null> {
-    const progress = await this.progressModel.findOne({ userId }).exec();
+  ): Promise<{ enrolled: boolean; progress: CourseProgress | null }> {
+    const progressDoc = await this.findProgressByUserId(userId);
 
-    if (!progress) return null;
+    if (!progressDoc) {
+      return { enrolled: false, progress: null };
+    }
 
-    return (
-      progress.courses.find((c) => c.courseId.toString() === courseId) || null
-    );
+    const courseProgress = progressDoc.courses.find(
+      (c) => c.courseId.toString() === courseId,
+    ) || null;
+
+    return {
+      enrolled: courseProgress !== null,
+      progress: courseProgress,
+    };
   }
 
   // ==================== ENROLLMENT ====================
@@ -67,7 +106,7 @@ export class ProgressService {
       throw new NotFoundException('Curso no encontrado');
     }
 
-    let progress = await this.progressModel.findOne({ userId }).exec();
+    let progress = await this.findProgressByUserId(userId);
 
     if (!progress) {
       progress = new this.progressModel({
@@ -141,11 +180,51 @@ export class ProgressService {
 
   async markLessonComplete(
     userId: string,
-    dto: MarkLessonCompleteDto,
+    dto: MarkLessonCompletePayload,
   ): Promise<ProgressUpdateResponse> {
     const lesson = await this.lessonModel.findById(dto.lessonId).exec();
     if (!lesson) {
       throw new NotFoundException('Lección no encontrada');
+    }
+
+    // ─── REGLA 1: Verificar límite diario de tareas ───
+    const dailyCheck = await this.checkDailyLimit(userId);
+    if (!dailyCheck.canComplete) {
+      return {
+        success: false,
+        courseProgress: 0,
+        themeProgress: 0,
+        lessonCompleted: false,
+        themeCompleted: false,
+        courseCompleted: false,
+        dailyLimitReached: true,
+        message: dailyCheck.message,
+        dailyProgress: {
+          tasksCompletedToday: dailyCheck.tasksCompletedToday,
+          maxDailyTasks: dailyCheck.maxDailyTasks,
+          tasksRemaining: 0,
+        },
+      };
+    }
+
+    // ─── REGLA 2: Verificar POST_QUIZ antes de permitir completar ───
+    const postQuizStatus = await this.quizService.getPostQuizStatus(userId, dto.lessonId);
+    if (!postQuizStatus.canComplete) {
+      return {
+        success: false,
+        courseProgress: 0,
+        themeProgress: 0,
+        lessonCompleted: false,
+        themeCompleted: false,
+        courseCompleted: false,
+        message: postQuizStatus.message,
+        postQuizRequired: {
+          quizId: postQuizStatus.quizId,
+          attemptsCount: postQuizStatus.attemptsCount,
+          maxAttempts: postQuizStatus.maxAttempts,
+          bestScore: postQuizStatus.bestScore,
+        },
+      };
     }
 
     const theme = await this.themeModel.findById(lesson.themeId).exec();
@@ -153,7 +232,7 @@ export class ProgressService {
       throw new NotFoundException('Tema no encontrado');
     }
 
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
     if (!progress) {
       throw new NotFoundException('Progreso no encontrado. Inscríbete primero.');
     }
@@ -179,15 +258,46 @@ export class ProgressService {
       throw new NotFoundException('Lección no encontrada en progreso');
     }
 
-    // Marcar lección como completada
+    // Evitar completar una lección ya completada (idempotencia)
+    if (lessonProgress.status === ProgressStatus.COMPLETED) {
+      const nextContent = await this.getNextContent(
+        dto.lessonId,
+        theme._id.toString(),
+        theme.courseId.toString(),
+      );
+      return {
+        success: true,
+        courseProgress: courseProgress.progressPercentage,
+        themeProgress: themeProgress.progressPercentage,
+        lessonCompleted: true,
+        themeCompleted: themeProgress.status === ProgressStatus.COMPLETED,
+        courseCompleted: courseProgress.status === ProgressStatus.COMPLETED,
+        message: 'Esta lección ya estaba completada',
+        unlockedContent: nextContent,
+      };
+    }
+
+    // ─── Marcar lección como completada ───
     lessonProgress.status = ProgressStatus.COMPLETED;
     lessonProgress.completedAt = new Date();
+
+    // Guardar resultado del quiz en el progreso si aplica
+    if (postQuizStatus.hasPostQuiz && postQuizStatus.hasPassed) {
+      lessonProgress.quizResult = {
+        score: postQuizStatus.bestScore || 0,
+        maxScore: 100,
+        percentage: postQuizStatus.bestScore || 0,
+        attempts: postQuizStatus.attemptsCount,
+        lastAttemptAt: new Date(),
+        passed: true,
+      };
+    }
 
     if (dto.completedBlocks) {
       lessonProgress.completedBlocks = dto.completedBlocks;
     }
 
-    // Actualizar progreso del tema
+    // ─── Actualizar progreso del tema ───
     const completedLessons = themeProgress.lessonsProgress.filter(
       (l) => l.status === ProgressStatus.COMPLETED,
     ).length;
@@ -204,7 +314,7 @@ export class ProgressService {
       themeProgress.startedAt = new Date();
     }
 
-    // Actualizar progreso del curso
+    // ─── Actualizar progreso del curso ───
     const completedThemes = courseProgress.themesProgress.filter(
       (t) => t.status === ProgressStatus.COMPLETED,
     ).length;
@@ -225,10 +335,33 @@ export class ProgressService {
     courseProgress.lastAccessedAt = new Date();
     progress.totalLessonsCompleted += 1;
 
-    // Actualizar streak
+    // ─── REGLA 3: Actualizar streak ───
     await this.updateStreak(progress);
 
     await progress.save();
+
+    // ─── REGLA 4: Incrementar progreso diario ───
+    await this.incrementDailyProgress(userId);
+
+    // ─── REGLA 5: Obtener siguiente contenido (auto-avance) ───
+    const unlockedContent = await this.getNextContent(
+      dto.lessonId,
+      theme._id.toString(),
+      theme.courseId.toString(),
+    );
+
+    // ─── REGLA 6: Otorgar recompensas de gamificación ───
+    const rewards = await this.awardCompletionRewards(
+      userId,
+      dto.lessonId,
+      theme,
+      themeCompleted,
+      courseCompleted,
+      progress.currentStreak,
+    );
+
+    // Calcular tareas restantes del día
+    const updatedDaily = await this.checkDailyLimit(userId);
 
     return {
       success: true,
@@ -237,6 +370,13 @@ export class ProgressService {
       lessonCompleted: true,
       themeCompleted,
       courseCompleted,
+      unlockedContent,
+      rewards,
+      dailyProgress: {
+        tasksCompletedToday: updatedDaily.tasksCompletedToday,
+        maxDailyTasks: updatedDaily.maxDailyTasks,
+        tasksRemaining: Math.max(0, updatedDaily.maxDailyTasks - updatedDaily.tasksCompletedToday),
+      },
     };
   }
 
@@ -246,7 +386,7 @@ export class ProgressService {
     userId: string,
     dto: SubmitExerciseDto,
   ): Promise<ProgressUpdateResponse> {
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
     if (!progress) {
       throw new NotFoundException('Progreso no encontrado');
     }
@@ -306,7 +446,7 @@ export class ProgressService {
     userId: string,
     dto: SubmitQuizDto,
   ): Promise<ProgressUpdateResponse> {
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
     if (!progress) {
       throw new NotFoundException('Progreso no encontrado');
     }
@@ -412,10 +552,100 @@ export class ProgressService {
 
   // ==================== UNLOCK CHECK ====================
 
+  /**
+   * Verifica si el usuario puede acceder a un tema específico
+   * Regla: Un tema solo se desbloquea si el anterior alcanzó el unlockThreshold
+   */
+  async canAccessTheme(
+    userId: string,
+    themeId: string,
+    courseId: string,
+  ): Promise<ThemeAccessResponse> {
+    const theme = await this.themeModel.findById(themeId).exec();
+    if (!theme) {
+      return { canAccess: false, reason: 'Tema no encontrado', themeId, requiresCompletion: false };
+    }
+
+    // Si no requiere completar anterior, siempre accesible
+    if (!theme.requiresPreviousCompletion) {
+      return { canAccess: true, themeId, requiresCompletion: false };
+    }
+
+    // Obtener todos los temas del curso ordenados
+    const themes = await this.themeModel
+      .find({ courseId: new Types.ObjectId(courseId) })
+      .sort({ order: 1 })
+      .exec();
+
+    const themeIndex = themes.findIndex((t) => t._id.toString() === themeId);
+
+    // Primer tema del curso: siempre accesible
+    if (themeIndex <= 0) {
+      return { canAccess: true, themeId, requiresCompletion: true };
+    }
+
+    // Verificar progreso del tema anterior
+    const previousTheme = themes[themeIndex - 1];
+    const progress = await this.findProgressByUserId(userId);
+    if (!progress) {
+      return {
+        canAccess: false,
+        reason: 'No estás inscrito en ningún curso',
+        themeId,
+        requiresCompletion: true,
+      };
+    }
+
+    const courseProgress = progress.courses.find(
+      (c) => c.courseId.toString() === courseId,
+    );
+    if (!courseProgress) {
+      return {
+        canAccess: false,
+        reason: 'No estás inscrito en este curso',
+        themeId,
+        requiresCompletion: true,
+      };
+    }
+
+    const prevThemeProgress = courseProgress.themesProgress.find(
+      (t) => t.themeId.toString() === previousTheme._id.toString(),
+    );
+
+    if (!prevThemeProgress) {
+      return {
+        canAccess: false,
+        reason: 'Debes completar el tema anterior para continuar',
+        themeId,
+        requiresCompletion: true,
+        previousThemeProgress: 0,
+        unlockThreshold: theme.unlockThreshold,
+      };
+    }
+
+    // Verificar si el tema anterior cumple el threshold de desbloqueo
+    if (prevThemeProgress.progressPercentage < theme.unlockThreshold) {
+      return {
+        canAccess: false,
+        reason: `Debes completar al menos ${theme.unlockThreshold}% del tema "${previousTheme.title}" para desbloquear este tema (actual: ${prevThemeProgress.progressPercentage}%)`,
+        themeId,
+        requiresCompletion: true,
+        previousThemeProgress: prevThemeProgress.progressPercentage,
+        unlockThreshold: theme.unlockThreshold,
+      };
+    }
+
+    return { canAccess: true, themeId, requiresCompletion: true };
+  }
+
+  /**
+   * Verifica si el usuario puede acceder a una lección
+   * Incluye verificación de tema secuencial + lección secuencial + PRE_QUIZ
+   */
   async canAccessLesson(
     userId: string,
     lessonId: string,
-  ): Promise<{ canAccess: boolean; reason?: string }> {
+  ): Promise<LessonAccessResponse> {
     const lesson = await this.lessonModel.findById(lessonId).exec();
     if (!lesson) {
       return { canAccess: false, reason: 'Lección no encontrada' };
@@ -423,64 +653,176 @@ export class ProgressService {
 
     // Si es preview, siempre accesible
     if (lesson.isPreview) {
-      return { canAccess: true };
+      return { canAccess: true, themeAccessible: true };
     }
 
-    // Si no requiere completar anterior, accesible
-    if (!lesson.requiresPreviousCompletion) {
-      return { canAccess: true };
-    }
-
-    // Verificar si la lección anterior está completada
     const theme = await this.themeModel.findById(lesson.themeId).exec();
     if (!theme) {
       return { canAccess: false, reason: 'Tema no encontrado' };
     }
 
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    // ─── REGLA: Verificar acceso al tema primero ───
+    const themeAccess = await this.canAccessTheme(
+      userId,
+      theme._id.toString(),
+      theme.courseId.toString(),
+    );
+    if (!themeAccess.canAccess) {
+      return {
+        canAccess: false,
+        reason: themeAccess.reason,
+        themeAccessible: false,
+      };
+    }
+
+    // Si no requiere completar anterior, verificar solo PRE_QUIZ
+    if (!lesson.requiresPreviousCompletion) {
+      const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+      if (preQuizStatus.mustTakeQuiz) {
+        return {
+          canAccess: true,
+          preQuizRequired: true,
+          preQuizId: preQuizStatus.quizId,
+          reason: preQuizStatus.message,
+          themeAccessible: true,
+        };
+      }
+      return { canAccess: true, themeAccessible: true };
+    }
+
+    // Verificar progreso secuencial de lecciones
+    const progress = await this.findProgressByUserId(userId);
     if (!progress) {
-      return { canAccess: false, reason: 'No estás inscrito' };
+      return { canAccess: false, reason: 'No estás inscrito', themeAccessible: true };
     }
 
     const courseProgress = progress.courses.find(
       (c) => c.courseId.toString() === theme.courseId.toString(),
     );
     if (!courseProgress) {
-      return { canAccess: false, reason: 'No estás inscrito en este curso' };
+      return { canAccess: false, reason: 'No estás inscrito en este curso', themeAccessible: true };
     }
 
     const themeProgress = courseProgress.themesProgress.find(
       (t) => t.themeId.toString() === theme._id.toString(),
     );
     if (!themeProgress) {
-      return { canAccess: false, reason: 'Tema no encontrado en progreso' };
+      return { canAccess: false, reason: 'Tema no encontrado en progreso', themeAccessible: true };
     }
 
-    // Encontrar índice de la lección
+    // Encontrar índice de la lección en el progreso
     const lessonIndex = themeProgress.lessonsProgress.findIndex(
       (l) => l.lessonId.toString() === lessonId,
     );
 
     if (lessonIndex === 0) {
-      // Primera lección, siempre accesible
-      return { canAccess: true };
+      // Primera lección del tema, verificar PRE_QUIZ
+      const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+      if (preQuizStatus.mustTakeQuiz) {
+        return {
+          canAccess: true,
+          preQuizRequired: true,
+          preQuizId: preQuizStatus.quizId,
+          reason: preQuizStatus.message,
+          themeAccessible: true,
+        };
+      }
+      return { canAccess: true, themeAccessible: true };
     }
 
-    const previousLesson = themeProgress.lessonsProgress[lessonIndex - 1];
-    if (previousLesson.status === ProgressStatus.COMPLETED) {
-      return { canAccess: true };
+    // ─── REGLA: Verificar lección anterior completada ───
+    const previousLessonProgress = themeProgress.lessonsProgress[lessonIndex - 1];
+    const previousLessonId = previousLessonProgress.lessonId.toString();
+
+    if (previousLessonProgress.status !== ProgressStatus.COMPLETED) {
+      return {
+        canAccess: false,
+        reason: 'Debes completar la lección anterior para continuar',
+        themeAccessible: true,
+      };
     }
+
+    // ─── REGLA: Verificar POST_QUIZ de la lección anterior ───
+    const postQuizCheck = await this.quizService.hasPassedPreviousLessonPostQuiz(
+      userId,
+      previousLessonId,
+    );
+
+    if (!postQuizCheck.canProceed) {
+      return {
+        canAccess: false,
+        reason: postQuizCheck.reason || 'Debes aprobar el quiz de la lección anterior',
+        themeAccessible: true,
+      };
+    }
+
+    // ─── REGLA: Verificar PRE_QUIZ de esta lección ───
+    const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+    if (preQuizStatus.mustTakeQuiz) {
+      return {
+        canAccess: true,
+        preQuizRequired: true,
+        preQuizId: preQuizStatus.quizId,
+        reason: preQuizStatus.message,
+        themeAccessible: true,
+      };
+    }
+
+    return { canAccess: true, themeAccessible: true };
+  }
+
+  /**
+   * Verifica si el usuario puede ver el contenido de una lección
+   * (después de hacer el PRE_QUIZ si es requerido)
+   */
+  async canViewLessonContent(
+    userId: string,
+    lessonId: string,
+  ): Promise<{
+    canView: boolean;
+    canBypass: boolean;
+    preQuiz?: {
+      required: boolean;
+      quizId?: string;
+      hasPassed: boolean;
+      message: string;
+    };
+    postQuiz?: {
+      required: boolean;
+      quizId?: string;
+      hasPassed: boolean;
+      message: string;
+    };
+  }> {
+    const preQuizStatus = await this.quizService.getPreQuizStatus(userId, lessonId);
+    const postQuizStatus = await this.quizService.getPostQuizStatus(userId, lessonId);
 
     return {
-      canAccess: false,
-      reason: 'Debes completar la lección anterior',
+      canView: preQuizStatus.canViewContent,
+      canBypass: preQuizStatus.canBypass,
+      preQuiz: preQuizStatus.hasPreQuiz
+        ? {
+            required: preQuizStatus.mustTakeQuiz,
+            quizId: preQuizStatus.quizId,
+            hasPassed: preQuizStatus.hasPassed,
+            message: preQuizStatus.message,
+          }
+        : undefined,
+      postQuiz: postQuizStatus.hasPostQuiz
+        ? {
+            required: postQuizStatus.requiresPass,
+            quizId: postQuizStatus.quizId,
+            hasPassed: postQuizStatus.hasPassed,
+            message: postQuizStatus.message,
+          }
+        : undefined,
     };
   }
 
   // ==================== ADDITIONAL METHODS ====================
 
   async findByUser(userId: string): Promise<UserProgress | null> {
-    return this.progressModel.findOne({ userId }).exec();
+    return this.findProgressByUserId(userId);
   }
 
   async getLessonProgress(
@@ -493,7 +835,7 @@ export class ProgressService {
     const theme = await this.themeModel.findById(lesson.themeId).exec();
     if (!theme) return null;
 
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
     if (!progress) return null;
 
     const courseProgress = progress.courses.find(
@@ -521,7 +863,7 @@ export class ProgressService {
     longestStreak: number;
     totalTimeSpentMinutes: number;
   }> {
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
 
     if (!progress) {
       return {
@@ -554,7 +896,7 @@ export class ProgressService {
       progressPercentage: number;
     }>
   > {
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
 
     if (!progress) return [];
 
@@ -588,7 +930,7 @@ export class ProgressService {
       throw new NotFoundException('Tema no encontrado');
     }
 
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
     if (!progress) {
       throw new NotFoundException('Progreso no encontrado');
     }
@@ -746,7 +1088,7 @@ export class ProgressService {
   async getStreak(
     userId: string,
   ): Promise<{ currentStreak: number; longestStreak: number }> {
-    const progress = await this.progressModel.findOne({ userId }).exec();
+    const progress = await this.findProgressByUserId(userId);
 
     if (!progress) {
       return { currentStreak: 0, longestStreak: 0 };
@@ -755,6 +1097,423 @@ export class ProgressService {
     return {
       currentStreak: progress.currentStreak,
       longestStreak: progress.longestStreak,
+    };
+  }
+
+  // ==================== DAILY TASK LIMIT ====================
+
+  /**
+   * Verifica si el usuario puede completar más tareas hoy
+   * Regla: El límite diario viene de SystemSettings (configurado por admin)
+   */
+  private async checkDailyLimit(userId: string): Promise<{
+    canComplete: boolean;
+    tasksCompletedToday: number;
+    maxDailyTasks: number;
+    message?: string;
+  }> {
+    // Obtener límite desde configuración del sistema
+    const maxDailyTasks = await this.settingsService.getMaxDailyTasks();
+
+    // Si el límite está desactivado (Infinity), siempre puede completar
+    if (!isFinite(maxDailyTasks)) {
+      return { canComplete: true, tasksCompletedToday: 0, maxDailyTasks: 0 };
+    }
+
+    const user = await this.userModel.findById(userId).exec();
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const lastTaskDate = user.dailyProgress.lastTaskDate
+      ? new Date(user.dailyProgress.lastTaskDate)
+      : null;
+
+    let tasksToday = user.dailyProgress.tasksCompletedToday;
+
+    // Si el último registro es de otro día, el contador real es 0
+    if (lastTaskDate) {
+      lastTaskDate.setHours(0, 0, 0, 0);
+      if (lastTaskDate.getTime() !== today.getTime()) {
+        tasksToday = 0;
+      }
+    } else {
+      tasksToday = 0;
+    }
+
+    if (tasksToday >= maxDailyTasks) {
+      return {
+        canComplete: false,
+        tasksCompletedToday: tasksToday,
+        maxDailyTasks,
+        message: `Has alcanzado tu límite diario de ${maxDailyTasks} tarea(s). Vuelve mañana para continuar tu entrenamiento.`,
+      };
+    }
+
+    return {
+      canComplete: true,
+      tasksCompletedToday: tasksToday,
+      maxDailyTasks,
+    };
+  }
+
+  /**
+   * Incrementa el contador de tareas diarias del usuario
+   */
+  private async incrementDailyProgress(userId: string): Promise<void> {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const user = await this.userModel.findById(userId).exec();
+    if (!user) return;
+
+    const lastTaskDate = user.dailyProgress.lastTaskDate
+      ? new Date(user.dailyProgress.lastTaskDate)
+      : null;
+
+    if (lastTaskDate) {
+      lastTaskDate.setHours(0, 0, 0, 0);
+      if (lastTaskDate.getTime() !== today.getTime()) {
+        // Nuevo día: resetear contador
+        user.dailyProgress.tasksCompletedToday = 1;
+      } else {
+        user.dailyProgress.tasksCompletedToday += 1;
+      }
+    } else {
+      user.dailyProgress.tasksCompletedToday = 1;
+    }
+
+    user.dailyProgress.lastTaskDate = today;
+    await user.save();
+  }
+
+  /**
+   * Obtiene el estado del progreso diario del usuario
+   */
+  async getDailyStatus(userId: string): Promise<DailyStatusResponse> {
+    const user = await this.userModel.findById(userId).exec();
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    // Obtener límite desde configuración del sistema
+    const maxDailyTasks = await this.settingsService.getMaxDailyTasks();
+    const limitEnabled = isFinite(maxDailyTasks);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let tasksToday = user.dailyProgress.tasksCompletedToday;
+    const lastTaskDate = user.dailyProgress.lastTaskDate
+      ? new Date(user.dailyProgress.lastTaskDate)
+      : null;
+
+    // Resetear si es nuevo día
+    if (lastTaskDate) {
+      lastTaskDate.setHours(0, 0, 0, 0);
+      if (lastTaskDate.getTime() !== today.getTime()) {
+        tasksToday = 0;
+      }
+    } else {
+      tasksToday = 0;
+    }
+
+    const remaining = limitEnabled
+      ? Math.max(0, maxDailyTasks - tasksToday)
+      : Infinity;
+
+    return {
+      tasksCompletedToday: tasksToday,
+      maxDailyTasks: limitEnabled ? maxDailyTasks : 0,
+      tasksRemaining: limitEnabled ? remaining : -1,
+      canCompleteMore: !limitEnabled || remaining > 0,
+      lastTaskDate: user.dailyProgress.lastTaskDate,
+    };
+  }
+
+  // ==================== REWARDS INTEGRATION ====================
+
+  /**
+   * Otorga recompensas de gamificación al completar contenido
+   * Regla: Tokens + XP por lección, bonus por tema/curso, bonus por racha
+   */
+  private async awardCompletionRewards(
+    userId: string,
+    lessonId: string,
+    theme: Theme,
+    themeCompleted: boolean,
+    courseCompleted: boolean,
+    currentStreak: number,
+  ): Promise<{
+    tokensEarned: number;
+    xpEarned: number;
+    streakBonus?: number;
+    themeBonus?: number;
+    courseBonus?: number;
+    leveledUp?: boolean;
+    newLevel?: number;
+  }> {
+    const rewards = {
+      tokensEarned: 0,
+      xpEarned: 0,
+    } as {
+      tokensEarned: number;
+      xpEarned: number;
+      streakBonus?: number;
+      themeBonus?: number;
+      courseBonus?: number;
+      leveledUp?: boolean;
+      newLevel?: number;
+    };
+
+    try {
+      // Recompensa base por completar lección: 10 tokens + 20 XP
+      const lessonReward = await this.gamificationService.rewardLessonComplete(
+        userId,
+        lessonId,
+        10,
+        20,
+      );
+      rewards.tokensEarned += lessonReward.amount;
+      rewards.xpEarned += lessonReward.xpAmount;
+
+      // Bonus por completar tema: 25 tokens + 50 XP
+      if (themeCompleted) {
+        const themeReward = await this.gamificationService.grantTokens(
+          userId,
+          25,
+          TransactionType.THEME_COMPLETE,
+          `Tema completado: ${theme.title}`,
+          {
+            referenceType: ReferenceType.THEME,
+            referenceId: theme._id.toString(),
+            xpAmount: 50,
+          },
+        );
+        rewards.themeBonus = themeReward.amount;
+        rewards.tokensEarned += themeReward.amount;
+        rewards.xpEarned += themeReward.xpAmount;
+      }
+
+      // Bonus por completar curso: 100 tokens + 200 XP
+      if (courseCompleted) {
+        const courseReward = await this.gamificationService.grantTokens(
+          userId,
+          100,
+          TransactionType.COURSE_COMPLETE,
+          'Curso completado',
+          {
+            referenceType: ReferenceType.COURSE,
+            referenceId: theme.courseId.toString(),
+            xpAmount: 200,
+          },
+        );
+        rewards.courseBonus = courseReward.amount;
+        rewards.tokensEarned += courseReward.amount;
+        rewards.xpEarned += courseReward.xpAmount;
+      }
+
+      // Bonus por racha cada 3 días: (días/3) * 5 tokens
+      if (currentStreak >= 3 && currentStreak % 3 === 0) {
+        const streakTokens = Math.floor(currentStreak / 3) * 5;
+        const streakReward = await this.gamificationService.rewardStreakBonus(
+          userId,
+          currentStreak,
+          streakTokens,
+        );
+        rewards.streakBonus = streakReward.amount;
+        rewards.tokensEarned += streakReward.amount;
+        rewards.xpEarned += streakReward.xpAmount;
+      }
+
+      // Verificar si subió de nivel
+      const xpProgress = await this.gamificationService.getXpProgress(userId);
+      const user = await this.userModel.findById(userId).exec();
+      if (user && user.gamification.level > 1) {
+        rewards.leveledUp = true;
+        rewards.newLevel = user.gamification.level;
+      }
+    } catch (error) {
+      // No fallar la operación principal si la gamificación falla
+      console.error('Error al otorgar recompensas de gamificación:', error);
+    }
+
+    return rewards;
+  }
+
+  // ==================== AUTO-ADVANCE / NEXT CONTENT ====================
+
+  /**
+   * Determina el siguiente contenido después de completar una lección
+   * Regla: Siguiente lección en el tema, o primera lección del siguiente tema
+   */
+  private async getNextContent(
+    lessonId: string,
+    themeId: string,
+    courseId: string,
+  ): Promise<{ nextLesson?: string; nextTheme?: string }> {
+    // Obtener lecciones del tema actual ordenadas
+    const lessons = await this.lessonModel
+      .find({ themeId: new Types.ObjectId(themeId) })
+      .sort({ order: 1 })
+      .exec();
+
+    const currentIndex = lessons.findIndex(
+      (l) => l._id.toString() === lessonId,
+    );
+
+    // Si hay una lección siguiente en el mismo tema
+    if (currentIndex >= 0 && currentIndex < lessons.length - 1) {
+      return { nextLesson: lessons[currentIndex + 1]._id.toString() };
+    }
+
+    // Tema completado: buscar el siguiente tema del curso
+    const themes = await this.themeModel
+      .find({ courseId: new Types.ObjectId(courseId) })
+      .sort({ order: 1 })
+      .exec();
+
+    const themeIndex = themes.findIndex((t) => t._id.toString() === themeId);
+
+    if (themeIndex >= 0 && themeIndex < themes.length - 1) {
+      const nextTheme = themes[themeIndex + 1];
+      const firstLesson = await this.lessonModel
+        .findOne({ themeId: nextTheme._id })
+        .sort({ order: 1 })
+        .exec();
+
+      return {
+        nextTheme: nextTheme._id.toString(),
+        nextLesson: firstLesson?._id.toString(),
+      };
+    }
+
+    // Curso completado
+    return {};
+  }
+
+  // ==================== STARTING POINT ====================
+
+  /**
+   * Obtiene el punto de inicio para un usuario (primera lección incompleta)
+   * Regla: Seguir el orden secuencial de módulos → temas → lecciones
+   */
+  async getStartingPoint(
+    userId: string,
+    courseId?: string,
+  ): Promise<StartingPointResponse> {
+    const progress = await this.findProgressByUserId(userId);
+
+    if (!progress || progress.courses.length === 0) {
+      throw new NotFoundException(
+        'No estás inscrito en ningún curso. Inscríbete primero.',
+      );
+    }
+
+    // Función auxiliar para encontrar la primera lección incompleta en un curso
+    const findFirstIncomplete = async (
+      cp: CourseProgress,
+    ): Promise<StartingPointResponse | null> => {
+      for (const tp of cp.themesProgress) {
+        if (tp.status === ProgressStatus.COMPLETED) continue;
+
+        for (const lp of tp.lessonsProgress) {
+          if (lp.status === ProgressStatus.COMPLETED) continue;
+
+          const [lesson, themeDoc, courseDoc] = await Promise.all([
+            this.lessonModel.findById(lp.lessonId).exec(),
+            this.themeModel.findById(tp.themeId).exec(),
+            this.courseModel.findById(cp.courseId).exec(),
+          ]);
+
+          if (lesson && themeDoc && courseDoc) {
+            return {
+              courseId: cp.courseId.toString(),
+              themeId: tp.themeId.toString(),
+              lessonId: lp.lessonId.toString(),
+              courseName: courseDoc.title,
+              themeName: themeDoc.title,
+              lessonName: lesson.title,
+              themeOrder: themeDoc.order,
+              lessonOrder: lesson.order,
+            };
+          }
+        }
+      }
+      return null;
+    };
+
+    // Si se especifica un curso
+    if (courseId) {
+      const courseProgress = progress.courses.find(
+        (c) => c.courseId.toString() === courseId,
+      );
+      if (!courseProgress) {
+        throw new NotFoundException('No estás inscrito en este curso');
+      }
+
+      const result = await findFirstIncomplete(courseProgress);
+      if (result) return result;
+
+      throw new NotFoundException(
+        'Ya has completado todas las lecciones de este curso',
+      );
+    }
+
+    // Buscar en todos los cursos del usuario (priorizando por último acceso)
+    const sortedCourses = [...progress.courses]
+      .filter((c) => c.status !== ProgressStatus.COMPLETED)
+      .sort((a, b) => {
+        const dateA = a.lastAccessedAt ? new Date(a.lastAccessedAt).getTime() : 0;
+        const dateB = b.lastAccessedAt ? new Date(b.lastAccessedAt).getTime() : 0;
+        return dateB - dateA;
+      });
+
+    for (const cp of sortedCourses) {
+      const result = await findFirstIncomplete(cp);
+      if (result) return result;
+    }
+
+    throw new NotFoundException(
+      'No hay lecciones pendientes. ¡Has completado todo tu entrenamiento!',
+    );
+  }
+
+  // ==================== FULL LESSON STATUS ====================
+
+  /**
+   * Obtiene el estado completo de acceso a una lección
+   * Combina: acceso al tema + acceso a lección + PRE_QUIZ + POST_QUIZ + límite diario
+   */
+  async getFullLessonStatus(
+    userId: string,
+    lessonId: string,
+  ): Promise<{
+    access: LessonAccessResponse;
+    contentStatus: {
+      canView: boolean;
+      canBypass: boolean;
+      preQuiz?: { required: boolean; quizId?: string; hasPassed: boolean; message: string };
+      postQuiz?: { required: boolean; quizId?: string; hasPassed: boolean; message: string };
+    };
+    dailyStatus: DailyStatusResponse;
+    lessonProgress: LessonProgress | null;
+  }> {
+    const [access, contentStatus, dailyStatus, lessonProgress] = await Promise.all([
+      this.canAccessLesson(userId, lessonId),
+      this.canViewLessonContent(userId, lessonId),
+      this.getDailyStatus(userId),
+      this.getLessonProgress(userId, lessonId),
+    ]);
+
+    return {
+      access,
+      contentStatus,
+      dailyStatus,
+      lessonProgress,
     };
   }
 }

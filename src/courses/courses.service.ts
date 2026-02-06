@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Course, CourseDocument, CourseStatus } from './schemas/course.schema';
+import { Course, CourseDocument, CourseStatus, CourseType } from './schemas/course.schema';
 import { Theme, ThemeDocument } from './schemas/theme.schema';
 import { Lesson, LessonDocument } from './schemas/lesson.schema';
 import {
@@ -15,7 +15,9 @@ import {
   QueryCoursesDto,
   ReorderThemesDto,
 } from './dto/course.dto';
-import { PlanType } from '../users/schemas/user.schema';
+import { PlanType, UserRole, UserDocument } from '../users/schemas/user.schema';
+import { CloudinaryService } from '../cloudinary';
+import { Platform, PlatformDocument } from '../platforms/schemas/platform.schema';
 
 @Injectable()
 export class CoursesService {
@@ -23,11 +25,16 @@ export class CoursesService {
     @InjectModel(Course.name) private courseModel: Model<CourseDocument>,
     @InjectModel(Theme.name) private themeModel: Model<ThemeDocument>,
     @InjectModel(Lesson.name) private lessonModel: Model<LessonDocument>,
+    @InjectModel(Platform.name) private platformModel: Model<PlatformDocument>,
+    private readonly cloudinaryService: CloudinaryService,
   ) {}
 
   // ==================== CRUD OPERATIONS ====================
 
-  async create(createCourseDto: CreateCourseDto): Promise<Course> {
+  async create(
+    createCourseDto: CreateCourseDto,
+    file?: Express.Multer.File,
+  ): Promise<Course> {
     const existingCourse = await this.courseModel.findOne({
       slug: createCourseDto.slug,
     });
@@ -36,7 +43,20 @@ export class CoursesService {
       throw new BadRequestException('Ya existe un curso con ese slug');
     }
 
-    const course = new this.courseModel(createCourseDto);
+    // Subir imagen a Cloudinary si se proporciona
+    let thumbnailUrl: string | null = null;
+    if (file) {
+      const uploadResult = await this.cloudinaryService.uploadFile(file, {
+        folder: 'wctraining/courses',
+        resourceType: 'image',
+      });
+      thumbnailUrl = uploadResult.secureUrl;
+    }
+
+    const course = new this.courseModel({
+      ...createCourseDto,
+      thumbnail: thumbnailUrl || createCourseDto.thumbnail || null,
+    });
     return course.save();
   }
 
@@ -112,7 +132,20 @@ export class CoursesService {
     return course as unknown as Course & { themes: Theme[] };
   }
 
-  async update(id: string, updateCourseDto: UpdateCourseDto): Promise<Course> {
+  async update(
+    id: string,
+    updateCourseDto: UpdateCourseDto,
+    file?: Express.Multer.File,
+  ): Promise<Course> {
+    // Subir nueva imagen si se proporciona
+    if (file) {
+      const uploadResult = await this.cloudinaryService.uploadFile(file, {
+        folder: 'wctraining/courses',
+        resourceType: 'image',
+      });
+      updateCourseDto.thumbnail = uploadResult.secureUrl;
+    }
+
     const course = await this.courseModel
       .findByIdAndUpdate(id, { $set: updateCourseDto }, { new: true })
       .exec();
@@ -238,5 +271,97 @@ export class CoursesService {
       })
       .sort({ displayOrder: 1 })
       .exec();
+  }
+
+  // ==================== CURSOS POR PLATAFORMA (REGLA DE NEGOCIO) ====================
+
+  /**
+   * Obtiene los cursos ordenados según la regla:
+   * - Si la modelo tiene streaming_platform → primero su módulo específico, luego generales
+   * - Si no tiene plataforma → solo cursos generales
+   * - Admin/Studio → retorna lista vacía (no tienen cursos)
+   */
+  async getCoursesForUser(user: UserDocument): Promise<{
+    platformCourses: Course[];
+    generalCourses: Course[];
+    allCourses: Course[];
+  }> {
+    // Usuarios administrativos no tienen cursos asignados
+    if (user.role === UserRole.ADMIN || user.role === UserRole.STUDIO) {
+      return {
+        platformCourses: [],
+        generalCourses: [],
+        allCourses: [],
+      };
+    }
+
+    const userPlan = user.subscriptionAccess?.planType || PlanType.TESTER;
+    const platformId = user.modelConfig?.platformId || null;
+
+    // Filtro base: solo cursos publicados
+    // Por ahora, si el plan es FREE no filtramos por allowedPlans
+    const baseFilter: Record<string, any> = {
+      status: CourseStatus.PUBLISHED,
+      ...(userPlan === PlanType.FREE ? {} : { allowedPlans: userPlan }),
+    };
+
+    // Cursos generales (sin plataforma específica o courseType = GENERAL)
+    const generalCourses = await this.courseModel
+      .find({
+        ...baseFilter,
+        $or: [
+          { courseType: CourseType.GENERAL },
+          { courseType: { $exists: false } },
+        ],
+        platformId: null,
+      })
+      .sort({ displayOrder: 1 })
+      .exec();
+
+    // Si la modelo tiene plataforma asignada, buscar su módulo específico
+    let platformCourses: Course[] = [];
+
+    if (platformId) {
+      platformCourses = await this.courseModel
+        .find({
+          ...baseFilter,
+          courseType: CourseType.MODULE,
+          platformId,
+        })
+        .sort({ displayOrder: 1 })
+        .exec();
+    }
+
+    // Orden final: primero módulos de plataforma, luego generales
+    const allCourses = [...platformCourses, ...generalCourses];
+
+    return {
+      platformCourses,
+      generalCourses,
+      allCourses,
+    };
+  }
+
+  /**
+   * Retorna cursos accesibles para el usuario autenticado
+   */
+  async getMyCoursesForUser(user: UserDocument): Promise<{
+    courses: Course[];
+    total: number;
+    page: number;
+    totalPages: number;
+  }> {
+    const { allCourses } = await this.getCoursesForUser(user);
+
+    const uniqueCourses = Array.from(
+      new Map(allCourses.map((course) => [course._id.toString(), course])).values(),
+    );
+
+    return {
+      courses: uniqueCourses,
+      total: uniqueCourses.length,
+      page: 1,
+      totalPages: 1,
+    };
   }
 }

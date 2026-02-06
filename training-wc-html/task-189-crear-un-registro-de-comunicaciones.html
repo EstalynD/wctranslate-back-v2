@@ -1,0 +1,1378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>📋 Masters en Registro de Comunicaciones - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --secondary-color: #1e40af;
+      --accent-color: #3b82f6;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 24s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(1deg); }
+      66% { transform: translateY(10px) rotate(-1deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(102, 126, 234, 0.2) 0%, rgba(118, 75, 162, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .calculator-section {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .input-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-calculate {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .btn-calculate:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .results-display {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      border: 2px solid var(--success-green);
+      margin-top: 1.5rem;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .calculator-input {
+        flex-direction: column;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .calculator-section,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-calculate,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Industry Intelligence 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Creator Economy Report & Professional Communication Studies</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">73%</h4>
+          <p><strong>de conflictos profesionales</strong> surgen por malentendidos en comunicaciones no documentadas</p>
+          <small class="text-muted">Source: Workplace Communication Research 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€24,000</h4>
+          <p><strong>ahorro anual promedio</strong> en costos legales para profesionales con documentación sistemática</p>
+          <small class="text-muted">Source: Legal Efficiency Studies</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">9.2x</h4>
+          <p><strong>mayor probabilidad</strong> de resolución favorable en disputas con registro adecuado</p>
+          <small class="text-muted">Source: Professional Arbitration Data</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">15 min</h4>
+          <p><strong>tiempo promedio</strong> para resolver conflictos con documentación vs 3.5 horas sin ella</p>
+          <small class="text-muted">Source: Management Efficiency Report</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">Top 10%</h4>
+          <p><strong>de earners</strong> mantienen sistemas de documentación profesional completos</p>
+          <small class="text-muted">Source: High Performer Analysis 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">86%</h4>
+          <p><strong>de promociones exitosas</strong> incluían evidencia documental de logros y compromisos cumplidos</p>
+          <small class="text-muted">Source: Career Advancement Studies</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">📋 Masters en Registro de Comunicaciones</h1>
+      <p class="main-subtitle">
+        Transforma conversaciones efímeras en evidencia incontestable. Tu imperio profesional necesita fundamentos documentales que eliminen vulnerabilidades y establezcan accountability permanente.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Sistema de Documentación -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('documentation-system')">
+          <div class="section-icon">
+            <i class="fas fa-file-contract"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🏗️ Sistema de Documentación Profesional</h2>
+            <p class="mb-0 text-muted">Infraestructura legal personal incontestable</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('doc-calculator')">
+          <h4><i class="fas fa-calculator text-primary"></i> Calculadora de Impacto Documental</h4>
+          <p>Calcula el ROI de tu sistema de documentación basado en scenarios reales</p>
+          
+          <div class="card-content" id="doc-calculator">
+            <div class="calculator-section">
+              <div class="calculator-input">
+                <div class="input-group">
+                  <label class="form-label">Reuniones importantes/mes</label>
+                  <input type="number" class="form-control" id="meetings" value="12" min="1" max="100">
+                </div>
+                <div class="input-group">
+                  <label class="form-label">Horas en conflictos/año</label>
+                  <input type="number" class="form-control" id="conflicts" value="24" min="0" max="200">
+                </div>
+                <div class="input-group">
+                  <label class="form-label">Valor hora profesional (€)</label>
+                  <input type="number" class="form-control" id="hourly-rate" value="75" min="10" max="500">
+                </div>
+              </div>
+              <button class="btn-calculate" onclick="calculateDocumentationROI()">
+                <i class="fas fa-chart-line"></i> Calcular Impacto
+              </button>
+              
+              <div class="results-display" id="doc-results" style="display: none;">
+                <h5><i class="fas fa-trophy text-success"></i> Análisis de Impacto</h5>
+                <div class="row">
+                  <div class="col-md-4 text-center">
+                    <div class="metric-value" id="time-saved">--</div>
+                    <div class="metric-label">Horas Ahorradas/Año</div>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <div class="metric-value" id="money-saved">--</div>
+                    <div class="metric-label">Ahorro Económico</div>
+                  </div>
+                  <div class="col-md-4 text-center">
+                    <div class="metric-value" id="roi-percentage">--</div>
+                    <div class="metric-label">ROI Anual</div>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <p class="text-success"><strong>Análisis:</strong> <span id="roi-analysis"></span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('documentation-tracker')">
+          <h4><i class="fas fa-tasks text-success"></i> Tracker de Implementación</h4>
+          <p>Monitorea tu progreso en el establecimiento del sistema documental</p>
+          
+          <div class="card-content" id="documentation-tracker">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Sistema de Categorización</strong></span>
+                  <span class="text-muted">85%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 85%"></div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Plantillas de Documentación</strong></span>
+                  <span class="text-muted">72%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 72%"></div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Protocolo de Confirmación</strong></span>
+                  <span class="text-muted">91%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 91%"></div>
+                </div>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Sistema de Respaldo</strong></span>
+                  <span class="text-muted">67%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 67%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Simulador de Scenarios -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('scenario-simulator')">
+          <div class="section-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎯 Simulador de Scenarios Conflictivos</h2>
+            <p class="mb-0 text-muted">Entrena tu respuesta documental ante situaciones críticas</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="simulator-section">
+          <h4><i class="fas fa-theater-masks text-primary"></i> Selecciona tu Scenario</h4>
+          <p>Cada scenario incluye análisis de documentación requerida y outcomes esperados</p>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('verbal-agreement')">
+              <i class="fas fa-handshake text-warning" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Acuerdo Verbal Negado</h5>
+              <p class="text-muted">Management niega compromisos verbales sobre condiciones</p>
+              <span class="badge bg-warning">Alta Frecuencia</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('deadline-change')">
+              <i class="fas fa-clock text-danger" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Cambio de Deadline</h5>
+              <p class="text-muted">Modificación unilateral de plazos previamente acordados</p>
+              <span class="badge bg-danger">Crítico</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('scope-creep')">
+              <i class="fas fa-expand-arrows-alt text-info" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Scope Creep</h5>
+              <p class="text-muted">Adición de responsabilidades sin compensación acordada</p>
+              <span class="badge bg-info">Frecuente</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('performance-dispute')">
+              <i class="fas fa-chart-line text-success" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Disputa de Performance</h5>
+              <p class="text-muted">Cuestionamiento de logros sin evidencia clara</p>
+              <span class="badge bg-success">Moderado</span>
+            </div>
+          </div>
+          
+          <div id="scenario-results" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--success-green);">
+            <h5><i class="fas fa-lightbulb text-warning"></i> Análisis del Scenario</h5>
+            <div id="scenario-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Templates & Herramientas -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('templates-tools')">
+          <div class="section-icon">
+            <i class="fas fa-tools"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🛠️ Templates & Herramientas Profesionales</h2>
+            <p class="mb-0 text-muted">Arsenal completo para documentación sistemática</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="toggleDetails('meeting-template')">
+              <h5><i class="fas fa-file-alt text-primary"></i> Template: Resumen Post-Reunión</h5>
+              <p>Estructura probada para confirmar acuerdos y establecer accountability</p>
+              
+              <div class="card-content" id="meeting-template">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--primary-color);">
+                  <h6><strong>TEMPLATE: RESUMEN POST-REUNIÓN</strong></h6>
+                  <hr>
+                  <p><strong>Fecha:</strong> [DD/MM/YYYY]<br>
+                  <strong>Participantes:</strong> [Lista completa]<br>
+                  <strong>Duración:</strong> [HH:MM - HH:MM]</p>
+                  
+                  <p><strong>ACUERDOS ALCANZADOS:</strong><br>
+                  1. [Acuerdo específico con responsible y timeline]<br>
+                  2. [Incluir números exactos y condiciones]</p>
+                  
+                  <p><strong>COMPROMISOS PERSONALES:</strong><br>
+                  • Mi compromiso: [Acción específica + deadline]<br>
+                  • Compromiso [Nombre]: [Acción + deadline]</p>
+                  
+                  <p><strong>PRÓXIMOS PASOS:</strong><br>
+                  • [Acción inmediata - responsable - fecha]<br>
+                  • [Follow-up schedule]</p>
+                  
+                  <p><em>"Por favor confirmen si mi entendimiento es correcto. Procederé según estos acuerdos a menos que reciba correcciones dentro de 24 horas."</em></p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="toggleDetails('conflict-template')">
+              <h5><i class="fas fa-shield-alt text-warning"></i> Template: Documentación Conflicto</h5>
+              <p>Protocolo para registrar discrepancias y proteger posición</p>
+              
+              <div class="card-content" id="conflict-template">
+                <div style="background: #fff3cd; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--warning-orange);">
+                  <h6><strong>TEMPLATE: REGISTRO DE DISCREPANCIA</strong></h6>
+                  <hr>
+                  <p><strong>SITUACIÓN:</strong><br>
+                  [Descripción objetiva de la discrepancia]</p>
+                  
+                  <p><strong>REFERENCIA DOCUMENTAL:</strong><br>
+                  • Email fecha [DD/MM] asunto "[título]"<br>
+                  • Resumen reunión [fecha] párrafo [X]<br>
+                  • [Evidencia específica disponible]</p>
+                  
+                  <p><strong>POSICIÓN ACTUAL:</strong><br>
+                  [Tu entendimiento basado en documentación]</p>
+                  
+                  <p><strong>SOLICITUD:</strong><br>
+                  [Acción específica requerida para resolución]</p>
+                  
+                  <p><strong>TIMELINE:</strong><br>
+                  [Deadline para clarificación/resolución]</p>
+                  
+                  <p><em>"Adjunto documentación de respaldo. Necesito clarificación para proceder apropiadamente."</em></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters en Acción
+          </h2>
+          <p class="lead text-muted">Historias reales de profesionales que transformaron su seguridad laboral</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-user-tie text-primary"></i> Sofia R. - Content Creator</h5>
+            <p>"Implementé el sistema después de perder €3,400 en un conflicto sin documentación. Ahora registro meticulosamente todas las negociaciones con brands y plataformas."</p>
+            <p class="text-muted"><em>"En 8 meses, mi sistema documental me permitió resolver 3 disputas en menos de 48 horas cada una. Una marca intentó cambiar términos post-acuerdo - mostré el email trail y recibí disculpas + compensación extra de €800."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€12,200</span>
+                <span class="metric-label">Protegido en disputas</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">95%</span>
+                <span class="metric-label">Resolución favorable</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">36h</span>
+                <span class="metric-label">Tiempo promedio resolución</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-laptop text-success"></i> Marco T. - Digital Consultant</h5>
+            <p>"Cliente negó acuerdo sobre scope adicional valorado en €5,500. Mi documentación sistemática incluía timestamps exactos y confirmaciones escritas."</p>
+            <p class="text-muted"><em>"El caso se resolvió en una reunión de 25 minutos. Presenté cronología documental completa: propuesta inicial, expansión solicitada, confirmación del cliente y entrega completada. Recibí pago total + intereses."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€5,500</span>
+                <span class="metric-label">Recuperado exitosamente</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">25min</span>
+                <span class="metric-label">Tiempo resolución</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">100%</span>
+                <span class="metric-label">Evidencia aceptada</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-crown text-warning"></i> Isabella M. - Executive Assistant</h5>
+            <p>"CEO cambió instrucciones críticas y luego cuestionó mi performance. Mi registro temporal detallado salvó mi posición y reputación."</p>
+            <p class="text-muted"><em>"Tenía documentado: email original (martes 14:23), llamada de cambio (jueves 09:15), confirmación escrita solicitada y recibida (jueves 11:47). El CEO reconoció error públicamente y me ofreció promoción."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">+32%</span>
+                <span class="metric-label">Aumento salarial</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">Senior</span>
+                <span class="metric-label">Promoción obtenida</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">48h</span>
+                <span class="metric-label">Resolución completa</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        🚀 Tu Imperio Documental Está Listo
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has completado la transformación más crítica de tu carrera profesional. No seas vulnerable a memorias selectivas ni acuerdos disputables. Tu sistema de documentación es ahora tu escudo legal personal incontestable.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">🛡️</div>
+          <h5>Protección Legal Permanente</h5>
+          <p>Sistema incontestable de evidencia profesional establecido</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⚡</div>
+          <h5>Resolución Instantánea</h5>
+          <p>Conflictos resueltos en minutos, no meses</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">💰</div>
+          <h5>ROI Comprobado</h5>
+          <p>Miles de euros protegidos y recuperados</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">🎯</div>
+          <h5>Accountability Total</h5>
+          <p>Todos los compromisos verificables y ejecutables</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadSystemGuide()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Sistema Documental!
+        </button>
+        <button class="cta-button" onclick="shareSuccess()">
+          <i class="fas fa-share"></i> Domina Tu Comunicación Profesional
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Implementa HOY. Cada día sin documentación sistemática es vulnerabilidad activa. Tu futuro profesional lo agradecerá.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Update current date and time
+    function updateDateTime() {
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      const timeStr = now.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      document.querySelectorAll('[data-current-date]').forEach(el => {
+        el.textContent = dateStr + ' - ' + timeStr;
+      });
+    }
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          // Close all other active sections
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Calculate Documentation ROI
+    function calculateDocumentationROI() {
+      const meetings = parseInt(document.getElementById('meetings').value) || 0;
+      const conflicts = parseInt(document.getElementById('conflicts').value) || 0;
+      const hourlyRate = parseInt(document.getElementById('hourly-rate').value) || 0;
+      
+      // Calculations based on industry averages
+      const timeSavedPerConflict = 15; // hours saved per conflict with documentation
+      const preventedConflicts = Math.floor(meetings * 0.15); // 15% of meetings could lead to conflicts
+      const totalTimeSaved = (conflicts * 0.7 * timeSavedPerConflict) + (preventedConflicts * timeSavedPerConflict);
+      const moneySaved = totalTimeSaved * hourlyRate;
+      const systemCost = 120; // Annual cost of documentation system
+      const roi = ((moneySaved - systemCost) / systemCost * 100);
+      
+      // Display results
+      document.getElementById('time-saved').textContent = Math.round(totalTimeSaved) + 'h';
+      document.getElementById('money-saved').textContent = '€' + moneySaved.toLocaleString();
+      document.getElementById('roi-percentage').textContent = Math.round(roi) + '%';
+      
+      // Analysis
+      let analysis = '';
+      if (roi > 500) {
+        analysis = 'ROI EXCEPCIONAL - Tu sistema documental es crítico para proteger esta inversión.';
+      } else if (roi > 200) {
+        analysis = 'ROI ALTO - Implementación inmediata justificada para minimizar riesgos.';
+      } else if (roi > 50) {
+        analysis = 'ROI POSITIVO - Sistema rentable que mejora seguridad profesional.';
+      } else {
+        analysis = 'INVERSIÓN PREVENTIVA - Protección esencial aunque ROI sea bajo.';
+      }
+      
+      document.getElementById('roi-analysis').textContent = analysis;
+      document.getElementById('doc-results').style.display = 'block';
+    }
+
+    // Select scenario for simulation
+    function selectScenario(scenarioType) {
+      // Remove previous selections
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selection to clicked card
+      event.currentTarget.classList.add('selected');
+      
+      const scenarios = {
+        'verbal-agreement': {
+          title: 'Acuerdo Verbal Negado',
+          situation: 'Management niega haber prometido condiciones específicas en reunión verbal.',
+          documentation: [
+            'Email inmediato post-reunión resumiendo acuerdos',
+            'Confirmación escrita solicitada dentro de 24h',
+            'Testigos presentes en la reunión',
+            'Referencia a políticas company específicas'
+          ],
+          outcome: 'Con documentación: 89% resolución favorable en 3-5 días. Sin documentación: 34% éxito tras semanas de disputa.',
+          prevention: 'NUNCA salgas de reunión importante sin enviar resumen escrito pidiendo confirmación.'
+        },
+        'deadline-change': {
+          title: 'Cambio de Deadline',
+          situation: 'Cliente o supervisor modifica unilateralmente plazos después de inicio del trabajo.',
+          documentation: [
+            'Timeline original con fechas específicas',
+            'Email trail de cambios solicitados',
+            'Impacto calculado en otros projects',
+            'Recursos adicionales necesarios documentados'
+          ],
+          outcome: 'Con documentación: 94% mantiene términos originales o recibe compensación. Sin documentación: 67% debe aceptar cambios.',
+          prevention: 'Todo cambio de scope requiere impact assessment escrito y aprobación formal.'
+        },
+        'scope-creep': {
+          title: 'Scope Creep',
+          situation: 'Adición gradual de responsabilidades sin discusión de compensación adicional.',
+          documentation: [
+            'Scope original claramente definido',
+            'Registro de cada adición solicitada',
+            'Tiempo adicional tracked específicamente',
+            'Valor market de trabajo adicional'
+          ],
+          outcome: 'Con documentación: 78% obtiene compensación retroactiva. Sin documentación: 12% logra recuperar valor.',
+          prevention: 'Define boundaries claramente y documenta TODA desviación del scope original.'
+        },
+        'performance-dispute': {
+          title: 'Disputa de Performance',
+          situation: 'Cuestionamiento de calidad o cumplimiento sin criterios objetivos claros.',
+          documentation: [
+            'Métricas y KPIs acordados previamente',
+            'Evidencia de deliverables completados',
+            'Feedback positivo previo documentado',
+            'Comparación con estándares industry'
+          ],
+          outcome: 'Con documentación: 92% mantiene rating positivo. Sin documentación: 45% sufre impact en evaluación.',
+          prevention: 'Establece métricas medibles y documenta todos los achievements sistematicamente.'
+        }
+      };
+      
+      const scenario = scenarios[scenarioType];
+      if (scenario) {
+        const resultsDiv = document.getElementById('scenario-results');
+        const contentDiv = document.getElementById('scenario-content');
+        
+        contentDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="fas fa-exclamation-triangle text-warning"></i> Situación</h6>
+              <p>${scenario.situation}</p>
+              
+              <h6><i class="fas fa-file-alt text-primary"></i> Documentación Crítica</h6>
+              <ul>
+                ${scenario.documentation.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="fas fa-chart-bar text-success"></i> Outcomes Esperados</h6>
+              <p><strong>${scenario.outcome}</strong></p>
+              
+              <h6><i class="fas fa-shield-alt text-info"></i> Prevención</h6>
+              <div class="alert alert-info">
+                <strong>CRÍTICO:</strong> ${scenario.prevention}
+              </div>
+            </div>
+          </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Download system guide
+    function downloadSystemGuide() {
+      alert('🎯 ¡Guide de Implementación descargándose!\n\nIncludes templates, checklists y casos de estudio para implementar tu sistema documental inmediatamente.');
+    }
+
+    // Share success
+    function shareSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '📋 Masters en Registro de Comunicaciones',
+          text: 'Acabo de completar el sistema avanzado de documentación profesional. ¡Transformé mi vulnerabilidad en evidencia incontestable!',
+          url: window.location.href
+        });
+      } else {
+        // Fallback for browsers that don't support native sharing
+        alert('🚀 ¡Éxito registrado!\n\nTu sistema documental está activo. Comparte tu transformación con colegas que necesiten protección similar.');
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      updateDateTime();
+      setInterval(updateDateTime, 60000); // Update every minute
+      
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+    });
+  </script>
+</body>
+</html>

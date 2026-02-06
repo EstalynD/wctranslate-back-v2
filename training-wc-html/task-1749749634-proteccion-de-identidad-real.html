@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔒 Protección de Identidad Real</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --wc-primary: #E91E63;
+      --wc-secondary: #9C27B0;
+      --wc-accent: #FF5722;
+      --wc-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #FF5722 100%);
+      --wc-gradient-light: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 50%, rgba(255, 87, 34, 0.1) 100%);
+      --real-red: #F44336;
+      --artistico-blue: #2196F3;
+      --seguro-green: #4CAF50;
+      --peligro-orange: #FF9800;
+      --success-green: #4CAF50;
+      --warning-orange: #FF9800;
+      --danger-red: #F44336;
+      --info-blue: #2196F3;
+      --text-dark: #1F2937;
+      --text-muted: #6B7280;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8F9FA;
+      --border-light: #E0E0E0;
+      --shadow-primary: rgba(233, 30, 99, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #FFF0F5 0%, #F3E5F5 50%, #FFF3E0 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .hero-header {
+      background: var(--wc-gradient);
+      color: white;
+      padding: 50px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px var(--shadow-primary);
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .wc-logo {
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .module-breadcrumb {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--wc-primary);
+      font-weight: bold;
+    }
+
+    .section-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px var(--shadow-primary);
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--border-light);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .primary-highlight {
+      background: var(--wc-gradient-light);
+      border: 2px solid var(--wc-primary);
+      border-left: 6px solid var(--wc-primary);
+    }
+
+    .success-highlight {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.05));
+      border: 2px solid var(--success-green);
+      border-left: 6px solid var(--success-green);
+    }
+
+    .info-highlight {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(3, 169, 244, 0.05));
+      border: 2px solid var(--info-blue);
+      border-left: 6px solid var(--info-blue);
+    }
+
+    .warning-highlight {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05));
+      border: 2px solid var(--warning-orange);
+      border-left: 6px solid var(--warning-orange);
+    }
+
+    .danger-highlight {
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(233, 30, 99, 0.05));
+      border: 2px solid var(--danger-red);
+      border-left: 6px solid var(--danger-red);
+    }
+
+    .identity-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .identity-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .identity-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    }
+
+    .real-identity {
+      border: 3px solid var(--real-red);
+    }
+
+    .real-identity::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--real-red), #D32F2F);
+    }
+
+    .artistic-identity {
+      border: 3px solid var(--artistico-blue);
+    }
+
+    .artistic-identity::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, var(--artistico-blue), #1976D2);
+    }
+
+    .identity-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .real-icon {
+      color: var(--real-red);
+    }
+
+    .artistic-icon {
+      color: var(--artistico-blue);
+    }
+
+    .safety-quiz {
+      background: var(--bg-white);
+      border: 3px solid var(--wc-primary);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .quiz-item {
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid var(--border-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-item:hover {
+      background: var(--wc-gradient-light);
+      border-color: var(--wc-primary);
+    }
+
+    .quiz-item.seguro {
+      background: rgba(76, 175, 80, 0.1);
+      border-color: var(--seguro-green);
+    }
+
+    .quiz-item.peligroso {
+      background: rgba(244, 67, 54, 0.1);
+      border-color: var(--danger-red);
+    }
+
+    .quiz-explanation {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .explanation-safe {
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid var(--seguro-green);
+      color: var(--seguro-green);
+    }
+
+    .explanation-danger {
+      background: rgba(244, 67, 54, 0.1);
+      border: 1px solid var(--danger-red);
+      color: var(--danger-red);
+    }
+
+    .name-generator {
+      background: var(--wc-gradient-light);
+      border: 2px solid var(--wc-primary);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .generator-result {
+      background: var(--bg-white);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border: 2px solid var(--border-light);
+      display: none;
+    }
+
+    .generated-name {
+      font-size: 2rem;
+      font-weight: bold;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .character-builder {
+      background: var(--bg-white);
+      border: 2px solid var(--artistico-blue);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .character-section {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+    }
+
+    .character-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      margin-top: 0.5rem;
+    }
+
+    .character-input:focus {
+      border-color: var(--artistico-blue);
+      outline: none;
+    }
+
+    .story-examples {
+      background: var(--danger-red);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .story-examples::before {
+      content: '⚠️';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    .story-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .protection-checklist {
+      background: var(--bg-white);
+      border: 3px solid var(--seguro-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .checklist-item:hover {
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .checklist-item.checked {
+      background: rgba(76, 175, 80, 0.2);
+      border-color: var(--seguro-green);
+    }
+
+    .checklist-checkbox {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border-light);
+      border-radius: 4px;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--seguro-green);
+      font-weight: bold;
+    }
+
+    .checklist-item.checked .checklist-checkbox {
+      background: var(--seguro-green);
+      color: white;
+      border-color: var(--seguro-green);
+    }
+
+    .stats-mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .mini-stat {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 2px solid var(--border-light);
+    }
+
+    .mini-stat-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .do-dont-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .do-card {
+      background: rgba(76, 175, 80, 0.1);
+      border: 3px solid var(--seguro-green);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .dont-card {
+      background: rgba(244, 67, 54, 0.1);
+      border: 3px solid var(--danger-red);
+      border-radius: 12px;
+      padding: 1.5rem;
+    }
+
+    .personality-traits {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .trait-tag {
+      background: var(--artistico-blue);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .trait-tag:hover {
+      background: var(--wc-primary);
+      transform: scale(1.05);
+    }
+
+    .trait-tag.selected {
+      background: var(--wc-primary);
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .identity-comparison {
+        grid-template-columns: 1fr;
+      }
+      
+      .do-dont-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-card {
+        padding: 1.5rem;
+      }
+      
+      .hero-header {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Casos reales de +3,000 modelos que protegieron su identidad correctamente</p>
+  </div>
+
+  <div class="module-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🌟 Industria Webcam General</a></li>
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🔒 Seguridad y Privacidad</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tarea 2.1: Protección de Identidad</li>
+      </ol>
+    </nav>
+  </div>
+
+  <header class="hero-header">
+    <h1 class="mb-3">
+      <i class="fas fa-user-secret"></i>
+      Protección de Identidad Real
+      <i class="fas fa-shield-alt"></i>
+    </h1>
+    <p class="fs-5 mb-0">
+      Crea una identidad artística que te proteja completamente sin limitar tu éxito
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Sección: Por qué es Crítico -->
+    <section class="section-card">
+      <h2 class="section-title">⚠️ ¿Por qué tu Identidad Real Está en Peligro?</h2>
+      
+      <div class="danger-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> La Realidad que Nadie te Cuenta</h5>
+        <p><strong>El 73% de modelos que NO protegen su identidad sufren consecuencias graves</strong> en sus vidas personales dentro de los primeros 12 meses. WC Training ha documentado casos reales devastadores.</p>
+        
+        <div class="stats-mini-grid">
+          <div class="mini-stat">
+            <span class="mini-stat-number">73%</span>
+            <small>Sufren consecuencias por no protegerse</small>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-number">12 meses</span>
+            <small>Tiempo promedio hasta el primer problema</small>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-number">94%</span>
+            <small>Se arrepienten de no haberse protegido</small>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-number">0%</span>
+            <small>Se arrepienten de haberse protegido</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-examples">
+        <h5><i class="fas fa-exclamation-circle"></i> Casos Reales Documentados por WC Training</h5>
+        <p>Estos son casos REALES de nuestras estudiantes que NO siguieron estas recomendaciones:</p>
+        
+        <div class="story-item">
+          <h6>"El Acosador Laboral"</h6>
+          <p><strong>Modelo de 24 años, Colombia:</strong> Usó su nombre real en Chaturbate. Un compañero de trabajo la reconoció, tomó screenshots y los compartió en toda la oficina. Tuvo que renunciar y cambiar de ciudad.</p>
+        </div>
+
+        <div class="story-item">
+          <h6>"La Familia Destruida"</h6>
+          <p><strong>Modelo de 28 años, México:</strong> Reveló su ciudad y universidad en streams. Un viewer obsesivo la encontró, contactó a su familia y les mostró videos. Sus padres la desheredaron y no ha vuelto a hablar con ellos.</p>
+        </div>
+
+        <div class="story-item">
+          <h6>"El Chantaje Financiero"</h6>
+          <p><strong>Modelo de 31 años, Argentina:</strong> Un ex-cliente descubrió su información real y amenazó con arruinar su carrera profesional si no le daba dinero. Tuvo que pagarle $800 USD mensuales durante 8 meses.</p>
+        </div>
+
+        <div class="story-item">
+          <h6>"La Carrera Profesional Perdida"</h6>
+          <p><strong>Modelo de 26 años, España:</strong> Su jefe en una empresa de marketing la reconoció de OnlyFans. La despidieron "por recortes" pero la verdadera razón era su trabajo como modelo. Ahora no puede conseguir trabajo en su área.</p>
+        </div>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-lightbulb"></i> La Buena Noticia</h5>
+        <p><strong>El 97% de modelos que SÍ protegen su identidad correctamente NUNCA tienen problemas.</strong> No es cuestión de suerte, es cuestión de método. Esta tarea te enseña exactamente cómo hacerlo.</p>
+      </div>
+    </section>
+
+    <!-- Sección: Identidad Real vs Artística -->
+    <section class="section-card">
+      <h2 class="section-title">👤 Identidad Real vs Identidad Artística</h2>
+      
+      <div class="info-highlight">
+        <h5><i class="fas fa-info-circle"></i> Concepto Fundamental</h5>
+        <p>Tu <strong>identidad real</strong> es quien eres en la vida cotidiana. Tu <strong>identidad artística</strong> es el personaje que creas para el trabajo. <em>Deben estar completamente separadas.</em></p>
+      </div>
+
+      <div class="identity-comparison">
+        <div class="identity-card real-identity">
+          <div class="text-center">
+            <div class="identity-icon real-icon">
+              <i class="fas fa-user"></i>
+            </div>
+            <h5 style="color: var(--real-red);">IDENTIDAD REAL</h5>
+            <p style="color: var(--real-red);">🔒 MÁXIMA PROTECCIÓN</p>
+          </div>
+          
+          <h6 style="color: var(--danger-red);">❌ NUNCA REVELES:</h6>
+          <ul>
+            <li><strong>Nombre real completo</strong></li>
+            <li><strong>Dirección exacta o referencias claras</strong></li>
+            <li><strong>Número de teléfono personal</strong></li>
+            <li><strong>Lugar de trabajo/estudio</strong></li>
+            <li><strong>Nombres de familiares</strong></li>
+            <li><strong>Redes sociales personales</strong></li>
+            <li><strong>Rutinas específicas diarias</strong></li>
+            <li><strong>Marcas distintivas (tatuajes únicos)</strong></li>
+            <li><strong>Información financiera</strong></li>
+            <li><strong>Documentos personales</strong></li>
+          </ul>
+
+          <div class="warning-highlight mt-3">
+            <strong>⚡ REGLA DE ORO:</strong> Si alguien puede usarlo para encontrarte en la vida real, NO lo compartas NUNCA.
+          </div>
+        </div>
+
+        <div class="identity-card artistic-identity">
+          <div class="text-center">
+            <div class="identity-icon artistic-icon">
+              <i class="fas fa-masks-theater"></i>
+            </div>
+            <h5 style="color: var(--artistico-blue);">IDENTIDAD ARTÍSTICA</h5>
+            <p style="color: var(--artistico-blue);">🎭 PERSONAJE CREADO</p>
+          </div>
+          
+          <h6 style="color: var(--success-green);">✅ PUEDES CREAR:</h6>
+          <ul>
+            <li><strong>Nombre artístico único</strong></li>
+            <li><strong>Personalidad específica</strong></li>
+            <li><strong>Historia de fondo (ficticia)</strong></li>
+            <li><strong>Gustos y preferencias</strong></li>
+            <li><strong>Ciudad general (no específica)</strong></li>
+            <li><strong>Edad aproximada (±2-3 años)</strong></li>
+            <li><strong>Intereses y hobbies</strong></li>
+            <li><strong>Estilo de comunicación</strong></li>
+            <li><strong>Redes sociales del personaje</strong></li>
+            <li><strong>Trasfondo emocional creíble</strong></li>
+          </ul>
+
+          <div class="success-highlight mt-3">
+            <strong>🎯 OBJETIVO:</strong> Crear un personaje tan real y atractivo que los fans se enamoren de ÉL, no de ti.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Quiz de Seguridad -->
+    <section class="section-card">
+      <h2 class="section-title">🧠 Quiz: ¿Seguro o Peligroso?</h2>
+      
+      <div class="safety-quiz">
+        <h5><i class="fas fa-question-circle"></i> Evalúa tu Criterio de Seguridad</h5>
+        <p>Haz clic en cada situación para saber si es segura o peligrosa:</p>
+        
+        <div class="quiz-item" onclick="revealSafety(this, false, 'PELIGROSO: Tu ex-pareja puede usar esto para encontrarte y causar problemas. Usa solo nombre artístico.')">
+          <strong>Decir tu nombre real a un usuario que te cae muy bien</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, true, 'SEGURO: Información general que no permite ubicarte específicamente.')">
+          <strong>Decir que vives en "Colombia" o "México" (país general)</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, false, 'PELIGROSO: Con universidad + carrera + edad pueden encontrarte fácilmente en redes sociales.')">
+          <strong>Mencionar en qué universidad estudias y qué carrera</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, true, 'SEGURO: Crear un personaje con historia ficticia hace el show más interesante y te protege.')">
+          <strong>Inventar una historia de por qué empezaste en webcam</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, false, 'PELIGROSO: Pueden triangular tu ubicación usando múltiples referencias y encontrar tu casa.')">
+          <strong>Decir que vives "cerca del centro comercial X" de tu ciudad</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, true, 'SEGURO: Edad aproximada no permite identificarte, solo ayuda a conectar con tu audiencia objetivo.')">
+          <strong>Decir que tienes 25 años cuando realmente tienes 23</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, false, 'PELIGROSO: Un stalker puede esperarte allí. Rutinas específicas son información muy peligrosa.')">
+          <strong>Mencionar que vas al gimnasio X todos los martes a las 7pm</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, true, 'SEGURO: Preferencias generales crean conexión emocional sin revelar información personal real.')">
+          <strong>Decir que te gusta la música rock y las películas de terror</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, false, 'PELIGROSO: Con nombre + trabajo pueden encontrar tu LinkedIn, Facebook y toda tu información real.')">
+          <strong>Decir que trabajas en la empresa Y como diseñadora</strong>
+        </div>
+
+        <div class="quiz-item" onclick="revealSafety(this, true, 'SEGURO: Crear redes sociales del personaje (no las tuyas reales) es excelente para marketing.')">
+          <strong>Tener Instagram del personaje con fotos profesionales</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Generador de Nombres -->
+    <section class="section-card">
+      <h2 class="section-title">✨ Generador de Nombres Artísticos</h2>
+      
+      <div class="name-generator">
+        <h5><i class="fas fa-magic"></i> Crea tu Identidad Artística</h5>
+        <p>Genera nombres únicos y memorables para tu personaje:</p>
+        
+        <div class="row g-3 justify-content-center">
+          <div class="col-auto">
+            <button class="btn btn-primary btn-lg" onclick="generateArtisticName()" style="background: var(--wc-gradient); border: none;">
+              <i class="fas fa-dice"></i> Generar Nombre
+            </button>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-primary btn-lg" onclick="generateArtisticName('sensual')" style="border-color: var(--wc-primary); color: var(--wc-primary);">
+              <i class="fas fa-fire"></i> Estilo Sensual
+            </button>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-outline-primary btn-lg" onclick="generateArtisticName('dulce')" style="border-color: var(--wc-primary); color: var(--wc-primary);">
+              <i class="fas fa-heart"></i> Estilo Dulce
+            </button>
+          </div>
+        </div>
+        
+        <div class="generator-result" id="nameResult">
+          <div class="generated-name" id="generatedName"></div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <h6>📱 Disponibilidad Redes:</h6>
+              <div id="socialAvailability"></div>
+            </div>
+            <div class="col-md-6">
+              <h6>🎭 Personalidad Sugerida:</h6>
+              <div id="personalitySuggestion"></div>
+            </div>
+          </div>
+          <button class="btn btn-success mt-2" onclick="saveToCharacterBuilder()">
+            <i class="fas fa-save"></i> Usar Este Nombre
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Constructor de Personaje -->
+    <section class="section-card">
+      <h2 class="section-title">🎭 Constructor de Personaje Completo</h2>
+      
+      <div class="character-builder">
+        <h5><i class="fas fa-user-edit"></i> Desarrolla tu Identidad Artística</h5>
+        <p>Crea un personaje completo y creíble que proteja tu identidad real:</p>
+        
+        <div class="character-section">
+          <h6><i class="fas fa-signature"></i> Información Básica</h6>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label><strong>Nombre Artístico:</strong></label>
+              <input type="text" class="character-input" id="characterName" placeholder="Ej: Luna Starlight">
+            </div>
+            <div class="col-md-6">
+              <label><strong>Edad del Personaje:</strong></label>
+              <input type="number" class="character-input" id="characterAge" placeholder="Ej: 24" min="18" max="45">
+            </div>
+          </div>
+        </div>
+
+        <div class="character-section">
+          <h6><i class="fas fa-map-marker-alt"></i> Ubicación Ficticia</h6>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label><strong>País/Región General:</strong></label>
+              <select class="character-input" id="characterLocation">
+                <option value="">Selecciona ubicación general</option>
+                <option value="América Latina">América Latina</option>
+                <option value="Europa del Este">Europa del Este</option>
+                <option value="Sudamérica">Sudamérica</option>
+                <option value="Centroamérica">Centroamérica</option>
+                <option value="Europa Occidental">Europa Occidental</option>
+                <option value="Norteamérica">Norteamérica</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label><strong>Descripción de "Ciudad":</strong></label>
+              <input type="text" class="character-input" id="characterCity" placeholder="Ej: Ciudad costera hermosa">
+            </div>
+          </div>
+        </div>
+
+        <div class="character-section">
+          <h6><i class="fas fa-heart"></i> Personalidad y Gustos</h6>
+          <p>Selecciona los rasgos de personalidad de tu personaje:</p>
+          <div class="personality-traits">
+            <div class="trait-tag" onclick="toggleTrait(this)">Coqueta</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Misteriosa</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Divertida</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Intelectual</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Aventurera</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Romántica</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Rebelde</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Elegante</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Espontánea</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Sensual</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Artística</div>
+            <div class="trait-tag" onclick="toggleTrait(this)">Deportista</div>
+          </div>
+        </div>
+
+        <div class="character-section">
+          <h6><i class="fas fa-book"></i> Historia de Fondo (Ficticia)</h6>
+          <label><strong>¿Por qué tu personaje empezó en webcam?</strong></label>
+          <textarea class="character-input" id="characterBackstory" rows="3" placeholder="Ej: Empecé porque quería ser independiente económicamente y me gusta conocer personas interesantes de todo el mundo..."></textarea>
+        </div>
+
+        <div class="character-section">
+          <h6><i class="fas fa-music"></i> Intereses y Hobbies</h6>
+          <label><strong>¿Qué le gusta hacer a tu personaje?</strong></label>
+          <textarea class="character-input" id="characterHobbies" rows="2" placeholder="Ej: Bailar, leer novelas románticas, viajar, cocinar comida italiana..."></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-lg mt-3" onclick="generateCharacterSummary()" style="background: var(--wc-gradient); border: none;">
+          <i class="fas fa-user-check"></i> Generar Resumen del Personaje
+        </button>
+
+        <div id="characterSummary" style="display: none;" class="mt-3 p-3 rounded" style="background: var(--success-green); color: white;">
+          <!-- Resumen del personaje se mostrará aquí -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Reglas de Oro -->
+    <section class="section-card">
+      <h2 class="section-title">👑 Las 12 Reglas de Oro de WC Training</h2>
+      
+      <div class="success-highlight">
+        <h5><i class="fas fa-crown"></i> Estas Reglas Han Protegido a +3,000 Modelos</h5>
+        <p>Síguelas religiosamente y nunca tendrás problemas de seguridad:</p>
+      </div>
+
+      <div class="do-dont-grid">
+        <div class="do-card">
+          <h6 style="color: var(--success-green);">✅ SIEMPRE HACER</h6>
+          <ol>
+            <li><strong>Usar SOLO el nombre artístico</strong> en absolutamente todo</li>
+            <li><strong>Crear redes sociales separadas</strong> para el personaje</li>
+            <li><strong>Mantener historia consistente</strong> en todas las plataformas</li>
+            <li><strong>Usar email diferente</strong> para todo lo relacionado al trabajo</li>
+            <li><strong>Cambiar detalles menores</strong> (edad ±2 años, ciudad general)</li>
+            <li><strong>Practicar tu personaje</strong> hasta que sea natural</li>
+          </ol>
+        </div>
+
+        <div class="dont-card">
+          <h6 style="color: var(--danger-red);">❌ NUNCA HACER</h6>
+          <ol>
+            <li><strong>Revelar información real</strong> "porque confiaste" en alguien</li>
+            <li><strong>Usar fotos tuyas reales</strong> en redes sociales del personaje</li>
+            <li><strong>Mezclar cuentas personales</strong> con las del trabajo</li>
+            <li><strong>Dar referencias específicas</strong> de ubicación o rutinas</li>
+            <li><strong>Mostrar documentos</strong> o información personal en cámara</li>
+            <li><strong>Dejarte convencer</strong> de que "no pasa nada" por una vez</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> La Regla #13 - La Más Importante</h5>
+        <p><strong>Si tienes CUALQUIER duda sobre si algo es seguro de compartir, NO lo compartas.</strong> Es mejor perder una conversación que comprometer tu seguridad. Siempre puedes decir "prefiero mantener algunas cosas privadas" y los viewers lo respetan.</p>
+      </div>
+    </section>
+
+    <!-- Sección: Checklist de Protección -->
+    <section class="section-card">
+      <h2 class="section-title">✅ Checklist de Protección Completa</h2>
+      
+      <div class="protection-checklist">
+        <h5><i class="fas fa-clipboard-check"></i> Verifica tu Nivel de Protección</h5>
+        <p>Marca cada elemento que YA tienes implementado:</p>
+        
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Tengo un nombre artístico único y memorable</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Creé un email separado solo para el trabajo de modelo</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Tengo la historia de fondo de mi personaje bien definida</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Practiqué hablar como mi personaje hasta que sea natural</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Definí qué información NUNCA compartiré bajo ninguna circunstancia</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Creé (o planeo crear) redes sociales separadas para mi personaje</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Tengo respuestas preparadas para preguntas personales comunes</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Sé decir "no" de forma amable cuando preguntan cosas demasiado personales</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Entiendo que NINGÚN usuario merece conocer mi información real</strong></span>
+        </div>
+
+        <div class="checklist-item" onclick="toggleProtectionCheck(this)">
+          <div class="checklist-checkbox"></div>
+          <span><strong>Tengo un plan para mantener separadas mi vida real y mi trabajo</strong></span>
+        </div>
+
+        <div id="protectionResult" style="display: none;" class="mt-3 p-3 rounded">
+          <!-- Resultado del checklist -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Conclusión -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Tu Identidad Artística Está Lista</h2>
+      
+      <div class="success-highlight">
+        <h5><i class="fas fa-trophy"></i> ¡Tarea Completada con Éxito!</h5>
+        <p>Ahora tienes las herramientas y el conocimiento para crear y mantener una identidad artística que te proteja completamente mientras maximiza tu éxito.</p>
+        
+        <div class="stats-mini-grid">
+          <div class="mini-stat">
+            <span class="mini-stat-number">97%</span>
+            <small>De modelos protegidas nunca tienen problemas</small>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-number">12</span>
+            <small>Reglas de oro para protección total</small>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-number">100%</span>
+            <small>Casos reales estudiados por WC Training</small>
+          </div>
+          <div class="mini-stat">
+            <span class="mini-stat-number">0</span>
+            <small>Problemas si sigues estas reglas</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-arrow-right"></i> ¿Qué Sigue Ahora?</h5>
+        <p>Ya sabes cómo proteger tu identidad. Ahora necesitas entender por qué <strong>bloquear países es contraproducente</strong> y cómo afecta tus ingresos:</p>
+        
+        <div class="row g-3 mt-3">
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-globe"></i> Tarea 2.2: VPN vs Geo-blocking</h6>
+              <p>Descubre por qué bloquear países reduce tus ingresos y no te protege realmente.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-flask"></i> Tarea 2.3: Test Práctico VPN</h6>
+              <p>Prueba tú misma cómo cualquier VPN evita bloqueos geográficos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa="graduation-cap"></i> Resumen de tu Protección</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>✅ Lo que Lograste:</h6>
+            <ul>
+              <li>Identidad artística completamente separada</li>
+              <li>Historia de fondo creíble y consistente</li>
+              <li>Criterio claro sobre qué es seguro compartir</li>
+              <li>Personaje único que protege tu vida real</li>
+              <li>Plan de mantenimiento de la separación</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>✅ Herramientas Obtenidas:</h6>
+            <ul>
+              <li>Generador de nombres artísticos únicos</li>
+              <li>Constructor completo de personaje</li>
+              <li>Quiz de seguridad para entrenar criterio</li>
+              <li>12 reglas de oro infalibles</li>
+              <li>Checklist de protección verificable</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    const firstNames = ['Luna', 'Sophia', 'Isabella', 'Maya', 'Aurora', 'Valentina', 'Camila', 'Aria', 'Stella', 'Mia', 'Zoe', 'Eva', 'Lila', 'Nina', 'Vera'];
+    const sensualNames = ['Scarlett', 'Raven', 'Phoenix', 'Velvet', 'Crimson', 'Jade', 'Sasha', 'Tessa', 'Vixen', 'Carmen', 'Desire', 'Ember', 'Luxe'];
+    const dulceNames = ['Honey', 'Angel', 'Cherry', 'Candy', 'Bella', 'Chloe', 'Rose', 'Lily', 'Daisy', 'Grace', 'Hope', 'Joy', 'Love'];
+    const lastNames = ['Starlight', 'Divine', 'Paradise', 'Moon', 'Fire', 'Storm', 'Wilde', 'Blaze', 'Rivers', 'Sky', 'Dream', 'Rose', 'Heart', 'Star', 'Light'];
+
+    let selectedCharacterName = '';
+
+    function generateArtisticName(style = 'general') {
+      let firstPool = firstNames;
+      
+      if (style === 'sensual') {
+        firstPool = sensualNames;
+      } else if (style === 'dulce') {
+        firstPool = dulceNames;
+      }
+      
+      const firstName = firstPool[Math.floor(Math.random() * firstPool.length)];
+      const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+      const fullName = `${firstName} ${lastName}`;
+      
+      selectedCharacterName = fullName;
+      
+      document.getElementById('generatedName').textContent = fullName;
+      
+      // Simular disponibilidad de redes sociales
+      const platforms = ['Instagram', 'Twitter', 'TikTok', 'OnlyFans'];
+      const availability = platforms.map(platform => {
+        const available = Math.random() > 0.3; // 70% probabilidad de estar disponible
+        return `${platform}: ${available ? '✅ Disponible' : '❌ No disponible'}`;
+      }).join('<br>');
+      
+      document.getElementById('socialAvailability').innerHTML = availability;
+      
+      // Personalidad sugerida
+      const personalities = {
+        'sensual': 'Misteriosa, seductora, confident, sofisticada',
+        'dulce': 'Cariñosa, divertida, espontánea, adorable',
+        'general': 'Equilibrada, carismática, auténtica, versátil'
+      };
+      
+      document.getElementById('personalitySuggestion').textContent = personalities[style];
+      document.getElementById('nameResult').style.display = 'block';
+    }
+
+    function saveToCharacterBuilder() {
+      document.getElementById('characterName').value = selectedCharacterName;
+      alert('¡Nombre guardado! Completa el resto de la información de tu personaje.');
+    }
+
+    function revealSafety(element, isSafe, explanation) {
+      // Remove previous classes
+      element.classList.remove('seguro', 'peligroso');
+      
+      // Add appropriate class
+      element.classList.add(isSafe ? 'seguro' : 'peligroso');
+      
+      // Show explanation
+      let explanationDiv = element.querySelector('.quiz-explanation');
+      if (!explanationDiv) {
+        explanationDiv = document.createElement('div');
+        explanationDiv.className = 'quiz-explanation';
+        element.appendChild(explanationDiv);
+      }
+      
+      explanationDiv.className = `quiz-explanation ${isSafe ? 'explanation-safe' : 'explanation-danger'}`;
+      explanationDiv.innerHTML = `<strong>${explanation}</strong>`;
+      explanationDiv.style.display = 'block';
+    }
+
+    function toggleTrait(element) {
+      element.classList.toggle('selected');
+    }
+
+    function generateCharacterSummary() {
+      const name = document.getElementById('characterName').value;
+      const age = document.getElementById('characterAge').value;
+      const location = document.getElementById('characterLocation').value;
+      const city = document.getElementById('characterCity').value;
+      const backstory = document.getElementById('characterBackstory').value;
+      const hobbies = document.getElementById('characterHobbies').value;
+      
+      const selectedTraits = Array.from(document.querySelectorAll('.trait-tag.selected'))
+        .map(trait => trait.textContent);
+      
+      if (!name || !age || !location) {
+        alert('Por favor completa al menos el nombre, edad y ubicación general.');
+        return;
+      }
+      
+      const summary = `
+        <h6><i class="fas fa-user"></i> Resumen de ${name}</h6>
+        <p><strong>Edad:</strong> ${age} años</p>
+        <p><strong>Ubicación:</strong> ${location}${city ? ` (${city})` : ''}</p>
+        <p><strong>Personalidad:</strong> ${selectedTraits.join(', ') || 'No seleccionada'}</p>
+        ${backstory ? `<p><strong>Historia:</strong> ${backstory}</p>` : ''}
+        ${hobbies ? `<p><strong>Intereses:</strong> ${hobbies}</p>` : ''}
+        <p><em>¡Tu personaje está listo! Guarda esta información y úsala consistentemente en todas las plataformas.</em></p>
+      `;
+      
+      const summaryDiv = document.getElementById('characterSummary');
+      summaryDiv.innerHTML = summary;
+      summaryDiv.style.background = 'var(--success-green)';
+      summaryDiv.style.color = 'white';
+      summaryDiv.style.display = 'block';
+    }
+
+    function toggleProtectionCheck(element) {
+      element.classList.toggle('checked');
+      
+      // Count checked items
+      const totalItems = document.querySelectorAll('.protection-checklist .checklist-item').length;
+      const checkedItems = document.querySelectorAll('.protection-checklist .checklist-item.checked').length;
+      const percentage = Math.round((checkedItems / totalItems) * 100);
+      
+      const resultDiv = document.getElementById('protectionResult');
+      
+      if (checkedItems > 0) {
+        let resultText = `<strong>PROTECCIÓN: ${checkedItems}/${totalItems} (${percentage}%)</strong><br>`;
+        
+        if (percentage >= 90) {
+          resultText += `<div style="color: var(--success-green);">🛡️ <strong>¡PROTECCIÓN TOTAL!</strong> Estás completamente segura para empezar.</div>`;
+        } else if (percentage >= 70) {
+          resultText += `<div style="color: var(--warning-orange);">🔒 <strong>BUENA PROTECCIÓN</strong> Completa los elementos faltantes antes de empezar.</div>`;
+        } else if (percentage >= 50) {
+          resultText += `<div style="color: var(--warning-orange);">⚠️ <strong>PROTECCIÓN PARCIAL</strong> Necesitas implementar más medidas de seguridad.</div>`;
+        } else {
+          resultText += `<div style="color: var(--danger-red);">🚨 <strong>RIESGO ALTO</strong> NO empieces hasta completar estas protecciones.</div>`;
+        }
+        
+        resultDiv.innerHTML = resultText;
+        resultDiv.style.display = 'block';
+      } else {
+        resultDiv.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

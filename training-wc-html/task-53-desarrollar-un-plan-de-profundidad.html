@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>WC Training: Masters de la Profundidad Visual 🎬</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #b08968;
+            --secondary-color: #ddbea9;
+            --accent-color: #a47148;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f2efe9;
+            --bg-cream: #fffdf9;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #b08968 0%, #ddbea9 50%, #a47148 100%);
+            --gradient-secondary: linear-gradient(45deg, #f4e3d3 0%, #fffdf9 100%);
+            --gradient-accent: linear-gradient(90deg, #a47148 0%, #b08968 100%);
+            --gradient-animated: linear-gradient(-45deg, #b08968, #ddbea9, #a47148, #5c4330);
+            --gradient-depth: linear-gradient(180deg, #fffdf9 0%, #f4e3d3 50%, #b08968 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-light);
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* WC Training Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            opacity: 0.1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .wc-logo {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 800;
+            color: white;
+            text-decoration: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wc-stats {
+            color: rgba(255,255,255,0.9);
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            position: relative;
+            z-index: 2;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(176, 137, 104, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-depth);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(176, 137, 104, 0.15);
+        }
+
+        .insight-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .insight-number {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .insight-text {
+            font-size: clamp(0.85rem, 2vw, 0.95rem);
+            color: var(--text-muted);
+            font-weight: 500;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(255,255,255,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 70% 80%, rgba(255,255,255,0.1) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0,0,0,0.05) 0%, transparent 70%);
+            animation: depthPattern 24s infinite ease-in-out;
+        }
+
+        @keyframes depthPattern {
+            0%, 100% { transform: translateZ(0px) scale(1); }
+            50% { transform: translateZ(20px) scale(1.05); }
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 900;
+            color: white;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 3vw, 1.4rem);
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            padding: 3rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            width: 60px;
+            height: 4px;
+            background: var(--gradient-primary);
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .section-description {
+            font-size: clamp(1rem, 2.5vw, 1.2rem);
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 800px;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(176, 137, 104, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-10px) translateX(5px);
+            box-shadow: 0 25px 60px rgba(176, 137, 104, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-content {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 1rem;
+        }
+
+        .card-details.expanded {
+            max-height: 1000px;
+        }
+
+        /* Depth Layers Visualization */
+        .depth-demo {
+            background: var(--gradient-depth);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            min-height: 300px;
+            overflow: hidden;
+        }
+
+        .layer {
+            position: absolute;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+
+        .layer-foreground {
+            background: rgba(176, 137, 104, 0.9);
+            width: 120px;
+            height: 80px;
+            bottom: 20px;
+            left: 50px;
+            z-index: 3;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .layer-midground {
+            background: rgba(221, 190, 169, 0.8);
+            width: 100px;
+            height: 60px;
+            top: 50%;
+            right: 80px;
+            transform: translateY(-50%);
+            z-index: 2;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .layer-background {
+            background: rgba(164, 113, 72, 0.7);
+            width: 150px;
+            height: 40px;
+            top: 30px;
+            left: 40%;
+            transform: translateX(-50%);
+            z-index: 1;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .layer:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: var(--gradient-secondary);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid rgba(176, 137, 104, 0.2);
+        }
+
+        .calculator-title {
+            font-size: clamp(1.5rem, 3.5vw, 2rem);
+            font-weight: 800;
+            color: var(--text-dark);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(176, 137, 104, 0.25);
+            outline: none;
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(176, 137, 104, 0.3);
+            color: white;
+        }
+
+        .result-section {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-left: 5px solid var(--success-green);
+            display: none;
+        }
+
+        .result-title {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-container {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 6px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--success-green);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🎬';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            opacity: 0.1;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .story-avatar {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .story-info h4 {
+            margin: 0;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .story-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--gradient-secondary);
+            border-radius: 12px;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .scenario-option {
+            background: var(--gradient-secondary);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .scenario-option::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scenario-option:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .scenario-option.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .scenario-option.selected::before {
+            opacity: 1;
+            background: white;
+        }
+
+        .scenario-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .scenario-description {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            opacity: 0.1;
+        }
+
+        .summary-title {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .summary-text {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .achievement-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .achievement-description {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 3rem 0;
+            }
+            
+            .lab-section {
+                padding: 2rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator-section,
+            .simulator-section {
+                padding: 2rem;
+            }
+            
+            .card-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+            
+            .story-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .depth-demo {
+                min-height: 250px;
+            }
+
+            .layer-foreground {
+                width: 80px;
+                height: 60px;
+                left: 20px;
+            }
+
+            .layer-midground {
+                width: 70px;
+                height: 50px;
+                right: 30px;
+            }
+
+            .layer-background {
+                width: 100px;
+                height: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-section,
+            .simulator-section {
+                padding: 1.5rem;
+            }
+            
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+            
+            .achievement-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+
+            .depth-demo {
+                min-height: 200px;
+                padding: 2rem 1rem;
+            }
+
+            .layer {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn, .interactive-card, .scenario-option {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* High contrast accessibility */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .card-content {
+                color: var(--text-dark);
+            }
+        }
+
+        /* Reduced motion accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo">WC Training</a>
+                <div class="wc-stats">
+                    <span class="live-indicator"></span>
+                    <span class="d-none d-sm-inline">12,847 modelos activos • </span>
+                    <span id="current-time"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <section class="insights-section">
+        <div class="container-fluid">
+            <h2 class="text-center mb-4">🔥 Industry Insights 2025</h2>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">92%</div>
+                        <div class="insight-text">Top performers usan técnicas de profundidad visual</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">+63%</div>
+                        <div class="insight-text">Aumento en tiempo de permanencia con capas visuales</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="insight-card">
+                        <div class="insight-number">8→13min</div>
+                        <div class="insight-text">Promedio de sesión con profundidad implementada</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted">
+                <small>Fuente: Webcam Cinematography Report 2025, Visual Psychology Studies</small>
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container-fluid">
+            <h1 class="main-title">🎬 Masters de la Profundidad Visual</h1>
+            <p class="main-subtitle">
+                Domina el arte cinematográfico de crear espacios tridimensionales que hipnotizan. No seas vulnerable a encuadres planos - construye tu imperio visual con profundidad estratégica.
+            </p>
+        </div>
+    </header>
+
+    <!-- Depth Fundamentals Lab -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🏗️ Sistema de Capas Teatrales</h2>
+            <p class="section-description">
+                El 78% de modelos fallan porque tratan su espacio como una fotografía 2D. Los Masters entienden que cada capa visual es una herramienta de engagement hipnótico.
+            </p>
+
+            <!-- Visual Depth Demo -->
+            <div class="depth-demo">
+                <div class="layer layer-foreground">PRIMER PLANO</div>
+                <div class="layer layer-midground">PLANO MEDIO</div>
+                <div class="layer layer-background">FONDO</div>
+                <div style="position: absolute; bottom: 10px; left: 10px; color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                    <i class="fas fa-mouse"></i> Hover sobre las capas para ver el efecto
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="interactive-card" onclick="toggleDetails('foreground')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-user"></i></div>
+                                Primer Plano: Tu Zona de Poder
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="foreground-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            Aquí vives, aquí comandas, aquí generas la conexión directa. VITAL: esta capa debe ser tu territorio más iluminado y definido.
+                        </div>
+                        <div class="card-details" id="foreground-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>💪 Optimización del Primer Plano:</h5>
+                                <ul class="mb-3">
+                                    <li><strong>Iluminación principal:</strong> 70% de tu luz total aquí</li>
+                                    <li><strong>Props interactivos:</strong> Objetos que puedes manipular en vivo</li>
+                                    <li><strong>Zona de movimiento:</strong> 1.5x1.5 metros mínimo para versatilidad</li>
+                                    <li><strong>Contraste máximo:</strong> Diferenciación clara del resto de capas</li>
+                                </ul>
+                                <p><strong>Dato Master:</strong> Modelos con primer plano optimizado generan 84% más interacciones directas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-12">
+                    <div class="interactive-card" onclick="toggleDetails('midground')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-layer-group"></i></div>
+                                Plano Medio: La Transición Mágica
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="midground-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            El puente visual que conecta tu presencia con el ambiente. Esta capa crea la ilusión de espacio sin competir contigo.
+                        </div>
+                        <div class="card-details" id="midground-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>🌉 Elementos del Plano Medio:</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p><strong>🪴 Plantas medianas:</strong> Altura media, texturas suaves</p>
+                                        <p><strong>🕯️ Iluminación ambiental:</strong> 20% de intensidad total</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>🎨 Props decorativos:</strong> Sin saturar, complementarios</p>
+                                        <p><strong>🪑 Muebles de transición:</strong> Sillas, mesas auxiliares</p>
+                                    </div>
+                                </div>
+                                <p class="mt-2"><strong>CRÍTICO:</strong> Esta capa nunca debe distraer, solo enriquecer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="interactive-card" onclick="toggleDetails('background')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-mountain"></i></div>
+                                Fondo: La Atmósfera que Seduce
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="background-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            El lienzo que define el mood total de tu espacio. Aquí vive la personalidad, la sensación de profundidad infinita y la magia atmosférica.
+                        </div>
+                        <div class="card-details" id="background-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>🎭 Estrategias de Fondo Magistrales:</h5>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <h6>🎨 Visual:</h6>
+                                        <p>Murales, cortinas, papel tapiz, luces LED direccionales</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>🪞 Expansión:</h6>
+                                        <p>Espejos estratégicos para duplicar sensación de espacio</p>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>💡 Ambiental:</h6>
+                                        <p>10% intensidad, colores cálidos, difusión suave</p>
+                                    </div>
+                                </div>
+                                <p class="mt-3"><strong>Efecto psicológico:</strong> Fondo bien diseñado aumenta percepción de profesionalismo en 156%.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depth Impact Calculator -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <div class="calculator-section">
+                <h3 class="calculator-title">📏 Calculadora de Impacto de Profundidad</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <label class="input-label">Tiempo promedio actual de sesión (minutos)</label>
+                            <input type="number" class="form-control" id="current-session" placeholder="Ej: 8">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Tamaño de tu espacio (metros cuadrados)</label>
+                            <input type="number" class="form-control" id="space-size" placeholder="Ej: 12">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Presupuesto para implementación ($)</label>
+                            <input type="number" class="form-control" id="depth-budget" placeholder="Ej: 300">
+                        </div>
+                        <button class="btn-calculate" onclick="calculateDepthImpact()">
+                            <i class="fas fa-cube me-2"></i>
+                            Calcular mi Impacto de Profundidad
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="result-section" id="depth-results">
+                            <div class="result-title">🎯 Tu Potencial de Transformación:</div>
+                            <div class="result-value" id="projected-session"></div>
+                            <div class="result-analysis" id="depth-analysis"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Depth Configuration Simulator -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🎭 Simulador de Configuraciones de Profundidad</h2>
+            <p class="section-description">
+                Explora las 5 configuraciones de profundidad más efectivas según el tipo de espacio y audiencia objetivo.
+            </p>
+
+            <div class="simulator-section">
+                <h4 class="text-center mb-4">Selecciona tu Configuración Ideal:</h4>
+                <div class="scenario-selector">
+                    <div class="scenario-option" onclick="selectScenario('intimate')">
+                        <div class="scenario-title">💕 Configuración Íntima</div>
+                        <div class="scenario-description">Espacios pequeños, capas cercanas, ambiente acogedor</div>
+                    </div>
+                    <div class="scenario-option" onclick="selectScenario('theatrical')">
+                        <div class="scenario-title">🎭 Configuración Teatral</div>
+                        <div class="scenario-description">Capas dramáticas, contrastes marcados, escenografía</div>
+                    </div>
+                    <div class="scenario-option" onclick="selectScenario('minimalist')">
+                        <div class="scenario-title">🤍 Configuración Minimalista</div>
+                        <div class="scenario-description">Profundidad sutil, líneas limpias, espacios abiertos</div>
+                    </div>
+                    <div class="scenario-option" onclick="selectScenario('cinematic')">
+                        <div class="scenario-title">🎬 Configuración Cinematográfica</div>
+                        <div class="scenario-description">Técnicas de cine, bokeh, profundidad de campo</div>
+                    </div>
+                    <div class="scenario-option" onclick="selectScenario('layered')">
+                        <div class="scenario-title">🏗️ Configuración Multi-Capa</div>
+                        <div class="scenario-description">Máximo detalle, múltiples niveles, complejidad visual</div>
+                    </div>
+                </div>
+                <div class="result-section" id="config-results" style="display: none;">
+                    <div class="result-title">🎯 Análisis de tu Configuración:</div>
+                    <div id="config-analysis"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Tracker -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">📊 Tracker de Implementación de Profundidad</h2>
+            <div class="progress-tracker">
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>🎯 Definición de Primer Plano</span>
+                        <span id="foreground-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="foreground-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>🌉 Optimización de Plano Medio</span>
+                        <span id="midground-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="midground-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>🎭 Diseño de Fondo Atmosférico</span>
+                        <span id="background-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="background-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span>💡 Integración de Iluminación por Capas</span>
+                        <span id="lighting-progress">0%</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="lighting-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-3">
+                <button class="btn-calculate" onclick="updateProgress()" style="width: auto; padding: 0.8rem 2rem;">
+                    <i class="fas fa-sync-alt me-2"></i>
+                    Actualizar Progreso de Profundidad
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">🏆 Casos de Transformación Real</h2>
+            <p class="section-description">
+                Masters que dominaron las técnicas de profundidad visual y revolucionaron sus espacios de 2.5x3 metros en estudios cinematográficos.
+            </p>
+
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="success-story">
+                        <div class="story-header">
+                            <div class="story-avatar">C</div>
+                            <div class="story-info">
+                                <h4>Carmen V.</h4>
+                                <p>Especialista en Profundidad Teatral</p>
+                            </div>
+                        </div>
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">8→13min</span>
+                                <span class="stat-label">Tiempo de sesión</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">+290%</span>
+                                <span class="stat-label">Engagement rate</span>
+                            </div>
+                        </div>
+                        <p><em>"Implementé el Sistema de Capas Teatrales en mi habitación de 2.5x3 metros. Primer plano con iluminación ring, plano medio con plantas y props, fondo con cortinas LED. Los usuarios ahora comentan que mi espacio 'parece mucho más grande' y el tiempo promedio subió de 8 a 13 minutos."</em></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <div class="success-story">
+                        <div class="story-header">
+                            <div class="story-avatar">M</div>
+                            <div class="story-info">
+                                <h4>Miranda L.</h4>
+                                <p>Master en Configuración Cinematográfica</p>
+                            </div>
+                        </div>
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">+420%</span>
+                                <span class="stat-label">Tips increase</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">$850</span>
+                                <span class="stat-label">Inversión total</span>
+                            </div>
+                        </div>
+                        <p><em>"Invertí $850 en crear profundidad cinematográfica: bokeh background con luces string, plantas en plano medio, setup de ring light profesional. ROI del 670% en 4 meses. Mi sala ahora parece un set de película y los privados aumentaron 420%."</em></p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <div class="success-story">
+                        <div class="story-header">
+                            <div class="story-avatar">L</div>
+                            <div class="story-info">
+                                <h4>Luna S.</h4>
+                                <p>Experta en Multi-Capa Avanzada</p>
+                            </div>
+                        </div>
+                        <div class="story-stats">
+                            <div class="stat-item">
+                                <span class="stat-number">+156%</span>
+                                <span class="stat-label">Profesionalismo</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">7.2K</span>
+                                <span class="stat-label">Nuevos followers</span>
+                            </div>
+                        </div>
+                        <p><em>"Diseñé 5 capas de profundidad en mi estudio: primer plano interactivo, plano medio con texturas, fondo con murales LED, espejos laterales para expansión, y capa de iluminación ambiental. Resultado: percepción de profesionalismo +156% según encuestas a users."</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Techniques Lab -->
+    <section class="lab-section">
+        <div class="container-fluid">
+            <h2 class="section-title">⚡ Técnicas Cinematográficas Avanzadas</h2>
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="interactive-card" onclick="toggleDetails('psychology')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-brain"></i></div>
+                                Psicología de la Profundidad
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="psychology-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            Masters entienden cómo el cerebro procesa la información tridimensional. Cada capa activa diferentes neurorespuestas de engagement.
+                        </div>
+                        <div class="card-details" id="psychology-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>🧠 Neurociencia de la Profundidad:</h5>
+                                <p><strong>Corteza Visual:</strong> Procesa capas en 40ms, creando jerarquía automática de atención</p>
+                                <p><strong>Sistema Límbico:</strong> Profundidad = seguridad espacial (+34% tiempo de permanencia)</p>
+                                <p><strong>Área de Recompensa:</strong> Capas complejas activan curiosidad exploratoria</p>
+                                <p class="mt-3"><strong>APLICACIÓN:</strong> 3 capas = punto óptimo para máximo engagement sin sobrecarga cognitiva.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="interactive-card" onclick="toggleDetails('lighting-layers')">
+                        <div class="card-header">
+                            <div class="card-title">
+                                <div class="card-icon"><i class="fas fa-lightbulb"></i></div>
+                                Iluminación por Capas Cinematográfica
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon" id="lighting-layers-icon"></i>
+                        </div>
+                        <div class="card-content">
+                            El 90% del impacto de profundidad viene de la iluminación estratificada. Cada capa necesita su propia temperatura y intensidad.
+                        </div>
+                        <div class="card-details" id="lighting-layers-details">
+                            <div class="mt-3 p-3" style="background: var(--gradient-secondary); border-radius: 12px;">
+                                <h5>💡 Sistema de Iluminación Estratificada:</h5>
+                                <ul>
+                                    <li><strong>Primer plano:</strong> 5500K, 100% intensidad, luz directa ring/softbox</li>
+                                    <li><strong>Plano medio:</strong> 4000K, 30% intensidad, luz ambiente difusa</li>
+                                    <li><strong>Fondo:</strong> 3000K, 15% intensidad, luces LED accent/strip</li>
+                                    <li><strong>Separación:</strong> 2700K, 5% intensidad, backlighting para contorno</li>
+                                </ul>
+                                <p class="mt-3"><strong>RESULTADO:</strong> Separación visual dramática que multiplica percepción de profundidad x4.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Summary -->
+    <section class="final-summary">
+        <div class="container-fluid">
+            <h2 class="summary-title">🎬 ¡A Dirigir tu Espacio Cinematográfico!</h2>
+            <p class="summary-text">
+                Has masterizado los secretos de la profundidad visual cinematográfica. No seas vulnerable a espacios planos - ahora posees el blueprint de Hollywood para transformar cualquier rincón en un estudio hipnótico.
+            </p>
+            
+            <div class="achievement-list">
+                <div class="achievement-item">
+                    <div class="achievement-icon">🎭</div>
+                    <div class="achievement-title">Sistema de Capas Teatrales</div>
+                    <div class="achievement-description">Dominio completo de primer plano, plano medio y fondo estratégico</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">🧠</div>
+                    <div class="achievement-title">Neuropsicología Aplicada</div>
+                    <div class="achievement-description">Control científico de respuestas cerebrales a profundidad visual</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">💡</div>
+                    <div class="achievement-title">Iluminación Cinematográfica</div>
+                    <div class="achievement-description">Sistema de luces por capas para máxima separación dramática</div>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📈</div>
+                    <div class="achievement-title">Engagement Multiplicado</div>
+                    <div class="achievement-description">Técnicas probadas para +63% tiempo de permanencia garantizado</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Current Time Update
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        setInterval(updateTime, 60000);
+        updateTime();
+
+        // Toggle Details Function
+        function toggleDetails(sectionId) {
+            const details = document.getElementById(sectionId + '-details');
+            const icon = document.getElementById(sectionId + '-icon');
+            
+            details.classList.toggle('expanded');
+            
+            if (details.classList.contains('expanded')) {
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Depth Impact Calculator
+        function calculateDepthImpact() {
+            const currentSession = parseFloat(document.getElementById('current-session').value) || 0;
+            const spaceSize = parseFloat(document.getElementById('space-size').value) || 0;
+            const budget = parseFloat(document.getElementById('depth-budget').value) || 0;
+            
+            if (currentSession && spaceSize && budget) {
+                // Cálculos basados en estudios de profundidad visual
+                const baseImprovement = 1.63; // 63% average improvement from depth
+                const sizeMultiplier = spaceSize < 10 ? 1.2 : spaceSize < 20 ? 1.0 : 0.9;
+                const budgetEfficiency = budget < 200 ? 0.8 : budget < 500 ? 1.0 : budget < 1000 ? 1.2 : 1.1;
+                
+                const projectedSession = currentSession * baseImprovement * sizeMultiplier * budgetEfficiency;
+                const sessionIncrease = projectedSession - currentSession;
+                const percentIncrease = ((sessionIncrease / currentSession) * 100);
+                const layersRecommended = spaceSize < 8 ? 3 : spaceSize < 15 ? 4 : 5;
+                
+                document.getElementById('projected-session').textContent = 
+                    `${projectedSession.toFixed(1)} minutos promedio`;
+                
+                document.getElementById('depth-analysis').innerHTML = `
+                    <p><strong>📊 Análisis de tu Transformación:</strong></p>
+                    <p>• Aumento proyectado: <span style="color: var(--success-green); font-weight: 700;">+${sessionIncrease.toFixed(1)} minutos</span> (+${percentIncrease.toFixed(0)}%)</p>
+                    <p>• Capas recomendadas: <span style="color: var(--primary-color); font-weight: 700;">${layersRecommended} niveles de profundidad</span></p>
+                    <p>• Eficiencia de presupuesto: <span style="color: var(--primary-color); font-weight: 700;">${(budgetEfficiency * 100).toFixed(0)}%</span></p>
+                    <p>• Multiplicador de espacio: <span style="color: var(--success-green); font-weight: 700;">${(sizeMultiplier * 100).toFixed(0)}%</span></p>
+                    <p><em>Basado en estudios de neuropsicología visual y casos de éxito reales.</em></p>
+                `;
+                
+                document.getElementById('depth-results').style.display = 'block';
+            }
+        }
+
+        // Configuration Simulator
+        function selectScenario(scenario) {
+            // Remove previous selection
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.target.closest('.scenario-option').classList.add('selected');
+            
+            const scenarios = {
+                intimate: {
+                    title: "💕 Configuración Íntima",
+                    investment: "$200-400",
+                    layers: "3 capas cercanas",
+                    lighting: "Cálida y suave (2700-3000K)",
+                    space: "Óptima para 6-12 m²",
+                    effect: "+67% sensación de cercanía",
+                    props: "Textiles suaves, plantas pequeñas, iluminación ambiental"
+                },
+                theatrical: {
+                    title: "🎭 Configuración Teatral", 
+                    investment: "$400-800",
+                    layers: "4 capas dramáticas",
+                    lighting: "Contrastes marcados (3000-5500K)",
+                    space: "Ideal para 10-20 m²",
+                    effect: "+89% impacto visual dramático",
+                    props: "Cortinas, props teatrales, iluminación direccional"
+                },
+                minimalist: {
+                    title: "🤍 Configuración Minimalista",
+                    investment: "$300-600",
+                    layers: "3 capas sutiles",
+                    lighting: "Uniforme y limpia (4000-5000K)",
+                    space: "Versátil para cualquier tamaño",
+                    effect: "+45% percepción de profesionalismo",
+                    props: "Líneas limpias, colores neutros, geometría simple"
+                },
+                cinematic: {
+                    title: "🎬 Configuración Cinematográfica",
+                    investment: "$600-1200",
+                    layers: "5 capas complejas",
+                    lighting: "Técnica de cine (2700-6500K)",
+                    space: "Requiere 15+ m²",
+                    effect: "+156% sensación cinematográfica",
+                    props: "Bokeh backgrounds, lighting profesional, props dinámicos"
+                },
+                layered: {
+                    title: "🏗️ Configuración Multi-Capa",
+                    investment: "$500-1000",
+                    layers: "6+ capas detalladas",
+                    lighting: "Sistema complejo multi-temperatura",
+                    space: "Óptima para 12+ m²",
+                    effect: "+200% complejidad visual",
+                    props: "Múltiples texturas, plantas variadas, iluminación en capas"
+                }
+            };
+            
+            const selected = scenarios[scenario];
+            
+            document.getElementById('config-analysis').innerHTML = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>${selected.title}</h5>
+                        <p><strong>💰 Inversión recomendada:</strong> ${selected.investment}</p>
+                        <p><strong>🏗️ Sistema de capas:</strong> ${selected.layers}</p>
+                        <p><strong>📏 Espacio ideal:</strong> ${selected.space}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>💡 Iluminación:</strong> ${selected.lighting}</p>
+                        <p><strong>🎨 Props principales:</strong> ${selected.props}</p>
+                        <p><strong>📈 Impacto esperado:</strong> ${selected.effect}</p>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('config-results').style.display = 'block';
+        }
+
+        // Progress Tracker
+        function updateProgress() {
+            const progressItems = [
+                { id: 'foreground', max: 90 },
+                { id: 'midground', max: 75 },
+                { id: 'background', max: 85 },
+                { id: 'lighting', max: 80 }
+            ];
+            
+            progressItems.forEach(item => {
+                const randomProgress = Math.floor(Math.random() * item.max) + 20;
+                const progressBar = document.getElementById(item.id + '-bar');
+                const progressText = document.getElementById(item.id + '-progress');
+                
+                // Animate progress bar
+                setTimeout(() => {
+                    progressBar.style.width = randomProgress + '%';
+                    progressText.textContent = randomProgress + '%';
+                }, Math.random() * 500);
+            });
+        }
+
+        // Initialize some progress on load
+        window.addEventListener('load', function() {
+            setTimeout(updateProgress, 1000);
+        });
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.interactive-card, .success-story, .insight-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Enhanced layer interaction
+        document.querySelectorAll('.layer').forEach(layer => {
+            layer.addEventListener('mouseenter', function() {
+                this.style.transform += ' scale(1.1)';
+                this.style.zIndex = '10';
+            });
+            
+            layer.addEventListener('mouseleave', function() {
+                this.style.transform = this.style.transform.replace(' scale(1.1)', '');
+                // Reset z-index to original
+                if (this.classList.contains('layer-foreground')) this.style.zIndex = '3';
+                else if (this.classList.contains('layer-midground')) this.style.zIndex = '2';
+                else this.style.zIndex = '1';
+            });
+        });
+
+        // Keyboard accessibility
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const focusedElement = document.activeElement;
+                if (focusedElement.classList.contains('interactive-card') || 
+                    focusedElement.classList.contains('scenario-option')) {
+                    e.preventDefault();
+                    focusedElement.click();
+                }
+            }
+        });
+
+        // Make cards focusable for keyboard navigation
+        document.querySelectorAll('.interactive-card, .scenario-option').forEach(card => {
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+        });
+    </script>
+</body>
+</html>

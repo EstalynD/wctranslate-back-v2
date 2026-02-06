@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>📅 Masters de Cartografía Temporal Estratégica - WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1f618d;
+            --secondary-color: #148f77;
+            --accent-color: #f1c40f;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            --gradient-primary: linear-gradient(135deg, #1f618d 0%, #148f77 50%, #f1c40f 100%);
+            --gradient-secondary: linear-gradient(45deg, #2ecc71 0%, #3498db 50%, #9b59b6 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            --gradient-accent: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+            --gradient-calendar: linear-gradient(135deg, #1f618d 0%, #2ecc71 50%, #3498db 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2ecc71 0%, #3498db 50%, #9b59b6 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .wc-header .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-green);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-calendar);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="calendar" width="100" height="100" patternUnits="userSpaceOnUse"><rect x="10" y="10" width="15" height="15" fill="white" opacity="0.1"/><rect x="30" y="10" width="15" height="15" fill="white" opacity="0.05"/><rect x="50" y="10" width="15" height="15" fill="white" opacity="0.1"/><rect x="70" y="10" width="15" height="15" fill="white" opacity="0.05"/><rect x="10" y="30" width="15" height="15" fill="white" opacity="0.05"/><rect x="30" y="30" width="15" height="15" fill="white" opacity="0.1"/><rect x="50" y="30" width="15" height="15" fill="white" opacity="0.05"/><rect x="70" y="30" width="15" height="15" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23calendar)"/></svg>');
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Interactive Calendar */
+        .interactive-calendar {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .calendar-nav {
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-nav:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .calendar-month {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .calendar-day-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+            border-radius: 10px 10px 0 0;
+        }
+
+        .calendar-day {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .calendar-day.optimal {
+            background: var(--gradient-success);
+            box-shadow: 0 0 20px rgba(40, 167, 69, 0.5);
+        }
+
+        .calendar-day.good {
+            background: var(--gradient-accent);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .calendar-day.event {
+            background: var(--gradient-primary);
+            box-shadow: 0 0 25px rgba(31, 97, 141, 0.7);
+        }
+
+        .calendar-day.event::after {
+            content: '🎭';
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            font-size: 0.8rem;
+        }
+
+        .calendar-legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-8px);
+        }
+
+        .lab-header {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lab-header:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-content {
+            padding: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .lab-content.active {
+            max-height: 3000px;
+        }
+
+        /* Heat Map */
+        .heat-map {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .heat-map-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+
+        .heat-map-month {
+            background: var(--bg-white);
+            padding: 1rem;
+            text-align: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .heat-map-month:hover {
+            transform: scale(1.05);
+        }
+
+        .heat-level-1 { background: #d4e6f1; }
+        .heat-level-2 { background: #a9cce3; }
+        .heat-level-3 { background: #7fb3d3; }
+        .heat-level-4 { background: #5499c7; }
+        .heat-level-5 { background: #2980b9; color: white; }
+
+        .heat-map-month::after {
+            content: attr(data-events) ' eventos';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.7rem;
+            opacity: 0.8;
+        }
+
+        /* Interactive Cards */
+        .interactive-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card-interactive {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .card-interactive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.active {
+            max-height: 800px;
+        }
+
+        /* Timing Calculator */
+        .timing-calculator {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-inputs {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calculator-results {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(31, 97, 141, 0.25);
+            outline: none;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .result-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .result-label {
+            opacity: 0.9;
+        }
+
+        /* Planning Timeline */
+        .planning-timeline {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .timeline-container {
+            position: relative;
+            height: 400px;
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
+
+        .timeline-phase {
+            position: absolute;
+            width: 250px;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .timeline-phase:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.05);
+        }
+
+        .timeline-phase.left {
+            right: 55%;
+        }
+
+        .timeline-phase.right {
+            left: 55%;
+        }
+
+        .timeline-phase:nth-child(2) { top: 20px; }
+        .timeline-phase:nth-child(3) { top: 120px; }
+        .timeline-phase:nth-child(4) { top: 220px; }
+        .timeline-phase:nth-child(5) { top: 320px; }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-success);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .success-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .success-quote {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .success-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .success-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .success-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Quarterly Overview */
+        .quarterly-overview {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .quarter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .quarter-tab {
+            background: var(--bg-light);
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .quarter-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .quarter-content {
+            display: none;
+        }
+
+        .quarter-content.active {
+            display: block;
+        }
+
+        .quarter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .quarter-month {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .quarter-month h5 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .event-slot {
+            background: var(--gradient-success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .floating-bg {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .floating-bg:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-bg:nth-child(2) { top: 20%; right: 10%; animation-delay: 5s; }
+        .floating-bg:nth-child(3) { bottom: 10%; left: 20%; animation-delay: 10s; }
+
+        /* Summary Section */
+        .summary-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.2);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Critical Alerts */
+        .critical-alert {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(241, 196, 15, 0.3);
+        }
+
+        .critical-badge {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, 1fr);
+                gap: 0.2rem;
+            }
+            
+            .calendar-day {
+                padding: 0.5rem;
+                min-height: 40px;
+                font-size: 0.8rem;
+            }
+            
+            .wc-stats {
+                gap: 1rem;
+            }
+            
+            .wc-header .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .lab-header:hover {
+                transform: none;
+            }
+            
+            .interactive-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .quarter-tabs {
+                flex-direction: column;
+            }
+
+            .quarter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline-phase {
+                width: 200px;
+            }
+
+            .timeline-phase.left {
+                right: 52%;
+            }
+
+            .timeline-phase.right {
+                left: 52%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .success-stories {
+                grid-template-columns: 1fr;
+            }
+            
+            .calendar-grid {
+                gap: 0.1rem;
+            }
+            
+            .calendar-day {
+                padding: 0.3rem;
+                min-height: 35px;
+                font-size: 0.7rem;
+            }
+            
+            .heat-map-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        /* Touch Friendly */
+        .btn-custom {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            cursor: pointer;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container-fluid">
+            <div class="wc-logo">📅 WC Training</div>
+            <div class="wc-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12,847</div>
+                    <div class="stat-label">Modelos Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="current-time"></div>
+                    <div class="stat-label">Tiempo Real</div>
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>EN VIVO</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-3">📊 Industry Insights 2025</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-number">300%</div>
+                    <p><strong>variación en participación</strong> puede experimentar el mismo evento según su timing estratégico</p>
+                    <small class="text-muted">Fuente: Temporal Marketing Analysis 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">140%</div>
+                    <p><strong>diferencia en ingresos</strong> entre eventos en fechas estratégicas vs fechas subóptimas</p>
+                    <small class="text-muted">Fuente: WC Training Calendar Analytics</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">87%</div>
+                    <p><strong>de top earners</strong> usan planificación trimestral vs 23% de modelos promedio</p>
+                    <small class="text-muted">Fuente: Strategic Planning Study</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">21 días</div>
+                    <p><strong>espaciamiento óptimo</strong> entre eventos similares para mantener anticipación sin perder momentum</p>
+                    <small class="text-muted">Fuente: Optimal Spacing Research</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">$2,340</div>
+                    <p><strong>ingresos adicionales mensuales</strong> por implementar Sistema de Cartografía Trimestral</p>
+                    <small class="text-muted">Fuente: Calendar Optimization Impact</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">94%</div>
+                    <p><strong>precisión en predicción</strong> de eventos exitosos usando análisis de patrones cíclicos</p>
+                    <small class="text-muted">Fuente: Predictive Analytics Report</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">📅 Masters de Cartografía Temporal Estratégica</h1>
+            <p class="main-subtitle">Desarrolla programación estratégica como la temporada de un teatro prestigioso. Cada evento ocupa una posición cuidadosamente seleccionada para maximizar anticipación e impacto individual. Tu calendario es la arquitectura de tu éxito económico.</p>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        
+        <!-- Critical Alert -->
+        <div class="critical-alert">
+            <span class="critical-badge">ESTRATÉGICO</span>
+            <strong>El timing determina 300% de variación en participación. El 87% de top earners usa planificación trimestral. ¡Tu calendario es tu ventaja competitiva!</strong>
+        </div>
+
+        <!-- Interactive Calendar -->
+        <div class="interactive-calendar">
+            <div class="container">
+                <h3 class="text-center mb-4">🗓️ Calendario Estratégico Interactivo</h3>
+                <p class="text-center">Visualiza fechas óptimas para eventos basado en patrones de tráfico y análisis predictivo</p>
+                
+                <div class="calendar-header">
+                    <button class="calendar-nav" onclick="changeMonth(-1)">
+                        <i class="fas fa-chevron-left"></i> Anterior
+                    </button>
+                    <div class="calendar-month" id="currentMonth">Enero 2025</div>
+                    <button class="calendar-nav" onclick="changeMonth(1)">
+                        Siguiente <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="calendar-grid">
+                    <div class="calendar-day-header">Lun</div>
+                    <div class="calendar-day-header">Mar</div>
+                    <div class="calendar-day-header">Mié</div>
+                    <div class="calendar-day-header">Jue</div>
+                    <div class="calendar-day-header">Vie</div>
+                    <div class="calendar-day-header">Sáb</div>
+                    <div class="calendar-day-header">Dom</div>
+                    
+                    <!-- Calendar days will be generated by JavaScript -->
+                    <div id="calendarDays"></div>
+                </div>
+
+                <div class="calendar-legend">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--gradient-success);"></div>
+                        <span>Fechas Óptimas (Alto tráfico + Fechas de pago)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--gradient-accent);"></div>
+                        <span>Fechas Buenas (Condiciones favorables)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: var(--gradient-primary);"></div>
+                        <span>Eventos Programados</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: rgba(255,255,255,0.1);"></div>
+                        <span>Fechas Regulares</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quarterly Overview -->
+        <div class="quarterly-overview">
+            <h3 class="text-center mb-4">📈 Vista Trimestral Estratégica</h3>
+            
+            <div class="quarter-tabs">
+                <div class="quarter-tab active" onclick="switchQuarter('q1')">Q1 2025</div>
+                <div class="quarter-tab" onclick="switchQuarter('q2')">Q2 2025</div>
+                <div class="quarter-tab" onclick="switchQuarter('q3')">Q3 2025</div>
+                <div class="quarter-tab" onclick="switchQuarter('q4')">Q4 2025</div>
+            </div>
+
+            <div class="quarter-content active" id="q1-content">
+                <div class="quarter-grid">
+                    <div class="quarter-month">
+                        <h5>📅 Enero 2025</h5>
+                        <div class="event-slot">🎭 Año Nuevo Spectacular - 2 Enero</div>
+                        <div class="event-slot">💎 Winter Romance - 14 Enero</div>
+                        <div class="event-slot">🌟 Luxury Friday - 31 Enero</div>
+                        <p><strong>Enfoque:</strong> Nuevos comienzos, resoluciones, ingresos post-fiestas</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Febrero 2025</h5>
+                        <div class="event-slot">💕 Valentine Special - 14 Febrero</div>
+                        <div class="event-slot">🎭 Carnival Dreams - 28 Febrero</div>
+                        <p><strong>Enfoque:</strong> Romance, intimidad, celebraciones temáticas</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Marzo 2025</h5>
+                        <div class="event-slot">🌸 Spring Awakening - 15 Marzo</div>
+                        <div class="event-slot">🍀 Lucky Charm Night - 29 Marzo</div>
+                        <p><strong>Enfoque:</strong> Renovación, energía primaveral, nuevos comienzos</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quarter-content" id="q2-content">
+                <div class="quarter-grid">
+                    <div class="quarter-month">
+                        <h5>📅 Abril 2025</h5>
+                        <div class="event-slot">🐰 Easter Fantasy - 13 Abril</div>
+                        <div class="event-slot">🌺 Bloom Festival - 26 Abril</div>
+                        <p><strong>Enfoque:</strong> Renovación, festivales de primavera, energía fresca</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Mayo 2025</h5>
+                        <div class="event-slot">👑 Mothers Day Tribute - 11 Mayo</div>
+                        <div class="event-slot">🎪 Circus Spectacular - 24 Mayo</div>
+                        <p><strong>Enfoque:</strong> Celebraciones familiares, entretenimiento, diversión</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Junio 2025</h5>
+                        <div class="event-slot">☀️ Summer Solstice - 21 Junio</div>
+                        <div class="event-slot">🏖️ Beach Paradise - 28 Junio</div>
+                        <p><strong>Enfoque:</strong> Verano, vacaciones, energía solar, libertad</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quarter-content" id="q3-content">
+                <div class="quarter-grid">
+                    <div class="quarter-month">
+                        <h5>📅 Julio 2025</h5>
+                        <div class="event-slot">🎆 Independence Gala - 4 Julio</div>
+                        <div class="event-slot">🌞 Midsummer Night - 19 Julio</div>
+                        <p><strong>Enfoque:</strong> Patriotismo, celebraciones de verano, libertad</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Agosto 2025</h5>
+                        <div class="event-slot">🔥 Fire Festival - 15 Agosto</div>
+                        <div class="event-slot">🎨 Art & Soul - 30 Agosto</div>
+                        <p><strong>Enfoque:</strong> Intensidad, pasión, creatividad artística</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Septiembre 2025</h5>
+                        <div class="event-slot">🍂 Harvest Moon - 13 Septiembre</div>
+                        <div class="event-slot">📚 Back to School - 27 Septiembre</div>
+                        <p><strong>Enfoque:</strong> Transición, nuevos ciclos, vuelta a rutinas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quarter-content" id="q4-content">
+                <div class="quarter-grid">
+                    <div class="quarter-month">
+                        <h5>📅 Octubre 2025</h5>
+                        <div class="event-slot">🎃 Halloween Masquerade - 31 Octubre</div>
+                        <div class="event-slot">🍷 Wine & Mystique - 18 Octubre</div>
+                        <p><strong>Enfoque:</strong> Misterio, transformación, fantasía, horror elegante</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Noviembre 2025</h5>
+                        <div class="event-slot">🦃 Gratitude Gathering - 27 Noviembre</div>
+                        <div class="event-slot">🍁 Autumn Elegance - 8 Noviembre</div>
+                        <p><strong>Enfoque:</strong> Gratitud, reuniones, elegancia otoñal</p>
+                    </div>
+                    <div class="quarter-month">
+                        <h5>📅 Diciembre 2025</h5>
+                        <div class="event-slot">❄️ Winter Wonderland - 21 Diciembre</div>
+                        <div class="event-slot">🎄 Christmas Magic - 25 Diciembre</div>
+                        <div class="event-slot">✨ New Year's Eve Gala - 31 Diciembre</div>
+                        <p><strong>Enfoque:</strong> Magia invernal, celebraciones, cierre de año</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 1: Fundamentos -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('fundamentos')">
+                <div class="lab-title">🎯 Lab 1: Fundamentos de Cartografía Temporal</div>
+                <p>La ciencia de posicionar eventos estratégicamente para maximizar impacto y participación</p>
+            </div>
+            <div class="lab-content" id="fundamentos">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>📊 La Arquitectura del Timing Estratégico</h4>
+                        <p>Desarrollar una programación estratégica de experiencias especiales es como diseñar la temporada de un teatro prestigioso – cada evento ocupa una posición cuidadosamente seleccionada dentro de un arco temporal mayor que maximiza tanto anticipación como impacto individual.</p>
+                        
+                        <div class="critical-alert">
+                            <strong>ESENCIAL:</strong> La diferencia entre eventos esporádicos e infraestructura programática deliberada es frecuentemente la línea divisoria entre oportunidades aisladas y un sistema sostenible de ingresos predeciblemente aumentados.
+                        </div>
+
+                        <h5>📅 Variables Críticas de Planificación:</h5>
+                        <ul>
+                            <li><strong>Patrones Cíclicos de Tráfico:</strong> Análisis histórico de audiencia por días/semanas/meses</li>
+                            <li><strong>Fechas de Pago Estratégicas:</strong> Alineación con ciclos de ingresos de mercados principales</li>
+                            <li><strong>Competencia de Eventos:</strong> Identificación de saturación en fechas específicas</li>
+                            <li><strong>Espaciamiento Psicológico:</strong> Timing óptimo para mantener anticipación sin perder momentum</li>
+                            <li><strong>Temática Estacional:</strong> Aprovechamiento de contextos culturales y emocionales</li>
+                            <li><strong>Planificación Continua:</strong> Sistema que mantiene próximos 3 meses siempre mapeados</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="progress-tracker">
+                            <h5>🎯 Dominio de Planificación</h5>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Análisis de Patrones</span>
+                                    <span id="patrones-progress">83%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 83%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Timing Estratégico</span>
+                                    <span id="timing-progress">76%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 76%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>ROI Temporal</span>
+                                    <span id="roi-progress">94%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 94%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Heat Map -->
+        <div class="heat-map">
+            <h3 class="text-center mb-4">🔥 Mapa de Calor: Óptimo Timing Anual</h3>
+            <p class="text-center">Densidad de eventos exitosos por mes basado en datos históricos de la industria</p>
+            
+            <div class="heat-map-grid">
+                <div class="heat-map-month heat-level-4" data-events="3" onclick="showMonthDetails('enero')">
+                    <h6>Enero</h6>
+                    <small>Alta actividad</small>
+                </div>
+                <div class="heat-map-month heat-level-5" data-events="4" onclick="showMonthDetails('febrero')">
+                    <h6>Febrero</h6>
+                    <small>Pico máximo</small>
+                </div>
+                <div class="heat-map-month heat-level-3" data-events="2" onclick="showMonthDetails('marzo')">
+                    <h6>Marzo</h6>
+                    <small>Actividad media</small>
+                </div>
+                <div class="heat-map-month heat-level-3" data-events="2" onclick="showMonthDetails('abril')">
+                    <h6>Abril</h6>
+                    <small>Actividad media</small>
+                </div>
+                <div class="heat-map-month heat-level-2" data-events="1" onclick="showMonthDetails('mayo')">
+                    <h6>Mayo</h6>
+                    <small>Actividad baja</small>
+                </div>
+                <div class="heat-map-month heat-level-2" data-events="1" onclick="showMonthDetails('junio')">
+                    <h6>Junio</h6>
+                    <small>Actividad baja</small>
+                </div>
+                <div class="heat-map-month heat-level-1" data-events="1" onclick="showMonthDetails('julio')">
+                    <h6>Julio</h6>
+                    <small>Baja actividad</small>
+                </div>
+                <div class="heat-map-month heat-level-1" data-events="1" onclick="showMonthDetails('agosto')">
+                    <h6>Agosto</h6>
+                    <small>Baja actividad</small>
+                </div>
+                <div class="heat-map-month heat-level-2" data-events="2" onclick="showMonthDetails('septiembre')">
+                    <h6>Septiembre</h6>
+                    <small>Repunte</small>
+                </div>
+                <div class="heat-map-month heat-level-5" data-events="4" onclick="showMonthDetails('octubre')">
+                    <h6>Octubre</h6>
+                    <small>Pico máximo</small>
+                </div>
+                <div class="heat-map-month heat-level-4" data-events="3" onclick="showMonthDetails('noviembre')">
+                    <h6>Noviembre</h6>
+                    <small>Alta actividad</small>
+                </div>
+                <div class="heat-map-month heat-level-5" data-events="5" onclick="showMonthDetails('diciembre')">
+                    <h6>Diciembre</h6>
+                    <small>Máximo anual</small>
+                </div>
+            </div>
+            
+            <div id="monthDetails" style="display: none; margin-top: 2rem; padding: 2rem; background: var(--bg-white); border-radius: 15px;">
+                <h4 id="monthTitle">Detalles del Mes</h4>
+                <div id="monthContent"></div>
+            </div>
+        </div>
+
+        <!-- Planning Timeline -->
+        <div class="planning-timeline">
+            <div class="container">
+                <h3 class="text-center mb-4">📋 Timeline de Planificación Continua</h3>
+                <p class="text-center">Sistema de planificación que mantiene siempre los próximos 3 meses estratégicamente mapeados</p>
+                
+                <div class="timeline-container">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="timeline-phase left">
+                        <div class="timeline-dot" style="top: 20px;"></div>
+                        <h6>🎯 Mes Actual</h6>
+                        <p><strong>Ejecución:</strong> Implementar eventos programados, monitorear performance, ajustes en tiempo real</p>
+                    </div>
+                    
+                    <div class="timeline-phase right">
+                        <div class="timeline-dot" style="top: 120px;"></div>
+                        <h6>📅 Mes +1</h6>
+                        <p><strong>Preparación:</strong> Finalizar detalles, promoción intensiva, setup técnico, backup plans</p>
+                    </div>
+                    
+                    <div class="timeline-phase left">
+                        <div class="timeline-dot" style="top: 220px;"></div>
+                        <h6>🎨 Mes +2</h6>
+                        <p><strong>Desarrollo:</strong> Crear conceptos, diseñar experiencias, planificar recursos, estrategia de marketing</p>
+                    </div>
+                    
+                    <div class="timeline-phase right">
+                        <div class="timeline-dot" style="top: 320px;"></div>
+                        <h6>🔍 Mes +3</h6>
+                        <p><strong>Investigación:</strong> Análisis de tendencias, identificación de fechas estratégicas, brainstorming inicial</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Análisis de Patrones -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('patrones')">
+                <div class="lab-title">📊 Lab 2: Análisis de Patrones y Optimización Temporal</div>
+                <p>Metodología para identificar y aprovechar ciclos de tráfico y oportunidades estratégicas</p>
+            </div>
+            <div class="lab-content" id="patrones">
+                <div class="interactive-cards">
+                    <div class="card-interactive" onclick="toggleCardDetails('trafico')">
+                        <div class="card-icon">📈</div>
+                        <div class="card-title">Análisis de Tráfico Cíclico</div>
+                        <p>Identificación de patrones históricos para predecir momentos óptimos</p>
+                        <div class="card-details" id="trafico">
+                            <hr>
+                            <h5>🔍 Metodología de Análisis:</h5>
+                            <ul>
+                                <li><strong>Patrones Semanales:</strong> Identificar días con más tráfico (típicamente jueves-sábado para adultos)</li>
+                                <li><strong>Ciclos Mensuales:</strong> Analizar primeras vs últimas semanas del mes (correlación con ciclos de pago)</li>
+                                <li><strong>Tendencias Estacionales:</strong> Mapear incrementos/decrementos por temporadas específicas</li>
+                                <li><strong>Eventos Competidores:</strong> Identificar saturación en fechas con múltiples eventos simultáneos</li>
+                                <li><strong>Audiencia Específica:</strong> Patrones únicos de tu audiencia vs tendencias generales de plataforma</li>
+                                <li><strong>Análisis Geográfico:</strong> Considerar zonas horarias y fechas de pago por regiones principales</li>
+                            </ul>
+                            
+                            <div class="critical-alert">
+                                <strong>VITAL:</strong> Tus patrones específicos pueden diferir de tendencias generales - prioriza siempre tu data personal.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-interactive" onclick="toggleCardDetails('fechaspago')">
+                        <div class="card-icon">💰</div>
+                        <div class="card-title">Sincronización con Fechas de Pago</div>
+                        <p>Alineación estratégica con ciclos de ingresos de audiencia principal</p>
+                        <div class="card-details" id="fechaspago">
+                            <hr>
+                            <h5>📅 Calendario de Ingresos Estratégico:</h5>
+                            <ul>
+                                <li><strong>Quincenas Corporativas:</strong> 15 y 30/31 de cada mes para empleados tradicionales</li>
+                                <li><strong>Viernes de Pago:</strong> Últimos viernes del mes en muchos países europeos</li>
+                                <li><strong>Bonificaciones Estacionales:</strong> Diciembre (bonos navideños), marzo (bonos anuales)</li>
+                                <li><strong>Tax Returns:</strong> Abril-mayo en EEUU, diferentes fechas por país</li>
+                                <li><strong>Jubilaciones/Pensiones:</strong> Primeros días del mes para audiencia madura</li>
+                                <li><strong>Freelancers/Gig Economy:</strong> Patterns más irregulares, requieren análisis individual</li>
+                            </ul>
+                            
+                            <div class="success-card">
+                                <div class="success-quote">
+                                    "Programar eventos 2-3 días después de fechas de pago principales puede incrementar participación hasta 180%."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-interactive" onclick="toggleCardDetails('espaciamiento')">
+                        <div class="card-icon">⏰</div>
+                        <div class="card-title">Espaciamiento Psicológico Óptimo</div>
+                        <p>Timing perfecto para mantener anticipación sin perder momentum relacional</p>
+                        <div class="card-details" id="espaciamiento">
+                            <hr>
+                            <h5>🧠 Psicología del Timing:</h5>
+                            <ul>
+                                <li><strong>Regla de los 21 días:</strong> Espaciamiento mínimo entre eventos similares para mantener novedad</li>
+                                <li><strong>Ciclo de Anticipación:</strong> 7-10 días de promoción previa para generar expectativa óptima</li>
+                                <li><strong>Momentum Relacional:</strong> Máximo 6 semanas entre cualquier tipo de evento para mantener conexión</li>
+                                <li><strong>Variedad Estratégica:</strong> Alternar tipos de eventos para diferentes segmentos de audiencia</li>
+                                <li><strong>Surprise Factor:</strong> 1 evento "sorpresa" por trimestre para mantener impredecibilidad</li>
+                                <li><strong>Recovery Time:</strong> 3-5 días post-evento antes de promocionar próximo</li>
+                            </ul>
+                            
+                            <div class="critical-alert">
+                                <strong>MASTERCLASS:</strong> El timing perfecto crea la sensación de que "siempre ocurre justo cuando empiezo a desearlo".
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timing Calculator -->
+        <div class="timing-calculator">
+            <h3 class="text-center mb-4">🧮 Calculadora de Impacto Temporal</h3>
+            <div class="calculator-grid">
+                <div class="calculator-inputs">
+                    <h4>📊 Variables de Timing</h4>
+                    <div class="form-group">
+                        <label class="form-label">Ingresos promedio evento ($):</label>
+                        <input type="number" id="ingresoEvento" class="form-control" value="3200" onchange="calculateTimingImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Multiplicador fecha óptima:</label>
+                        <input type="number" id="multiplicadorOptimo" class="form-control" value="2.4" step="0.1" onchange="calculateTimingImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Eventos por trimestre:</label>
+                        <input type="number" id="eventosTrimestre" class="form-control" value="6" onchange="calculateTimingImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">% eventos en fechas óptimas:</label>
+                        <input type="number" id="porcentajeOptimo" class="form-control" value="75" onchange="calculateTimingImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Costo de planificación ($):</label>
+                        <input type="number" id="costoPlaneacion" class="form-control" value="120" onchange="calculateTimingImpact()">
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <h4>💎 Impacto de Planificación Estratégica</h4>
+                    <div class="result-item">
+                        <div class="result-number" id="ingresoOptimizado">$0</div>
+                        <div class="result-label">Ingresos Trimestrales Optimizados</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="incrementoTemporal">$0</div>
+                        <div class="result-label">Incremento vs Timing Aleatorio</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="roiPlaneacion">0x</div>
+                        <div class="result-label">ROI de Planificación Estratégica</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="proyeccionAnual">$0</div>
+                        <div class="result-label">Proyección Anual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-stories">
+            <div class="success-card">
+                <div class="success-quote">
+                    "Implementé mi 'Sistema de Cartografía Trimestral' donde mapeo meticulosamente los próximos tres meses identificando fechas estratégicas. Considero patrones históricos de tráfico, proximidad a fechas de pago, competencia de otros eventos, y espaciamiento psicológicamente óptimo. Lo transformador fue descubrir que la programación precisa impactaba dramáticamente la asistencia – el mismo concepto en fecha estratégica vs subóptima resultaba en diferencias de hasta 140% en participación."
+                </div>
+                <div class="text-end">
+                    <strong>- Sofía R.</strong><br>
+                    <small>Calendar Strategist, 2.5 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">+140%</div>
+                        <div>Participación</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">3 Meses</div>
+                        <div>Planificación</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$4,800</div>
+                        <div>Ingresos Extra/Trim</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-card">
+                <div class="success-quote">
+                    "Mi calendario estratégico se basa en datos puros: analizo patrones de tráfico históricos, sincronizo con fechas de pago de mis mercados principales, y mantengo espaciamiento de 21 días entre eventos similares. Ahora puedo predecir con 94% de precisión qué eventos serán exitosos. Un seguidor regular me dijo: 'Me encanta cómo tus eventos especiales ocurren justo cuando empiezo a desear algo diferente... siempre parecen perfectamente cronometrados'."
+                </div>
+                <div class="text-end">
+                    <strong>- Miranda K.</strong><br>
+                    <small>Data-Driven Planner, 3 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">94%</div>
+                        <div>Precisión</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">21 días</div>
+                        <div>Espaciamiento</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$7,200</div>
+                        <div>Ingresos Mensuales</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-card">
+                <div class="success-quote">
+                    "La clave no es solo planificar eventos, sino crear un sistema de planificación continua. Siempre tengo los próximos 3 meses completamente mapeados: mes actual en ejecución, +1 en preparación, +2 en desarrollo, +3 en investigación. Este sistema me permite aprovechar tendencias estacionales, evitar saturación de fechas, y mantener variedad estratégica que satisface diferentes segmentos de mi audiencia."
+                </div>
+                <div class="text-end">
+                    <strong>- Valentina M.</strong><br>
+                    <small>Strategic Calendar Master, 4 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">3 Meses</div>
+                        <div>Horizonte</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">+287%</div>
+                        <div>ROI vs Random</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$9,600</div>
+                        <div>Record Trimestral</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Optimización Continua -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('optimizacion')">
+                <div class="lab-title">📈 Lab 3: Optimización y Evolución del Sistema</div>
+                <p>Metodología para refinar continuamente tu calendario estratégico basado en resultados</p>
+            </div>
+            <div class="lab-content" id="optimizacion">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>🛠️ Técnicas Efectivas Comprobadas:</h4>
+                        <ul>
+                            <li><strong>Identificación de Patrones Cíclicos:</strong> Análisis sistemático de métricas de tráfico para encontrar tendencias repetibles</li>
+                            <li><strong>Sincronización con Fechas de Pago:</strong> Mapeo de ciclos de ingresos en mercados prioritarios para timing óptimo</li>
+                            <li><strong>Variedad Estratégica:</strong> Implementación de diferentes tipos de eventos para satisfacer segmentos distintos de audiencia</li>
+                            <li><strong>Consistencia sin Predictibilidad:</strong> Mantenimiento de regularidad que genere expectativa sin volverse rutinario</li>
+                            <li><strong>Espaciamiento Psicológico Óptimo:</strong> Timing perfecto que mantiene anticipación sin perder momentum relacional</li>
+                            <li><strong>Planificación Continua:</strong> Sistema que siempre mantiene próximos tres meses estratégicamente mapeados</li>
+                            <li><strong>Análisis Post-Evento:</strong> Evaluación sistemática de resultados para optimización de futuras decisiones temporales</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="critical-alert">
+                            <strong>PRINCIPIO MAESTRO:</strong>
+                            "El mismo evento, idénticamente ejecutado, puede experimentar variaciones de hasta 300% en participación e impacto basado exclusivamente en su posicionamiento dentro de ciclos temporales relevantes. Tu calendario estratégico transforma eventos individuales en componentes sinérgicos de un sistema económico optimizado."
+                        </div>
+                        
+                        <h5>📈 Métricas de Optimización Temporal:</h5>
+                        <div class="progress-tracker">
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Precisión Predictiva</span>
+                                    <span>91%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 91%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Optimización de Fechas</span>
+                                    <span>87%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 87%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>ROI Calendario</span>
+                                    <span>94%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 94%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 class="summary-title">🏆 ¡A Construir Tu Sistema de Cartografía Temporal!</h2>
+            <p class="lead">Has dominado la arquitectura temporal que transforma eventos aislados en un sistema económico optimizado y predecible</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <div class="achievement-icon">📅</div>
+                    <h5>Calendario Estratégico</h5>
+                    <p>12 meses completamente mapeados</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📊</div>
+                    <h5>Análisis de Patrones</h5>
+                    <p>94% precisión predictiva</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">💰</div>
+                    <h5>ROI Temporal</h5>
+                    <p>140% más participación</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">⏰</div>
+                    <h5>Espaciamiento Óptimo</h5>
+                    <p>21 días timing perfecto</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">🎯</div>
+                    <h5>Planificación Continua</h5>
+                    <p>3 meses siempre mapeados</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📈</div>
+                    <h5>Optimización</h5>
+                    <p>Sistema evolutivo perfecto</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-custom" onclick="window.location.reload()">🚀 Reiniciar Masterclass</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Calendar variables
+        let currentMonth = 0; // January 2025
+        let currentYear = 2025;
+        const months = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+
+        // Optimal dates for events (example data)
+        const optimalDates = {
+            2025: {
+                0: [2, 14, 31], // January
+                1: [14, 28], // February
+                2: [15, 29], // March
+                3: [13, 26], // April
+                4: [11, 24], // May
+                5: [21, 28], // June
+                6: [4, 19], // July
+                7: [15, 30], // August
+                8: [13, 27], // September
+                9: [18, 31], // October
+                10: [8, 27], // November
+                11: [21, 25, 31] // December
+            }
+        };
+
+        const goodDates = {
+            2025: {
+                0: [4, 11, 18, 25], // January
+                1: [7, 21], // February
+                2: [8, 22], // March
+                3: [5, 19], // April
+                4: [3, 17, 31], // May
+                5: [7, 14], // June
+                6: [12, 26], // July
+                7: [9, 23], // August
+                8: [6, 20], // September
+                9: [11, 25], // October
+                10: [15, 22], // November
+                11: [7, 14, 28] // December
+            }
+        };
+
+        const eventDates = {
+            2025: {
+                0: [2, 14, 31], // Events scheduled
+                1: [14, 28],
+                2: [15, 29],
+                // Add more as needed
+            }
+        };
+
+        // Real-time clock
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Calendar functions
+        function generateCalendar() {
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const calendarDays = document.getElementById('calendarDays');
+            
+            // Update month display
+            document.getElementById('currentMonth').textContent = `${months[currentMonth]} ${currentYear}`;
+            
+            // Clear previous calendar
+            calendarDays.innerHTML = '';
+            
+            // Add empty cells for days before month starts
+            for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day';
+                calendarDays.appendChild(emptyDay);
+            }
+            
+            // Add days of month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day';
+                dayElement.textContent = day;
+                
+                // Check if this day is optimal, good, or has event
+                if (optimalDates[currentYear] && optimalDates[currentYear][currentMonth] && 
+                    optimalDates[currentYear][currentMonth].includes(day)) {
+                    dayElement.classList.add('optimal');
+                } else if (goodDates[currentYear] && goodDates[currentYear][currentMonth] && 
+                           goodDates[currentYear][currentMonth].includes(day)) {
+                    dayElement.classList.add('good');
+                }
+                
+                if (eventDates[currentYear] && eventDates[currentYear][currentMonth] && 
+                    eventDates[currentYear][currentMonth].includes(day)) {
+                    dayElement.classList.add('event');
+                }
+                
+                dayElement.onclick = () => showDayDetails(day);
+                calendarDays.appendChild(dayElement);
+            }
+        }
+
+        function changeMonth(direction) {
+            currentMonth += direction;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            } else if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            generateCalendar();
+        }
+
+        function showDayDetails(day) {
+            const isOptimal = optimalDates[currentYear] && optimalDates[currentYear][currentMonth] && 
+                             optimalDates[currentYear][currentMonth].includes(day);
+            const isGood = goodDates[currentYear] && goodDates[currentYear][currentMonth] && 
+                          goodDates[currentYear][currentMonth].includes(day);
+            const hasEvent = eventDates[currentYear] && eventDates[currentYear][currentMonth] && 
+                            eventDates[currentYear][currentMonth].includes(day);
+
+            let details = `<h5>${day} de ${months[currentMonth]} ${currentYear}</h5>`;
+            
+            if (hasEvent) {
+                details += `<div class="alert alert-primary">🎭 <strong>Evento programado</strong> - Verificar preparativos</div>`;
+            } else if (isOptimal) {
+                details += `<div class="alert alert-success">✨ <strong>Fecha óptima</strong> - Ideal para eventos especiales (+140% participación esperada)</div>`;
+            } else if (isGood) {
+                details += `<div class="alert alert-warning">👍 <strong>Fecha buena</strong> - Condiciones favorables para eventos</div>`;
+            } else {
+                details += `<div class="alert alert-info">📅 <strong>Fecha regular</strong> - Considerar para eventos de menor escala</div>`;
+            }
+
+            alert(details.replace(/<[^>]*>/g, '')); // Simple alert for demo
+        }
+
+        // Quarter switching
+        function switchQuarter(quarter) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.quarter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Hide all content
+            document.querySelectorAll('.quarter-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Activate selected quarter
+            event.target.classList.add('active');
+            document.getElementById(quarter + '-content').classList.add('active');
+        }
+
+        // Show month details in heat map
+        function showMonthDetails(month) {
+            const details = document.getElementById('monthDetails');
+            const title = document.getElementById('monthTitle');
+            const content = document.getElementById('monthContent');
+            
+            const monthData = {
+                enero: {
+                    title: '📅 Enero 2025 - Estrategia de Año Nuevo',
+                    content: `
+                        <h5>🎯 Factores Clave:</h5>
+                        <ul>
+                            <li><strong>Post-holidays recovery:</strong> Audiencia con ingresos frescos post-navidad</li>
+                            <li><strong>Resoluciones de año nuevo:</strong> Mayor disposición a "nuevas experiencias"</li>
+                            <li><strong>Winter blues:</strong> Búsqueda de entretenimiento para combatir depresión estacional</li>
+                            <li><strong>Fechas óptimas:</strong> 2 (post-holiday), 14 (quincena), 31 (fin de mes)</li>
+                        </ul>
+                        <div class="alert alert-success">
+                            <strong>ROI Esperado:</strong> +180% vs promedio anual en fechas estratégicas
+                        </div>
+                    `
+                },
+                febrero: {
+                    title: '💕 Febrero 2025 - Pico de Romance',
+                    content: `
+                        <h5>🎯 Factores Clave:</h5>
+                        <ul>
+                            <li><strong>San Valentín:</strong> Máxima demanda de contenido romántico/íntimo</li>
+                            <li><strong>Winter peak:</strong> Audiencia busca calidez y conexión emocional</li>
+                            <li><strong>Mes corto:</strong> Concentración de eventos en menos días = mayor impacto</li>
+                            <li><strong>Fechas óptimas:</strong> 14 (valentín), 28 (fin de mes)</li>
+                        </ul>
+                        <div class="alert alert-success">
+                            <strong>ROI Esperado:</strong> +250% vs promedio, especialmente contenido romántico
+                        </div>
+                    `
+                },
+                octubre: {
+                    title: '🎃 Octubre 2025 - Halloween Bonanza',
+                    content: `
+                        <h5>🎯 Factores Clave:</h5>
+                        <ul>
+                            <li><strong>Halloween fever:</strong> Demanda máxima de contenido temático/costumes</li>
+                            <li><strong>Fall energy:</strong> Regreso de energía post-verano, nuevos proyectos</li>
+                            <li><strong>Pre-holiday spending:</strong> Última oportunidad antes de gastos navideños</li>
+                            <li><strong>Fechas óptimas:</strong> 18 (pre-halloween buildup), 31 (halloween)</li>
+                        </ul>
+                        <div class="alert alert-success">
+                            <strong>ROI Esperado:</strong> +300% vs promedio, eventos temáticos extraordinarios
+                        </div>
+                    `
+                },
+                diciembre: {
+                    title: '❄️ Diciembre 2025 - Máximo Anual',
+                    content: `
+                        <h5>🎯 Factores Clave:</h5>
+                        <ul>
+                            <li><strong>Holiday bonuses:</strong> Máximos ingresos disponibles del año</li>
+                            <li><strong>Festividad continua:</strong> Ambiente celebratorio durante todo el mes</li>
+                            <li><strong>Winter solstice:</strong> Búsqueda de luz y calidez emocional</li>
+                            <li><strong>Year-end closure:</strong> Disposición a "celebrar" el año</li>
+                            <li><strong>Fechas óptimas:</strong> 21 (solstice), 25 (navidad), 31 (año nuevo)</li>
+                        </ul>
+                        <div class="alert alert-success">
+                            <strong>ROI Esperado:</strong> +400% vs promedio - pico absoluto del año
+                        </div>
+                    `
+                }
+            };
+            
+            const data = monthData[month] || {
+                title: 'Detalles del Mes',
+                content: 'Información no disponible para este mes.'
+            };
+            
+            title.textContent = data.title;
+            content.innerHTML = data.content;
+            details.style.display = 'block';
+        }
+
+        // Toggle lab sections
+        function toggleDetails(sectionId) {
+            const content = document.getElementById(sectionId);
+            content.classList.toggle('active');
+        }
+
+        // Toggle card details
+        function toggleCardDetails(cardId) {
+            const details = document.getElementById(cardId);
+            details.classList.toggle('active');
+        }
+
+        // Timing Calculator
+        function calculateTimingImpact() {
+            const ingreso = parseFloat(document.getElementById('ingresoEvento').value) || 0;
+            const multiplicador = parseFloat(document.getElementById('multiplicadorOptimo').value) || 0;
+            const eventos = parseInt(document.getElementById('eventosTrimestre').value) || 0;
+            const porcentaje = parseFloat(document.getElementById('porcentajeOptimo').value) || 0;
+            const costo = parseFloat(document.getElementById('costoPlaneacion').value) || 0;
+
+            // Calculate optimized performance
+            const eventosOptimos = eventos * (porcentaje / 100);
+            const eventosRegulares = eventos - eventosOptimos;
+            
+            const ingresoOptimizado = (eventosOptimos * ingreso * multiplicador) + (eventosRegulares * ingreso);
+            const ingresoSinPlanear = eventos * ingreso;
+            const incremento = ingresoOptimizado - ingresoSinPlanear;
+            const costoTotal = costo * eventos;
+            const roiPlaneacion = (incremento - costoTotal) / costoTotal;
+            const proyeccionAnual = ingresoOptimizado * 4;
+
+            // Update display
+            document.getElementById('ingresoOptimizado').textContent = '$' + ingresoOptimizado.toFixed(0);
+            document.getElementById('incrementoTemporal').textContent = '$' + incremento.toFixed(0);
+            document.getElementById('roiPlaneacion').textContent = roiPlaneacion.toFixed(1) + 'x';
+            document.getElementById('proyeccionAnual').textContent = '$' + proyeccionAnual.toFixed(0);
+
+            // Update progress bars
+            updateProgressBars(porcentaje);
+        }
+
+        function updateProgressBars(porcentaje) {
+            const patrones = Math.min(porcentaje * 1.1, 95);
+            const timing = Math.min(porcentaje * 1.0, 95);
+            const roi = Math.min(porcentaje * 1.3, 95);
+            
+            document.getElementById('patrones-progress').textContent = patrones.toFixed(0) + '%';
+            document.getElementById('timing-progress').textContent = timing.toFixed(0) + '%';
+            document.getElementById('roi-progress').textContent = roi.toFixed(0) + '%';
+        }
+
+        // Initialize
+        generateCalendar();
+        calculateTimingImpact();
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Progressive enhancement for animations
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.lab-section, .card-interactive, .success-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+    </script>
+</body>
+</html>

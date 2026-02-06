@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>🔍 Sistema de Recursos Estratégicos - WC Training</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #3b82f6;
+      --secondary-color: #f59e0b;
+      --accent-color: #8b5cf6;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc3545;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-dark: #1a1a2e;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --gradient-secondary: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+      --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+      --gradient-resources: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+      --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.15);
+      --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      overflow-x: hidden;
+    }
+
+    /* WC Training Header */
+    .wc-header {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float-pattern 24s linear infinite;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .user-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .live-indicator {
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Industry Insights Section */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .insight-number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient-resources);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1'/%3E%3C/svg%3E") repeat;
+      animation: float-bg 20s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      padding: 3rem 0;
+      background: var(--bg-white);
+      margin-bottom: 2rem;
+      border-radius: 25px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lab-section:nth-child(even) {
+      background: var(--bg-light);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 2rem;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+
+    /* Interactive Cards */
+    .resource-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .resource-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s;
+    }
+
+    .resource-card:hover::before {
+      left: 100%;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-8px) translateX(5px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-color);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      background: var(--gradient-resources);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .card-details.active {
+      max-height: 800px;
+    }
+
+    /* Resource Readiness Calculator */
+    .calculator-container {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      margin-bottom: 1.5rem;
+    }
+
+    .calculator-input label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .calculator-input input,
+    .calculator-input select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .calculator-input input:focus,
+    .calculator-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .calculator-result {
+      background: var(--gradient-success);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .result-number {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Professional Directory */
+    .directory-container {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin: 2rem 0;
+    }
+
+    .professional-category {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .professional-category:hover {
+      border-color: var(--primary-color);
+      background: white;
+    }
+
+    .professional-category.active {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .category-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .professional-list {
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      display: none;
+    }
+
+    .professional-list.show {
+      display: block;
+      animation: slideDown 0.3s ease;
+    }
+
+    .professional-item {
+      background: white;
+      padding: 1rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      border-left: 3px solid var(--primary-color);
+    }
+
+    /* Crisis Simulator */
+    .simulator-container {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin: 2rem 0;
+    }
+
+    .crisis-scenario {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .crisis-scenario:hover {
+      border-color: var(--primary-color);
+      background: white;
+    }
+
+    .crisis-scenario.active {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .simulation-result {
+      background: var(--gradient-secondary);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .simulation-result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Resource Evaluation Matrix */
+    .evaluation-matrix {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      margin: 2rem 0;
+      overflow-x: auto;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    .matrix-table th,
+    .matrix-table td {
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid var(--border-light);
+    }
+
+    .matrix-table th {
+      background: var(--gradient-primary);
+      color: white;
+      font-weight: 600;
+    }
+
+    .matrix-table tr:nth-child(even) {
+      background: var(--bg-light);
+    }
+
+    .rating-star {
+      color: var(--secondary-color);
+      margin: 0 0.1rem;
+    }
+
+    .rating-star.filled {
+      color: #fbbf24;
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress-bar-custom {
+      height: 12px;
+      background: var(--bg-light);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-resources);
+      transition: width 2s ease;
+      border-radius: 10px;
+    }
+
+    /* Success Stories */
+    .success-story {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border-left: 5px solid var(--success-green);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-story::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 4rem;
+      color: var(--success-green);
+      opacity: 0.2;
+      font-family: serif;
+    }
+
+    .story-author {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-top: 1rem;
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--success-green);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Search and Filter */
+    .search-filter {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 2rem;
+    }
+
+    .search-input {
+      position: relative;
+    }
+
+    .search-input input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border: 2px solid var(--border-light);
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .search-input i {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+
+    .filter-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-tag {
+      background: var(--bg-light);
+      border: 1px solid var(--border-light);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: 0.9rem;
+    }
+
+    .filter-tag:hover,
+    .filter-tag.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 48px;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 4rem 0;
+      border-radius: 25px;
+      margin: 3rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float-pattern 22s linear infinite reverse;
+    }
+
+    .achievement-badge {
+      background: var(--gradient-warning);
+      color: var(--text-dark);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: inline-block;
+      margin: 1rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    @keyframes float-bg {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      25% { transform: translateY(-10px) translateX(5px); }
+      50% { transform: translateY(0px) translateX(10px); }
+      75% { transform: translateY(10px) translateX(5px); }
+    }
+
+    @keyframes float-pattern {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(60px); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 3rem 0;
+      }
+      
+      .lab-section {
+        padding: 2rem 0;
+        margin-bottom: 1rem;
+      }
+      
+      .resource-card {
+        padding: 1.5rem;
+      }
+      
+      .calculator-container,
+      .simulator-container,
+      .directory-container {
+        padding: 1.5rem;
+      }
+      
+      .user-stats {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+      }
+      
+      .insight-card {
+        padding: 1rem;
+      }
+      
+      .insight-number {
+        font-size: 1.5rem;
+      }
+      
+      .story-stats {
+        gap: 1rem;
+      }
+      
+      .achievement-badge {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+      }
+      
+      .filter-tags {
+        justify-content: center;
+      }
+      
+      .matrix-table {
+        font-size: 0.9rem;
+      }
+      
+      .matrix-table th,
+      .matrix-table td {
+        padding: 0.5rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .resource-card {
+        padding: 1rem;
+      }
+      
+      .card-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+      
+      .calculator-input input,
+      .calculator-input select {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .result-number {
+        font-size: 2rem;
+      }
+      
+      .btn-primary-custom {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .professional-category {
+        padding: 1rem;
+      }
+      
+      .category-badge {
+        position: static;
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-white: #1e1e2e;
+        --bg-light: #181825;
+        --text-dark: #f8f9fa;
+        --text-muted: #9ca3af;
+        --border-light: #374151;
+      }
+      
+      .resource-card,
+      .calculator-container,
+      .simulator-container,
+      .progress-tracker,
+      .success-story,
+      .evaluation-matrix,
+      .directory-container,
+      .search-filter,
+      .professional-list,
+      .professional-item {
+        background: var(--bg-white);
+        color: var(--text-dark);
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .wc-header,
+      .btn-primary-custom,
+      .calculator-container,
+      .simulator-container {
+        display: none !important;
+      }
+      
+      .resource-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+      
+      .hero-section {
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Training Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">WC Training</div>
+        </div>
+        <div class="col-md-6 text-end">
+          <div class="user-stats">
+            <div class="live-indicator"></div>
+            <span>12,847 modelos activos</span>
+            <i class="fas fa-users"></i>
+            <span id="current-date"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="industry-insights">
+    <div class="container">
+      <h2 class="text-center mb-4">📊 Datos de Recursos Profesionales 2025</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="insight-card text-center">
+            <div class="insight-number">87%</div>
+            <p class="mb-0">de modelos exitosas tienen directorio de recursos especializados</p>
+            <small class="text-muted">Professional Resources Study 2025</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card text-center">
+            <div class="insight-number">750%</div>
+            <p class="mb-0">resolución más rápida de crisis con recursos preparados</p>
+            <small class="text-muted">Crisis Response Effectiveness Report</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card text-center">
+            <div class="insight-number">$19.8K</div>
+            <p class="mb-0">ahorro promedio anual con asistencia especializada proactiva</p>
+            <small class="text-muted">Resource Investment ROI Analysis</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container text-center">
+      <h1 class="hero-title">🔍 Masters de Recursos Estratégicos</h1>
+      <p class="hero-subtitle">Construye tu directorio personalizado de apoyo especializado que transformará tu seguridad profesional. No improvises en crisis - ten tu sistema de recursos preparado.</p>
+      <button class="btn-primary-custom" onclick="scrollToSection('resources-section')">
+        <i class="fas fa-search"></i>
+        ¡A construir tu sistema de recursos!
+      </button>
+    </div>
+  </div>
+
+  <!-- Sistema de Recursos Section -->
+  <div class="container my-5">
+    <div class="lab-section" id="resources-section">
+      <div class="container">
+        <h2 class="section-title">🎯 Lab de Sistema de Recursos Estratégicos</h2>
+        
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="resource-card" onclick="toggleDetails('resource-system')">
+              <div class="card-header">
+                <div class="card-icon">
+                  <i class="fas fa-network-wired"></i>
+                </div>
+                <div>
+                  <h4>Protocolo de Investigación de Recursos</h4>
+                  <p class="text-muted mb-0">Metodología sistemática para identificar apoyo especializado</p>
+                </div>
+              </div>
+              <div class="card-details" id="resource-system">
+                <p><strong>CRÍTICO:</strong> Identificar sistemáticamente fuentes de apoyo especializado es como crear un directorio personalizado de recursos críticos. Esta infraestructura de recursos transforma fundamentalmente tu red de seguridad profesional.</p>
+                
+                <div class="mt-4">
+                  <h6>🔥 Las 7 Fases de Investigación de Recursos:</h6>
+                  
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="alert alert-primary">
+                        <h6><i class="fas fa-search"></i> Fase 1: Mapeo de Necesidades</h6>
+                        <ul class="mb-0">
+                          <li>Identifica desafíos específicos de tu profesión</li>
+                          <li>Categoriza por tipo de asistencia requerida</li>
+                          <li>Prioriza por frecuencia y criticidad</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="alert alert-success">
+                        <h6><i class="fas fa-users"></i> Fase 2: Investigación por Redes</h6>
+                        <ul class="mb-0">
+                          <li>Consulta redes profesionales especializadas</li>
+                          <li>Solicita recomendaciones específicas</li>
+                          <li>Verifica experiencia con tu industria</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="alert alert-warning">
+                        <h6><i class="fas fa-comments"></i> Fase 3: Entrevistas Preliminares</h6>
+                        <ul class="mb-0">
+                          <li>Evalúa comprensión sin juicio</li>
+                          <li>Confirma confidencialidad absoluta</li>
+                          <li>Verifica disponibilidad para emergencias</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="alert alert-info">
+                        <h6><i class="fas fa-shield-alt"></i> Fase 4: Verificación de Credenciales</h6>
+                        <ul class="mb-0">
+                          <li>Confirma licencias y certificaciones</li>
+                          <li>Revisa historial y referencias</li>
+                          <li>Verifica seguros y protecciones</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="alert alert-secondary">
+                        <h6><i class="fas fa-file-contract"></i> Fase 5: Establecimiento de Contacto</h6>
+                        <ul class="mb-0">
+                          <li>Sesión inicial de conocimiento</li>
+                          <li>Acuerdos de trabajo y tarifas</li>
+                          <li>Protocolos de comunicación</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="alert alert-dark">
+                        <h6><i class="fas fa-database"></i> Fase 6: Documentación Sistemática</h6>
+                        <ul class="mb-0">
+                          <li>Crea base de datos organizada</li>
+                          <li>Categoriza por especialidad</li>
+                          <li>Incluye notas de evaluación</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <div class="alert alert-light border">
+                        <h6><i class="fas fa-sync-alt"></i> Fase 7: Mantenimiento y Actualización</h6>
+                        <ul class="mb-0">
+                          <li>Revisión semestral de información</li>
+                          <li>Actualización de contactos y servicios</li>
+                          <li>Incorporación de nuevos recursos</li>
+                          <li>Evaluación de efectividad histórica</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calculadora de Preparación de Recursos -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">📊 Calculadora de Preparación de Recursos</h2>
+        
+        <div class="calculator-container">
+          <h5>🎯 Evalúa Qué Tan Preparada Estás Para Emergencias</h5>
+          <p>Ingresa información sobre tu sistema actual de recursos para calcular tu nivel de preparación:</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Recursos de Salud Mental Identificados:</label>
+                <select id="mental-health-resources" onchange="calculateResourceReadiness()">
+                  <option value="">Selecciona cantidad</option>
+                  <option value="0">Ninguno</option>
+                  <option value="1">1 recurso</option>
+                  <option value="2">2-3 recursos</option>
+                  <option value="3">4+ recursos especializados</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Recursos Legales Especializados:</label>
+                <select id="legal-resources" onchange="calculateResourceReadiness()">
+                  <option value="">Selecciona tipo</option>
+                  <option value="0">Sin recursos legales</option>
+                  <option value="1">Abogado general</option>
+                  <option value="2">Especialista en industria</option>
+                  <option value="3">Equipo legal especializado</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Recursos de Seguridad Digital:</label>
+                <select id="security-resources" onchange="calculateResourceReadiness()">
+                  <option value="">Selecciona nivel</option>
+                  <option value="0">Sin especialistas</option>
+                  <option value="1">Conocimiento básico</option>
+                  <option value="2">Especialista disponible</option>
+                  <option value="3">Equipo de seguridad</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Recursos Financieros Profesionales:</label>
+                <select id="financial-resources" onchange="calculateResourceReadiness()">
+                  <option value="">Selecciona nivel</option>
+                  <option value="0">Sin asesoría financiera</option>
+                  <option value="1">Contador básico</option>
+                  <option value="2">Asesor financiero especializado</option>
+                  <option value="3">Equipo financiero completo</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Tiempo de Respuesta Promedio:</label>
+                <select id="response-time" onchange="calculateResourceReadiness()">
+                  <option value="">Selecciona tiempo</option>
+                  <option value="0">No sé / 1+ semana</option>
+                  <option value="1">2-3 días</option>
+                  <option value="2">24-48 horas</option>
+                  <option value="3">Misma día / inmediato</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Nivel de Preparación Documental:</label>
+                <select id="documentation-level" onchange="calculateResourceReadiness()">
+                  <option value="">Selecciona nivel</option>
+                  <option value="0">Sin documentación</option>
+                  <option value="1">Lista básica de contactos</option>
+                  <option value="2">Base de datos organizada</option>
+                  <option value="3">Sistema completo con protocolos</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="calculator-result" id="resource-readiness-result" style="display: none;">
+            <div class="result-number" id="readiness-score">0</div>
+            <div id="readiness-analysis">Tu análisis de preparación aparecerá aquí</div>
+            <div id="readiness-recommendations" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Directorio Interactivo de Categorías -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">📚 Directorio Interactivo de Recursos</h2>
+        
+        <div class="search-filter">
+          <div class="search-input">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Buscar tipo de recurso o especialidad..." oninput="filterResources(this.value)">
+          </div>
+          <div class="filter-tags">
+            <div class="filter-tag active" onclick="filterByCategory('all')">Todos</div>
+            <div class="filter-tag" onclick="filterByCategory('mental-health')">Salud Mental</div>
+            <div class="filter-tag" onclick="filterByCategory('legal')">Legal</div>
+            <div class="filter-tag" onclick="filterByCategory('financial')">Financiero</div>
+            <div class="filter-tag" onclick="filterByCategory('security')">Seguridad</div>
+            <div class="filter-tag" onclick="filterByCategory('medical')">Médico</div>
+          </div>
+        </div>
+        
+        <div class="directory-container">
+          <h5>🎯 Categorías de Recursos Especializados</h5>
+          <p>Haz click en cada categoría para ver ejemplos de profesionales especializados:</p>
+          
+          <div class="professional-category" data-category="mental-health" onclick="toggleProfessionalList('mental-health')">
+            <div class="category-badge">CRÍTICO</div>
+            <h6><i class="fas fa-brain"></i> Recursos de Salud Mental Especializada</h6>
+            <p class="mb-0">Terapeutas y psicólogos con experiencia específica en trabajo sexual y estigma ocupacional</p>
+            <div class="professional-list" id="mental-health-list">
+              <div class="professional-item">
+                <strong>Psicólogos Especializados en Trabajo Sexual</strong><br>
+                <small>Certificados en terapia sexual, comprensión de estigma, enfoque no patologizante</small>
+              </div>
+              <div class="professional-item">
+                <strong>Terapeutas EMDR con Experiencia en Trauma</strong><br>
+                <small>Especialistas en procesamiento de experiencias difíciles y estrés postraumático</small>
+              </div>
+              <div class="professional-item">
+                <strong>Coaches de Bienestar para Performers</strong><br>
+                <small>Apoyo en balance vida-trabajo, gestión de límites, autocuidado</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="professional-category" data-category="legal" onclick="toggleProfessionalList('legal')">
+            <div class="category-badge">ESENCIAL</div>
+            <h6><i class="fas fa-gavel"></i> Recursos Legales Especializados</h6>
+            <p class="mb-0">Abogados con experiencia en industrias de entretenimiento adulto y derechos digitales</p>
+            <div class="professional-list" id="legal-list">
+              <div class="professional-item">
+                <strong>Abogados de Derechos Digitales</strong><br>
+                <small>Especialistas en copyright, piratería, protección de contenido online</small>
+              </div>
+              <div class="professional-item">
+                <strong>Especialistas en Derecho de Entretenimiento</strong><br>
+                <small>Contratos, negociaciones, protección de marca personal</small>
+              </div>
+              <div class="professional-item">
+                <strong>Abogados de Privacidad y Acoso</strong><br>
+                <small>Órdenes de restricción, cyberbullying, protección de identidad</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="professional-category" data-category="financial" onclick="toggleProfessionalList('financial')">
+            <div class="category-badge">VITAL</div>
+            <h6><i class="fas fa-chart-line"></i> Recursos Financieros Especializados</h6>
+            <p class="mb-0">Asesores financieros y contadores familiarizados con ingresos variables y industria</p>
+            <div class="professional-list" id="financial-list">
+              <div class="professional-item">
+                <strong>Contadores Especializados en Creadores</strong><br>
+                <small>Manejo de ingresos variables, deducciones específicas, reportes fiscales</small>
+              </div>
+              <div class="professional-item">
+                <strong>Asesores de Inversión para Freelancers</strong><br>
+                <small>Estrategias de ahorro e inversión para ingresos irregulares</small>
+              </div>
+              <div class="professional-item">
+                <strong>Especialistas en Planificación de Retiro</strong><br>
+                <small>Planes de pensión alternativos, diversificación de ingresos</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="professional-category" data-category="security" onclick="toggleProfessionalList('security')">
+            <div class="category-badge">URGENTE</div>
+            <h6><i class="fas fa-shield-alt"></i> Recursos de Seguridad Digital</h6>
+            <p class="mb-0">Especialistas en ciberseguridad y protección de identidad digital</p>
+            <div class="professional-list" id="security-list">
+              <div class="professional-item">
+                <strong>Especialistas en Ciberseguridad Personal</strong><br>
+                <small>Protección de cuentas, detección de amenazas, respuesta a incidentes</small>
+              </div>
+              <div class="professional-item">
+                <strong>Consultores en Privacidad Digital</strong><br>
+                <small>Anonimización, protección de datos personales, seguridad operacional</small>
+              </div>
+              <div class="professional-item">
+                <strong>Investigadores de Seguridad</strong><br>
+                <small>Investigación de acoso, rastreo de amenazas, evidencia digital</small>
+              </div>
+            </div>
+          </div>
+          
+          <div class="professional-category" data-category="medical" onclick="toggleProfessionalList('medical')">
+            <div class="category-badge">IMPORTANTE</div>
+            <h6><i class="fas fa-user-md"></i> Recursos Médicos Especializados</h6>
+            <p class="mb-0">Profesionales médicos con comprensión y respeto por el trabajo sexual</p>
+            <div class="professional-list" id="medical-list">
+              <div class="professional-item">
+                <strong>Ginecólogos Especializados</strong><br>
+                <small>Atención sin juicio, comprensión de necesidades específicas</small>
+              </div>
+              <div class="professional-item">
+                <strong>Especialistas en Medicina Sexual</strong><br>
+                <small>Salud sexual integral, prevención, tratamiento especializado</small>
+              </div>
+              <div class="professional-item">
+                <strong>Médicos de Familia LGBT+ Friendly</strong><br>
+                <small>Atención general comprensiva, historial médico confidencial</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulador de Crisis -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">⚡ Simulador de Respuesta a Crisis</h2>
+        
+        <div class="simulator-container">
+          <h5>🚨 Simula emergencias y evalúa tu tiempo de respuesta</h5>
+          <p>Selecciona una crisis para ver cómo responderías con tu sistema actual:</p>
+          
+          <div class="crisis-scenario" onclick="selectCrisis('cyber-attack')">
+            <h6>🔒 Ataque Cibernético / Hackeo de Cuentas</h6>
+            <p class="mb-0">Tus cuentas principales han sido comprometidas y hay contenido filtrado</p>
+          </div>
+          
+          <div class="crisis-scenario" onclick="selectCrisis('legal-threat')">
+            <h6>⚖️ Amenaza Legal / Demanda</h6>
+            <p class="mb-0">Recibes una amenaza legal seria que requiere respuesta inmediata</p>
+          </div>
+          
+          <div class="crisis-scenario" onclick="selectCrisis('stalking-harassment')">
+            <h6>👁️ Acoso / Stalking Severo</h6>
+            <p class="mb-0">Situación de acoso que escala a amenazas físicas reales</p>
+          </div>
+          
+          <div class="crisis-scenario" onclick="selectCrisis('mental-health-crisis')">
+            <h6>🧠 Crisis de Salud Mental</h6>
+            <p class="mb-0">Episodio severo de ansiedad, depresión o pensamientos suicidas</p>
+          </div>
+          
+          <div class="crisis-scenario" onclick="selectCrisis('financial-emergency')">
+            <h6>💰 Emergencia Financiera Mayor</h6>
+            <p class="mb-0">Pérdida súbita de ingresos principales con obligaciones críticas</p>
+          </div>
+          
+          <div class="simulation-result" id="crisis-result">
+            <h5 id="crisis-title">Respuesta a Crisis</h5>
+            <p id="crisis-analysis">El análisis aparecerá aquí</p>
+            <div id="crisis-action-plan"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Matriz de Evaluación de Profesionales -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">⭐ Matriz de Evaluación de Profesionales</h2>
+        
+        <div class="evaluation-matrix">
+          <h5>📋 Criterios de Evaluación para Recursos</h5>
+          <p>Usa esta matriz para evaluar y comparar profesionales potenciales:</p>
+          
+          <table class="matrix-table">
+            <thead>
+              <tr>
+                <th>Criterio de Evaluación</th>
+                <th>Peso</th>
+                <th>Profesional A</th>
+                <th>Profesional B</th>
+                <th>Profesional C</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Experiencia en Industria</strong></td>
+                <td>25%</td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Confidencialidad</strong></td>
+                <td>20%</td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Disponibilidad</strong></td>
+                <td>20%</td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Costo / Valor</strong></td>
+                <td>15%</td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+              </tr>
+              <tr>
+                <td><strong>Comprensión sin Juicio</strong></td>
+                <td>20%</td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star">★</span>
+                  <span class="rating-star">★</span>
+                </td>
+                <td>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                  <span class="rating-star filled">★</span>
+                </td>
+              </tr>
+              <tr style="background: var(--bg-light); font-weight: bold;">
+                <td>PUNTUACIÓN TOTAL</td>
+                <td>100%</td>
+                <td>82/100</td>
+                <td>74/100</td>
+                <td>92/100</td>
+              </tr>
+            </tbody>
+          </table>
+          
+          <div class="text-center mt-3">
+            <button class="btn-primary-custom" onclick="downloadMatrix()">
+              <i class="fas fa-download"></i>
+              Descargar Plantilla de Evaluación
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">📈 Tracker de Desarrollo de Recursos</h2>
+        
+        <div class="progress-tracker">
+          <h5>🎯 Tu Progreso en Construcción de Sistema de Recursos</h5>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Identificación de Necesidades</span>
+              <span id="needs-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="needs-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Investigación de Profesionales</span>
+              <span id="research-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="research-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Verificación y Contacto</span>
+              <span id="verification-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="verification-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Documentación y Mantenimiento</span>
+              <span id="documentation-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="documentation-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <button class="btn-primary-custom" onclick="updateResourceProgress()">
+              <i class="fas fa-sync-alt"></i>
+              Actualizar Progreso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">🏆 Casos de Éxito con Recursos</h2>
+        
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="success-story">
+              <h6>🚀 Crisis Evitada por Preparación</h6>
+              <p>"Cuando enfrenté un ataque cibernético serio, mi sistema de recursos me salvó. En 2 horas tenía a mi especialista en seguridad trabajando en la situación, mi abogado revisando las implicaciones legales, y mi terapeuta ayudándome a manejar el estrés. Sin preparación previa, habría sido devastador."</p>
+              <div class="story-author">- Alexandra K., Creator Profesional</div>
+              <div class="story-stats">
+                <div class="stat-item">
+                  <div class="stat-number">2h</div>
+                  <div class="stat-label">Tiempo de respuesta</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">5</div>
+                  <div class="stat-label">Recursos activados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">$25K</div>
+                  <div class="stat-label">Daños evitados</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="success-story">
+              <h6>💡 Transformación con Asesoría Especializada</h6>
+              <p>"Mi asesor financiero especializado en creators me ayudó a estructurar mis ingresos de manera que en 18 meses pude comprar mi casa y tener un fondo de emergencia sólido. Había perdido años con contadores que no entendían mi situación específica."</p>
+              <div class="story-author">- Carolina M., Top 5% Creator</div>
+              <div class="story-stats">
+                <div class="stat-item">
+                  <div class="stat-number">$180K</div>
+                  <div class="stat-label">Ahorros estructurados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">18</div>
+                  <div class="stat-label">Meses de asesoría</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">350%</div>
+                  <div class="stat-label">Mejora en finanzas</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-12">
+            <div class="success-story">
+              <h6>🌟 Sistema Integral de Recursos</h6>
+              <p>"Después de 2 años construyendo mi sistema de recursos metodicamente, tengo una red de 12 profesionales especializados que me conocen y entienden mi trabajo sin juicio. Esto me ha dado una tranquilidad increíble - sé que sin importar qué crisis enfrente, tengo el apoyo necesario. Mi productividad aumentó 200% solo por la reducción de ansiedad sobre 'qué pasaría si...' porque ahora sé exactamente qué haría."</p>
+              <div class="story-author">- Sophia R., Resource Network Architect</div>
+              <div class="story-stats">
+                <div class="stat-item">
+                  <div class="stat-number">12</div>
+                  <div class="stat-label">Recursos especializados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">200%</div>
+                  <div class="stat-label">Aumento productividad</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">$31K</div>
+                  <div class="stat-label">Ahorro anual en crisis</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">24</div>
+                  <div class="stat-label">Meses de construcción</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="final-summary">
+      <div class="container text-center">
+        <h2>🛡️ Tu Sistema de Recursos Te Protegerá</h2>
+        <p class="lead">Has completado tu transformación en la construcción de sistemas de recursos estratégicos. Ahora tienes las herramientas para crear un directorio de apoyo especializado que será tu red de seguridad definitiva.</p>
+        
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="achievement-badge">🏆 Arquitecta de Sistemas de Recursos</div>
+            <div class="achievement-badge">🎯 Especialista en Preparación de Crisis</div>
+            <div class="achievement-badge">⚡ Expert en Respuesta de Emergencia</div>
+            <div class="achievement-badge">📈 Maestra de Recursos Estratégicos</div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h4>🌟 Lo que has dominado:</h4>
+          <div class="row g-3 mt-3">
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">7</div>
+                <div>Fases de investigación</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">6</div>
+                <div>Categorías de recursos</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">5</div>
+                <div>Tipos de crisis simuladas</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">∞</div>
+                <div>Tranquilidad y seguridad</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <p class="mt-4 lead">
+          <strong>Tu sistema de recursos es tu póliza de seguro profesional.</strong> 
+          Cada recurso especializado que cultives hoy será tu salvavidas mañana.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Global variables
+    let currentFilter = 'all';
+    
+    // Update current date
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+
+    // Toggle details function
+    function toggleDetails(id) {
+      const element = document.getElementById(id);
+      element.classList.toggle('active');
+    }
+
+    // Calculate resource readiness
+    function calculateResourceReadiness() {
+      const mentalHealth = parseInt(document.getElementById('mental-health-resources').value) || 0;
+      const legal = parseInt(document.getElementById('legal-resources').value) || 0;
+      const security = parseInt(document.getElementById('security-resources').value) || 0;
+      const financial = parseInt(document.getElementById('financial-resources').value) || 0;
+      const responseTime = parseInt(document.getElementById('response-time').value) || 0;
+      const documentation = parseInt(document.getElementById('documentation-level').value) || 0;
+
+      // Complex scoring algorithm with weights
+      const mentalHealthScore = mentalHealth * 15;
+      const legalScore = legal * 18;
+      const securityScore = security * 20;
+      const financialScore = financial * 15;
+      const responseScore = responseTime * 15;
+      const documentationScore = documentation * 17;
+      
+      const totalScore = Math.min(100, mentalHealthScore + legalScore + securityScore + financialScore + responseScore + documentationScore);
+      
+      let analysis = '';
+      let recommendations = '';
+      
+      if (totalScore >= 85) {
+        analysis = '🏆 EXCEPCIONAL: Tu sistema de recursos es robusto y está preparado para la mayoría de emergencias.';
+        recommendations = '<strong>Optimiza:</strong> Realiza simulacros periódicos y actualiza contactos semestralmente.';
+      } else if (totalScore >= 70) {
+        analysis = '✅ SÓLIDO: Tienes una base fuerte pero algunas áreas necesitan fortalecimiento.';
+        recommendations = '<strong>Mejora:</strong> Enfócate en las categorías con menor puntuación y reduce tiempos de respuesta.';
+      } else if (totalScore >= 50) {
+        analysis = '⚡ EN DESARROLLO: Tu sistema está tomando forma pero requiere más trabajo sistemático.';
+        recommendations = '<strong>Prioriza:</strong> Completa las 7 fases de investigación para cada categoría crítica.';
+      } else if (totalScore >= 30) {
+        analysis = '⚠️ BÁSICO: Tienes algunos recursos pero no son suficientes para emergencias reales.';
+        recommendations = '<strong>Acelera:</strong> Dedica tiempo semanal a construir tu sistema de recursos estratégicos.';
+      } else {
+        analysis = '🚨 CRÍTICO: Estás muy vulnerable. Necesitas comenzar inmediatamente la construcción de recursos.';
+        recommendations = '<strong>Acción urgente:</strong> Implementa las 7 fases comenzando por salud mental y legal.';
+      }
+
+      document.getElementById('readiness-score').textContent = totalScore + '/100';
+      document.getElementById('readiness-analysis').textContent = analysis;
+      document.getElementById('readiness-recommendations').innerHTML = recommendations;
+      document.getElementById('resource-readiness-result').style.display = 'block';
+    }
+
+    // Toggle professional list
+    function toggleProfessionalList(category) {
+      const allLists = document.querySelectorAll('.professional-list');
+      const targetList = document.getElementById(category + '-list');
+      
+      // Close all other lists
+      allLists.forEach(list => {
+        if (list !== targetList) {
+          list.classList.remove('show');
+        }
+      });
+      
+      // Toggle target list
+      targetList.classList.toggle('show');
+    }
+
+    // Filter resources by category
+    function filterByCategory(category) {
+      currentFilter = category;
+      
+      // Update filter tags
+      document.querySelectorAll('.filter-tag').forEach(tag => {
+        tag.classList.remove('active');
+      });
+      event.target.classList.add('active');
+      
+      // Show/hide categories
+      const categories = document.querySelectorAll('.professional-category');
+      categories.forEach(cat => {
+        if (category === 'all' || cat.dataset.category === category) {
+          cat.style.display = 'block';
+        } else {
+          cat.style.display = 'none';
+        }
+      });
+    }
+
+    // Filter resources by search
+    function filterResources(searchTerm) {
+      const categories = document.querySelectorAll('.professional-category');
+      const term = searchTerm.toLowerCase();
+      
+      categories.forEach(category => {
+        const text = category.textContent.toLowerCase();
+        const categoryType = category.dataset.category;
+        
+        const matchesSearch = text.includes(term);
+        const matchesFilter = currentFilter === 'all' || categoryType === currentFilter;
+        
+        if (matchesSearch && matchesFilter) {
+          category.style.display = 'block';
+        } else {
+          category.style.display = 'none';
+        }
+      });
+    }
+
+    // Select crisis scenario
+    function selectCrisis(crisis) {
+      // Remove active class from all scenarios
+      document.querySelectorAll('.crisis-scenario').forEach(scenario => {
+        scenario.classList.remove('active');
+      });
+      
+      // Add active class to selected scenario
+      event.currentTarget.classList.add('active');
+      
+      let title, analysis, actionPlan;
+      
+      switch(crisis) {
+        case 'cyber-attack':
+          title = '🔒 Plan de Respuesta: Ataque Cibernético';
+          analysis = 'Respuesta inmediata crítica: cambio de contraseñas, contacto con especialista, documentación de evidencia.';
+          actionPlan = `
+            <div class="mt-3">
+              <strong>Plan de Acción Inmediata:</strong><br>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <strong>Primeros 30 minutos:</strong><br>
+                  • Cambiar todas las contraseñas<br>
+                  • Activar 2FA en todas las cuentas<br>
+                  • Contactar especialista en seguridad<br>
+                  • Documentar evidencia con screenshots
+                </div>
+                <div class="col-md-6">
+                  <strong>Siguientes 24 horas:</strong><br>
+                  • Reunión con abogado especializado<br>
+                  • Reportar a plataformas afectadas<br>
+                  • Comunicación con audiencia<br>
+                  • Plan de recuperación de imagen
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'legal-threat':
+          title = '⚖️ Plan de Respuesta: Amenaza Legal';
+          analysis = 'No responder sin asesoría legal. Contacto inmediato con abogado especializado antes de cualquier acción.';
+          actionPlan = `
+            <div class="mt-3">
+              <strong>Protocolo Legal de Emergencia:</strong><br>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <strong>Inmediatamente:</strong><br>
+                  • NO responder a la amenaza<br>
+                  • Documentar toda comunicación<br>
+                  • Contactar abogado especializado<br>
+                  • Recopilar evidencia relevante
+                </div>
+                <div class="col-md-6">
+                  <strong>Con asesoría legal:</strong><br>
+                  • Evaluar validez de la amenaza<br>
+                  • Preparar estrategia de respuesta<br>
+                  • Documentar defensa<br>
+                  • Plan de comunicación pública
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'stalking-harassment':
+          title = '👁️ Plan de Respuesta: Acoso/Stalking';
+          analysis = 'Seguridad personal prioritaria. Documentación exhaustiva, contacto con autoridades y especialistas en seguridad.';
+          actionPlan = `
+            <div class="mt-3">
+              <strong>Plan de Protección Personal:</strong><br>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <strong>Seguridad inmediata:</strong><br>
+                  • Evaluar amenaza física real<br>
+                  • Contactar policía si necesario<br>
+                  • Documentar toda evidencia<br>
+                  • Activar redes de apoyo personal
+                </div>
+                <div class="col-md-6">
+                  <strong>Medidas profesionales:</strong><br>
+                  • Especialista en investigación<br>
+                  • Abogado para órdenes de restricción<br>
+                  • Refuerzo de seguridad digital<br>
+                  • Plan de contingencia de ubicación
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'mental-health-crisis':
+          title = '🧠 Plan de Respuesta: Crisis de Salud Mental';
+          analysis = 'Seguridad emocional prioritaria. Contacto inmediato con terapeuta y redes de apoyo. No tomar decisiones importantes.';
+          actionPlan = `
+            <div class="mt-3">
+              <strong>Protocolo de Bienestar Mental:</strong><br>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <strong>Apoyo inmediato:</strong><br>
+                  • Contactar terapeuta especializado<br>
+                  • Activar red de apoyo personal<br>
+                  • Líneas de crisis si es urgente<br>
+                  • Evitar decisiones importantes
+                </div>
+                <div class="col-md-6">
+                  <strong>Estabilización:</strong><br>
+                  • Plan de cuidado intensivo<br>
+                  • Ajustes en carga de trabajo<br>
+                  • Comunicación con audiencia<br>
+                  • Seguimiento profesional continuo
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'financial-emergency':
+          title = '💰 Plan de Respuesta: Emergencia Financiera';
+          analysis = 'Evaluación rápida de opciones. Contacto con asesor financiero para estrategia de recuperación y prevención.';
+          actionPlan = `
+            <div class="mt-3">
+              <strong>Plan de Recuperación Financiera:</strong><br>
+              <div class="row mt-2">
+                <div class="col-md-6">
+                  <strong>Evaluación inmediata:</strong><br>
+                  • Análisis de liquidez actual<br>
+                  • Priorización de obligaciones<br>
+                  • Contactar asesor financiero<br>
+                  • Explorar opciones de emergencia
+                </div>
+                <div class="col-md-6">
+                  <strong>Estrategia de recuperación:</strong><br>
+                  • Plan de ingresos de emergencia<br>
+                  • Negociación con acreedores<br>
+                  • Restructuración financiera<br>
+                  • Prevención de crisis futuras
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+      }
+      
+      document.getElementById('crisis-title').textContent = title;
+      document.getElementById('crisis-analysis').textContent = analysis;
+      document.getElementById('crisis-action-plan').innerHTML = actionPlan;
+      
+      const resultElement = document.getElementById('crisis-result');
+      resultElement.classList.add('show');
+    }
+
+    // Download evaluation matrix
+    function downloadMatrix() {
+      // Simulate download of evaluation template
+      alert('📋 Plantilla de Evaluación descargada! Use esta matriz para evaluar sistemáticamente todos sus recursos profesionales.');
+    }
+
+    // Update resource progress
+    function updateResourceProgress() {
+      const progress = [
+        { id: 'needs', percentage: Math.floor(Math.random() * 20) + 80 },
+        { id: 'research', percentage: Math.floor(Math.random() * 25) + 65 },
+        { id: 'verification', percentage: Math.floor(Math.random() * 30) + 55 },
+        { id: 'documentation', percentage: Math.floor(Math.random() * 25) + 70 }
+      ];
+      
+      progress.forEach(item => {
+        document.getElementById(item.id + '-progress').style.width = item.percentage + '%';
+        document.getElementById(item.id + '-percentage').textContent = item.percentage + '%';
+      });
+    }
+
+    // Smooth scroll to section
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCurrentDate();
+      updateResourceProgress();
+      
+      // Update date every minute
+      setInterval(updateCurrentDate, 60000);
+      
+      // Add animation delays to cards
+      const cards = document.querySelectorAll('.resource-card, .insight-card');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = (index * 0.1) + 's';
+      });
+    });
+
+    // Touch support for mobile
+    if ('ontouchstart' in window) {
+      document.body.classList.add('touch-device');
+    }
+
+    // Keyboard navigation support
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('resource-card') || 
+            e.target.classList.contains('crisis-scenario') ||
+            e.target.classList.contains('professional-category') ||
+            e.target.classList.contains('filter-tag')) {
+          e.target.click();
+        }
+      }
+    });
+
+    // Performance optimization for animations
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotion.matches) {
+      document.body.classList.add('reduced-motion');
+    }
+  </script>
+</body>
+</html>

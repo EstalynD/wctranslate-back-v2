@@ -1,0 +1,1937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, initial-scale=1.0, maximum-scale=5.0">
+    <title>💡 WC Training - Master de Mapeo de Fuentes de Luz</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ffc107;
+            --secondary-color: #ff9800;
+            --accent-color: #ffeb3b;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #ffc107 0%, #ff9800 50%, #ffeb3b 100%);
+            --gradient-secondary: linear-gradient(45deg, #fff9c4 0%, #ffeaa7 50%, #fdcb6e 100%);
+            --gradient-warm: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 50%, #ffcc02 100%);
+            --gradient-bright: linear-gradient(135deg, #ffeb3b 0%, #ffc107 50%, #ff9800 100%);
+            --gradient-soft: linear-gradient(135deg, #fffbf0 0%, #fff8e1 50%, #fff3c4 100%);
+            --gradient-intense: linear-gradient(135deg, #ff8f00 0%, #ffa000 50%, #ffb300 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffc107 0%, #ff9800 50%, #ffeb3b 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 25s ease-in-out infinite;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-35px) rotate(12deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes lightBeam {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.2; }
+            50% { transform: scale(1.3) rotate(180deg); opacity: 0.8; }
+        }
+
+        @keyframes illuminate {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 193, 7, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 193, 7, 0.8); }
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="lightPattern" patternUnits="userSpaceOnUse" width="35" height="35"><circle cx="17.5" cy="17.5" r="10" fill="none" stroke="%23ffc107" stroke-width="2" opacity="0.1"/><circle cx="17.5" cy="17.5" r="4" fill="%23ffeb3b" opacity="0.2"/><polygon points="17.5,7.5 22.5,12.5 17.5,17.5 12.5,12.5" fill="%23ff9800" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23lightPattern)"/></svg>') repeat;
+            animation: float 30s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            padding: 1rem 0;
+            box-shadow: 0 15px 40px rgba(255, 193, 7, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #ff0000;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        .insights-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insights-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 25px 50px rgba(255, 193, 7, 0.2);
+            border-color: var(--primary-color);
+            animation: illuminate 2s infinite;
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-header {
+            background: var(--gradient-primary);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(255, 193, 7, 0.3);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="lightSources" patternUnits="userSpaceOnUse" width="60" height="60"><circle cx="30" cy="30" r="15" fill="none" stroke="%23ffffff" stroke-width="2" opacity="0.1"/><circle cx="30" cy="30" r="6" fill="%23ffeb3b" opacity="0.3"/><line x1="30" y1="15" x2="30" y2="45" stroke="%23ffffff" stroke-width="1" opacity="0.2"/><line x1="15" y1="30" x2="45" y2="30" stroke="%23ffffff" stroke-width="1" opacity="0.2"/><line x1="21.2" y1="21.2" x2="38.8" y2="38.8" stroke="%23ffffff" stroke-width="1" opacity="0.2"/><line x1="38.8" y1="21.2" x2="21.2" y2="38.8" stroke="%23ffffff" stroke-width="1" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23lightSources)"/></svg>') repeat;
+            animation: float 28s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: rgba(255,255,255,0.9);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            border-radius: 25px;
+            padding: 3px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .lab-header {
+            background: var(--gradient-primary);
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-title {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .card-interactive {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 50px rgba(255, 193, 7, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .card-interactive.expanded {
+            background: linear-gradient(135deg, #fffbf0 0%, #ffffff 100%);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-interactive.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .card-interactive.expanded .card-details {
+            max-height: 3500px;
+        }
+
+        .light-mapper {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border: 2px solid #0ea5e9;
+        }
+
+        .light-source {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 1rem;
+            border: 3px solid white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .light-source:hover {
+            transform: scale(1.15) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .light-source.active {
+            animation: lightBeam 3s infinite;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 40px var(--primary-color);
+        }
+
+        .light-source::after {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: -15px;
+            right: -15px;
+            bottom: -15px;
+            border: 2px dashed transparent;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .light-source.active::after {
+            border-color: var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        .audit-grid {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+            position: relative;
+            min-height: 400px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .audit-cell {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: #f8f9fa;
+        }
+
+        .audit-cell:hover {
+            border-color: var(--primary-color);
+            background: var(--gradient-soft);
+        }
+
+        .audit-cell.has-light {
+            background: var(--gradient-warm);
+            border-color: var(--primary-color);
+            border-style: solid;
+        }
+
+        .light-indicator {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .problem-detector {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 193, 7, 0.2);
+        }
+
+        .calculator-result {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .audit-tracker {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShimmer 2s infinite;
+        }
+
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .protocol-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .protocol-step {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .protocol-step:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 193, 7, 0.2);
+        }
+
+        .protocol-step.completed {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .problem-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .problem-card:hover {
+            border-color: var(--warning-orange);
+            transform: translateY(-3px);
+        }
+
+        .problem-card.detected {
+            background: #fee2e2;
+            border-color: #ef4444;
+        }
+
+        .problem-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--success-green);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--success-green);
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            opacity: 0.3;
+        }
+
+        .success-numbers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-number {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid var(--success-green);
+        }
+
+        .success-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--success-green);
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 193, 7, 0.4);
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .source-citation {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+
+        .current-time {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Media Queries Avanzadas */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 0.5rem;
+            }
+            
+            .wc-header {
+                padding: 0.8rem 0;
+            }
+            
+            .wc-stats {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .main-header {
+                padding: 2.5rem 0;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                margin: 1rem 0;
+            }
+            
+            .lab-header {
+                padding: 1.5rem;
+            }
+            
+            .card-interactive {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .light-mapper,
+            .problem-detector,
+            .audit-tracker {
+                padding: 1.5rem;
+            }
+            
+            .protocol-steps {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .problem-types {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .success-numbers {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .light-source {
+                width: 60px;
+                height: 60px;
+                margin: 0.5rem;
+                font-size: 0.8rem;
+            }
+            
+            .audit-grid {
+                grid-template-columns: repeat(3, 1fr);
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .calculator-input {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+            
+            .success-numbers {
+                grid-template-columns: 1fr;
+            }
+            
+            .protocol-step {
+                padding: 1rem;
+            }
+            
+            .btn-primary-custom {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .light-source {
+                width: 50px;
+                height: 50px;
+                margin: 0.3rem;
+                font-size: 0.7rem;
+            }
+            
+            .audit-grid {
+                grid-template-columns: repeat(2, 1fr);
+                min-height: 250px;
+            }
+        }
+
+        /* Orientación landscape en móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Pantallas grandes */
+        @media (min-width: 1200px) {
+            .container-fluid {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Alto contraste y accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .floating-bg,
+            .live-indicator,
+            .btn-primary-custom {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+            
+            .lab-section,
+            .insights-section {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+    
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="wc-logo">
+                        <i class="fas fa-lightbulb me-2"></i>
+                        WC Training Academy
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-3">
+        <!-- Industry Insights 2025 -->
+        <div class="insights-section">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="fw-bold text-dark mb-3">
+                        <i class="fas fa-chart-line text-warning me-2"></i>
+                        Industry Insights 2025 - Auditoría Lumínica Profesional
+                        <span class="live-indicator ms-2"></span>
+                    </h2>
+                    <p class="text-muted">Actualizado en tiempo real - <span class="current-time" id="currentTime"></span></p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+134%</div>
+                        <h5 class="fw-bold">Mejora Visual</h5>
+                        <p class="mb-0">Con auditoría completa de iluminación</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+$1,890</div>
+                        <h5 class="fw-bold">Revenue Mensual</h5>
+                        <p class="mb-0">Por optimización de fuentes lumínicas</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">83%</div>
+                        <h5 class="fw-bold">Problemas Ocultos</h5>
+                        <p class="mb-0">Detectados con mapeo sistemático</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">7.2</div>
+                        <h5 class="fw-bold">Problemas Promedio</h5>
+                        <p class="mb-0">Por espacio antes de auditoría</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+89%</div>
+                        <h5 class="fw-bold">Calidad Percibida</h5>
+                        <p class="mb-0">Después de mapeo completo</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">94%</div>
+                        <h5 class="fw-bold">Top Performers</h5>
+                        <p class="mb-0">Realizan auditorías mensuales</p>
+                    </div>
+                </div>
+            </div>
+            <div class="source-citation">
+                <strong>Fuentes:</strong> Lighting Design Institute 2025, Professional Streaming Report, Visual Quality Analytics, Photography Standards Bureau
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <div class="main-header">
+            <div class="container">
+                <h1 class="main-title">
+                    💡 Master de Mapeo de Fuentes de Luz
+                </h1>
+                <p class="main-subtitle">
+                    Domina el arte de la auditoría lumínica profesional. Descubre, analiza y optimiza cada fuente de luz en tu espacio para crear una imagen impecable que maximiza engagement, conversión y revenue a través de la excelencia visual.
+                </p>
+            </div>
+        </div>
+
+        <!-- Laboratorio de Auditoría Lumínica -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🔬 Laboratorio de Auditoría Lumínica</h2>
+                <p class="lab-subtitle">Ciencia del análisis sistemático de iluminación</p>
+            </div>
+            <div class="p-4">
+                <div class="card-interactive" onclick="toggleDetails('light-analysis')">
+                    <div class="card-header">
+                        <h3 class="card-title">🧠 Neurociencia de la Percepción Lumínica</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>El cerebro humano procesa información lumínica en microfases que determinan la primera impresión y decisión de permanencia.</p>
+                    <div class="card-details" id="light-analysis">
+                        <div class="mt-4">
+                            <h5><strong>⚡ CRÍTICO: Proceso de Evaluación Visual (0.05-2.0 segundos)</strong></h5>
+                            <div class="row g-4 my-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded" style="background: var(--gradient-warm); color: #333;">
+                                        <h6><strong>🔍 Fase 1: Escáner Inicial (0.05s)</strong></h6>
+                                        <ul class="mb-0">
+                                            <li>Detección de contrastes extremos</li>
+                                            <li>Identificación de sombras duras</li>
+                                            <li>Evaluación de claridad general</li>
+                                            <li>Proceso 100% subconsciente</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded" style="background: var(--gradient-bright); color: #333;">
+                                        <h6><strong>👁️ Fase 2: Análisis Focal (0.3s)</strong></h6>
+                                        <ul class="mb-0">
+                                            <li>Evaluación de definición facial</li>
+                                            <li>Detección de reflejos molestos</li>
+                                            <li>Análisis de uniformidad</li>
+                                            <li>Decisión consciente +45%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded" style="background: var(--gradient-soft); color: #333;">
+                                        <h6><strong>🎯 Fase 3: Evaluación Técnica (1.0s)</strong></h6>
+                                        <ul class="mb-0">
+                                            <li>Juicio de calidad profesional</li>
+                                            <li>Comparación con estándares</li>
+                                            <li>Valoración de inversión tiempo</li>
+                                            <li>Formación de expectativas</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded" style="background: var(--gradient-intense); color: white;">
+                                        <h6><strong>💭 Fase 4: Decisión Final (2.0s)</strong></h6>
+                                        <ul class="mb-0">
+                                            <li>Permanencia o abandono</li>
+                                            <li>Nivel de engagement asignado</li>
+                                            <li>Predisposición a gastar</li>
+                                            <li>Critical revenue moment</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning mt-4">
+                                <strong>🎯 Estrategia Elite:</strong> Los top performers realizan "mapeos de calor lumínico" cada 30 días, documentando cada fuente de luz y su impacto específico. Descubren en promedio 7.2 problemas críticos por auditoría que están saboteando silenciosamente su revenue.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-interactive" onclick="toggleDetails('systematic-protocol')">
+                    <div class="card-header">
+                        <h3 class="card-title">📋 Protocolo Sistemático de Auditoría</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Metodología profesional paso a paso para mapear, analizar y optimizar cada fuente lumínica en tu espacio.</p>
+                    <div class="card-details" id="systematic-protocol">
+                        <div class="mt-4">
+                            <div class="protocol-steps">
+                                <div class="protocol-step" onclick="toggleStep(this)">
+                                    <div class="step-number">1</div>
+                                    <h6><strong>Preparación Nocturna</strong></h6>
+                                    <p>Eliminar toda luz natural y preparar equipo de documentación</p>
+                                </div>
+                                <div class="protocol-step" onclick="toggleStep(this)">
+                                    <div class="step-number">2</div>
+                                    <h6><strong>Blackout Total</strong></h6>
+                                    <p>Apagar absolutamente todas las fuentes lumínicas del espacio</p>
+                                </div>
+                                <div class="protocol-step" onclick="toggleStep(this)">
+                                    <div class="step-number">3</div>
+                                    <h6><strong>Activación Secuencial</strong></h6>
+                                    <p>Encender cada luz individualmente con documentación fotográfica</p>
+                                </div>
+                                <div class="protocol-step" onclick="toggleStep(this)">
+                                    <div class="step-number">4</div>
+                                    <h6><strong>Análisis de Impacto</strong></h6>
+                                    <p>Evaluar efectos específicos de cada fuente en imagen final</p>
+                                </div>
+                                <div class="protocol-step" onclick="toggleStep(this)">
+                                    <div class="step-number">5</div>
+                                    <h6><strong>Detección de Problemas</strong></h6>
+                                    <p>Identificar sombras, reflejos, sobreexposiciones y distorsiones</p>
+                                </div>
+                                <div class="protocol-step" onclick="toggleStep(this)">
+                                    <div class="step-number">6</div>
+                                    <h6><strong>Optimización Iterativa</strong></h6>
+                                    <p>Ajustar posición, intensidad y difusión de cada fuente</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h6><strong>🛠️ Kit de Herramientas Profesional</strong></h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <strong>Cámara/Smartphone</strong>
+                                                <br><small>Para documentación fotográfica sistemática</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <strong>Trípode o Soporte</strong>
+                                                <br><small>Mantener ángulo consistente durante auditoría</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <strong>Medidor de Luz (App)</strong>
+                                                <br><small>Luxómetro digital para mediciones objetivas</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="list-group">
+                                            <div class="list-group-item">
+                                                <strong>Hoja de Mapeo</strong>
+                                                <br><small>Documento cada fuente y su impacto específico</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <strong>Materiales de Difusión</strong>
+                                                <br><small>Papel vegetal, telas, para probar soluciones</small>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <strong>Timer/Cronómetro</strong>
+                                                <br><small>Documentar tiempo dedicado a cada fuente</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulador de Mapeo Lumínico -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🎮 Simulador de Mapeo Lumínico</h2>
+                <p class="lab-subtitle">Herramienta interactiva para auditoría virtual de iluminación</p>
+            </div>
+            <div class="p-4">
+                <div class="light-mapper">
+                    <h5><strong>💡 Laboratorio Virtual de Fuentes de Luz</strong></h5>
+                    <p>Haz click en cada tipo de luz para activar/desactivar y observar su impacto:</p>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-8">
+                            <div class="text-center mb-3">
+                                <h6><strong>Fuentes de Luz Disponibles:</strong></h6>
+                                <div class="light-source" style="background: linear-gradient(135deg, #ffeb3b, #ffc107)" onclick="activateLight(this, 'ceiling')" data-type="Luz de Techo">
+                                    TECHO
+                                </div>
+                                <div class="light-source" style="background: linear-gradient(135deg, #ff9800, #f57c00)" onclick="activateLight(this, 'desk')" data-type="Lámpara de Escritorio">
+                                    ESCRITORIO
+                                </div>
+                                <div class="light-source" style="background: linear-gradient(135deg, #fff59d, #ffcc02)" onclick="activateLight(this, 'ring')" data-type="Ring Light">
+                                    RING
+                                </div>
+                                <div class="light-source" style="background: linear-gradient(135deg, #ffa726, #ef6c00)" onclick="activateLight(this, 'natural')" data-type="Luz Natural">
+                                    NATURAL
+                                </div>
+                                <div class="light-source" style="background: linear-gradient(135deg, #ffb74d, #f57c00)" onclick="activateLight(this, 'accent')" data-type="Luz de Acento">
+                                    ACENTO
+                                </div>
+                                <div class="light-source" style="background: linear-gradient(135deg, #ffd54f, #ffb300)" onclick="activateLight(this, 'background')" data-type="Luz de Fondo">
+                                    FONDO
+                                </div>
+                            </div>
+                            
+                            <div class="audit-grid" id="lightingGrid">
+                                <div class="audit-cell" data-position="1"></div>
+                                <div class="audit-cell" data-position="2"></div>
+                                <div class="audit-cell" data-position="3"></div>
+                                <div class="audit-cell" data-position="4"></div>
+                                <div class="audit-cell" data-position="5"></div>
+                                <div class="audit-cell" data-position="6"></div>
+                                <div class="audit-cell" data-position="7"></div>
+                                <div class="audit-cell" data-position="8"></div>
+                                <div class="audit-cell" data-position="9"></div>
+                                <div class="audit-cell" data-position="10"></div>
+                                <div class="audit-cell" data-position="11" style="background: #e3f2fd; border: 3px solid #2196f3;">
+                                    <span style="color: #2196f3; font-weight: bold;">TÚ</span>
+                                </div>
+                                <div class="audit-cell" data-position="12"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="calculator-result" id="lightingAnalysis">
+                                <h6><strong>📊 Análisis de Iluminación</strong></h6>
+                                <p>Activa diferentes fuentes de luz para analizar su impacto en tu imagen</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detector de Problemas Lumínicos -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🚨 Detector de Problemas Lumínicos</h2>
+                <p class="lab-subtitle">Identificación automática de errores críticos de iluminación</p>
+            </div>
+            <div class="p-4">
+                <div class="card-interactive" onclick="toggleDetails('problem-detector')">
+                    <div class="card-header">
+                        <h3 class="card-title">🔍 Scanner de Problemas Críticos</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Sistema de detección automática de los 8 problemas lumínicos más comunes que sabotean el revenue.</p>
+                    <div class="card-details" id="problem-detector">
+                        <div class="mt-4">
+                            <div class="problem-types">
+                                <div class="problem-card" onclick="toggleProblem(this, 'shadows')">
+                                    <div class="problem-icon">😰</div>
+                                    <h6><strong>Sombras Racoon</strong></h6>
+                                    <p>Sombras oscuras bajo los ojos que envejecen</p>
+                                    <small>Detectado en 67% de setups</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'reflections')">
+                                    <div class="problem-icon">🕶️</div>
+                                    <h6><strong>Reflejos en Gafas</strong></h6>
+                                    <p>Brillos que ocultan expresiones oculares</p>
+                                    <small>Detectado en 45% de usuarios con gafas</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'hotspots')">
+                                    <div class="problem-icon">💥</div>
+                                    <h6><strong>Puntos Calientes</strong></h6>
+                                    <p>Zonas sobreexpuestas que distraen</p>
+                                    <small>Detectado en 52% de espacios</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'asymmetry')">
+                                    <div class="problem-icon">⚖️</div>
+                                    <h6><strong>Asimetría Facial</strong></h6>
+                                    <p>Iluminación desigual entre lados</p>
+                                    <small>Detectado en 78% de setups básicos</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'background')">
+                                    <div class="problem-icon">🌆</div>
+                                    <h6><strong>Fondo Competitivo</strong></h6>
+                                    <p>Elementos del fondo más iluminados que tú</p>
+                                    <small>Detectado en 38% de transmisiones</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'color')">
+                                    <div class="problem-icon">🌈</div>
+                                    <h6><strong>Temperatura Mixta</strong></h6>
+                                    <p>Mezcla de luces cálidas y frías</p>
+                                    <small>Detectado en 61% de setups</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'flicker')">
+                                    <div class="problem-icon">⚡</div>
+                                    <h6><strong>Parpadeo Subliminal</strong></h6>
+                                    <p>Fluctuaciones que causan fatiga visual</p>
+                                    <small>Detectado en 29% de luces LED baratas</small>
+                                </div>
+                                
+                                <div class="problem-card" onclick="toggleProblem(this, 'harshness')">
+                                    <div class="problem-icon">😵</div>
+                                    <h6><strong>Luz Dura Directa</strong></h6>
+                                    <p>Iluminación sin difusión que endurece</p>
+                                    <small>Detectado en 71% de setups amateur</small>
+                                </div>
+                            </div>
+                            
+                            <div class="problem-detector mt-4">
+                                <h6><strong>📋 Checklist de Problemas Detectados</strong></h6>
+                                <div id="problemSummary">
+                                    <p>Selecciona los problemas que has identificado en tu espacio para obtener soluciones específicas</p>
+                                </div>
+                                <button class="btn btn-primary-custom mt-3" onclick="generateSolutions()">
+                                    🔧 Generar Plan de Soluciones
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-interactive" onclick="toggleDetails('solution-generator')">
+                    <div class="card-header">
+                        <h3 class="card-title">⚡ Generador de Soluciones</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Sistema automático que genera soluciones específicas para cada problema detectado en tu auditoría.</p>
+                    <div class="card-details" id="solution-generator">
+                        <div class="mt-4">
+                            <div class="problem-detector">
+                                <h6><strong>🛠️ Configurador de Soluciones</strong></h6>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label"><strong>Presupuesto Disponible:</strong></label>
+                                        <select class="calculator-input" id="budget" onchange="generateCustomSolutions()">
+                                            <option value="">Selecciona presupuesto...</option>
+                                            <option value="minimal">Mínimo ($0-50)</option>
+                                            <option value="moderate">Moderado ($50-200)</option>
+                                            <option value="advanced">Avanzado ($200-500)</option>
+                                            <option value="professional">Profesional ($500+)</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label"><strong>Prioridad Principal:</strong></label>
+                                        <select class="calculator-input" id="priority" onchange="generateCustomSolutions()">
+                                            <option value="">Selecciona prioridad...</option>
+                                            <option value="quick">Solución Rápida</option>
+                                            <option value="professional">Calidad Profesional</option>
+                                            <option value="revenue">Máximo ROI</option>
+                                            <option value="aesthetic">Mejor Apariencia</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="calculator-result" id="solutionPlan">
+                                    Configura tus parámetros para generar un plan personalizado de soluciones
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculadora ROI Lumínico -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">💰 Calculadora ROI Lumínico</h2>
+                <p class="lab-subtitle">Mide el retorno de inversión de tu optimización de iluminación</p>
+            </div>
+            <div class="p-4">
+                <div class="problem-detector">
+                    <h5><strong>🧮 Calculadora de Impacto Lumínico</strong></h5>
+                    <div class="row g-3">
+                        <div class="col-md-4">
+                            <label class="form-label"><strong>Revenue Actual Mensual ($):</strong></label>
+                            <input type="number" class="calculator-input" id="currentRevenue" placeholder="1500" onchange="calculateLightingROI()">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"><strong>Horas de Streaming Diarias:</strong></label>
+                            <input type="number" class="calculator-input" id="dailyHours" placeholder="6" onchange="calculateLightingROI()">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label"><strong>Nivel de Optimización:</strong></label>
+                            <select class="calculator-input" id="optimizationLevel" onchange="calculateLightingROI()">
+                                <option value="">Selecciona nivel...</option>
+                                <option value="basic">Básico (reorganización)</option>
+                                <option value="intermediate">Intermedio (nuevas luces)</option>
+                                <option value="advanced">Avanzado (setup profesional)</option>
+                                <option value="studio">Studio (sistema completo)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="calculator-result" id="lightingROIResult">
+                        Completa los datos para calcular el ROI de tu optimización lumínica
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracker de Auditoría Completa -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">📋 Tracker de Auditoría Completa</h2>
+                <p class="lab-subtitle">Seguimiento paso a paso de tu proceso de mapeo lumínico</p>
+            </div>
+            <div class="p-4">
+                <div class="audit-tracker">
+                    <h6><strong>📈 Progreso de Auditoría Lumínica</strong></h6>
+                    <div class="mt-3">
+                        <div class="d-flex justify-content-between">
+                            <span>Preparación del Espacio</span>
+                            <span id="prepProgress">0%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="prepBar" style="width: 0%"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Mapeo de Fuentes</span>
+                            <span id="mappingProgress">0%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="mappingBar" style="width: 0%"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Detección de Problemas</span>
+                            <span id="detectionProgress">0%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="detectionBar" style="width: 0%"></div>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-2">
+                            <span>Implementación de Soluciones</span>
+                            <span id="solutionProgress">0%</span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="solutionBar" style="width: 0%"></div>
+                        </div>
+                        
+                        <button class="btn btn-primary-custom mt-3" onclick="updateAuditProgress()">
+                            ✅ Avanzar en Auditoría
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casos de Éxito Reales -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🏆 Casos de Éxito Masters Lumínicos</h2>
+                <p class="lab-subtitle">Historias reales de transformación con auditorías profesionales</p>
+            </div>
+            <div class="p-4">
+                <div class="success-story">
+                    <h5><strong>💰 Carmen "LightMaster" - Revenue +$2,680/mes</strong></h5>
+                    <p><em>"Mi auditoría lumínica reveló 9 problemas críticos que ni siquiera sabía que tenía. El peor: mi lámpara de techo creaba sombras de zombie bajo mis ojos, y un reflejo en mi monitor competía directamente conmigo por atención. Solucioné todo reorganizando luces existentes y agregando solo un difusor casero de $12. Un usuario comentó: 'WOW, compraste cámara nueva?' No, solo optimicé mi luz. Mi conversión se disparó porque ahora proyecto calidad profesional real."</em></p>
+                    <div class="success-numbers">
+                        <div class="success-number">
+                            <div class="success-value">+189%</div>
+                            <div>Calidad Percibida</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">67min</div>
+                            <div>Sesión Promedio</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">$2,680</div>
+                            <div>Extra Mensual</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">93%</div>
+                            <div>Usuarios Satisfechos</div>
+                        </div>
+                    </div>
+                    <div class="source-citation">
+                        <strong>Verificado:</strong> Before/After photo analysis, Earnings reports marzo-septiembre 2025
+                    </div>
+                </div>
+
+                <div class="success-story">
+                    <h5><strong>🎯 Roberto "TechAuditor" - Conversión +234%</strong></h5>
+                    <p><em>"Desarrollé mi propio 'Protocolo de Mapeo de Calor Lumínico' usando una app de medición de lux y documentando cada fuente con precisión científica. Descubrí que mi 'perfecta' iluminación tenía un parpadeo subliminal de 47Hz que estaba causando fatiga visual subconsciente. Los usuarios se iban sin saber por qué. Cambié a LED de calidad profesional y mi retención se triplicó instantáneamente."</em></p>
+                    <div class="success-numbers">
+                        <div class="success-number">
+                            <div class="success-value">+234%</div>
+                            <div>Tasa Conversión</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">145%</div>
+                            <div>Retención Usuarios</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">$1,950</div>
+                            <div>Revenue Boost</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">96%</div>
+                            <div>Calidad Técnica</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-story">
+                    <h5><strong>🚀 Diana "StudioQueen" - Profesionalismo +378%</strong></h5>
+                    <p><em>"Mi auditoría completa me llevó 4 horas pero cambió mi carrera para siempre. Identifiqué 12 problemas incluyendo temperatura de color mixta (3200K + 5600K) que hacía mi piel se viera extraña, y puntos calientes en la pared que robaban atención. Invertí $340 en un sistema de 3 luces con difusores y ahora usuarios preguntan si soy profesional de TV. Mi imagen ahora comunica premium automáticamente."</em></p>
+                    <div class="success-numbers">
+                        <div class="success-number">
+                            <div class="success-value">+378%</div>
+                            <div>Percepción Profesional</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">189min</div>
+                            <div>Sesión VIP Promedio</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">$4,890</div>
+                            <div>Mes Récord</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">99%</div>
+                            <div>Usuarios Premium</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Final Motivacional -->
+        <div class="main-header">
+            <div class="container text-center">
+                <h2 class="main-title">💡 Tu Dominio Lumínico Awaits</h2>
+                <p class="main-subtitle mb-4">
+                    Has absorbido la ciencia de la auditoría lumínica profesional. Ahora posees las herramientas para detectar, analizar y resolver cada problema que sabotea silenciosamente tu calidad visual. Cada fuente de luz optimizada es un paso hacia la excelencia que maximiza tu revenue.
+                </p>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">✅</div>
+                            <h6>Protocolo Dominado</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">🔍</div>
+                            <h6>Problemas Detectados</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">⚡</div>
+                            <h6>Soluciones Implementadas</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">💰</div>
+                            <h6>Revenue Optimizado</h6>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary-custom btn-lg mt-4">
+                    🚀 ¡A Iluminar tu Éxito!
+                </button>
+                <p class="mt-3 text-white-50">
+                    <small>Tu próxima transmisión brillará con excelencia profesional</small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables globales para tracking
+        let activeLights = [];
+        let detectedProblems = [];
+        let selectedBudget = null;
+        let selectedPriority = null;
+
+        // Actualizar tiempo en tiempo real
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Toggle details para cards expandibles
+        function toggleDetails(cardId) {
+            const card = document.getElementById(cardId).parentElement;
+            card.classList.toggle('expanded');
+        }
+
+        // Activar/desactivar fuentes de luz en simulador
+        function activateLight(element, lightType) {
+            element.classList.toggle('active');
+            
+            const lightData = {
+                type: lightType,
+                name: element.getAttribute('data-type'),
+                active: element.classList.contains('active')
+            };
+            
+            if (lightData.active) {
+                activeLights.push(lightData);
+            } else {
+                activeLights = activeLights.filter(light => light.type !== lightType);
+            }
+            
+            updateLightingAnalysis();
+        }
+
+        // Actualizar análisis de iluminación
+        function updateLightingAnalysis() {
+            const resultDiv = document.getElementById('lightingAnalysis');
+            const activeCount = activeLights.length;
+            
+            if (activeCount === 0) {
+                resultDiv.innerHTML = `
+                    <h6><strong>📊 Análisis de Iluminación</strong></h6>
+                    <p>Activa diferentes fuentes de luz para analizar su impacto en tu imagen</p>
+                `;
+                return;
+            }
+            
+            let effectiveness = 0;
+            let recommendations = [];
+            let problems = [];
+            
+            // Calcular efectividad basada en luces activas
+            activeLights.forEach(light => {
+                switch(light.type) {
+                    case 'ceiling':
+                        effectiveness += 15;
+                        problems.push("⚠️ Puede crear sombras bajo los ojos");
+                        break;
+                    case 'desk':
+                        effectiveness += 25;
+                        recommendations.push("✅ Buena para iluminación lateral");
+                        break;
+                    case 'ring':
+                        effectiveness += 35;
+                        recommendations.push("✅ Excelente para iluminación frontal uniforme");
+                        break;
+                    case 'natural':
+                        effectiveness += 20;
+                        problems.push("⚠️ Inconsistente durante el día");
+                        break;
+                    case 'accent':
+                        effectiveness += 10;
+                        recommendations.push("✅ Agrega profundidad y dimensión");
+                        break;
+                    case 'background':
+                        effectiveness += 15;
+                        recommendations.push("✅ Separa del fondo");
+                        break;
+                }
+            });
+            
+            // Penalizar por demasiadas luces
+            if (activeCount > 4) {
+                effectiveness -= 10;
+                problems.push("⚠️ Demasiadas fuentes pueden crear conflictos");
+            }
+            
+            // Bonus por combinaciones específicas
+            const lightTypes = activeLights.map(l => l.type);
+            if (lightTypes.includes('ring') && lightTypes.includes('background')) {
+                effectiveness += 10;
+                recommendations.push("✅ Combinación ring + fondo = excelente separación");
+            }
+            
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <h4><strong>${Math.min(effectiveness, 100)}% Efectividad</strong></h4>
+                    <div class="mt-3">
+                        <h6>Luces Activas: ${activeCount}</h6>
+                        ${recommendations.length > 0 ? `
+                            <div class="mt-2">
+                                <h6>Aspectos Positivos:</h6>
+                                <ul class="text-start list-unstyled">
+                                    ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        ${problems.length > 0 ? `
+                            <div class="mt-2">
+                                <h6>Atención Requerida:</h6>
+                                <ul class="text-start list-unstyled">
+                                    ${problems.map(prob => `<li>${prob}</li>`).join('')}
+                                </ul>
+                            </div>
+                        ` : ''}
+                        ${effectiveness >= 80 ? '<p class="text-success mt-2"><strong>🏆 Setup Óptimo</strong></p>' : ''}
+                        ${effectiveness < 50 ? '<p class="text-warning mt-2"><strong>⚠️ Necesita Optimización</strong></p>' : ''}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle problemas detectados
+        function toggleProblem(element, problemType) {
+            element.classList.toggle('detected');
+            
+            if (element.classList.contains('detected')) {
+                detectedProblems.push(problemType);
+            } else {
+                detectedProblems = detectedProblems.filter(p => p !== problemType);
+            }
+            
+            updateProblemSummary();
+        }
+
+        // Actualizar resumen de problemas
+        function updateProblemSummary() {
+            const summaryDiv = document.getElementById('problemSummary');
+            
+            if (detectedProblems.length === 0) {
+                summaryDiv.innerHTML = '<p>Selecciona los problemas que has identificado en tu espacio para obtener soluciones específicas</p>';
+                return;
+            }
+            
+            const problemNames = {
+                'shadows': 'Sombras Racoon',
+                'reflections': 'Reflejos en Gafas',
+                'hotspots': 'Puntos Calientes',
+                'asymmetry': 'Asimetría Facial',
+                'background': 'Fondo Competitivo',
+                'color': 'Temperatura Mixta',
+                'flicker': 'Parpadeo Subliminal',
+                'harshness': 'Luz Dura Directa'
+            };
+            
+            summaryDiv.innerHTML = `
+                <h6><strong>Problemas Detectados (${detectedProblems.length}):</strong></h6>
+                <ul>
+                    ${detectedProblems.map(p => `<li>${problemNames[p]}</li>`).join('')}
+                </ul>
+                <p class="text-warning"><strong>Severidad:</strong> ${detectedProblems.length >= 5 ? 'Alta' : detectedProblems.length >= 3 ? 'Media' : 'Baja'}</p>
+            `;
+        }
+
+        // Generar soluciones automáticas
+        function generateSolutions() {
+            if (detectedProblems.length === 0) {
+                alert('Primero identifica los problemas que has detectado');
+                return;
+            }
+            
+            const solutions = {
+                'shadows': 'Agregar luz de relleno frontal a 45° o elevar luz principal',
+                'reflections': 'Reposicionar luces para evitar ángulo directo o cambiar posición de gafas',
+                'hotspots': 'Difundir luces con papel vegetal o alejar fuentes intensas',
+                'asymmetry': 'Balancear con luz de relleno del lado menos iluminado',
+                'background': 'Reducir iluminación de fondo o aumentar luz principal',
+                'color': 'Usar solo luces de misma temperatura (3200K o 5600K)',
+                'flicker': 'Reemplazar LEDs baratos por luces de calidad profesional',
+                'harshness': 'Agregar difusores o rebotar luz en pared/techo'
+            };
+            
+            let solutionPlan = `
+                <h4><strong>🔧 Plan de Soluciones Personalizadas</strong></h4>
+                <div class="mt-3">
+                    <h6>Problemas a Resolver (${detectedProblems.length}):</h6>
+                    <ol>
+            `;
+            
+            detectedProblems.forEach(problem => {
+                const problemNames = {
+                    'shadows': 'Sombras Racoon',
+                    'reflections': 'Reflejos en Gafas',
+                    'hotspots': 'Puntos Calientes',
+                    'asymmetry': 'Asimetría Facial',
+                    'background': 'Fondo Competitivo',
+                    'color': 'Temperatura Mixta',
+                    'flicker': 'Parpadeo Subliminal',
+                    'harshness': 'Luz Dura Directa'
+                };
+                
+                solutionPlan += `
+                    <li>
+                        <strong>${problemNames[problem]}:</strong><br>
+                        <em>${solutions[problem]}</em>
+                    </li>
+                `;
+            });
+            
+            solutionPlan += `
+                    </ol>
+                    <p class="mt-3"><strong>Tiempo estimado:</strong> ${Math.ceil(detectedProblems.length * 0.5)} horas</p>
+                    <p><strong>Prioridad:</strong> Comenzar con sombras y asimetría (mayor impacto)</p>
+                </div>
+            `;
+            
+            document.getElementById('problemSummary').innerHTML = solutionPlan;
+        }
+
+        // Generar soluciones personalizadas
+        function generateCustomSolutions() {
+            const budget = document.getElementById('budget').value;
+            const priority = document.getElementById('priority').value;
+            const resultDiv = document.getElementById('solutionPlan');
+
+            if (!budget || !priority) return;
+
+            let solutions = {};
+            
+            // Configurar soluciones por presupuesto
+            switch(budget) {
+                case 'minimal':
+                    solutions = {
+                        investment: '$0-50',
+                        items: ['Papel vegetal para difusión', 'Reorganización de luces existentes', 'DIY reflectores con cartón blanco'],
+                        timeframe: '1-2 días',
+                        expectedImprovement: '+45% calidad visual'
+                    };
+                    break;
+                case 'moderate':
+                    solutions = {
+                        investment: '$50-200',
+                        items: ['Ring light básico', 'Difusores profesionales', 'Soporte ajustable', 'LED panel secundario'],
+                        timeframe: '3-5 días',
+                        expectedImprovement: '+85% calidad visual'
+                    };
+                    break;
+                case 'advanced':
+                    solutions = {
+                        investment: '$200-500',
+                        items: ['Kit de 3 luces LED', 'Softboxes profesionales', 'Controlador de intensidad', 'Light stand premium'],
+                        timeframe: '1-2 semanas',
+                        expectedImprovement: '+145% calidad visual'
+                    };
+                    break;
+                case 'professional':
+                    solutions = {
+                        investment: '$500+',
+                        items: ['Sistema de iluminación completo', 'Luces RGB programables', 'Panel de control profesional', 'Setup cinematográfico'],
+                        timeframe: '2-4 semanas',
+                        expectedImprovement: '+234% calidad visual'
+                    };
+                    break;
+            }
+            
+            // Ajustar por prioridad
+            let priorityNote = '';
+            switch(priority) {
+                case 'quick':
+                    priorityNote = 'Soluciones implementables en 24-48 horas';
+                    break;
+                case 'professional':
+                    priorityNote = 'Enfoque en calidad profesional y durabilidad';
+                    break;
+                case 'revenue':
+                    priorityNote = 'Optimizado para máximo retorno de inversión';
+                    break;
+                case 'aesthetic':
+                    priorityNote = 'Prioridad en apariencia visual impactante';
+                    break;
+            }
+            
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <h4><strong>💡 Plan Personalizado</strong></h4>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <h6><strong>Inversión:</strong> ${solutions.investment}</h6>
+                            <h6><strong>Timeframe:</strong> ${solutions.timeframe}</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><strong>Mejora Esperada:</strong></h6>
+                            <h5 class="text-warning">${solutions.expectedImprovement}</h5>
+                        </div>
+                    </div>
+                    <div class="mt-3 text-start">
+                        <h6><strong>Kit Recomendado:</strong></h6>
+                        <ul>
+                            ${solutions.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        <p class="text-info"><strong>Enfoque:</strong> ${priorityNote}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Calculadora de ROI lumínico
+        function calculateLightingROI() {
+            const current = parseFloat(document.getElementById('currentRevenue').value) || 0;
+            const hours = parseFloat(document.getElementById('dailyHours').value) || 0;
+            const level = document.getElementById('optimizationLevel').value;
+            const resultDiv = document.getElementById('lightingROIResult');
+
+            if (!current || !hours || !level) return;
+
+            let multiplier = 1;
+            let visualBoost = 0;
+            let setupCost = 0;
+
+            switch(level) {
+                case 'basic':
+                    multiplier = 1.25; // +25% revenue
+                    visualBoost = 45;
+                    setupCost = 25;
+                    break;
+                case 'intermediate':
+                    multiplier = 1.5; // +50% revenue
+                    visualBoost = 85;
+                    setupCost = 150;
+                    break;
+                case 'advanced':
+                    multiplier = 1.9; // +90% revenue
+                    visualBoost = 145;
+                    setupCost = 350;
+                    break;
+                case 'studio':
+                    multiplier = 2.4; // +140% revenue
+                    visualBoost = 234;
+                    setupCost = 750;
+                    break;
+            }
+
+            const newRevenue = current * multiplier;
+            const monthlyIncrease = newRevenue - current;
+            const roi = ((monthlyIncrease * 12 - setupCost) / setupCost * 100).toFixed(0);
+            const paybackWeeks = (setupCost / (monthlyIncrease / 4)).toFixed(1);
+
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <h4><strong>💰 Proyección ROI Lumínico</strong></h4>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-4">
+                            <div><strong>Revenue Actual</strong></div>
+                            <div class="text-success"><h6>$${current.toLocaleString()}/mes</h6></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div><strong>Revenue Proyectado</strong></div>
+                            <div class="text-primary"><h6>$${newRevenue.toLocaleString()}/mes</h6></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div><strong>Mejora Visual</strong></div>
+                            <div class="text-warning"><h6>+${visualBoost}%</h6></div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <p><strong>Incremento mensual:</strong> +$${monthlyIncrease.toLocaleString()}</p>
+                        <p><strong>ROI anual:</strong> ${roi}%</p>
+                        <p><strong>Recuperación:</strong> ${paybackWeeks} semanas</p>
+                        <small><strong>Inversión:</strong> $${setupCost} (equipos de iluminación)</small>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle steps de protocolo
+        function toggleStep(element) {
+            element.classList.toggle('completed');
+        }
+
+        // Actualizar progreso de auditoría
+        function updateAuditProgress() {
+            const progressBars = [
+                { bar: 'prepBar', text: 'prepProgress', target: 100 },
+                { bar: 'mappingBar', text: 'mappingProgress', target: 90 },
+                { bar: 'detectionBar', text: 'detectionProgress', target: 85 },
+                { bar: 'solutionBar', text: 'solutionProgress', target: 75 }
+            ];
+
+            progressBars.forEach((item, index) => {
+                setTimeout(() => {
+                    const bar = document.getElementById(item.bar);
+                    const text = document.getElementById(item.text);
+                    
+                    let current = 0;
+                    const interval = setInterval(() => {
+                        current += 2;
+                        bar.style.width = current + '%';
+                        text.textContent = current + '%';
+                        
+                        if (current >= item.target) {
+                            clearInterval(interval);
+                        }
+                    }, 50);
+                }, index * 800);
+            });
+        }
+
+        // Animaciones de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar cards al scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.card-interactive, .insight-card, .protocol-step').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

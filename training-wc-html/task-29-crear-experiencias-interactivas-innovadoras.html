@@ -1,0 +1,2073 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters en Gamificación e Interacción</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6d28d9;
+            --secondary-color: #9f7aea;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f4efff;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #6d28d9 0%, #9f7aea 100%);
+            --gradient-secondary: linear-gradient(135deg, #fd7e14 0%, #6d28d9 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #6d28d9, #9f7aea, #fd7e14, #28a745);
+            --gradient-game: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-reward: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --gradient-challenge: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --gradient-collab: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-leaderboard: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 22s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes levelUp {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(5deg); }
+            50% { transform: scale(1.2) rotate(-5deg); }
+            75% { transform: scale(1.1) rotate(3deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes gameGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(109, 40, 217, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(109, 40, 217, 0.6); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes coinFlip {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(180deg); }
+        }
+
+        @keyframes achievement {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+
+        .wc-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .wc-logo {
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(109, 40, 217, 0.3);
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 30px;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary-color);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(109, 40, 217, 0.2);
+            border-color: var(--primary-color);
+            animation: gameGlow 2s infinite;
+        }
+
+        .main-header {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-game);
+            opacity: 0.05;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .gamify-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-left: 6px solid var(--primary-color);
+            position: relative;
+            min-height: 80px;
+        }
+
+        .gamify-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 60px rgba(109, 40, 217, 0.15);
+            border-color: var(--primary-color);
+            background: var(--bg-white);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .card-details.active {
+            max-height: 4000px;
+            opacity: 1;
+            animation: slideDown 0.5s ease;
+        }
+
+        .engagement-calculator {
+            background: var(--gradient-game);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            color: white;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            min-height: 44px;
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-input:focus {
+            outline: none;
+            border-color: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+        }
+
+        .level-system {
+            background: var(--gradient-game);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .level-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .level-badge {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .level-badge:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            animation: levelUp 1s ease;
+            border-color: white;
+        }
+
+        .level-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .challenge-builder {
+            background: var(--gradient-challenge);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .challenge-list {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .challenge-item {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 60px;
+        }
+
+        .challenge-item:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateX(10px);
+        }
+
+        .challenge-reward {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            min-width: 100px;
+            text-align: center;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .interaction-hub {
+            background: var(--gradient-reward);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .poll-simulator {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary-color);
+        }
+
+        .poll-option {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 60px;
+        }
+
+        .poll-option:hover, .poll-option.selected {
+            background: rgba(255, 255, 255, 0.4);
+            transform: translateX(10px);
+            border: 2px solid var(--primary-color);
+        }
+
+        .vote-count {
+            background: rgba(255, 255, 255, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .collaboration-network {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 3px solid var(--primary-color);
+        }
+
+        .collab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .collab-card {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: center;
+            border: 2px solid transparent;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .collab-card:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+        }
+
+        .event-calendar {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .calendar-day {
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 0.75rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            font-size: 0.9rem;
+        }
+
+        .calendar-day:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .calendar-day.event-day {
+            background: var(--primary-color);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .loyalty-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .loyalty-meter {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .loyalty-points {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .progress-bar-custom {
+            height: 25px;
+            border-radius: 15px;
+            background: var(--gradient-primary);
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .leaderboard {
+            background: var(--gradient-leaderboard);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .leaderboard-item {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            min-height: 70px;
+            transition: all 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateX(10px);
+        }
+
+        .rank-badge {
+            background: var(--warning-orange);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+
+        .engagement-metrics {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bg-light);
+            min-height: 50px;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .achievement-showcase {
+            background: var(--gradient-collab);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .achievement-card:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            animation: achievement 1s ease;
+        }
+
+        .achievement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            animation: coinFlip 3s infinite;
+        }
+
+        .scenario-simulator {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .scenario-option:hover, .scenario-option.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+            transform: translateX(10px);
+        }
+
+        .scenario-result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            display: none;
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🎮';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 44px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(109, 40, 217, 0.4);
+            color: white;
+            animation: levelUp 0.5s ease;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .wellness-tip {
+            background: rgba(109, 40, 217, 0.1);
+            border-left: 5px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .achievement-unlock {
+            background: var(--gradient-reward);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            text-align: center;
+            animation: levelUp 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .gamify-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .level-grid, .collab-grid, .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .industry-insights {
+                padding: 1.5rem;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .wc-header .row > div {
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+            
+            .challenge-item, .poll-option {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            
+            .gamify-card {
+                padding: 1rem;
+            }
+            
+            .level-system, .success-story {
+                padding: 1.5rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .level-icon, .achievement-icon {
+                font-size: 2rem;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .leaderboard-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .gamify-card {
+                border: 3px solid var(--text-dark);
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+            
+            .insight-card {
+                border: 2px solid var(--text-dark);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-gamepad"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> 12,847 MODELOS GAMING
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-trophy"></i> Sistema de Niveles
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">🎮 Gamification & Engagement Industry Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">456%</h4>
+                        <p class="mb-0">Incremento engagement con sistemas de niveles</p>
+                        <small class="text-muted">Interactive Entertainment Study</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">89%</h4>
+                        <p class="mb-0">Mayor retención con desafíos interactivos</p>
+                        <small class="text-muted">Engagement Analytics Report</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">+347%</h4>
+                        <p class="mb-0">ROI con recompensas por fidelidad</p>
+                        <small class="text-muted">Loyalty Program Analysis</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">76%</h4>
+                        <p class="mb-0">Prefieren experiencias interactivas</p>
+                        <small class="text-muted">User Experience Research</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">+234%</h4>
+                        <p class="mb-0">Incremento tips con colaboraciones</p>
+                        <small class="text-muted">Collaboration Impact Study</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">$9,847</h4>
+                        <p class="mb-0">Ingreso promedio con gamificación</p>
+                        <small class="text-muted">Revenue Optimization Report</small>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Interactive Entertainment Study 2025, Engagement Analytics Report
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container">
+        <div class="main-header">
+            <div class="text-center">
+                <h1 class="main-title">🎮 Masters en Gamificación e Interacción</h1>
+                <p class="lead text-muted mb-4">
+                    Domina las mecánicas de juego que transforman espectadores pasivos en participantes activos. 
+                    Convierte cada show en una experiencia adictiva que genera +456% más engagement.
+                    <strong>CRÍTICO:</strong> 89% mayor retención con sistemas gamificados.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="badge bg-primary fs-6">Sistemas de Niveles</span>
+                    <span class="badge bg-success fs-6">Interacción en Tiempo Real</span>
+                    <span class="badge bg-warning fs-6">Colaboraciones Épicas</span>
+                    <span class="badge bg-info fs-6">Recompensas Inteligentes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Engagement Calculator -->
+    <div class="container">
+        <div class="engagement-calculator">
+            <h2 class="section-title text-white">
+                <i class="fas fa-calculator"></i> Calculadora de Engagement Gamificado
+            </h2>
+            <p class="lead mb-4">ESENCIAL: Proyecta el impacto de elementos gamificados en tu audiencia y ingresos.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Métricas Actuales</h5>
+                    <input type="number" class="calc-input" id="avgViewers" placeholder="Promedio de viewers por stream" min="1">
+                    <input type="number" class="calc-input" id="avgSessionTime" placeholder="Tiempo promedio de sesión (minutos)" min="1">
+                    <input type="number" class="calc-input" id="monthlyIncome" placeholder="Ingresos mensuales actuales ($)" min="0">
+                    <input type="number" class="calc-input" id="repeatViewers" placeholder="% de viewers que regresan" min="0" max="100">
+                    <button class="btn-primary-custom mt-3" onclick="calculateEngagement()">
+                        <i class="fas fa-chart-line"></i> Calcular Impacto Gamificado
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="engagementResult" style="display: none;">
+                        <h5>Proyección con Gamificación</h5>
+                        <div id="engagementProjections"></div>
+                        <div id="revenueImpact"></div>
+                        <div id="implementationSteps"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level System Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-trophy"></i> Laboratorio de Elementos Gamificados
+            </h2>
+            <p class="lead mb-4">REVOLUTIONARY: +456% incremento en engagement con sistemas de niveles perfectamente diseñados.</p>
+            
+            <div class="gamify-card" onclick="toggleDetails('level-system')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🏆 Sistema de Niveles y Progresión VIP</h4>
+                    <i class="fas fa-chevron-down" id="level-system-icon"></i>
+                </div>
+                <div class="card-details" id="level-system">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="level-system">
+                                <h5>Jerarquía de Usuarios VIP Personalizable</h5>
+                                <div class="level-grid">
+                                    <div class="level-badge" onclick="customizeLevel('novato')">
+                                        <div class="level-icon">🥉</div>
+                                        <h6>Novato</h6>
+                                        <p>0-100 tokens</p>
+                                        <small>Acceso básico al chat público</small>
+                                    </div>
+                                    <div class="level-badge" onclick="customizeLevel('regular')">
+                                        <div class="level-icon">🥈</div>
+                                        <h6>Regular</h6>
+                                        <p>100-500 tokens</p>
+                                        <small>Requests básicos + mensajes privados</small>
+                                    </div>
+                                    <div class="level-badge" onclick="customizeLevel('vip')">
+                                        <div class="level-icon">🥇</div>
+                                        <h6>VIP</h6>
+                                        <p>500-2000 tokens</p>
+                                        <small>Control de juguetes + contenido exclusivo</small>
+                                    </div>
+                                    <div class="level-badge" onclick="customizeLevel('elite')">
+                                        <div class="level-icon">👑</div>
+                                        <h6>Elite</h6>
+                                        <p>2000-5000 tokens</p>
+                                        <small>Shows privados + video llamadas especiales</small>
+                                    </div>
+                                    <div class="level-badge" onclick="customizeLevel('legend')">
+                                        <div class="level-icon">🌟</div>
+                                        <h6>Legend</h6>
+                                        <p>5000-10000 tokens</p>
+                                        <small>Acceso completo + encuentros virtuales</small>
+                                    </div>
+                                    <div class="level-badge" onclick="customizeLevel('emperor')">
+                                        <div class="level-icon">💎</div>
+                                        <h6>Emperor</h6>
+                                        <p>10000+ tokens</p>
+                                        <small>Status supremo + beneficios únicos</small>
+                                    </div>
+                                </div>
+                                <button class="btn-primary-custom mt-3" onclick="createLevelSystem()">
+                                    <i class="fas fa-crown"></i> Crear Mi Sistema de Niveles
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="engagement-metrics">
+                                <h6>Impacto por Nivel de Usuario</h6>
+                                <div class="metric-item">
+                                    <span>Retención promedio</span>
+                                    <span class="metric-value">+456%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Tips por sesión</span>
+                                    <span class="metric-value">+234%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Tiempo de sesión</span>
+                                    <span class="metric-value">+189%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Conversión VIP</span>
+                                    <span class="metric-value">+678%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="wellness-tip">
+                                <h6><i class="fas fa-lightbulb"></i> Beneficios por Nivel</h6>
+                                <p><strong>Novato:</strong> Chat básico, bienvenida</p>
+                                <p><strong>Regular:</strong> PM, requests simples</p>
+                                <p><strong>VIP:</strong> Control devices, contenido exclusivo</p>
+                                <p><strong>Elite+:</strong> Shows privados, acceso premium</p>
+                                <p class="text-success"><strong>Resultado:</strong> 89% usuarios buscan ascender nivel</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gamify-card" onclick="toggleDetails('challenge-system')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🎯 Sistema de Desafíos y Recompensas</h4>
+                    <i class="fas fa-chevron-down" id="challenge-system-icon"></i>
+                </div>
+                <div class="card-details" id="challenge-system">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="challenge-builder">
+                                <h5>Constructor de Desafíos Interactivos</h5>
+                                <div class="challenge-list">
+                                    <h6>Desafíos Diarios</h6>
+                                    <div class="challenge-item" onclick="toggleChallenge(this)">
+                                        <span><strong>Goal Alcanzado:</strong> 500 tokens en una sesión</span>
+                                        <div class="challenge-reward">+50 bonus</div>
+                                    </div>
+                                    <div class="challenge-item" onclick="toggleChallenge(this)">
+                                        <span><strong>Maratón:</strong> Stream de 3+ horas consecutivas</span>
+                                        <div class="challenge-reward">+100 bonus</div>
+                                    </div>
+                                    <div class="challenge-item" onclick="toggleChallenge(this)">
+                                        <span><strong>Fan Favorito:</strong> 10 nuevos seguidores</span>
+                                        <div class="challenge-reward">+75 bonus</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="challenge-list">
+                                    <h6>Desafíos Semanales</h6>
+                                    <div class="challenge-item" onclick="toggleChallenge(this)">
+                                        <span><strong>Top Performer:</strong> Top 100 esta semana</span>
+                                        <div class="challenge-reward">+500 bonus</div>
+                                    </div>
+                                    <div class="challenge-item" onclick="toggleChallenge(this)">
+                                        <span><strong>Colaboración Elite:</strong> 2+ streams con otras modelos</span>
+                                        <div class="challenge-reward">+300 bonus</div>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-primary-custom mt-3" onclick="createChallengeSystem()">
+                                    <i class="fas fa-target"></i> Configurar Mis Desafíos
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="achievement-showcase">
+                                <h5>Logros Desbloqueables</h5>
+                                <div class="achievement-grid">
+                                    <div class="achievement-card" onclick="unlockAchievement(this)">
+                                        <div class="achievement-icon">🏆</div>
+                                        <h6>Primera Victoria</h6>
+                                        <p>Completar primer desafío</p>
+                                    </div>
+                                    <div class="achievement-card" onclick="unlockAchievement(this)">
+                                        <div class="achievement-icon">💎</div>
+                                        <h6>Streak Master</h6>
+                                        <p>7 días consecutivos</p>
+                                    </div>
+                                    <div class="achievement-card" onclick="unlockAchievement(this)">
+                                        <div class="achievement-icon">🌟</div>
+                                        <h6>Fan Magnet</h6>
+                                        <p>100+ seguidores nuevos</p>
+                                    </div>
+                                    <div class="achievement-card" onclick="unlockAchievement(this)">
+                                        <div class="achievement-icon">👑</div>
+                                        <h6>Queen Status</h6>
+                                        <p>Top 10 del mes</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gamify-card" onclick="toggleDetails('interaction-mechanics')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🎪 Mecánicas de Interacción en Tiempo Real</h4>
+                    <i class="fas fa-chevron-down" id="interaction-mechanics-icon"></i>
+                </div>
+                <div class="card-details" id="interaction-mechanics">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="interaction-hub">
+                                <h5>Centro de Interacción Avanzada</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="poll-simulator">
+                                            <h6>🗳️ Simulador de Polls Interactivos</h6>
+                                            <p>¿Qué outfit quieren ver después?</p>
+                                            <div class="poll-option" onclick="votePoll(this, 'lingerie')">
+                                                <span>Lencería roja sexy</span>
+                                                <div class="vote-count" id="vote-lingerie">0%</div>
+                                            </div>
+                                            <div class="poll-option" onclick="votePoll(this, 'cosplay')">
+                                                <span>Cosplay anime</span>
+                                                <div class="vote-count" id="vote-cosplay">0%</div>
+                                            </div>
+                                            <div class="poll-option" onclick="votePoll(this, 'casual')">
+                                                <span>Look casual relajado</span>
+                                                <div class="vote-count" id="vote-casual">0%</div>
+                                            </div>
+                                            <div class="poll-option" onclick="votePoll(this, 'surprise')">
+                                                <span>Déjame sorprenderte</span>
+                                                <div class="vote-count" id="vote-surprise">0%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="poll-simulator">
+                                            <h6>🎲 Rueda de la Fortuna Interactiva</h6>
+                                            <div class="text-center">
+                                                <div class="vr-viewer" onclick="spinWheel()" style="width: 120px; height: 120px; border: 3px solid var(--primary-color); cursor: pointer;">
+                                                    <span id="wheelResult">🎰</span>
+                                                </div>
+                                                <p class="mt-2">Click para girar la rueda</p>
+                                                <div id="wheelReward" style="display: none;" class="achievement-unlock mt-2">
+                                                    <strong>¡Premio ganado!</strong>
+                                                    <p id="rewardText"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="engagement-metrics">
+                                <h6>Métricas de Interacción</h6>
+                                <div class="metric-item">
+                                    <span>Participación en polls</span>
+                                    <span class="metric-value" id="pollParticipation">0%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Engagement rate</span>
+                                    <span class="metric-value" id="engagementRate">0%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Tips por interacción</span>
+                                    <span class="metric-value" id="tipsPerInteraction">+0%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="wellness-tip">
+                                <h6><i class="fas fa-magic"></i> Ideas de Interacción</h6>
+                                <ul>
+                                    <li><strong>Polls en vivo:</strong> Decisiones de outfit, música, actividades</li>
+                                    <li><strong>Rueda premios:</strong> Descuentos, contenido bonus, shows especiales</li>
+                                    <li><strong>Trivia games:</strong> Preguntas sobre ti con recompensas</li>
+                                    <li><strong>Countdown goals:</strong> Objetivos colectivos con premios</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collaboration Network -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-users"></i> Red de Colaboraciones Épicas
+            </h2>
+            <p class="lead mb-4">ESTRATÉGICO: +234% incremento en tips con colaboraciones bien ejecutadas. Expande tu alcance exponencialmente.</p>
+            
+            <div class="collaboration-network">
+                <h5>Tipos de Colaboración Disponibles</h5>
+                <div class="collab-grid">
+                    <div class="collab-card" onclick="selectCollabType('duo-stream')">
+                        <h6>👯 Duo Streams</h6>
+                        <p>Shows en pareja, doble audiencia</p>
+                        <small>ROI: +234% promedio</small>
+                    </div>
+                    <div class="collab-card" onclick="selectCollabType('group-events')">
+                        <h6>🎉 Eventos Grupales</h6>
+                        <p>Fiestas temáticas, celebraciones</p>
+                        <small>ROI: +456% en eventos</small>
+                    </div>
+                    <div class="collab-card" onclick="selectCollabType('contests')">
+                        <h6>🏆 Competencias</h6>
+                        <p>Desafíos entre modelos</p>
+                        <small>ROI: +189% engagement</small>
+                    </div>
+                    <div class="collab-card" onclick="selectCollabType('mentorship')">
+                        <h6>👥 Mentoría</h6>
+                        <p>Guía a nuevas modelos</p>
+                        <small>ROI: +67% long-term</small>
+                    </div>
+                    <div class="collab-card" onclick="selectCollabType('cross-promo')">
+                        <h6>📢 Cross-Promoción</h6>
+                        <p>Intercambio de audiencias</p>
+                        <small>ROI: +123% nuevos fans</small>
+                    </div>
+                    <div class="collab-card" onclick="selectCollabType('themed-weeks')">
+                        <h6>🎭 Semanas Temáticas</h6>
+                        <p>Coordinación de contenido</p>
+                        <small>ROI: +298% cohesión</small>
+                    </div>
+                </div>
+                
+                <div class="wellness-tip mt-3">
+                    <h6><i class="fas fa-handshake"></i> Guía de Colaboración Exitosa</h6>
+                    <p><strong>1. Compatibilidad:</strong> Audencias similares pero no idénticas</p>
+                    <p><strong>2. Planificación:</strong> 1-2 semanas de antelación mínimo</p>
+                    <p><strong>3. Promoción:</strong> Ambas promocionan en sus redes 3 días antes</p>
+                    <p><strong>4. División:</strong> 50/50 en tips, contenido conjunto posterior</p>
+                    <p class="text-success"><strong>Resultado típico:</strong> +234% tips, +89% nuevos seguidores</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Calendar & Scheduling -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-calendar-alt"></i> Calendario de Eventos Gamificados
+            </h2>
+            <p class="lead mb-4">ORGANIZACIONAL: Planifica eventos especiales que mantengan tu audiencia enganchada 24/7.</p>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="event-calendar">
+                        <h5>Calendario del Mes - Eventos Especiales</h5>
+                        <div class="calendar-grid">
+                            <div class="calendar-day">L</div>
+                            <div class="calendar-day">M</div>
+                            <div class="calendar-day">X</div>
+                            <div class="calendar-day">J</div>
+                            <div class="calendar-day">V</div>
+                            <div class="calendar-day">S</div>
+                            <div class="calendar-day">D</div>
+                            
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day event-day" onclick="showEvent('3')">3<br><small>🎉 Evento</small></div>
+                            <div class="calendar-day">4</div>
+                            <div class="calendar-day">5</div>
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            
+                            <div class="calendar-day">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day event-day" onclick="showEvent('10')">10<br><small>🏆 Contest</small></div>
+                            <div class="calendar-day">11</div>
+                            <div class="calendar-day">12</div>
+                            <div class="calendar-day">13</div>
+                            <div class="calendar-day">14</div>
+                            
+                            <div class="calendar-day">15</div>
+                            <div class="calendar-day">16</div>
+                            <div class="calendar-day event-day" onclick="showEvent('17')">17<br><small>👯 Collab</small></div>
+                            <div class="calendar-day">18</div>
+                            <div class="calendar-day">19</div>
+                            <div class="calendar-day">20</div>
+                            <div class="calendar-day">21</div>
+                            
+                            <div class="calendar-day">22</div>
+                            <div class="calendar-day">23</div>
+                            <div class="calendar-day event-day" onclick="showEvent('24')">24<br><small>🎭 Theme</small></div>
+                            <div class="calendar-day">25</div>
+                            <div class="calendar-day">26</div>
+                            <div class="calendar-day">27</div>
+                            <div class="calendar-day">28</div>
+                            
+                            <div class="calendar-day">29</div>
+                            <div class="calendar-day">30</div>
+                            <div class="calendar-day event-day" onclick="showEvent('31')">31<br><small>🌟 Final</small></div>
+                        </div>
+                        
+                        <button class="btn-primary-custom mt-3" onclick="createEventCalendar()">
+                            <i class="fas fa-calendar-plus"></i> Crear Mi Calendario de Eventos
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="engagement-metrics">
+                        <h6>Tipos de Eventos Populares</h6>
+                        <div class="metric-item">
+                            <span>🎉 Fiestas Temáticas</span>
+                            <span class="metric-value">+456%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span>🏆 Competencias</span>
+                            <span class="metric-value">+234%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span>👯 Colaboraciones</span>
+                            <span class="metric-value">+189%</span>
+                        </div>
+                        <div class="metric-item">
+                            <span>🎭 Cosplay Days</span>
+                            <span class="metric-value">+298%</span>
+                        </div>
+                    </div>
+                    
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Eventos de Alto Impacto</h6>
+                        <p><strong>Lunes:</strong> Motivation Monday - Goals nuevos</p>
+                        <p><strong>Miércoles:</strong> Wild Wednesday - Contenido atrevido</p>
+                        <p><strong>Viernes:</strong> Fantasy Friday - Roleplay especial</p>
+                        <p><strong>Fines de semana:</strong> Eventos especiales y colaboraciones</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loyalty & Retention System -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-heart"></i> Sistema de Fidelidad y Retención
+            </h2>
+            <p class="lead mb-4">RETENCIÓN: +347% ROI con programas de fidelidad. Convierte viewers casuales en fans devotos.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="loyalty-tracker">
+                        <h5>Tracker de Fidelidad de Usuarios</h5>
+                        <div class="loyalty-meter">
+                            <span><strong>JohnDoe123</strong> - Viewer desde hace 3 meses</span>
+                            <div class="loyalty-points">850 pts</div>
+                        </div>
+                        <div class="loyalty-meter">
+                            <span><strong>AlexFan88</strong> - VIP Level, muy activo</span>
+                            <div class="loyalty-points">2,340 pts</div>
+                        </div>
+                        <div class="loyalty-meter">
+                            <span><strong>MikeSupporter</strong> - Top contributor este mes</span>
+                            <div class="loyalty-points">4,892 pts</div>
+                        </div>
+                        <div class="loyalty-meter">
+                            <span><strong>DavidRegular</strong> - Viewer constante, buen engagement</span>
+                            <div class="loyalty-points">1,567 pts</div>
+                        </div>
+                        
+                        <div class="wellness-tip mt-3">
+                            <h6><i class="fas fa-gift"></i> Sistema de Recompensas</h6>
+                            <p><strong>500 pts:</strong> Foto personalizada</p>
+                            <p><strong>1000 pts:</strong> Video mensaje privado</p>
+                            <p><strong>2000 pts:</strong> Show privado 10 min</p>
+                            <p><strong>5000 pts:</strong> Video call personalizada</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="leaderboard">
+                        <h5>🏆 Leaderboard de Fans del Mes</h5>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">1</div>
+                            <div>
+                                <strong>TopFan_Mike</strong><br>
+                                <small>8,947 tokens donados | Elite Status</small>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">2</div>
+                            <div>
+                                <strong>LoyalAlex88</strong><br>
+                                <small>6,234 tokens donados | VIP Status</small>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">3</div>
+                            <div>
+                                <strong>SupporterJohn</strong><br>
+                                <small>4,567 tokens donados | VIP Status</small>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">4</div>
+                            <div>
+                                <strong>FaithfulDavid</strong><br>
+                                <small>3,891 tokens donados | Regular Status</small>
+                            </div>
+                        </div>
+                        <div class="leaderboard-item">
+                            <div class="rank-badge">5</div>
+                            <div>
+                                <strong>ConstantCarl</strong><br>
+                                <small>2,456 tokens donados | Regular Status</small>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-primary-custom mt-3" onclick="updateLeaderboard()">
+                            <i class="fas fa-trophy"></i> Actualizar Rankings
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Gamification Strategy Simulator -->
+    <div class="container">
+        <div class="scenario-simulator">
+            <h2 class="section-title text-white">
+                <i class="fas fa-gamepad"></i> Simulador de Estrategias Gamificadas
+            </h2>
+            <p class="lead mb-4">ESTRATÉGICO: Simula diferentes enfoques de gamificación para maximizar engagement y retención.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Selecciona tu Estrategia de Gamificación:</h5>
+                    <div class="scenario-option" onclick="selectGamificationStrategy('competitive')">
+                        <strong>🏆 Enfoque Competitivo:</strong> Leaderboards, rankings, competencias entre usuarios
+                    </div>
+                    <div class="scenario-option" onclick="selectGamificationStrategy('collaborative')">
+                        <strong>🤝 Enfoque Colaborativo:</strong> Metas grupales, eventos comunitarios, colaboraciones
+                    </div>
+                    <div class="scenario-option" onclick="selectGamificationStrategy('achievement')">
+                        <strong>🌟 Enfoque de Logros:</strong> Badges, achievements, progresión personal
+                    </div>
+                    <div class="scenario-option" onclick="selectGamificationStrategy('reward')">
+                        <strong>🎁 Enfoque de Recompensas:</strong> Sistema de puntos, premios, intercambios
+                    </div>
+                    <div class="scenario-option" onclick="selectGamificationStrategy('storytelling')">
+                        <strong>📚 Enfoque Narrativo:</strong> Personajes, historias, roleplay gamificado
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="scenario-result" id="gamificationResult">
+                        <h6>Análisis de Estrategia:</h6>
+                        <div id="strategyAnalysis"></div>
+                        <h6 class="mt-3">Proyección de Resultados:</h6>
+                        <div id="projectedOutcomes"></div>
+                        <h6 class="mt-3">Plan de Implementación:</h6>
+                        <div id="implementationGuide"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="container">
+        <div class="success-story">
+            <h2 class="section-title text-white">
+                <i class="fas fa-trophy"></i> Casos de Éxito en Gamificación
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Caso: Mia, 25 años</h6>
+                        <p><strong>Situación:</strong> Engagement bajo, viewers pasivos</p>
+                        <p><strong>Implementación:</strong> Sistema de niveles + desafíos diarios</p>
+                        <p><strong>Resultados:</strong> +456% engagement, +234% tips</p>
+                        <p><strong>Timeline:</strong> Resultados visibles en 2 semanas</p>
+                        <p class="text-success"><strong>ROI:</strong> De $2,100 a $9,800/mes en 6 semanas</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Caso: Luna, 28 años</h6>
+                        <p><strong>Situación:</strong> Alta rotación de viewers, poca fidelidad</p>
+                        <p><strong>Implementación:</strong> Programa fidelidad + colaboraciones</p>
+                        <p><strong>Resultados:</strong> +347% retención, +189% viewers recurrentes</p>
+                        <p><strong>Timeline:</strong> Cambio sostenido en 4 semanas</p>
+                        <p class="text-success"><strong>ROI:</strong> +298% en customer lifetime value</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Caso: Aria, 22 años</h6>
+                        <p><strong>Situación:</strong> Plateau en crecimiento, necesitaba innovar</p>
+                        <p><strong>Implementación:</strong> Eventos gamificados + interacción real-time</p>
+                        <p><strong>Resultados:</strong> +567% engagement eventos, top 5% plataforma</p>
+                        <p><strong>Timeline:</strong> Breakthrough en 3 semanas</p>
+                        <p class="text-success"><strong>ROI:</strong> De top 30% a top 5% en 2 meses</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p class="lead"><strong>Patrón Común:</strong> Implementación gradual = resultados sostenibles y escalables</p>
+                <p><strong>Tiempo promedio ROI:</strong> 2-4 semanas | <strong>Incremento típico:</strong> 300-500% engagement</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="container">
+        <div class="final-summary">
+            <h2>🎮 Dominio Completo de la Gamificación</h2>
+            <p class="lead mb-4">
+                Has accedido al sistema completo que transforma shows ordinarios en 
+                <strong>experiencias adictivas</strong> que mantienen a tu audiencia enganchada 24/7. 
+                Tu engagement ahora es imparable.
+            </p>
+            
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <h4>+456%</h4>
+                    <p>Incremento Engagement</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>+347%</h4>
+                    <p>ROI Fidelidad</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>89%</h4>
+                    <p>Mayor Retención</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>+234%</h4>
+                    <p>Tips con Colaboraciones</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-primary-custom me-3" onclick="downloadGamificationGuide()">
+                    <i class="fas fa-download"></i> Descargar Guía Completa
+                </button>
+                <button class="btn-primary-custom" onclick="joinGamificationCommunity()">
+                    <i class="fas fa-users"></i> Unirse a Comunidad Gaming
+                </button>
+            </div>
+            
+            <p class="mt-4">
+                <strong>¡A construir tu imperio de engagement imparable!</strong><br>
+                Convierte cada viewer en un fan devoto con el poder de la gamificación.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let pollVotes = { lingerie: 0, cosplay: 0, casual: 0, surprise: 0 };
+        let totalVotes = 0;
+        let userLevel = 0;
+        let engagementScore = 0;
+        
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const icon = document.getElementById(cardId + '-icon');
+            
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                if (icon) icon.className = 'fas fa-chevron-down';
+            } else {
+                details.classList.add('active');
+                if (icon) icon.className = 'fas fa-chevron-up';
+            }
+        }
+        
+        // Calculate engagement impact
+        function calculateEngagement() {
+            const viewers = parseFloat(document.getElementById('avgViewers').value) || 0;
+            const sessionTime = parseFloat(document.getElementById('avgSessionTime').value) || 0;
+            const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const repeatRate = parseFloat(document.getElementById('repeatViewers').value) || 0;
+            
+            if (viewers === 0 || sessionTime === 0 || income === 0) {
+                alert('Por favor completa todos los campos para obtener proyecciones precisas');
+                return;
+            }
+            
+            // Calculate gamification impact
+            const engagementMultiplier = 4.56; // +456%
+            const retentionMultiplier = 3.47; // +347%
+            const sessionMultiplier = 1.89; // +89%
+            
+            const projectedViewers = Math.round(viewers * engagementMultiplier);
+            const projectedSession = Math.round(sessionTime * sessionMultiplier);
+            const projectedIncome = Math.round(income * retentionMultiplier);
+            const projectedRetention = Math.min(repeatRate * 2.5, 95); // Max 95%
+            
+            // Display results
+            const resultDiv = document.getElementById('engagementResult');
+            const projectionsDiv = document.getElementById('engagementProjections');
+            const revenueDiv = document.getElementById('revenueImpact');
+            const stepsDiv = document.getElementById('implementationSteps');
+            
+            projectionsDiv.innerHTML = `
+                <h6>📊 Métricas Proyectadas con Gamificación</h6>
+                <p><strong>Viewers promedio:</strong> ${viewers} → ${projectedViewers} (+${Math.round((projectedViewers/viewers - 1) * 100)}%)</p>
+                <p><strong>Tiempo de sesión:</strong> ${sessionTime}min → ${projectedSession}min (+${Math.round((projectedSession/sessionTime - 1) * 100)}%)</p>
+                <p><strong>Retención:</strong> ${repeatRate}% → ${projectedRetention.toFixed(1)}% (+${(projectedRetention - repeatRate).toFixed(1)}%)</p>
+            `;
+            
+            revenueDiv.innerHTML = `
+                <h6>💰 Impacto en Ingresos</h6>
+                <p><strong>Ingresos actuales:</strong> $${income.toLocaleString()}/mes</p>
+                <p><strong>Ingresos proyectados:</strong> $${projectedIncome.toLocaleString()}/mes</p>
+                <p><strong>Incremento mensual:</strong> +$${(projectedIncome - income).toLocaleString()}</p>
+                <p class="text-success"><strong>ROI anual:</strong> +${Math.round((projectedIncome - income) * 12).toLocaleString()}</p>
+            `;
+            
+            stepsDiv.innerHTML = `
+                <h6>🎯 Plan de Implementación</h6>
+                <p><strong>Semana 1:</strong> Configurar sistema de niveles</p>
+                <p><strong>Semana 2:</strong> Lanzar desafíos diarios</p>
+                <p><strong>Semana 3:</strong> Implementar polls interactivos</p>
+                <p><strong>Semana 4:</strong> Añadir colaboraciones y eventos</p>
+                <p class="text-success"><strong>Resultados visibles:</strong> 2-3 semanas</p>
+            `;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Customize level system
+        function customizeLevel(levelName) {
+            const levels = {
+                'novato': 'Novato: Chat básico, bienvenidas especiales, acceso a polls públicos',
+                'regular': 'Regular: PM habilitados, requests básicos, descuentos 10%',
+                'vip': 'VIP: Control de juguetes, contenido exclusivo, shows con descuento',
+                'elite': 'Elite: Shows privados, videollamadas, contenido personalizado',
+                'legend': 'Legend: Acceso total, encuentros virtuales, contenido ultra-exclusivo',
+                'emperor': 'Emperor: Status supremo, beneficios únicos, experiencias personalizadas'
+            };
+            
+            alert(`🏆 ${levels[levelName]}\n\n¿Te gustaría personalizar los beneficios de este nivel?`);
+        }
+        
+        // Create level system
+        function createLevelSystem() {
+            userLevel++;
+            alert(`✅ Sistema de Niveles Creado!\n\n🎯 6 niveles configurados\n🏆 Beneficios personalizados\n📊 Tracking automático\n💎 Incentivos de progresión\n\n¡Tu audiencia ahora tiene razones para volver y ascender!`);
+        }
+        
+        // Toggle challenge
+        function toggleChallenge(element) {
+            const isCompleted = element.style.backgroundColor === 'rgba(40, 167, 69, 0.3)';
+            
+            if (isCompleted) {
+                element.style.backgroundColor = '';
+                element.style.border = '';
+            } else {
+                element.style.backgroundColor = 'rgba(40, 167, 69, 0.3)';
+                element.style.border = '2px solid #28a745';
+                
+                // Show achievement notification
+                setTimeout(() => {
+                    alert('🎉 ¡Desafío Completado!\n\n+Bonus tokens ganados\n+XP para siguiente nivel\n+Badge desbloqueado');
+                }, 500);
+            }
+        }
+        
+        // Create challenge system
+        function createChallengeSystem() {
+            alert(`🎯 Sistema de Desafíos Configurado!\n\n✅ Desafíos diarios automáticos\n🏆 Recompensas escalables\n📈 Tracking de progreso\n🎖️ Sistema de achievements\n\nTus viewers ahora tienen metas claras y recompensas motivadoras!`);
+        }
+        
+        // Unlock achievement
+        function unlockAchievement(element) {
+            element.style.transform = 'scale(1.1)';
+            element.style.backgroundColor = 'rgba(40, 167, 69, 0.3)';
+            element.style.border = '2px solid #28a745';
+            
+            setTimeout(() => {
+                alert('🌟 ¡Achievement Desbloqueado!\n\n+100 XP ganados\n+Badge especial\n+Reconocimiento público\n\n¡Sigue coleccionando logros!');
+            }, 300);
+        }
+        
+        // Vote in poll
+        function votePoll(element, option) {
+            // Remove previous selections
+            document.querySelectorAll('.poll-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.style.backgroundColor = '';
+            });
+            
+            // Add selection to current
+            element.classList.add('selected');
+            element.style.backgroundColor = 'rgba(109, 40, 217, 0.3)';
+            
+            // Update vote count
+            pollVotes[option]++;
+            totalVotes++;
+            
+            // Update percentages
+            Object.keys(pollVotes).forEach(key => {
+                const percentage = Math.round((pollVotes[key] / totalVotes) * 100);
+                const voteElement = document.getElementById(`vote-${key}`);
+                if (voteElement) {
+                    voteElement.textContent = `${percentage}%`;
+                }
+            });
+            
+            // Update engagement metrics
+            updateEngagementMetrics();
+        }
+        
+        // Spin wheel
+        function spinWheel() {
+            const wheel = document.getElementById('wheelResult');
+            const rewardDiv = document.getElementById('wheelReward');
+            const rewardText = document.getElementById('rewardText');
+            
+            const prizes = [
+                { emoji: '💰', text: '50 tokens bonus' },
+                { emoji: '🎁', text: 'Contenido exclusivo' },
+                { emoji: '⭐', text: '15 min show gratis' },
+                { emoji: '💎', text: 'Upgrade a VIP' },
+                { emoji: '🎊', text: 'Foto personalizada' },
+                { emoji: '🔥', text: 'Request especial' }
+            ];
+            
+            // Spinning animation
+            let spins = 0;
+            const spinInterval = setInterval(() => {
+                wheel.textContent = prizes[spins % prizes.length].emoji;
+                spins++;
+            }, 100);
+            
+            // Stop after 2 seconds
+            setTimeout(() => {
+                clearInterval(spinInterval);
+                const winner = prizes[Math.floor(Math.random() * prizes.length)];
+                wheel.textContent = winner.emoji;
+                rewardText.textContent = winner.text;
+                rewardDiv.style.display = 'block';
+                
+                // Update engagement
+                updateEngagementMetrics();
+            }, 2000);
+        }
+        
+        // Update engagement metrics
+        function updateEngagementMetrics() {
+            const participation = Math.min(totalVotes * 5, 100);
+            const engagement = Math.min(totalVotes * 3 + userLevel * 10, 100);
+            const tips = Math.min(totalVotes * 15, 300);
+            
+            const participationEl = document.getElementById('pollParticipation');
+            const engagementEl = document.getElementById('engagementRate');
+            const tipsEl = document.getElementById('tipsPerInteraction');
+            
+            if (participationEl) participationEl.textContent = `${participation}%`;
+            if (engagementEl) engagementEl.textContent = `${engagement}%`;
+            if (tipsEl) tipsEl.textContent = `+${tips}%`;
+        }
+        
+        // Select collaboration type
+        function selectCollabType(type) {
+            const collabTypes = {
+                'duo-stream': 'Duo Streams: Coordinación previa, división 50/50, promoción cruzada. ROI típico: +234%',
+                'group-events': 'Eventos Grupales: 3-5 modelos, temática común, audiencia combinada. ROI típico: +456%',
+                'contests': 'Competencias: Desafíos públicos, votaciones de audiencia, premios compartidos. ROI típico: +189%',
+                'mentorship': 'Mentoría: Guía a nuevas, comisión por referidos, network building. ROI típico: +67% long-term',
+                'cross-promo': 'Cross-Promoción: Intercambio de shoutouts, audiencias complementarias. ROI típico: +123%',
+                'themed-weeks': 'Semanas Temáticas: Coordinación de contenido, timing sincronizado. ROI típico: +298%'
+            };
+            
+            alert(`🤝 ${collabTypes[type]}\n\n¿Te interesa configurar este tipo de colaboración?`);
+        }
+        
+        // Show event details
+        function showEvent(day) {
+            const events = {
+                '3': '🎉 Fiesta de Bienvenida: Evento para nuevos usuarios con premios especiales',
+                '10': '🏆 Competencia de Tips: Los top 3 donadores ganan contenido exclusivo',
+                '17': '👯 Collab Stream: Stream conjunto con otra modelo popular',
+                '24': '🎭 Noche Temática: Cosplay Night con votaciones de audiencia',
+                '31': '🌟 Gran Final: Evento de cierre de mes con todos los achievements'
+            };
+            
+            alert(`📅 Evento del día ${day}:\n\n${events[day]}\n\n¿Te gustaría programar un evento similar?`);
+        }
+        
+        // Create event calendar
+        function createEventCalendar() {
+            alert(`📅 Calendario de Eventos Creado!\n\n🎉 4 eventos mensuales programados\n📢 Promoción automática\n🎯 Metas específicas por evento\n📊 Tracking de resultados\n\nTu audiencia ahora tiene eventos que esperar cada semana!`);
+        }
+        
+        // Update leaderboard
+        function updateLeaderboard() {
+            alert(`🏆 Leaderboard Actualizado!\n\n📊 Rankings en tiempo real\n🎖️ Nuevos achievements\n💰 Recompensas distribuidas\n🔄 Datos sincronizados\n\nLa competencia sana motiva a todos tus fans!`);
+        }
+        
+        // Gamification strategy simulator
+        function selectGamificationStrategy(strategy) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to current
+            event.target.classList.add('selected');
+            
+            const resultDiv = document.getElementById('gamificationResult');
+            const analysis = document.getElementById('strategyAnalysis');
+            const outcomes = document.getElementById('projectedOutcomes');
+            const guide = document.getElementById('implementationGuide');
+            
+            const strategies = {
+                'competitive': {
+                    analysis: 'Enfoque competitivo usando rankings y leaderboards. Ideal para audiencias que disfrutan la competencia.',
+                    outcomes: 'Engagement: +456%, Retención: +234%, Tips competitivos: +189%. Funciona mejor con audiencias masculinas 18-35.',
+                    guide: '1. Implementar leaderboards (semana 1) 2. Crear competencias de tips (semana 2) 3. Sistema de rankings (semana 3)'
+                },
+                'collaborative': {
+                    analysis: 'Enfoque colaborativo con metas grupales y eventos comunitarios. Construye comunidad sólida.',
+                    outcomes: 'Engagement: +347%, Fidelidad: +456%, Eventos: +234%. Mejor para audiencias que valoran comunidad.',
+                    guide: '1. Metas grupales (semana 1) 2. Eventos colaborativos (semana 2) 3. Proyectos comunitarios (semana 3)'
+                },
+                'achievement': {
+                    analysis: 'Sistema de logros y progresión personal. Satisface necesidad de progreso individual.',
+                    outcomes: 'Progresión: +567%, Engagement personal: +298%, Retorno: +189%. Ideal para gamers y completionistas.',
+                    guide: '1. Sistema de badges (semana 1) 2. Achievements complejos (semana 2) 3. Progresión visible (semana 3)'
+                },
+                'reward': {
+                    analysis: 'Sistema de puntos y recompensas tangibles. Motivación externa clara y medible.',
+                    outcomes: 'Conversión: +456%, Loyalty: +347%, Spending: +234%. Efectivo para audiencias transaccionales.',
+                    guide: '1. Sistema de puntos (semana 1) 2. Catálogo de premios (semana 2) 3. Recompensas exclusivas (semana 3)'
+                },
+                'storytelling': {
+                    analysis: 'Narrativa y roleplay gamificado. Crea experiencias inmersivas y memorables.',
+                    outcomes: 'Inmersión: +678%, Engagement emocional: +456%, Diferenciación: +298%. Mejor para nichos creativos.',
+                    guide: '1. Personajes y lore (semana 1) 2. Historias interactivas (semana 2) 3. Roleplay avanzado (semana 3)'
+                }
+            };
+            
+            const selected = strategies[strategy];
+            analysis.textContent = selected.analysis;
+            outcomes.textContent = selected.outcomes;
+            guide.textContent = selected.guide;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Download gamification guide
+        function downloadGamificationGuide() {
+            alert(`🎮 Guía Completa de Gamificación descargada!\n\n✅ 50+ mecánicas de juego\n🎯 Templates de implementación\n📊 Métricas de seguimiento\n🏆 Casos de éxito detallados\n\nRevisa tu email en 24 horas.`);
+        }
+        
+        // Join gamification community
+        function joinGamificationCommunity() {
+            alert(`🎮 ¡Bienvenida a la Comunidad Gaming!\n\n🌟 Acceso a Discord privado\n🎯 Workshops mensuales\n🤝 Network de modelos gaming\n📚 Recursos exclusivos\n🏆 Competencias inter-modelos\n\nRecibirás invitación en 48 horas.`);
+        }
+        
+        // Initialize gamification metrics
+        function initializeMetrics() {
+            updateEngagementMetrics();
+            updateCurrentDate();
+        }
+        
+        // Level up user
+        function levelUpUser() {
+            userLevel++;
+            engagementScore += 25;
+            
+            const achievements = [
+                '🏆 First Victory Achievement',
+                '🌟 Engagement Master Badge',
+                '💎 Community Leader Status',
+                '👑 Elite Performer Recognition',
+                '🚀 Innovation Pioneer Award'
+            ];
+            
+            const achievement = achievements[Math.min(userLevel - 1, achievements.length - 1)];
+            
+            setTimeout(() => {
+                alert(`🎉 ¡LEVEL UP!\n\nNuevo Nivel: ${userLevel}\n${achievement}\n\n+Beneficios desbloqueados\n+Acceso a contenido exclusivo\n+Mayor visibilidad en rankings`);
+            }, 500);
+        }
+        
+        // Simulate daily engagement
+        function simulateDailyEngagement() {
+            const dailyBonus = Math.floor(Math.random() * 100) + 50;
+            engagementScore += dailyBonus;
+            
+            if (engagementScore > (userLevel * 100)) {
+                levelUpUser();
+            }
+            
+            updateEngagementMetrics();
+        }
+        
+        // Auto-save gamification progress
+        function autoSaveProgress() {
+            const gameData = {
+                level: userLevel,
+                score: engagementScore,
+                pollVotes: pollVotes,
+                totalVotes: totalVotes,
+                timestamp: new Date().toISOString()
+            };
+            
+            // In a real implementation, this would save to a backend
+            console.log('Gamification progress saved:', gameData);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeMetrics();
+            
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
+            
+            // Simulate engagement every 30 seconds for demo
+            setInterval(simulateDailyEngagement, 30000);
+            
+            // Auto-save progress every 5 minutes
+            setInterval(autoSaveProgress, 300000);
+            
+            // Add welcome message
+            setTimeout(() => {
+                if (userLevel === 0) {
+                    alert('🎮 ¡Bienvenida al Sistema de Gamificación!\n\nExplora las diferentes secciones para ver cómo transformar tu engagement.\n\n✨ Tip: Haz click en las tarjetas para expandir contenido');
+                    userLevel = 1;
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

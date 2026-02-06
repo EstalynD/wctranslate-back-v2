@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 Tarea 3.1: Estrategias de Monetización</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --wc-primary: #E91E63;
+      --wc-secondary: #9C27B0;
+      --wc-accent: #FF5722;
+      --wc-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #FF5722 100%);
+      --wc-gradient-light: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 50%, rgba(255, 87, 34, 0.1) 100%);
+      --tokens-gold: #FFD700;
+      --privados-purple: #8E24AA;
+      --contenido-blue: #1976D2;
+      --success-green: #4CAF50;
+      --warning-orange: #FF9800;
+      --danger-red: #F44336;
+      --info-blue: #2196F3;
+      --text-dark: #1F2937;
+      --text-muted: #6B7280;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8F9FA;
+      --border-light: #E0E0E0;
+      --shadow-primary: rgba(233, 30, 99, 0.15);
+      --money-green: #00C853;
+      --calculator-bg: #F3E5F5;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #FFF8E1 0%, #F3E5F5 50%, #E8F5E8 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .hero-header {
+      background: var(--wc-gradient);
+      color: white;
+      padding: 50px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px var(--shadow-primary);
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .wc-logo {
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .module-breadcrumb {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--wc-primary);
+      font-weight: bold;
+    }
+
+    .section-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px var(--shadow-primary);
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--border-light);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .primary-highlight {
+      background: var(--wc-gradient-light);
+      border: 2px solid var(--wc-primary);
+      border-left: 6px solid var(--wc-primary);
+    }
+
+    .success-highlight {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.05));
+      border: 2px solid var(--success-green);
+      border-left: 6px solid var(--success-green);
+    }
+
+    .info-highlight {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(3, 169, 244, 0.05));
+      border: 2px solid var(--info-blue);
+      border-left: 6px solid var(--info-blue);
+    }
+
+    .warning-highlight {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05));
+      border: 2px solid var(--warning-orange);
+      border-left: 6px solid var(--warning-orange);
+    }
+
+    .danger-highlight {
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(233, 30, 99, 0.05));
+      border: 2px solid var(--danger-red);
+      border-left: 6px solid var(--danger-red);
+    }
+
+    .strategy-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .strategy-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      border: 3px solid transparent;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .strategy-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .tokens-card {
+      border-color: var(--tokens-gold);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 193, 7, 0.02));
+    }
+
+    .tokens-card:hover {
+      border-color: var(--tokens-gold);
+      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.3);
+    }
+
+    .privados-card {
+      border-color: var(--privados-purple);
+      background: linear-gradient(135deg, rgba(142, 36, 170, 0.05), rgba(156, 39, 176, 0.02));
+    }
+
+    .privados-card:hover {
+      border-color: var(--privados-purple);
+      box-shadow: 0 15px 40px rgba(142, 36, 170, 0.3);
+    }
+
+    .contenido-card {
+      border-color: var(--contenido-blue);
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.05), rgba(33, 150, 243, 0.02));
+    }
+
+    .contenido-card:hover {
+      border-color: var(--contenido-blue);
+      box-shadow: 0 15px 40px rgba(25, 118, 210, 0.3);
+    }
+
+    .strategy-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .tokens-icon {
+      color: var(--tokens-gold);
+    }
+
+    .privados-icon {
+      color: var(--privados-purple);
+    }
+
+    .contenido-icon {
+      color: var(--contenido-blue);
+    }
+
+    .strategy-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .strategy-description {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .earning-potential {
+      background: var(--calculator-bg);
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .earning-range {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--money-green);
+      margin-bottom: 0.5rem;
+    }
+
+    .effort-level {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .strategy-pros-cons {
+      text-align: left;
+      margin-top: 1rem;
+    }
+
+    .pros-list, .cons-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+    }
+
+    .pros-list li {
+      color: var(--success-green);
+      margin-bottom: 0.3rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .pros-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .cons-list li {
+      color: var(--danger-red);
+      margin-bottom: 0.3rem;
+      position: relative;
+      padding-left: 1.5rem;
+    }
+
+    .cons-list li::before {
+      content: '✗';
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .interactive-calculator {
+      background: var(--calculator-bg);
+      border: 3px solid var(--info-blue);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .interactive-calculator::before {
+      content: '💰';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--info-blue);
+    }
+
+    .calculator-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .input-group {
+      background: var(--bg-white);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .input-label {
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .calculator-input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .calculator-input:focus {
+      outline: none;
+      border-color: var(--info-blue);
+      box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
+    }
+
+    .calculator-results {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      display: none;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .result-box {
+      text-align: center;
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .result-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--money-green);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .best-strategy {
+      background: var(--money-green);
+      color: white;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    .quiz-section {
+      background: var(--bg-white);
+      border: 3px solid var(--wc-primary);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .quiz-section::before {
+      content: '🎯';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--wc-primary);
+    }
+
+    .quiz-question {
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .quiz-options {
+      margin: 1rem 0;
+    }
+
+    .quiz-option {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--wc-primary);
+      background: var(--wc-gradient-light);
+    }
+
+    .quiz-option.selected {
+      border-color: var(--wc-primary);
+      background: var(--wc-gradient-light);
+      font-weight: bold;
+    }
+
+    .quiz-option input[type="radio"] {
+      margin-right: 1rem;
+      scale: 1.2;
+    }
+
+    .progress-tracker {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: var(--bg-white);
+      border-radius: 8px;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .progress-item:hover {
+      border-color: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+    }
+
+    .progress-item.completed {
+      background: var(--bg-white);
+      border-color: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    }
+
+    .progress-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--success-green);
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .progress-item.completed .progress-checkbox {
+      background: var(--success-green);
+      color: white;
+      border-color: var(--success-green);
+    }
+
+    .comparison-table {
+      background: var(--bg-white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .table-header {
+      background: var(--wc-gradient);
+      color: white;
+      padding: 1rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .table-cell {
+      padding: 1rem;
+      text-align: center;
+      border-right: 1px solid var(--border-light);
+    }
+
+    .table-cell:last-child {
+      border-right: none;
+    }
+
+    .table-cell.feature {
+      background: var(--bg-light);
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .rating-stars {
+      color: var(--tokens-gold);
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--wc-primary) !important;
+      color: white !important;
+    }
+
+    .btn-success {
+      background: var(--success-green) !important;
+      color: white !important;
+    }
+
+    .btn-info {
+      background: var(--info-blue) !important;
+      color: white !important;
+    }
+
+    .btn-warning {
+      background: var(--warning-orange) !important;
+      color: white !important;
+    }
+
+    @media (max-width: 768px) {
+      .strategy-comparison {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .section-card {
+        padding: 1.5rem;
+      }
+      
+      .hero-header {
+        padding: 30px 20px;
+      }
+
+      .calculator-inputs {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .result-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .table-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .table-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+      }
+
+      .table-cell.feature {
+        background: var(--wc-primary);
+        color: white;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-card {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Domina las estrategias de monetización más rentables del modelaje webcam</p>
+  </div>
+
+  <div class="module-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🌟 Industria Webcam General</a></li>
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">💰 Estrategias de Monetización</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tarea 3.1: Tokens vs Privados vs Contenido</li>
+      </ol>
+    </nav>
+  </div>
+
+  <header class="hero-header">
+    <h1 class="mb-3">
+      <i class="fas fa-chart-line"></i>
+      Comparativa de Estrategias de Monetización
+      <i class="fas fa-dollar-sign"></i>
+    </h1>
+    <p class="fs-5 mb-0">
+      Descubre cuál es la estrategia más rentable para TU perfil específico
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Sección: Introducción -->
+    <section class="section-card">
+      <h2 class="section-title">💡 ¿Por Qué Esta Decisión Definirá Tus Ingresos?</h2>
+      
+      <div class="primary-highlight">
+        <h5><i class="fas fa-lightbulb"></i> La Diferencia Entre $500 y $5,000 Mensuales</h5>
+        <p>No todas las estrategias generan los mismos ingresos. Una modelo puede trabajar 8 horas diarias en la estrategia equivocada y ganar $500 mensuales, mientras otra trabaja 4 horas en la estrategia correcta y gana $5,000. <strong>La diferencia no es el esfuerzo, es la estrategia.</strong></p>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-info-circle"></i> Lo Que Aprenderás en Esta Tarea</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>🎯 Análisis Detallado:</h6>
+            <ul>
+              <li>Rentabilidad real de cada estrategia</li>
+              <li>Tiempo de inversión vs ingresos</li>
+              <li>Perfil ideal para cada método</li>
+              <li>Ventajas y desventajas específicas</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>🧮 Herramientas Prácticas:</h6>
+            <ul>
+              <li>Calculadora de ingresos personalizada</li>
+              <li>Test de perfil para elegir estrategia</li>
+              <li>Comparativas visuales interactivas</li>
+              <li>Plan de acción específico</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> Error Común Costoso</h5>
+        <p>El 80% de las modelos nuevas eligen la estrategia más "fácil" en lugar de la más rentable para su perfil. Resultado: meses de trabajo con ingresos bajos y frustración. <strong>Esta tarea te evitará ese error.</strong></p>
+      </div>
+    </section>
+
+    <!-- Sección: Comparativa de Estrategias -->
+    <section class="section-card">
+      <h2 class="section-title">⚖️ Las 3 Estrategias Principales</h2>
+      
+      <div class="strategy-comparison">
+        
+        <!-- Tokens -->
+        <div class="strategy-card tokens-card" onclick="selectStrategy('tokens')">
+          <div class="strategy-icon tokens-icon">🪙</div>
+          <h3 class="strategy-title">PÁGINAS DE TOKENS</h3>
+          <p class="strategy-description">Los usuarios compran tokens/créditos y te los dan como propinas durante shows públicos en vivo.</p>
+          
+          <div class="earning-potential">
+            <div class="earning-range">$800 - $4,000/mes</div>
+            <div class="effort-level">Esfuerzo: Alto | Consistencia: Crítica</div>
+          </div>
+
+          <div class="strategy-pros-cons">
+            <h6 style="color: var(--success-green);">✓ Ventajas:</h6>
+            <ul class="pros-list">
+              <li>Ingresos altos si construyes audiencia</li>
+              <li>Shows públicos = más visibilidad</li>
+              <li>Propinas espontáneas adicionales</li>
+              <li>Fans regulares generan ingresos estables</li>
+            </ul>
+
+            <h6 style="color: var(--danger-red);">✗ Desventajas:</h6>
+            <ul class="cons-list">
+              <li>Competencia muy alta</li>
+              <li>Requiere personalidad extrovertida</li>
+              <li>Horarios fijos para mantener audiencia</li>
+              <li>Depende de "days" buenos y malos</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Privados -->
+        <div class="strategy-card privados-card" onclick="selectStrategy('privados')">
+          <div class="strategy-icon privados-icon">🔐</div>
+          <h3 class="strategy-title">SHOWS PRIVADOS</h3>
+          <p class="strategy-description">Los usuarios pagan por minuto por shows privados personalizados solo para ellos.</p>
+          
+          <div class="earning-potential">
+            <div class="earning-range">$1,200 - $6,000/mes</div>
+            <div class="effort-level">Esfuerzo: Medio | Consistencia: Moderada</div>
+          </div>
+
+          <div class="strategy-pros-cons">
+            <h6 style="color: var(--success-green);">✓ Ventajas:</h6>
+            <ul class="pros-list">
+              <li>Ingresos más predecibles por minuto</li>
+              <li>Menos competencia directa</li>
+              <li>Clientes pagan tarifas premium</li>
+              <li>Relación más personalizada</li>
+            </ul>
+
+            <h6 style="color: var(--danger-red);">✗ Desventajas:</h6>
+            <ul class="cons-list">
+              <li>Menor visibilidad = menos clientes nuevos</li>
+              <li>Depende de pocos clientes regulares</li>
+              <li>Presión por performance individual</li>
+              <li>Puede ser emocionalmente demandante</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="strategy-card contenido-card" onclick="selectStrategy('contenido')">
+          <div class="strategy-icon contenido-icon">📱</div>
+          <h3 class="strategy-title">VENTA DE CONTENIDO</h3>
+          <p class="strategy-description">Creas contenido (fotos, videos, customs) y lo vendes a través de plataformas especializadas.</p>
+          
+          <div class="earning-potential">
+            <div class="earning-range">$600 - $8,000/mes</div>
+            <div class="effort-level">Esfuerzo: Variable | Consistencia: Flexible</div>
+          </div>
+
+          <div class="strategy-pros-cons">
+            <h6 style="color: var(--success-green);">✓ Ventajas:</h6>
+            <ul class="pros-list">
+              <li>Ingresos pasivos a largo plazo</li>
+              <li>Horarios completamente flexibles</li>
+              <li>Un contenido se vende múltiples veces</li>
+              <li>Menos exposición personal en vivo</li>
+            </ul>
+
+            <h6 style="color: var(--danger-red);">✗ Desventajas:</h6>
+            <ul class="cons-list">
+              <li>Inicio más lento de ingresos</li>
+              <li>Requiere marketing constante</li>
+              <li>Necesitas creatividad para contenido</li>
+              <li>Plataformas toman comisiones altas</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="strategyDetails" style="display: none;" class="success-highlight mt-3">
+        <!-- Detalles de la estrategia seleccionada -->
+      </div>
+    </section>
+
+    <!-- Sección: Calculadora Interactiva -->
+    <section class="section-card">
+      <h2 class="section-title">🧮 Calculadora de Rentabilidad Personalizada</h2>
+      
+      <div class="interactive-calculator">
+        <h5><i class="fas fa-calculator"></i> Calcula Tus Ingresos Potenciales</h5>
+        <p>Ingresa tus datos para ver cuál estrategia sería más rentable en tu caso específico:</p>
+        
+        <div class="calculator-inputs">
+          <div class="input-group">
+            <label class="input-label">Horas disponibles por día:</label>
+            <input type="number" class="calculator-input" id="horasDisponibles" value="4" min="1" max="12" onchange="calculateEarnings()">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Días por semana:</label>
+            <input type="number" class="calculator-input" id="diasSemana" value="5" min="1" max="7" onchange="calculateEarnings()">
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Nivel de experiencia:</label>
+            <select class="calculator-input" id="experiencia" onchange="calculateEarnings()">
+              <option value="principiante">Principiante (0-3 meses)</option>
+              <option value="intermedio">Intermedio (3-12 meses)</option>
+              <option value="avanzado">Avanzado (1+ años)</option>
+            </select>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">Personalidad:</label>
+            <select class="calculator-input" id="personalidad" onchange="calculateEarnings()">
+              <option value="extrovertida">Extrovertida y social</option>
+              <option value="introvertida">Introvertida pero cálida</option>
+              <option value="creativa">Muy creativa</option>
+              <option value="profesional">Orientada a negocios</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-info btn-lg" onclick="calculateEarnings()" style="background: var(--info-blue); margin: 1rem 0;">
+          <i class="fas fa-calculator"></i> Calcular Mis Ingresos Potenciales
+        </button>
+
+        <div class="calculator-results" id="calculatorResults">
+          <h6><strong>📊 Tus Ingresos Potenciales Mensuales:</strong></h6>
+          
+          <div class="result-grid">
+            <div class="result-box">
+              <span class="result-number" id="tokensResult">$0</span>
+              <div class="result-label">Páginas de Tokens</div>
+            </div>
+            <div class="result-box">
+              <span class="result-number" id="privadosResult">$0</span>
+              <div class="result-label">Shows Privados</div>
+            </div>
+            <div class="result-box">
+              <span class="result-number" id="contenidoResult">$0</span>
+              <div class="result-label">Venta de Contenido</div>
+            </div>
+          </div>
+
+          <div class="best-strategy" id="bestStrategy">
+            <!-- Recomendación aparecerá aquí -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Tabla Comparativa Detallada -->
+    <section class="section-card">
+      <h2 class="section-title">📋 Comparativa Detallada</h2>
+      
+      <div class="comparison-table">
+        <div class="table-header">
+          <h5><i class="fas fa-balance-scale"></i> Comparación Completa de Estrategias</h5>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell feature">Factor</div>
+          <div class="table-cell">🪙 Tokens</div>
+          <div class="table-cell">🔐 Privados</div>
+          <div class="table-cell">📱 Contenido</div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell feature">Ingresos Potenciales</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            $800-4,000/mes
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            $1,200-6,000/mes
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            $600-8,000/mes
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell feature">Tiempo de Inicio</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            2-4 semanas
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            1-2 semanas
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            2-6 meses
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell feature">Flexibilidad Horaria</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Horarios fijos
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Semi-flexible
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            Total flexibilidad
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell feature">Competencia</div>
+          <div class="table-cell">
+            <div class="rating-stars">★☆☆☆☆</div>
+            Muy alta
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Moderada
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Alta
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell feature">Escalabilidad</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Limitada por tiempo
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Muy limitada
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            Muy escalable
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Test de Perfil -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Test: ¿Cuál es TU Estrategia Perfecta?</h2>
+      
+      <div class="quiz-section">
+        <h5><i class="fas fa-question-circle"></i> Test de Personalidad y Perfil</h5>
+        <p>Responde honestamente para obtener una recomendación personalizada:</p>
+
+        <div class="quiz-question">
+          <h6><strong>1. ¿Cómo te describes socialmente?</strong></h6>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q1', 'extrovertida')">
+              <input type="radio" name="q1" value="extrovertida">
+              Me encanta conocer gente nueva y ser el centro de atención
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q1', 'amigable')">
+              <input type="radio" name="q1" value="amigable">
+              Soy amigable pero prefiero conversaciones 1 a 1
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q1', 'introvertida')">
+              <input type="radio" name="q1" value="introvertida">
+              Soy más reservada, prefiero trabajar independiente
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <h6><strong>2. ¿Cuál es tu disponibilidad de tiempo?</strong></h6>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q2', 'fijos')">
+              <input type="radio" name="q2" value="fijos">
+              Puedo trabajar horarios fijos y consistentes
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q2', 'variables')">
+              <input type="radio" name="q2" value="variables">
+              Prefiero horarios variables pero puedo ser constante
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q2', 'flexibles')">
+              <input type="radio" name="q2" value="flexibles">
+              Necesito máxima flexibilidad horaria
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <h6><strong>3. ¿Cómo prefieres generar ingresos?</strong></h6>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q3', 'inmediatos')">
+              <input type="radio" name="q3" value="inmediatos">
+              Quiero ver resultados y dinero rápidamente
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q3', 'estables')">
+              <input type="radio" name="q3" value="estables">
+              Prefiero ingresos estables y predecibles
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q3', 'escalables')">
+              <input type="radio" name="q3" value="escalables">
+              Puedo esperar más tiempo por ingresos escalables
+            </div>
+          </div>
+        </div>
+
+        <div class="quiz-question">
+          <h6><strong>4. ¿Qué tan cómoda te sientes con la exposición?</strong></h6>
+          <div class="quiz-options">
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q4', 'total')">
+              <input type="radio" name="q4" value="total">
+              Me encanta estar en vivo y que me vean muchas personas
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q4', 'selectiva')">
+              <input type="radio" name="q4" value="selectiva">
+              Prefiero audiencias más pequeñas y selectas
+            </div>
+            <div class="quiz-option" onclick="selectQuizOption(this, 'q4', 'controlada')">
+              <input type="radio" name="q4" value="controlada">
+              Prefiero tener más control sobre quién ve mi contenido
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-primary btn-lg" onclick="calculateQuizResult()" style="margin: 1rem 0;">
+          <i class="fas fa-chart-pie"></i> Ver Mi Estrategia Recomendada
+        </button>
+
+        <div id="quizResult" style="display: none;" class="mt-3">
+          <!-- Resultado del quiz -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Tracker de Progreso -->
+    <section class="section-card">
+      <h2 class="section-title">✅ Tu Progreso en Esta Tarea</h2>
+      
+      <div class="progress-tracker">
+        <h5><i class="fas fa-tasks"></i> Checklist de Aprendizaje</h5>
+        <p>Marca cada elemento que hayas completado:</p>
+        
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Analicé las 3 estrategias principales de monetización</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Usé la calculadora para ver mis ingresos potenciales</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Completé el test de perfil personalizado</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Revisé la tabla comparativa detallada</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Identifiqué cuál estrategia es mejor para mi perfil</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Entiendo las ventajas y desventajas de cada método</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Tengo claridad sobre mis próximos pasos</strong></span>
+        </div>
+
+        <div id="progressResult" style="display: none;" class="mt-3 p-3 rounded">
+          <!-- Resultado del progreso -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Plan de Acción -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Tu Plan de Acción Personalizado</h2>
+      
+      <div class="success-highlight">
+        <h5><i class="fas fa-trophy"></i> ¡Decisión Tomada!</h5>
+        <p>Ya sabes cuál estrategia es más rentable para tu perfil. Ahora es momento de implementarla correctamente.</p>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-arrow-right"></i> Siguientes Pasos Recomendados</h5>
+        <div class="row g-3">
+          <div class="col-md-4">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-money-bill-wave"></i> Tarea 3.2</h6>
+              <p><strong>Las 12 Formas de Generar Ingresos</strong><br>
+              Aprende TODAS las formas de monetizar, no solo la principal.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-brain"></i> Tarea 3.3</h6>
+              <p><strong>Psicología de las Propinas</strong><br>
+              Técnicas mentales para que users quieran darte dinero.</p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-chart-line"></i> Tema 4</h6>
+              <p><strong>Marketing y Posicionamiento</strong><br>
+              Construye una marca que genere ingresos constantes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-graduation-cap"></i> Resumen de lo que Aprendiste</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>💡 Conceptos Clave:</h6>
+            <ul>
+              <li>Diferencias reales entre estrategias de monetización</li>
+              <li>Rentabilidad específica para tu perfil</li>
+              <li>Factores que determinan el éxito en cada método</li>
+              <li>Cómo elegir basándote en datos, no emociones</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>🛠️ Herramientas Aplicadas:</h6>
+            <ul>
+              <li>Calculadora de ingresos personalizada</li>
+              <li>Test de perfil profesional</li>
+              <li>Análisis comparativo detallado</li>
+              <li>Plan de acción específico para tu caso</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-lightbulb"></i> Insight Clave Para Recordar</h5>
+        <p><strong>No existe la "mejor" estrategia universal.</strong> Existe la mejor estrategia para TU personalidad, tiempo disponible, objetivos financieros y nivel de experiencia. La modelo que gana $8,000 mensuales no necesariamente usa la estrategia "superior", usa la estrategia PERFECTA para su perfil específico.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let selectedStrategy = '';
+    let quizAnswers = {};
+    
+    function selectStrategy(strategy) {
+      selectedStrategy = strategy;
+      
+      const strategies = {
+        'tokens': {
+          title: '🪙 Páginas de Tokens Seleccionada',
+          description: 'Perfecto para personalidades extrovertidas que disfrutan la interacción social. Requiere consistencia pero puede generar muy buenos ingresos con la audiencia correcta.',
+          tips: 'Tips clave: Sé consistente con horarios, desarrolla personalidad única, interactúa genuinamente con tu audiencia, usa menús de propinas claros.'
+        },
+        'privados': {
+          title: '🔐 Shows Privados Seleccionados',
+          description: 'Ideal para quienes prefieren interacciones personalizadas y tarifas premium. Menos competencia directa pero requiere habilidades de conexión 1 a 1.',
+          tips: 'Tips clave: Construye relaciones genuinas, ofrece experiencias personalizadas, mantén límites claros, optimiza tu perfil para privados.'
+        },
+        'contenido': {
+          title: '📱 Venta de Contenido Seleccionada',
+          description: 'Perfecto para personas creativas que valoran flexibilidad. Inicio más lento pero potencial de ingresos pasivos muy alto.',
+          tips: 'Tips clave: Crea contenido de calidad, diversifica tipos de contenido, usa múltiples plataformas, enfócate en marketing.'
+        }
+      };
+      
+      const strategyInfo = strategies[strategy];
+      document.getElementById('strategyDetails').innerHTML = `
+        <h6><strong>${strategyInfo.title}</strong></h6>
+        <p>${strategyInfo.description}</p>
+        <p><strong>💡 ${strategyInfo.tips}</strong></p>
+      `;
+      document.getElementById('strategyDetails').style.display = 'block';
+    }
+
+    function calculateEarnings() {
+      const horas = parseInt(document.getElementById('horasDisponibles').value);
+      const dias = parseInt(document.getElementById('diasSemana').value);
+      const experiencia = document.getElementById('experiencia').value;
+      const personalidad = document.getElementById('personalidad').value;
+      
+      // Factores multiplicadores basados en experiencia
+      const expMultipliers = {
+        'principiante': 0.6,
+        'intermedio': 0.8,
+        'avanzado': 1.2
+      };
+      
+      // Factores para cada estrategia basados en personalidad
+      const personalityFactors = {
+        'extrovertida': { tokens: 1.3, privados: 0.9, contenido: 0.8 },
+        'introvertida': { tokens: 0.7, privados: 1.2, contenido: 1.1 },
+        'creativa': { tokens: 0.9, privados: 0.8, contenido: 1.4 },
+        'profesional': { tokens: 1.0, privados: 1.3, contenido: 1.2 }
+      };
+      
+      const horasSemanales = horas * dias;
+      const expFactor = expMultipliers[experiencia];
+      const personalityFactor = personalityFactors[personalidad];
+      
+      // Cálculos base por hora (valores promedio)
+      const tokensPerHour = 25 * expFactor * personalityFactor.tokens;
+      const privadosPerHour = 35 * expFactor * personalityFactor.privados;
+      const contenidoPerHour = 15 * expFactor * personalityFactor.contenido; // Menos lineal
+      
+      // Cálculos mensuales (4.33 semanas por mes)
+      const tokensMonth = Math.round(tokensPerHour * horasSemanales * 4.33);
+      const privadosMonth = Math.round(privadosPerHour * horasSemanales * 4.33);
+      const contenidoMonth = Math.round(contenidoPerHour * horasSemanales * 4.33 * 1.5); // Factor escalabilidad
+      
+      document.getElementById('tokensResult').textContent = `$${tokensMonth.toLocaleString()}`;
+      document.getElementById('privadosResult').textContent = `$${privadosMonth.toLocaleString()}`;
+      document.getElementById('contenidoResult').textContent = `$${contenidoMonth.toLocaleString()}`;
+      
+      // Determinar mejor estrategia
+      const results = {
+        tokens: tokensMonth,
+        privados: privadosMonth,
+        contenido: contenidoMonth
+      };
+      
+      const bestStrategy = Object.keys(results).reduce((a, b) => results[a] > results[b] ? a : b);
+      const strategyNames = {
+        tokens: 'Páginas de Tokens',
+        privados: 'Shows Privados', 
+        contenido: 'Venta de Contenido'
+      };
+      
+      document.getElementById('bestStrategy').innerHTML = `
+        🏆 <strong>Estrategia más rentable para ti: ${strategyNames[bestStrategy]}</strong><br>
+        Con potencial de $${results[bestStrategy].toLocaleString()} mensuales basado en tu perfil.
+      `;
+      
+      document.getElementById('calculatorResults').style.display = 'block';
+    }
+
+    function selectQuizOption(element, question, value) {
+      // Deseleccionar otras opciones de la misma pregunta
+      const questionOptions = document.querySelectorAll(`input[name="${question}"]`).forEach(input => {
+        input.closest('.quiz-option').classList.remove('selected');
+        input.checked = false;
+      });
+      
+      // Seleccionar opción actual
+      element.classList.add('selected');
+      element.querySelector('input').checked = true;
+      
+      // Guardar respuesta
+      quizAnswers[question] = value;
+    }
+
+    function calculateQuizResult() {
+      if (Object.keys(quizAnswers).length < 4) {
+        alert('Por favor responde todas las preguntas para obtener tu recomendación personalizada.');
+        return;
+      }
+      
+      // Sistema de puntuación
+      let scores = { tokens: 0, privados: 0, contenido: 0 };
+      
+      // Pregunta 1: Personalidad social
+      if (quizAnswers.q1 === 'extrovertida') {
+        scores.tokens += 3;
+        scores.privados += 1;
+        scores.contenido += 1;
+      } else if (quizAnswers.q1 === 'amigable') {
+        scores.tokens += 2;
+        scores.privados += 3;
+        scores.contenido += 2;
+      } else {
+        scores.tokens += 1;
+        scores.privados += 2;
+        scores.contenido += 3;
+      }
+      
+      // Pregunta 2: Disponibilidad
+      if (quizAnswers.q2 === 'fijos') {
+        scores.tokens += 3;
+        scores.privados += 2;
+        scores.contenido += 1;
+      } else if (quizAnswers.q2 === 'variables') {
+        scores.tokens += 2;
+        scores.privados += 3;
+        scores.contenido += 2;
+      } else {
+        scores.tokens += 1;
+        scores.privados += 1;
+        scores.contenido += 3;
+      }
+      
+      // Pregunta 3: Tipo de ingresos
+      if (quizAnswers.q3 === 'inmediatos') {
+        scores.tokens += 2;
+        scores.privados += 3;
+        scores.contenido += 1;
+      } else if (quizAnswers.q3 === 'estables') {
+        scores.tokens += 3;
+        scores.privados += 2;
+        scores.contenido += 2;
+      } else {
+        scores.tokens += 1;
+        scores.privados += 1;
+        scores.contenido += 3;
+      }
+      
+      // Pregunta 4: Exposición
+      if (quizAnswers.q4 === 'total') {
+        scores.tokens += 3;
+        scores.privados += 1;
+        scores.contenido += 1;
+      } else if (quizAnswers.q4 === 'selectiva') {
+        scores.tokens += 1;
+        scores.privados += 3;
+        scores.contenido += 2;
+      } else {
+        scores.tokens += 1;
+        scores.privados += 2;
+        scores.contenido += 3;
+      }
+      
+      // Determinar estrategia ganadora
+      const winner = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+      
+      const recommendations = {
+        tokens: {
+          title: '🪙 Tu Estrategia Ideal: Páginas de Tokens',
+          description: 'Basado en tu perfil, tienes las características perfectas para triunfar en páginas de tokens. Tu personalidad social y disponibilidad de horarios te dan ventaja competitiva.',
+          action: 'Enfócate en construir una audiencia leal, desarrolla una personalidad única en cámara, y mantén horarios consistentes.',
+          platforms: 'Plataformas recomendadas: Chaturbate, MyFreeCams, Cam4'
+        },
+        privados: {
+          title: '🔐 Tu Estrategia Ideal: Shows Privados',
+          description: 'Tu perfil indica que destacarías en shows privados. Prefieres conexiones más íntimas y tienes la personalidad para justificar tarifas premium.',
+          action: 'Desarrolla habilidades de conexión emocional, optimiza tu perfil para atraer clientes premium, y enfócate en la retención.',
+          platforms: 'Plataformas recomendadas: LiveJasmin, StripChat, ImLive'
+        },
+        contenido: {
+          title: '📱 Tu Estrategia Ideal: Venta de Contenido',
+          description: 'Tu perfil sugiere que serías muy exitosa vendiendo contenido. Valoras la flexibilidad y tienes potencial creativo para contenido escalable.',
+          action: 'Invierte en equipos de calidad, desarrolla creatividad en contenido, y enfócate en marketing en redes sociales.',
+          platforms: 'Plataformas recomendadas: OnlyFans, ManyVids, Clips4Sale'
+        }
+      };
+      
+      const result = recommendations[winner];
+      
+      document.getElementById('quizResult').innerHTML = `
+        <div style="background: var(--success-green); color: white; padding: 1.5rem; border-radius: 8px;">
+          <h6><strong>${result.title}</strong></h6>
+          <p>${result.description}</p>
+          <p><strong>🎯 Plan de Acción:</strong> ${result.action}</p>
+          <p><strong>💻 ${result.platforms}</strong></p>
+        </div>
+      `;
+      document.getElementById('quizResult').style.display = 'block';
+    }
+
+    function toggleProgress(element) {
+      element.classList.toggle('completed');
+      
+      const totalItems = document.querySelectorAll('.progress-tracker .progress-item').length;
+      const completedItems = document.querySelectorAll('.progress-tracker .progress-item.completed').length;
+      const percentage = Math.round((completedItems / totalItems) * 100);
+      
+      const resultDiv = document.getElementById('progressResult');
+      
+      if (completedItems > 0) {
+        let resultText = `<strong>PROGRESO: ${completedItems}/${totalItems} (${percentage}%)</strong><br>`;
+        
+        if (percentage >= 100) {
+          resultText += `<div style="color: var(--success-green);">🏆 <strong>¡TAREA COMPLETA!</strong> Ya sabes cuál estrategia de monetización es perfecta para ti.</div>`;
+        } else if (percentage >= 75) {
+          resultText += `<div style="color: var(--warning-orange);">📊 <strong>CASI TERMINADO</strong> Completa los últimos pasos para tener total claridad.</div>`;
+        } else if (percentage >= 50) {
+          resultText += `<div style="color: var(--info-blue);">💡 <strong>BUEN PROGRESO</strong> Estás entendiendo las diferencias entre estrategias.</div>`;
+        } else {
+          resultText += `<div style="color: var(--warning-orange);">📈 <strong>EMPEZANDO</strong> Sigue analizando para tomar la mejor decisión.</div>`;
+        }
+        
+        resultDiv.innerHTML = resultText;
+        resultDiv.style.background = percentage >= 100 ? 'var(--success-green)' : percentage >= 75 ? 'var(--warning-orange)' : 'var(--info-blue)';
+        resultDiv.style.color = 'white';
+        resultDiv.style.borderRadius = '8px';
+        resultDiv.style.padding = '1rem';
+        resultDiv.style.fontWeight = 'bold';
+        resultDiv.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.3)';
+        resultDiv.style.display = 'block';
+      } else {
+        resultDiv.style.display = 'none';
+      }
+    }
+
+    // Calcular automáticamente al cargar la página
+    window.onload = function() {
+      calculateEarnings();
+    };
+  </script>
+</body>
+</html>

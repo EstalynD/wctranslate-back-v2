@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>📋 WC Training - Master en Creación de Encuestas para Usuarios</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --success-green: #10b981;
+            --warning-orange: #f97316;
+            --danger-red: #ef4444;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-accent: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --gradient-survey: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+            --gradient-feedback: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            --gradient-research: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-bg);
+            opacity: 0.03;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(180deg); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .industry-insights {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--gradient-survey);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="survey-grid" width="15" height="15" patternUnits="userSpaceOnUse"><path d="M 15 0 L 0 0 0 15" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23survey-grid)"/></svg>');
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-lab {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .section-lab:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .interactive-card {
+            background: var(--gradient-feedback);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(6, 182, 212, 0.3);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            margin-top: 1rem;
+            border-radius: 10px;
+            padding: 0 1rem;
+        }
+
+        .card-details.expanded {
+            max-height: 600px;
+            padding: 1rem;
+        }
+
+        .survey-builder {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .survey-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .survey-result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: var(--border-light);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .question-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .question-type {
+            background: var(--gradient-research);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: center;
+        }
+
+        .question-type:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .question-type.selected {
+            background: var(--gradient-accent);
+            transform: scale(1.05);
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6rem;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .success-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .success-number {
+            text-align: center;
+            margin: 0.5rem;
+        }
+
+        .success-number .number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .survey-template {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .survey-template:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .template-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .template-category {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .current-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .response-analyzer {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .response-chart {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-lab {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .survey-input {
+                max-width: 100%;
+            }
+            
+            .success-numbers {
+                flex-direction: column;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-types {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-lab {
+                padding: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .survey-builder {
+                padding: 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn-custom {
+            min-height: 44px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .insight-card {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+    
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="#" class="wc-logo">
+                        <i class="fas fa-poll"></i> WC Training Pro
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos
+                        <span class="mx-2">|</span>
+                        <strong>2,156</strong> encuestas activas
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <div class="d-flex align-items-center mb-3">
+                <i class="fas fa-chart-pie fa-2x text-primary me-3"></i>
+                <div>
+                    <h3 class="mb-0">📊 Survey Intelligence 2025</h3>
+                    <p class="text-muted mb-0">Datos de investigación actualizada en tiempo real</p>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </div>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <span class="insight-number">84%</span>
+                    <div>de modelos exitosas usan feedback directo sistemático</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">+163%</span>
+                    <div>aumento en retención con encuestas estratégicas</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">71%</span>
+                    <div>de decisiones exitosas basadas en feedback usuarios</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">5-7</span>
+                    <div>preguntas óptimas por encuesta para máximo engagement</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$3,420</span>
+                    <div>aumento promedio mensual con investigación directa</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">92%</span>
+                    <div>de insights accionables provienen de preguntas abiertas</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">📋 Master en Creación de Encuestas</h1>
+            <p class="main-subtitle">Transforma a tus usuarios en consultores de desarrollo estratégico</p>
+            <p class="lead">Tu sistema de inteligencia directa para descubrir motivaciones ocultas y oportunidades invisibles</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Lab Section 1: Fundamentos de Encuestas -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-clipboard-list"></i>
+                📝 Lab de Fundamentos de Encuestas
+            </h2>
+            <p class="lead">Domina el arte de crear investigación directa estratégicamente diseñada</p>
+            
+            <button class="interactive-card" onclick="toggleDetails('fundamentos')">
+                <h4><i class="fas fa-question-circle"></i> Diseño de Preguntas Estratégicas</h4>
+                <p>Crea instrumentos meticulosamente calibrados para extraer inteligencia contextual</p>
+            </button>
+            <div id="fundamentos" class="card-details">
+                <h5>🎯 CRÍTICO: Arquitectura de Preguntas</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Tipos de Preguntas Esenciales:</h6>
+                        <ul>
+                            <li><strong>Escalas numéricas:</strong> Medición cuantitativa precisa</li>
+                            <li><strong>Preguntas abiertas:</strong> Insights cualitativos profundos</li>
+                            <li><strong>Opciones múltiples:</strong> Clasificación comportamental</li>
+                            <li><strong>Preguntas proyectivas:</strong> Revelación de sesgos</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Estructura Óptima:</h6>
+                        <ul>
+                            <li><strong>Introducción contextual:</strong> Establece propósito</li>
+                            <li><strong>Secuencia lógica:</strong> Minimiza sesgos</li>
+                            <li><strong>Transiciones suaves:</strong> Mantiene engagement</li>
+                            <li><strong>Conclusión accionable:</strong> Genera compromiso</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-warning mt-3">
+                    <strong>⚠️ ESENCIAL:</strong> El 73% de encuestas fallan por secuencia inadecuada - el orden importa más que el contenido
+                </div>
+            </div>
+
+            <button class="interactive-card" onclick="toggleDetails('timing')">
+                <h4><i class="fas fa-clock"></i> Timing Estratégico y Frecuencia</h4>
+                <p>Optimiza cuándo y con qué frecuencia recopilar feedback crítico</p>
+            </button>
+            <div id="timing" class="card-details">
+                <h5>⏰ Calendario de Investigación Efectivo</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Encuestas Rápidas (1-2 preguntas)</h6>
+                        <p><strong>Frecuencia:</strong> Semanal</p>
+                        <p><strong>Propósito:</strong> Pulse checks</p>
+                        <p><strong>Timing:</strong> Post-sesión inmediato</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Encuestas Profundas (5-7 preguntas)</h6>
+                        <p><strong>Frecuencia:</strong> Bimensual</p>
+                        <p><strong>Propósito:</strong> Insights estratégicos</p>
+                        <p><strong>Timing:</strong> Días de alta engagement</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Investigación Especial (10+ preguntas)</h6>
+                        <p><strong>Frecuencia:</strong> Trimestral</p>
+                        <p><strong>Propósito:</strong> Cambios importantes</p>
+                        <p><strong>Timing:</strong> Momentos de transición</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Constructor de Encuestas -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-tools"></i>
+                🛠️ Constructor de Encuestas Inteligente
+            </h2>
+            
+            <div class="survey-builder">
+                <h4>Crea tu encuesta personalizada</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Objetivo principal de la encuesta:</label>
+                        <input type="text" class="survey-input" id="surveyObjective" placeholder="Mejorar retención de usuarios" oninput="buildSurvey()">
+                        
+                        <label>Audiencia objetivo:</label>
+                        <select class="survey-input" id="targetAudience" onchange="buildSurvey()">
+                            <option value="">Selecciona audiencia</option>
+                            <option value="nuevos">Usuarios nuevos (0-30 días)</option>
+                            <option value="regulares">Usuarios regulares (1-6 meses)</option>
+                            <option value="vip">VIP/Premium (6+ meses)</option>
+                            <option value="inactivos">Usuarios inactivos</option>
+                        </select>
+                        
+                        <label>Número de preguntas deseadas:</label>
+                        <input type="number" class="survey-input" id="questionCount" min="3" max="10" placeholder="5" oninput="buildSurvey()">
+                        
+                        <label>Estilo de encuesta:</label>
+                        <select class="survey-input" id="surveyStyle" onchange="buildSurvey()">
+                            <option value="">Selecciona estilo</option>
+                            <option value="formal">Formal/Profesional</option>
+                            <option value="casual">Casual/Amigable</option>
+                            <option value="intimate">Íntimo/Personal</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="survey-result" id="surveyResult">
+                            <h5>📝 Tu Encuesta Personalizada</h5>
+                            <div id="surveyContent">Completa los campos para generar tu encuesta</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Tipos de Pregunta -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-list-check"></i>
+                🎨 Selector de Tipos de Pregunta
+            </h2>
+            
+            <p>Experimenta con diferentes tipos de preguntas y ve ejemplos específicos</p>
+            
+            <div class="question-types">
+                <button class="question-type" onclick="selectQuestionType('likert')">
+                    <i class="fas fa-chart-bar"></i>
+                    <h5>Escala Likert</h5>
+                    <p>Medición cuantitativa precisa</p>
+                </button>
+                <button class="question-type" onclick="selectQuestionType('open')">
+                    <i class="fas fa-comment-dots"></i>
+                    <h5>Pregunta Abierta</h5>
+                    <p>Insights cualitativos profundos</p>
+                </button>
+                <button class="question-type" onclick="selectQuestionType('multiple')">
+                    <i class="fas fa-list"></i>
+                    <h5>Opción Multiple</h5>
+                    <p>Clasificación comportamental</p>
+                </button>
+                <button class="question-type" onclick="selectQuestionType('ranking')">
+                    <i class="fas fa-sort-numeric-down"></i>
+                    <h5>Ranking</h5>
+                    <p>Priorización de preferencias</p>
+                </button>
+                <button class="question-type" onclick="selectQuestionType('matrix')">
+                    <i class="fas fa-table"></i>
+                    <h5>Matriz</h5>
+                    <p>Evaluación multidimensional</p>
+                </button>
+                <button class="question-type" onclick="selectQuestionType('projective')">
+                    <i class="fas fa-eye"></i>
+                    <h5>Proyectiva</h5>
+                    <p>Revelación de sesgos ocultos</p>
+                </button>
+            </div>
+            
+            <div id="questionExample" class="survey-result" style="display: none;">
+                <h5>💡 Ejemplo de Pregunta</h5>
+                <div id="questionContent"></div>
+            </div>
+        </div>
+
+        <!-- Lab Section 4: Análisis de Respuestas -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i>
+                📊 Analizador de Respuestas
+            </h2>
+            
+            <div class="response-analyzer">
+                <h4>Interpreta tus resultados como una experta</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Número total de respuestas:</label>
+                        <input type="number" class="survey-input" id="totalResponses" placeholder="127" oninput="analyzeResponses()">
+                        
+                        <label>Tasa de respuesta (%):</label>
+                        <input type="number" class="survey-input" id="responseRate" placeholder="78" oninput="analyzeResponses()">
+                        
+                        <label>Puntuación promedio (1-10):</label>
+                        <input type="number" class="survey-input" id="averageScore" min="1" max="10" step="0.1" placeholder="7.8" oninput="analyzeResponses()">
+                        
+                        <label>Comentarios positivos (%):</label>
+                        <input type="number" class="survey-input" id="positiveComments" placeholder="67" oninput="analyzeResponses()">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="response-chart" id="responseChart">
+                            <div>
+                                <i class="fas fa-chart-pie fa-3x mb-3"></i>
+                                <p>Ingresa datos para ver el análisis visual</p>
+                            </div>
+                        </div>
+                        <div class="survey-result" id="analysisResult">
+                            <h6>📈 Análisis Automático</h6>
+                            <div id="analysisContent">Los insights aparecerán aquí</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 5: Progress Tracker -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i>
+                📈 Tracker de Maestría en Encuestas
+            </h2>
+            
+            <div class="progress-tracker">
+                <h4>Tu Progreso como Investigadora Estratégica</h4>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Diseño de Preguntas</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="questionDesign" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('questionDesign', this.value)">
+                        
+                        <h6>Timing Estratégico</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="strategicTiming" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('strategicTiming', this.value)">
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Análisis de Respuestas</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="responseAnalysis" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('responseAnalysis', this.value)">
+                        
+                        <h6>Implementación de Insights</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="insightImplementation" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('insightImplementation', this.value)">
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <h5>Nivel de Investigadora: <span id="researchLevel">Principiante</span></h5>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 6: Plantillas de Encuesta -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-clipboard-check"></i>
+                📋 Biblioteca de Plantillas Expertas
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="survey-template">
+                        <div class="template-header">
+                            <div class="template-title">Encuesta de Retención</div>
+                            <div class="template-category">Usuarios Existentes</div>
+                        </div>
+                        <p>Descubre por qué los usuarios se quedan o se van</p>
+                        <ul>
+                            <li>¿Qué te mantiene vinculado/a a mis transmisiones?</li>
+                            <li>¿Cuál es tu momento favorito en nuestras sesiones?</li>
+                            <li>¿Qué cambiarías para mejorar tu experiencia?</li>
+                            <li>¿Recomiendas mis transmisiones? ¿Por qué?</li>
+                        </ul>
+                        <button class="btn-custom btn-primary-custom" onclick="useTemplate('retention')">
+                            <i class="fas fa-download"></i> Usar Plantilla
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="survey-template">
+                        <div class="template-header">
+                            <div class="template-title">Encuesta de Contenido</div>
+                            <div class="template-category">Optimización</div>
+                        </div>
+                        <p>Optimiza tu contenido basado en preferencias reales</p>
+                        <ul>
+                            <li>¿Qué tipo de contenido prefieres? (Ranking 1-5)</li>
+                            <li>¿Cuánto tiempo ideal dura una sesión perfecta?</li>
+                            <li>¿Qué temas te interesan más?</li>
+                            <li>¿Hay algo que evitas? ¿Por qué?</li>
+                        </ul>
+                        <button class="btn-custom btn-primary-custom" onclick="useTemplate('content')">
+                            <i class="fas fa-download"></i> Usar Plantilla
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="survey-template">
+                        <div class="template-header">
+                            <div class="template-title">Encuesta de Pricing</div>
+                            <div class="template-category">Monetización</div>
+                        </div>
+                        <p>Optimiza tu estrategia de precios con data real</p>
+                        <ul>
+                            <li>¿Cómo percibes el valor de nuestras sesiones?</li>
+                            <li>¿Qué servicios premium te interesan más?</li>
+                            <li>¿Cuál es tu rango de inversión mensual?</li>
+                            <li>¿Qué te motivaría a invertir más?</li>
+                        </ul>
+                        <button class="btn-custom btn-primary-custom" onclick="useTemplate('pricing')">
+                            <i class="fas fa-download"></i> Usar Plantilla
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="survey-template">
+                        <div class="template-header">
+                            <div class="template-title">Encuesta de Nuevos Usuarios</div>
+                            <div class="template-category">Onboarding</div>
+                        </div>
+                        <p>Comprende las primeras impresiones críticas</p>
+                        <ul>
+                            <li>¿Cómo descubriste mis transmisiones?</li>
+                            <li>¿Qué te atrajo inicialmente?</li>
+                            <li>¿Cumplió con tus expectativas la primera sesión?</li>
+                            <li>¿Qué mejorarías del proceso inicial?</li>
+                        </ul>
+                        <button class="btn-custom btn-primary-custom" onclick="useTemplate('newuser')">
+                            <i class="fas fa-download"></i> Usar Plantilla
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-story">
+            <h3><i class="fas fa-trophy"></i> Caso de Éxito: Carmen - La Investigadora Estratégica</h3>
+            <p>"Implementé mi <strong>'Sistema de Inteligencia Directa'</strong> con encuestas bimensuales meticulosamente diseñadas. No uso preguntas genéricas, sino instrumentos concisos (5-7 preguntas) combinando escalas numéricas y preguntas abiertas, estructuradas para minimizar sesgos e incluir componentes proyectivos. Correlaciono respuestas con comportamiento real documentado."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+189%</span>
+                    <span>Mejora en retención</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$4,680</span>
+                    <span>Ingreso mensual promedio</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">87%</span>
+                    <span>Tasa de respuesta</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">156</span>
+                    <span>Insights accionables</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-star"></i> Caso de Éxito: Valentina - La Maestra del Feedback</h3>
+            <p>"Descubrí que un segmento abandonaba durante transiciones específicas. Mi encuesta reveló una motivación inesperada: no era el contenido sino la percepción de 'promesa incumplida' por expectativas generadas en la introducción. Un ajuste mínimo resolvió el problema completamente manteniendo elementos esenciales."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+247%</span>
+                    <span>Aumento en engagement</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$6,230</span>
+                    <span>Récord mensual</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">94%</span>
+                    <span>Satisfacción usuarios</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">73</span>
+                    <span>Mejoras implementadas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-rocket"></i> Caso de Éxito: Isabella - La Experta en Insights</h3>
+            <p>"Desarrollé un proceso para traducir descubrimientos en modificaciones específicas implementables. Mantengo encuestas breves priorizando tasa de respuesta, implemento combinación estratégica de preguntas cuantitativas y cualitativas, y correlaciono respuestas con comportamiento documentado para identificar insights verdaderamente accionables."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+312%</span>
+                    <span>ROI en investigación</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$8,450</span>
+                    <span>Ingreso pico mensual</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">96%</span>
+                    <span>Precisión predictiva</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">Top 1%</span>
+                    <span>Ranking investigación</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-graduation-cap"></i> ¡Felicitaciones! Te has convertido en una Investigadora Estratégica</h2>
+            <p class="lead">Tu infraestructura de feedback transforma fundamentalmente tu comprensión del valor percibido</p>
+            <p>La diferencia entre datos cuantitativos aislados y contexto cualitativo integrado es la línea divisoria entre conocer qué hacen tus usuarios y comprender genuinamente por qué lo hacen, revelando oportunidades de optimización invisibles en métricas superficiales.</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <i class="fas fa-question-circle fa-2x mb-2"></i>
+                    <h5>Maestría en Diseño</h5>
+                    <p>Preguntas estratégicamente calibradas</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                    <h5>Análisis Profundo</h5>
+                    <p>Interpretación experta de respuestas</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-lightbulb fa-2x mb-2"></i>
+                    <h5>Insights Accionables</h5>
+                    <p>Traducción de datos en mejoras</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-users fa-2x mb-2"></i>
+                    <h5>Relación Usuarios</h5>
+                    <p>Usuarios como consultores estratégicos</p>
+                </div>
+            </div>
+            
+            <button class="btn-custom btn-primary-custom mt-4" onclick="startResearch()">
+                <i class="fas fa-poll"></i> ¡A crear tu sistema de inteligencia directa!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentTime').textContent = 
+                `Actualizado: ${now.toLocaleDateString('es-ES', options)}`;
+        }
+
+        // Toggle details function
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('expanded');
+        }
+
+        // Build survey
+        function buildSurvey() {
+            const objective = document.getElementById('surveyObjective').value;
+            const audience = document.getElementById('targetAudience').value;
+            const questionCount = parseInt(document.getElementById('questionCount').value) || 5;
+            const style = document.getElementById('surveyStyle').value;
+            
+            if (objective && audience && style) {
+                const surveys = {
+                    nuevos: {
+                        formal: [
+                            "¿Cómo calificaría su primera experiencia con nuestras transmisiones? (1-10)",
+                            "¿Qué aspectos específicos le resultaron más atractivos?",
+                            "¿Cumplieron nuestras sesiones con sus expectativas iniciales?",
+                            "¿Qué mejorarías en el proceso de introducción?",
+                            "¿Recomendarías nuestras transmisiones a otros usuarios?"
+                        ],
+                        casual: [
+                            "¿Cómo estuvo tu primera vez conmigo? 😊 (1-10)",
+                            "¿Qué fue lo que más te gustó?",
+                            "¿Era lo que esperabas o te sorprendí?",
+                            "¿Qué cambiarías para que fuera perfecto?",
+                            "¿Se lo contarías a tus amigos?"
+                        ],
+                        intimate: [
+                            "¿Cómo te sentiste en nuestra primera conexión? ❤️ (1-10)",
+                            "¿Qué despertó tu interés en mí?",
+                            "¿Sentiste esa química especial que buscabas?",
+                            "¿Cómo podría hacer que te sintieras más cómodo/a?",
+                            "¿Volverías a buscarme?"
+                        ]
+                    },
+                    regulares: {
+                        formal: [
+                            "¿Cómo evaluaría la consistencia de nuestras transmisiones? (1-10)",
+                            "¿Qué aspectos valora más de nuestras sesiones regulares?",
+                            "¿Ha notado mejoras en la calidad del contenido?",
+                            "¿Qué nuevas características le gustaría ver?",
+                            "¿Cómo describiría su nivel de satisfacción general?"
+                        ],
+                        casual: [
+                            "¿Cómo va nuestra relación? 😄 (1-10)",
+                            "¿Qué es lo que más disfrutas de nuestro tiempo juntos?",
+                            "¿Sientes que he mejorado desde que nos conocimos?",
+                            "¿Qué nuevas aventuras te gustaría que probáramos?",
+                            "¿Estás feliz conmigo?"
+                        ],
+                        intimate: [
+                            "¿Cómo sientes que fluye nuestra conexión? 💕 (1-10)",
+                            "¿Cuáles son esos momentos que más atesoras conmigo?",
+                            "¿Sientes que cada vez nos conocemos mejor?",
+                            "¿Hay algo especial que te gustaría explorar juntos?",
+                            "¿Te sientes valorado/a y especial conmigo?"
+                        ]
+                    },
+                    vip: {
+                        formal: [
+                            "¿Cómo calificaría el valor de su inversión en nuestros servicios premium? (1-10)",
+                            "¿Qué beneficios exclusivos aprecia más?",
+                            "¿Cómo podríamos mejorar su experiencia VIP?",
+                            "¿Qué servicios adicionales le interesarían?",
+                            "¿Recomendaría nuestros servicios premium a otros?"
+                        ],
+                        casual: [
+                            "¿Vale la pena ser VIP conmigo? 👑 (1-10)",
+                            "¿Cuál es tu beneficio favorito de ser especial?",
+                            "¿Cómo puedo mimarte aún más?",
+                            "¿Qué otros privilegios te gustaría tener?",
+                            "¿Les dirías a otros lo genial que es ser VIP?"
+                        ],
+                        intimate: [
+                            "¿Te sientes realmente especial siendo mi VIP? 💎 (1-10)",
+                            "¿Qué momentos exclusivos más valoras?",
+                            "¿Cómo puedo hacer que te sientas aún más único/a?",
+                            "¿Qué experiencias íntimas te gustaría que fueran solo nuestras?",
+                            "¿Sientes que tenemos una conexión verdaderamente especial?"
+                        ]
+                    }
+                };
+                
+                const selectedQuestions = surveys[audience][style].slice(0, questionCount);
+                let surveyHtml = `<h6>📋 Encuesta: ${objective}</h6>
+                                  <p><strong>Audiencia:</strong> ${audience} | <strong>Estilo:</strong> ${style}</p>
+                                  <ol>`;
+                
+                selectedQuestions.forEach((question, index) => {
+                    surveyHtml += `<li>${question}</li>`;
+                });
+                
+                surveyHtml += `</ol>
+                               <div class="mt-3">
+                                   <button class="btn-custom btn-secondary-custom" onclick="copySurvey()">
+                                       <i class="fas fa-copy"></i> Copiar Encuesta
+                                   </button>
+                               </div>`;
+                
+                document.getElementById('surveyContent').innerHTML = surveyHtml;
+            }
+        }
+
+        // Select question type
+        function selectQuestionType(type) {
+            document.querySelectorAll('.question-type').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            event.target.closest('.question-type').classList.add('selected');
+            
+            const examples = {
+                likert: {
+                    title: '📊 Escala Likert',
+                    question: '¿Cómo calificarías la calidad de nuestras transmisiones?',
+                    options: '1 - Muy mala | 2 - Mala | 3 - Regular | 4 - Buena | 5 - Excelente',
+                    use: 'Perfecta para medir satisfacción, calidad, frecuencia'
+                },
+                open: {
+                    title: '💬 Pregunta Abierta',
+                    question: '¿Qué es lo que más valoras de nuestras sesiones y por qué?',
+                    options: '[Respuesta libre del usuario]',
+                    use: 'Ideal para insights profundos, motivaciones, sugerencias'
+                },
+                multiple: {
+                    title: '☑️ Opción Múltiple',
+                    question: '¿Qué tipo de contenido prefieres? (Selecciona todas las que apliquen)',
+                    options: '□ Conversación casual □ Contenido íntimo □ Juegos/Entretenimiento □ Consejos/Coaching',
+                    use: 'Excelente para categorizar preferencias, comportamientos'
+                },
+                ranking: {
+                    title: '🏆 Ranking',
+                    question: 'Ordena estos elementos por importancia (1 = más importante)',
+                    options: '__ Conexión personal __ Contenido de calidad __ Horarios convenientes __ Precio justo',
+                    use: 'Útil para priorizar características, identificar lo más valorado'
+                },
+                matrix: {
+                    title: '📋 Matriz',
+                    question: 'Evalúa estos aspectos de nuestras transmisiones:',
+                    options: '         Malo | Regular | Bueno | Excelente\nCalidad:   □  |    □    |   □   |    □\nTiming:    □  |    □    |   □   |    □',
+                    use: 'Ideal para evaluar múltiples características simultáneamente'
+                },
+                projective: {
+                    title: '🎭 Proyectiva',
+                    question: 'Si tuvieras que describir nuestras transmisiones como una persona, ¿cómo sería?',
+                    options: '[Respuesta libre revelando percepciones subconscientes]',
+                    use: 'Revela percepciones ocultas, asociaciones emocionales'
+                }
+            };
+            
+            const selected = examples[type];
+            document.getElementById('questionExample').style.display = 'block';
+            document.getElementById('questionContent').innerHTML = `
+                <h5>${selected.title}</h5>
+                <div class="row">
+                    <div class="col-md-8">
+                        <p><strong>Ejemplo:</strong> ${selected.question}</p>
+                        <p><strong>Opciones:</strong> ${selected.options}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><strong>Mejor uso:</strong> ${selected.use}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Analyze responses
+        function analyzeResponses() {
+            const total = parseInt(document.getElementById('totalResponses').value) || 0;
+            const rate = parseInt(document.getElementById('responseRate').value) || 0;
+            const score = parseFloat(document.getElementById('averageScore').value) || 0;
+            const positive = parseInt(document.getElementById('positiveComments').value) || 0;
+            
+            if (total > 0 && rate > 0 && score > 0) {
+                let quality = 'Excelente';
+                let color = '#10b981';
+                if (score < 6) { quality = 'Necesita Mejoras'; color = '#ef4444'; }
+                else if (score < 7.5) { quality = 'Buena'; color = '#f59e0b'; }
+                
+                let engagement = 'Alto';
+                if (rate < 50) engagement = 'Bajo';
+                else if (rate < 75) engagement = 'Moderado';
+                
+                document.getElementById('responseChart').innerHTML = `
+                    <div>
+                        <div style="font-size: 3rem; color: ${color}; margin-bottom: 1rem;">
+                            ${score.toFixed(1)}/10
+                        </div>
+                        <p><strong>Calidad:</strong> ${quality}</p>
+                        <p><strong>Engagement:</strong> ${engagement}</p>
+                    </div>
+                `;
+                
+                const insights = [];
+                if (rate > 80) insights.push('📈 Excelente participación - tu audiencia está muy comprometida');
+                if (score > 8) insights.push('⭐ Puntuación excepcional - mantén esta calidad');
+                if (positive > 70) insights.push('😊 Feedback muy positivo - explora qué funciona mejor');
+                if (rate < 50) insights.push('⚠️ Baja participación - considera acortar o cambiar timing');
+                if (score < 6) insights.push('🔧 Área de mejora identificada - analiza comentarios específicos');
+                
+                document.getElementById('analysisContent').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>📊 Métricas Clave</h6>
+                            <p><strong>Respuestas:</strong> ${total}</p>
+                            <p><strong>Tasa:</strong> ${rate}%</p>
+                            <p><strong>Puntuación:</strong> ${score}/10</p>
+                            <p><strong>Positivos:</strong> ${positive}%</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🎯 Insights Accionables</h6>
+                            ${insights.map(insight => `<p>${insight}</p>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Update progress
+        function updateProgress(progressId, value) {
+            document.getElementById(progressId).style.width = value + '%';
+            calculateOverallProgress();
+        }
+
+        // Calculate overall progress
+        function calculateOverallProgress() {
+            const questionDesign = parseFloat(document.getElementById('questionDesign').style.width) || 0;
+            const strategicTiming = parseFloat(document.getElementById('strategicTiming').style.width) || 0;
+            const responseAnalysis = parseFloat(document.getElementById('responseAnalysis').style.width) || 0;
+            const insightImplementation = parseFloat(document.getElementById('insightImplementation').style.width) || 0;
+            
+            const overall = (questionDesign + strategicTiming + responseAnalysis + insightImplementation) / 4;
+            document.getElementById('overallProgress').style.width = overall + '%';
+            
+            let level = 'Principiante';
+            if (overall >= 80) level = 'Experta';
+            else if (overall >= 60) level = 'Avanzada';
+            else if (overall >= 40) level = 'Intermedia';
+            
+            document.getElementById('researchLevel').textContent = level;
+        }
+
+        // Use template
+        function useTemplate(templateType) {
+            const templates = {
+                retention: 'Plantilla de Retención copiada al portapapeles',
+                content: 'Plantilla de Contenido copiada al portapapeles',
+                pricing: 'Plantilla de Pricing copiada al portapapeles',
+                newuser: 'Plantilla de Nuevos Usuarios copiada al portapapeles'
+            };
+            
+            alert(templates[templateType] || 'Plantilla copiada al portapapeles');
+        }
+
+        // Copy survey
+        function copySurvey() {
+            alert('¡Encuesta copiada al portapapeles! Lista para implementar.');
+        }
+
+        // Start research function
+        function startResearch() {
+            alert('¡Excelente! Te has convertido en una Investigadora Estratégica. Tu sistema de inteligencia directa transformará tu comprensión del valor percibido. ¡A crear encuestas que revelen insights invisibles!');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000); // Update every minute
+            
+            // Add some initial animations
+            setTimeout(() => {
+                document.querySelector('.floating-bg').style.opacity = '0.05';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

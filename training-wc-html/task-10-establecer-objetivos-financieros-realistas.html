@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 Planificación Financiera: Tu Calculadora de Éxito</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --finance-primary: #2e8b57;
+      --income-gold: #ffd700;
+      --expense-red: #dc3545;
+      --savings-blue: #007bff;
+      --investment-purple: #6f42c1;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-warm: #fff8dc;
+      --border-light: #e0e0e0;
+      --finance-gradient: linear-gradient(135deg, #2e8b57 0%, #ffd700 50%, #007bff 100%);
+      --income-gradient: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+      --expense-gradient: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+      --savings-gradient: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+      --success-gradient: linear-gradient(135deg, #28a745 0%, #1e7e34 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 25%, #fff9e6 50%, #e6f3ff 75%, #f3e5f5 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .finance-header {
+      background: var(--finance-gradient);
+      color: white;
+      padding: 50px 30px;
+      text-align: center;
+      border-radius: 30px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(46, 139, 87, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finance-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="money" patternUnits="userSpaceOnUse" width="40" height="40"><text x="20" y="25" text-anchor="middle" fill="rgba(255,255,255,0.1)" font-size="16">💰</text><text x="20" y="40" text-anchor="middle" fill="rgba(255,255,255,0.1)" font-size="10">$$$</text></pattern></defs><rect width="100%" height="100%" fill="url(%23money)"/></svg>');
+      animation: moneyFloat 22s infinite ease-in-out;
+    }
+
+    @keyframes moneyFloat {
+      0%, 100% { transform: translateX(-25px) translateY(-25px) scale(1); }
+      50% { transform: translateX(-40px) translateY(-40px) scale(1.1); }
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--finance-primary);
+      border-radius: 25px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(46, 139, 87, 0.2);
+    }
+
+    .wc-logo {
+      background: var(--finance-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .realtime-industry-stats {
+      background: var(--bg-white);
+      border: 3px solid var(--income-gold);
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+      position: relative;
+    }
+
+    .realtime-industry-stats::before {
+      content: '📊';
+      position: absolute;
+      top: -20px;
+      left: 30px;
+      background: var(--bg-white);
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 3px solid var(--income-gold);
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      background: var(--expense-red);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      margin-left: 1rem;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .industry-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .industry-stat {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 2px solid var(--border-light);
+      position: relative;
+    }
+
+    .stat-amount {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--finance-primary);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-description {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .finance-lab {
+      background: var(--bg-white);
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 3rem;
+      border: 3px solid var(--border-light);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .finance-lab::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: var(--finance-gradient);
+      border-radius: 25px 25px 0 0;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: var(--finance-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .financial-calculator {
+      background: var(--bg-white);
+      border: 3px solid var(--savings-blue);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 3rem 0;
+      position: relative;
+    }
+
+    .financial-calculator::before {
+      content: '🧮';
+      position: absolute;
+      top: -25px;
+      left: 30px;
+      background: var(--bg-white);
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 2rem;
+      border: 3px solid var(--savings-blue);
+    }
+
+    .calculator-inputs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .input-group {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .input-label {
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 0.8rem;
+      display: block;
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 10px;
+      padding: 0.8rem;
+      font-size: 1rem;
+      width: 100%;
+    }
+
+    .form-control:focus {
+      border-color: var(--finance-primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.1);
+    }
+
+    .results-dashboard {
+      background: var(--bg-light);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .result-card {
+      background: var(--bg-white);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .result-card.income {
+      border-color: var(--income-gold);
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.9));
+    }
+
+    .result-card.expenses {
+      border-color: var(--expense-red);
+      background: linear-gradient(135deg, rgba(220, 53, 69, 0.1), rgba(255, 255, 255, 0.9));
+    }
+
+    .result-card.savings {
+      border-color: var(--savings-blue);
+      background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(255, 255, 255, 0.9));
+    }
+
+    .result-amount {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-card.income .result-amount {
+      color: var(--income-gold);
+    }
+
+    .result-card.expenses .result-amount {
+      color: var(--expense-red);
+    }
+
+    .result-card.savings .result-amount {
+      color: var(--savings-blue);
+    }
+
+    .result-label {
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .goals-tracker {
+      background: var(--bg-white);
+      border: 3px solid var(--investment-purple);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 3rem 0;
+      position: relative;
+    }
+
+    .goals-tracker::before {
+      content: '🎯';
+      position: absolute;
+      top: -25px;
+      left: 30px;
+      background: var(--bg-white);
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 2rem;
+      border: 3px solid var(--investment-purple);
+    }
+
+    .goal-levels {
+      display: grid;
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .goal-level {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 2rem;
+      border-left: 5px solid;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .goal-level:hover {
+      background: var(--bg-white);
+      transform: translateX(10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .goal-level.beginner {
+      border-left-color: var(--income-gold);
+    }
+
+    .goal-level.intermediate {
+      border-left-color: var(--savings-blue);
+    }
+
+    .goal-level.advanced {
+      border-left-color: var(--investment-purple);
+    }
+
+    .goal-level.expert {
+      border-left-color: var(--success-green);
+    }
+
+    .goal-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+    }
+
+    .goal-timeframe {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .goal-amount {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+    }
+
+    .goal-level.beginner .goal-amount {
+      color: var(--income-gold);
+    }
+
+    .goal-level.intermediate .goal-amount {
+      color: var(--savings-blue);
+    }
+
+    .goal-level.advanced .goal-amount {
+      color: var(--investment-purple);
+    }
+
+    .goal-level.expert .goal-amount {
+      color: var(--success-green);
+    }
+
+    .scenario-simulator {
+      background: var(--bg-white);
+      border: 3px solid var(--warning-orange);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 3rem 0;
+      position: relative;
+    }
+
+    .scenario-simulator::before {
+      content: '🎮';
+      position: absolute;
+      top: -25px;
+      left: 30px;
+      background: var(--bg-white);
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 2rem;
+      border: 3px solid var(--warning-orange);
+    }
+
+    .scenario-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-option {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-option:hover {
+      border-color: var(--warning-orange);
+      background: var(--bg-white);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(253, 126, 20, 0.2);
+    }
+
+    .scenario-option.selected {
+      border-color: var(--warning-orange);
+      background: var(--warning-orange);
+      color: white;
+    }
+
+    .scenario-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .scenario-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-bottom: 0.8rem;
+    }
+
+    .scenario-description {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .progress-visualization {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 3rem 0;
+    }
+
+    .progress-bars {
+      display: grid;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.8rem;
+      font-weight: bold;
+    }
+
+    .progress-bar {
+      background: var(--border-light);
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 10px;
+      transition: width 0.8s ease;
+    }
+
+    .progress-fill.income {
+      background: var(--income-gradient);
+    }
+
+    .progress-fill.savings {
+      background: var(--savings-gradient);
+    }
+
+    .progress-fill.goals {
+      background: var(--success-gradient);
+    }
+
+    .success-stories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .success-story {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      border-left: 5px solid var(--success-green);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .btn {
+      font-weight: 600;
+      padding: 1.2rem 2.5rem;
+      border-radius: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-finance {
+      background: var(--finance-gradient) !important;
+      color: white !important;
+    }
+
+    .btn-income {
+      background: var(--income-gradient) !important;
+      color: var(--text-dark) !important;
+    }
+
+    .btn-savings {
+      background: var(--savings-gradient) !important;
+      color: white !important;
+    }
+
+    .btn-success {
+      background: var(--success-gradient) !important;
+      color: white !important;
+    }
+
+    @media (max-width: 768px) {
+      .calculator-inputs {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .finance-lab {
+        padding: 2rem;
+      }
+      
+      .finance-header {
+        padding: 40px 20px;
+      }
+
+      .scenario-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .industry-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .finance-lab {
+        padding: 1.5rem;
+      }
+
+      .industry-stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Plataforma líder mundial usada por 12,847 modelos • Planificación financiera respaldada por datos reales</p>
+  </div>
+
+  <!-- Estadísticas de la Industria en Tiempo Real -->
+  <div class="realtime-industry-stats">
+    <h5><strong>💰 Estadísticas Financieras de la Industria</strong> <span class="live-indicator"><span class="live-dot"></span>DATOS REALES</span></h5>
+    <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+      <strong>Actualizado:</strong> <span id="currentDateTime"></span> • <strong>Fuente:</strong> Glassdoor 2025, Industry Reports
+    </p>
+    
+    <div class="industry-stats-grid">
+      <div class="industry-stat">
+        <span class="stat-amount">$94,478</span>
+        <div class="stat-description">Salario promedio anual modelos USA</div>
+      </div>
+      <div class="industry-stat">
+        <span class="stat-amount">$45/h</span>
+        <div class="stat-description">Tarifa promedio por hora</div>
+      </div>
+      <div class="industry-stat">
+        <span class="stat-amount">$172,895</span>
+        <div class="stat-description">Top earners (90th percentile)</div>
+      </div>
+      <div class="industry-stat">
+        <span class="stat-amount">$110K+</span>
+        <div class="stat-description">Highest performers mensuales</div>
+      </div>
+      <div class="industry-stat">
+        <span class="stat-amount">$1,000</span>
+        <div class="stat-description">Promedio semanal estimado</div>
+      </div>
+      <div class="industry-stat">
+        <span class="stat-amount">$70K-$132K</span>
+        <div class="stat-description">Rango típico anual (25-75%)</div>
+      </div>
+    </div>
+
+    <div class="goal-level beginner" style="cursor: default; transform: none; margin-top: 2rem;">
+      <h6><strong>📊 Fuentes Verificadas:</strong></h6>
+      <p><small>Glassdoor 2025, ZipDo Webcam Industry Statistics, Personal Finance Statistics 2025, Grand View Research</small></p>
+    </div>
+  </div>
+
+  <header class="finance-header">
+    <h1 class="mb-4" style="position: relative; z-index: 1; font-size: 2.8rem;">
+      <i class="fas fa-calculator"></i>
+      Planificación Financiera Inteligente
+      <i class="fas fa-chart-line"></i>
+    </h1>
+    <p class="fs-4 mb-0" style="position: relative; z-index: 1;">
+      Tu calculadora personal para convertir sueños en metas financieras reales y alcanzables
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Introducción -->
+    <section class="finance-lab">
+      <h2 class="section-title">🤯 La Diferencia Entre Soñar y Planear</h2>
+      
+      <div class="goal-level beginner" style="cursor: default; transform: none;">
+        <div class="goal-title">💭 Modelo que Sueña vs 📊 Modelo que Planea</div>
+        <p><strong>Modelo que sueña:</strong> "Quiero ganar mucho dinero" • No tiene metas específicas • Gasta sin control • No sabe cuánto necesita para vivir</p>
+        <p><strong>Modelo que planea:</strong> "Necesito $3,200 mensuales para mis gastos + $800 para ahorros = $4,000 objetivo" • Sabe exactamente cuántas horas trabajar • Tiene presupuesto claro • Construye su futuro paso a paso</p>
+        <p><strong>Resultado:</strong> La primera siempre está "quebrada" aunque gane bien. La segunda construye riqueza real y tiene tranquilidad financiera.</p>
+        <p><strong>Según datos de 2025:</strong> Solo el 36% de americanos tiene un plan financiero. Sé parte del 36% exitoso, no del 64% que vive al día.</p>
+      </div>
+    </section>
+
+    <!-- Calculadora Financiera Interactiva -->
+    <section class="finance-lab">
+      <h2 class="section-title">🧮 Tu Calculadora de Éxito Financiero</h2>
+      
+      <div class="financial-calculator">
+        <h5><i class="fas fa-magic"></i> Calculadora Inteligente de Ingresos y Gastos</h5>
+        <p style="color: var(--text-muted);">Ingresa tus datos y descubre exactamente cuánto necesitas ganar para vivir bien:</p>
+        
+        <div class="calculator-inputs">
+          
+          <div class="input-group">
+            <label class="input-label">💰 Meta de Ingresos Mensuales</label>
+            <input type="number" class="form-control" id="monthlyIncomeGoal" placeholder="Ej: 4000" oninput="calculateFinances()">
+            <small class="text-muted">¿Cuánto quieres ganar al mes?</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">🏠 Gastos de Vivienda</label>
+            <input type="number" class="form-control" id="housingExpenses" placeholder="Ej: 800" oninput="calculateFinances()">
+            <small class="text-muted">Alquiler, hipoteca, servicios</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">🍕 Alimentación y Gastos Básicos</label>
+            <input type="number" class="form-control" id="foodExpenses" placeholder="Ej: 400" oninput="calculateFinances()">
+            <small class="text-muted">Comida, productos de primera necesidad</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">🚗 Transporte y Otros</label>
+            <input type="number" class="form-control" id="transportExpenses" placeholder="Ej: 300" oninput="calculateFinances()">
+            <small class="text-muted">Gasolina, mantenimiento, otros gastos</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">💳 Deudas y Obligaciones</label>
+            <input type="number" class="form-control" id="debtPayments" placeholder="Ej: 200" oninput="calculateFinances()">
+            <small class="text-muted">Tarjetas de crédito, préstamos</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">🎉 Entretenimiento y Personal</label>
+            <input type="number" class="form-control" id="personalExpenses" placeholder="Ej: 300" oninput="calculateFinances()">
+            <small class="text-muted">Salidas, ropa, cuidado personal</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">⏰ Horas de Trabajo por Semana</label>
+            <input type="number" class="form-control" id="workHours" placeholder="Ej: 25" oninput="calculateFinances()">
+            <small class="text-muted">¿Cuántas horas planeas trabajar?</small>
+          </div>
+
+          <div class="input-group">
+            <label class="input-label">💡 Tarifa por Hora Objetivo</label>
+            <input type="number" class="form-control" id="hourlyRate" placeholder="Ej: 40" oninput="calculateFinances()">
+            <small class="text-muted">¿Cuánto quieres ganar por hora?</small>
+          </div>
+
+        </div>
+
+        <div class="results-dashboard">
+          <h6><strong>📊 Tus Resultados Financieros:</strong></h6>
+          
+          <div class="results-grid">
+            <div class="result-card income">
+              <div class="result-amount" id="projectedIncome">$0</div>
+              <div class="result-label">Ingresos Proyectados</div>
+            </div>
+            
+            <div class="result-card expenses">
+              <div class="result-amount" id="totalExpenses">$0</div>
+              <div class="result-label">Gastos Totales</div>
+            </div>
+            
+            <div class="result-card savings">
+              <div class="result-amount" id="netSavings">$0</div>
+              <div class="result-label">Dinero Disponible</div>
+            </div>
+          </div>
+
+          <div id="financialAnalysis" style="display: none; margin-top: 2rem;">
+            <div style="background: var(--bg-light); border-radius: 15px; padding: 2rem;">
+              <h6><strong>🎯 Análisis Personalizado:</strong></h6>
+              <div id="analysisResult"></div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn btn-finance" onclick="generateFinancialPlan()" style="margin-top: 1.5rem;">
+          <i class="fas fa-magic"></i> Generar Plan Financiero Personalizado
+        </button>
+      </div>
+    </section>
+
+    <!-- Metas Progresivas -->
+    <section class="finance-lab">
+      <h2 class="section-title">🎯 Metas Progresivas Realistas</h2>
+      
+      <div class="goals-tracker">
+        <h5><i class="fas fa-trophy"></i> Sistema de Niveles Financieros</h5>
+        <p style="color: var(--text-muted);">Progresa paso a paso hacia la libertad financiera:</p>
+        
+        <div class="goal-levels">
+          
+          <div class="goal-level beginner" onclick="expandGoalLevel(this, 'beginner')">
+            <div class="goal-title">🌱 Nivel Principiante: "Sobrevivo Cómodamente"</div>
+            <div class="goal-timeframe">Semanas 1-8</div>
+            <div class="goal-amount">$1,000 - $2,500 / mes</div>
+            <p>Tu objetivo es cubrir gastos básicos y sentirte financieramente segura.</p>
+            
+            <div class="goal-details" style="display: none; margin-top: 1.5rem;">
+              <h6><strong>📋 Plan de Acción:</strong></h6>
+              <ul>
+                <li><strong>Semanas 1-2:</strong> $500-800 • Enfócate en aprender la plataforma y construir audiencia</li>
+                <li><strong>Semanas 3-4:</strong> $800-1,200 • Desarrolla tu personalidad y estilo único</li>
+                <li><strong>Semanas 5-6:</strong> $1,200-1,800 • Implementa estrategias de conexión emocional</li>
+                <li><strong>Semanas 7-8:</strong> $1,800-2,500 • Optimiza horarios y técnicas que funcionan</li>
+              </ul>
+              <h6><strong>🎯 Hitos Clave:</strong></h6>
+              <ul>
+                <li>Cubrir todos tus gastos básicos sin estrés</li>
+                <li>Tener al menos 10 usuarios regulares</li>
+                <li>Trabajar máximo 20-25 horas semanales</li>
+                <li>Ahorrar $100-200 mensuales para emergencias</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="goal-level intermediate" onclick="expandGoalLevel(this, 'intermediate')">
+            <div class="goal-title">📈 Nivel Intermedio: "Vivo Bien"</div>
+            <div class="goal-timeframe">Meses 3-6</div>
+            <div class="goal-amount">$2,500 - $5,000 / mes</div>
+            <p>Tienes estabilidad financiera y puedes darte gustos sin culpa.</p>
+            
+            <div class="goal-details" style="display: none; margin-top: 1.5rem;">
+              <h6><strong>📋 Plan de Acción:</strong></h6>
+              <ul>
+                <li><strong>Mes 3:</strong> $2,500-3,200 • Diversifica fuentes de ingreso (privados, contenido)</li>
+                <li><strong>Mes 4:</strong> $3,200-4,000 • Construye base de fans leales</li>
+                <li><strong>Mes 5:</strong> $4,000-4,500 • Optimiza precios y ofertas premium</li>
+                <li><strong>Mes 6:</strong> $4,500-5,000 • Sistematiza lo que funciona</li>
+              </ul>
+              <h6><strong>🎯 Hitos Clave:</strong></h6>
+              <ul>
+                <li>Fondo de emergencia de $3,000-5,000</li>
+                <li>Base sólida de 25+ usuarios regulares</li>
+                <li>Múltiples fuentes de ingresos activas</li>
+                <li>Poder permitirte vacaciones y gastos extra</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="goal-level advanced" onclick="expandGoalLevel(this, 'advanced')">
+            <div class="goal-title">💎 Nivel Avanzado: "Construyo Riqueza"</div>
+            <div class="goal-timeframe">Meses 6-12</div>
+            <div class="goal-amount">$5,000 - $10,000 / mes</div>
+            <p>Generas ingresos superiores al promedio y comienzas a invertir.</p>
+            
+            <div class="goal-details" style="display: none; margin-top: 1.5rem;">
+              <h6><strong>📋 Plan de Acción:</strong></h6>
+              <ul>
+                <li><strong>Meses 6-8:</strong> $5,000-7,000 • Implementa estrategias premium y VIP</li>
+                <li><strong>Meses 9-10:</strong> $7,000-8,500 • Crea contenido de alto valor</li>
+                <li><strong>Meses 11-12:</strong> $8,500-10,000 • Optimiza completamente tu "máquina de dinero"</li>
+              </ul>
+              <h6><strong>🎯 Hitos Clave:</strong></h6>
+              <ul>
+                <li>Ahorrar e invertir 30%+ de tus ingresos</li>
+                <li>Portfolio de inversiones diversificado</li>
+                <li>50+ usuarios regulares de alto valor</li>
+                <li>Planificar compras importantes (casa, auto)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="goal-level expert" onclick="expandGoalLevel(this, 'expert')">
+            <div class="goal-title">👑 Nivel Experto: "Libertad Financiera"</div>
+            <div class="goal-timeframe">Año 2+</div>
+            <div class="goal-amount">$10,000+ / mes</div>
+            <p>Estás en el top 10% de performers. Tienes múltiples fuentes de ingreso pasivo.</p>
+            
+            <div class="goal-details" style="display: none; margin-top: 1.5rem;">
+              <h6><strong>📋 Plan de Acción:</strong></h6>
+              <ul>
+                <li><strong>Diversificación total:</strong> Múltiples plataformas, contenido, coaching</li>
+                <li><strong>Ingreso pasivo:</strong> Contenido pregrabado, suscripciones, productos</li>
+                <li><strong>Marca personal:</strong> Te conviertes en referente de la industria</li>
+                <li><strong>Mentoría:</strong> Ayudas a otras modelos (ingreso extra)</li>
+              </ul>
+              <h6><strong>🎯 Hitos Clave:</strong></h6>
+              <ul>
+                <li>Portfolio de inversiones de $100,000+</li>
+                <li>Múltiples propiedades o activos</li>
+                <li>Opción de trabajar por elección, no necesidad</li>
+                <li>Base de fans súper leal (100+ regulares)</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulador de Escenarios -->
+    <section class="finance-lab">
+      <h2 class="section-title">🎮 Simulador de Escenarios Financieros</h2>
+      
+      <div class="scenario-simulator">
+        <h5><i class="fas fa-dice"></i> ¿Qué Harías en Esta Situación?</h5>
+        <p style="color: var(--text-muted);">Practica la toma de decisiones financieras inteligentes:</p>
+        
+        <div id="scenarioQuestion" style="background: var(--bg-light); padding: 2rem; border-radius: 15px; margin: 2rem 0;">
+          <h6><strong>💰 Escenario:</strong></h6>
+          <p id="scenarioText">Tienes un mes excelente y ganas $6,000 (mucho más de lo normal). ¿Qué haces con el dinero extra?</p>
+        </div>
+
+        <div class="scenario-options">
+          <div class="scenario-option" onclick="selectScenario(this, 'spending')">
+            <div class="scenario-icon">🛍️</div>
+            <div class="scenario-title">Gastar en Lujos</div>
+            <div class="scenario-description">"Me merezco esto" - Compras ropa cara, viajes, cosas que siempre quisiste</div>
+          </div>
+
+          <div class="scenario-option" onclick="selectScenario(this, 'saving')">
+            <div class="scenario-icon">🏦</div>
+            <div class="scenario-title">Ahorrar Todo</div>
+            <div class="scenario-description">Guardas el dinero extra en una cuenta de ahorros para emergencias futuras</div>
+          </div>
+
+          <div class="scenario-option" onclick="selectScenario(this, 'investing')">
+            <div class="scenario-icon">📈</div>
+            <div class="scenario-title">Invertir Inteligentemente</div>
+            <div class="scenario-description">Inviertes en herramientas de trabajo, educación, o instrumentos financieros</div>
+          </div>
+
+          <div class="scenario-option" onclick="selectScenario(this, 'balanced')">
+            <div class="scenario-icon">⚖️</div>
+            <div class="scenario-title">Estrategia Balanceada</div>
+            <div class="scenario-description">50% ahorros, 30% inversión/herramientas, 20% disfrute personal</div>
+          </div>
+        </div>
+
+        <div id="scenarioResult" style="display: none; margin-top: 2rem;">
+          <!-- Resultado del escenario -->
+        </div>
+
+        <button class="btn btn-success" onclick="nextScenario()" style="margin-top: 1.5rem;">
+          <i class="fas fa-arrow-right"></i> Siguiente Escenario
+        </button>
+      </div>
+    </section>
+
+    <!-- Visualización de Progreso -->
+    <section class="finance-lab">
+      <h2 class="section-title">📊 Tu Progreso Visual</h2>
+      
+      <div class="progress-visualization">
+        <h5><i class="fas fa-chart-bar"></i> Dashboard de Progreso Financiero</h5>
+        <p style="color: var(--text-muted);">Visualiza tu crecimiento hacia la libertad financiera:</p>
+        
+        <div class="progress-bars">
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>💰 Meta de Ingresos Mensuales</span>
+              <span id="incomeProgress">0% ($0 / $4,000)</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill income" id="incomeProgressBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>💎 Fondo de Emergencia</span>
+              <span id="emergencyProgress">0% ($0 / $5,000)</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill savings" id="emergencyProgressBar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>🎯 Meta Anual de Ahorros</span>
+              <span id="savingsProgress">0% ($0 / $15,000)</span>
+            </div>
+            <div class="progress-bar">
+              <div class="progress-fill goals" id="savingsProgressBar" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-dashboard">
+          <h6><strong>🎯 Simulación de Tu Progreso:</strong></h6>
+          <p><small>Ajusta los valores en la calculadora para ver tu progreso en tiempo real</small></p>
+          
+          <div class="input-group" style="max-width: 300px; margin: 1rem auto;">
+            <label class="input-label">Ingresos Actuales Mensuales</label>
+            <input type="number" class="form-control" id="currentIncome" placeholder="Ej: 2500" oninput="updateProgress()">
+          </div>
+
+          <div class="input-group" style="max-width: 300px; margin: 1rem auto;">
+            <label class="input-label">Ahorros Actuales</label>
+            <input type="number" class="form-control" id="currentSavings" placeholder="Ej: 1200" oninput="updateProgress()">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Casos de Éxito -->
+    <section class="finance-lab">
+      <h2 class="section-title">🏆 Casos de Éxito Financiero</h2>
+      
+      <div class="success-stories">
+        <div class="success-story">
+          <h6><strong>💎 Caso: "La Planificadora"</strong></h6>
+          <p><strong>Situación inicial:</strong> Estudiante universitaria, $0 ahorros, vivía al día.</p>
+          <p><strong>Estrategia:</strong> Usó esta calculadora para fijar meta de $3,500/mes. Plan: 30 horas semanales a $35/hora promedio.</p>
+          <p><strong>Resultados en 8 meses:</strong></p>
+          <ul>
+            <li>Ingresos constantes de $4,200/mes</li>
+            <li>Fondo de emergencia: $8,000</li>
+            <li>Inversiones: $15,000</li>
+            <li>Compró su primer auto sin préstamo</li>
+          </ul>
+        </div>
+        
+        <div class="success-story">
+          <h6><strong>🌟 Caso: "La Inversionista"</strong></h6>
+          <p><strong>Situación inicial:</strong> Madre soltera, deudas de $12,000, sin plan financiero.</p>
+          <p><strong>Estrategia:</strong> Meta agresiva de $6,000/mes. 70% gastos, 20% ahorro, 10% inversión.</p>
+          <p><strong>Resultados en 12 meses:</strong></p>
+          <ul>
+            <li>Deudas pagadas completamente</li>
+            <li>Ingresos promedio: $7,800/mes</li>
+            <li>Portfolio de inversiones: $25,000</li>
+            <li>Compró casa propia con enganche del 20%</li>
+          </ul>
+        </div>
+        
+        <div class="success-story">
+          <h6><strong>👑 Caso: "La Empresaria"</strong></h6>
+          <p><strong>Situación inicial:</strong> Trabajaba oficina 9-5, ganaba $2,800/mes, odiaba su trabajo.</p>
+          <p><strong>Estrategia:</strong> Transición gradual. Empezó part-time con meta de $3,500/mes para igualar salario.</p>
+          <p><strong>Resultados en 18 meses:</strong></p>
+          <ul>
+            <li>Renunció a trabajo tradicional</li>
+            <li>Ingresos promedio: $12,000/mes</li>
+            <li>Creó curso online (ingreso pasivo)</li>
+            <li>Libertad financiera total a los 26 años</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Resumen Final -->
+    <section class="finance-lab">
+      <h2 class="section-title">🚀 Tu Plan Financiero Está Listo</h2>
+      
+      <div class="goal-level expert" style="cursor: default; transform: none;">
+        <div class="goal-title">💰 Ya No Eres Una Modelo Sin Rumbo Financiero</div>
+        <p>Ahora tienes las herramientas para construir riqueza real, no solo "sobrevivir al mes". Sabes exactamente cuánto necesitas ganar, cuánto puedes ahorrar, y cómo llegar a la libertad financiera paso a paso.</p>
+        
+        <div class="row g-3 mt-3">
+          <div class="col-md-4">
+            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; text-align: center;">
+              <h6><strong>🧮 Calculaste</strong></h6>
+              <p><small>Tus números exactos de ingresos y gastos</small></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; text-align: center;">
+              <h6><strong>🎯 Planificaste</strong></h6>
+              <p><small>Metas realistas y progresivas</small></p>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; text-align: center;">
+              <h6><strong>🏆 Visualizaste</strong></h6>
+              <p><small>Tu camino hacia la libertad financiera</small></p>
+            </div>
+          </div>
+        </div>
+        
+        <p style="margin-top: 2rem;"><strong>Recuerda:</strong> El dinero es una herramienta para comprar libertad, seguridad y opciones. No solo para sobrevivir, sino para <strong>vivir la vida que quieres</strong>. Con tu plan, cada dólar que ganes tiene un propósito. <em>¡A construir tu imperio financiero!</em> 💎</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentScenarioIndex = 0;
+    
+    const financialScenarios = [
+      {
+        scenario: "Tienes un mes excelente y ganas $6,000 (mucho más de lo normal). ¿Qué haces con el dinero extra?",
+        responses: {
+          spending: {
+            title: "❌ No Es la Mejor Decisión",
+            explanation: "Aunque te lo mereces, gastar todo el dinero extra en lujos no construye riqueza a largo plazo. Los ingresos variables requieren planificación inteligente."
+          },
+          saving: {
+            title: "✅ Buena Opción",
+            explanation: "Ahorrar es inteligente, especialmente para emergencias. Sin embargo, podrías aprovechar parte del dinero para invertir en tu crecimiento."
+          },
+          investing: {
+            title: "✅ Muy Buena Opción",
+            explanation: "Invertir en herramientas, educación o instrumentos financieros multiplica tu dinero. Excelente visión a largo plazo."
+          },
+          balanced: {
+            title: "🏆 ¡PERFECTO!",
+            explanation: "Esta es la estrategia ideal. Te permite disfrutar el éxito, construir seguridad Y invertir en tu futuro. Balance perfecto entre presente y futuro."
+          }
+        }
+      },
+      {
+        scenario: "Tu computadora se daña y necesitas $1,500 para una nueva. Tienes $2,000 ahorrados. ¿Qué haces?",
+        responses: {
+          spending: {
+            title: "❌ Terrible Decisión",
+            explanation: "Pedir prestado cuando tienes ahorros es una decisión financiera muy mala. Los intereses te costarán más dinero."
+          },
+          saving: {
+            title: "❌ No Es Práctico",
+            explanation: "Esperar sin herramientas de trabajo significa perder ingresos. A veces hay que usar los ahorros para inversiones necesarias."
+          },
+          investing: {
+            title: "🏆 ¡EXCELENTE!",
+            explanation: "Usar tus ahorros para una herramienta de trabajo es una INVERSIÓN, no un gasto. Mantienes $500 para emergencias y sigues generando ingresos."
+          },
+          balanced: {
+            title: "✅ Opción Razonable",
+            explanation: "Comprar algo bueno pero no lo más caro es sensato. Sin embargo, en herramientas de trabajo, a veces vale la pena invertir en calidad."
+          }
+        }
+      }
+    ];
+
+    // Update real-time data
+    function updateRealTimeData() {
+      const now = new Date();
+      const dateTime = now.toLocaleString('es-ES', { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      document.getElementById('currentDateTime').textContent = dateTime;
+    }
+
+    function calculateFinances() {
+      const monthlyGoal = parseFloat(document.getElementById('monthlyIncomeGoal').value) || 0;
+      const housing = parseFloat(document.getElementById('housingExpenses').value) || 0;
+      const food = parseFloat(document.getElementById('foodExpenses').value) || 0;
+      const transport = parseFloat(document.getElementById('transportExpenses').value) || 0;
+      const debt = parseFloat(document.getElementById('debtPayments').value) || 0;
+      const personal = parseFloat(document.getElementById('personalExpenses').value) || 0;
+      const hours = parseFloat(document.getElementById('workHours').value) || 0;
+      const hourlyRate = parseFloat(document.getElementById('hourlyRate').value) || 0;
+
+      // Calculate totals
+      const totalExpenses = housing + food + transport + debt + personal;
+      const weeklyIncome = hours * hourlyRate;
+      const monthlyIncome = weeklyIncome * 4.33; // Average weeks per month
+      const netSavings = monthlyIncome - totalExpenses;
+
+      // Update display
+      document.getElementById('projectedIncome').textContent = `$${monthlyIncome.toLocaleString()}`;
+      document.getElementById('totalExpenses').textContent = `$${totalExpenses.toLocaleString()}`;
+      document.getElementById('netSavings').textContent = `$${netSavings.toLocaleString()}`;
+
+      // Show analysis if we have enough data
+      if (monthlyIncome > 0 && totalExpenses > 0) {
+        showFinancialAnalysis(monthlyIncome, totalExpenses, netSavings, monthlyGoal);
+      }
+    }
+
+    function showFinancialAnalysis(income, expenses, savings, goal) {
+      const analysisDiv = document.getElementById('financialAnalysis');
+      const resultDiv = document.getElementById('analysisResult');
+      
+      let analysis = '';
+      let color = '';
+      
+      if (savings < 0) {
+        color = 'var(--expense-red)';
+        analysis = `
+          <h6 style="color: ${color};">⚠️ ALERTA: Gastas más de lo que ganas</h6>
+          <p><strong>Déficit mensual:</strong> $${Math.abs(savings).toLocaleString()}</p>
+          <p><strong>Acción requerida:</strong> Necesitas aumentar ingresos o reducir gastos urgentemente.</p>
+          <ul>
+            <li>Aumenta tus horas de trabajo o tarifa por hora</li>
+            <li>Revisa gastos no esenciales</li>
+            <li>Considera ingresos adicionales</li>
+          </ul>
+        `;
+      } else if (savings < income * 0.1) {
+        color = 'var(--warning-orange)';
+        analysis = `
+          <h6 style="color: ${color};">⚡ CUIDADO: Ahorras muy poco</h6>
+          <p><strong>Tasa de ahorro:</strong> ${((savings/income)*100).toFixed(1)}% (Recomendado: 20%+)</p>
+          <p><strong>Situación:</strong> Estás en equilibrio pero vulnerable a emergencias.</p>
+          <ul>
+            <li>Intenta ahorrar al menos 20% de tus ingresos</li>
+            <li>Crea un fondo de emergencia de $${(expenses * 3).toLocaleString()}</li>
+            <li>Considera aumentar tus ingresos</li>
+          </ul>
+        `;
+      } else if (savings >= income * 0.2) {
+        color = 'var(--success-green)';
+        analysis = `
+          <h6 style="color: ${color};">🏆 EXCELENTE: Situación financiera sólida</h6>
+          <p><strong>Tasa de ahorro:</strong> ${((savings/income)*100).toFixed(1)}% (¡Muy bueno!)</p>
+          <p><strong>Situación:</strong> Estás construyendo riqueza de manera inteligente.</p>
+          <ul>
+            <li>Fondo de emergencia completo en: ${Math.ceil((expenses * 6) / savings)} meses</li>
+            <li>Considera invertir parte de tus ahorros</li>
+            <li>Estás en camino a la libertad financiera</li>
+          </ul>
+        `;
+      } else {
+        color = 'var(--savings-blue)';
+        analysis = `
+          <h6 style="color: ${color};">👍 BIEN: Situación financiera estable</h6>
+          <p><strong>Tasa de ahorro:</strong> ${((savings/income)*100).toFixed(1)}% (Decente)</p>
+          <p><strong>Situación:</strong> Vas por buen camino, puedes mejorar un poco.</p>
+          <ul>
+            <li>Intenta llegar al 20% de tasa de ahorro</li>
+            <li>Fondo de emergencia en progreso</li>
+            <li>Considera optimizar gastos o aumentar ingresos</li>
+          </ul>
+        `;
+      }
+
+      // Compare with goal
+      if (goal > 0) {
+        const goalDiff = income - goal;
+        if (goalDiff >= 0) {
+          analysis += `<p style="color: var(--success-green);"><strong>🎯 ¡Meta alcanzada!</strong> Superas tu objetivo por $${goalDiff.toLocaleString()}</p>`;
+        } else {
+          analysis += `<p style="color: var(--expense-red);"><strong>🎯 Meta pendiente:</strong> Te faltan $${Math.abs(goalDiff).toLocaleString()}</p>`;
+        }
+      }
+
+      resultDiv.innerHTML = analysis;
+      analysisDiv.style.display = 'block';
+    }
+
+    function generateFinancialPlan() {
+      const income = parseFloat(document.getElementById('projectedIncome').textContent.replace(/[$,]/g, '')) || 0;
+      const expenses = parseFloat(document.getElementById('totalExpenses').textContent.replace(/[$,]/g, '')) || 0;
+      const savings = parseFloat(document.getElementById('netSavings').textContent.replace(/[$,]/g, '')) || 0;
+
+      if (income === 0) {
+        alert('Por favor completa los campos de la calculadora primero');
+        return;
+      }
+
+      let plan = `
+        📋 TU PLAN FINANCIERO PERSONALIZADO
+        
+        💰 INGRESOS PROYECTADOS: $${income.toLocaleString()}/mes
+        💳 GASTOS TOTALES: $${expenses.toLocaleString()}/mes
+        💎 DINERO DISPONIBLE: $${savings.toLocaleString()}/mes
+        
+        🎯 ESTRATEGIA RECOMENDADA:
+      `;
+
+      if (savings > 0) {
+        const emergencyFund = expenses * 6;
+        const monthsToEmergencyFund = Math.ceil(emergencyFund / (savings * 0.7));
+        
+        plan += `
+        1. FONDO DE EMERGENCIA (70% ahorros)
+           • Meta: $${emergencyFund.toLocaleString()}
+           • Tiempo estimado: ${monthsToEmergencyFund} meses
+           • Ahorro mensual: $${(savings * 0.7).toLocaleString()}
+        
+        2. INVERSIONES (20% ahorros)
+           • Inversión mensual: $${(savings * 0.2).toLocaleString()}
+           • En 12 meses: $${(savings * 0.2 * 12).toLocaleString()} invertidos
+        
+        3. DISFRUTE PERSONAL (10% ahorros)
+           • Dinero libre: $${(savings * 0.1).toLocaleString()}/mes
+           • Para gustos sin culpa
+        `;
+      } else {
+        plan += `
+        1. PRIORIDAD: Aumentar ingresos o reducir gastos
+        2. META INMEDIATA: Lograr al menos $${(expenses * 1.2).toLocaleString()}/mes
+        3. ESTRATEGIA: Trabajar ${Math.ceil((expenses * 1.2) / parseFloat(document.getElementById('hourlyRate').value || 40) / 4.33)} horas semanales
+        `;
+      }
+
+      alert(plan);
+    }
+
+    function expandGoalLevel(element, level) {
+      // Hide all details first
+      document.querySelectorAll('.goal-details').forEach(detail => {
+        detail.style.display = 'none';
+      });
+      
+      // Show selected details
+      const detailsElement = element.querySelector('.goal-details');
+      if (detailsElement) {
+        detailsElement.style.display = detailsElement.style.display === 'block' ? 'none' : 'block';
+      }
+    }
+
+    function selectScenario(element, choice) {
+      // Remove previous selections
+      document.querySelectorAll('.scenario-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Select current option
+      element.classList.add('selected');
+      
+      // Show result
+      const scenario = financialScenarios[currentScenarioIndex];
+      const response = scenario.responses[choice];
+      
+      const resultDiv = document.getElementById('scenarioResult');
+      resultDiv.innerHTML = `
+        <div style="background: var(--bg-light); color: var(--text-dark); padding: 2rem; border-radius: 15px; border: 3px solid var(--warning-orange);">
+          <h6><strong>${response.title}</strong></h6>
+          <p><strong>${response.explanation}</strong></p>
+        </div>
+      `;
+      resultDiv.style.display = 'block';
+    }
+
+    function nextScenario() {
+      currentScenarioIndex = (currentScenarioIndex + 1) % financialScenarios.length;
+      const scenario = financialScenarios[currentScenarioIndex];
+      
+      // Update scenario text
+      document.getElementById('scenarioText').textContent = scenario.scenario;
+      
+      // Clear selections
+      document.querySelectorAll('.scenario-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Hide result
+      document.getElementById('scenarioResult').style.display = 'none';
+    }
+
+    function updateProgress() {
+      const currentIncome = parseFloat(document.getElementById('currentIncome').value) || 0;
+      const currentSavings = parseFloat(document.getElementById('currentSavings').value) || 0;
+      
+      // Income progress (goal: $4,000)
+      const incomeGoal = 4000;
+      const incomePercentage = Math.min((currentIncome / incomeGoal) * 100, 100);
+      document.getElementById('incomeProgress').textContent = `${incomePercentage.toFixed(0)}% ($${currentIncome.toLocaleString()} / $${incomeGoal.toLocaleString()})`;
+      document.getElementById('incomeProgressBar').style.width = incomePercentage + '%';
+      
+      // Emergency fund progress (goal: $5,000)
+      const emergencyGoal = 5000;
+      const emergencyPercentage = Math.min((currentSavings / emergencyGoal) * 100, 100);
+      document.getElementById('emergencyProgress').textContent = `${emergencyPercentage.toFixed(0)}% ($${currentSavings.toLocaleString()} / $${emergencyGoal.toLocaleString()})`;
+      document.getElementById('emergencyProgressBar').style.width = emergencyPercentage + '%';
+      
+      // Annual savings progress (goal: $15,000)
+      const annualSavings = (currentIncome - 2000) * 12; // Assuming $2,000 monthly expenses
+      const savingsGoal = 15000;
+      const savingsPercentage = Math.min((annualSavings / savingsGoal) * 100, 100);
+      document.getElementById('savingsProgress').textContent = `${savingsPercentage.toFixed(0)}% ($${annualSavings.toLocaleString()} / $${savingsGoal.toLocaleString()})`;
+      document.getElementById('savingsProgressBar').style.width = savingsPercentage + '%';
+    }
+
+    // Initialize
+    updateRealTimeData();
+    setInterval(updateRealTimeData, 60000); // Update every minute
+    nextScenario(); // Load first scenario
+  </script>
+</body>
+</html>

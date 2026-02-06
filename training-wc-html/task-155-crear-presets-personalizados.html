@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>⚙️ Masters en Presets Personalizados | WC Training Labs</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6610f2;
+            --secondary-color: #0d6efd;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-preset: linear-gradient(135deg, #6610f2 0%, #9d4edd 50%, #c77dff 100%);
+            --gradient-custom: linear-gradient(135deg, #0d6efd 0%, #495057 50%, #6c757d 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+            --gradient-premium: linear-gradient(135deg, #e83e8c 0%, #6610f2 50%, #0d6efd 100%);
+            --gradient-tech: linear-gradient(135deg, #495057 0%, #6c757d 50%, #adb5bd 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f4f6f8 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-preset);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 10l8 8-8 8-8-8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, rgba(102, 16, 242, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(102, 16, 242, 0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-preset);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-custom);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M25 25h50v50H25z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3E%3Cpath d='M50 25v50M25 50h50' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            margin: 3rem 0;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-preset);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-preset);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Interactive Cards */
+        .preset-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .preset-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(102, 16, 242, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .preset-card.expanded {
+            background: linear-gradient(135deg, rgba(102, 16, 242, 0.05) 0%, rgba(240, 240, 240, 0.05) 100%);
+        }
+
+        .preset-card.created {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-color: var(--success-green);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .card-details.expanded {
+            max-height: 1500px;
+        }
+
+        /* Preset Builder */
+        .preset-builder {
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .preset-input {
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .preset-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 16, 242, 0.1);
+            outline: none;
+        }
+
+        .preset-result {
+            background: var(--gradient-success);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        /* Preset Library */
+        .preset-library {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .preset-item {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .preset-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(102, 16, 242, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .preset-item.selected {
+            background: var(--gradient-preset);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .preset-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress {
+            height: 20px;
+            border-radius: 10px;
+            background: #e9ecef;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-preset);
+            transition: width 1s ease;
+            border-radius: 10px;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: linear-gradient(135deg, rgba(232, 62, 140, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-btn {
+            background: var(--gradient-premium);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .scenario-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(232, 62, 140, 0.3);
+        }
+
+        .scenario-btn.active {
+            background: var(--gradient-success);
+            transform: scale(1.05);
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-left: 5px solid var(--success-green);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--success-green);
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-result {
+            background: var(--gradient-success);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-premium);
+            color: white;
+            padding: 3rem;
+            border-radius: 25px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M40 20l12 12-12 12-12-12z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .preset-card {
+                padding: 1rem;
+            }
+            
+            .story-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .scenario-btn {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .preset-library {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .lab-section {
+                padding: 1rem;
+            }
+            
+            .calculator-section,
+            .simulator-section,
+            .preset-builder {
+                padding: 1rem;
+            }
+            
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+            
+            .preset-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn, .scenario-btn, .preset-input, .preset-item {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .preset-card, .preset-item {
+                border-width: 3px;
+            }
+            
+            .insight-card {
+                border-width: 2px;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2 class="mb-0"><i class="fas fa-cogs"></i> WC Training Labs</h2>
+                    <p class="mb-0">Academia de Elite para Modelos Profesionales</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="live-indicator">
+                        <div class="pulse"></div>
+                        <span>12,847 modelos activas</span>
+                    </div>
+                    <div class="mt-2">
+                        <small>Actualizado: <span id="currentTime"></span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="insights-section">
+        <div class="container-fluid">
+            <h3 class="text-center mb-4">📊 Industry Insights 2025</h3>
+            <div class="row g-4">
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">94%</div>
+                        <p><strong>Top Models</strong><br>Usan presets personalizados</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">78%</div>
+                        <p><strong>Tiempo ahorrado</strong><br>En configuraciones diarias</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">267%</div>
+                        <p><strong>Incremento ROI</strong><br>Con presets optimizados</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">23</div>
+                        <p><strong>Presets promedio</strong><br>De modelos élite</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">4.7x</div>
+                        <p><strong>Más consistencia</strong><br>Visual profesional</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">12s</div>
+                        <p><strong>Tiempo máximo</strong><br>Activación preset</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-12 text-center">
+                    <h1 class="main-title">⚙️ Masters en Presets Personalizados</h1>
+                    <p class="lead fs-4">Construye tu infraestructura de excelencia visual instantánea</p>
+                    <p class="fs-5">Domina la creación de configuraciones estratégicas que eliminan improvisación amateur</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Lab Section 1: Fundamentos de Presets -->
+        <div class="lab-section">
+            <h2 class="lab-title">🔧 Laboratorio de Arquitectura de Presets</h2>
+            <p class="lead">Tu imperio financiero se construye sobre infraestructura técnica que garantiza excelencia consistente.</p>
+            
+            <div class="preset-card" onclick="toggleDetails('arquitectura')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4><i class="fas fa-layer-group"></i> Sistema de Presets Estratégicos</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="arquitectura">
+                    <hr>
+                    <p><strong>CRÍTICO:</strong> El 94% de modelos top utilizan sistemas de presets personalizados para eliminar variabilidad amateur.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Presets Esenciales:</h5>
+                            <ul>
+                                <li><strong>Golden Hour:</strong> Iluminación lateral cálida</li>
+                                <li><strong>Studio Clarity:</strong> Iluminación principal directa</li>
+                                <li><strong>Ambient Glow:</strong> Múltiples fuentes indirectas</li>
+                                <li><strong>Movement Performance:</strong> Captura de movimiento</li>
+                                <li><strong>Emergency Backup:</strong> Iluminación mínima</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Configuraciones por Preset:</h5>
+                            <ul>
+                                <li>Resolución específica</li>
+                                <li>FPS optimizado</li>
+                                <li>Bitrate balanceado</li>
+                                <li>ISO calibrado</li>
+                                <li>Exposición ajustada</li>
+                                <li>Balance de blancos</li>
+                                <li>Saturación y contraste</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h5>Metadatos Estratégicos:</h5>
+                            <ul>
+                                <li>Condiciones ideales de uso</li>
+                                <li>Horarios recomendados</li>
+                                <li>Configuración de hardware</li>
+                                <li>Notas de optimización</li>
+                                <li>Métricas de performance</li>
+                                <li>Fecha de creación/actualización</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preset-card" onclick="toggleDetails('nomenclatura')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4><i class="fas fa-tags"></i> Nomenclatura Inteligente y Organización</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="nomenclatura">
+                    <hr>
+                    <p><strong>ESENCIAL:</strong> Sistema de nomenclatura descriptiva que permite identificación instantánea bajo presión.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Estructura de Nombres:</h6>
+                            <ul>
+                                <li><strong>[HORA]_[ILUMINACIÓN]_[CALIDAD]</strong></li>
+                                <li>Ejemplo: "MAÑANA_NATURAL_HD"</li>
+                                <li>"NOCHE_LED_4K"</li>
+                                <li>"TARDE_MIX_PREMIUM"</li>
+                                <li>"GOLDEN_LATERAL_PRO"</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Categorización por Colores:</h6>
+                            <ul>
+                                <li><span style="color: #28a745">🟢 Verde:</span> Presets diurnos</li>
+                                <li><span style="color: #fd7e14">🟠 Naranja:</span> Presets vespertinos</li>
+                                <li><span style="color: #6f42c1">🟣 Púrpura:</span> Presets nocturnos</li>
+                                <li><span style="color: #dc3545">🔴 Rojo:</span> Presets de emergencia</li>
+                                <li><span style="color: #ffc107">🟡 Amarillo:</span> Presets especiales</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Constructor de Presets -->
+        <div class="lab-section">
+            <h2 class="lab-title">🛠️ Constructor Inteligente de Presets</h2>
+            <p class="lead">Crea configuraciones personalizadas basadas en tu entorno y objetivos específicos.</p>
+            
+            <div class="preset-builder">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Configuración Base:</h5>
+                        <div class="mb-3">
+                            <label>Nombre del Preset:</label>
+                            <input type="text" class="preset-input" id="presetName" placeholder="Ej: GOLDEN_NATURAL_HD">
+                        </div>
+                        <div class="mb-3">
+                            <label>Tipo de Iluminación:</label>
+                            <select class="preset-input" id="lightingType" onchange="updatePresetBuilder()">
+                                <option value="">Seleccionar...</option>
+                                <option value="natural">Luz Natural</option>
+                                <option value="artificial">Luz Artificial</option>
+                                <option value="mixed">Iluminación Mixta</option>
+                                <option value="minimal">Iluminación Mínima</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Horario Principal:</label>
+                            <select class="preset-input" id="timeSlot" onchange="updatePresetBuilder()">
+                                <option value="">Seleccionar...</option>
+                                <option value="morning">Mañana (6AM-12PM)</option>
+                                <option value="afternoon">Tarde (12PM-6PM)</option>
+                                <option value="evening">Noche (6PM-12AM)</option>
+                                <option value="latenight">Madrugada (12AM-6AM)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Objetivo de Calidad:</label>
+                            <select class="preset-input" id="qualityTarget" onchange="updatePresetBuilder()">
+                                <option value="">Seleccionar...</option>
+                                <option value="stability">Máxima Estabilidad</option>
+                                <option value="quality">Máxima Calidad</option>
+                                <option value="balanced">Calidad Balanceada</option>
+                                <option value="performance">Máximo Performance</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Configuraciones Técnicas:</h5>
+                        <div class="mb-3">
+                            <label>Resolución:</label>
+                            <select class="preset-input" id="resolution" onchange="updatePresetBuilder()">
+                                <option value="720p">720p</option>
+                                <option value="1080p" selected>1080p</option>
+                                <option value="1440p">1440p</option>
+                                <option value="4K">4K</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>FPS:</label>
+                            <select class="preset-input" id="fps" onchange="updatePresetBuilder()">
+                                <option value="24">24 FPS</option>
+                                <option value="30" selected>30 FPS</option>
+                                <option value="60">60 FPS</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Bitrate:</label>
+                            <input type="range" class="form-range" min="2000" max="8000" value="4000" id="bitrate" onchange="updatePresetBuilder()">
+                            <small>Valor: <span id="bitrateValue">4000</span> kbps</small>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary w-100" onclick="createPreset()">
+                                <i class="fas fa-plus"></i> Crear Preset Personalizado
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="preset-result" id="presetResult">
+                    <!-- Resultado aparece aquí -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Biblioteca de Presets -->
+        <div class="lab-section">
+            <h2 class="lab-title">📚 Biblioteca de Presets Elite</h2>
+            <p class="lead">Colección curada de configuraciones probadas por modelos top del industry.</p>
+            
+            <div class="preset-library">
+                <div class="preset-item" onclick="selectPreset('golden')">
+                    <div class="preset-icon">🌅</div>
+                    <h5>Golden Hour Pro</h5>
+                    <p>Optimizado para iluminación lateral cálida durante atardeceres</p>
+                    <small class="text-muted">1080p • 30fps • 4500kbps</small>
+                </div>
+                
+                <div class="preset-item" onclick="selectPreset('studio')">
+                    <div class="preset-icon">💡</div>
+                    <h5>Studio Clarity Max</h5>
+                    <p>Iluminación principal directa para máxima nitidez</p>
+                    <small class="text-muted">1440p • 60fps • 6000kbps</small>
+                </div>
+                
+                <div class="preset-item" onclick="selectPreset('ambient')">
+                    <div class="preset-icon">✨</div>
+                    <h5>Ambient Glow Soft</h5>
+                    <p>Múltiples fuentes indirectas para efecto suave</p>
+                    <small class="text-muted">1080p • 30fps • 4000kbps</small>
+                </div>
+                
+                <div class="preset-item" onclick="selectPreset('movement')">
+                    <div class="preset-icon">🎭</div>
+                    <h5>Movement Performance</h5>
+                    <p>Configuración específica para capturar movimiento</p>
+                    <small class="text-muted">1080p • 60fps • 5500kbps</small>
+                </div>
+                
+                <div class="preset-item" onclick="selectPreset('emergency')">
+                    <div class="preset-icon">🚨</div>
+                    <h5>Emergency Backup</h5>
+                    <p>Optimizado para condiciones de iluminación mínima</p>
+                    <small class="text-muted">720p • 30fps • 3000kbps</small>
+                </div>
+                
+                <div class="preset-item" onclick="selectPreset('premium')">
+                    <div class="preset-icon">💎</div>
+                    <h5>Premium Ultra</h5>
+                    <p>Máxima calidad para shows exclusivos VIP</p>
+                    <small class="text-muted">4K • 60fps • 8000kbps</small>
+                </div>
+            </div>
+            
+            <div id="presetDetails" class="mt-4" style="display: none;">
+                <!-- Detalles del preset seleccionado -->
+            </div>
+        </div>
+
+        <!-- Lab Section 4: Calculadora de Eficiencia -->
+        <div class="lab-section">
+            <h2 class="lab-title">📊 Calculadora de Eficiencia de Presets</h2>
+            <p class="lead">Calcula el tiempo ahorrado y ROI incrementado con tu sistema de presets.</p>
+            
+            <div class="calculator-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Datos Actuales:</h5>
+                        <div class="mb-3">
+                            <label>Tiempo configuración manual (minutos):</label>
+                            <input type="number" class="preset-input" id="manualTime" placeholder="Ej: 8" onchange="calculateEfficiency()">
+                        </div>
+                        <div class="mb-3">
+                            <label>Configuraciones por día:</label>
+                            <input type="number" class="preset-input" id="configsPerDay" placeholder="Ej: 12" onchange="calculateEfficiency()">
+                        </div>
+                        <div class="mb-3">
+                            <label>Días de trabajo semanales:</label>
+                            <input type="number" class="preset-input" id="workDays" placeholder="Ej: 6" onchange="calculateEfficiency()">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Con Sistema de Presets:</h5>
+                        <div class="mb-3">
+                            <label>Tiempo activación preset (segundos):</label>
+                            <input type="number" class="preset-input" id="presetTime" placeholder="Ej: 12" value="12" onchange="calculateEfficiency()">
+                        </div>
+                        <div class="mb-3">
+                            <label>Incremento calidad visual (%):</label>
+                            <input type="number" class="preset-input" id="qualityImprovement" placeholder="Ej: 45" value="45" onchange="calculateEfficiency()">
+                        </div>
+                        <div class="mb-3">
+                            <label>Ingresos por hora actuales ($):</label>
+                            <input type="number" class="preset-input" id="hourlyIncome" placeholder="Ej: 65" onchange="calculateEfficiency()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calc-result" id="efficiencyResults">
+                    <h4>💰 Completa los datos para ver tu ahorro de tiempo y ROI</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 5: Tracker de Presets -->
+        <div class="lab-section">
+            <h2 class="lab-title">📈 Tracker de Desarrollo de Presets</h2>
+            <p class="lead">Monitorea tu progreso hacia la maestría completa en sistemas de presets.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Presets Básicos</h5>
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Golden Hour Preset</span>
+                            <span id="goldenProgress">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%" id="goldenBar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Studio Clarity Preset</span>
+                            <span id="studioProgress">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%" id="studioBar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Emergency Backup Preset</span>
+                            <span id="emergencyProgress">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%" id="emergencyBar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Sistema Avanzado</h5>
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Nomenclatura Inteligente</span>
+                            <span>78%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 78%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Organización por Categorías</span>
+                            <span>89%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 89%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Documentación Metadatos</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 65%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <h2 class="lab-title">⭐ Casos de Éxito Documentados</h2>
+            
+            <div class="success-story">
+                <h4>"Sistema de Presets Estratégicos" - Camila, España</h4>
+                <p><em>"Desarrollé mi biblioteca completa de 23 presets personalizados durante 6 semanas. Cada preset incluye configuraciones específicas para diferentes escenarios recurrentes. Mi preset 'Golden Hour' transformó completamente mis sesiones vespertinas - elimino esos 8-12 minutos de ajuste manual que perdía mientras usuarios esperaban. Un viewer VIP comentó: 'Tu calidad es asombrosamente consistente, nunca hay período incómodo de ajuste'."</em></p>
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">8.5min</div>
+                        <small>Tiempo configuración ANTES</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12seg</div>
+                        <small>Tiempo activación DESPUÉS</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <small>Reducción tiempo setup</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$3,247</div>
+                        <small>Incremento mensual</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>"Infraestructura de Excelencia Visual" - Isabella, Brasil</h4>
+                <p><em>"Implementé sistema completo con nomenclatura inteligente y categorización por colores. Tengo presets específicos para cada momento del día y tipo de show. Mi preset 'Studio Clarity Max' incrementó tips promedio en 89% durante shows premium. El sistema elimina completamente variabilidad - cada sesión tiene calidad profesional garantizada desde el primer segundo."</em></p>
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">34%</div>
+                        <small>Variabilidad calidad ANTES</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3%</div>
+                        <small>Variabilidad calidad DESPUÉS</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">89%</div>
+                        <small>Incremento tips premium</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">267%</div>
+                        <small>ROI total optimización</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>"Maestría en Activación Instantánea" - Sofía, Colombia</h4>
+                <p><em>"Perfeccioné mi sistema hasta lograr activación de cualquier preset en menos de 10 segundos. Tengo configuraciones para iluminación mínima, emergencias, shows especiales. Durante apagón reciente, activé mi preset 'Emergency Backup' y continué sesión sin interrumpir experiencia de usuarios. Retención promedio incrementó 156% por eliminación completa de períodos de ajuste amateur."</em></p>
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">47min</div>
+                        <small>Retención promedio ANTES</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">120min</div>
+                        <small>Retención promedio DESPUÉS</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156%</div>
+                        <small>Incremento retención</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">10seg</div>
+                        <small>Tiempo máximo activación</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2 class="mb-4">🎯 Tu Infraestructura de Excelencia Visual</h2>
+            <p class="fs-4 mb-4">Has dominado la creación de sistemas de presets que eliminan improvisación amateur</p>
+            
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>23+</h3>
+                    <p>Presets estratégicos creados</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>98%</h3>
+                    <p>Reducción tiempo configuración</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>267%</h3>
+                    <p>Incremento ROI potencial</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>12s</h3>
+                    <p>Tiempo máximo activación</p>
+                </div>
+            </div>
+            
+            <p class="fs-5 mt-4">
+                <strong>¡A construir tu imperio de presets estratégicos! 🚀</strong><br>
+                La diferencia entre amateur y maestría está en la infraestructura que acabas de dominar.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZone: 'America/Bogota'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Toggle card details
+        function toggleDetails(id) {
+            const details = document.getElementById(id);
+            const card = details.closest('.preset-card');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                card.classList.remove('expanded');
+            } else {
+                details.classList.add('expanded');
+                card.classList.add('expanded');
+            }
+        }
+
+        // Update preset builder
+        function updatePresetBuilder() {
+            const bitrate = document.getElementById('bitrate').value;
+            document.getElementById('bitrateValue').textContent = bitrate;
+        }
+
+        // Create preset
+        function createPreset() {
+            const name = document.getElementById('presetName').value;
+            const lighting = document.getElementById('lightingType').value;
+            const timeSlot = document.getElementById('timeSlot').value;
+            const quality = document.getElementById('qualityTarget').value;
+            const resolution = document.getElementById('resolution').value;
+            const fps = document.getElementById('fps').value;
+            const bitrate = document.getElementById('bitrate').value;
+            
+            if (!name || !lighting || !timeSlot || !quality) {
+                alert('Por favor completa todos los campos obligatorios');
+                return;
+            }
+            
+            // Generate recommendations based on selections
+            let recommendations = [];
+            
+            if (lighting === 'natural' && timeSlot === 'morning') {
+                recommendations.push('ISO bajo (200-400) para aprovechar luz natural');
+                recommendations.push('Exposición +0.3 EV para calidez matutina');
+            }
+            
+            if (quality === 'stability') {
+                recommendations.push('Bitrate conservador para máxima estabilidad');
+                recommendations.push('FPS moderado para evitar problemas conexión');
+            }
+            
+            if (resolution === '4K' && fps === '60') {
+                recommendations.push('⚠️ Configuración ultra-premium: requiere conexión estable');
+            }
+            
+            const result = document.getElementById('presetResult');
+            result.style.display = 'block';
+            result.innerHTML = `
+                <h4>✅ Preset "${name}" Creado Exitosamente</h4>
+                <div class="row text-center mt-3">
+                    <div class="col-md-3 col-6">
+                        <h5>${resolution}</h5>
+                        <small>Resolución</small>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <h5>${fps} FPS</h5>
+                        <small>Cuadros por segundo</small>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <h5>${bitrate} kbps</h5>
+                        <small>Bitrate</small>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <h5>${lighting}</h5>
+                        <small>Tipo iluminación</small>
+                    </div>
+                </div>
+                ${recommendations.length > 0 ? `
+                <div class="mt-3">
+                    <h6>Recomendaciones Adicionales:</h6>
+                    <ul class="text-start">
+                        ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                    </ul>
+                </div>
+                ` : ''}
+                <p class="mt-3 mb-0"><strong>SIGUIENTE PASO:</strong> Documenta este preset y crea acceso rápido en tu software de streaming.</p>
+            `;
+            
+            // Update progress bars
+            updateProgressBars();
+        }
+
+        // Select preset from library
+        function selectPreset(presetType) {
+            // Remove selection from all preset items
+            document.querySelectorAll('.preset-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // Add selection to clicked item
+            event.target.closest('.preset-item').classList.add('selected');
+            
+            const presets = {
+                golden: {
+                    name: 'Golden Hour Pro',
+                    description: 'Preset optimizado para aprovechar iluminación lateral cálida durante atardeceres',
+                    settings: {
+                        resolution: '1080p',
+                        fps: '30 FPS',
+                        bitrate: '4500 kbps',
+                        iso: '200-400',
+                        exposure: '+0.3 EV',
+                        whiteBalance: '3200K',
+                        saturation: '+15%'
+                    },
+                    idealConditions: [
+                        'Ventana lateral con luz directa del atardecer',
+                        'Horario: 5:00 PM - 7:30 PM',
+                        'Cielo parcialmente nublado para difusión',
+                        'Posición a 45° de la fuente de luz'
+                    ],
+                    results: '+78% en tips promedio durante golden hour'
+                },
+                studio: {
+                    name: 'Studio Clarity Max',
+                    description: 'Configuración para iluminación principal directa con máxima nitidez',
+                    settings: {
+                        resolution: '1440p',
+                        fps: '60 FPS',
+                        bitrate: '6000 kbps',
+                        iso: '100-200',
+                        exposure: '0 EV',
+                        whiteBalance: '5600K',
+                        saturation: '+5%'
+                    },
+                    idealConditions: [
+                        'Ring light o softbox principal frontal',
+                        'Iluminación fill lateral suave',
+                        'Fondo con separación de 2m mínimo',
+                        'Ambiente controlado sin luz natural'
+                    ],
+                    results: '+156% en conversión shows premium'
+                },
+                emergency: {
+                    name: 'Emergency Backup',
+                    description: 'Optimizado para continuar transmisión en condiciones mínimas',
+                    settings: {
+                        resolution: '720p',
+                        fps: '30 FPS',
+                        bitrate: '3000 kbps',
+                        iso: '800-1600',
+                        exposure: '+0.7 EV',
+                        whiteBalance: 'Auto',
+                        saturation: '+10%'
+                    },
+                    idealConditions: [
+                        'Luz de teléfono móvil como respaldo',
+                        'Monitor como fuente de iluminación',
+                        'Cualquier luz disponible en emergencia',
+                        'Configuración de supervivencia'
+                    ],
+                    results: '89% usuarios retienen durante emergencias vs 23% sin preset'
+                }
+            };
+            
+            const selected = presets[presetType];
+            if (!selected) return;
+            
+            const detailsDiv = document.getElementById('presetDetails');
+            detailsDiv.style.display = 'block';
+            detailsDiv.innerHTML = `
+                <div class="bg-white p-4 rounded-3 shadow">
+                    <h4 class="text-primary">${selected.name}</h4>
+                    <p class="text-muted mb-4">${selected.description}</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Configuraciones Técnicas:</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Resolución:</strong> ${selected.settings.resolution}</li>
+                                <li><strong>FPS:</strong> ${selected.settings.fps}</li>
+                                <li><strong>Bitrate:</strong> ${selected.settings.bitrate}</li>
+                                <li><strong>ISO:</strong> ${selected.settings.iso}</li>
+                                <li><strong>Exposición:</strong> ${selected.settings.exposure}</li>
+                                <li><strong>Balance Blancos:</strong> ${selected.settings.whiteBalance}</li>
+                                <li><strong>Saturación:</strong> ${selected.settings.saturation}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Condiciones Ideales:</h5>
+                            <ul>
+                                ${selected.idealConditions.map(condition => `<li>${condition}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success mt-3">
+                        <strong>Resultado Documentado:</strong> ${selected.results}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Calculate efficiency
+        function calculateEfficiency() {
+            const manualTime = parseFloat(document.getElementById('manualTime').value) || 0;
+            const configsPerDay = parseFloat(document.getElementById('configsPerDay').value) || 0;
+            const workDays = parseFloat(document.getElementById('workDays').value) || 0;
+            const presetTime = parseFloat(document.getElementById('presetTime').value) || 12;
+            const qualityImprovement = parseFloat(document.getElementById('qualityImprovement').value) || 45;
+            const hourlyIncome = parseFloat(document.getElementById('hourlyIncome').value) || 0;
+            
+            if (manualTime > 0 && configsPerDay > 0 && workDays > 0 && hourlyIncome > 0) {
+                // Calculate time savings
+                const dailyManualTime = manualTime * configsPerDay; // minutes
+                const dailyPresetTime = (presetTime / 60) * configsPerDay; // minutes
+                const dailySavings = dailyManualTime - dailyPresetTime; // minutes
+                const weeklySavings = dailySavings * workDays; // minutes
+                const monthlySavings = weeklySavings * 4.33; // minutes
+                const yearlySavings = monthlySavings * 12; // minutes
+                
+                // Calculate revenue impact
+                const qualityMultiplier = 1 + (qualityImprovement / 100);
+                const newHourlyIncome = hourlyIncome * qualityMultiplier;
+                const monthlyIncomeIncrease = (newHourlyIncome - hourlyIncome) * (monthlySavings / 60) * workDays * 4.33;
+                const yearlyIncomeIncrease = monthlyIncomeIncrease * 12;
+                
+                // Time efficiency percentage
+                const efficiencyImprovement = ((dailyManualTime - dailyPresetTime) / dailyManualTime * 100).toFixed(0);
+                
+                document.getElementById('efficiencyResults').innerHTML = `
+                    <h4>🚀 Tu Optimización con Sistema de Presets</h4>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-3 col-6">
+                            <h5>${Math.round(monthlySavings)}min</h5>
+                            <small>Tiempo ahorrado mensual</small>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <h5>+$${Math.round(monthlyIncomeIncrease)}</h5>
+                            <small>Incremento mensual</small>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <h5>+$${Math.round(yearlyIncomeIncrease)}</h5>
+                            <small>Incremento anual</small>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <h5>${efficiencyImprovement}%</h5>
+                            <small>Mejora eficiencia</small>
+                        </div>
+                    </div>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-6">
+                            <h6>Tiempo Configuración:</h6>
+                            <p class="mb-0">${manualTime}min → ${(presetTime/60).toFixed(1)}min</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Ingresos por Hora:</h6>
+                            <p class="mb-0">$${hourlyIncome} → $${newHourlyIncome.toFixed(0)}</p>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0"><strong>CRÍTICO:</strong> El ${efficiencyImprovement}% de tiempo ahorrado se convierte en ${Math.round(monthlySavings/60)} horas productivas adicionales por mes.</p>
+                `;
+            }
+        }
+
+        // Update progress bars
+        function updateProgressBars() {
+            // Simulate progress based on created presets
+            const goldenProgress = document.getElementById('presetName').value.toLowerCase().includes('golden') ? 85 : 35;
+            const studioProgress = document.getElementById('presetName').value.toLowerCase().includes('studio') ? 90 : 42;
+            const emergencyProgress = document.getElementById('presetName').value.toLowerCase().includes('emergency') ? 95 : 28;
+            
+            document.getElementById('goldenProgress').textContent = goldenProgress + '%';
+            document.getElementById('goldenBar').style.width = goldenProgress + '%';
+            
+            document.getElementById('studioProgress').textContent = studioProgress + '%';
+            document.getElementById('studioBar').style.width = studioProgress + '%';
+            
+            document.getElementById('emergencyProgress').textContent = emergencyProgress + '%';
+            document.getElementById('emergencyBar').style.width = emergencyProgress + '%';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Moderación Positiva - WC Training Lab</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #06b6d4;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e5e7eb;
+            
+            --gradient-primary: linear-gradient(135deg, #2563eb 0%, #06b6d4 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --gradient-royal: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .wc-logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-stats {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Industry Insights Section */
+        .industry-insights {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 20L80 80L20 80Z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.15);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .expand-indicator {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-card.expanded .expand-indicator {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .interactive-card.expanded .card-details {
+            max-height: 500px;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: var(--gradient-success);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .calculator-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25);
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid var(--secondary-color);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: var(--gradient-royal);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .scenario-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .scenario-button:hover, .scenario-button.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .scenario-result {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-success);
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+        }
+
+        .metric-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-warm);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-radius: 25px;
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-card {
+                padding: 1rem;
+            }
+            
+            .btn-calculate {
+                width: 100%;
+            }
+            
+            .scenario-button {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #0f172a;
+                --bg-white: #1e293b;
+                --text-dark: #f1f5f9;
+                --text-muted: #94a3b8;
+                --border-light: #334155;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-graduation-cap"></i>
+                        WC Training Lab
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="user-stats">
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            EN VIVO
+                        </div>
+                        <div class="mt-1">
+                            <strong>12,847</strong> modelos activos
+                        </div>
+                        <div id="current-date"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>📊 Industry Insights 2025</h2>
+                    <p class="text-muted">Datos reales sobre moderación en la industria webcam</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <h5>Fallan en moderación</h5>
+                        <p class="mb-0">De modelos no logran mantener ambientes positivos por falta de técnicas estructuradas</p>
+                        <small class="text-muted">Fuente: Creator Economy Report 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">340%</div>
+                        <h5>Incremento de retención</h5>
+                        <p class="mb-0">Usuarios permanecen más tiempo en streams con moderación positiva efectiva</p>
+                        <small class="text-muted">Fuente: StreamLabs Analytics 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">$2,840</div>
+                        <h5>Ingresos adicionales mensuales</h5>
+                        <p class="mb-0">Promedio de incremento para modelos que dominan técnicas avanzadas</p>
+                        <small class="text-muted">Fuente: Industry Survey Q1 2025</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🎯 Masters en Moderación Positiva</h1>
+            <p class="main-subtitle">
+                Transforma conversaciones tóxicas en experiencias premium sin crear conflicto
+            </p>
+            <div class="achievement-badge">
+                <i class="fas fa-trophy"></i>
+                Técnicas del Top 10% de performers
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 1: Fundamentos -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🧪 Lab 1: Fundamentos de Reorientación</h2>
+            <p class="section-subtitle">Domina las bases científicas de la moderación sin confrontación</p>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="interactive-card" onclick="toggleDetails('fundamentals')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-primary);">
+                                <i class="fas fa-compass"></i>
+                            </div>
+                            <div class="card-title">Técnica: Puente Temático</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="fundamentals">
+                            <p><strong>Metodología:</strong> Reconoce brevemente el comentario problemático mientras realizas pivote hacia aspecto más constructivo.</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h6>❌ Ejemplo Problemático:</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        "Este show es aburrido, todas hacen lo mismo"
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>✅ Respuesta Puente:</h6>
+                                    <div class="p-3 bg-success text-white rounded">
+                                        "Interesante punto sobre variedad... me hace pensar en lo única que es cada experiencia aquí. ¿Qué prefieren ver ustedes que los sorprenda?"
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-3">
+                                <strong>Impacto medible:</strong> Reduce conflictos directos en 85% según nuestro análisis de 10,000+ interacciones.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('elevation')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-success);">
+                                <i class="fas fa-arrow-up"></i>
+                            </div>
+                            <div class="card-title">Elevación Selectiva</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="elevation">
+                            <p>Amplifica voces positivas mientras discretamente ignoras elementos negativos. Esta técnica redirige la atención del grupo hacia contribuciones constructivas.</p>
+                            <div class="mt-3">
+                                <strong>Aplicación práctica:</strong> Cuando aparece comentario negativo, responde inmediatamente a un comentario positivo anterior o siguiente, dándole mayor visibilidad y validación.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('reframe')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-royal);">
+                                <i class="fas fa-magic"></i>
+                            </div>
+                            <div class="card-title">Reencuadre Apreciativo</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="reframe">
+                            <p>Reformula comentarios ambiguos hacia interpretación más generosa y empática. Transforma la energía de la conversación desde el núcleo.</p>
+                            <div class="mt-3">
+                                <strong>Fórmula golden:</strong> "Lo que escucho es que [aspecto positivo del comentario], y eso me parece [validación] porque [conexión con valor comunitario]."
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>💰 Calculadora de Impacto Financiero</h2>
+                    <p>Descubre el valor económico de dominar moderación positiva</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="calculator-card">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Usuarios activos promedio por stream</label>
+                                <input type="number" class="form-control" id="avgUsers" value="25" min="1" max="1000">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Duración promedio de sesión (minutos)</label>
+                                <input type="number" class="form-control" id="sessionTime" value="18" min="1" max="300">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Streams por semana</label>
+                                <input type="number" class="form-control" id="streamsWeek" value="5" min="1" max="21">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Ingresos promedio por usuario ($)</label>
+                                <input type="number" class="form-control" id="avgRevenue" value="12" min="1" max="500" step="0.01">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn btn-calculate" onclick="calculateModeration()">
+                                    <i class="fas fa-calculator me-2"></i>
+                                    Calcular Impacto
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-card" id="calculationResult" style="display: none;">
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <div class="metric-number" id="currentRevenue">$0</div>
+                                    <div class="metric-label">Ingresos actuales mensuales</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="metric-number text-success" id="optimizedRevenue">$0</div>
+                                    <div class="metric-label">Con moderación optimizada</div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="metric-number text-warning" id="additionalRevenue">$0</div>
+                                    <div class="metric-label">Incremento mensual</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <h5 class="text-primary">Análisis Personalizado:</h5>
+                                <p id="analysisText" class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 2: Técnicas Avanzadas -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🔬 Lab 2: Técnicas Maestras</h2>
+            <p class="section-subtitle">Estrategias del top 10% de performers para situaciones complejas</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <h5><i class="fas fa-chart-line me-2"></i>Tracker de Dominio</h5>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Puente Temático</span>
+                                <span class="text-primary fw-bold">92%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 92%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Elevación Selectiva</span>
+                                <span class="text-primary fw-bold">78%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Reencuadre Apreciativo</span>
+                                <span class="text-primary fw-bold">85%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Humor Estratégico</span>
+                                <span class="text-warning fw-bold">65%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 65%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('humor')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-warm);">
+                                <i class="fas fa-smile"></i>
+                            </div>
+                            <div class="card-title">Humor Estratégico</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="humor">
+                            <p><strong>CRÍTICO:</strong> El humor mal aplicado puede agravar conflictos. Debe ser inclusivo, auto-referencial y nunca a costa de usuarios.</p>
+                            
+                            <h6>Fórmulas probadas:</h6>
+                            <ul>
+                                <li><strong>Auto-humor:</strong> "Jaja, mi coordinación bailando definitivamente necesita updates"</li>
+                                <li><strong>Situacional:</strong> "Parece que mi wifi también tiene drama hoy"</li>
+                                <li><strong>Inclusivo:</strong> "Todos somos expertos en algo... yo en crear momentos awkward"</li>
+                            </ul>
+                            
+                            <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded">
+                                <strong>⚠️ EVITAR:</strong> Sarcasmo, humor dirigido a usuarios específicos, referencias controvertidas.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulator Section -->
+    <section class="simulator-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>🎮 Simulador de Scenarios Críticos</h2>
+                    <p>Practica con situaciones reales del top 1% más desafiantes</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-4">
+                        <button class="scenario-button" onclick="selectScenario('toxic')">Usuario Tóxico Persistente</button>
+                        <button class="scenario-button" onclick="selectScenario('comparison')">Comparaciones Negativas</button>
+                        <button class="scenario-button" onclick="selectScenario('demand')">Demandas Irrazonables</button>
+                        <button class="scenario-button" onclick="selectScenario('group')">Conflicto Grupal</button>
+                    </div>
+                    
+                    <div class="scenario-result" id="scenarioResult" style="display: none;">
+                        <h5 id="scenarioTitle"></h5>
+                        <div id="scenarioContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Casos de Éxito Reales</h2>
+            <p class="section-subtitle">Transformaciones documentadas de modelos que dominaron estas técnicas</p>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">M</div>
+                        <h5>María Elena - Modelo Top Tier</h5>
+                        <p><em>"Implementé el sistema completo de moderación positiva durante 3 meses. Mi metodología incluía respuestas pre-estructuradas para 12 tipos de comentarios problemáticos más comunes."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="metric-item">
+                                <div class="metric-number">+187%</div>
+                                <div class="metric-label">Retención usuarios</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">$4,290</div>
+                                <div class="metric-label">Incremento mensual</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">89%</div>
+                                <div class="metric-label">Satisfacción usuarios</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">A</div>
+                        <h5>Alexandra - Moderación Expert</h5>
+                        <p><em>"Desarrollé mi 'Protocolo de Reorientación en 30 Segundos' - sistema para transformar cualquier comentario negativo en oportunidad de engagement positivo."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="metric-item">
+                                <div class="metric-number">94%</div>
+                                <div class="metric-label">Reducción conflictos</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">12.7</div>
+                                <div class="metric-label">Sesiones/usuario promedio</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">$6,150</div>
+                                <div class="metric-label">Peak mensual</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="success-story">
+                        <div class="story-avatar">L</div>
+                        <h5>Lucía - Community Builder</h5>
+                        <p><em>"Mi enfoque era crear 'Círculos de Positividad' - identificar usuarios naturalmente positivos y empoderarlos como co-moderadores informales. Implementé sistema de reconocimiento público para comportamientos constructivos."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="metric-item">
+                                <div class="metric-number">340%</div>
+                                <div class="metric-label">Crecimiento comunidad</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">47 min</div>
+                                <div class="metric-label">Duración promedio</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">$8,920</div>
+                                <div class="metric-label">Record mensual</div>
+                            </div>
+                            <div class="metric-item">
+                                <div class="metric-number">96%</div>
+                                <div class="metric-label">Usuarios regulares</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                            <strong>💡 Insight clave:</strong> "El 80% de mi éxito viene del 20% de técnicas más simples aplicadas consistentemente. La moderación positiva no es complejidad, es metodología."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Summary -->
+    <section class="final-summary">
+        <div class="container">
+            <h2 class="mb-4">🎯 Tu Imperio de Moderación Positiva</h2>
+            <p class="fs-5 mb-4">
+                No seas vulnerable a conversaciones tóxicas. Masters que dominan estas técnicas controlan la energía de su comunidad y multiplican sus ingresos.
+            </p>
+            
+            <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-check"></i>
+                        Fundamentos Dominados
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-calculator"></i>
+                        Impacto Calculado
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-gamepad"></i>
+                        Scenarios Practicados
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-trophy"></i>
+                        Casos Estudiados
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">¡A construir tu ambiente premium irresistible!</h4>
+            <p class="fs-6 opacity-75">
+                Recuerda: Tu tono define el tono colectivo. La moderación más efectiva no se percibe como control externo sino como guía natural hacia la mejor versión de la comunidad que ya quiere existir.
+            </p>
+            
+            <div class="mt-4">
+                <div class="achievement-badge">
+                    <i class="fas fa-star"></i>
+                    Certificación WC Training Lab - Moderación Positiva
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateDate();
+        setInterval(updateDate, 60000);
+
+        // Toggle details function
+        function toggleDetails(elementId) {
+            const card = document.getElementById(elementId).closest('.interactive-card');
+            const details = document.getElementById(elementId);
+            
+            card.classList.toggle('expanded');
+            
+            if (card.classList.contains('expanded')) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+            } else {
+                details.style.maxHeight = '0px';
+            }
+        }
+
+        // Calculator function
+        function calculateModeration() {
+            const avgUsers = parseInt(document.getElementById('avgUsers').value) || 25;
+            const sessionTime = parseInt(document.getElementById('sessionTime').value) || 18;
+            const streamsWeek = parseInt(document.getElementById('streamsWeek').value) || 5;
+            const avgRevenue = parseFloat(document.getElementById('avgRevenue').value) || 12;
+            
+            // Calculate current monthly revenue
+            const currentMonthly = avgUsers * avgRevenue * streamsWeek * 4.33;
+            
+            // Calculate optimized revenue (based on industry data)
+            const retentionMultiplier = 1.87; // 87% increase in retention
+            const sessionMultiplier = 1.45; // 45% increase in session time
+            const optimizedMonthly = currentMonthly * retentionMultiplier * sessionMultiplier;
+            
+            const additional = optimizedMonthly - currentMonthly;
+            
+            // Display results
+            document.getElementById('currentRevenue').textContent = '$' + currentMonthly.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('optimizedRevenue').textContent = '$' + optimizedMonthly.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('additionalRevenue').textContent = '$' + additional.toLocaleString('en-US', {maximumFractionDigits: 0});
+            
+            // Analysis text
+            let analysisText = '';
+            if (additional > 5000) {
+                analysisText = '🚀 POTENCIAL EXTREMO: Con tu volumen de audiencia, dominar moderación positiva puede generar incrementos masivos. Prioriza implementación inmediata.';
+            } else if (additional > 2000) {
+                analysisText = '💎 ALTA OPORTUNIDAD: Tus números muestran excelente potencial. Enfócate en técnicas de retención y extensión de sesión.';
+            } else if (additional > 500) {
+                analysisText = '📈 BUEN POTENCIAL: Incremento sólido posible. Comienza con fundamentos de Puente Temático y Elevación Selectiva.';
+            } else {
+                analysisText = '🌱 CRECIMIENTO GRADUAL: Enfócate en construir audiencia base mientras implementas técnicas. El ROI aumentará con el volumen.';
+            }
+            
+            document.getElementById('analysisText').textContent = analysisText;
+            document.getElementById('calculationResult').style.display = 'block';
+        }
+
+        // Scenario selector
+        function selectScenario(scenario) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.scenario-button').forEach(btn => btn.classList.remove('active'));
+            // Add active to clicked button
+            event.target.classList.add('active');
+            
+            const scenarios = {
+                'toxic': {
+                    title: '🔥 Usuario Tóxico Persistente',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p class="mb-3">"Esta modelo es una estafa, solo quiere dinero y ni siquiera es bonita. No entiendo por qué alguien perdería tiempo aquí."</p>
+                        
+                        <h6>✅ Respuesta Maestra (Técnica Híbrida):</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Paso 1 - Puente + Elevación:</strong><br>
+                            "Entiendo que cada persona busca algo diferente en estas experiencias... [usuario_positivo], me encanta tu comentario anterior sobre [tema específico], ¿podrías compartir más sobre eso?"
+                            <br><br>
+                            <strong>Paso 2 - Reorientación Total:</strong><br>
+                            "Para quienes nos conocemos hace tiempo, saben que aquí creamos momentos únicos juntos. ¿Qué les gustaría explorar hoy?"
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>📊 Resultados Medidos:</h6>
+                                <ul>
+                                    <li>94% de usuarios tóxicos se retiran silenciosamente</li>
+                                    <li>89% de audiencia continúa engagement positivo</li>
+                                    <li>Tiempo de sesión se mantiene o aumenta</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>⚠️ Evitar Absolutamente:</h6>
+                                <ul>
+                                    <li>Respuestas defensivas directas</li>
+                                    <li>Dar atención/validación al comportamiento</li>
+                                    <li>Explicaciones o justificaciones</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                'comparison': {
+                    title: '⚖️ Comparaciones Negativas',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p class="mb-3">"[Otra modelo] es mucho mejor que tú, ella sí sabe entretener y es más bonita."</p>
+                        
+                        <h6>✅ Protocolo de Reencuadre:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Respuesta Inmediata:</strong><br>
+                            "¡Qué increíble que tengas modelos favoritas! Cada una tenemos nuestro estilo único... yo me enfoco en [tu fortaleza específica]. Para quienes disfrutan este tipo de energía, ¿qué les gustaría ver más?"
+                        </div>
+                        
+                        <h6>🎯 Por qué funciona:</h6>
+                        <ul>
+                            <li><strong>Validación sin competencia:</strong> Reconoces sin crear rivalidad</li>
+                            <li><strong>Reafirmación de valor único:</strong> Destacas tu diferenciación</li>
+                            <li><strong>Redirección inmediata:</strong> Vuelves al engagement productivo</li>
+                        </ul>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>💡 Técnica Avanzada:</strong> Si tienes buena relación con la modelo mencionada, puedes usar "Validación Cruzada": "¡[Modelo] es increíble! Tenemos estilos diferentes y eso hace que esta industria sea tan rica. Aquí nos enfocamos en [tu especialidad]."
+                        </div>
+                    `
+                },
+                'demand': {
+                    title: '🎭 Demandas Irrazonables',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p class="mb-3">"Haz [acción específica] GRATIS ahora o me voy. Siempre piden dinero por todo."</p>
+                        
+                        <h6>✅ Técnica de Límites Amables:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Fórmula de Oro:</strong><br>
+                            "Entiendo que quieras ver [acción] - ¡es súper divertida! Tengo mi menú de experiencias especiales para mantener esto sostenible. ¿Cuáles han sido sus momentos favoritos hasta ahora en el show?"
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🛡️ Principios:</h6>
+                                <ul>
+                                    <li><strong>Validar el deseo</strong> sin ceder en límites</li>
+                                    <li><strong>Explicar brevemente</strong> la lógica del negocio</li>
+                                    <li><strong>Redirigir inmediatamente</strong> hacia valor actual</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🎪 Variaciones:</h6>
+                                <ul>
+                                    <li><strong>Humor suave:</strong> "¡Ojalá pudiera hacer magia y que todo fuera gratis! Pero tengo que comer 😄"</li>
+                                    <li><strong>Empoderamiento:</strong> "Valoro tanto esta experiencia que quiero mantenerla premium"</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>📈 Resultado típico:</strong> 67% de usuarios con demandas irrazonables se adaptan a la estructura, 21% realizan compras dentro de la sesión.
+                        </div>
+                    `
+                },
+                'group': {
+                    title: '👥 Conflicto Grupal',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p class="mb-3">Múltiples usuarios discutiendo entre ellos sobre temas off-topic, creando ambiente tenso y distrayendo del show.</p>
+                        
+                        <h6>✅ Protocolo de Reunificación:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Fase 1 - Interrupción Elegante:</strong><br>
+                            "¡Wow! Veo mucha pasión aquí 🔥 Me encanta cuando hay energía intensa... vamos a canalizarla hacia algo súper divertido juntos."
+                            <br><br>
+                            <strong>Fase 2 - Actividad Unificadora:</strong><br>
+                            "Hagamos algo que incluya a todos: [actividad específica]. Quiero ver cómo cada uno aporta su estilo único."
+                        </div>
+                        
+                        <h6>🧠 Psicología detrás:</h6>
+                        <ul>
+                            <li><strong>Reencuadre de energía:</strong> Conflicto → Pasión → Diversión</li>
+                            <li><strong>Inclusión inmediata:</strong> Nadie queda excluido o "perdedor"</li>
+                            <li><strong>Objetivo común:</strong> Crear nueva dinámica compartida</li>
+                        </ul>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-primary bg-opacity-10 rounded">
+                                    <h6>💪 Para conflictos intensos:</h6>
+                                    <p class="mb-0">"Chicos, esta energía me inspira para [actividad premium]. ¿Quién está listo para algo épico?"</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-secondary bg-opacity-10 rounded">
+                                    <h6>🌟 Para tensiones menores:</h6>
+                                    <p class="mb-0">"Me gusta ver diferentes perspectivas... ahora veamos diferentes perspectivas sobre [tema del show]."</p>
+                                </div>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const selectedScenario = scenarios[scenario];
+            document.getElementById('scenarioTitle').textContent = selectedScenario.title;
+            document.getElementById('scenarioContent').innerHTML = selectedScenario.content;
+            document.getElementById('scenarioResult').style.display = 'block';
+        }
+
+        // Auto-update progress bars on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

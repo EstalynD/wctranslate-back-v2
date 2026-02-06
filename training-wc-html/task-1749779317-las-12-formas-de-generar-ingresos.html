@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 Tarea 3.2: Las 12 Formas de Generar Ingresos</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --wc-primary: #E91E63;
+      --wc-secondary: #9C27B0;
+      --wc-accent: #FF5722;
+      --wc-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #FF5722 100%);
+      --wc-gradient-light: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 50%, rgba(255, 87, 34, 0.1) 100%);
+      --income-gold: #FFD700;
+      --income-silver: #C0C0C0;
+      --income-bronze: #CD7F32;
+      --success-green: #4CAF50;
+      --warning-orange: #FF9800;
+      --danger-red: #F44336;
+      --info-blue: #2196F3;
+      --text-dark: #1F2937;
+      --text-muted: #6B7280;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8F9FA;
+      --border-light: #E0E0E0;
+      --shadow-primary: rgba(233, 30, 99, 0.15);
+      --money-green: #00C853;
+      --passive-purple: #673AB7;
+      --diversification-gradient: linear-gradient(135deg, #FFD700 0%, #FF6B35 50%, #4ECDC4 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #FFFDE7 0%, #F3E5F5 25%, #E8F5E8 50%, #FFF3E0 75%, #E3F2FD 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .hero-header {
+      background: var(--diversification-gradient);
+      color: white;
+      padding: 50px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px var(--shadow-primary);
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .wc-logo {
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .module-breadcrumb {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--wc-primary);
+      font-weight: bold;
+    }
+
+    .section-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px var(--shadow-primary);
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--border-light);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .primary-highlight {
+      background: var(--wc-gradient-light);
+      border: 2px solid var(--wc-primary);
+      border-left: 6px solid var(--wc-primary);
+    }
+
+    .success-highlight {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.05));
+      border: 2px solid var(--success-green);
+      border-left: 6px solid var(--success-green);
+    }
+
+    .info-highlight {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(3, 169, 244, 0.05));
+      border: 2px solid var(--info-blue);
+      border-left: 6px solid var(--info-blue);
+    }
+
+    .warning-highlight {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05));
+      border: 2px solid var(--warning-orange);
+      border-left: 6px solid var(--warning-orange);
+    }
+
+    .danger-highlight {
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(233, 30, 99, 0.05));
+      border: 2px solid var(--danger-red);
+      border-left: 6px solid var(--danger-red);
+    }
+
+    .income-methods-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .income-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      position: relative;
+      cursor: pointer;
+      border: 3px solid transparent;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .income-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--diversification-gradient);
+    }
+
+    .income-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      border-color: var(--wc-primary);
+    }
+
+    .income-card.selected {
+      border-color: var(--success-green);
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(255, 255, 255, 0.95));
+      box-shadow: 0 15px 40px rgba(76, 175, 80, 0.3);
+    }
+
+    .income-tier {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .tier-high {
+      background: var(--income-gold);
+      color: #333;
+    }
+
+    .tier-medium {
+      background: var(--income-silver);
+      color: #333;
+    }
+
+    .tier-low {
+      background: var(--income-bronze);
+    }
+
+    .income-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+      background: var(--diversification-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .income-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: var(--text-dark);
+    }
+
+    .income-description {
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+      font-size: 0.95rem;
+    }
+
+    .income-potential {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 152, 0, 0.05));
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid var(--warning-orange);
+    }
+
+    .income-range {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--money-green);
+      margin-bottom: 0.3rem;
+    }
+
+    .income-effort {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .income-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .income-tag {
+      background: var(--bg-light);
+      color: var(--text-dark);
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      border: 1px solid var(--border-light);
+    }
+
+    .income-tag.passive {
+      background: rgba(103, 58, 183, 0.1);
+      color: var(--passive-purple);
+      border-color: var(--passive-purple);
+    }
+
+    .income-tag.active {
+      background: rgba(244, 67, 54, 0.1);
+      color: var(--danger-red);
+      border-color: var(--danger-red);
+    }
+
+    .income-tag.scalable {
+      background: rgba(76, 175, 80, 0.1);
+      color: var(--success-green);
+      border-color: var(--success-green);
+    }
+
+    .diversification-calculator {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 87, 34, 0.05));
+      border: 3px solid var(--warning-orange);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .diversification-calculator::before {
+      content: '📊';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--warning-orange);
+    }
+
+    .calculator-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .control-group {
+      background: var(--bg-white);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .control-label {
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+      font-size: 0.9rem;
+    }
+
+    .control-input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .control-input:focus {
+      outline: none;
+      border-color: var(--warning-orange);
+      box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+    }
+
+    .diversification-results {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      display: none;
+    }
+
+    .income-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .breakdown-item {
+      text-align: center;
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      position: relative;
+    }
+
+    .breakdown-item.active {
+      border-color: var(--success-green);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .breakdown-amount {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--money-green);
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+
+    .breakdown-method {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .breakdown-percentage {
+      position: absolute;
+      top: 5px;
+      right: 8px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-weight: bold;
+    }
+
+    .total-income {
+      background: var(--money-green);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-top: 1rem;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .income-strategy-builder {
+      background: var(--bg-white);
+      border: 3px solid var(--info-blue);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .income-strategy-builder::before {
+      content: '🎯';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--info-blue);
+    }
+
+    .strategy-phases {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .phase-card {
+      background: var(--bg-light);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-light);
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .phase-card:hover {
+      border-color: var(--info-blue);
+      box-shadow: 0 4px 15px rgba(33, 150, 243, 0.2);
+    }
+
+    .phase-number {
+      position: absolute;
+      top: -15px;
+      left: 15px;
+      background: var(--info-blue);
+      color: white;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .phase-title {
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      font-size: 1.1rem;
+    }
+
+    .phase-timeframe {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .phase-methods {
+      list-style: none;
+      padding: 0;
+    }
+
+    .phase-methods li {
+      color: var(--text-dark);
+      margin-bottom: 0.3rem;
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.9rem;
+    }
+
+    .phase-methods li::before {
+      content: '💰';
+      position: absolute;
+      left: 0;
+      font-size: 0.8rem;
+    }
+
+    .timeline-tracker {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .timeline-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: var(--bg-white);
+      border-radius: 8px;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .timeline-item:hover {
+      border-color: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+    }
+
+    .timeline-item.completed {
+      background: var(--bg-white);
+      border-color: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    }
+
+    .timeline-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--success-green);
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .timeline-item.completed .timeline-checkbox {
+      background: var(--success-green);
+      color: white;
+      border-color: var(--success-green);
+    }
+
+    .advanced-methods {
+      background: linear-gradient(135deg, rgba(103, 58, 183, 0.1), rgba(156, 39, 176, 0.05));
+      border: 3px solid var(--passive-purple);
+      border-radius: 16px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .advanced-methods::before {
+      content: '🚀';
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--passive-purple);
+    }
+
+    .method-comparison-table {
+      background: var(--bg-white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .table-header {
+      background: var(--diversification-gradient);
+      color: white;
+      padding: 1rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .table-cell {
+      padding: 1rem;
+      text-align: center;
+      border-right: 1px solid var(--border-light);
+      font-size: 0.9rem;
+    }
+
+    .table-cell:last-child {
+      border-right: none;
+    }
+
+    .table-cell.method-name {
+      background: var(--bg-light);
+      font-weight: bold;
+      text-align: left;
+    }
+
+    .rating-stars {
+      color: var(--income-gold);
+      font-size: 1rem;
+    }
+
+    .btn {
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--wc-primary) !important;
+      color: white !important;
+    }
+
+    .btn-success {
+      background: var(--success-green) !important;
+      color: white !important;
+    }
+
+    .btn-info {
+      background: var(--info-blue) !important;
+      color: white !important;
+    }
+
+    .btn-warning {
+      background: var(--warning-orange) !important;
+      color: white !important;
+    }
+
+    @media (max-width: 768px) {
+      .income-methods-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .section-card {
+        padding: 1.5rem;
+      }
+      
+      .hero-header {
+        padding: 30px 20px;
+      }
+
+      .calculator-controls {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .income-breakdown {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .strategy-phases {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .table-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      .table-cell {
+        border-right: none;
+        border-bottom: 1px solid var(--border-light);
+        text-align: left;
+        padding: 0.8rem;
+      }
+
+      .table-cell.method-name {
+        background: var(--info-blue);
+        color: white;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .income-breakdown {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-card {
+        padding: 1rem;
+      }
+
+      .income-tags {
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Diversifica tus fuentes de ingresos: de $500 a $5,000+ mensuales</p>
+  </div>
+
+  <div class="module-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🌟 Industria Webcam General</a></li>
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">💰 Estrategias de Monetización</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tarea 3.2: Las 12 Formas de Generar Ingresos</li>
+      </ol>
+    </nav>
+  </div>
+
+  <header class="hero-header">
+    <h1 class="mb-3">
+      <i class="fas fa-coins"></i>
+      Las 12 Formas de Generar Ingresos
+      <i class="fas fa-chart-pie"></i>
+    </h1>
+    <p class="fs-5 mb-0">
+      Diversifica tus fuentes de dinero y multiplica tus ingresos mensuales
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Sección: Introducción a la Diversificación -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 El Secreto de las Modelos que Ganan $5,000+</h2>
+      
+      <div class="primary-highlight">
+        <h5><i class="fas fa-lightbulb"></i> ¿Por Qué Solo 10% de las Modelos Ganan Bien?</h5>
+        <p>El 90% de las modelos dependen de UNA sola fuente de ingresos (shows en vivo). Las modelos top diversifican y tienen <strong>múltiples flujos de dinero trabajando simultáneamente</strong>. Mientras una modelo promedio hace $500/mes con shows, una modelo diversificada hace $5,000/mes combinando 6-8 métodos diferentes.</p>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-info-circle"></i> Qué Aprenderás en Esta Tarea</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>💰 Las 12 Fuentes de Ingresos:</h6>
+            <ul>
+              <li>Métodos de ingresos activos vs pasivos</li>
+              <li>Rentabilidad específica de cada método</li>
+              <li>Tiempo de inversión vs retorno</li>
+              <li>Cómo combinarlos estratégicamente</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>🔧 Herramientas Prácticas:</h6>
+            <ul>
+              <li>Calculadora de diversificación personalizada</li>
+              <li>Plan de implementación por fases</li>
+              <li>Tracker de métodos ya implementados</li>
+              <li>Comparativa de rentabilidad detallada</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> Error Costoso Común</h5>
+        <p>Muchas modelos intentan implementar los 12 métodos al mismo tiempo y terminan fracasando en todos. <strong>La clave es implementar gradualmente y dominar cada método antes de agregar el siguiente.</strong> Esta tarea te dará el plan paso a paso correcto.</p>
+      </div>
+    </section>
+
+    <!-- Sección: Las 12 Formas de Generar Ingresos -->
+    <section class="section-card">
+      <h2 class="section-title">💎 Las 12 Fuentes de Ingresos Comprobadas</h2>
+      
+      <div class="income-methods-grid">
+        
+        <!-- Método 1: Shows Públicos -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 1)">
+          <div class="income-tier tier-high">ALTO</div>
+          <div class="income-icon">🎭</div>
+          <h3 class="income-title">1. Shows Públicos/Tokens</h3>
+          <p class="income-description">Actuaciones en vivo donde recibis propinas y tokens de múltiples viewers simultáneamente.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$800 - $4,000/mes</div>
+            <div class="income-effort">Esfuerzo: Alto | Tiempo: 4-8h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag active">Activo</span>
+            <span class="income-tag">Inmediato</span>
+            <span class="income-tag">Social</span>
+          </div>
+        </div>
+
+        <!-- Método 2: Shows Privados -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 2)">
+          <div class="income-tier tier-high">ALTO</div>
+          <div class="income-icon">🔐</div>
+          <h3 class="income-title">2. Shows Privados</h3>
+          <p class="income-description">Sesiones 1-a-1 personalizadas con tarifas premium por minuto.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$1,200 - $6,000/mes</div>
+            <div class="income-effort">Esfuerzo: Medio | Tiempo: 3-6h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag active">Activo</span>
+            <span class="income-tag">Premium</span>
+            <span class="income-tag">Personal</span>
+          </div>
+        </div>
+
+        <!-- Método 3: Contenido Grabado -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 3)">
+          <div class="income-tier tier-medium">MEDIO</div>
+          <div class="income-icon">📹</div>
+          <h3 class="income-title">3. Contenido Grabado</h3>
+          <p class="income-description">Videos y fotos que vendés múltiples veces a diferentes compradores.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$400 - $2,500/mes</div>
+            <div class="income-effort">Esfuerzo: Medio | Tiempo: 2-4h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag passive">Semi-Pasivo</span>
+            <span class="income-tag scalable">Escalable</span>
+            <span class="income-tag">Flexible</span>
+          </div>
+        </div>
+
+        <!-- Método 4: Contenido Personalizado -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 4)">
+          <div class="income-tier tier-high">ALTO</div>
+          <div class="income-icon">🎨</div>
+          <h3 class="income-title">4. Contenido Personalizado</h3>
+          <p class="income-description">Videos/fotos custom hechos específicamente para un cliente particular.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$600 - $3,500/mes</div>
+            <div class="income-effort">Esfuerzo: Alto | Tiempo: Variable</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag active">Activo</span>
+            <span class="income-tag">Premium</span>
+            <span class="income-tag">Creativo</span>
+          </div>
+        </div>
+
+        <!-- Método 5: Suscripciones -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 5)">
+          <div class="income-tier tier-medium">MEDIO</div>
+          <div class="income-icon">📱</div>
+          <h3 class="income-title">5. Suscripciones Mensuales</h3>
+          <p class="income-description">Fans pagan mensualmente por acceso a tu contenido exclusivo y comunicación.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$300 - $8,000/mes</div>
+            <div class="income-effort">Esfuerzo: Medio | Tiempo: 2-3h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag passive">Semi-Pasivo</span>
+            <span class="income-tag scalable">Escalable</span>
+            <span class="income-tag">Recurrente</span>
+          </div>
+        </div>
+
+        <!-- Método 6: Venta de Artículos -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 6)">
+          <div class="income-tier tier-low">BAJO</div>
+          <div class="income-icon">👙</div>
+          <h3 class="income-title">6. Artículos Usados</h3>
+          <p class="income-description">Venta de ropa interior, accesorios y artículos personales usados.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$200 - $1,000/mes</div>
+            <div class="income-effort">Esfuerzo: Bajo | Tiempo: 1h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag">Complementario</span>
+            <span class="income-tag">Fetish</span>
+            <span class="income-tag">Único</span>
+          </div>
+        </div>
+
+        <!-- Método 7: Sexting/Mensajes -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 7)">
+          <div class="income-tier tier-medium">MEDIO</div>
+          <div class="income-icon">💬</div>
+          <h3 class="income-title">7. Sexting/Mensajes</h3>
+          <p class="income-description">Conversaciones íntimas por texto con tarifas por mensaje o tiempo.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$300 - $2,000/mes</div>
+            <div class="income-effort">Esfuerzo: Bajo | Tiempo: Flexible</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag active">Activo</span>
+            <span class="income-tag">Flexible</span>
+            <span class="income-tag">Personal</span>
+          </div>
+        </div>
+
+        <!-- Método 8: Llamadas de Voz -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 8)">
+          <div class="income-tier tier-medium">MEDIO</div>
+          <div class="income-icon">📞</div>
+          <h3 class="income-title">8. Llamadas de Voz</h3>
+          <p class="income-description">Conversaciones telefónicas íntimas cobrando por minuto.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$400 - $2,500/mes</div>
+            <div class="income-effort">Esfuerzo: Medio | Tiempo: Variable</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag active">Activo</span>
+            <span class="income-tag">Premium</span>
+            <span class="income-tag">Íntimo</span>
+          </div>
+        </div>
+
+        <!-- Método 9: Coaching/Mentoring -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 9)">
+          <div class="income-tier tier-high">ALTO</div>
+          <div class="income-icon">🎓</div>
+          <h3 class="income-title">9. Coaching/Mentoring</h3>
+          <p class="income-description">Enseñar a nuevas modelos lo que sabés, cobrando por consultas y cursos.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$500 - $4,000/mes</div>
+            <div class="income-effort">Esfuerzo: Medio | Tiempo: 2-4h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag scalable">Escalable</span>
+            <span class="income-tag">Profesional</span>
+            <span class="income-tag">Educativo</span>
+          </div>
+        </div>
+
+        <!-- Método 10: Afiliaciones -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 10)">
+          <div class="income-tier tier-low">BAJO</div>
+          <div class="income-icon">🤝</div>
+          <h3 class="income-title">10. Programas de Afiliación</h3>
+          <p class="income-description">Comisiones por referir nuevas modelos y usuarios a plataformas.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$100 - $1,500/mes</div>
+            <div class="income-effort">Esfuerzo: Bajo | Tiempo: 1h/día</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag passive">Pasivo</span>
+            <span class="income-tag">Red</span>
+            <span class="income-tag">Comisiones</span>
+          </div>
+        </div>
+
+        <!-- Método 11: Merchandise -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 11)">
+          <div class="income-tier tier-medium">MEDIO</div>
+          <div class="income-icon">🛍️</div>
+          <h3 class="income-title">11. Merchandise Propio</h3>
+          <p class="income-description">Creación y venta de productos con tu marca: calendarios, tazas, camisetas.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$200 - $2,000/mes</div>
+            <div class="income-effort">Esfuerzo: Alto inicial | Tiempo: Variable</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag passive">Semi-Pasivo</span>
+            <span class="income-tag scalable">Escalable</span>
+            <span class="income-tag">Marca</span>
+          </div>
+        </div>
+
+        <!-- Método 12: Colaboraciones de Marca -->
+        <div class="income-card" onclick="selectIncomeMethod(this, 12)">
+          <div class="income-tier tier-high">ALTO</div>
+          <div class="income-icon">🌟</div>
+          <h3 class="income-title">12. Colaboraciones/Sponsors</h3>
+          <p class="income-description">Marcas te pagan por promocionar productos para adultos, lencería, juguetes.</p>
+          
+          <div class="income-potential">
+            <div class="income-range">$300 - $5,000/mes</div>
+            <div class="income-effort">Esfuerzo: Medio | Tiempo: Variable</div>
+          </div>
+
+          <div class="income-tags">
+            <span class="income-tag">Prestigio</span>
+            <span class="income-tag">Marca</span>
+            <span class="income-tag scalable">Escalable</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div id="methodDetails" style="display: none;" class="success-highlight mt-3">
+        <!-- Detalles del método seleccionado -->
+      </div>
+    </section>
+
+    <!-- Sección: Calculadora de Diversificación -->
+    <section class="section-card">
+      <h2 class="section-title">🧮 Calculadora de Diversificación de Ingresos</h2>
+      
+      <div class="diversification-calculator">
+        <h5><i class="fas fa-calculator"></i> Diseña Tu Mix de Ingresos Personalizado</h5>
+        <p>Selecciona qué métodos implementarías y ve cuánto podrías ganar combinándolos:</p>
+        
+        <div class="calculator-controls">
+          <div class="control-group">
+            <label class="control-label">Horas disponibles totales por día:</label>
+            <input type="number" class="control-input" id="totalHours" value="6" min="2" max="12" onchange="calculateDiversification()">
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Nivel de experiencia:</label>
+            <select class="control-input" id="experienceLevel" onchange="calculateDiversification()">
+              <option value="beginner">Principiante (0-3 meses)</option>
+              <option value="intermediate">Intermedio (3-12 meses)</option>
+              <option value="advanced">Avanzado (1+ años)</option>
+              <option value="expert">Experto (2+ años)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Métodos que implementarías:</label>
+            <select class="control-input" id="methodCount" onchange="calculateDiversification()">
+              <option value="3">3 métodos (Fácil de manejar)</option>
+              <option value="5">5 métodos (Equilibrio perfecto)</option>
+              <option value="7">7 métodos (Diversificación alta)</option>
+              <option value="10">10+ métodos (Máxima diversificación)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label class="control-label">Enfoque principal:</label>
+            <select class="control-input" id="mainFocus" onchange="calculateDiversification()">
+              <option value="live">Shows en vivo</option>
+              <option value="content">Creación de contenido</option>
+              <option value="interaction">Interacción personal</option>
+              <option value="passive">Ingresos pasivos</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn btn-warning btn-lg" onclick="calculateDiversification()" style="margin: 1rem 0;">
+          <i class="fas fa-chart-pie"></i> Calcular Mi Potencial de Ingresos Diversificados
+        </button>
+
+        <div class="diversification-results" id="diversificationResults">
+          <h6><strong>📊 Tu Potencial de Ingresos Diversificados:</strong></h6>
+          
+          <div class="income-breakdown" id="incomeBreakdown">
+            <!-- Los resultados aparecerán aquí -->
+          </div>
+
+          <div class="total-income" id="totalIncomeDisplay">
+            <!-- Total aparecerá aquí -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Plan de Implementación por Fases -->
+    <section class="section-card">
+      <h2 class="section-title">📈 Plan de Implementación Estratégico</h2>
+      
+      <div class="income-strategy-builder">
+        <h5><i class="fas fa-rocket"></i> Cómo Implementar Gradualmente (Sin Fracasar)</h5>
+        <p>No trates de hacer todo al mismo tiempo. Este plan por fases te asegura el éxito:</p>
+        
+        <div class="strategy-phases">
+          
+          <div class="phase-card">
+            <div class="phase-number">1</div>
+            <h6 class="phase-title">FASE INICIAL</h6>
+            <div class="phase-timeframe">Mes 1-2: Establecer base sólida</div>
+            <ul class="phase-methods">
+              <li>Shows públicos/tokens OR privados (elige uno)</li>
+              <li>Venta de contenido básico</li>
+              <li>Sexting/mensajes simples</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+              <strong>Meta:</strong> $800-1,500/mes • <strong>Enfoque:</strong> Dominar lo básico
+            </p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-number">2</div>
+            <h6 class="phase-title">FASE EXPANSIÓN</h6>
+            <div class="phase-timeframe">Mes 3-4: Agregar métodos complementarios</div>
+            <ul class="phase-methods">
+              <li>Agregar el método que NO elegiste en Fase 1</li>
+              <li>Contenido personalizado/customs</li>
+              <li>Suscripciones mensuales</li>
+              <li>Llamadas de voz ocasionales</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+              <strong>Meta:</strong> $1,500-3,000/mes • <strong>Enfoque:</strong> Diversificar servicios
+            </p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-number">3</div>
+            <h6 class="phase-title">FASE DIVERSIFICACIÓN</h6>
+            <div class="phase-timeframe">Mes 5-6: Ingresos pasivos y escalables</div>
+            <ul class="phase-methods">
+              <li>Venta de artículos usados</li>
+              <li>Programas de afiliación</li>
+              <li>Merchandise básico</li>
+              <li>Optimizar métodos existentes</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+              <strong>Meta:</strong> $2,500-4,500/mes • <strong>Enfoque:</strong> Ingresos semi-pasivos
+            </p>
+          </div>
+
+          <div class="phase-card">
+            <div class="phase-number">4</div>
+            <h6 class="phase-title">FASE PROFESIONAL</h6>
+            <div class="phase-timeframe">Mes 7+: Máxima rentabilidad</div>
+            <ul class="phase-methods">
+              <li>Coaching/mentoring a nuevas modelos</li>
+              <li>Colaboraciones con marcas</li>
+              <li>Línea de productos propia</li>
+              <li>Automatización de procesos</li>
+            </ul>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 1rem;">
+              <strong>Meta:</strong> $4,000-8,000+/mes • <strong>Enfoque:</strong> Escalabilidad máxima
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Tabla Comparativa Detallada -->
+    <section class="section-card">
+      <h2 class="section-title">📋 Comparativa Completa de Métodos</h2>
+      
+      <div class="method-comparison-table">
+        <div class="table-header">
+          <h5><i class="fas fa-chart-bar"></i> Análisis Detallado de Rentabilidad por Método</h5>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">Método de Ingreso</div>
+          <div class="table-cell"><strong>Potencial</strong></div>
+          <div class="table-cell"><strong>Dificultad</strong></div>
+          <div class="table-cell"><strong>Tiempo</strong></div>
+          <div class="table-cell"><strong>Escalable</strong></div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">1. Shows Públicos/Tokens</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            $800-4K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            Alta
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            4-8h/día
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Limitada
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">2. Shows Privados</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            $1.2K-6K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Media
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            3-6h/día
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Limitada
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">3. Contenido Grabado</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            $400-2.5K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Media
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            2-4h/día
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            Alta
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">4. Contenido Personalizado</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            $600-3.5K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            Alta
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Variable
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Media
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">5. Suscripciones Mensuales</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            $300-8K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Baja
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            2-3h/día
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            Muy Alta
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">6. Artículos Usados</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            $200-1K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★☆☆☆☆</div>
+            Muy Baja
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            1h/día
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★☆☆☆</div>
+            Limitada
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">9. Coaching/Mentoring</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            $500-4K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            Media
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★☆☆</div>
+            2-4h/día
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            Muy Alta
+          </div>
+        </div>
+
+        <div class="table-row">
+          <div class="table-cell method-name">12. Colaboraciones/Sponsors</div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            $300-5K
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            Alta
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★☆</div>
+            Variable
+          </div>
+          <div class="table-cell">
+            <div class="rating-stars">★★★★★</div>
+            Muy Alta
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Métodos Avanzados -->
+    <section class="section-card">
+      <h2 class="section-title">🚀 Métodos Avanzados para Expertas</h2>
+      
+      <div class="advanced-methods">
+        <h5><i class="fas fa-crown"></i> Estrategias de Modelos que Ganan $8,000+</h5>
+        <p>Una vez que domines los métodos básicos, estos métodos avanzados pueden llevarte a ingresos de 5 cifras:</p>
+        
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="success-highlight" style="padding: 1.5rem;">
+              <h6><i class="fas fa-graduation-cap"></i> Academia/Cursos Propios</h6>
+              <p>Crea cursos completos sobre modelaje webcam y véndelos a $200-500 cada uno. Una vez creado, es 100% pasivo.</p>
+              <p><strong>Potencial:</strong> $2,000-10,000/mes</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1.5rem;">
+              <h6><i class="fas fa-users"></i> Agencia Propia</h6>
+              <p>Recluta y entrena nuevas modelos, tomando % de sus ganancias. Escalable sin límites.</p>
+              <p><strong>Potencial:</strong> $5,000-50,000+/mes</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <div class="warning-highlight" style="padding: 1.5rem;">
+              <h6><i class="fas fa-mobile-alt"></i> App/Plataforma Propia</h6>
+              <p>Desarrolla tu propia plataforma donde fans pagan directamente sin comisiones de terceros.</p>
+              <p><strong>Potencial:</strong> $3,000-20,000+/mes</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="primary-highlight" style="padding: 1.5rem;">
+              <h6><i class="fas fa-book"></i> Libro/eBook</h6>
+              <p>Escribe sobre tu experiencia y estrategias. Se vende mientras dormís.</p>
+              <p><strong>Potencial:</strong> $500-3,000/mes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Tracker de Implementación -->
+    <section class="section-card">
+      <h2 class="section-title">✅ Tracker de Implementación</h2>
+      
+      <div class="timeline-tracker">
+        <h5><i class="fas fa-tasks"></i> Tu Progreso de Diversificación</h5>
+        <p>Marca cada método conforme lo vayas implementando exitosamente:</p>
+        
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="1">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Shows públicos/tokens implementados</strong> - Genero ingresos consistentes</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="2">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Contenido grabado en venta</strong> - Tengo al menos 10 videos/sets disponibles</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="3">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Sexting/mensajes activo</strong> - Clientes regulares para conversaciones</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="4">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Shows privados funcionando</strong> - Al menos 3 privados por semana</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="5">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Suscripciones mensuales</strong> - Al menos 20 suscriptores activos</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="6">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Contenido personalizado</strong> - Hago customs regularmente</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="7">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Llamadas de voz</strong> - Ofrezco y tengo clientes regulares</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="8">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Venta de artículos</strong> - Genero ingresos adicionales mensuales</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="9">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Programas de afiliación</strong> - Genero comisiones pasivas</span>
+        </div>
+
+        <div class="timeline-item" onclick="toggleTimeline(this)" data-method="10">
+          <div class="timeline-checkbox"></div>
+          <span><strong>Tengo diversificación completa</strong> - 5+ métodos generando dinero simultáneamente</span>
+        </div>
+
+        <div id="timelineResult" style="display: none;" class="mt-3 p-3 rounded">
+          <!-- Resultado del progreso -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Plan de Acción Final -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Tu Plan de Acción Personalizado</h2>
+      
+      <div class="success-highlight">
+        <h5><i class="fas fa-trophy"></i> ¡Ya Conoces Todas las Formas de Generar Dinero!</h5>
+        <p>Ahora tienes el conocimiento completo sobre diversificación de ingresos. La diferencia entre ganar $500 y $5,000+ mensuales está en implementar estos métodos estratégicamente.</p>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-arrow-right"></i> Próximos Pasos Recomendados</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-brain"></i> Tarea 3.3</h6>
+              <p><strong>Psicología de las Propinas</strong><br>
+              Técnicas mentales para que users QUIERAN darte dinero voluntariamente.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-chart-line"></i> Tema 4</h6>
+              <p><strong>Marketing y Posicionamiento</strong><br>
+              Construye una marca que atraiga clientes de alta calidad.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-lightbulb"></i> Insight Clave Para el Éxito</h5>
+        <p><strong>La diversificación no significa hacer todo mal.</strong> Es mejor dominar 3-5 métodos perfectamente que intentar los 12 mediocremente. Implementa gradualmente, domina cada uno, y después agrega el siguiente. Las modelos exitosas no son las que hacen más cosas, son las que hacen las cosas correctas consistentemente.</p>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-graduation-cap"></i> Resumen de lo que Aprendiste</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>💰 Métodos de Ingresos:</h6>
+            <ul>
+              <li>12 formas diferentes de generar dinero</li>
+              <li>Rentabilidad específica de cada método</li>
+              <li>Cuáles son activos vs pasivos vs escalables</li>
+              <li>Plan de implementación por fases</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>🛠️ Herramientas Aplicadas:</h6>
+            <ul>
+              <li>Calculadora de diversificación personalizada</li>
+              <li>Comparativa detallada de rentabilidad</li>
+              <li>Timeline de implementación estratégica</li>
+              <li>Métodos avanzados para expertas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let selectedMethods = new Set();
+    let implementedMethods = 0;
+    
+    const methodDetails = {
+      1: {
+        title: '🎭 Shows Públicos/Tokens - Método Seleccionado',
+        description: 'Este es el método más tradicional pero con mayor potencial de audiencia. Perfecto para personalidades extrovertidas que disfrutan la interacción social múltiple.',
+        tips: 'Tips clave: Mantén horarios consistentes, desarrolla shows temáticos, usa menús de propinas claros, interactúa genuinamente con tu audiencia.',
+        platforms: 'Plataformas recomendadas: Chaturbate, MyFreeCams, Cam4, BongaCams'
+      },
+      2: {
+        title: '🔐 Shows Privados - Método Seleccionado',
+        description: 'Método premium con las tarifas más altas por minuto. Ideal para quienes prefieren atención personalizada 1-a-1.',
+        tips: 'Tips clave: Construye conexiones emocionales, ofrece experiencias únicas, mantén límites claros, optimiza tu perfil para privados.',
+        platforms: 'Plataformas recomendadas: LiveJasmin, StripChat, ImLive, Flirt4Free'
+      },
+      3: {
+        title: '📹 Contenido Grabado - Método Seleccionado',
+        description: 'Trabajo una vez, vende múltiples veces. Perfecto para generar ingresos semi-pasivos a largo plazo.',
+        tips: 'Tips clave: Invierte en buena iluminación, crea contenido variado, organiza por categorías, promociona en múltiples plataformas.',
+        platforms: 'Plataformas recomendadas: ManyVids, Clips4Sale, OnlyFans, PornHub Premium'
+      }
+      // Agregar más detalles para otros métodos...
+    };
+    
+    function selectIncomeMethod(element, methodId) {
+      // Toggle selection
+      if (selectedMethods.has(methodId)) {
+        selectedMethods.delete(methodId);
+        element.classList.remove('selected');
+      } else {
+        selectedMethods.add(methodId);
+        element.classList.add('selected');
+      }
+      
+      // Show details for the most recently selected method
+      if (selectedMethods.has(methodId) && methodDetails[methodId]) {
+        const details = methodDetails[methodId];
+        document.getElementById('methodDetails').innerHTML = `
+          <h6><strong>${details.title}</strong></h6>
+          <p>${details.description}</p>
+          <p><strong>💡 ${details.tips}</strong></p>
+          <p><strong>🌐 ${details.platforms}</strong></p>
+        `;
+        document.getElementById('methodDetails').style.display = 'block';
+      } else if (selectedMethods.size === 0) {
+        document.getElementById('methodDetails').style.display = 'none';
+      }
+      
+      // Update calculator if it has been run
+      if (document.getElementById('diversificationResults').style.display === 'block') {
+        calculateDiversification();
+      }
+    }
+
+    function calculateDiversification() {
+      const totalHours = parseInt(document.getElementById('totalHours').value);
+      const experience = document.getElementById('experienceLevel').value;
+      const methodCount = parseInt(document.getElementById('methodCount').value);
+      const mainFocus = document.getElementById('mainFocus').value;
+      
+      // Experience multipliers
+      const expMultipliers = {
+        'beginner': 0.6,
+        'intermediate': 0.8,
+        'advanced': 1.0,
+        'expert': 1.3
+      };
+      
+      // Focus multipliers for different method types
+      const focusMultipliers = {
+        'live': { active: 1.2, passive: 0.8, content: 0.9 },
+        'content': { active: 0.9, passive: 1.1, content: 1.3 },
+        'interaction': { active: 1.1, passive: 0.9, content: 1.0 },
+        'passive': { active: 0.8, passive: 1.4, content: 1.1 }
+      };
+      
+      const expFactor = expMultipliers[experience];
+      const focusFactor = focusMultipliers[mainFocus];
+      
+      // Base earnings per method type (monthly)
+      const methodEarnings = {
+        'Shows Públicos': { base: 1200, type: 'active' },
+        'Shows Privados': { base: 1800, type: 'active' },
+        'Contenido Grabado': { base: 800, type: 'content' },
+        'Suscripciones': { base: 1500, type: 'passive' },
+        'Sexting': { base: 600, type: 'active' },
+        'Contenido Custom': { base: 1000, type: 'content' },
+        'Llamadas': { base: 700, type: 'active' },
+        'Artículos': { base: 300, type: 'passive' },
+        'Afiliaciones': { base: 400, type: 'passive' },
+        'Coaching': { base: 1200, type: 'passive' }
+      };
+      
+      const breakdown = document.getElementById('incomeBreakdown');
+      breakdown.innerHTML = '';
+      
+      let totalIncome = 0;
+      let methodNames = Object.keys(methodEarnings);
+      
+      // Select methods based on count and focus
+      let selectedMethodNames = methodNames.slice(0, methodCount);
+      
+      selectedMethodNames.forEach(methodName => {
+        const method = methodEarnings[methodName];
+        const typeFactor = focusFactor[method.type] || 1;
+        const hoursFactor = Math.min(totalHours / 6, 1.2); // More hours = slight bonus
+        
+        const income = Math.round(method.base * expFactor * typeFactor * hoursFactor);
+        totalIncome += income;
+        
+        const percentage = Math.round((income / (method.base * expFactor * typeFactor * hoursFactor * selectedMethodNames.length)) * 100);
+        
+        breakdown.innerHTML += `
+          <div class="breakdown-item active">
+            <div class="breakdown-percentage">${Math.round((income / 8000) * 100)}%</div>
+            <span class="breakdown-amount">$${income.toLocaleString()}</span>
+            <div class="breakdown-method">${methodName}</div>
+          </div>
+        `;
+      });
+      
+      document.getElementById('totalIncomeDisplay').innerHTML = `
+        🏆 <strong>Ingresos Mensuales Potenciales: $${totalIncome.toLocaleString()}</strong><br>
+        Implementando ${methodCount} métodos con ${totalHours}h/día de trabajo total
+      `;
+      
+      document.getElementById('diversificationResults').style.display = 'block';
+    }
+
+    function toggleTimeline(element) {
+      element.classList.toggle('completed');
+      
+      const totalItems = document.querySelectorAll('.timeline-tracker .timeline-item').length;
+      const completedItems = document.querySelectorAll('.timeline-tracker .timeline-item.completed').length;
+      const percentage = Math.round((completedItems / totalItems) * 100);
+      
+      const resultDiv = document.getElementById('timelineResult');
+      
+      if (completedItems > 0) {
+        let resultText = `<strong>DIVERSIFICACIÓN: ${completedItems}/${totalItems} métodos (${percentage}%)</strong><br>`;
+        
+        if (percentage >= 100) {
+          resultText += `<div style="color: var(--success-green);">🏆 <strong>¡DIVERSIFICACIÓN COMPLETA!</strong> Estás generando ingresos de múltiples fuentes como las modelos top.</div>`;
+        } else if (percentage >= 70) {
+          resultText += `<div style="color: var(--warning-orange);">🚀 <strong>DIVERSIFICACIÓN AVANZADA</strong> Tienes una base sólida de ingresos diversificados.</div>`;
+        } else if (percentage >= 40) {
+          resultText += `<div style="color: var(--info-blue);">📈 <strong>DIVERSIFICACIÓN INTERMEDIA</strong> Vas por buen camino, sigue implementando métodos.</div>`;
+        } else {
+          resultText += `<div style="color: var(--warning-orange);">🌱 <strong>DIVERSIFICACIÓN INICIAL</strong> Enfócate en dominar los primeros métodos antes de agregar más.</div>`;
+        }
+        
+        resultDiv.innerHTML = resultText;
+        resultDiv.style.background = percentage >= 100 ? 'var(--success-green)' : percentage >= 70 ? 'var(--warning-orange)' : 'var(--info-blue)';
+        resultDiv.style.color = 'white';
+        resultDiv.style.borderRadius = '8px';
+        resultDiv.style.padding = '1rem';
+        resultDiv.style.fontWeight = 'bold';
+        resultDiv.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.3)';
+        resultDiv.style.display = 'block';
+      } else {
+        resultDiv.style.display = 'none';
+      }
+    }
+
+    // Auto-calculate on page load
+    window.onload = function() {
+      calculateDiversification();
+    };
+  </script>
+</body>
+</html>

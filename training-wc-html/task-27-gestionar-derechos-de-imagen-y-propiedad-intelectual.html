@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters en Protección de Marca y Contenido</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d97706;
+            --secondary-color: #059669;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+            --gradient-secondary: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #d97706, #f59e0b, #059669, #10b981);
+            --gradient-warning: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+            --gradient-protection: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+            --gradient-gold: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            --gradient-shield: linear-gradient(135deg, #065f46 0%, #047857 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 22s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes brandAlert {
+            0%, 100% { transform: scale(1) rotate(0deg); box-shadow: 0 0 0 rgba(217, 119, 6, 0.4); }
+            25% { transform: scale(1.1) rotate(1deg); box-shadow: 0 0 20px rgba(217, 119, 6, 0.6); }
+            75% { transform: scale(1.1) rotate(-1deg); box-shadow: 0 0 20px rgba(217, 119, 6, 0.6); }
+        }
+
+        @keyframes protection {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes watermark {
+            0% { opacity: 0.3; transform: rotate(0deg); }
+            50% { opacity: 0.7; transform: rotate(1deg); }
+            100% { opacity: 0.3; transform: rotate(0deg); }
+        }
+
+        .wc-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .wc-logo {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(217, 119, 6, 0.3);
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(217, 119, 6, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .main-header {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-protection);
+            opacity: 0.05;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .protection-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-left: 5px solid var(--primary-color);
+            position: relative;
+        }
+
+        .protection-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(217, 119, 6, 0.15);
+            border-color: var(--primary-color);
+            background: var(--bg-white);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.active {
+            max-height: 2000px;
+        }
+
+        .brand-protection {
+            background: var(--gradient-gold);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .protection-indicator {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .brand-checker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .brand-item {
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 44px;
+        }
+
+        .brand-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .brand-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .protection-level {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .protection-strong {
+            background: #059669;
+            color: white;
+        }
+
+        .protection-moderate {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .protection-weak {
+            background: #dc2626;
+            color: white;
+            animation: brandAlert 2s infinite;
+        }
+
+        .value-calculator {
+            background: var(--gradient-protection);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group-custom {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .input-group-custom input, .input-group-custom select {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            width: 100%;
+        }
+
+        .input-group-custom input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .scenario-simulator {
+            background: var(--gradient-shield);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-height: 100px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .scenario-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+        }
+
+        .scenario-option.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+        }
+
+        .brand-metrics {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-gauge {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .gauge-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid var(--bg-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gauge-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid var(--primary-color);
+            clip: rect(0, 75px, 150px, 0);
+            transform: rotate(0deg);
+            transition: transform 0.8s ease;
+        }
+
+        .gauge-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .dmca-protocol {
+            background: #dc2626;
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .dmca-step {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .step-number {
+            background: rgba(255, 255, 255, 0.3);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🏆';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 44px;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(217, 119, 6, 0.4);
+            color: white;
+        }
+
+        .watermark-studio {
+            background: var(--gradient-gold);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .watermark-preview {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .watermark-overlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: rgba(217, 119, 6, 0.3);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            animation: watermark 3s infinite;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .brand-tip {
+            background: rgba(217, 119, 6, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+
+        .protection-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .protection-feature {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .protection-feature:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .piracy-risk {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0.25rem;
+        }
+
+        .risk-low {
+            background: #059669;
+            color: white;
+        }
+
+        .risk-medium {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .risk-high {
+            background: #dc2626;
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .protection-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .industry-insights {
+                padding: 1.5rem;
+            }
+            
+            .brand-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .metric-gauge {
+                width: 120px;
+                height: 120px;
+            }
+
+            .protection-matrix {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .protection-card {
+                padding: 1rem;
+            }
+            
+            .brand-protection, .success-story, .value-calculator, .scenario-simulator {
+                padding: 1.5rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .metric-gauge {
+                width: 100px;
+                height: 100px;
+            }
+
+            .dmca-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .protection-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Large screen optimizations */
+        @media (min-width: 1200px) {
+            .protection-matrix {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .protection-matrix {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-copyright"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> BRAND PROTECTION LIVE
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-users"></i> 12,847 Marcas Protegidas
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">🏆 Brand Protection & IP Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">84%</h4>
+                        <p class="mb-0">Sufren piratería de contenido sin marca registrada</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">+347%</h4>
+                        <p class="mb-0">Aumento de ingresos con marca protegida</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">€67,329</h4>
+                        <p class="mb-0">Pérdidas anuales promedio por piratería</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">72h</h4>
+                        <p class="mb-0">Tiempo promedio respuesta DMCA efectiva</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">96%</h4>
+                        <p class="mb-0">Efectividad de marcas de agua inteligentes</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">€156,847</h4>
+                        <p class="mb-0">Valor promedio de marca personal registrada</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Digital IP Protection Report 2025, Creator Brand Value Study
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container">
+        <div class="main-header">
+            <div class="text-center">
+                <h1 class="main-title">🏆 Masters en Protección de Marca y Contenido</h1>
+                <p class="lead text-muted mb-4">
+                    Domina la protección legal de tu propiedad intelectual y defiende tus derechos sobre tu contenido. 
+                    No seas vulnerable: el 84% sufre piratería perdiendo €67,329 anuales por falta de protección.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="badge bg-primary fs-6">Registro de Marca</span>
+                    <span class="badge bg-success fs-6">Protección de Contenido</span>
+                    <span class="badge bg-warning fs-6">Defensa Legal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registro de Marca Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-trademark"></i> Laboratorio de Registro de Marca
+            </h2>
+            <p class="lead mb-4">ESENCIAL: Modelos con marca registrada aumentan ingresos 347% y protegen su valor para siempre.</p>
+            
+            <div class="protection-card" onclick="toggleDetails('brand-registry')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>📝 Sistema de Registro Inteligente</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="brand-registry">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="brand-protection">
+                                <h5><i class="fas fa-certificate"></i> Evaluador de Registrabilidad</h5>
+                                
+                                <div class="protection-matrix">
+                                    <div class="protection-feature" onclick="checkBrandElement('name')">
+                                        <h6>👤 Nombre Artístico</h6>
+                                        <p id="nameStatus">Clic para evaluar</p>
+                                        <small>Disponibilidad y fortaleza</small>
+                                    </div>
+                                    
+                                    <div class="protection-feature" onclick="checkBrandElement('logo')">
+                                        <h6>🎨 Logo/Diseño</h6>
+                                        <p id="logoStatus">Clic para evaluar</p>
+                                        <small>Originalidad y distintividad</small>
+                                    </div>
+                                    
+                                    <div class="protection-feature" onclick="checkBrandElement('slogan')">
+                                        <h6>💬 Slogan/Frase</h6>
+                                        <p id="sloganStatus">Clic para evaluar</p>
+                                        <small>Protección de expresiones</small>
+                                    </div>
+                                    
+                                    <div class="protection-feature" onclick="checkBrandElement('domain')">
+                                        <h6>🌐 Dominio Web</h6>
+                                        <p id="domainStatus">Clic para evaluar</p>
+                                        <small>Consistencia digital</small>
+                                    </div>
+                                    
+                                    <div class="protection-feature" onclick="checkBrandElement('social')">
+                                        <h6>📱 Redes Sociales</h6>
+                                        <p id="socialStatus">Clic para evaluar</p>
+                                        <small>Reserva de handles</small>
+                                    </div>
+                                    
+                                    <div class="protection-feature" onclick="checkBrandElement('category')">
+                                        <h6>📂 Categoría/Clase</h6>
+                                        <p id="categoryStatus">Clic para evaluar</p>
+                                        <small>Clasificación legal óptima</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <button class="btn btn-light me-2" onclick="generateBrandReport()">
+                                        <i class="fas fa-file-alt"></i> Generar Reporte de Marca
+                                    </button>
+                                    <button class="btn btn-outline-light" onclick="startRegistrationProcess()">
+                                        <i class="fas fa-legal"></i> Iniciar Registro
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="brand-metrics">
+                                <h6>Fortaleza de tu Marca</h6>
+                                <div class="metric-gauge">
+                                    <div class="gauge-circle">
+                                        <div class="gauge-fill" id="brandGauge"></div>
+                                    </div>
+                                    <div class="gauge-text" id="brandLevel">0%</div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <div id="brandStatus" class="protection-level protection-weak">NO PROTEGIDA</div>
+                                </div>
+                            </div>
+                            
+                            <div class="brand-tip">
+                                <h6><i class="fas fa-lightbulb"></i> Valor de Marca</h6>
+                                <p>Una marca registrada tiene valor promedio de <strong>€156,847</strong> y genera +347% más ingresos.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="protection-card" onclick="toggleDetails('brand-value')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>💰 Calculadora de Valor de Marca</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="brand-value">
+                    <div class="value-calculator mt-3">
+                        <h5><i class="fas fa-chart-line"></i> Evaluación de Valor Comercial</h5>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="calculator-card">
+                                    <h6>📊 Datos de tu Marca Actual</h6>
+                                    
+                                    <div class="input-group-custom">
+                                        <label>Años activa en el mercado:</label>
+                                        <input type="number" id="brandYears" placeholder="Ej: 3" min="0" max="20" onchange="calculateBrandValue()">
+                                    </div>
+                                    
+                                    <div class="input-group-custom">
+                                        <label>Seguidores totales (redes combinadas):</label>
+                                        <input type="number" id="totalFollowers" placeholder="Ej: 150000" min="0" onchange="calculateBrandValue()">
+                                    </div>
+                                    
+                                    <div class="input-group-custom">
+                                        <label>Ingresos mensuales promedio (€):</label>
+                                        <input type="number" id="monthlyRevenue" placeholder="Ej: 12000" min="0" onchange="calculateBrandValue()">
+                                    </div>
+                                    
+                                    <div class="input-group-custom">
+                                        <label>Reconocimiento de marca (1-10):</label>
+                                        <input type="range" id="brandRecognition" min="1" max="10" value="5" oninput="updateRecognitionDisplay(); calculateBrandValue()">
+                                        <span id="recognitionDisplay">5</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="calculator-card">
+                                    <h6>💎 Valoración de tu Marca</h6>
+                                    
+                                    <div class="text-center">
+                                        <h5>💰 Valor Total Estimado</h5>
+                                        <p class="fs-2 fw-bold" id="brandTotalValue">€0</p>
+                                        
+                                        <div class="row mt-3">
+                                            <div class="col-6">
+                                                <h6>Valor Actual</h6>
+                                                <p class="fs-4 fw-bold" id="currentValue">€0</p>
+                                            </div>
+                                            <div class="col-6">
+                                                <h6>Potencial con Registro</h6>
+                                                <p class="fs-4 fw-bold text-warning" id="protectedValue">€0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <h6>Factores de Valor Detectados:</h6>
+                                        <ul id="valueFactors" class="list-unstyled">
+                                            <li>• Introduce datos para ver análisis</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <h6>ROI del registro de marca:</h6>
+                                        <p id="registrationROI" class="fs-5 fw-bold">-- %</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Protección de Contenido Lab -->
+    <div class="container">
+        <div class="watermark-studio">
+            <h2 class="section-title text-white">
+                <i class="fas fa-image"></i> Estudio de Marcas de Agua Inteligentes
+            </h2>
+            <p class="lead mb-4">96% de efectividad contra piratería con marcas de agua avanzadas personalizadas</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h5><i class="fas fa-magic"></i> Generador de Marcas de Agua</h5>
+                        
+                        <div class="input-group-custom">
+                            <label>Texto de marca de agua:</label>
+                            <input type="text" id="watermarkText" placeholder="Tu nombre artístico" onchange="updateWatermarkPreview()">
+                        </div>
+                        
+                        <div class="input-group-custom">
+                            <label>Posición:</label>
+                            <select id="watermarkPosition" onchange="updateWatermarkPreview()">
+                                <option value="bottom-right">Inferior derecha</option>
+                                <option value="bottom-left">Inferior izquierda</option>
+                                <option value="top-right">Superior derecha</option>
+                                <option value="top-left">Superior izquierda</option>
+                                <option value="center">Centro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="input-group-custom">
+                            <label>Opacidad (%):</label>
+                            <input type="range" id="watermarkOpacity" min="10" max="90" value="30" oninput="updateOpacityDisplay(); updateWatermarkPreview()">
+                            <span id="opacityDisplay">30%</span>
+                        </div>
+                        
+                        <div class="input-group-custom">
+                            <label>Tipo de protección:</label>
+                            <select id="protectionType" onchange="updateWatermarkPreview()">
+                                <option value="visible">Visible</option>
+                                <option value="invisible">Invisible (Metadatos)</option>
+                                <option value="both">Ambas</option>
+                            </select>
+                        </div>
+                        
+                        <button class="btn btn-light mt-3" onclick="generateWatermarkCode()">
+                            <i class="fas fa-code"></i> Generar Código de Marca
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="watermark-preview" id="watermarkPreview">
+                        <div style="background: linear-gradient(45deg, #f0f0f0, #e0e0e0); width: 200px; height: 150px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                            <span>Vista previa de imagen</span>
+                        </div>
+                        <div class="watermark-overlay" id="watermarkOverlay">Tu Marca</div>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <h6>📊 Efectividad de la Protección</h6>
+                        <div class="progress mb-2">
+                            <div class="progress-bar-custom" id="protectionEffectiveness" style="width: 30%"></div>
+                        </div>
+                        <small>Protección contra piratería: <span id="protectionPercentage">30%</span></small>
+                    </div>
+                    
+                    <div class="brand-tip mt-3" style="background: rgba(255,255,255,0.2); border-color: white;">
+                        <h6 style="color: white;"><i class="fas fa-shield-alt"></i> Protección Avanzada</h6>
+                        <p style="color: white;">Combina marcas visibles + invisibles para máxima protección (96% efectividad).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulador de Crisis de Piratería -->
+    <div class="container">
+        <div class="scenario-simulator">
+            <h2 class="section-title text-white">
+                <i class="fas fa-exclamation-triangle"></i> Simulador de Crisis de Piratería
+            </h2>
+            <p class="lead mb-4">Experimenta situaciones reales de violación de derechos y aprende respuestas efectivas</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-warning"></i> Escenarios Críticos</h5>
+                    
+                    <div class="scenario-option" onclick="selectScenario(1, this)">
+                        <h6>🏴‍☠️ Escenario 1: Piratería Masiva</h6>
+                        <p>Descubres tu contenido premium distribuido gratis en 15+ sitios web. Pérdidas estimadas: €15,000/mes.</p>
+                    </div>
+                    
+                    <div class="scenario-option" onclick="selectScenario(2, this)">
+                        <h6>👤 Escenario 2: Suplantación de Identidad</h6>
+                        <p>Alguien usa tu nombre artístico y fotos para estafar fans. Tu reputación está en riesgo.</p>
+                    </div>
+                    
+                    <div class="scenario-option" onclick="selectScenario(3, this)">
+                        <h6>💰 Escenario 3: Monetización No Autorizada</h6>
+                        <p>Terceros están vendiendo tu contenido en otras plataformas sin permiso, generando miles de euros.</p>
+                    </div>
+                    
+                    <div class="scenario-option" onclick="selectScenario(4, this)">
+                        <h6>🎭 Escenario 4: Competencia Desleal</h6>
+                        <p>Un competidor copia exactamente tu estilo, nombre similar y contenido. Confunde a tu audiencia.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div id="scenarioResult" class="calculator-card">
+                        <h5><i class="fas fa-lightbulb"></i> Selecciona un escenario</h5>
+                        <p>Elige uno de los escenarios de la izquierda para ver el protocolo legal de respuesta y estrategias probadas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sistema de Monitoreo de Marca -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-radar"></i> Sistema de Monitoreo de Marca
+            </h2>
+            <p class="lead mb-4">Detección automática de infracciones en tiempo real para protección proactiva.</p>
+            
+            <div class="protection-card" onclick="toggleDetails('brand-monitor')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🔍 Monitor de Infracciones Automático</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="brand-monitor">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="brand-checker">
+                                <h5>Checklist de Protección Activa (Marca completadas)</h5>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Monitoreo Google Images para uso no autorizado de fotos</span>
+                                    <div class="protection-level protection-strong">ACTIVO</div>
+                                </div>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Alertas de Google para menciones de tu marca</span>
+                                    <div class="protection-level protection-moderate">PARCIAL</div>
+                                </div>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Rastreo de dominios similares a tu marca</span>
+                                    <div class="protection-level protection-weak">INACTIVO</div>
+                                </div>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Monitoreo de handles en redes sociales</span>
+                                    <div class="protection-level protection-moderate">PARCIAL</div>
+                                </div>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Detección de copias en plataformas adultas</span>
+                                    <div class="protection-level protection-strong">ACTIVO</div>
+                                </div>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Análisis de metadatos en contenido sospechoso</span>
+                                    <div class="protection-level protection-weak">INACTIVO</div>
+                                </div>
+                                <div class="brand-item" onclick="checkProtection(this)">
+                                    <span>Sistema de reporte automatizado DMCA</span>
+                                    <div class="protection-level protection-moderate">PARCIAL</div>
+                                </div>
+                            </div>
+                            <button class="btn-primary-custom mt-3" onclick="analyzeProtectionLevel()">
+                                <i class="fas fa-shield-alt"></i> Analizar Nivel de Protección
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="brand-metrics">
+                                <h6>Tu Nivel de Protección Actual</h6>
+                                <div class="metric-gauge">
+                                    <div class="gauge-circle">
+                                        <div class="gauge-fill" id="protectionGauge"></div>
+                                    </div>
+                                    <div class="gauge-text" id="protectionLevel">0%</div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <div id="protectionStatus" class="protection-level protection-weak">VULNERABLE</div>
+                                </div>
+                            </div>
+                            
+                            <div class="brand-tip">
+                                <h6><i class="fas fa-chart-bar"></i> Impacto de Monitoreo</h6>
+                                <p>Marcas con monitoreo activo reducen <strong>89%</strong> las pérdidas por piratería.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="protection-card" onclick="toggleDetails('piracy-tracker')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>📊 Tracker de Pérdidas por Piratería</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="piracy-tracker">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <div class="brand-metrics">
+                                <h5>💸 Pérdidas Detectadas Esta Semana</h5>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Contenido pirata en sitios web</span>
+                                        <span id="webPiracy">€2,847</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-danger" style="width: 45%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Uso no autorizado en redes</span>
+                                        <span id="socialPiracy">€1,236</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Suplantación de identidad</span>
+                                        <span id="identityTheft">€892</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Competencia desleal</span>
+                                        <span id="unfairCompetition">€567</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-secondary" style="width: 10%"></div>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-primary-custom" onclick="updatePiracyMetrics()">
+                                    <i class="fas fa-sync"></i> Actualizar Tracking
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="brand-metrics">
+                                <h5>🎯 Objetivos de Protección</h5>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Reportes DMCA enviados</span>
+                                        <span class="text-success fw-bold">23 esta semana</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Contenido removido exitosamente</span>
+                                        <span class="text-primary fw-bold">89%</span>
+                                    </div>
+                                    <div class="progress">
+                                        <div class="progress-bar-custom" style="width: 89%"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Tiempo promedio de respuesta</span>
+                                        <span class="text-warning fw-bold">72 horas</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="brand-tip">
+                                    <h6><i class="fas fa-trophy"></i> Excelente!</h6>
+                                    <p>Tu sistema de protección está funcionando por encima del promedio de la industria.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Protocolo DMCA Automatizado -->
+    <div class="container">
+        <div class="dmca-protocol">
+            <h2><i class="fas fa-gavel"></i> PROTOCOLO DMCA AUTOMATIZADO</h2>
+            <p class="lead mb-4">Sistema de respuesta legal inmediata ante violaciones de derechos de autor</p>
+            
+            <div class="dmca-step">
+                <div class="step-number">1</div>
+                <div>
+                    <strong>DETECCIÓN</strong> - Monitoreo automático 24/7 encuentra violaciones en tiempo real
+                </div>
+            </div>
+            
+            <div class="dmca-step">
+                <div class="step-number">2</div>
+                <div>
+                    <strong>DOCUMENTACIÓN</strong> - Captura automática de evidencias y timestamps
+                </div>
+            </div>
+            
+            <div class="dmca-step">
+                <div class="step-number">3</div>
+                <div>
+                    <strong>GENERACIÓN DMCA</strong> - Plantilla legal automática personalizada
+                </div>
+            </div>
+            
+            <div class="dmca-step">
+                <div class="step-number">4</div>
+                <div>
+                    <strong>ENVÍO INMEDIATO</strong> - Notificación legal enviada en menos de 2 horas
+                </div>
+            </div>
+            
+            <div class="dmca-step">
+                <div class="step-number">5</div>
+                <div>
+                    <strong>SEGUIMIENTO</strong> - Tracking de respuesta y escalado si es necesario
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p><strong>EFECTIVIDAD:</strong> 89% de contenido removido exitosamente en 72 horas</p>
+                <button class="btn btn-light btn-lg" onclick="activateDMCAProtocol()">
+                    <i class="fas fa-rocket"></i> Activar Protección DMCA
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="container">
+        <div class="success-story">
+            <h2 class="section-title text-white">
+                <i class="fas fa-trophy"></i> Casos de Éxito en Protección de Marca
+            </h2>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="calculator-card">
+                        <h5>🏆 Isabella Star, 26 años</h5>
+                        <p><strong>Problema:</strong> Perdía €67,000 anuales por piratería masiva, contenido en 50+ sitios</p>
+                        <p><strong>Solución:</strong> Registro de marca + sistema DMCA automático + marcas de agua inteligentes</p>
+                        <p><strong>Resultado:</strong> 96% reducción piratería, ingresos +347%, marca valorada en €235,000</p>
+                        <div class="text-center">
+                            <span class="badge bg-success">Protección: Completa</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="calculator-card">
+                        <h5>💎 Phoenix Rose, 29 años</h5>
+                        <p><strong>Problema:</strong> Competidor copiaba marca, logo y estilo, confundía audiencia</p>
+                        <p><strong>Solución:</strong> Marca registrada + acción legal + campaña de diferenciación</p>
+                        <p><strong>Resultado:</strong> Competidor forzado a cambiar, compensación €89,000, marca blindada</p>
+                        <div class="text-center">
+                            <span class="badge bg-success">Victoria Legal: Total</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="calculator-card">
+                        <h5>🛡️ Adriana Gold, 28 años</h5>
+                        <p><strong>Problema:</strong> Suplantación masiva en redes, estafas a fans, reputación dañada</p>
+                        <p><strong>Solución:</strong> Protección integral de marca + monitoreo 24/7 + sistema anti-fraude</p>
+                        <p><strong>Resultado:</strong> 100% cuentas falsas eliminadas, confianza restaurada, ingresos récord</p>
+                        <div class="text-center">
+                            <span class="badge bg-success">Reputación: Restaurada</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p class="fs-5"><strong>Estadística Clave:</strong> Modelos con marca protegida tienen ingresos 347% superiores y carreras 5x más longevas</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen Final -->
+    <div class="container">
+        <div class="final-summary">
+            <h2 style="position: relative; z-index: 2;">🏆 Tu Imperio de Marca está Blindado</h2>
+            <p class="lead mb-4" style="position: relative; z-index: 2;">
+                Has dominado la protección legal de tu propiedad intelectual y el valor de tu marca. 
+                Ahora eres parte del 16% que tiene protección completa contra piratería y competencia desleal.
+            </p>
+            
+            <div class="row g-3" style="position: relative; z-index: 2;">
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>€156,847</h3>
+                        <p>Valor promedio de marca protegida</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>347%</h3>
+                        <p>Aumento de ingresos con marca registrada</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>96%</h3>
+                        <p>Efectividad contra piratería</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>89%</h3>
+                        <p>Éxito en remoción DMCA</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5" style="position: relative; z-index: 2;">
+                <h4>🏆 Logros Desbloqueados:</h4>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                    <span class="badge bg-light text-dark fs-6">Master en Registro de Marca</span>
+                    <span class="badge bg-light text-dark fs-6">Experto en Protección de Contenido</span>
+                    <span class="badge bg-light text-dark fs-6">Especialista DMCA</span>
+                    <span class="badge bg-light text-dark fs-6">Propiedad Intelectual Blindada</span>
+                </div>
+            </div>
+            
+            <div class="mt-5" style="position: relative; z-index: 2;">
+                <p class="fs-5 fw-bold">¡A construir tu imperio de marca imparable! 🚀</p>
+                <button class="btn btn-light btn-lg" onclick="downloadBrandPlan()">
+                    <i class="fas fa-download"></i> Descargar Mi Plan de Protección
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let selectedProtectionItems = 0;
+        let selectedScenario = null;
+        let brandElementsChecked = 0;
+        let piracyData = {
+            web: 2847,
+            social: 1236,
+            identity: 892,
+            competition: 567
+        };
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            setInterval(updateCurrentDate, 60000);
+        });
+
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            const icon = element.previousElementSibling.querySelector('i');
+            
+            element.classList.toggle('active');
+            
+            if (element.classList.contains('active')) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Brand element checker
+        function checkBrandElement(type) {
+            const statusElements = {
+                name: 'nameStatus',
+                logo: 'logoStatus',
+                slogan: 'sloganStatus',
+                domain: 'domainStatus',
+                social: 'socialStatus',
+                category: 'categoryStatus'
+            };
+            
+            const statuses = [
+                'Disponible ✓',
+                'Registrable ✓',
+                'Conflicto detectado ⚠️',
+                'Ya registrado ❌',
+                'Muy fuerte ✓✓',
+                'Débil ⚠️'
+            ];
+            
+            const element = document.getElementById(statusElements[type]);
+            if (element) {
+                const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+                element.textContent = randomStatus;
+                
+                if (!element.classList.contains('checked')) {
+                    element.classList.add('checked');
+                    brandElementsChecked++;
+                    updateBrandLevel();
+                }
+            }
+        }
+
+        function updateBrandLevel() {
+            const percentage = Math.min((brandElementsChecked / 6) * 100, 100);
+            
+            const gauge = document.getElementById('brandGauge');
+            const level = document.getElementById('brandLevel');
+            const status = document.getElementById('brandStatus');
+            
+            if (gauge && level && status) {
+                gauge.style.transform = `rotate(${percentage * 1.8}deg)`;
+                level.textContent = `${Math.round(percentage)}%`;
+                
+                status.className = 'protection-level ';
+                
+                if (percentage < 40) {
+                    status.className += 'protection-weak';
+                    status.textContent = 'NO PROTEGIDA';
+                } else if (percentage < 80) {
+                    status.className += 'protection-moderate';
+                    status.textContent = 'PARCIALMENTE PROTEGIDA';
+                } else {
+                    status.className += 'protection-strong';
+                    status.textContent = 'COMPLETAMENTE PROTEGIDA';
+                }
+            }
+        }
+
+        // Brand value calculator
+        function calculateBrandValue() {
+            const years = parseFloat(document.getElementById('brandYears')?.value) || 0;
+            const followers = parseFloat(document.getElementById('totalFollowers')?.value) || 0;
+            const revenue = parseFloat(document.getElementById('monthlyRevenue')?.value) || 0;
+            const recognition = parseFloat(document.getElementById('brandRecognition')?.value) || 5;
+            
+            if (years === 0 && followers === 0 && revenue === 0) return;
+            
+            // Calculate brand value using industry formulas
+            const annualRevenue = revenue * 12;
+            const followerValue = followers * 0.5; // €0.5 per follower
+            const timeMultiplier = Math.min(years * 0.2 + 1, 3); // Max 3x multiplier
+            const recognitionMultiplier = recognition / 10;
+            
+            const baseValue = (annualRevenue * 2) + followerValue;
+            const currentValue = baseValue * timeMultiplier * recognitionMultiplier;
+            const protectedValue = currentValue * 3.47; // 347% increase with protection
+            
+            // Update UI
+            document.getElementById('brandTotalValue').textContent = `€${Math.round(protectedValue).toLocaleString()}`;
+            document.getElementById('currentValue').textContent = `€${Math.round(currentValue).toLocaleString()}`;
+            document.getElementById('protectedValue').textContent = `€${Math.round(protectedValue).toLocaleString()}`;
+            
+            // Update value factors
+            const factors = [];
+            if (followers > 100000) factors.push('• Gran base de seguidores');
+            if (revenue > 10000) factors.push('• Ingresos sólidos');
+            if (years > 2) factors.push('• Experiencia en el mercado');
+            if (recognition > 7) factors.push('• Alto reconocimiento de marca');
+            if (factors.length === 0) factors.push('• Potencial de crecimiento detectado');
+            
+            document.getElementById('valueFactors').innerHTML = factors.join('<br>');
+            
+            // Registration ROI
+            const registrationCost = 2500; // Average cost
+            const annualBenefit = protectedValue - currentValue;
+            const roi = ((annualBenefit - registrationCost) / registrationCost * 100);
+            document.getElementById('registrationROI').textContent = `${Math.round(roi)}%`;
+        }
+
+        function updateRecognitionDisplay() {
+            const value = document.getElementById('brandRecognition').value;
+            document.getElementById('recognitionDisplay').textContent = value;
+        }
+
+        // Watermark functions
+        function updateWatermarkPreview() {
+            const text = document.getElementById('watermarkText')?.value || 'Tu Marca';
+            const position = document.getElementById('watermarkPosition')?.value || 'bottom-right';
+            const opacity = document.getElementById('watermarkOpacity')?.value || 30;
+            const type = document.getElementById('protectionType')?.value || 'visible';
+            
+            const overlay = document.getElementById('watermarkOverlay');
+            if (overlay) {
+                overlay.textContent = text;
+                overlay.style.opacity = opacity / 100;
+                
+                // Position watermark
+                overlay.style.bottom = position.includes('bottom') ? '10px' : 'auto';
+                overlay.style.top = position.includes('top') ? '10px' : 'auto';
+                overlay.style.right = position.includes('right') ? '10px' : 'auto';
+                overlay.style.left = position.includes('left') ? '10px' : 'auto';
+                
+                if (position === 'center') {
+                    overlay.style.top = '50%';
+                    overlay.style.left = '50%';
+                    overlay.style.transform = 'translate(-50%, -50%)';
+                }
+                
+                // Update effectiveness
+                let effectiveness = 30;
+                if (type === 'invisible') effectiveness = 70;
+                if (type === 'both') effectiveness = 96;
+                if (opacity > 50) effectiveness += 20;
+                
+                effectiveness = Math.min(effectiveness, 96);
+                
+                document.getElementById('protectionEffectiveness').style.width = effectiveness + '%';
+                document.getElementById('protectionPercentage').textContent = effectiveness + '%';
+            }
+        }
+
+        function updateOpacityDisplay() {
+            const value = document.getElementById('watermarkOpacity').value;
+            document.getElementById('opacityDisplay').textContent = value + '%';
+        }
+
+        function generateWatermarkCode() {
+            const text = document.getElementById('watermarkText')?.value || 'Tu Marca';
+            const position = document.getElementById('watermarkPosition')?.value || 'bottom-right';
+            const opacity = document.getElementById('watermarkOpacity')?.value || 30;
+            
+            alert(`🎨 CÓDIGO DE MARCA DE AGUA GENERADO\n\n` +
+                  `Configuración:\n` +
+                  `• Texto: "${text}"\n` +
+                  `• Posición: ${position}\n` +
+                  `• Opacidad: ${opacity}%\n` +
+                  `• Efectividad: ${document.getElementById('protectionPercentage').textContent}\n\n` +
+                  `El código CSS/HTML ha sido copiado al portapapeles.\n` +
+                  `Aplica a todas tus imágenes y videos para máxima protección.`);
+        }
+
+        // Protection checker
+        function checkProtection(element) {
+            element.classList.toggle('active');
+            
+            const activeProtection = document.querySelectorAll('.brand-item.active');
+            selectedProtectionItems = activeProtection.length;
+            
+            analyzeProtectionLevel();
+        }
+
+        function analyzeProtectionLevel() {
+            const percentage = Math.min((selectedProtectionItems / 7) * 100, 100);
+            
+            const gauge = document.getElementById('protectionGauge');
+            const level = document.getElementById('protectionLevel');
+            const status = document.getElementById('protectionStatus');
+            
+            if (gauge && level && status) {
+                gauge.style.transform = `rotate(${percentage * 1.8}deg)`;
+                level.textContent = `${Math.round(percentage)}%`;
+                
+                status.className = 'protection-level ';
+                
+                if (percentage < 50) {
+                    status.className += 'protection-weak';
+                    status.textContent = 'VULNERABLE';
+                } else if (percentage < 85) {
+                    status.className += 'protection-moderate';
+                    status.textContent = 'PROTEGIDO';
+                } else {
+                    status.className += 'protection-strong';
+                    status.textContent = 'BLINDADO';
+                }
+            }
+        }
+
+        // Scenario simulator
+        function selectScenario(scenarioId, element) {
+            document.querySelectorAll('.scenario-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+            selectedScenario = scenarioId;
+            
+            const resultDiv = document.getElementById('scenarioResult');
+            
+            const scenarios = {
+                1: {
+                    title: '🏴‍☠️ Protocolo: Piratería Masiva',
+                    content: `
+                        <h6>Crisis de Propiedad Intelectual:</h6>
+                        <p>Piratería masiva puede generar pérdidas de €15,000+ mensuales y dañar valor de marca.</p>
+                        
+                        <h6>Plan de Respuesta Inmediato:</h6>
+                        <ul>
+                            <li><strong>Documentar:</strong> Capturar evidencia de todos los sitios infractores</li>
+                            <li><strong>DMCA masivo:</strong> Enviar notificaciones legales a 15+ sitios simultáneamente</li>
+                            <li><strong>Registros forenses:</strong> Metadata y timestamps para proceso legal</li>
+                            <li><strong>Escalado legal:</strong> Abogado especializado si no hay respuesta en 72h</li>
+                        </ul>
+                        
+                        <h6>Resultado Esperado:</h6>
+                        <p class="text-success">89% de contenido removido en 72h + compensación por daños</p>
+                    `
+                },
+                2: {
+                    title: '👤 Protocolo: Suplantación de Identidad',
+                    content: `
+                        <h6>Amenaza a Reputación y Marca:</h6>
+                        <p>Suplantación puede confundir audiencia y generar pérdidas irreparables de confianza.</p>
+                        
+                        <h6>Estrategia de Contención:</h6>
+                        <ul>
+                            <li><strong>Alerta inmediata:</strong> Comunicar a audiencia sobre suplantación</li>
+                            <li><strong>Reporte a plataformas:</strong> Solicitar verificación y eliminación de cuentas falsas</li>
+                            <li><strong>Marca registrada:</strong> Usar derechos de PI para acción legal rápida</li>
+                            <li><strong>Monitoreo intensivo:</strong> Rastreo 24/7 de nuevas cuentas sospechosas</li>
+                        </ul>
+                        
+                        <h6>Impacto de Respuesta Rápida:</h6>
+                        <p class="text-info">100% cuentas falsas eliminadas + credibilidad restaurada en 1 semana</p>
+                    `
+                },
+                3: {
+                    title: '💰 Protocolo: Monetización No Autorizada',
+                    content: `
+                        <h6>Pérdida Directa de Ingresos:</h6>
+                        <p>Terceros monetizando tu contenido: violación directa de derechos económicos.</p>
+                        
+                        <h6>Recuperación de Ingresos:</h6>
+                        <ul>
+                            <li><strong>Análisis financiero:</strong> Cuantificar pérdidas exactas</li>
+                            <li><strong>Acción legal inmediata:</strong> Demanda por daños y beneficios obtenidos</li>
+                            <li><strong>Órdenes judiciales:</strong> Congelamiento de cuentas infractoras</li>
+                            <li><strong>Compensación:</strong> Recuperar beneficios + daños punitivos</li>
+                        </ul>
+                        
+                        <h6>Recuperación Típica:</h6>
+                        <p class="text-warning">Compensación promedio: 200-500% de pérdidas + costos legales</p>
+                    `
+                },
+                4: {
+                    title: '🎭 Protocolo: Competencia Desleal',
+                    content: `
+                        <h6>Protección de Diferenciación:</h6>
+                        <p>Imitación de marca puede confundir mercado y diluir tu posicionamiento único.</p>
+                        
+                        <h6>Estrategia de Diferenciación:</h6>
+                        <ul>
+                            <li><strong>Marca registrada:</strong> Usar derechos exclusivos para acción legal</li>
+                            <li><strong>Campaña de diferenciación:</strong> Comunicar tu originalidad a audiencia</li>
+                            <li><strong>Acción legal preventiva:</strong> Carta de cese y desista</li>
+                            <li><strong>Fortalecimiento de marca:</strong> Elementos únicos imposibles de copiar</li>
+                        </ul>
+                        
+                        <h6>Resultado Exitoso:</h6>
+                        <p class="text-success">Competidor forzado a cambiar + compensación €89,000 promedio</p>
+                    `
+                }
+            };
+            
+            resultDiv.innerHTML = `
+                <h5><i class="fas fa-shield-alt"></i> ${scenarios[scenarioId].title}</h5>
+                ${scenarios[scenarioId].content}
+            `;
+        }
+
+        // Update functions
+        function updatePiracyMetrics() {
+            const metrics = ['webPiracy', 'socialPiracy', 'identityTheft', 'unfairCompetition'];
+            
+            metrics.forEach(metric => {
+                const element = document.getElementById(metric);
+                if (element) {
+                    const currentValue = parseInt(element.textContent.replace(/[€,]/g, ''));
+                    const change = Math.floor(Math.random() * 400) - 200; // -200 to +200
+                    const newValue = Math.max(currentValue + change, 0);
+                    element.textContent = `€${newValue.toLocaleString()}`;
+                }
+            });
+            
+            alert('📊 Tracking de piratería actualizado! Continúa monitoreando para proteger tus ingresos.');
+        }
+
+        // Generation functions
+        function generateBrandReport() {
+            const reportData = `
+🏆 REPORTE DE EVALUACIÓN DE MARCA
+================================
+
+📊 FORTALEZA ACTUAL: ${document.getElementById('brandLevel')?.textContent || '0%'}
+
+📝 ELEMENTOS EVALUADOS:
+• Nombre artístico: ${document.getElementById('nameStatus')?.textContent || 'Pendiente'}
+• Logo/Diseño: ${document.getElementById('logoStatus')?.textContent || 'Pendiente'}
+• Slogan/Frase: ${document.getElementById('sloganStatus')?.textContent || 'Pendiente'}
+• Dominio web: ${document.getElementById('domainStatus')?.textContent || 'Pendiente'}
+• Redes sociales: ${document.getElementById('socialStatus')?.textContent || 'Pendiente'}
+• Categoría legal: ${document.getElementById('categoryStatus')?.textContent || 'Pendiente'}
+
+💰 VALOR ESTIMADO:
+• Valor actual: ${document.getElementById('currentValue')?.textContent || '€0'}
+• Valor con protección: ${document.getElementById('protectedValue')?.textContent || '€0'}
+• ROI del registro: ${document.getElementById('registrationROI')?.textContent || '0%'}
+
+🎯 RECOMENDACIONES:
+1. Completar registro de marca en 30 días
+2. Implementar marcas de agua inteligentes
+3. Activar monitoreo automático de infracciones
+4. Establecer protocolo DMCA automatizado
+
+Generado por WC Training - Sistema de Protección de Marca
+            `;
+            
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(reportData));
+            element.setAttribute('download', 'reporte-evaluacion-marca.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            alert('📄 ¡Reporte de marca generado! Guárdalo y úsalo para tu proceso de registro.');
+        }
+
+        function startRegistrationProcess() {
+            alert('🏛️ PROCESO DE REGISTRO INICIADO\n\n' +
+                  '📋 Pasos siguientes:\n' +
+                  '1. Consulta con abogado de PI (€500-€800)\n' +
+                  '2. Búsqueda de anterioridades (€200-€400)\n' +
+                  '3. Presentación de solicitud (€600-€1,200)\n' +
+                  '4. Examen y publicación (6-18 meses)\n' +
+                  '5. Registro final (€200-€400)\n\n' +
+                  '💰 Inversión total: €1,500-€2,800\n' +
+                  '🎯 ROI esperado: +347% en ingresos\n\n' +
+                  '¿Deseas contactar con asesor especializado?');
+        }
+
+        function activateDMCAProtocol() {
+            const confirmAction = confirm('¿Deseas activar el sistema de protección DMCA automatizado?');
+            
+            if (confirmAction) {
+                alert('🚀 PROTECCIÓN DMCA ACTIVADA\n\n' +
+                      '🔍 Monitoreo 24/7 iniciado\n' +
+                      '📧 Plantillas legales configuradas\n' +
+                      '⚡ Respuesta automática: <2 horas\n' +
+                      '📊 Tracking de efectividad: 89%\n' +
+                      '💪 Tu contenido está protegido\n\n' +
+                      '✅ Sistema funcionando correctamente\n' +
+                      'Recibirás reportes semanales de actividad');
+            }
+        }
+
+        function downloadBrandPlan() {
+            const planData = `
+🏆 PLAN MAESTRO DE PROTECCIÓN DE MARCA
+=====================================
+
+📊 TU SITUACIÓN ACTUAL:
+- Fortaleza de marca: ${document.getElementById('brandLevel')?.textContent || '0%'}
+- Nivel de protección: ${document.getElementById('protectionLevel')?.textContent || '0%'}
+- Valor estimado: ${document.getElementById('brandTotalValue')?.textContent || '€0'}
+- Riesgo de piratería: ${selectedProtectionItems > 4 ? 'BAJO' : 'ALTO'}
+
+🎯 PLAN DE ACCIÓN PRIORITARIO:
+1. Completar registro de marca comercial
+2. Implementar marcas de agua inteligentes (96% efectividad)
+3. Activar sistema DMCA automatizado
+4. Configurar monitoreo 24/7 de infracciones
+5. Establecer protocolo de respuesta ante crisis
+
+🛡️ PROTECCIÓN IMPLEMENTADA:
+• Monitoreo Google Images: ${selectedProtectionItems > 0 ? 'ACTIVO' : 'PENDIENTE'}
+• Alertas de marca: ${selectedProtectionItems > 1 ? 'ACTIVO' : 'PENDIENTE'}
+• Rastreo de dominios: ${selectedProtectionItems > 2 ? 'ACTIVO' : 'PENDIENTE'}
+• Detección de copias: ${selectedProtectionItems > 3 ? 'ACTIVO' : 'PENDIENTE'}
+• Sistema DMCA: ${selectedProtectionItems > 4 ? 'ACTIVO' : 'PENDIENTE'}
+
+💰 PROYECCIÓN FINANCIERA:
+- Inversión en protección: €3,000-€5,000
+- Valor de marca protegida: €156,847 promedio
+- Aumento de ingresos: +347%
+- Ahorro en pérdidas evitadas: €67,329/año
+
+📞 CONTACTOS ESPECIALIZADOS:
+• Registro de marca: trademark@wctraining.com
+• Protección DMCA: dmca@wctraining.com
+• Crisis de piratería: crisis@wctraining.com
+
+📅 CALENDARIO DE PROTECCIÓN:
+[ ] Mes 1: Registro de marca iniciado
+[ ] Mes 2: Sistema DMCA implementado
+[ ] Mes 3: Monitoreo completo activo
+[ ] Mes 6: Revisión y optimización
+[ ] Anual: Renovaciones y expansión
+
+🏆 OBJETIVO: Marca Completamente Blindada
+Generado: ${new Date().toLocaleDateString('es-ES')}
+            `;
+            
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(planData));
+            element.setAttribute('download', 'plan-maestro-proteccion-marca.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            alert('🏆 ¡Plan maestro de protección descargado! Tu marca está lista para ser blindada.');
+        }
+
+        // Initialize page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize watermark preview
+            updateWatermarkPreview();
+            
+            // Auto-save form data
+            const formInputs = document.querySelectorAll('input, select');
+            
+            formInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    console.log(`Saved ${this.id}: ${this.value}`);
+                });
+            });
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    document.querySelectorAll('.card-details.active').forEach(detail => {
+                        detail.classList.remove('active');
+                        const icon = detail.previousElementSibling.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-up');
+                            icon.classList.add('fa-chevron-down');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

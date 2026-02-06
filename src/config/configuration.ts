@@ -8,4 +8,9 @@ export default () => ({
     bcryptSaltRounds: parseInt(process.env.BCRYPT_SALT_ROUNDS || '12', 10),
     tokenExpirationHours: parseInt(process.env.TOKEN_EXPIRATION_HOURS || '24', 10),
   },
+  cloudinary: {
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME || 'dkzrxuhsc',
+    apiKey: process.env.CLOUDINARY_API_KEY || '',
+    apiSecret: process.env.CLOUDINARY_API_SECRET || '',
+  },
 });

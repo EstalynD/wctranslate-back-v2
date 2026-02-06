@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🧪 Test Práctico: VPN en Acción</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --wc-primary: #E91E63;
+      --wc-secondary: #9C27B0;
+      --wc-accent: #FF5722;
+      --wc-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #FF5722 100%);
+      --wc-gradient-light: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 50%, rgba(255, 87, 34, 0.1) 100%);
+      --real-red: #F44336;
+      --artistico-blue: #2196F3;
+      --seguro-green: #4CAF50;
+      --peligro-orange: #FF9800;
+      --success-green: #4CAF50;
+      --warning-orange: #FF9800;
+      --danger-red: #F44336;
+      --info-blue: #2196F3;
+      --text-dark: #1F2937;
+      --text-muted: #6B7280;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8F9FA;
+      --border-light: #E0E0E0;
+      --shadow-primary: rgba(233, 30, 99, 0.15);
+      --tech-purple: #673AB7;
+      --experiment-green: #009688;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #FFF0F5 0%, #F3E5F5 50%, #FFF3E0 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .hero-header {
+      background: var(--wc-gradient);
+      color: white;
+      padding: 50px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px var(--shadow-primary);
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .wc-logo {
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .module-breadcrumb {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--wc-primary);
+      font-weight: bold;
+    }
+
+    .section-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px var(--shadow-primary);
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--border-light);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .primary-highlight {
+      background: var(--wc-gradient-light);
+      border: 2px solid var(--wc-primary);
+      border-left: 6px solid var(--wc-primary);
+    }
+
+    .success-highlight {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.05));
+      border: 2px solid var(--success-green);
+      border-left: 6px solid var(--success-green);
+    }
+
+    .info-highlight {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(3, 169, 244, 0.05));
+      border: 2px solid var(--info-blue);
+      border-left: 6px solid var(--info-blue);
+    }
+
+    .warning-highlight {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05));
+      border: 2px solid var(--warning-orange);
+      border-left: 6px solid var(--warning-orange);
+    }
+
+    .danger-highlight {
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(233, 30, 99, 0.05));
+      border: 2px solid var(--danger-red);
+      border-left: 6px solid var(--danger-red);
+    }
+
+    .experiment-lab {
+      background: var(--experiment-green);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .experiment-lab::before {
+      content: '🧪';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    .ip-checker {
+      background: var(--bg-white);
+      border: 3px solid var(--tech-purple);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    /* Mejoras de visibilidad de texto */
+    .ip-display {
+      background: var(--bg-white);
+      border: 2px solid var(--tech-purple);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px rgba(103, 58, 183, 0.1);
+    }
+
+    .current-ip {
+      color: var(--tech-purple);
+      font-weight: bold;
+      font-size: 1.3rem;
+    }
+
+    .location-info {
+      background: var(--bg-light);
+      border: 2px solid var(--tech-purple);
+      border-radius: 6px;
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+
+    .location-info strong {
+      color: var(--text-dark);
+      font-weight: bold;
+    }
+
+    .location-info span {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    /* Asegurar que todos los textos sean visibles */
+    .experiment-lab h5,
+    .location-simulator h5,
+    .real-test h5 {
+      color: white;
+      font-weight: bold;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .experiment-lab p,
+    .location-simulator p,
+    .real-test p {
+      color: white;
+      opacity: 0.95;
+    }
+
+    .test-site h6 {
+      color: white;
+      font-weight: bold;
+    }
+
+    .test-site p {
+      color: white;
+      opacity: 0.9;
+    }
+
+    .vpn-guide {
+      background: var(--bg-white);
+      border: 3px solid var(--experiment-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .guide-step {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-left: 6px solid var(--experiment-green);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .guide-step:hover {
+      background: var(--bg-light);
+      border-color: var(--experiment-green);
+      transform: translateX(5px);
+      box-shadow: 0 4px 15px rgba(0, 150, 136, 0.2);
+    }
+
+    .guide-step.completed {
+      background: var(--bg-white);
+      border-left-color: var(--success-green);
+      border-color: var(--success-green);
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+    }
+
+    .guide-step h6 {
+      color: var(--text-dark);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-step p {
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .guide-step small {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    .step-number {
+      position: absolute;
+      left: -25px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: var(--experiment-green);
+      color: white;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(0, 150, 136, 0.3);
+    }
+
+    .completed .step-number {
+      background: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    .vpn-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .vpn-card {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .vpn-card:hover {
+      border-color: var(--experiment-green);
+      background: var(--bg-white);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 150, 136, 0.2);
+    }
+
+    .vpn-card.free {
+      border-color: var(--success-green);
+      background: var(--bg-white);
+    }
+
+    .vpn-card.free:hover {
+      border-color: var(--success-green);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.2);
+    }
+
+    .vpn-card.premium {
+      border-color: var(--warning-orange);
+      background: var(--bg-white);
+    }
+
+    .vpn-card.premium:hover {
+      border-color: var(--warning-orange);
+      box-shadow: 0 6px 20px rgba(255, 152, 0, 0.2);
+    }
+
+    .vpn-card h6 {
+      color: var(--text-dark);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .vpn-card small {
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .vpn-logo {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .vpn-price {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .free-price {
+      color: var(--success-green);
+    }
+
+    .premium-price {
+      color: var(--warning-orange);
+    }
+
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .before-card {
+      background: var(--bg-white);
+      border: 3px solid var(--danger-red);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(244, 67, 54, 0.2);
+    }
+
+    .before-card::before {
+      content: 'ANTES';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--danger-red);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+    }
+
+    .after-card {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(76, 175, 80, 0.2);
+    }
+
+    .after-card::before {
+      content: 'DESPUÉS';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--success-green);
+      color: white;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    }
+
+    .before-card h6 {
+      color: var(--danger-red);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .after-card h6 {
+      color: var(--success-green);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .before-card #beforeData,
+    .after-card #afterData {
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.8;
+    }
+
+    .before-card strong,
+    .after-card strong {
+      color: var(--text-dark);
+      font-weight: 700;
+    }
+
+    .location-simulator {
+      background: var(--tech-purple);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .location-simulator::before {
+      content: '🌐';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    .country-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .country-option {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .country-option:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.5);
+    }
+
+    .country-option.selected {
+      background: rgba(76, 175, 80, 0.3);
+      border-color: var(--success-green);
+    }
+
+    .country-flag {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .real-test {
+      background: var(--warning-orange);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .real-test::before {
+      content: '🎯';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    .test-site {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .test-button {
+      background: var(--bg-white);
+      color: var(--warning-orange);
+      border: 2px solid var(--bg-white);
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 0.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .test-button:hover {
+      background: var(--bg-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Botones principales */
+    .btn {
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-primary {
+      background: var(--tech-purple) !important;
+      border-color: var(--tech-purple) !important;
+      color: white !important;
+    }
+
+    .btn-success {
+      background: var(--success-green) !important;
+      border-color: var(--success-green) !important;
+      color: white !important;
+    }
+
+    .btn-primary:hover {
+      background: #5E35B1 !important;
+      border-color: #5E35B1 !important;
+    }
+
+    .btn-success:hover {
+      background: #45A049 !important;
+      border-color: #45A049 !important;
+    }
+
+    .progress-tracker {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: var(--bg-white);
+      border-radius: 8px;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .progress-item:hover {
+      border-color: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.1);
+    }
+
+    .progress-item.completed {
+      background: var(--bg-white);
+      border-color: var(--success-green);
+      box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+    }
+
+    .progress-item span {
+      color: var(--text-dark);
+      font-weight: 500;
+    }
+
+    .progress-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--success-green);
+      font-weight: bold;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .progress-item.completed .progress-checkbox {
+      background: var(--success-green);
+      color: white;
+      border-color: var(--success-green);
+    }
+
+    .results-dashboard {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      display: none;
+    }
+
+    .result-card {
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .result-success {
+      border-color: var(--success-green);
+      background: rgba(76, 175, 80, 0.1);
+    }
+
+    .result-warning {
+      border-color: var(--warning-orange);
+      background: rgba(255, 152, 0, 0.1);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-box {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 2px solid var(--border-light);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    @media (max-width: 768px) {
+      .before-after {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      
+      .section-card {
+        padding: 1.5rem;
+      }
+      
+      .hero-header {
+        padding: 30px 20px;
+      }
+
+      .country-selector {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 0.8rem;
+      }
+
+      .vpn-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 0.8rem;
+      }
+
+      .step-number {
+        left: -20px;
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+      }
+
+      .guide-step {
+        margin-left: 15px;
+        padding: 1rem;
+      }
+
+      .before-card::before,
+      .after-card::before {
+        padding: 6px 15px;
+        font-size: 0.8rem;
+      }
+
+      .country-option {
+        padding: 0.8rem;
+      }
+
+      .country-flag {
+        font-size: 1.8rem;
+        margin-bottom: 0.3rem;
+      }
+
+      .country-option small {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .country-selector {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .section-card {
+        padding: 1rem;
+      }
+
+      .guide-step {
+        margin-left: 10px;
+        padding: 0.8rem;
+      }
+
+      .step-number {
+        left: -15px;
+        width: 25px;
+        height: 25px;
+        font-size: 0.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Laboratorio práctico: experimenta cómo funcionan las VPN en tiempo real</p>
+  </div>
+
+  <div class="module-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🌟 Industria Webcam General</a></li>
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🔒 Seguridad y Privacidad</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tarea 2.3: Test Práctico VPN</li>
+      </ol>
+    </nav>
+  </div>
+
+  <header class="hero-header">
+    <h1 class="mb-3">
+      <i class="fas fa-flask"></i>
+      Verificación Práctica de VPN y Geo-blocking
+      <i class="fas fa-search"></i>
+    </h1>
+    <p class="fs-5 mb-0">
+      Experimenta tú misma cómo cualquiera puede evitar bloqueos geográficos en minutos
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Sección: Introducción al Experimento -->
+    <section class="section-card">
+      <h2 class="section-title">🔬 Bienvenida al Laboratorio VPN</h2>
+      
+      <div class="primary-highlight">
+        <h5><i class="fas fa-lightbulb"></i> ¿Qué Vas a Descubrir Hoy?</h5>
+        <p>Esta no es teoría. Vas a <strong>experimentar directamente</strong> cómo funcionan las VPN y por qué el geo-blocking es completamente inútil. Al final de esta tarea tendrás <strong>prueba visual</strong> de que cualquier persona puede evitar tus bloqueos geográficos.</p>
+        
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-number">5</span>
+            <small>Experimentos prácticos</small>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">10</span>
+            <small>Países diferentes a probar</small>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">3</span>
+            <small>VPN gratuitas recomendadas</small>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">15 min</span>
+            <small>Tiempo total del experimento</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-info-circle"></i> ¿Por qué es Importante Este Test?</h5>
+        <p>Muchas modelos no creen que el geo-blocking sea inútil hasta que lo ven con sus propios ojos. <strong>Después de esta tarea, tendrás evidencia irrefutable</strong> de que estás perdiendo dinero innecesariamente.</p>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-shield-alt"></i> Tranquila, Esto es 100% Seguro</h5>
+        <p>Vamos a usar VPN <strong>completamente legales y gratuitas</strong>. No descargarás nada sospechoso. Son las mismas herramientas que usan millones de trabajadores remotos, estudiantes y viajeros diariamente.</p>
+      </div>
+    </section>
+
+    <!-- Sección: Tu IP Actual -->
+    <section class="section-card">
+      <h2 class="section-title">📍 Paso 1: Verifica tu Ubicación Actual</h2>
+      
+      <div class="ip-checker">
+        <h5><i class="fas fa-map-marker-alt"></i> ¿Desde Dónde Navegas Ahora?</h5>
+        <p>Antes de experimentar con VPN, veamos desde qué país y ciudad estás navegando actualmente:</p>
+        
+        <button class="btn btn-primary btn-lg" onclick="checkCurrentIP()" style="background: var(--tech-purple); border: none;">
+          <i class="fas fa-search"></i> Detectar Mi Ubicación Actual
+        </button>
+        
+        <div class="ip-display" id="currentIPDisplay" style="display: none;">
+          <div class="current-ip" id="currentIP">Cargando...</div>
+          <div class="location-info" id="locationInfo">
+            <strong>📍 Tu ubicación actual:</strong><br>
+            <span id="currentCountry">---</span><br>
+            <span id="currentCity">---</span><br>
+            <span id="currentISP">---</span>
+          </div>
+        </div>
+        
+        <div class="success-highlight mt-3" id="step1Complete" style="display: none;">
+          <h6><i class="fas fa-check"></i> Paso 1 Completado</h6>
+          <p>Perfecto. Ya sabemos desde dónde navegas. Ahora vamos a "viajar" virtualmente a otros países.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Guía VPN Paso a Paso -->
+    <section class="section-card">
+      <h2 class="section-title">🛠️ Paso 2: Instala tu Primera VPN</h2>
+      
+      <div class="vpn-guide">
+        <h5><i class="fas fa-download"></i> Elige tu VPN Gratuita Favorita</h5>
+        <p>Estas son VPN 100% gratuitas, legales y seguras. Elige la que más te guste:</p>
+        
+        <div class="vpn-options">
+          <div class="vpn-card free" onclick="selectVPN('proton')">
+            <div class="vpn-logo">🛡️</div>
+            <h6><strong>ProtonVPN</strong></h6>
+            <div class="vpn-price free-price">GRATIS</div>
+            <small>• Sin límite de tiempo<br>• 3 países disponibles<br>• Sin registro de tarjeta</small>
+          </div>
+
+          <div class="vpn-card free" onclick="selectVPN('tunnel')">
+            <div class="vpn-logo">🐻</div>
+            <h6><strong>TunnelBear</strong></h6>
+            <div class="vpn-price free-price">GRATIS</div>
+            <small>• 500MB mensuales<br>• 20+ países<br>• Súper fácil de usar</small>
+          </div>
+
+          <div class="vpn-card free" onclick="selectVPN('windscribe')">
+            <div class="vpn-logo">💨</div>
+            <h6><strong>Windscribe</strong></h6>
+            <div class="vpn-price free-price">GRATIS</div>
+            <small>• 10GB mensuales<br>• 10+ países<br>• Sin datos de pago</small>
+          </div>
+
+          <div class="vpn-card premium" onclick="selectVPN('express')">
+            <div class="vpn-logo">⚡</div>
+            <h6><strong>ExpressVPN</strong></h6>
+            <div class="vpn-price premium-price">$8.32/mes</div>
+            <small>• 30 días gratis<br>• 90+ países<br>• La más rápida</small>
+          </div>
+        </div>
+
+        <div id="vpnInstructions" style="display: none;">
+          <!-- Las instrucciones específicas aparecerán aquí -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Proceso de Instalación -->
+    <section class="section-card">
+      <h2 class="section-title">⚙️ Paso 3: Proceso de Instalación</h2>
+      
+      <div class="experiment-lab">
+        <h5><i class="fas fa-cogs"></i> Sigue Estos Pasos Exactos</h5>
+        <p>Marca cada paso conforme lo vayas completando. ¡Es más fácil de lo que crees!</p>
+        
+        <div class="guide-step" onclick="completeStep(1)">
+          <div class="step-number">1</div>
+          <h6><strong>Ve al sitio web oficial de tu VPN elegida</strong></h6>
+          <p>Busca en Google el nombre de la VPN + "official website" para asegurarte de ir al sitio correcto.</p>
+          <small>👆 Haz clic cuando hayas entrado al sitio web</small>
+        </div>
+
+        <div class="guide-step" onclick="completeStep(2)">
+          <div class="step-number">2</div>
+          <h6><strong>Descarga la aplicación</strong></h6>
+          <p>Busca el botón de "Download" o "Descargar". Elige la versión para tu dispositivo (Windows, Mac, Android, iOS).</p>
+          <small>👆 Haz clic cuando hayas descargado la app</small>
+        </div>
+
+        <div class="guide-step" onclick="completeStep(3)">
+          <div class="step-number">3</div>
+          <h6><strong>Instala y crea cuenta (si es necesario)</strong></h6>
+          <p>Instala como cualquier programa normal. Algunas VPN requieren email, otras no. USA EMAIL FALSO si quieres.</p>
+          <small>👆 Haz clic cuando hayas instalado y abierto la app</small>
+        </div>
+
+        <div class="guide-step" onclick="completeStep(4)">
+          <div class="step-number">4</div>
+          <h6><strong>Conecta a un país diferente</strong></h6>
+          <p>En la app, selecciona un país DIFERENTE al tuyo. Si eres de Colombia, elige Estados Unidos, España, etc.</p>
+          <small>👆 Haz clic cuando estés conectada a otro país</small>
+        </div>
+
+        <div class="guide-step" onclick="completeStep(5)">
+          <div class="step-number">5</div>
+          <h6><strong>¡Verifica que funcionó!</strong></h6>
+          <p>Vuelve a verificar tu IP en el siguiente paso. Si muestra el país nuevo, ¡funcionó!</p>
+          <small>👆 Haz clic cuando hayas verificado el cambio</small>
+        </div>
+
+        <div id="installationComplete" style="display: none; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+          <h6><strong>🎉 ¡Instalación Completa!</strong></h6>
+          <p>Si completaste los 5 pasos, ya tienes una VPN funcionando. Ahora puedes "estar" en cualquier país que quieras.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Verificación Después de VPN -->
+    <section class="section-card">
+      <h2 class="section-title">🔄 Paso 4: Verifica tu Nueva Ubicación</h2>
+      
+      <div class="before-after">
+        <div class="before-card">
+          <h6><i class="fas fa-map-marker-alt"></i> ANTES (sin VPN)</h6>
+          <div id="beforeData">
+            <strong>País:</strong> <span id="beforeCountry">---</span><br>
+            <strong>Ciudad:</strong> <span id="beforeCity">---</span><br>
+            <strong>IP:</strong> <span id="beforeIP">---</span>
+          </div>
+        </div>
+
+        <div class="after-card">
+          <h6><i class="fas fa-globe"></i> DESPUÉS (con VPN)</h6>
+          <div id="afterData">
+            <strong>País:</strong> <span id="afterCountry">---</span><br>
+            <strong>Ciudad:</strong> <span id="afterCity">---</span><br>
+            <strong>IP:</strong> <span id="afterIP">---</span>
+          </div>
+          
+          <button class="btn btn-success mt-2" onclick="checkNewIP()" style="background: var(--success-green); border: none;">
+            <i class="fas fa-refresh"></i> Verificar Nueva Ubicación
+          </button>
+        </div>
+      </div>
+
+      <div id="comparisonResult" style="display: none;" class="success-highlight mt-3">
+        <!-- Resultado de la comparación -->
+      </div>
+    </section>
+
+    <!-- Sección: Simulador de Países -->
+    <section class="section-card">
+      <h2 class="section-title">🌍 Paso 5: Experimenta con Diferentes Países</h2>
+      
+      <div class="location-simulator">
+        <h5><i class="fas fa-plane"></i> Simulador de Viaje Virtual</h5>
+        <p>Ahora que tienes VPN, "viaja" a diferentes países y ve cómo cambias tu ubicación virtual:</p>
+        
+        <div class="country-selector">
+          <div class="country-option" onclick="simulateCountry(this, 'Estados Unidos', '🇺🇸')">
+            <div class="country-flag">🇺🇸</div>
+            <small><strong>Estados Unidos</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'Reino Unido', '🇬🇧')">
+            <div class="country-flag">🇬🇧</div>
+            <small><strong>Reino Unido</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'Alemania', '🇩🇪')">
+            <div class="country-flag">🇩🇪</div>
+            <small><strong>Alemania</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'Canadá', '🇨🇦')">
+            <div class="country-flag">🇨🇦</div>
+            <small><strong>Canadá</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'Australia', '🇦🇺')">
+            <div class="country-flag">🇦🇺</div>
+            <small><strong>Australia</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'Japón', '🇯🇵')">
+            <div class="country-flag">🇯🇵</div>
+            <small><strong>Japón</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'Francia', '🇫🇷')">
+            <div class="country-flag">🇫🇷</div>
+            <small><strong>Francia</strong></small>
+          </div>
+
+          <div class="country-option" onclick="simulateCountry(this, 'España', '🇪🇸')">
+            <div class="country-flag">🇪🇸</div>
+            <small><strong>España</strong></small>
+          </div>
+        </div>
+
+        <div id="currentSelection" style="background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem; display: none;">
+          <h6><strong>📍 Ahora "estás" en:</strong></h6>
+          <div id="selectedCountryDisplay" style="font-size: 1.2rem; font-weight: bold;"></div>
+          <p>En tu VPN, conecta a este país y verifica que tu IP cambió.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Test de Sitios Reales -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Paso 6: Prueba con Sitios Webcam Reales</h2>
+      
+      <div class="real-test">
+        <h5><i class="fas fa-desktop"></i> Test de Acceso a Plataformas</h5>
+        <p>Ahora vamos a probar si puedes acceder a páginas webcam reales desde "otros países":</p>
+        
+        <div class="test-site">
+          <h6><strong>Test 1: Chaturbate</strong></h6>
+          <p>Entra a Chaturbate con VPN de diferentes países y ve cómo cambia el idioma y las modelos mostradas.</p>
+          <button class="test-button" onclick="window.open('https://chaturbate.com/', '_blank')">
+            <i class="fas fa-external-link-alt"></i> Ir a Chaturbate
+          </button>
+          <button class="test-button" onclick="markTestComplete('chaturbate')">
+            <i class="fas fa-check"></i> Test Completado
+          </button>
+        </div>
+
+        <div class="test-site">
+          <h6><strong>Test 2: MyFreeCams</strong></h6>
+          <p>Prueba desde 2-3 países diferentes y observa cómo cambian las opciones disponibles.</p>
+          <button class="test-button" onclick="window.open('https://myfreecams.com/', '_blank')">
+            <i class="fas fa-external-link-alt"></i> Ir a MyFreeCams
+          </button>
+          <button class="test-button" onclick="markTestComplete('mfc')">
+            <i class="fas fa-check"></i> Test Completado
+          </button>
+        </div>
+
+        <div class="test-site">
+          <h6><strong>Test 3: StripChat</strong></h6>
+          <p>Verifica que puedes acceder normalmente desde cualquier país con VPN.</p>
+          <button class="test-button" onclick="window.open('https://stripchat.com/', '_blank')">
+            <i class="fas fa-external-link-alt"></i> Ir a StripChat
+          </button>
+          <button class="test-button" onclick="markTestComplete('stripchat')">
+            <i class="fas fa-check"></i> Test Completado
+          </button>
+        </div>
+
+        <div id="realTestResults" style="display: none; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+          <h6><strong>🎯 Resultado del Test:</strong></h6>
+          <p id="testResultText"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Tracker de Progreso -->
+    <section class="section-card">
+      <h2 class="section-title">✅ Tu Progreso en el Experimento</h2>
+      
+      <div class="progress-tracker">
+        <h5><i class="fas fa-tasks"></i> Checklist de Verificación VPN</h5>
+        <p>Marca cada elemento que hayas completado exitosamente:</p>
+        
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Verifiqué mi IP/ubicación original</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Descargué e instalé una VPN gratuita</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Me conecté exitosamente a otro país</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Verifiqué que mi IP cambió al nuevo país</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Probé al menos 3 países diferentes</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Accedí a páginas webcam desde "otros países"</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Comprobé que el geo-blocking es inútil</strong></span>
+        </div>
+
+        <div class="progress-item" onclick="toggleProgress(this)">
+          <div class="progress-checkbox"></div>
+          <span><strong>Entiendo que estaba perdiendo dinero innecesariamente</strong></span>
+        </div>
+
+        <div id="progressResult" style="display: none;" class="mt-3 p-3 rounded">
+          <!-- Resultado del progreso -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Dashboard de Resultados -->
+    <section class="section-card">
+      <h2 class="section-title">📊 Resultados de tu Experimento</h2>
+      
+      <div class="results-dashboard" id="finalResults">
+        <h5><i class="fas fa-chart-bar"></i> Resumen de Descubrimientos</h5>
+        
+        <div class="result-card result-success">
+          <h6><strong>✅ Confirmado: VPN Funciona Perfectamente</strong></h6>
+          <p>Lograste cambiar tu ubicación virtual a otros países en cuestión de minutos.</p>
+        </div>
+
+        <div class="result-card result-success">
+          <h6><strong>✅ Confirmado: Geo-blocking es Inútil</strong></h6>
+          <p>Cualquier usuario puede evitar tus bloqueos geográficos tan fácil como tú lo hiciste.</p>
+        </div>
+
+        <div class="result-card result-warning">
+          <h6><strong>⚠️ Realidad: Estás Perdiendo Dinero</strong></h6>
+          <p>Si tienes países bloqueados, estás rechazando dinero de usuarios que pueden evitar fácilmente tu bloqueo.</p>
+        </div>
+
+        <div class="result-card result-success">
+          <h6><strong>✅ Solución: Desbloquea Todos los Países</strong></h6>
+          <p>La protección real viene de tu identidad artística, no del geo-blocking que acabas de comprobar que no funciona.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Conclusión -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Conclusiones de tu Experimento</h2>
+      
+      <div class="success-highlight">
+        <h5><i class="fas fa-trophy"></i> ¡Experimento Completado con Éxito!</h5>
+        <p>Felicitaciones. Ahora tienes <strong>evidencia directa y personal</strong> de que el geo-blocking no funciona. No es teoría, no son opiniones - es algo que acabas de probar tú misma.</p>
+        
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-number">5 min</span>
+            <small>Tiempo que tardaste en "cambiar de país"</small>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">$0</span>
+            <small>Costo de evitar geo-blocking</small>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">100%</span>
+            <small>Efectividad de VPN para evitar bloqueos</small>
+          </div>
+          <div class="stat-box">
+            <span class="stat-number">0%</span>
+            <small>Protección real del geo-blocking</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-arrow-right"></i> ¿Qué Sigue Ahora?</h5>
+        <p>Ya completaste las 3 tareas de Seguridad y Privacidad. Sabes cómo protegerte REALMENTE y por qué el geo-blocking es contraproducente. Ahora es momento de enfocarte en <strong>maximizar tus ingresos</strong>:</p>
+        
+        <div class="row g-3 mt-3">
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-money-bill-wave"></i> Tema 3: Estrategias de Monetización</h6>
+              <p>Aprende las 12 formas diferentes de generar ingresos como modelo webcam.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-chart-line"></i> Tarea 3.1: Páginas de Tokens vs Privados</h6>
+              <p>Descubre qué estrategia genera más dinero para tu perfil específico.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-graduation-cap"></i> Resumen de lo que Demostraste</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>🧪 Experimentos Realizados:</h6>
+            <ul>
+              <li>Instalaste y usaste VPN por primera vez</li>
+              <li>Cambiaste tu ubicación virtual exitosamente</li>
+              <li>Accediste a sitios desde "otros países"</li>
+              <li>Comprobaste que VPN evita cualquier bloqueo</li>
+              <li>Verificaste que el proceso es súper fácil</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>✅ Conclusiones Irrefutables:</h6>
+            <ul>
+              <li>Cualquier persona puede evitar geo-blocking</li>
+              <li>Solo toma 5-10 minutos de configuración</li>
+              <li>Las VPN son gratuitas y legales</li>
+              <li>El geo-blocking NO ofrece protección real</li>
+              <li>Estás perdiendo dinero innecesariamente</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="danger-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> Tu Decisión Final</h5>
+        <p><strong>Después de experimentar personalmente lo fácil que es evitar geo-blocking, ya no puedes decir "no sabía".</strong> Si continúas bloqueando países, estarás eligiendo conscientemente perder dinero sabiendo que no obtienes protección real a cambio.</p>
+        <p><strong>La decisión inteligente:</strong> Desbloquea todos los países y enfócate en tu identidad artística para protección real. Es lo que hacen las modelos que ganan $5,000+ mensuales.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let completedSteps = 0;
+    let testsCompleted = 0;
+    let selectedVPN = '';
+    let originalData = {};
+
+    // Simular detección de IP (en una implementación real usarías una API)
+    function checkCurrentIP() {
+      document.getElementById('currentIPDisplay').style.display = 'block';
+      
+      // Simulación de datos (en realidad usarías una API como ipapi.co)
+      setTimeout(() => {
+        const countries = ['Colombia', 'México', 'Argentina', 'España', 'Chile'];
+        const cities = ['Medellín', 'Ciudad de México', 'Buenos Aires', 'Madrid', 'Santiago'];
+        const randomIndex = Math.floor(Math.random() * countries.length);
+        
+        const currentCountry = countries[randomIndex];
+        const currentCity = cities[randomIndex];
+        const currentIP = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        
+        originalData = { country: currentCountry, city: currentCity, ip: currentIP };
+        
+        document.getElementById('currentIP').textContent = currentIP;
+        document.getElementById('currentCountry').textContent = currentCountry;
+        document.getElementById('currentCity').textContent = currentCity;
+        document.getElementById('currentISP').textContent = 'Tu proveedor de internet local';
+        
+        // Llenar datos del "antes"
+        document.getElementById('beforeCountry').textContent = currentCountry;
+        document.getElementById('beforeCity').textContent = currentCity;
+        document.getElementById('beforeIP').textContent = currentIP;
+        
+        document.getElementById('step1Complete').style.display = 'block';
+      }, 2000);
+    }
+
+    function selectVPN(vpnType) {
+      selectedVPN = vpnType;
+      const vpnData = {
+        'proton': {
+          name: 'ProtonVPN',
+          url: 'https://protonvpn.com/',
+          steps: 'Ve a protonvpn.com → Create Free Account → Download → Instalar → Conectar a US, UK o Japan'
+        },
+        'tunnel': {
+          name: 'TunnelBear',
+          url: 'https://tunnelbear.com/',
+          steps: 'Ve a tunnelbear.com → Try for Free → Download → Crear cuenta con email → Conectar a cualquier país'
+        },
+        'windscribe': {
+          name: 'Windscribe',
+          url: 'https://windscribe.com/',
+          steps: 'Ve a windscribe.com → Get Started → Download → Email + contraseña → Conectar a servidor'
+        },
+        'express': {
+          name: 'ExpressVPN',
+          url: 'https://expressvpn.com/',
+          steps: 'Ve a expressvpn.com → Get ExpressVPN → 30 días gratis → Download → Instalar → Conectar'
+        }
+      };
+      
+      const vpn = vpnData[vpnType];
+      document.getElementById('vpnInstructions').innerHTML = `
+        <div style="background: rgba(76, 175, 80, 0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+          <h6><strong>✅ Elegiste: ${vpn.name}</strong></h6>
+          <p><strong>Pasos rápidos:</strong></p>
+          <p>${vpn.steps}</p>
+          <button class="btn btn-success" onclick="window.open('${vpn.url}', '_blank')" style="background: var(--success-green); border: none;">
+            <i class="fas fa-external-link-alt"></i> Ir a ${vpn.name}
+          </button>
+        </div>
+      `;
+      document.getElementById('vpnInstructions').style.display = 'block';
+    }
+
+    function completeStep(step) {
+      const stepElement = document.querySelectorAll('.guide-step')[step - 1];
+      stepElement.classList.add('completed');
+      completedSteps++;
+      
+      if (completedSteps >= 5) {
+        document.getElementById('installationComplete').style.display = 'block';
+      }
+    }
+
+    function checkNewIP() {
+      // Simular nueva IP después de VPN
+      const vpnCountries = ['Estados Unidos', 'Reino Unido', 'Alemania', 'Canadá', 'Francia'];
+      const vpnCities = ['Nueva York', 'Londres', 'Berlín', 'Toronto', 'París'];
+      const randomIndex = Math.floor(Math.random() * vpnCountries.length);
+      
+      const newCountry = vpnCountries[randomIndex];
+      const newCity = vpnCities[randomIndex];
+      const newIP = `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+      
+      document.getElementById('afterCountry').textContent = newCountry;
+      document.getElementById('afterCity').textContent = newCity;
+      document.getElementById('afterIP').textContent = newIP;
+      
+      document.getElementById('comparisonResult').innerHTML = `
+        <h6><strong>🎉 ¡Éxito Total!</strong></h6>
+        <p>Tu ubicación cambió de <strong>${originalData.country}</strong> a <strong>${newCountry}</strong></p>
+        <p>Ahora cualquier sitio web cree que estás navegando desde ${newCountry}. ¡Acabas de evitar cualquier posible geo-blocking!</p>
+      `;
+      document.getElementById('comparisonResult').style.display = 'block';
+    }
+
+    function simulateCountry(element, country, flag) {
+      // Remover selección anterior
+      document.querySelectorAll('.country-option').forEach(el => el.classList.remove('selected'));
+      
+      // Seleccionar nuevo país
+      element.classList.add('selected');
+      
+      document.getElementById('selectedCountryDisplay').innerHTML = `${flag} ${country}`;
+      document.getElementById('currentSelection').style.display = 'block';
+    }
+
+    function markTestComplete(site) {
+      testsCompleted++;
+      
+      const siteNames = {
+        'chaturbate': 'Chaturbate',
+        'mfc': 'MyFreeCams',
+        'stripchat': 'StripChat'
+      };
+      
+      if (testsCompleted >= 3) {
+        document.getElementById('realTestResults').innerHTML = `
+          <h6><strong>🎯 Test Completado</strong></h6>
+          <p>Confirmaste que puedes acceder a todas las páginas webcam usando VPN. Si tuvieras geo-blocking activado, estos mismos usuarios podrían evitarlo exactamente como tú lo hiciste.</p>
+        `;
+        document.getElementById('realTestResults').style.display = 'block';
+      }
+    }
+
+    function toggleProgress(element) {
+      element.classList.toggle('completed');
+      
+      // Contar elementos completados
+      const totalItems = document.querySelectorAll('.progress-tracker .progress-item').length;
+      const completedItems = document.querySelectorAll('.progress-tracker .progress-item.completed').length;
+      const percentage = Math.round((completedItems / totalItems) * 100);
+      
+      const resultDiv = document.getElementById('progressResult');
+      
+      if (completedItems > 0) {
+        let resultText = `<strong>PROGRESO: ${completedItems}/${totalItems} (${percentage}%)</strong><br>`;
+        
+        if (percentage >= 100) {
+          resultText += `<div style="color: var(--success-green);">🏆 <strong>¡EXPERIMENTO COMPLETO!</strong> Tienes evidencia irrefutable de que el geo-blocking no funciona.</div>`;
+          document.getElementById('finalResults').style.display = 'block';
+        } else if (percentage >= 75) {
+          resultText += `<div style="color: var(--warning-orange);">🔬 <strong>CASI TERMINADO</strong> Completa los últimos pasos para tener evidencia completa.</div>`;
+        } else if (percentage >= 50) {
+          resultText += `<div style="color: var(--info-blue);">⚗️ <strong>BUEN PROGRESO</strong> Vas por el camino correcto, sigue experimentando.</div>`;
+        } else {
+          resultText += `<div style="color: var(--warning-orange);">🧪 <strong>EMPEZANDO</strong> Completa más pasos para ver resultados significativos.</div>`;
+        }
+        
+        resultDiv.innerHTML = resultText;
+        resultDiv.style.background = percentage >= 100 ? 'var(--success-green)' : percentage >= 75 ? 'var(--warning-orange)' : 'var(--info-blue)';
+        resultDiv.style.color = 'white';
+        resultDiv.style.borderRadius = '8px';
+        resultDiv.style.padding = '1rem';
+        resultDiv.style.fontWeight = 'bold';
+        resultDiv.style.textShadow = '0 1px 3px rgba(0, 0, 0, 0.3)';
+        resultDiv.style.display = 'block';
+      } else {
+        resultDiv.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>

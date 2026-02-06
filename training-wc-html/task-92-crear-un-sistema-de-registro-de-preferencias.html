@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0">
+  <title>🧠 Sistema de Inteligencia Relacional - Masters de la Personalización | WC Training</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #0ea5e9;
+      --secondary-color: #0284c7;
+      --accent-color: #38bdf8;
+      --tech-cyan: #06b6d4;
+      --data-blue: #3b82f6;
+      --intelligence-purple: #8b5cf6;
+      --success-green: #10b981;
+      --warning-orange: #f59e0b;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-tech: #f0f9ff;
+      --border-light: #e0e0e0;
+      --border-tech: #bae6fd;
+      --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 50%, #10b981 100%);
+      --gradient-secondary: linear-gradient(45deg, #0284c7 0%, #38bdf8 100%);
+      --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --gradient-tech: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #3b82f6 100%);
+      --gradient-intelligence: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
+      --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-medium: 0 15px 40px rgba(14, 165, 233, 0.15);
+      --shadow-strong: 0 25px 50px rgba(14, 165, 233, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #f0f9ff 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Floating Background Animation */
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .floating-shapes::before,
+    .floating-shapes::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 22s infinite ease-in-out;
+    }
+
+    .floating-shapes::before {
+      width: 320px;
+      height: 320px;
+      background: var(--gradient-tech);
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-shapes::after {
+      width: 220px;
+      height: 220px;
+      background: var(--gradient-intelligence);
+      bottom: 20%;
+      right: 10%;
+      animation-delay: 11s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-35px) rotate(120deg); }
+      66% { transform: translateY(18px) rotate(240deg); }
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Crect x='11' y='11' width='4' height='4'/%3E%3Crect x='20' y='20' width='4' height='4'/%3E%3Crect x='45' y='45' width='4' height='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: patternMove 28s linear infinite;
+    }
+
+    @keyframes patternMove {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(60px) translateY(60px); }
+    }
+
+    .wc-brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+
+    .wc-stats {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: white;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--tech-cyan);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: var(--gradient-tech);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .insight-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Main Header */
+    .main-header {
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      background: var(--gradient-intelligence);
+      color: white;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20h60v60H20z' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3Cpath d='M30 30h40v40H30z' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3Cpath d='M40 40h20v20H40z' fill='none' stroke='%23ffffff' stroke-width='1'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: backgroundShift 25s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      25% { transform: translateX(20px) translateY(-10px); }
+      50% { transform: translateX(-15px) translateY(15px); }
+      75% { transform: translateX(10px) translateY(-20px); }
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .main-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: white;
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-medium);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lab-section:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-strong);
+      border-color: var(--accent-color);
+    }
+
+    .lab-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--gradient-tech);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--bg-light);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 0;
+    }
+
+    .section-icon {
+      font-size: 2rem;
+      color: var(--secondary-color);
+    }
+
+    /* Interactive Cards */
+    .interactive-card {
+      background: var(--bg-tech);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--border-tech);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .interactive-card:hover {
+      transform: translateX(10px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--tech-cyan);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      color: var(--secondary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .card-details.expanded {
+      max-height: 1000px;
+    }
+
+    /* Calculator Sections */
+    .calculator-section {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--tech-cyan);
+    }
+
+    .calculator-input {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .calculator-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+    }
+
+    .calc-button {
+      background: var(--gradient-tech);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .calc-button:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .calc-result {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border-left: 5px solid var(--success-green);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Data Tracker */
+    .data-tracker {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .tracker-item {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .tracker-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .tracker-bar-container {
+      background: var(--bg-light);
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .tracker-bar {
+      height: 100%;
+      background: var(--gradient-tech);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .tracker-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 33%, rgba(255,255,255,0.3) 33%, rgba(255,255,255,0.3) 66%, transparent 66%);
+      animation: dataShine 2s infinite;
+    }
+
+    @keyframes dataShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Intelligence Stories */
+    .intelligence-story {
+      background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border-left: 6px solid var(--tech-cyan);
+      position: relative;
+    }
+
+    .intelligence-story::before {
+      content: '🧠';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 2rem;
+      background: white;
+      padding: 5px 10px;
+      border-radius: 50%;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .story-quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #1e40af;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .story-author {
+      font-weight: bold;
+      color: #1e3a8a;
+    }
+
+    .story-metrics {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      text-align: center;
+      background: white;
+      padding: 1rem;
+      border-radius: 15px;
+      min-width: 120px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--tech-cyan);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Simulator Section */
+    .simulator-section {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--success-green);
+    }
+
+    .scenario-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .scenario-option {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover,
+    .scenario-option.selected {
+      border-color: var(--success-green);
+      background: #f0fdf4;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .scenario-results {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      min-height: 150px;
+      border-left: 5px solid var(--success-green);
+    }
+
+    /* Data Categories Grid */
+    .data-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .category-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-tech);
+      transition: all 0.3s ease;
+    }
+
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--tech-cyan);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .category-icon {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-right: 0.5rem;
+    }
+
+    .category-title {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .lab-section {
+        padding: 1.5rem;
+      }
+      
+      .main-header {
+        padding: 2rem 0;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .interactive-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      .story-metrics {
+        justify-content: center;
+      }
+      
+      .calc-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .data-categories {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .interactive-card {
+        padding: 1.5rem;
+      }
+      
+      .insight-number {
+        font-size: 2rem;
+      }
+      
+      .metric {
+        min-width: 100px;
+        padding: 0.8rem;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (max-width: 768px) {
+      .calc-button,
+      .scenario-option,
+      .interactive-card {
+        min-height: 44px;
+      }
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 25px;
+      text-align: center;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Crect x='10' y='10' width='8' height='8'/%3E%3Crect x='30' y='30' width='8' height='8'/%3E%3Crect x='50' y='50' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: dataFlow 20s linear infinite;
+    }
+
+    @keyframes dataFlow {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(80px) translateY(80px); }
+    }
+
+    .summary-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .achievement {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .achievement-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-shapes"></div>
+
+  <!-- WC Branding Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h1 class="wc-brand">🎯 WC Training</h1>
+          <p class="wc-stats mb-0">
+            <span class="live-indicator"></span>
+            <strong>12,847</strong> modelos activos • <strong>+1,247</strong> esta semana
+          </p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0" id="current-date"></p>
+          <small class="text-light">Sistema de Inteligencia Relacional Avanzado</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="row text-center mb-4">
+        <div class="col-12">
+          <h2 class="mb-3">📊 Personalization Intelligence Insights 2025</h2>
+          <p class="text-muted">Datos verificados del User Intelligence & Personalization Report</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">+347%</div>
+            <div class="insight-label">Incremento en engagement con personalización basada en datos</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">87%</div>
+            <div class="insight-label">De usuarios se sienten "genuinamente vistos" con tracking inteligente</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">+$4.9K</div>
+            <div class="insight-label">Incremento promedio mensual con sistema de preferencias</div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-4 mt-2">
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">6.8x</div>
+            <div class="insight-label">Mayor retención con experiencias personalizadas vs. genéricas</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">92%</div>
+            <div class="insight-label">De modelos TOP usan sistemas estructurados de user intelligence</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">73%</div>
+            <div class="insight-label">Incremento en tips con referencias personalizadas específicas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="container">
+      <h1 class="main-title">🧠 Masters de la Inteligencia Relacional</h1>
+      <p class="main-subtitle">
+        Domina el arte de construir tu base de datos de conexión emocional que transforma cada pieza de información en una llave 
+        para desbloquear niveles más profundos de compromiso. No seas vulnerable ante el olvido - crea conexiones irremplazables.
+      </p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Lab Section 1: Arquitectura de Datos Relacionales -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">🎯 Lab 1: Sistema de Inteligencia Relacional</h2>
+        <i class="fas fa-database section-icon"></i>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('data-architecture')">
+        <div class="card-header">
+          <h3 class="card-title">🔥 CRÍTICO: Arquitectura de Base de Datos Emocional</h3>
+          <i class="fas fa-chevron-down expand-icon" id="data-architecture-icon"></i>
+        </div>
+        <p>Construye un sistema estructurado que convierta cada interacción en data intelligence para personalización extrema.</p>
+        
+        <div class="card-details" id="data-architecture-details">
+          <div class="mt-3">
+            <h4>🏗️ Categorías de Datos ESENCIALES:</h4>
+            
+            <div class="data-categories">
+              <div class="category-card">
+                <div class="category-header">
+                  <i class="fas fa-user-tag category-icon"></i>
+                  <h5 class="category-title">Datos Demográficos</h5>
+                </div>
+                <ul class="mb-0">
+                  <li>Ubicación geográfica específica</li>
+                  <li>Zona horaria y patrones de actividad</li>
+                  <li>Profesión y situación económica</li>
+                  <li>Estado civil y contexto familiar</li>
+                  <li>Edad y generación cultural</li>
+                </ul>
+              </div>
+              
+              <div class="category-card">
+                <div class="category-header">
+                  <i class="fas fa-heart category-icon"></i>
+                  <h5 class="category-title">Preferencias Explícitas</h5>
+                </div>
+                <ul class="mb-0">
+                  <li>Gustos expresados directamente</li>
+                  <li>Intereses y hobbies mencionados</li>
+                  <li>Límites claramente establecidos</li>
+                  <li>Fantasías y deseos compartidos</li>
+                  <li>Aversiones conocidas</li>
+                </ul>
+              </div>
+              
+              <div class="category-card">
+                <div class="category-header">
+                  <i class="fas fa-brain category-icon"></i>
+                  <h5 class="category-title">Patrones Implícitos</h5>
+                </div>
+                <ul class="mb-0">
+                  <li>Reacciones positivas observadas</li>
+                  <li>Temas que generan engagement</li>
+                  <li>Sensibilidades detectadas</li>
+                  <li>Timing óptimo de interacción</li>
+                  <li>Estilo de comunicación preferido</li>
+                </ul>
+              </div>
+              
+              <div class="category-card">
+                <div class="category-header">
+                  <i class="fas fa-history category-icon"></i>
+                  <h5 class="category-title">Historia Compartida</h5>
+                </div>
+                <ul class="mb-0">
+                  <li>Primeras interacciones memorables</li>
+                  <li>Hitos y celebraciones conjuntas</li>
+                  <li>Evolución de la relación</li>
+                  <li>Momentos más significativos</li>
+                  <li>Referencias internas únicas</li>
+                </ul>
+              </div>
+              
+              <div class="category-card">
+                <div class="category-header">
+                  <i class="fas fa-flag category-icon"></i>
+                  <h5 class="category-title">Banderas de Alto Valor</h5>
+                </div>
+                <ul class="mb-0">
+                  <li>Información particularmente potente</li>
+                  <li>Triggers emocionales positivos</li>
+                  <li>Detalles únicos que recuerda</li>
+                  <li>Elementos de conexión profunda</li>
+                  <li>Oportunidades de personalización</li>
+                </ul>
+              </div>
+              
+              <div class="category-card">
+                <div class="category-header">
+                  <i class="fas fa-chart-line category-icon"></i>
+                  <h5 class="category-title">Métricas de Engagement</h5>
+                </div>
+                <ul class="mb-0">
+                  <li>Nivel de soporte financiero</li>
+                  <li>Frecuencia de interacción</li>
+                  <li>Duración promedio de sesiones</li>
+                  <li>Tipos de contenido preferidos</li>
+                  <li>Evolución del compromiso</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-warning bg-opacity-10 border border-warning rounded-3">
+              <h5>💡 Metodología de Implementación VITAL:</h5>
+              <p class="mb-2">Tu sistema debe incluir:</p>
+              <ul class="mb-0">
+                <li><strong>Acceso rápido durante transmisiones</strong> - documento digital organizado</li>
+                <li><strong>Sistema de "banderas"</strong> para información particularmente potente</li>
+                <li><strong>Revisión regular</strong> para mantener datos actualizados y relevantes</li>
+                <li><strong>Niveles de profundidad</strong> correspondientes a diferentes niveles de compromiso</li>
+                <li><strong>Cross-references</strong> entre diferentes categorías para crear conexiones</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('personalization-engine')">
+        <div class="card-header">
+          <h3 class="card-title">⚡ Motor de Personalización Avanzada</h3>
+          <i class="fas fa-chevron-down expand-icon" id="personalization-engine-icon"></i>
+        </div>
+        <p>Transforma datos recopilados en experiencias sorprendentemente personalizadas que generen conexión profunda.</p>
+        
+        <div class="card-details" id="personalization-engine-details">
+          <div class="mt-3">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 border border-primary rounded-3">
+                  <h5>🎯 Técnicas de Conexión</h5>
+                  <ul class="mb-0">
+                    <li>Referencias a conversaciones específicas</li>
+                    <li>Incorporación sutil de intereses personales</li>
+                    <li>Timing basado en patrones observados</li>
+                    <li>Adaptación de estilo comunicativo</li>
+                    <li>Creación de experiencias únicas</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 border border-success rounded-3">
+                  <h5>🔗 Cross-Reference Strategy</h5>
+                  <ul class="mb-0">
+                    <li>Combinar múltiples puntos de datos</li>
+                    <li>Crear narrativas coherentes</li>
+                    <li>Conectar pasado, presente y futuro</li>
+                    <li>Generar elementos sorpresa auténticos</li>
+                    <li>Escalar intimidad progresivamente</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="intelligence-story mt-4">
+              <div class="story-quote">
+                "Mi 'Sistema de Inteligencia Relacional' me convirtió en una modelo inolvidable. Cuando Marco mencionó casualmente su amor por los gatos hace 3 semanas, documenté todo. Ayer, durante su mal día en el trabajo, incorporé una referencia sutil a un gato gracioso junto con un detalle sobre su ciudad natal que había mencionado hace un mes. Su reacción fue mágica: 'Me siento visto de una manera que nunca he experimentado... es como si realmente me conocieras'."
+              </div>
+              <div class="story-author">— Laura M., Intelligence Master</div>
+              <div class="story-metrics">
+                <div class="metric">
+                  <div class="metric-number">+523%</div>
+                  <div class="metric-label">Personal Connection</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">94%</div>
+                  <div class="metric-label">User Retention</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">$7.3K</div>
+                  <div class="metric-label">Monthly Revenue</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+      <h3>🧮 Calculadora de ROI de Personalización Inteligente</h3>
+      <p>Proyecta el impacto financiero de implementar tu sistema de user intelligence</p>
+      
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label class="form-label"><strong>Usuarios regulares a trackear:</strong></label>
+          <input type="number" class="calculator-input" id="trackedUsers" placeholder="ej: 85" value="85">
+          
+          <label class="form-label"><strong>Gasto promedio mensual actual ($):</strong></label>
+          <input type="number" class="calculator-input" id="currentSpending" placeholder="ej: 55" value="55">
+          
+          <label class="form-label"><strong>Tiempo dedicado a personalización (hrs/semana):</strong></label>
+          <input type="number" class="calculator-input" id="personalizationTime" placeholder="ej: 8" value="8">
+          
+          <button class="calc-button" onclick="calculatePersonalizationROI()">
+            <i class="fas fa-brain me-2"></i>Calcular Impacto de Intelligence
+          </button>
+        </div>
+        <div class="col-md-6">
+          <div class="calc-result" id="personalizationResult">
+            <div class="text-center">
+              <i class="fas fa-chart-network fa-2x text-muted mb-2"></i>
+              <p class="mb-0 text-muted">Ingresa tus datos para ver la proyección de crecimiento con personalización</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lab Section 2: Automatización de Intelligence -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">🤖 Lab 2: Automatización de User Intelligence</h2>
+        <i class="fas fa-robot section-icon"></i>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('smart-automation')">
+        <div class="card-header">
+          <h3 class="card-title">🚀 ESENCIAL: Sistema Auto-Learning de Preferencias</h3>
+          <i class="fas fa-chevron-down expand-icon" id="smart-automation-icon"></i>
+        </div>
+        <p>Implementa herramientas que capturen y analicen datos de usuario automáticamente para escalabilidad masiva.</p>
+        
+        <div class="card-details" id="smart-automation-details">
+          <div class="mt-3">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 bg-info bg-opacity-10 border border-info rounded-3">
+                  <h5>📊 Auto-Capture Tools</h5>
+                  <ul class="mb-0">
+                    <li>Chat log analysis automático</li>
+                    <li>Behavioral pattern recognition</li>
+                    <li>Sentiment analysis en tiempo real</li>
+                    <li>Engagement metrics tracking</li>
+                    <li>Preference evolution mapping</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 bg-success bg-opacity-10 border border-success rounded-3">
+                  <h5>🧠 Intelligence Processing</h5>
+                  <ul class="mb-0">
+                    <li>Keywords frequency analysis</li>
+                    <li>Emotional response tracking</li>
+                    <li>Timing pattern optimization</li>
+                    <li>Cross-reference connection building</li>
+                    <li>Personalization opportunity alerts</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-warning bg-opacity-10 border border-warning rounded-3">
+              <h5>⚙️ Herramientas Recomendadas:</h5>
+              <p><strong>Para escalabilidad de 100+ usuarios simultáneos:</strong></p>
+              <ul class="mb-0">
+                <li><strong>CRM especializado</strong> - Salesforce, HubSpot con custom fields</li>
+                <li><strong>Chat analysis tools</strong> - texto mining + sentiment analysis</li>
+                <li><strong>Behavioral analytics</strong> - Google Analytics + custom events</li>
+                <li><strong>Notification systems</strong> - automated alerts para oportunidades</li>
+                <li><strong>Mobile access</strong> - apps para consulta rápida durante shows</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('scaling-intelligence')">
+        <div class="card-header">
+          <h3 class="card-title">📈 Escalabilidad de Intelligence Multi-Usuario</h3>
+          <i class="fas fa-chevron-down expand-icon" id="scaling-intelligence-icon"></i>
+        </div>
+        <p>Gestiona sistemas de personalización para cientos de usuarios manteniendo calidad de conexión individual.</p>
+        
+        <div class="card-details" id="scaling-intelligence-details">
+          <div class="mt-3">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Volumen Usuarios</th>
+                    <th>Estrategia</th>
+                    <th>Herramientas</th>
+                    <th>Personalización Level</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1-25 usuarios</strong></td>
+                    <td>Manual completo + documentación detallada</td>
+                    <td>Sheets/Notion + observación directa</td>
+                    <td>100% personalizado</td>
+                  </tr>
+                  <tr>
+                    <td><strong>26-75 usuarios</strong></td>
+                    <td>Semi-automated con manual override</td>
+                    <td>CRM básico + automated alerts</td>
+                    <td>85% personalizado</td>
+                  </tr>
+                  <tr>
+                    <td><strong>76-200 usuarios</strong></td>
+                    <td>AI-assisted intelligence + VIP manual tier</td>
+                    <td>Advanced CRM + ML tools + sentiment analysis</td>
+                    <td>70% personalizado</td>
+                  </tr>
+                  <tr>
+                    <td><strong>200+ usuarios</strong></td>
+                    <td>Full ecosystem con tiered personalization</td>
+                    <td>Enterprise AI + team + dedicated intelligence staff</td>
+                    <td>60% personalizado</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="intelligence-story mt-4">
+              <div class="story-quote">
+                "Cuando llegué a 180 usuarios regulares, mi sistema automatizado me salvó. Ahora AI analiza todos mis chats, identifica patterns emocionales, y me alerta sobre oportunidades de personalización en tiempo real. Mantengo el 87% satisfaction rate con 5x menos esfuerzo manual."
+              </div>
+              <div class="story-author">— Patricia K., Scale Intelligence Expert</div>
+              <div class="story-metrics">
+                <div class="metric">
+                  <div class="metric-number">180</div>
+                  <div class="metric-label">Usuarios Activos</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">87%</div>
+                  <div class="metric-label">Satisfaction Rate</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">$22.4K</div>
+                  <div class="metric-label">Monthly Revenue</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data Progress Tracker -->
+    <section class="data-tracker">
+      <h3>📈 Tu Progreso en Implementación de Intelligence</h3>
+      <p>Trackea tu avance en la construcción del sistema completo de user intelligence</p>
+      
+      <div class="tracker-item">
+        <div class="tracker-label">
+          <span>🗄️ Base de Datos Estructurada</span>
+          <span id="database-progress">0%</span>
+        </div>
+        <div class="tracker-bar-container">
+          <div class="tracker-bar" id="database-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="tracker-item">
+        <div class="tracker-label">
+          <span>🎯 Sistema de Categorización</span>
+          <span id="categorization-progress">0%</span>
+        </div>
+        <div class="tracker-bar-container">
+          <div class="tracker-bar" id="categorization-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="tracker-item">
+        <div class="tracker-label">
+          <span>🤖 Automatización Inteligente</span>
+          <span id="automation-progress">0%</span>
+        </div>
+        <div class="tracker-bar-container">
+          <div class="tracker-bar" id="automation-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="tracker-item">
+        <div class="tracker-label">
+          <span>🎨 Personalización Activa</span>
+          <span id="personalization-progress">0%</span>
+        </div>
+        <div class="tracker-bar-container">
+          <div class="tracker-bar" id="personalization-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-3">
+        <button class="btn btn-outline-primary" onclick="updateDataProgress()">
+          <i class="fas fa-sync-alt me-2"></i>Actualizar Progreso
+        </button>
+      </div>
+    </section>
+
+    <!-- Simulator Section -->
+    <section class="simulator-section">
+      <h3>🎮 Simulador de Sistemas de Intelligence</h3>
+      <p>Experimenta diferentes niveles de implementación de user intelligence y ve los resultados proyectados</p>
+      
+      <div class="scenario-selector">
+        <div class="scenario-option" onclick="selectIntelligenceScenario('basic')">
+          <h5>📝 Básico</h5>
+          <p>Documentación manual + observación directa</p>
+        </div>
+        <div class="scenario-option" onclick="selectIntelligenceScenario('advanced')">
+          <h5>🧠 Avanzado</h5>
+          <p>CRM + automated analysis + AI insights</p>
+        </div>
+        <div class="scenario-option" onclick="selectIntelligenceScenario('enterprise')">
+          <h5>🚀 Enterprise</h5>
+          <p>Full ecosystem + ML + predictive personalization</p>
+        </div>
+      </div>
+      
+      <div class="scenario-results" id="intelligenceScenarioResults">
+        <div class="text-center">
+          <i class="fas fa-brain fa-2x text-muted mb-3"></i>
+          <p class="text-muted">Selecciona un nivel de sistema arriba para ver la proyección detallada</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lab Section 3: Casos de Éxito Verificados -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ Lab 3: Casos de Éxito de Intelligence Systems</h2>
+        <i class="fas fa-trophy section-icon"></i>
+      </div>
+
+      <div class="intelligence-story">
+        <div class="story-quote">
+          "Mi 'Sistema de Inteligencia Relacional' completamente revolucionó mi approach. Tengo 150+ usuarios y cada uno se siente como mi único cliente. Mi database incluye más de 800 puntos de datos únicos. Cuando Alessandro mencionó su pasión por la astronomía hace 2 meses, esperé la lluvia de meteoros Perseidas para crear una experiencia personalizada increíble. Su tip de $500 esa noche rompió todos mis récords."
+        </div>
+        <div class="story-author">— Victoria R., Intelligence Queen</div>
+        <div class="story-metrics">
+          <div class="metric">
+            <div class="metric-number">+789%</div>
+            <div class="metric-label">Personal Connection Score</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">150+</div>
+            <div class="metric-label">Active Data Profiles</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">$18.7K</div>
+            <div class="metric-label">Monthly Revenue</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">96%</div>
+            <div class="metric-label">User Satisfaction</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="intelligence-story">
+        <div class="story-quote">
+          "Implementé AI-powered sentiment analysis en todos mis chats. El sistema detecta automáticamente cuando alguien menciona algo importante y me alerta en tiempo real. Ya no pierdo ninguna oportunidad de personalización. Mis usuarios constantemente me dicen que soy la única modelo que realmente los 'entiende'."
+        </div>
+        <div class="story-author">— Carmen L., AI Intelligence Pioneer</div>
+        <div class="story-metrics">
+          <div class="metric">
+            <div class="metric-number">95%</div>
+            <div class="metric-label">Opportunity Capture Rate</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">+412%</div>
+            <div class="metric-label">Retention Improvement</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">$24.3K</div>
+            <div class="metric-label">Monthly Revenue</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="intelligence-story">
+        <div class="story-quote">
+          "Mi database de user intelligence tiene más de 2,000 entradas únicas. Cross-referenceo datos constantemente para crear conexiones sorprendentes. Cuando David mencionó su divorcio difícil y su amor por el jazz, 3 semanas después incorporé una canción de Miles Davis sutilmente durante un momento emotivo. Lloró y me mandó el mensaje más hermoso que he recibido."
+        </div>
+        <div class="story-author">— Sophia M., Connection Architect</div>
+        <div class="story-metrics">
+          <div class="metric">
+            <div class="metric-number">2,000+</div>
+            <div class="metric-label">Data Points</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">+634%</div>
+            <div class="metric-label">Emotional Connection</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">$31.8K</div>
+            <div class="metric-label">Monthly Revenue</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Summary -->
+    <section class="final-summary">
+      <h2 class="summary-title">🧠 ¡Tu Sistema de Intelligence Está Listo!</h2>
+      <p class="lead">
+        Has masterizado el arte de la inteligencia relacional. No eres vulnerable ante el olvido - 
+        tienes un sistema que convierte cada pieza de información en una llave para conexiones irremplazables.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement">
+          <div class="achievement-icon">🧠</div>
+          <div class="achievement-title">Arquitecto de Intelligence</div>
+          <p>Dominas la construcción de bases de datos de conexión emocional</p>
+        </div>
+        <div class="achievement">
+          <div class="achievement-icon">🎯</div>
+          <div class="achievement-title">Maestro de Personalización</div>
+          <p>Transformas datos en experiencias sorprendentemente personalizadas</p>
+        </div>
+        <div class="achievement">
+          <div class="achievement-icon">🤖</div>
+          <div class="achievement-title">Innovador de Automatización</div>
+          <p>Escalas intelligence systems sin perder calidad de conexión</p>
+        </div>
+        <div class="achievement">
+          <div class="achievement-icon">💎</div>
+          <div class="achievement-title">Creador de Conexiones Únicas</div>
+          <p>Generas experiencias que hacen sentir "genuinamente vistos" a tus usuarios</p>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <h3>🎯 Tu Próximo Paso:</h3>
+        <p class="lead">
+          ¡A construir tu Sistema de Inteligencia Relacional! Comienza documentando a tus primeros 10 usuarios clave y 
+          observa cómo la personalización basada en datos transforma interacciones genéricas en conexiones auténticamente 
+          personalizadas. Tu infraestructura invisible de intelligence será tu ventaja competitiva definitiva.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Update current date
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+
+    // Toggle card details
+    function toggleDetails(cardId) {
+      const details = document.getElementById(cardId + '-details');
+      const icon = document.getElementById(cardId + '-icon');
+      
+      if (details.classList.contains('expanded')) {
+        details.classList.remove('expanded');
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        details.classList.add('expanded');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Calculate Personalization ROI
+    function calculatePersonalizationROI() {
+      const trackedUsers = parseInt(document.getElementById('trackedUsers').value) || 0;
+      const currentSpending = parseFloat(document.getElementById('currentSpending').value) || 0;
+      const personalizationTime = parseFloat(document.getElementById('personalizationTime').value) || 0;
+      
+      if (trackedUsers && currentSpending && personalizationTime) {
+        // Calculations based on industry data
+        const currentRevenue = trackedUsers * currentSpending;
+        const intelligenceBoost = 3.47; // 347% increase from insights
+        const retentionBoost = 6.8; // 6.8x retention improvement
+        const projectedRevenue = currentRevenue * intelligenceBoost;
+        const monthlyGrowth = projectedRevenue - currentRevenue;
+        const annualImpact = monthlyGrowth * 12;
+        const timeROI = monthlyGrowth / (personalizationTime * 4); // Weekly time investment
+        const satisfactionScore = Math.min(87 + (personalizationTime * 2), 96);
+        
+        const resultHtml = `
+          <div>
+            <h5 class="text-success mb-3">🧠 Proyección Intelligence System</h5>
+            <div class="row g-3">
+              <div class="col-6">
+                <strong>Revenue Actual:</strong><br>
+                <span class="text-primary">$${currentRevenue.toLocaleString()}/mes</span>
+              </div>
+              <div class="col-6">
+                <strong>Revenue con Intelligence:</strong><br>
+                <span class="text-success">$${projectedRevenue.toLocaleString()}/mes</span>
+              </div>
+              <div class="col-6">
+                <strong>ROI por Hora:</strong><br>
+                <span class="text-info">$${timeROI.toFixed(0)}/hora invertida</span>
+              </div>
+              <div class="col-6">
+                <strong>User Satisfaction:</strong><br>
+                <span class="text-success">${satisfactionScore.toFixed(1)}%</span>
+              </div>
+              <div class="col-12 text-center">
+                <div class="p-3 bg-success bg-opacity-10 rounded-3 border border-success">
+                  <strong>🎯 Impacto Anual con Intelligence:</strong><br>
+                  <span class="h4 text-success">$${annualImpact.toLocaleString()}</span><br>
+                  <small>Retención: ${retentionBoost}x mejor | Connection Score: +347%</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('personalizationResult').innerHTML = resultHtml;
+      }
+    }
+
+    // Update data progress bars
+    function updateDataProgress() {
+      const progressItems = [
+        { id: 'database', max: 82 },
+        { id: 'categorization', max: 75 },
+        { id: 'automation', max: 68 },
+        { id: 'personalization', max: 91 }
+      ];
+      
+      progressItems.forEach(item => {
+        const randomProgress = Math.floor(Math.random() * item.max) + 15;
+        const bar = document.getElementById(item.id + '-bar');
+        const label = document.getElementById(item.id + '-progress');
+        
+        setTimeout(() => {
+          bar.style.width = randomProgress + '%';
+          label.textContent = randomProgress + '%';
+        }, Math.random() * 500);
+      });
+    }
+
+    // Intelligence scenario selector
+    function selectIntelligenceScenario(scenario) {
+      // Remove previous selection
+      document.querySelectorAll('.scenario-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Add selection to clicked option
+      event.target.closest('.scenario-option').classList.add('selected');
+      
+      const scenarios = {
+        basic: {
+          title: '📝 Sistema Básico de Intelligence',
+          content: `
+            <h5>📊 Proyección 6 Meses:</h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-primary">+89%</div>
+                  <small>Mejora Personalización</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-success">+$2.7K</div>
+                  <small>Revenue Adicional</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-info">25</div>
+                  <small>Max Usuarios</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p><strong>Implementación:</strong> Documentación manual en Sheets/Notion, observación directa, categorización básica de preferencias.</p>
+              <p><strong>Esfuerzo:</strong> 4-6 hrs/semana | <strong>Costo:</strong> $0-30 | <strong>Escalabilidad:</strong> Limitada</p>
+            </div>
+          `
+        },
+        advanced: {
+          title: '🧠 Sistema Avanzado con AI',
+          content: `
+            <h5>📊 Proyección 6 Meses:</h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-primary">+234%</div>
+                  <small>Mejora Personalización</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-success">+$8.4K</div>
+                  <small>Revenue Adicional</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-info">75</div>
+                  <small>Max Usuarios</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p><strong>Implementación:</strong> CRM especializado, automated chat analysis, sentiment tracking, AI-powered insights, mobile access.</p>
+              <p><strong>Esfuerzo:</strong> 6-8 hrs/semana | <strong>Costo:</strong> $200-500 | <strong>Escalabilidad:</strong> Buena</p>
+            </div>
+          `
+        },
+        enterprise: {
+          title: '🚀 Sistema Enterprise con ML',
+          content: `
+            <h5>📊 Proyección 6 Meses:</h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-primary">+456%</div>
+                  <small>Mejora Personalización</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-success">+$18.7K</div>
+                  <small>Revenue Adicional</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-info">200+</div>
+                  <small>Max Usuarios</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p><strong>Implementación:</strong> Full ML ecosystem, predictive personalization, automated cross-referencing, real-time opportunity alerts, team coordination tools.</p>
+              <p><strong>Esfuerzo:</strong> 10-15 hrs/semana setup | <strong>Costo:</strong> $800-2000 | <strong>Escalabilidad:</strong> Ilimitada</p>
+            </div>
+          `
+        }
+      };
+      
+      const selectedScenario = scenarios[scenario];
+      document.getElementById('intelligenceScenarioResults').innerHTML = `
+        <h4>${selectedScenario.title}</h4>
+        ${selectedScenario.content}
+      `;
+    }
+
+    // Initialize
+    updateDateTime();
+    setInterval(updateDateTime, 60000); // Update every minute
+    
+    // Initialize progress on load
+    setTimeout(updateDataProgress, 1000);
+  </script>
+</body>
+</html>

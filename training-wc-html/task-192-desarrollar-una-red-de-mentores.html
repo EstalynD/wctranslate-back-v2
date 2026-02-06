@@ -1,0 +1,2117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>🎯 Masters en Red de Mentores - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #1e40af;
+      --secondary-color: #1e3a8a;
+      --accent-color: #3b82f6;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+      --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-network: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M30 10 L50 30 L30 50 L10 30 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 28s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-18px) rotate(1deg); }
+      66% { transform: translateY(12px) rotate(-1deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(30, 58, 138, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 58, 138, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .network-builder {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .mentor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .mentor-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .mentor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .mentor-card.added {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.05);
+    }
+
+    .expertise-tag {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin: 0.25rem;
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(30, 64, 175, 0.25);
+    }
+
+    .btn-network {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-width: 160px;
+    }
+
+    .btn-network:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(30, 64, 175, 0.3);
+    }
+
+    .network-visual {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+      position: relative;
+      min-height: 300px;
+      overflow: hidden;
+    }
+
+    .network-node {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background: var(--gradient-primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 3px solid white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .network-node:hover {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+
+    .network-node.center {
+      background: var(--gradient-warning);
+      width: 100px;
+      height: 100px;
+      font-size: 1rem;
+    }
+
+    .network-connection {
+      position: absolute;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+      opacity: 0.6;
+      transform-origin: left center;
+    }
+
+    .gap-analysis {
+      background: linear-gradient(135deg, rgba(255, 165, 0, 0.1) 0%, rgba(255, 69, 0, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .gap-item {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--warning-orange);
+      transition: all 0.3s ease;
+    }
+
+    .gap-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .priority-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .priority-high {
+      background: rgba(220, 38, 38, 0.2);
+      color: #dc2626;
+    }
+
+    .priority-medium {
+      background: rgba(251, 191, 36, 0.2);
+      color: #f59e0b;
+    }
+
+    .priority-low {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+
+    .consultation-log {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .consultation-entry {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .consultation-entry:last-child {
+      border-bottom: none;
+    }
+
+    .consultation-entry:hover {
+      background: rgba(30, 64, 175, 0.05);
+    }
+
+    .consultation-type {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--gradient-primary);
+      color: white;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .mentor-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+
+      .network-visual {
+        min-height: 250px;
+      }
+
+      .network-node {
+        width: 60px;
+        height: 60px;
+        font-size: 0.7rem;
+      }
+
+      .network-node.center {
+        width: 80px;
+        height: 80px;
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .network-builder,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+
+      .network-visual {
+        min-height: 200px;
+        padding: 1rem;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-network,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Intelligence de Networking 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Professional Networking Institute & Mentorship Effectiveness Studies</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">87%</h4>
+          <p><strong>de executives top-tier</strong> mantienen consejo consultivo activo de 3-5 mentores estratégicamente seleccionados</p>
+          <small class="text-muted">Source: Executive Leadership Network Analysis 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€340,000</h4>
+          <p><strong>incremento salarial promedio</strong> en 3 años para profesionales con red de mentores estructurada vs networking casual</p>
+          <small class="text-muted">Source: Career Advancement Economics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">5.2x</h4>
+          <p><strong>mayor probabilidad</strong> de identificar oportunidades transformativas con perspectivas diversificadas vs evaluación singular</p>
+          <small class="text-muted">Source: Decision Quality & Mentorship Impact</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">72h</h4>
+          <p><strong>tiempo promedio</strong> para obtener insight específico de mentor vs 3+ semanas de research independiente</p>
+          <small class="text-muted">Source: Knowledge Transfer Efficiency</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">94%</h4>
+          <p><strong>de oportunidades críticas</strong> identificadas a través de red consultiva no habían sido consideradas previamente</p>
+          <small class="text-muted">Source: Opportunity Discovery Research</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">68%</h4>
+          <p><strong>reducción en errores</strong> estratégicos cuando decisiones incluyen input de múltiples mentores complementarios</p>
+          <small class="text-muted">Source: Strategic Decision Analysis</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">🎯 Masters en Red de Mentores</h1>
+      <p class="main-subtitle">
+        Construye tu consejo consultivo personalizado. Tu imperio profesional necesita inteligencia colectiva que transforme perspectiva singular en evaluaciones multidimensionales enriquecidas.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Constructor de Red -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('network-builder-section')">
+          <div class="section-icon">
+            <i class="fas fa-network-wired"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🏗️ Constructor de Red Estratégica</h2>
+            <p class="mb-0 text-muted">Sistema de mapeo y desarrollo de consejo consultivo personalizado</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="network-builder">
+          <h4><i class="fas fa-users text-primary"></i> Configuración de Mentor Network</h4>
+          <p>Diseña tu consejo consultivo con expertise complementario y perspectivas diversificadas</p>
+          
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Nombre del Mentor</label>
+              <input type="text" class="form-control" id="mentor-name" placeholder="Ej: María Rodriguez">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Área de Expertise Principal</label>
+              <select class="form-control" id="mentor-expertise">
+                <option value="">Selecciona área</option>
+                <option value="strategic">Estrategia & Leadership</option>
+                <option value="financial">Finanzas & Investment</option>
+                <option value="technical">Expertise Técnico</option>
+                <option value="marketing">Marketing & Brand</option>
+                <option value="international">Expansión Internacional</option>
+                <option value="operations">Operaciones & Scaling</option>
+                <option value="legal">Legal & Compliance</option>
+                <option value="innovation">Innovation & R&D</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row mb-4">
+            <div class="col-md-4">
+              <label class="form-label">Nivel de Experiencia</label>
+              <select class="form-control" id="mentor-level">
+                <option value="senior">Senior (15+ años)</option>
+                <option value="expert">Expert (10-15 años)</option>
+                <option value="specialist">Specialist (5-10 años)</option>
+                <option value="emerging">Emerging (3-5 años)</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Estilo de Comunicación</label>
+              <select class="form-control" id="mentor-style">
+                <option value="direct">Directo & Analítico</option>
+                <option value="supportive">Supportivo & Motivacional</option>
+                <option value="challenging">Challenging & Provocativo</option>
+                <option value="collaborative">Colaborativo & Inclusivo</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Frecuencia de Contacto</label>
+              <select class="form-control" id="mentor-frequency">
+                <option value="weekly">Semanal</option>
+                <option value="biweekly">Quincenal</option>
+                <option value="monthly">Mensual</option>
+                <option value="quarterly">Trimestral</option>
+                <option value="adhoc">As-needed</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="text-center mb-4">
+            <button class="btn-network" onclick="addMentor()">
+              <i class="fas fa-plus"></i> Agregar a Red
+            </button>
+            <button class="btn-network" onclick="generateNetworkVisual()" style="background: var(--gradient-success);">
+              <i class="fas fa-sitemap"></i> Visualizar Red
+            </button>
+          </div>
+          
+          <div id="mentor-list" class="mentor-grid">
+            <!-- Mentor cards will be added here -->
+          </div>
+        </div>
+
+        <div class="network-visual" id="network-visual" style="display: none;">
+          <h4><i class="fas fa-project-diagram text-primary"></i> Tu Red de Mentores Visualizada</h4>
+          <div id="network-diagram" style="position: relative; height: 400px;">
+            <!-- Network diagram will be generated here -->
+          </div>
+        </div>
+
+        <div class="gap-analysis">
+          <h4><i class="fas fa-search text-warning"></i> Análisis de Gaps en Expertise</h4>
+          <p>Identifica áreas donde necesitas agregar mentores para completar tu consejo consultivo</p>
+          
+          <div id="gap-results">
+            <div class="gap-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6><strong>Estrategia Internacional</strong></h6>
+                  <small class="text-muted">Necesario para expansión global y cultural intelligence</small>
+                </div>
+                <span class="priority-badge priority-high">Alta Prioridad</span>
+              </div>
+            </div>
+            
+            <div class="gap-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6><strong>Digital Transformation</strong></h6>
+                  <small class="text-muted">Expertise en tech adoption y digital strategy</small>
+                </div>
+                <span class="priority-badge priority-medium">Media Prioridad</span>
+              </div>
+            </div>
+            
+            <div class="gap-item">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h6><strong>Sustainability & ESG</strong></h6>
+                  <small class="text-muted">Perspectiva en responsabilidad corporativa</small>
+                </div>
+                <span class="priority-badge priority-low">Baja Prioridad</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Calculadora de ROI de Networking -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('networking-roi')">
+          <div class="section-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">💰 Calculadora de ROI de Mentorship</h2>
+            <p class="mb-0 text-muted">Cuantifica el valor de tu inversión en red de mentores</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('roi-calculator')">
+          <h4><i class="fas fa-calculator text-success"></i> Análisis de Valor de Red</h4>
+          <p>Calcula el ROI específico de mantener consejo consultivo vs navegación independiente</p>
+          
+          <div class="card-content" id="roi-calculator">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label">Número de mentores activos</label>
+                <input type="number" class="form-control" id="mentor-count" value="3" min="1" max="10">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Horas mensuales de consulta</label>
+                <input type="number" class="form-control" id="consultation-hours" value="6" min="1" max="40">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class="form-label">Valor hora profesional (€)</label>
+                <input type="number" class="form-control" id="hourly-value" value="150" min="50" max="1000">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Oportunidades identificadas/año</label>
+                <input type="number" class="form-control" id="opportunities-identified" value="4" min="1" max="20">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class="form-label">Valor promedio oportunidad (€)</label>
+                <input type="number" class="form-control" id="opportunity-value" value="85000" min="1000" max="1000000">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Errores evitados/año</label>
+                <input type="number" class="form-control" id="errors-avoided" value="2" min="0" max="10">
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button class="btn-network" onclick="calculateNetworkingROI()">
+                <i class="fas fa-chart-bar"></i> Calcular ROI Total
+              </button>
+            </div>
+            
+            <div id="roi-results" style="display: none; margin-top: 2rem; background: white; padding: 2rem; border-radius: 15px; border: 2px solid var(--success-green);">
+              <h6><i class="fas fa-trophy text-success"></i> Análisis de ROI Anual</h6>
+              <div class="row text-center">
+                <div class="col-md-3">
+                  <div class="metric-value" id="total-value-generated">--</div>
+                  <div class="metric-label">Valor Total Generado</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="time-investment">--</div>
+                  <div class="metric-label">Inversión Tiempo</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="net-roi">--</div>
+                  <div class="metric-label">ROI Neto</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="payback-period">--</div>
+                  <div class="metric-label">Payback Period</div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-success"><strong>Análisis:</strong> <span id="roi-analysis-text"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('consultation-tracker')">
+          <h4><i class="fas fa-clipboard-list text-info"></i> Tracker de Consultas</h4>
+          <p>Registra y analiza efectividad de tus interacciones con mentores</p>
+          
+          <div class="card-content" id="consultation-tracker">
+            <div class="consultation-log">
+              <h6><i class="fas fa-history text-primary"></i> Registro de Consultas Recientes</h6>
+              <div id="consultation-entries">
+                <div class="consultation-entry">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="mb-1">Evaluación oferta Series B</h6>
+                      <div class="mb-2">
+                        <span class="consultation-type">Estratégico</span>
+                        <small class="text-muted ms-2">con María Rodriguez | 45 min</small>
+                      </div>
+                      <small class="text-muted">
+                        <strong>Outcome:</strong> Identificó 3 red flags en términos, negoció mejor valuación
+                      </small>
+                    </div>
+                    <div class="text-end">
+                      <small class="text-muted">15 Ene 2025</small>
+                      <div class="mt-1">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="consultation-entry">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="mb-1">Digital marketing strategy</h6>
+                      <div class="mb-2">
+                        <span class="consultation-type">Marketing</span>
+                        <small class="text-muted ms-2">con Carlos Tech | 30 min</small>
+                      </div>
+                      <small class="text-muted">
+                        <strong>Outcome:</strong> Pivote a TikTok strategy, 300% increase en engagement
+                      </small>
+                    </div>
+                    <div class="text-end">
+                      <small class="text-muted">12 Ene 2025</small>
+                      <div class="mt-1">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="far fa-star text-warning"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="consultation-entry">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <h6 class="mb-1">International expansion planning</h6>
+                      <div class="mb-2">
+                        <span class="consultation-type">Internacional</span>
+                        <small class="text-muted ms-2">con Ana Global | 60 min</small>
+                      </div>
+                      <small class="text-muted">
+                        <strong>Outcome:</strong> Priorización mercados LATAM, roadmap específico
+                      </small>
+                    </div>
+                    <div class="text-end">
+                      <small class="text-muted">08 Ene 2025</small>
+                      <div class="mt-1">
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                        <i class="fas fa-star text-warning"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Simulador de Consultas -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('consultation-simulator')">
+          <div class="section-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎮 Simulador de Consultas Estratégicas</h2>
+            <p class="mb-0 text-muted">Entrena tu capacidad de síntesis de perspectivas múltiples</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="simulator-section">
+          <h4><i class="fas fa-comments text-primary"></i> Scenarios de Consulta Compleja</h4>
+          <p>Practica la síntesis de input diversificado de múltiples mentores con perspectivas contradictorias</p>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('conflicting-advice')">
+              <i class="fas fa-balance-scale text-warning" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Consejos Contradictorios</h5>
+              <p class="text-muted">Mentores con perspectivas opuestas sobre decisión estratégica</p>
+              <span class="badge bg-warning">Síntesis Compleja</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('risk-tolerance')">
+              <i class="fas fa-chart-line text-danger" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Diferencias en Risk Tolerance</h5>
+              <p class="text-muted">Evaluación de oportunidad con perfiles de riesgo diversos</p>
+              <span class="badge bg-danger">Risk Assessment</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('timing-disagreement')">
+              <i class="fas fa-clock text-info" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Discrepancia en Timing</h5>
+              <p class="text-muted">Mentores con perspectivas diferentes sobre cuándo actuar</p>
+              <span class="badge bg-info">Timing Critical</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('market-analysis')">
+              <i class="fas fa-globe text-success" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Análisis de Mercado Divergente</h5>
+              <p class="text-muted">Interpretaciones diferentes de data y trends del mercado</p>
+              <span class="badge bg-success">Market Intelligence</span>
+            </div>
+          </div>
+          
+          <div id="scenario-results" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--success-green);">
+            <h5><i class="fas fa-lightbulb text-warning"></i> Análisis del Scenario</h5>
+            <div id="scenario-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 4: Templates de Outreach -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('outreach-templates')">
+          <div class="section-icon">
+            <i class="fas fa-envelope"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">📧 Templates de Outreach Profesional</h2>
+            <p class="mb-0 text-muted">Mensajes calibrados para establecer relaciones de mentoría</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="toggleDetails('initial-outreach')">
+              <h5><i class="fas fa-handshake text-primary"></i> Initial Outreach</h5>
+              <p>Template para primer contacto con potencial mentor</p>
+              
+              <div class="card-content" id="initial-outreach">
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--primary-color);">
+                  <h6><strong>Subject: Admiración por su trabajo en [área específica]</strong></h6>
+                  <hr>
+                  <p>Estimada [Nombre],</p>
+                  
+                  <p>He seguido su trayectoria en [área específica] y me impresiona especialmente [logro específico mencionado]. Su approach a [tema específico] resuena con mi propia visión sobre [área relevante].</p>
+                  
+                  <p>Actualmente estoy [situación actual] y desarrollando [proyecto/objetivo específico]. Su expertise en [área] sería invaluable para navegar [desafío específico].</p>
+                  
+                  <p><strong>Propuesta de valor bidireccional:</strong><br>
+                  • Mi perspectiva fresh sobre [tema] basada en [experiencia específica]<br>
+                  • Research que estoy desarrollando en [área de interés para mentor]<br>
+                  • Conexiones en [industria/área donde puedes agregar valor]</p>
+                  
+                  <p>¿Estaría abierta a café de 30 minutos para explorar potencial colaboración consultiva?</p>
+                  
+                  <p>Adjunto mi background y propuesta específica.</p>
+                  
+                  <p>Saludos,<br>[Tu nombre]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="toggleDetails('follow-up-template')">
+              <h5><i class="fas fa-reply text-success"></i> Follow-up Estratégico</h5>
+              <p>Template para mantener relación con mentores establecidos</p>
+              
+              <div class="card-content" id="follow-up-template">
+                <div style="background: #f0f8ff; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--success-green);">
+                  <h6><strong>Subject: Update + Insight que le interesará</strong></h6>
+                  <hr>
+                  <p>Hola [Nombre],</p>
+                  
+                  <p><strong>Update sobre nuestro último conversation:</strong><br>
+                  Implementé su sugerencia sobre [tema específico] y los resultados han sido [outcome específico con números]. Su perspectiva fue clave para [resultado específico].</p>
+                  
+                  <p><strong>Insight que pensé le interesaría:</strong><br>
+                  [Información valiosa relevante a su área de expertise o intereses]</p>
+                  
+                  <p><strong>Nueva situación donde valoraría su perspectiva:</strong><br>
+                  [Descripción concisa del desafío/oportunidad actual]</p>
+                  
+                  <p>¿Tendría 20 minutos para una llamada rápida esta semana o próxima?</p>
+                  
+                  <p>Como siempre, agradezco su tiempo y expertise.</p>
+                  
+                  <p>Saludos,<br>[Tu nombre]</p>
+                  
+                  <p><em>P.S. Vi su reciente [publicación/logro] - congratulaciones!</em></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="toggleDetails('gratitude-template')">
+              <h5><i class="fas fa-heart text-warning"></i> Expresión de Gratitud</h5>
+              <p>Template para agradecer y fortalecer la relación</p>
+              
+              <div class="card-content" id="gratitude-template">
+                <div style="background: #fff9e6; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--warning-orange);">
+                  <h6><strong>Subject: Impacto de su mentoría - Resultados específicos</strong></h6>
+                  <hr>
+                  <p>Querida [Nombre],</p>
+                  
+                  <p>Quería compartir el outcome directo de nuestras conversaciones:</p>
+                  
+                  <p><strong>Resultados cuantificables:</strong><br>
+                  • [Métrica específica] mejoró [porcentaje] desde implementar su advice<br>
+                  • Evité [error específico] que habría costado [cantidad/tiempo]<br>
+                  • Identifiqué [oportunidad] que resultó en [benefit específico]</p>
+                  
+                  <p><strong>Impacto cualitativo:</strong><br>
+                  Su perspectiva sobre [tema] fundamentalmente cambió mi approach a [área]. La confianza que me dio para [acción específica] fue transformativa.</p>
+                  
+                  <p><strong>Paying it forward:</strong><br>
+                  He comenzado a mentorar a [número] junior professionals using insights que aprendí de usted, específicamente [metodología/approach específico].</p>
+                  
+                  <p>Su investment en mi desarrollo está creando impact exponencial.</p>
+                  
+                  <p>Con profunda gratitud,<br>[Tu nombre]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="toggleDetails('value-sharing')">
+              <h5><i class="fas fa-share text-info"></i> Compartir Valor</h5>
+              <p>Template para ofrecer valor proactivamente</p>
+              
+              <div class="card-content" id="value-sharing">
+                <div style="background: #f0f8ff; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--accent-color);">
+                  <h6><strong>Subject: Recurso específico para [proyecto/interés del mentor]</strong></h6>
+                  <hr>
+                  <p>Hola [Nombre],</p>
+                  
+                  <p>Recordando su interés en [tema específico], encontré [recurso/oportunidad/insight] que pensé le resultaría valioso:</p>
+                  
+                  <p><strong>Específicamente:</strong><br>
+                  [Descripción detallada del valor - datos, contactos, oportunidades, insights, etc.]</p>
+                  
+                  <p><strong>Por qué es relevante para usted:</strong><br>
+                  [Conexión específica con sus intereses/proyectos/objetivos]</p>
+                  
+                  <p><strong>Acción potencial:</strong><br>
+                  [Sugerencia específica de cómo pueden usar esta información]</p>
+                  
+                  <p>Si le parece útil, happy to make introductions o proporcionar más detalles.</p>
+                  
+                  <p>Como siempre, agradezco su mentorship continued.</p>
+                  
+                  <p>Saludos,<br>[Tu nombre]</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 5: Tracker de Efectividad -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('effectiveness-tracker')">
+          <div class="section-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">📊 Tracker de Efectividad Consultiva</h2>
+            <p class="mb-0 text-muted">Métricas de impacto y optimización de tu red de mentores</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('network-metrics')">
+          <h4><i class="fas fa-tachometer-alt text-success"></i> Métricas de Performance de Red</h4>
+          <p>Tracking de efectividad y ROI de tu consejo consultivo</p>
+          
+          <div class="card-content" id="network-metrics">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Response Rate de Mentores</strong></span>
+                  <span class="text-muted">94%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 94%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de consultas que reciben respuesta dentro de 48h</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Calidad de Insights</strong></span>
+                  <span class="text-muted">87%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 87%"></div>
+                </div>
+                <small class="text-muted">Rating promedio de utilidad de advice recibido</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Implementation Rate</strong></span>
+                  <span class="text-muted">76%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 76%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de recommendations que implementas exitosamente</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Diversidad de Perspectivas</strong></span>
+                  <span class="text-muted">82%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 82%"></div>
+                </div>
+                <small class="text-muted">Score de complementariedad de expertise en tu red</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('relationship-health')">
+          <h4><i class="fas fa-heartbeat text-info"></i> Health Check de Relaciones</h4>
+          <p>Monitorea la salud y sostenibilidad de tus relaciones de mentoría</p>
+          
+          <div class="card-content" id="relationship-health">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><i class="fas fa-calendar text-primary"></i> Frecuencia de Contacto</h6>
+                <ul class="list-unstyled">
+                  <li><strong>María Rodriguez (Strategic):</strong> <span class="text-success">Óptima - cada 2 semanas</span></li>
+                  <li><strong>Carlos Tech (Marketing):</strong> <span class="text-warning">Moderada - mensual</span></li>
+                  <li><strong>Ana Global (International):</strong> <span class="text-danger">Baja - 3+ meses</span></li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6><i class="fas fa-exchange-alt text-success"></i> Reciprocidad de Valor</h6>
+                <ul class="list-unstyled">
+                  <li><strong>Value provided:</strong> Research compartido, conexiones, insights</li>
+                  <li><strong>Balance ratio:</strong> 70% recibido / 30% dado</li>
+                  <li><strong>Recommendation:</strong> Incrementar value sharing proactivo</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h6><i class="fas fa-exclamation-triangle text-warning"></i> Alerts & Recommendations</h6>
+              <div class="alert alert-warning">
+                <p><strong>Action needed:</strong> Ana Global no ha tenido contacto en 3+ meses. Enviar value-sharing email esta semana.</p>
+              </div>
+              <div class="alert alert-info">
+                <p><strong>Opportunity:</strong> Carlos Tech mencionó interés en AI marketing. Compartes research relevante para fortalecer relación.</p>
+              </div>
+              <div class="alert alert-success">
+                <p><strong>Strength:</strong> María Rodriguez relationship está en sweet spot - high value exchange, regular contact, mutual respect.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters del Networking
+          </h2>
+          <p class="lead text-muted">Historias reales de transformación mediante consejo consultivo estratégico</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-rocket text-primary"></i> Jessica M. - Tech Startup Founder</h5>
+            <p>"Construí consejo de 4 mentores: tech veteran, financial expert, marketing strategist y operations specialist. Cuando evaluaba Series A, sus perspectivas divergentes revelaron deal terms problemáticos."</p>
+            <p class="text-muted"><em>"Tech mentor identificó IP concerns, financial expert negoció mejor valuation, marketing strategist sugirió timing different, operations expert alertó sobre scaling challenges. Result: mejor deal €2.3M higher valuation + retained 23% más equity vs offer original."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€2.3M</span>
+                <span class="metric-label">Valuation improvement</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">23%</span>
+                <span class="metric-label">Equity preserved</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">4</span>
+                <span class="metric-label">Mentores activos</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-globe text-success"></i> Roberto L. - International Expansion Director</h5>
+            <p>"Mi red incluía mentores de 3 mercados target: Europa, LATAM y Asia. Cuando planeaba expansion, cada uno proporcionó intelligence específica que evitó errores costosos."</p>
+            <p class="text-muted"><em>"Europa mentor alertó sobre new regulations que habrían bloqueado launch. LATAM advisor identificó partner local crítico. Asia expert sugirió timing adjustment por cultural factors. Combined intelligence resultó en successful launch en los 3 mercados simultáneamente - first company en industry to achieve this."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">3</span>
+                <span class="metric-label">Mercados launched</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">180%</span>
+                <span class="metric-label">Revenue growth</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€850K</span>
+                <span class="metric-label">Costs avoided</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-chart-line text-warning"></i> Patricia S. - Investment Portfolio Manager</h5>
+            <p>"Desarrollé network de mentores across different asset classes y geographical expertise. Durante market volatility 2024, sus perspectives diversas fueron críticas para portfolio protection."</p>
+            <p class="text-muted"><em>"Fixed income mentor sugirió defensive positioning. Equity expert identificó undervalued opportunities. Commodities advisor alertó sobre supply chain disruptions. Currency specialist predicted EUR/USD moves. Result: portfolio outperformed benchmark 14.2% during crisis period."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">+14.2%</span>
+                <span class="metric-label">Outperformance</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€4.7M</span>
+                <span class="metric-label">AUM protected</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">5</span>
+                <span class="metric-label">Expertise areas</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        🎯 Tu Consejo Consultivo Está Activo
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has establecido la infraestructura de inteligencia colectiva más poderosa para decision-making superior. No navegues solo con perspectiva singular. Tu red de mentores es ahora tu ventaja estratégica multiplied.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">🎯</div>
+          <h5>Network Estratégico</h5>
+          <p>Consejo consultivo diversificado con expertise complementario</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">💡</div>
+          <h5>Inteligencia Colectiva</h5>
+          <p>Perspectives múltiples identificando opportunities invisibles</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⚡</div>
+          <h5>Accelerated Learning</h5>
+          <p>Knowledge transfer 10x faster que research independiente</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">🛡️</div>
+          <h5>Risk Mitigation</h5>
+          <p>Blind spots eliminados mediante evaluation multi-perspectiva</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadNetworkingKit()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Red de Mentores!
+        </button>
+        <button class="cta-button" onclick="shareNetworkingSuccess()">
+          <i class="fas fa-share"></i> Domina Tu Inteligencia Colectiva
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Activa tu network inmediatamente. Cada decisión sin consejo consultivo es oportunidad perdida. Tu futuro professional depende de esta inteligencia colectiva.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Global variables for mentor network
+    let mentorNetwork = [];
+    let consultationLog = [];
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Add mentor to network
+    function addMentor() {
+      const name = document.getElementById('mentor-name').value.trim();
+      const expertise = document.getElementById('mentor-expertise').value;
+      const level = document.getElementById('mentor-level').value;
+      const style = document.getElementById('mentor-style').value;
+      const frequency = document.getElementById('mentor-frequency').value;
+      
+      if (!name || !expertise) {
+        alert('Por favor completa nombre y área de expertise');
+        return;
+      }
+      
+      const mentor = {
+        id: Date.now(),
+        name: name,
+        expertise: expertise,
+        level: level,
+        style: style,
+        frequency: frequency,
+        addedDate: new Date()
+      };
+      
+      mentorNetwork.push(mentor);
+      updateMentorDisplay();
+      
+      // Clear form
+      document.getElementById('mentor-name').value = '';
+      document.getElementById('mentor-expertise').value = '';
+    }
+
+    // Update mentor display
+    function updateMentorDisplay() {
+      const container = document.getElementById('mentor-list');
+      
+      if (mentorNetwork.length === 0) {
+        container.innerHTML = '<p class="text-center text-muted">Agrega mentores para comenzar tu red consultiva</p>';
+        return;
+      }
+      
+      container.innerHTML = mentorNetwork.map(mentor => `
+        <div class="mentor-card added">
+          <div class="d-flex justify-content-between align-items-start">
+            <div>
+              <h6><strong>${mentor.name}</strong></h6>
+              <span class="expertise-tag">${getExpertiseLabel(mentor.expertise)}</span>
+              <div class="mt-2">
+                <small class="text-muted">
+                  <i class="fas fa-layer-group"></i> ${getLevelLabel(mentor.level)} |
+                  <i class="fas fa-comments"></i> ${getStyleLabel(mentor.style)} |
+                  <i class="fas fa-calendar"></i> ${getFrequencyLabel(mentor.frequency)}
+                </small>
+              </div>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" onclick="removeMentor(${mentor.id})">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Remove mentor
+    function removeMentor(id) {
+      mentorNetwork = mentorNetwork.filter(m => m.id !== id);
+      updateMentorDisplay();
+    }
+
+    // Generate network visual
+    function generateNetworkVisual() {
+      if (mentorNetwork.length === 0) {
+        alert('Agrega mentores para visualizar tu red');
+        return;
+      }
+      
+      const visualContainer = document.getElementById('network-visual');
+      const diagramContainer = document.getElementById('network-diagram');
+      
+      // Clear previous diagram
+      diagramContainer.innerHTML = '';
+      
+      // Create center node (you)
+      const centerNode = document.createElement('div');
+      centerNode.className = 'network-node center';
+      centerNode.style.left = '50%';
+      centerNode.style.top = '50%';
+      centerNode.style.transform = 'translate(-50%, -50%)';
+      centerNode.textContent = 'TÚ';
+      diagramContainer.appendChild(centerNode);
+      
+      // Position mentor nodes around center
+      const angleStep = (2 * Math.PI) / mentorNetwork.length;
+      const radius = 120;
+      
+      mentorNetwork.forEach((mentor, index) => {
+        const angle = index * angleStep;
+        const x = 50 + (radius * Math.cos(angle)) / 4; // Convert to percentage
+        const y = 50 + (radius * Math.sin(angle)) / 4;
+        
+        // Create mentor node
+        const node = document.createElement('div');
+        node.className = 'network-node';
+        node.style.left = x + '%';
+        node.style.top = y + '%';
+        node.style.transform = 'translate(-50%, -50%)';
+        node.textContent = mentor.name.split(' ')[0]; // First name only
+        node.title = `${mentor.name} - ${getExpertiseLabel(mentor.expertise)}`;
+        
+        // Add color coding by expertise
+        const expertiseColors = {
+          'strategic': 'linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%)',
+          'financial': 'linear-gradient(135deg, #059669 0%, #047857 100%)',
+          'technical': 'linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)',
+          'marketing': 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+          'international': 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+          'operations': 'linear-gradient(135deg, #0891b2 0%, #0e7490 100%)',
+          'legal': 'linear-gradient(135deg, #4338ca 0%, #3730a3 100%)',
+          'innovation': 'linear-gradient(135deg, #be185d 0%, #9d174d 100%)'
+        };
+        
+        node.style.background = expertiseColors[mentor.expertise] || 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)';
+        
+        diagramContainer.appendChild(node);
+        
+        // Create connection line
+        const connection = document.createElement('div');
+        connection.className = 'network-connection';
+        
+        // Calculate line position and rotation
+        const centerX = 50;
+        const centerY = 50;
+        const length = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+        const angleRad = Math.atan2(y - centerY, x - centerX);
+        
+        connection.style.left = centerX + '%';
+        connection.style.top = centerY + '%';
+        connection.style.width = length + '%';
+        connection.style.transform = `translate(0, -50%) rotate(${angleRad}rad)`;
+        
+        diagramContainer.appendChild(connection);
+      });
+      
+      visualContainer.style.display = 'block';
+      visualContainer.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Calculate networking ROI
+    function calculateNetworkingROI() {
+      const mentorCount = parseInt(document.getElementById('mentor-count').value) || 0;
+      const consultationHours = parseInt(document.getElementById('consultation-hours').value) || 0;
+      const hourlyValue = parseInt(document.getElementById('hourly-value').value) || 0;
+      const opportunities = parseInt(document.getElementById('opportunities-identified').value) || 0;
+      const opportunityValue = parseInt(document.getElementById('opportunity-value').value) || 0;
+      const errorsAvoided = parseInt(document.getElementById('errors-avoided').value) || 0;
+      
+      // Annual calculations
+      const timeInvestment = consultationHours * 12; // Monthly to annual
+      const timeInvestmentValue = timeInvestment * hourlyValue;
+      const opportunityValue_total = opportunities * opportunityValue;
+      const errorsAvoidedValue = errorsAvoided * (hourlyValue * 20); // Estimate 20h cost per error
+      
+      const totalValueGenerated = opportunityValue_total + errorsAvoidedValue;
+      const netROI = ((totalValueGenerated - timeInvestmentValue) / timeInvestmentValue) * 100;
+      const paybackMonths = Math.round(timeInvestmentValue / (totalValueGenerated / 12));
+      
+      // Display results
+      document.getElementById('total-value-generated').textContent = '€' + totalValueGenerated.toLocaleString();
+      document.getElementById('time-investment').textContent = timeInvestment + 'h/año';
+      document.getElementById('net-roi').textContent = Math.round(netROI) + '%';
+      document.getElementById('payback-period').textContent = paybackMonths + ' meses';
+      
+      // Analysis
+      let analysis = '';
+      if (netROI > 300) {
+        analysis = 'ROI EXCEPCIONAL - Tu red de mentores genera valor exponencial vs inversión.';
+      } else if (netROI > 150) {
+        analysis = 'ROI EXCELENTE - Network altamente efectivo, considera expandir strategically.';
+      } else if (netROI > 50) {
+        analysis = 'ROI POSITIVO - Good foundation, optimiza quality de interactions para mayor impact.';
+      } else {
+        analysis = 'INVERSIÓN A LARGO PLAZO - Focus en relationship building para unlock mayor valor.';
+      }
+      
+      document.getElementById('roi-analysis-text').textContent = analysis;
+      document.getElementById('roi-results').style.display = 'block';
+    }
+
+    // Scenario selection
+    function selectScenario(scenarioType) {
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      const scenarios = {
+        'conflicting-advice': {
+          title: 'Consejos Contradictorios',
+          situation: 'Tienes 3 mentores con perspectivas completamente opuestas sobre una decisión de expansion.',
+          mentor_perspectives: [
+            { name: 'Mentor A (Conservative)', advice: 'Postpone expansion, focus on profitability current markets' },
+            { name: 'Mentor B (Aggressive)', advice: 'Expand immediately while momentum is strong, take calculated risks' },
+            { name: 'Mentor C (Hybrid)', advice: 'Test in one market first, gather data before full expansion' }
+          ],
+          synthesis_framework: 'Evalúa risk tolerance personal, market timing, available resources y competitive landscape para decidir cuál perspective priorizar.',
+          decision_matrix: 'Crea weighted analysis: 40% financial capacity, 30% market opportunity, 20% competitive timing, 10% personal risk tolerance.',
+          outcome_guidance: 'Decision final debe considerar todas perspectives pero aligned con tu strategic vision y current capabilities.'
+        },
+        'risk-tolerance': {
+          title: 'Diferencias en Risk Tolerance',
+          situation: 'Mentores con backgrounds diferentes evalúan riesgo de investment opportunity muy diferente.',
+          mentor_perspectives: [
+            { name: 'Financial Mentor', advice: 'High risk due to market volatility, require 25% premium' },
+            { name: 'Tech Mentor', advice: 'Low risk, technology disruption inevitable, invest aggressively' },
+            { name: 'Operations Mentor', advice: 'Medium risk, execution challenges significant but manageable' }
+          ],
+          synthesis_framework: 'Understand que risk tolerance refleja industry experience y personal bias. Weight advice basado en relevance al specific opportunity.',
+          decision_matrix: 'Combine: Technical feasibility (40%), Market risk (30%), Financial risk (20%), Execution risk (10%).',
+          outcome_guidance: 'Use diversified perspective para create comprehensive risk assessment, no rely en single viewpoint.'
+        },
+        'timing-disagreement': {
+          title: 'Discrepancia en Timing',
+          situation: 'Unanimous agreement sobre QUÉ hacer, pero complete disagreement sobre CUÁNDO actuar.',
+          mentor_perspectives: [
+            { name: 'Market Expert', advice: 'Wait 6 months, market conditions will be more favorable' },
+            { name: 'Competition Analyst', advice: 'Act immediately, competitors are preparing similar moves' },
+            { name: 'Resource Manager', advice: 'Wait 3 months, team capacity will be optimized then' }
+          ],
+          synthesis_framework: 'Timing decisions require balancing external factors (market, competition) with internal readiness (resources, capabilities).',
+          decision_matrix: 'Evaluate: Competitive pressure (35%), Market conditions (30%), Internal readiness (25%), Opportunity cost of delay (10%).',
+          outcome_guidance: 'Sometimes imperfect timing with good execution beats perfect timing with poor execution.'
+        },
+        'market-analysis': {
+          title: 'Análisis de Mercado Divergente',
+          situation: 'Mismo market data, interpretaciones completamente diferentes sobre opportunity size y competitive dynamics.',
+          mentor_perspectives: [
+            { name: 'Industry Veteran', advice: 'Market is saturated, margins will compress, avoid' },
+            { name: 'Growth Strategist', advice: 'Market is consolidating, perfect time for aggressive expansion' },
+            { name: 'Data Analyst', advice: 'Market is bifurcating, focus on premium segment only' }
+          ],
+          synthesis_framework: 'Different interpretations often reflect different analytical frameworks y assumptions. Dig into underlying logic.',
+          decision_matrix: 'Validate assumptions: Market size projections, competitive response likelihood, customer behavior trends, regulatory changes.',
+          outcome_guidance: 'Truth often lies in synthesis - combine insights to create more complete market picture than any single perspective.'
+        }
+      };
+      
+      const scenario = scenarios[scenarioType];
+      if (scenario) {
+        const resultsDiv = document.getElementById('scenario-results');
+        const contentDiv = document.getElementById('scenario-content');
+        
+        contentDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="fas fa-situation text-warning"></i> Situación</h6>
+              <p>${scenario.situation}</p>
+              
+              <h6><i class="fas fa-users text-primary"></i> Perspectivas de Mentores</h6>
+              <ul>
+                ${scenario.mentor_perspectives.map(p => `
+                  <li><strong>${p.name}:</strong> ${p.advice}</li>
+                `).join('')}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="fas fa-cogs text-info"></i> Framework de Síntesis</h6>
+              <div class="alert alert-info">
+                <p><small>${scenario.synthesis_framework}</small></p>
+              </div>
+              
+              <h6><i class="fas fa-balance-scale text-success"></i> Decision Matrix</h6>
+              <div class="alert alert-success">
+                <p><small><strong>${scenario.decision_matrix}</strong></small></p>
+              </div>
+              
+              <h6><i class="fas fa-lightbulb text-warning"></i> Outcome Guidance</h6>
+              <div class="alert alert-warning">
+                <p><small>${scenario.outcome_guidance}</small></p>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Helper functions for labels
+    function getExpertiseLabel(expertise) {
+      const labels = {
+        'strategic': 'Estrategia & Leadership',
+        'financial': 'Finanzas & Investment',
+        'technical': 'Expertise Técnico',
+        'marketing': 'Marketing & Brand',
+        'international': 'Expansión Internacional',
+        'operations': 'Operaciones & Scaling',
+        'legal': 'Legal & Compliance',
+        'innovation': 'Innovation & R&D'
+      };
+      return labels[expertise] || expertise;
+    }
+
+    function getLevelLabel(level) {
+      const labels = {
+        'senior': 'Senior (15+ años)',
+        'expert': 'Expert (10-15 años)',
+        'specialist': 'Specialist (5-10 años)',
+        'emerging': 'Emerging (3-5 años)'
+      };
+      return labels[level] || level;
+    }
+
+    function getStyleLabel(style) {
+      const labels = {
+        'direct': 'Directo',
+        'supportive': 'Supportivo',
+        'challenging': 'Challenging',
+        'collaborative': 'Colaborativo'
+      };
+      return labels[style] || style;
+    }
+
+    function getFrequencyLabel(frequency) {
+      const labels = {
+        'weekly': 'Semanal',
+        'biweekly': 'Quincenal',
+        'monthly': 'Mensual',
+        'quarterly': 'Trimestral',
+        'adhoc': 'As-needed'
+      };
+      return labels[frequency] || frequency;
+    }
+
+    // Download networking kit
+    function downloadNetworkingKit() {
+      alert('🎯 ¡Kit de Networking descargándose!\n\nIncludes:\n• Templates de outreach personalizables\n• Framework de síntesis de consejos\n• Tracker de ROI de mentorship\n• Network visualization tools\n• Relationship maintenance guide');
+    }
+
+    // Share networking success
+    function shareNetworkingSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '🎯 Masters en Red de Mentores',
+          text: 'Acabo de construir mi consejo consultivo personalizado con inteligencia colectiva. ¡Transformé perspectiva singular en evaluaciones multidimensionales!',
+          url: window.location.href
+        });
+      } else {
+        alert('🎯 ¡Red de Mentores Activa!\n\nTu consejo consultivo está establecido. Comparte esta transformación con colegas que necesiten inteligencia colectiva para decision-making superior.');
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update mentor display initially
+      updateMentorDisplay();
+      
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+
+      // Initialize sample mentors for demo
+      const sampleMentors = [
+        {
+          id: 1,
+          name: 'María Rodriguez',
+          expertise: 'strategic',
+          level: 'senior',
+          style: 'direct',
+          frequency: 'monthly',
+          addedDate: new Date('2025-01-01')
+        },
+        {
+          id: 2,
+          name: 'Carlos Tech',
+          expertise: 'marketing',
+          level: 'expert',
+          style: 'collaborative',
+          frequency: 'biweekly',
+          addedDate: new Date('2025-01-10')
+        }
+      ];
+      
+      // Add sample mentors to demonstrate functionality
+      // mentorNetwork = sampleMentors;
+      // updateMentorDisplay();
+    });
+  </script>
+</body>
+</html>

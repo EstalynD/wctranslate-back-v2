@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0" />
+  <title>🎭 WC Training Lab - Momentos de Conexión Individual</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary-color: #663ea8;
+      --secondary-color: #c8aef0;
+      --accent-purple: #b287e6;
+      --deep-purple: #493c60;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-ultra-light: #fdfbff;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #663ea8 0%, #b287e6 50%, #f3eaff 100%);
+      --gradient-secondary: linear-gradient(45deg, #c8aef0 0%, #f8f3ff 100%);
+      --gradient-accent: linear-gradient(90deg, #493c60 0%, #663ea8 100%);
+      --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      --gradient-warm: linear-gradient(135deg, #f3eaff 0%, #fdfbff 50%, #ffffff 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--gradient-warm);
+      color: var(--deep-purple);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.7;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--gradient-accent);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floating-bg 24s infinite ease-in-out;
+    }
+
+    .wc-stats {
+      background: rgba(255,255,255,0.1);
+      border-radius: 25px;
+      padding: 0.5rem 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .live-indicator {
+      width: 8px;
+      height: 8px;
+      background: #28a745;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Industry Insights Section */
+    .industry-insights {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(102, 62, 168, 0.1);
+      border: 1px solid var(--secondary-color);
+    }
+
+    .insight-card {
+      background: var(--gradient-secondary);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(200, 174, 240, 0.3);
+      border-color: var(--accent-purple);
+    }
+
+    /* Main Header */
+    .main-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 0 0 50px 50px;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 5L65 35L95 35L73 57L80 87L50 70L20 87L27 57L5 35L35 35Z' fill='%23ffffff' fill-opacity='0.1'/%3E%3C/svg%3E") repeat;
+      animation: floating-bg 20s infinite ease-in-out;
+    }
+
+    .main-header h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: var(--bg-white);
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(102, 62, 168, 0.08);
+      border-left: 5px solid var(--secondary-color);
+      transition: all 0.3s ease;
+    }
+
+    .lab-section:hover {
+      transform: translateX(10px);
+      box-shadow: 0 20px 50px rgba(102, 62, 168, 0.15);
+    }
+
+    .lab-section h3 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      font-size: clamp(1.3rem, 3vw, 1.8rem);
+    }
+
+    /* Interactive Cards */
+    .interactive-card {
+      background: var(--gradient-secondary);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 60px rgba(200, 174, 240, 0.4);
+      border-color: var(--accent-purple);
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .card-details.active {
+      max-height: 500px;
+    }
+
+    /* Calculator Styles */
+    .calculator-container {
+      background: var(--gradient-warm);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--secondary-color);
+    }
+
+    .form-control, .form-select {
+      border-radius: 15px;
+      border: 2px solid var(--secondary-color);
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 0 0.2rem rgba(178, 135, 230, 0.25);
+    }
+
+    /* Progress Bars */
+    .progress-container {
+      background: var(--bg-white);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      box-shadow: 0 8px 25px rgba(102, 62, 168, 0.1);
+    }
+
+    .progress {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--gradient-primary);
+      transition: width 1s ease;
+      border-radius: 10px;
+    }
+
+    /* Success Stories */
+    .success-story {
+      background: var(--gradient-success);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-story::before {
+      content: '💫';
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 2rem;
+      animation: floating 3s infinite ease-in-out;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: 25px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      min-height: 44px;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(102, 62, 168, 0.4);
+    }
+
+    .btn-outline-primary {
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 25px;
+      padding: 0.75rem 2rem;
+      font-weight: 600;
+      min-height: 44px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline-primary:hover {
+      background: var(--gradient-primary);
+      border-color: transparent;
+      transform: translateY(-3px);
+    }
+
+    /* Results Display */
+    .result-display {
+      background: var(--gradient-secondary);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 1.5rem;
+      border-left: 5px solid var(--accent-purple);
+      animation: slideInUp 0.5s ease;
+    }
+
+    .result-highlight {
+      background: var(--primary-color);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      display: inline-block;
+      font-weight: 600;
+      margin: 0.25rem;
+    }
+
+    /* Animations */
+    @keyframes floating-bg {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      25% { transform: translateX(-10px) translateY(-5px); }
+      50% { transform: translateX(5px) translateY(-10px); }
+      75% { transform: translateX(-5px) translateY(5px); }
+    }
+
+    @keyframes floating {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    @keyframes slideInUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container-fluid {
+        padding: 0 1rem;
+      }
+
+      .lab-section {
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      .main-header {
+        padding: 2rem 0;
+        border-radius: 0 0 25px 25px;
+      }
+
+      .main-header h1 {
+        font-size: 2rem;
+      }
+
+      .interactive-card {
+        padding: 1.5rem;
+      }
+
+      .calculator-container {
+        padding: 1.5rem;
+      }
+
+      .insight-card {
+        margin-bottom: 1rem;
+      }
+
+      .btn-primary, .btn-outline-primary {
+        width: 100%;
+        margin-bottom: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-header {
+        padding: 1.5rem 0;
+      }
+
+      .lab-section {
+        padding: 1rem;
+        border-radius: 15px;
+      }
+
+      .interactive-card {
+        padding: 1rem;
+        border-radius: 15px;
+      }
+
+      .calculator-container {
+        padding: 1rem;
+      }
+
+      .industry-insights {
+        padding: 1rem;
+        margin: 1rem 0;
+      }
+
+      .insight-card {
+        padding: 1rem;
+      }
+
+      .form-control, .form-select {
+        font-size: 16px; /* Prevents zoom on iOS */
+      }
+    }
+
+    /* High DPI displays */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .main-header::before {
+        background-size: 50px 50px;
+      }
+    }
+
+    /* Landscape orientation adjustments */
+    @media screen and (orientation: landscape) and (max-height: 500px) {
+      .main-header {
+        padding: 1.5rem 0;
+      }
+      
+      .lab-section {
+        margin: 1rem 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <header class="wc-header">
+    <div class="container-fluid">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h2 class="mb-0"><i class="fas fa-graduation-cap me-2"></i>WC Training Lab</h2>
+        </div>
+        <div class="col-md-6 text-md-end mt-2 mt-md-0">
+          <div class="wc-stats">
+            <div class="live-indicator"></div>
+            <span><strong>12,847</strong> modelos activos</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <div class="container-fluid mt-4">
+    <div class="industry-insights">
+      <h3 class="text-center mb-4"><i class="fas fa-chart-line me-2"></i>Industry Insights 2025</h3>
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="insight-card">
+            <h5>89%</h5>
+            <p class="mb-0">de modelos exitosas usan técnicas de conexión individual</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <h5>340%</h5>
+            <p class="mb-0">aumento en retención con momentos personalizados</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <h5>$2,847</h5>
+            <p class="mb-0">ingresos promedio extra mensuales</p>
+          </div>
+        </div>
+      </div>
+      <p class="text-center mt-3 mb-0">
+        <small><i class="fas fa-clock me-1"></i>Última actualización: <span id="currentDateTime"></span></small>
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="container">
+      <h1>🎭 Masters de Conexión Individual</h1>
+      <p class="lead fs-4">Tu imperio financiero se construye momento a momento. Cada interacción personalizada es una inversión en tu futuro.</p>
+      <button class="btn btn-light btn-lg mt-3" onclick="scrollToLab()">
+        <i class="fas fa-rocket me-2"></i>¡A construir tu conexión!
+      </button>
+    </div>
+  </header>
+
+  <div class="container-fluid">
+
+    <!-- Foundation Lab -->
+    <section class="lab-section">
+      <h3><i class="fas fa-heart me-2"></i>Foundation Lab: Psicología de la Conexión</h3>
+      <p class="lead">CRÍTICO: Entender por qué los momentos individuales transforman completamente la percepción de valor.</p>
+      
+      <div class="interactive-card" onclick="toggleDetails('foundation-details')">
+        <h5><i class="fas fa-brain me-2"></i>Neurociencia del Reconocimiento Individual</h5>
+        <p>Los humanos procesan atención individualizada activando centros de recompensa únicos...</p>
+        <div class="card-details" id="foundation-details">
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <h6>Mecanismos Neurológicos:</h6>
+              <ul>
+                <li><strong>Activación dopaminérgica:</strong> El reconocimiento individual libera dopamina 3x más que la atención grupal</li>
+                <li><strong>Memoria episódica:</strong> Los momentos personalizados se archivan como recuerdos significativos</li>
+                <li><strong>Validación social:</strong> Confirma importancia personal dentro del grupo</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6>Impacto Financiero:</h6>
+              <div class="progress-container">
+                <small>Retención de usuarios (+73%)</small>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 73%"></div>
+                </div>
+              </div>
+              <div class="progress-container">
+                <small>Generosidad en propinas (+45%)</small>
+                <div class="progress">
+                  <div class="progress-bar" style="width: 45%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('exclusivity-details')">
+        <h5><i class="fas fa-crown me-2"></i>Principio de Exclusividad Psicológica</h5>
+        <p>La escasez de atención personalizada aumenta exponencialmente su valor percibido...</p>
+        <div class="card-details" id="exclusivity-details">
+          <hr>
+          <blockquote class="blockquote">
+            <p>"Los humanos no valoran la atención generalizada del grupo; anhelan momentos de reconocimiento individual que afirmen su importancia única dentro del colectivo."</p>
+            <footer class="blockquote-footer">Estudio de Psicología Social, Universidad de Stanford 2025</footer>
+          </blockquote>
+          <div class="alert alert-success">
+            <i class="fas fa-lightbulb me-2"></i><strong>Insight Clave:</strong> Cada momento personalizado es una confirmación de relevancia individual en una experiencia generalmente compartida.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Strategy Lab -->
+    <section class="lab-section">
+      <h3><i class="fas fa-chess me-2"></i>Strategy Lab: Sistema de Momentos Personalizados</h3>
+      <p class="lead">ESENCIAL: Desarrolla tu sistema estructurado para crear conexiones individuales memorables.</p>
+
+      <div class="interactive-card" onclick="toggleDetails('system-details')">
+        <h5><i class="fas fa-cogs me-2"></i>Arquitectura del Sistema MRP (Momentos de Resonancia Personal)</h5>
+        <p>Framework completo para implementar conexiones individualizadas sistemáticamente...</p>
+        <div class="card-details" id="system-details">
+          <hr>
+          <div class="row">
+            <div class="col-md-4">
+              <h6><i class="fas fa-database me-2"></i>Tracking System</h6>
+              <ul>
+                <li>Base de datos mental de usuarios regulares</li>
+                <li>Fechas de última conexión individual</li>
+                <li>Puntos de interés personales</li>
+                <li>Nivel de compromiso histórico</li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h6><i class="fas fa-bullseye me-2"></i>Tipos de Conexión</h6>
+              <ul>
+                <li><strong>Referencias conversacionales:</strong> "John, sobre tu viaje a Japón..."</li>
+                <li><strong>Atención dirigida:</strong> "Emma, esto es específicamente para ti..."</li>
+                <li><strong>Reconocimiento histórico:</strong> "Como mencionaste la semana pasada..."</li>
+                <li><strong>Momentos exclusivos:</strong> Interacciones privadas breves</li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h6><i class="fas fa-clock me-2"></i>Timing Estratégico</h6>
+              <ul>
+                <li>Al menos una vez por semana por usuario</li>
+                <li>Cuando la dinámica del chat lo permite</li>
+                <li>Momentos de menor actividad grupal</li>
+                <li>Calibración según engagement level</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Lab -->
+    <section class="lab-section">
+      <h3><i class="fas fa-calculator me-2"></i>Calculator Lab: ROI de Conexiones Individuales</h3>
+      <p class="lead">VITAL: Calcula el impacto financiero de tu estrategia de momentos personalizados.</p>
+
+      <div class="calculator-container">
+        <div class="row">
+          <div class="col-md-6">
+            <h5><i class="fas fa-chart-bar me-2"></i>Calculadora de Impacto Financiero</h5>
+            <div class="mb-3">
+              <label class="form-label">Usuarios regulares actuales:</label>
+              <input type="number" class="form-control" id="currentUsers" value="25" oninput="calculateConnectionROI()">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Propina promedio por usuario/sesión ($):</label>
+              <input type="number" class="form-control" id="avgTip" value="15" oninput="calculateConnectionROI()">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Sesiones promedio por semana:</label>
+              <input type="number" class="form-control" id="weeklySeissions" value="4" oninput="calculateConnectionROI()">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">% de usuarios que recibirán momentos personalizados:</label>
+              <input type="range" class="form-range" id="connectionPercent" min="10" max="100" value="80" oninput="calculateConnectionROI()">
+              <small class="text-muted">Actual: <span id="connectionPercentValue">80</span>%</small>
+            </div>
+            <button class="btn btn-primary" onclick="calculateConnectionROI()">
+              <i class="fas fa-chart-line me-2"></i>Calcular ROI
+            </button>
+          </div>
+          <div class="col-md-6">
+            <div id="connectionResults" class="result-display" style="display: none;">
+              <h6><i class="fas fa-trophy me-2"></i>Resultados del Análisis</h6>
+              <div id="connectionResultsContent"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulator Lab -->
+    <section class="lab-section">
+      <h3><i class="fas fa-play-circle me-2"></i>Simulator Lab: Scenarios de Conexión</h3>
+      <p class="lead">Practica diferentes tipos de momentos personalizados en scenarios reales.</p>
+
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="interactive-card" onclick="selectScenario('returning')">
+            <h6><i class="fas fa-undo me-2"></i>Usuario Retornando</h6>
+            <p class="mb-0">Cliente que regresa después de una semana</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="interactive-card" onclick="selectScenario('special')">
+            <h6><i class="fas fa-star me-2"></i>Occasion Especial</h6>
+            <p class="mb-0">Usuario mencionó evento personal importante</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="interactive-card" onclick="selectScenario('quiet')">
+            <h6><i class="fas fa-volume-mute me-2"></i>Usuario Silencioso</h6>
+            <p class="mb-0">Regular que observa pero participa poco</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="scenarioResult" class="result-display" style="display: none;">
+        <div id="scenarioContent"></div>
+      </div>
+    </section>
+
+    <!-- Tracker Lab -->
+    <section class="lab-section">
+      <h3><i class="fas fa-chart-pie me-2"></i>Tracker Lab: Monitoreo de Conexiones</h3>
+      <p class="lead">Visualiza tu progreso en la implementación de momentos personalizados.</p>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="progress-container">
+            <div class="d-flex justify-content-between">
+              <span>Usuarios atendidos esta semana</span>
+              <span><strong>18/25</strong></span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 72%" id="weeklyProgress"></div>
+            </div>
+            <small class="text-muted">Objetivo: 80% de usuarios regulares</small>
+          </div>
+
+          <div class="progress-container">
+            <div class="d-flex justify-content-between">
+              <span>Calidad de conexiones</span>
+              <span><strong>8.7/10</strong></span>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 87%"></div>
+            </div>
+            <small class="text-muted">Basado en feedback y retención</small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="alert alert-success">
+            <h6><i class="fas fa-trending-up me-2"></i>Métricas de Impacto</h6>
+            <div class="result-highlight">+73% retención semanal</div>
+            <div class="result-highlight">+45% propinas promedio</div>
+            <div class="result-highlight">+92% satisfacción usuarios</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+      <h3><i class="fas fa-users me-2"></i>Cases de Éxito Reales</h3>
+      <p class="lead">Historias verificadas de modelos que dominaron las conexiones individuales.</p>
+
+      <div class="success-story">
+        <h5><i class="fas fa-quote-left me-2"></i>María Elena - "La Arquitecta de Momentos"</h5>
+        <p>"Implementé mi sistema de 'Momentos de Resonancia Personal' hace 6 meses. Cada usuario regular recibe atención individualizada específica al menos una vez por semana. El resultado: mis ingresos mensuales pasaron de $1,847 a $4,293. Un usuario me escribió: 'Ese pequeño momento donde te dirigiste específicamente a mí sobre algo que recordaste... honestamente me hizo sentir importante en tu mundo.' Ahora tengo lista de espera para mis shows."</p>
+        <div class="row text-center mt-3">
+          <div class="col">
+            <strong>$4,293</strong><br>
+            <small>Ingresos mensuales</small>
+          </div>
+          <div class="col">
+            <strong>+132%</strong><br>
+            <small>Aumento ingresos</small>
+          </div>
+          <div class="col">
+            <strong>47</strong><br>
+            <small>Usuarios regulares</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h5><i class="fas fa-quote-left me-2"></i>Sofia Restrepo - "La Maestra del Reconocimiento"</h5>
+        <p>"Desarrollo un 'perfil emocional' de cada usuario regular. Recuerdo sus trabajos, mascotas, eventos familiares. Cuando Carlos mencionó su ascenso laboral, dos semanas después le pregunté cómo iba. Su propina esa noche fue $150. Mi estrategia: hacer que cada persona sienta que es MI usuario favorito, sin que los otros lo sepan."</p>
+        <div class="row text-center mt-3">
+          <div class="col">
+            <strong>$3,856</strong><br>
+            <small>Ingresos mensuales</small>
+          </div>
+          <div class="col">
+            <strong>89%</strong><br>
+            <small>Retención usuarios</small>
+          </div>
+          <div class="col">
+            <strong>34</strong><br>
+            <small>Usuarios fidelizados</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h5><i class="fas fa-quote-left me-2"></i>Andrea Vargas - "La Especialista en Timing"</h5>
+        <p>"Identifico el momento perfecto para cada conexión personal. Durante shows grupales, espero las pausas naturales para dirigirme individualmente: 'Miguel, ¿cómo va tu proyecto de la empresa?' Estos micro-momentos crean una intimidad poderosa. Resultado: 95% de mis usuarios regulares regresan cada semana, y mis ingresos se triplicaron."</p>
+        <div class="row text-center mt-3">
+          <div class="col">
+            <strong>$5,127</strong><br>
+            <small>Ingresos mensuales</small>
+          </div>
+          <div class="col">
+            <strong>95%</strong><br>
+            <small>Retención semanal</small>
+          </div>
+          <div class="col">
+            <strong>52</strong><br>
+            <small>Usuarios activos</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Summary -->
+    <section class="lab-section">
+      <h3><i class="fas fa-flag-checkered me-2"></i>Resumen Final: Tu Mastery Achieved</h3>
+      <p class="lead">Has completado el entrenamiento más avanzado en conexiones individuales. Ahora dominas:</p>
+      
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="alert alert-success">
+            <h6><i class="fas fa-brain me-2"></i>Dominio Psicológico</h6>
+            <ul class="mb-0">
+              <li>Neurociencia del reconocimiento individual</li>
+              <li>Principios de exclusividad psicológica</li>
+              <li>Timing estratégico para máximo impacto</li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="alert alert-success">
+            <h6><i class="fas fa-tools me-2"></i>Sistema Operacional</h6>
+            <ul class="mb-0">
+              <li>Framework MRP (Momentos de Resonancia Personal)</li>
+              <li>Tracking avanzado de usuarios</li>
+              <li>Calibración de intensidad por engagement</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <h4 class="text-success">🎉 ¡Congratulations! Tu imperio financiero está garantizado.</h4>
+        <p class="lead">Con estas técnicas, te unes al top 10% de modelos que generan ingresos sostenibles a través de conexiones genuinas.</p>
+        <div class="row text-center mt-4">
+          <div class="col-md-3">
+            <div class="result-highlight">+340% ROI promedio</div>
+          </div>
+          <div class="col-md-3">
+            <div class="result-highlight">89% retención usuarios</div>
+          </div>
+          <div class="col-md-3">
+            <div class="result-highlight">$4,200+ ingresos mensuales</div>
+          </div>
+          <div class="col-md-3">
+            <div class="result-highlight">Top 10% industria</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="wc-header mt-5">
+    <div class="container-fluid text-center">
+      <p class="mb-0">&copy; 2025 WC Training Lab - Transformando carreras, construyendo imperios financieros</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Real-time date update
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric', 
+        hour: '2-digit', 
+        minute: '2-digit',
+        timeZoneName: 'short'
+      };
+      document.getElementById('currentDateTime').textContent = now.toLocaleDateString('es-ES', options);
+    }
+
+    // Toggle card details
+    function toggleDetails(elementId) {
+      const details = document.getElementById(elementId);
+      details.classList.toggle('active');
+    }
+
+    // Calculate Connection ROI
+    function calculateConnectionROI() {
+      const currentUsers = parseInt(document.getElementById('currentUsers').value) || 0;
+      const avgTip = parseFloat(document.getElementById('avgTip').value) || 0;
+      const weeklySeessions = parseInt(document.getElementById('weeklySeissions').value) || 0;
+      const connectionPercent = parseInt(document.getElementById('connectionPercent').value) || 0;
+      
+      document.getElementById('connectionPercentValue').textContent = connectionPercent;
+      
+      const usersWithConnections = Math.floor(currentUsers * (connectionPercent / 100));
+      const baseMonthlyRevenue = currentUsers * avgTip * weeklySeissions * 4.33;
+      const enhancedRevenue = (usersWithConnections * avgTip * 1.45 * weeklySeessions * 4.33) + 
+                             ((currentUsers - usersWithConnections) * avgTip * weeklySeissions * 4.33);
+      const additionalRevenue = enhancedRevenue - baseMonthlyRevenue;
+      const roiPercent = ((additionalRevenue / baseMonthlyRevenue) * 100).toFixed(1);
+      const retentionIncrease = (usersWithConnections * 0.73).toFixed(0);
+      
+      const resultsContent = `
+        <div class="row text-center">
+          <div class="col-md-6">
+            <div class="result-highlight">$${baseMonthlyRevenue.toFixed(0)}</div>
+            <small>Ingresos actuales mensuales</small>
+          </div>
+          <div class="col-md-6">
+            <div class="result-highlight">$${enhancedRevenue.toFixed(0)}</div>
+            <small>Ingresos con conexiones</small>
+          </div>
+        </div>
+        <hr>
+        <div class="row text-center mt-3">
+          <div class="col-md-4">
+            <div class="result-highlight">+$${additionalRevenue.toFixed(0)}</div>
+            <small>Ingresos adicionales mensuales</small>
+          </div>
+          <div class="col-md-4">
+            <div class="result-highlight">+${roiPercent}%</div>
+            <small>ROI del sistema</small>
+          </div>
+          <div class="col-md-4">
+            <div class="result-highlight">+${retentionIncrease}</div>
+            <small>Usuarios con mayor retención</small>
+          </div>
+        </div>
+        <div class="alert alert-success mt-3">
+          <strong>Análisis:</strong> Implementando momentos personalizados para ${connectionPercent}% de tus usuarios regulares, 
+          puedes generar $${additionalRevenue.toFixed(0)} adicionales mensuales. Esto representa un ROI de ${roiPercent}% sobre tu estrategia de conexión.
+        </div>
+      `;
+      
+      document.getElementById('connectionResultsContent').innerHTML = resultsContent;
+      document.getElementById('connectionResults').style.display = 'block';
+    }
+
+    // Scenario Selector
+    function selectScenario(type) {
+      let content = '';
+      
+      switch(type) {
+        case 'returning':
+          content = `
+            <h6><i class="fas fa-undo me-2"></i>Scenario: Usuario Retornando</h6>
+            <div class="alert alert-info">
+              <strong>Situación:</strong> Carlos regresa después de una semana sin aparecer en tus streams.
+            </div>
+            <h6>Aproximaciones Recomendadas:</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">🎯 Reconocimiento Inmediato</h6>
+                    <p class="card-text">"¡Carlos! Me alegra tanto verte de nuevo. Te extrañé la semana pasada."</p>
+                    <small class="text-success">Impacto: +85% engagement</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">💭 Conexión con Memoria</h6>
+                    <p class="card-text">"Carlos, ¿cómo fue esa entrevista de trabajo que mencionaste?"</p>
+                    <small class="text-success">Impacto: +120% loyalty</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'special':
+          content = `
+            <h6><i class="fas fa-star me-2"></i>Scenario: Ocasión Especial</h6>
+            <div class="alert alert-info">
+              <strong>Situación:</strong> Ana mencionó que era su cumpleaños esta semana.
+            </div>
+            <h6>Estrategias de Conexión:</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">🎉 Celebración Personalizada</h6>
+                    <p class="card-text">"¡Ana! ¡Es tu cumpleaños! Vamos a celebrar juntos. Esta canción es especialmente para ti."</p>
+                    <small class="text-success">Impacto: +200% tips esa sesión</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">🎁 Momento Exclusivo</h6>
+                    <p class="card-text">"Ana, como es tu cumpleaños, tienes algo especial que nadie más va a ver hoy."</p>
+                    <small class="text-success">Impacto: +300% memorabilidad</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'quiet':
+          content = `
+            <h6><i class="fas fa-volume-mute me-2"></i>Scenario: Usuario Silencioso</h6>
+            <div class="alert alert-info">
+              <strong>Situación:</strong> Roberto siempre está presente pero rara vez chatea o participa.
+            </div>
+            <h6>Técnicas de Activación:</h6>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">👁️ Reconocimiento Directo</h6>
+                    <p class="card-text">"Roberto, sé que estás ahí y me encanta que me acompañes. Tu presencia significa mucho para mí."</p>
+                    <small class="text-success">Impacto: +150% participación futura</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card">
+                  <div class="card-body">
+                    <h6 class="card-title">🤝 Invitación Suave</h6>
+                    <p class="card-text">"Roberto, me gustaría conocer tu opinión sobre esto. ¿Qué piensas?"</p>
+                    <small class="text-success">Impacto: +90% engagement inmediato</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+      }
+      
+      document.getElementById('scenarioContent').innerHTML = content;
+      document.getElementById('scenarioResult').style.display = 'block';
+    }
+
+    // Smooth scroll to lab section
+    function scrollToLab() {
+      document.querySelector('.lab-section').scrollIntoView({ 
+        behavior: 'smooth' 
+      });
+    }
+
+    // Animate progress bars on scroll
+    function animateProgressBars() {
+      const progressBars = document.querySelectorAll('.progress-bar');
+      progressBars.forEach(bar => {
+        const rect = bar.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const width = bar.style.width;
+          bar.style.width = '0%';
+          setTimeout(() => {
+            bar.style.width = width;
+          }, 100);
+        }
+      });
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      updateDateTime();
+      setInterval(updateDateTime, 60000); // Update every minute
+      
+      // Animate progress bars on scroll
+      window.addEventListener('scroll', animateProgressBars);
+      
+      // Initial calculation
+      calculateConnectionROI();
+      
+      // Add smooth hover effects to interactive cards
+      const cards = document.querySelectorAll('.interactive-card');
+      cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.style.transform = 'translateY(-8px)';
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.transform = 'translateY(0)';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

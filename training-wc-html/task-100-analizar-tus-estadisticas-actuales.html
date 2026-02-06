@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌍 Análisis Geográfico de Audiencia - WC Training Lab</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #0ea5e9;
+            --secondary-color: #10b981;
+            --success-green: #059669;
+            --warning-orange: #f59e0b;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e5e7eb;
+            
+            --gradient-primary: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --gradient-geo: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-analytics: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 0L60 30L30 60L0 30Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(-10px); }
+        }
+
+        .wc-logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-stats {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Industry Insights Section */
+        .industry-insights {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 10C72 10 90 28 90 50C90 72 72 90 50 90C28 90 10 72 10 50C10 28 28 10 50 10Z'/%3E%3Cpath d='M50 25C64 25 75 36 75 50C75 64 64 75 50 75C36 75 25 64 25 50C25 36 36 25 50 25Z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 15px 40px rgba(14, 165, 233, 0.15);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .expand-indicator {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-card.expanded .expand-indicator {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .interactive-card.expanded .card-details {
+            max-height: 700px;
+        }
+
+        /* Geographic Calculator */
+        .geo-calculator {
+            background: var(--gradient-geo);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .calculator-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(14, 165, 233, 0.25);
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(14, 165, 233, 0.3);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Regional Optimizer */
+        .regional-optimizer {
+            background: var(--gradient-analytics);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .region-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .region-button:hover, .region-button.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .region-result {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Progress Trackers */
+        .geo-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1.5s ease;
+        }
+
+        /* Heat Map Visualization */
+        .heat-map {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .country-bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .country-bar:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .country-flag {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .country-name {
+            font-weight: 600;
+            min-width: 120px;
+        }
+
+        .country-metric {
+            flex: 1;
+            margin-left: 1rem;
+        }
+
+        .metric-bar {
+            height: 8px;
+            background: var(--border-light);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.25rem;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-geo);
+        }
+
+        .story-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .story-metric-item {
+            text-align: center;
+            padding: 1.25rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+        }
+
+        .story-metric-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .story-metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Achievement System */
+        .achievement-section {
+            background: var(--gradient-warm);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-radius: 25px;
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .mastery-level {
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Timezone Optimizer */
+        .timezone-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .timezone-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .timezone-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .timezone-time {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .timezone-revenue {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--success-green);
+            margin-top: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .country-name {
+                min-width: 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-card {
+                padding: 1rem;
+            }
+            
+            .btn-calculate {
+                width: 100%;
+            }
+            
+            .region-button {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            
+            .story-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .timezone-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #0f172a;
+                --bg-white: #1e293b;
+                --text-dark: #f1f5f9;
+                --text-muted: #94a3b8;
+                --border-light: #334155;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-globe-americas"></i>
+                        WC Training Lab
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="user-stats">
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            EN VIVO
+                        </div>
+                        <div class="mt-1">
+                            <strong>12,847</strong> modelos activos
+                        </div>
+                        <div id="current-date"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>🌍 Industry Insights 2025 - Análisis Geográfico</h2>
+                    <p class="text-muted">Datos verificables sobre segmentación geográfica en la industria</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">83%</div>
+                        <h5>Ignoran datos geográficos</h5>
+                        <p class="mb-0">De modelos no analizan sistemáticamente la rentabilidad por región, perdiendo oportunidades masivas</p>
+                        <small class="text-muted">Fuente: Global Creator Analytics Report 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">540%</div>
+                        <h5>Diferencia entre regiones</h5>
+                        <p class="mb-0">Variación promedio en valor por usuario entre el país más y menos rentable</p>
+                        <small class="text-muted">Fuente: Audience Monetization Study Q1 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">$4,890</div>
+                        <h5>Incremento promedio mensual</h5>
+                        <p class="mb-0">Aumento típico al optimizar horarios y contenido por mercados prioritarios</p>
+                        <small class="text-muted">Fuente: Geographic Optimization Case Studies 2025</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🌍 Masters en Análisis Geográfico</h1>
+            <p class="main-subtitle">
+                Descubre tus vetas de oro geográficas y multiplica ingresos enfocándote en mercados premium
+            </p>
+            <div class="achievement-badge">
+                <i class="fas fa-chart-line"></i>
+                Metodologías de segmentación del top 3%
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 1: Auditoría Geográfica -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🧪 Lab 1: Auditoría Geográfica Profunda</h2>
+            <p class="section-subtitle">Sistemas del top 3% para identificar y priorizar mercados de alto valor</p>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="interactive-card" onclick="toggleDetails('geographic-audit')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-geo);">
+                                <i class="fas fa-search-dollar"></i>
+                            </div>
+                            <div class="card-title">Metodología de Auditoría Mensual</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="geographic-audit">
+                            <p><strong>ESENCIAL:</strong> Sistema de 4 fases para identificar, cuantificar y priorizar mercados geográficos por rentabilidad real.</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h6>🎯 Fase 1: Extracción de Datos</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Fuentes críticas:</strong><br>
+                                        • Analytics de plataforma (por país)<br>
+                                        • Datos de facturación por región<br>
+                                        • Logs de tiempo de conexión<br>
+                                        • Métricas de engagement por zona<br>
+                                        <strong>Periodo:</strong> Últimos 90 días mínimo
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>📊 Fase 2: Cálculo de VPU</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Fórmula VPU:</strong><br>
+                                        Valor Por Usuario = Ingresos País ÷ Usuarios Únicos País<br>
+                                        <strong>Métricas complementarias:</strong><br>
+                                        • Tiempo promedio por sesión<br>
+                                        • Frecuencia de visita<br>
+                                        • Tasa de conversión por región
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <h6>🔍 Fase 3: Análisis de Patrones</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Identificar:</strong><br>
+                                        • Top 5 países por VPU<br>
+                                        • Horarios peak por región<br>
+                                        • Preferencias de contenido<br>
+                                        • Ciclos de pago estacionales
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>⚡ Fase 4: Optimización</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Acciones inmediatas:</strong><br>
+                                        • Ajustar horarios de trabajo<br>
+                                        • Adaptar contenido por región<br>
+                                        • Priorizar mercados premium<br>
+                                        • Reducir tiempo en mercados low-value
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 p-3 bg-success bg-opacity-10 rounded">
+                                <strong>📈 Resultado típico:</strong> 45-65% incremento en ingresos por hora trabajada al redirigir esfuerzos hacia mercados identificados como premium.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('timezone-optimization')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-analytics);">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="card-title">Optimización por Zonas Horarias</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="timezone-optimization">
+                            <p>Sincroniza tu horario de trabajo con los picos de actividad y gasto de tus mercados más rentables.</p>
+                            
+                            <h6>🕐 Metodología de Sincronización:</h6>
+                            <div class="mt-2">
+                                <strong>1. Mapeo de horarios premium:</strong> Identificar las 3-4 horas diarias de mayor VPU por región target<br>
+                                <strong>2. Matriz de superposición:</strong> Encontrar ventanas donde múltiples mercados premium se superponen<br>
+                                <strong>3. Calendario optimizado:</strong> Diseñar horario que maximice exposición a audiencias de alto valor
+                            </div>
+                            
+                            <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded">
+                                <strong>⚠️ CRÍTICO:</strong> Un horario mal optimizado puede significar la diferencia entre $2,000 y $8,000 mensuales trabajando las mismas horas.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('content-localization')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-success);">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="card-title">Localización de Contenido</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="content-localization">
+                            <p>Adapta contenido, referencias culturales y metodologías de engagement para resonar con mercados específicos.</p>
+                            
+                            <h6>🎯 Estrategias por Región:</h6>
+                            <ul class="mt-2">
+                                <li><strong>Europa Occidental:</strong> Enfoque en sofisticación, arte, cultura premium</li>
+                                <li><strong>Norte América:</strong> Interactividad, personalización, experiencias únicas</li>
+                                <li><strong>Asia-Pacífico:</strong> Tecnología, innovación, elementos kawaii/cute</li>
+                                <li><strong>Latinoamérica:</strong> Calidez, conexión personal, celebraciones</li>
+                            </ul>
+                            
+                            <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                                <strong>💡 Insight clave:</strong> La misma modelo puede tener 10x más éxito en una región vs otra simplemente ajustando el estilo de presentación y contenido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Geographic Calculator -->
+    <section class="geo-calculator">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>💰 Calculadora de Valor por Región</h2>
+                    <p>Identifica tus mercados más rentables y proyecta el impacto de la optimización geográfica</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="calculator-card">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">País/Región Principal</label>
+                                <select class="form-select" id="primaryRegion">
+                                    <option value="US">Estados Unidos</option>
+                                    <option value="DE">Alemania</option>
+                                    <option value="UK">Reino Unido</option>
+                                    <option value="CA">Canadá</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="FR">Francia</option>
+                                    <option value="IT">Italia</option>
+                                    <option value="ES">España</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Usuarios únicos mensuales</label>
+                                <input type="number" class="form-control" id="monthlyUsers" value="180" min="10" max="5000">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Ingresos mensuales región ($)</label>
+                                <input type="number" class="form-control" id="monthlyRevenue" value="2840" min="50" max="50000" step="10">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Horas trabajadas en región</label>
+                                <input type="number" class="form-control" id="hoursWorked" value="45" min="5" max="200">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">% usuarios que convierten</label>
+                                <input type="number" class="form-control" id="conversionRate" value="18" min="1" max="100">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label text-dark fw-bold">Gasto promedio por conversión ($)</label>
+                                <input type="number" class="form-control" id="avgSpend" value="47" min="1" max="1000" step="0.01">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn btn-calculate" onclick="calculateGeoValue()">
+                                    <i class="fas fa-globe me-2"></i>
+                                    Analizar Rentabilidad Regional
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-card" id="geoResult" style="display: none;">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="metric-number" id="vpuCurrent">$0</div>
+                                    <div class="metric-label">Valor Por Usuario (VPU)</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-success" id="revenuePerHour">$0</div>
+                                    <div class="metric-label">Ingresos por hora</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-warning" id="optimizationPotential">$0</div>
+                                    <div class="metric-label">Potencial optimizado</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-primary" id="annualImpact">$0</div>
+                                    <div class="metric-label">Impacto anual</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <h5 class="text-primary">Análisis Estratégico por Región:</h5>
+                                <p id="geoAnalysis" class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 2: Heat Map y Trackers -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🔬 Lab 2: Heat Map de Rentabilidad Global</h2>
+            <p class="section-subtitle">Visualización avanzada de performance por país y optimización de portafolio geográfico</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="geo-tracker">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Tracker de Optimización Geográfica</h5>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Análisis de Datos Completado</span>
+                                <span class="text-primary fw-bold">89%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 89%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Mercados Premium Identificados</span>
+                                <span class="text-primary fw-bold">76%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 76%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Horarios Optimizados</span>
+                                <span class="text-primary fw-bold">82%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Contenido Localizado</span>
+                                <span class="text-warning fw-bold">63%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 63%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="heat-map">
+                        <h5><i class="fas fa-fire me-2"></i>Heat Map de Rentabilidad</h5>
+                        <div class="country-bar">
+                            <span class="country-flag">🇩🇪</span>
+                            <span class="country-name">Alemania</span>
+                            <div class="country-metric">
+                                <div class="d-flex justify-content-between">
+                                    <span>VPU: $89</span>
+                                    <span class="text-success fw-bold">+34%</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="country-bar">
+                            <span class="country-flag">🇺🇸</span>
+                            <span class="country-name">Estados Unidos</span>
+                            <div class="country-metric">
+                                <div class="d-flex justify-content-between">
+                                    <span>VPU: $76</span>
+                                    <span class="text-success fw-bold">+28%</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 85%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="country-bar">
+                            <span class="country-flag">🇬🇧</span>
+                            <span class="country-name">Reino Unido</span>
+                            <div class="country-metric">
+                                <div class="d-flex justify-content-between">
+                                    <span>VPU: $68</span>
+                                    <span class="text-success fw-bold">+22%</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="country-bar">
+                            <span class="country-flag">🇦🇺</span>
+                            <span class="country-name">Australia</span>
+                            <div class="country-metric">
+                                <div class="d-flex justify-content-between">
+                                    <span>VPU: $61</span>
+                                    <span class="text-success fw-bold">+18%</span>
+                                </div>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 68%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="timezone-grid">
+                        <div class="timezone-card">
+                            <h6>🇩🇪 Alemania</h6>
+                            <div class="timezone-time">20:00 - 23:00</div>
+                            <div class="timezone-revenue">$1,240/sem</div>
+                            <small class="text-muted">Peak: Viernes-Sábado</small>
+                        </div>
+                        <div class="timezone-card">
+                            <h6>🇺🇸 Costa Este</h6>
+                            <div class="timezone-time">21:00 - 01:00</div>
+                            <div class="timezone-revenue">$1,080/sem</div>
+                            <small class="text-muted">Peak: Jueves-Sábado</small>
+                        </div>
+                        <div class="timezone-card">
+                            <h6>🇬🇧 Reino Unido</h6>
+                            <div class="timezone-time">19:00 - 22:00</div>
+                            <div class="timezone-revenue">$890/sem</div>
+                            <small class="text-muted">Peak: Domingo-Martes</small>
+                        </div>
+                        <div class="timezone-card">
+                            <h6>🇦🇺 Australia</h6>
+                            <div class="timezone-time">12:00 - 15:00</div>
+                            <div class="timezone-revenue">$740/sem</div>
+                            <small class="text-muted">Peak: Sábado-Domingo</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Regional Optimizer -->
+    <section class="regional-optimizer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>🎯 Simulador de Optimización Regional</h2>
+                    <p>Explora estrategias específicas para maximizar el potencial de cada mercado geográfico</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-4">
+                        <button class="region-button" onclick="selectRegionStrategy('premium-western')">Mercados Premium Occidentales</button>
+                        <button class="region-button" onclick="selectRegionStrategy('emerging-markets')">Mercados Emergentes</button>
+                        <button class="region-button" onclick="selectRegionStrategy('asia-pacific')">Asia-Pacífico</button>
+                        <button class="region-button" onclick="selectRegionStrategy('latin-america')">Latinoamérica</button>
+                    </div>
+                    
+                    <div class="region-result" id="regionStrategyResult" style="display: none;">
+                        <h5 id="regionStrategyTitle"></h5>
+                        <div id="regionStrategyContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Casos de Éxito en Optimización Geográfica</h2>
+            <p class="section-subtitle">Transformaciones documentadas de modelos que dominaron la segmentación por mercados</p>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">V</div>
+                        <h5>Valentina - Geographic Strategist</h5>
+                        <p><em>"Implementé mi 'Sistema de Mapeo de Valor Geográfico' durante 6 meses. Descubrí que usuarios alemanes y escandinavos representaban solo 14% de mi audiencia pero 47% de mis ingresos. Reorienté completamente mi horario y enfoque hacia estos mercados premium."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">+267%</div>
+                                <div class="story-metric-label">ROI por hora</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$9,340</div>
+                                <div class="story-metric-label">Peak mensual</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">5.4x</div>
+                                <div class="story-metric-label">VPU vs promedio</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">L</div>
+                        <h5>Luna - Timezone Optimizer</h5>
+                        <p><em>"Mi revelación fue entender que trabajaba 60 horas semanales pero solo 15 coincidían con mis mercados más rentables. Desarrollé un calendario de 'Ventanas de Oro' sincronizado con 4 regiones premium simultaneamente."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">-40%</div>
+                                <div class="story-metric-label">Horas trabajadas</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">+180%</div>
+                                <div class="story-metric-label">Ingresos totales</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$12,670</div>
+                                <div class="story-metric-label">Record mensual</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="success-story">
+                        <div class="story-avatar">A</div>
+                        <h5>Aurora - Multi-Market Virtuosa</h5>
+                        <p><em>"Creé 'Personas Regionales' - adaptaciones específicas de mi marca para resonar con diferentes culturas. Mi versión para mercado alemán era más sofisticada y técnica, para estadounidenses más interactiva y personal, para asiáticos más kawaii y tecnológica. Mismo núcleo, presentaciones localizadas."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">89%</div>
+                                <div class="story-metric-label">Retención por región</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">7.2x</div>
+                                <div class="story-metric-label">Conversión vs genérico</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$18,920</div>
+                                <div class="story-metric-label">Record mensual</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">240k</div>
+                                <div class="story-metric-label">Ingresos anuales</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                            <strong>🌟 Metodología clave:</strong> "Cada región tiene un 'código cultural' específico. Mi éxito vino de decodificar qué valora cada mercado y adaptar mi presentación sin perder mi autenticidad. Es como ser fluida en múltiples idiomas emocionales."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Section -->
+    <section class="achievement-section">
+        <div class="container">
+            <h2 class="mb-4">🌍 Tu Imperio Geográfico Global</h2>
+            <p class="fs-5 mb-4">
+                No seas vulnerable a mercados de bajo valor. Masters que dominan segmentación geográfica multiplican ingresos enfocándose en las vetas de oro correctas.
+            </p>
+            
+            <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-search-dollar"></i>
+                        Auditoría Dominada
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-calculator"></i>
+                        VPU Calculado
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-fire"></i>
+                        Heat Map Analizado
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-globe"></i>
+                        Estrategias Practicadas
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="mastery-level">
+                        <h4>🎯 Maestría en Segmentación Geográfica</h4>
+                        <p class="mb-3">Has completado el entrenamiento avanzado en análisis y optimización geográfica. Ahora posees las herramientas para identificar y capitalizar tus mercados más rentables con precisión científica.</p>
+                        
+                        <div class="row text-center mt-4">
+                            <div class="col-md-4">
+                                <h5>✅ Auditoría</h5>
+                                <p>Sistema de 4 fases dominado</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>✅ Optimización</h5>
+                                <p>Horarios y contenido por región</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>✅ Localización</h5>
+                                <p>Estrategias culturales específicas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">¡A conquistar tus mercados de oro!</h4>
+            <p class="fs-6 opacity-75">
+                Recuerda: La ubicación geográfica de tu audiencia es frecuentemente el predictor más poderoso de comportamiento económico. Tu mapa de rentabilidad geográfica es la brújula que dirigirá todos tus esfuerzos estratégicos subsecuentes.
+            </p>
+            
+            <div class="mt-4">
+                <div class="achievement-badge">
+                    <i class="fas fa-trophy"></i>
+                    Certificación WC Training Lab - Análisis Geográfico Avanzado
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateDate();
+        setInterval(updateDate, 60000);
+
+        // Toggle details function
+        function toggleDetails(elementId) {
+            const card = document.getElementById(elementId).closest('.interactive-card');
+            const details = document.getElementById(elementId);
+            
+            card.classList.toggle('expanded');
+            
+            if (card.classList.contains('expanded')) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+            } else {
+                details.style.maxHeight = '0px';
+            }
+        }
+
+        // Geographic value calculator
+        function calculateGeoValue() {
+            const region = document.getElementById('primaryRegion').value;
+            const monthlyUsers = parseInt(document.getElementById('monthlyUsers').value) || 180;
+            const monthlyRevenue = parseFloat(document.getElementById('monthlyRevenue').value) || 2840;
+            const hoursWorked = parseInt(document.getElementById('hoursWorked').value) || 45;
+            const conversionRate = parseFloat(document.getElementById('conversionRate').value) || 18;
+            const avgSpend = parseFloat(document.getElementById('avgSpend').value) || 47;
+            
+            // Calculate current metrics
+            const vpuCurrent = monthlyRevenue / monthlyUsers;
+            const revenuePerHour = monthlyRevenue / hoursWorked;
+            
+            // Calculate optimization potential based on region
+            const regionMultipliers = {
+                'DE': 1.85, 'US': 1.62, 'UK': 1.48, 'CA': 1.45,
+                'AU': 1.38, 'FR': 1.32, 'IT': 1.25, 'ES': 1.18
+            };
+            
+            const optimizationMultiplier = regionMultipliers[region] || 1.2;
+            const optimizedRevenue = monthlyRevenue * optimizationMultiplier;
+            const optimizationPotential = optimizedRevenue - monthlyRevenue;
+            const annualImpact = optimizationPotential * 12;
+            
+            // Display results
+            document.getElementById('vpuCurrent').textContent = '$' + vpuCurrent.toFixed(2);
+            document.getElementById('revenuePerHour').textContent = '$' + revenuePerHour.toFixed(2);
+            document.getElementById('optimizationPotential').textContent = '$' + optimizationPotential.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('annualImpact').textContent = '$' + annualImpact.toLocaleString('en-US', {maximumFractionDigits: 0});
+            
+            // Analysis text
+            let analysisText = '';
+            const regionNames = {
+                'DE': 'Alemania', 'US': 'Estados Unidos', 'UK': 'Reino Unido', 'CA': 'Canadá',
+                'AU': 'Australia', 'FR': 'Francia', 'IT': 'Italia', 'ES': 'España'
+            };
+            
+            if (vpuCurrent > 50) {
+                analysisText = `🚀 MERCADO PREMIUM: ${regionNames[region]} muestra VPU excepcional de $${vpuCurrent.toFixed(2)}. Prioriza este mercado inmediatamente y optimiza horarios para maximizar exposición.`;
+            } else if (vpuCurrent > 25) {
+                analysisText = `💎 POTENCIAL ALTO: VPU sólido en ${regionNames[region]}. Incrementa dedicación a esta región y analiza patrones de comportamiento para optimización.`;
+            } else if (vpuCurrent > 15) {
+                analysisText = `📈 OPORTUNIDAD MEDIA: VPU moderado. Considera estrategias de localización de contenido para mejorar conversión en ${regionNames[region]}.`;
+            } else {
+                analysisText = `🔍 REQUIERE ANÁLISIS: VPU bajo sugiere necesidad de reevaluar estrategia para ${regionNames[region]} o considerar mercados alternativos más rentables.`;
+            }
+            
+            document.getElementById('geoAnalysis').textContent = analysisText;
+            document.getElementById('geoResult').style.display = 'block';
+        }
+
+        // Regional strategy selector
+        function selectRegionStrategy(strategy) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.region-button').forEach(btn => btn.classList.remove('active'));
+            // Add active to clicked button
+            event.target.classList.add('active');
+            
+            const strategies = {
+                'premium-western': {
+                    title: '💎 Mercados Premium Occidentales (EU/NA)',
+                    content: `
+                        <h6>🎯 Características del Mercado:</h6>
+                        <p class="mb-3">Alto poder adquisitivo, usuarios dispuestos a pagar premium por calidad y experiencias personalizadas. Valoran sofisticación, profesionalismo y atención al detalle.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>✅ Estrategias Ganadoras:</h6>
+                                <ul>
+                                    <li><strong>Horarios optimizados:</strong> 19:00-23:00 hora local</li>
+                                    <li><strong>Contenido premium:</strong> Enfoque en calidad sobre cantidad</li>
+                                    <li><strong>Interacción sofisticada:</strong> Conversaciones inteligentes, referencias culturales</li>
+                                    <li><strong>Tecnología avanzada:</strong> HD/4K, audio premium, efectos</li>
+                                    <li><strong>Personalización:</strong> Experiencias únicas por usuario</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Métricas Esperadas:</h6>
+                                <ul>
+                                    <li><strong>VPU Promedio:</strong> $45-85</li>
+                                    <li><strong>Tasa Conversión:</strong> 25-40%</li>
+                                    <li><strong>Sesión Promedio:</strong> 35-60 min</li>
+                                    <li><strong>Retorno 7 días:</strong> 70-85%</li>
+                                    <li><strong>Gasto promedio:</strong> $50-150</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-success bg-opacity-10 rounded">
+                                    <h6>🇩🇪 Alemania - Específico:</h6>
+                                    <p class="mb-0">Enfoque técnico, puntualidad, calidad suprema. Evitar improvisación excesiva. Valorar eficiencia y expertise.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-primary bg-opacity-10 rounded">
+                                    <h6>🇺🇸 Estados Unidos - Específico:</h6>
+                                    <p class="mb-0">Interactividad alta, entretenimiento, personalización. Energía positiva, innovación, experiencias "wow".</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>⚠️ CRÍTICO:</strong> Estos mercados castigan duramente la inconsistencia. Mantén estándares altos siempre o perderás credibilidad permanentemente.
+                        </div>
+                    `
+                },
+                'emerging-markets': {
+                    title: '🌱 Mercados Emergentes (Europa del Este/América Latina)',
+                    content: `
+                        <h6>🎯 Características del Mercado:</h6>
+                        <p class="mb-3">Audiencias numerosas pero con menor poder adquisitivo individual. Requieren estrategias de volumen optimizado y construcción de comunidad loyal.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>✅ Estrategias de Volumen:</h6>
+                                <ul>
+                                    <li><strong>Modelo freemium:</strong> Contenido base gratuito, premium accesible</li>
+                                    <li><strong>Comunidad sólida:</strong> Fidelización a largo plazo</li>
+                                    <li><strong>Horarios extendidos:</strong> Mayor tiempo online para compensar VPU</li>
+                                    <li><strong>Promociones frecuentes:</strong> Descuentos y paquetes</li>
+                                    <li><strong>Eventos grupales:</strong> Experiencias compartidas</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Métricas Típicas:</h6>
+                                <ul>
+                                    <li><strong>VPU Promedio:</strong> $8-25</li>
+                                    <li><strong>Volumen usuarios:</strong> 3-8x vs premium</li>
+                                    <li><strong>Sesión Promedio:</strong> 20-40 min</li>
+                                    <li><strong>Frecuencia:</strong> 4-6 visitas/semana</li>
+                                    <li><strong>Gasto promedio:</strong> $5-30</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>💡 Oportunidad Clave:</strong> Aunque VPU individual es menor, la lealtad y volumen pueden generar ingresos consistentes y predecibles. Ideal para establecer base sólida.
+                        </div>
+                        
+                        <div class="p-3 bg-primary bg-opacity-10 rounded mt-3">
+                            <strong>🎯 Fórmula de Éxito:</strong> Construye comunidad fuerte → Genera confianza → Ofrece valor consistente → Monetiza lealtad → Escala volumen
+                        </div>
+                    `
+                },
+                'asia-pacific': {
+                    title: '🌸 Asia-Pacífico (Japón/Corea/Australia)',
+                    content: `
+                        <h6>🎯 Características del Mercado:</h6>
+                        <p class="mb-3">Mercados diversos con alta adopción tecnológica. Valoran innovación, elementos kawaii/cute, y experiencias interactivas únicas.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>✅ Adaptaciones Culturales:</h6>
+                                <ul>
+                                    <li><strong>Estética kawaii:</strong> Elementos cute y coloridos</li>
+                                    <li><strong>Tecnología avanzada:</strong> AR/VR, gadgets interactivos</li>
+                                    <li><strong>Gamificación:</strong> Elementos de juego y recompensas</li>
+                                    <li><strong>Ritual y ceremonia:</strong> Experiencias estructuradas</li>
+                                    <li><strong>Innovación constante:</strong> Nuevas features regularmente</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Patrones Regionales:</h6>
+                                <ul>
+                                    <li><strong>🇯🇵 Japón:</strong> Tecnología + kawaii, VPU $35-65</li>
+                                    <li><strong>🇰🇷 Corea:</strong> Trends + K-culture, VPU $28-45</li>
+                                    <li><strong>🇦🇺 Australia:</strong> Casual + premium, VPU $40-70</li>
+                                    <li><strong>Horarios:</strong> Muy específicos por país</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-success bg-opacity-10 rounded">
+                                    <h6>🎮 Gamificación Efectiva:</h6>
+                                    <p class="mb-0">Sistemas de puntos, rankings, logros, coleccionables. Los usuarios APAC responden extremadamente bien a mecánicas de juego.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-warning bg-opacity-10 rounded">
+                                    <h6>⚠️ Zonas Horarias Críticas:</h6>
+                                    <p class="mb-0">12+ horas de diferencia con Europa/América. Requiere horarios completamente diferentes o audiencia nocturna occidental.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-primary bg-opacity-10 rounded mt-3">
+                            <strong>🌟 Factor Éxito:</strong> La novedad y innovación constante son CRÍTICAS. Lo que funciona 3 meses puede estar obsoleto. Mantén evolución continua.
+                        </div>
+                    `
+                },
+                'latin-america': {
+                    title: '🌶️ Latinoamérica (México/Brasil/Argentina)',
+                    content: `
+                        <h6>🎯 Características del Mercado:</h6>
+                        <p class="mb-3">Audiencias cálidas y expresivas que valoran conexión personal, celebración y autenticidad. Mercado en crecimiento con oportunidades significativas.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>✅ Elementos Culturales Clave:</h6>
+                                <ul>
+                                    <li><strong>Calidez personal:</strong> Conexiones genuinas y familiares</li>
+                                    <li><strong>Celebración:</strong> Fiestas, música, baile</li>
+                                    <li><strong>Familia/comunidad:</strong> Enfoque grupal vs individual</li>
+                                    <li><strong>Expresividad:</strong> Emociones abiertas y comunicación directa</li>
+                                    <li><strong>Autenticidad:</strong> Valor supremo, detectan falsedad rápido</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Dinámicas por País:</h6>
+                                <ul>
+                                    <li><strong>🇲🇽 México:</strong> Tradición + modernidad, VPU $12-35</li>
+                                    <li><strong>🇧🇷 Brasil:</strong> Carnaval + sensualidad, VPU $15-40</li>
+                                    <li><strong>🇦🇷 Argentina:</strong> Sofisticación + pasión, VPU $18-45</li>
+                                    <li><strong>Horarios:</strong> Noches tardías (22:00-02:00)</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="p-3 bg-success bg-opacity-10 rounded">
+                                    <h6>🎵 Música y Ritmo:</h6>
+                                    <p class="mb-0">Integra música latina, baile, ritmos regionales. La música es lenguaje universal que conecta instantáneamente.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="p-3 bg-warning bg-opacity-10 rounded">
+                                    <h6>💰 Consideraciones Económicas:</h6>
+                                    <p class="mb-0">VPU menor pero lealtad extrema. Estrategias de volumen y suscripciones funcionan mejor que one-time premium.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-primary bg-opacity-10 rounded mt-3">
+                            <strong>❤️ Factor Diferenciador:</strong> La conexión emocional supera todo. Si logras "familia" status con tu audiencia latina, tendrás usuarios de por vida que traerán amigos.
+                        </div>
+                        
+                        <div class="p-3 bg-info bg-opacity-10 rounded mt-3">
+                            <strong>🚀 Oportunidad 2025:</strong> Mercado en explosión con nueva generación de mayor poder adquisitivo. Los primeros en optimizar correctamente dominarán.
+                        </div>
+                    `
+                }
+            };
+            
+            const selectedStrategy = strategies[strategy];
+            document.getElementById('regionStrategyTitle').textContent = selectedStrategy.title;
+            document.getElementById('regionStrategyContent').innerHTML = selectedStrategy.content;
+            document.getElementById('regionStrategyResult').style.display = 'block';
+        }
+
+        // Auto-update progress bars and heat map on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                // Progress bars
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+                
+                // Heat map fills
+                document.querySelectorAll('.metric-fill').forEach(fill => {
+                    const width = fill.style.width;
+                    fill.style.width = '0%';
+                    setTimeout(() => {
+                        fill.style.width = width;
+                    }, 200);
+                });
+            }, 500);
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe cards for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.interactive-card, .insight-card, .country-bar, .timezone-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

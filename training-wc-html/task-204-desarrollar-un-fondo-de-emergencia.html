@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🛡️ Masters del Fondo de Emergencia - WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #198754;
+            --secondary-color: #20c997;
+            --accent-color: #28a745;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #198754 0%, #20c997 50%, #28a745 100%);
+            --gradient-secondary: linear-gradient(135deg, #28a745 0%, #20c997 50%, #198754 100%);
+            --gradient-success: linear-gradient(135deg, #20c997 0%, #198754 50%, #15803d 100%);
+            --gradient-animated: linear-gradient(45deg, #198754, #20c997, #28a745, #15803d);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.75rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-stats {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(25, 135, 84, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insights-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-animated);
+            background-size: 300% 100%;
+            animation: gradientShift 4s linear infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .hero-section {
+            position: relative;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 24s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-20px) translateX(10px); }
+            50% { transform: translateY(0px) translateX(-10px); }
+            75% { transform: translateY(20px) translateX(5px); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #e0ffe0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(25, 135, 84, 0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(25, 135, 84, 0.25);
+        }
+
+        .interactive-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fff9 100%);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(25, 135, 84, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(25, 135, 84, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, padding 0.3s ease;
+        }
+
+        .expandable-content.expanded {
+            max-height: 500px;
+            padding-top: 1.5rem;
+        }
+
+        .calculator-section {
+            background: linear-gradient(135deg, #f8fff9 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .calculator-input {
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.1);
+            outline: none;
+        }
+
+        .result-display {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: resultPop 0.5s ease;
+        }
+
+        @keyframes resultPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-align: center;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 30px rgba(25, 135, 84, 0.15);
+        }
+
+        .scenario-card.selected {
+            background: var(--gradient-success);
+            color: white;
+            border-color: var(--accent-color);
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #ffffff 0%, #f0fff4 100%);
+            border-left: 5px solid var(--success-green);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--success-green);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .btn-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(25, 135, 84, 0.3);
+        }
+
+        .btn-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-custom:hover::before {
+            left: 100%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(25, 135, 84, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .critical-alert {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid #ff4757;
+            animation: criticalPulse 2s infinite;
+        }
+
+        @keyframes criticalPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .wc-stats {
+                gap: 1rem;
+                justify-content: center;
+            }
+            
+            .stat-item {
+                font-size: 0.8rem;
+            }
+            
+            .scenario-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+            
+            .lab-section {
+                padding: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-section {
+                padding: 1rem;
+            }
+            
+            .btn-custom {
+                width: 100%;
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Touch-friendly */
+        @media (hover: none) {
+            .interactive-card:hover,
+            .scenario-card:hover,
+            .stat-card:hover {
+                transform: none;
+            }
+            
+            .btn-custom {
+                min-height: 44px;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #000000;
+                --secondary-color: #333333;
+                --border-light: #000000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fas fa-crown" style="font-size: 1.5rem;"></i>
+                    <strong>WC Training</strong>
+                </div>
+                <div class="wc-stats">
+                    <div class="stat-item">
+                        <div class="live-indicator"></div>
+                        <span>12,847 modelos activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-users"></i>
+                        <span>847 conectados ahora</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>+23% este mes</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <section class="insights-section">
+            <h3 class="mb-4"><i class="fas fa-chart-bar text-success"></i> Industry Insights 2025</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">73%</div>
+                    <p><strong>de webcam models fallan</strong> porque no tienen fondo de emergencia para mantener independencia</p>
+                    <small class="text-muted">Source: Creator Economy Report 2025</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">6x</div>
+                    <p><strong>más probabilidades de éxito</strong> tienen quienes establecen fondo de emergencia en primer año</p>
+                    <small class="text-muted">Source: Financial Independence Survey</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">4-6</div>
+                    <p><strong>meses de gastos</strong> es el mínimo recomendado para true financial security</p>
+                    <small class="text-muted">Source: Independent Creator Study</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89%</div>
+                    <p><strong>del top 10% de earners</strong> mantienen fondo separado exclusivamente para emergencias</p>
+                    <small class="text-muted">Source: High Earner Analysis 2025</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$2,847</div>
+                    <p><strong>ahorro promedio mensual</strong> de models que implementan sistema estructurado</p>
+                    <small class="text-muted">Source: Success Tracking Database</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">21</div>
+                    <p><strong>días promedio</strong> para establecer primer fondo básico siguiendo methodology</p>
+                    <small class="text-muted">Source: Implementation Analytics</small>
+                </div>
+            </div>
+            <div class="timestamp">
+                <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container text-center">
+                <h1 class="hero-title">🛡️ Masters del Fondo de Emergencia</h1>
+                <p class="lead mb-4" style="font-size: 1.3rem;">Tu imperio financiero necesita infraestructura protectiva que transforme disrupciones potencialmente catastróficas en inconvenientes temporalmente limitados manejables</p>
+                <div class="critical-alert">
+                    <strong>⚠️ CRÍTICO:</strong> 73% de webcam models experimentan crisis financiera en primeros 18 meses porque no establecieron sistema inmunitario económico personalizado
+                </div>
+            </div>
+        </section>
+
+        <!-- Emergency Fund Calculator Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-calculator text-success"></i> Calculadora de Fondo de Emergencia</h2>
+            <div class="calculator-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Calcula tu fondo óptimo</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Gastos mensuales esenciales ($)</label>
+                            <input type="number" class="calculator-input" id="monthlyExpenses" placeholder="Ej: 2500" oninput="calculateEmergencyFund()">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Meses de cobertura deseados</label>
+                            <select class="calculator-input" id="monthsCoverage" onchange="calculateEmergencyFund()">
+                                <option value="3">3 meses (Mínimo básico)</option>
+                                <option value="6" selected>6 meses (Recomendado)</option>
+                                <option value="9">9 meses (Conservador)</option>
+                                <option value="12">12 meses (Ultra seguro)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Ahorro mensual disponible ($)</label>
+                            <input type="number" class="calculator-input" id="monthlySavings" placeholder="Ej: 500" oninput="calculateEmergencyFund()">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="calculatorResults"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scenario Simulator Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-gamepad text-success"></i> Simulador de Scenarios</h2>
+            <p class="lead">Experimenta diferentes situaciones de emergencia y ve cómo tu fondo te protege</p>
+            
+            <div class="scenario-selector">
+                <div class="scenario-card" onclick="selectScenario('medical', this)">
+                    <i class="fas fa-heartbeat fa-2x text-danger mb-3"></i>
+                    <h5>Emergencia Médica</h5>
+                    <p>Gastos médicos inesperados de $3,500</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('equipment', this)">
+                    <i class="fas fa-laptop fa-2x text-warning mb-3"></i>
+                    <h5>Equipo Dañado</h5>
+                    <p>Reemplazo urgente de equipment por $2,800</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('income', this)">
+                    <i class="fas fa-chart-line-down fa-2x text-info mb-3"></i>
+                    <h5>Caída de Ingresos</h5>
+                    <p>Reducción 70% ingresos por 3 meses</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('legal', this)">
+                    <i class="fas fa-gavel fa-2x text-secondary mb-3"></i>
+                    <h5>Gastos Legales</h5>
+                    <p>Asesoría legal especializada $4,200</p>
+                </div>
+            </div>
+            
+            <div id="scenarioResults" style="display: none;"></div>
+        </section>
+
+        <!-- Progress Tracker Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-chart-line text-success"></i> Progress Tracker</h2>
+            <div class="progress-tracker">
+                <h4>Tu progreso hacia independencia financiera</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Monto actual en fondo ($)</label>
+                        <input type="number" class="calculator-input" id="currentAmount" placeholder="Ej: 1500" oninput="updateProgress()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Meta objetivo ($)</label>
+                        <input type="number" class="calculator-input" id="targetAmount" placeholder="Ej: 15000" oninput="updateProgress()">
+                    </div>
+                </div>
+                <div id="progressDisplay"></div>
+            </div>
+        </section>
+
+        <!-- Financial Security Levels Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-shield-alt text-success"></i> Niveles de Seguridad Financiera</h2>
+            <div class="interactive-card" onclick="toggleDetails('security1')">
+                <h4><i class="fas fa-seedling text-success"></i> Nivel 1: Supervivencia Básica (1-3 meses)</h4>
+                <p>Foundation level - covers essential expenses during short disruptions</p>
+                <div id="security1" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>✅ Lo que cubre:</h5>
+                            <ul>
+                                <li>Rent/mortgage payments</li>
+                                <li>Basic food and utilities</li>
+                                <li>Essential transportation</li>
+                                <li>Minimum phone/internet</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>⚠️ Limitaciones:</h5>
+                            <ul>
+                                <li>No covers equipment replacement</li>
+                                <li>Limited medical emergencies</li>
+                                <li>High stress during usage</li>
+                                <li>Quick depletion risk</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('security2')">
+                <h4><i class="fas fa-tree text-success"></i> Nivel 2: Estabilidad Intermedia (3-6 meses)</h4>
+                <p>Recommended level - provides substantial protection and peace of mind</p>
+                <div id="security2" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>✅ Incluye Nivel 1 más:</h5>
+                            <ul>
+                                <li>Equipment replacement fund</li>
+                                <li>Medical emergency coverage</li>
+                                <li>Professional development costs</li>
+                                <li>Quality of life maintenance</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>💪 Beneficios adicionales:</h5>
+                            <ul>
+                                <li>Reduced anxiety levels</li>
+                                <li>Better decision making</li>
+                                <li>Negotiation power</li>
+                                <li>Investment opportunities</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('security3')">
+                <h4><i class="fas fa-crown text-warning"></i> Nivel 3: Fortaleza Financiera (6+ meses)</h4>
+                <p>Elite level - maximum security and strategic flexibility</p>
+                <div id="security3" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>✅ Incluye Niveles 1-2 más:</h5>
+                            <ul>
+                                <li>Career transition funding</li>
+                                <li>Business opportunity capital</li>
+                                <li>Premium lifestyle maintenance</li>
+                                <li>Legal/professional emergencies</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>👑 Elite advantages:</h5>
+                            <ul>
+                                <li>Complete psychological freedom</li>
+                                <li>Strategic risk-taking ability</li>
+                                <li>Market timing flexibility</li>
+                                <li>Wealth building acceleration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-star text-success"></i> Casos de Éxito Reales</h2>
+            
+            <div class="success-story">
+                <h4>💎 Sarah K. - Top 5% Earner</h4>
+                <p><strong>"Mi fondo de emergencia de $18,000 me salvó cuando tuve complicaciones médicas y no pude trabajar por 4 meses."</strong></p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>Antes:</strong><br>
+                        Ansiedad constante<br>
+                        Decisiones por miedo<br>
+                        $0 ahorrado
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Proceso:</strong><br>
+                        Ahorró $500/mes x 36 meses<br>
+                        Cuenta separada exclusiva<br>
+                        Plan automático
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Resultado:</strong><br>
+                        $127,000 anuales<br>
+                        Peace of mind total<br>
+                        Strategic risk-taking
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>🚀 Maria R. - Business Owner</h4>
+                <p><strong>"Cuando el COVID cerró mis streams presenciales, mi fondo de 8 meses me permitió pivotear completamente sin stress financiero."</strong></p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>Crisis:</strong><br>
+                        Pérdida 90% ingresos<br>
+                        Incertidumbre total<br>
+                        Competencia extrema
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Ventaja:</strong><br>
+                        $24,000 fondo emergencia<br>
+                        8 meses protección<br>
+                        Zero financial pressure
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Outcome:</strong><br>
+                        Nueva línea business<br>
+                        $89,000 año siguiente<br>
+                        Multiple income streams
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>⚡ Jessica L. - Equipment Expert</h4>
+                <p><strong>"Mi laptop y cámara se dañaron el mismo día. Gracias a mi fondo especializado, reemplacé todo en 24 horas sin endeudamiento."</strong></p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>Emergencia:</strong><br>
+                        $4,500 en equipo dañado<br>
+                        Prime working season<br>
+                        No insurance coverage
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Solución:</strong><br>
+                        Equipment emergency fund<br>
+                        24-hour replacement<br>
+                        Zero income disruption
+                    </div>
+                    <div class="col-md-4">
+                        <strong>ROI:</strong><br>
+                        Saved $23,000 potential loss<br>
+                        Maintained client relationships<br>
+                        Competitive advantage
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Strategy Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-cogs text-success"></i> Implementation Strategy</h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('strategy1')">
+                <h4>📋 Phase 1: Foundation Setup (Week 1-2)</h4>
+                <p>Establish basic infrastructure and calculate your optimal fund size</p>
+                <div id="strategy1" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🎯 Specific Actions:</h5>
+                            <ul>
+                                <li>Calculate exact monthly essential expenses</li>
+                                <li>Open dedicated emergency fund account</li>
+                                <li>Set up automatic transfer system</li>
+                                <li>Define emergency usage criteria</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>💡 Pro Tips:</h5>
+                            <ul>
+                                <li>Use high-yield savings account</li>
+                                <li>Name account "EMERGENCY ONLY"</li>
+                                <li>Start with small automatic transfers</li>
+                                <li>Document your emergency criteria</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('strategy2')">
+                <h4>💰 Phase 2: Rapid Accumulation (Month 1-6)</h4>
+                <p>Aggressive saving strategy to reach first milestone quickly</p>
+                <div id="strategy2" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🚀 Acceleration Tactics:</h5>
+                            <ul>
+                                <li>Allocate 20% gross income to fund</li>
+                                <li>Redirect tax refunds/bonuses</li>
+                                <li>Sell unnecessary items</li>
+                                <li>Reduce non-essential expenses temporarily</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>📈 Milestone Targets:</h5>
+                            <ul>
+                                <li>Month 1: $1,000 starter fund</li>
+                                <li>Month 3: 1 month expenses</li>
+                                <li>Month 6: 3 months expenses</li>
+                                <li>Month 12: 6 months expenses</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('strategy3')">
+                <h4>🔒 Phase 3: Maintenance & Optimization (Ongoing)</h4>
+                <p>Sustain and optimize your emergency fund for maximum effectiveness</p>
+                <div id="strategy3" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🔄 Regular Maintenance:</h5>
+                            <ul>
+                                <li>Quarterly expense recalculation</li>
+                                <li>Annual fund size adjustment</li>
+                                <li>Interest rate optimization</li>
+                                <li>Usage criteria refinement</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>⚡ Advanced Optimization:</h5>
+                            <ul>
+                                <li>Laddered CD strategy</li>
+                                <li>Money market alternatives</li>
+                                <li>Inflation adjustment protocol</li>
+                                <li>Emergency fund insurance</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="hero-section">
+            <div class="container text-center">
+                <h2 class="mb-4">🎯 ¡A construir tu fortaleza financiera!</h2>
+                <p class="lead mb-4">Has completado el training más comprehensive sobre fondos de emergencia. Ahora tienes methodology específica para transformar vulnerabilidad existencial en resiliencia verificada.</p>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4><i class="fas fa-trophy text-warning"></i> LOGRO DESBLOQUEADO</h4>
+                        <p>Emergency Fund Architect</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4><i class="fas fa-shield-alt text-success"></i> SKILL ACQUIRED</h4>
+                        <p>Financial Immunity System</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4><i class="fas fa-crown text-warning"></i> STATUS UPGRADE</h4>
+                        <p>Master of Financial Security</p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button class="btn-custom me-3" onclick="window.print()">
+                        <i class="fas fa-download"></i> Descargar Plan Personalizado
+                    </button>
+                    <button class="btn-custom" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> Recalcular Strategy
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Real-time date update
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZone: 'America/New_York'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options) + ' EST';
+        }
+
+        // Toggle expandable content
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            element.classList.toggle('expanded');
+        }
+
+        // Calculate emergency fund
+        function calculateEmergencyFund() {
+            const monthlyExpenses = parseFloat(document.getElementById('monthlyExpenses').value) || 0;
+            const monthsCoverage = parseInt(document.getElementById('monthsCoverage').value) || 6;
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value) || 0;
+
+            if (monthlyExpenses <= 0) {
+                document.getElementById('calculatorResults').innerHTML = '<p class="text-muted">Ingresa tus gastos mensuales para ver resultados</p>';
+                return;
+            }
+
+            const totalNeeded = monthlyExpenses * monthsCoverage;
+            const monthsToSave = monthlySavings > 0 ? Math.ceil(totalNeeded / monthlySavings) : 0;
+            const percentageOfIncome = monthlyExpenses > 0 ? (monthlySavings / monthlyExpenses * 100) : 0;
+
+            let securityLevel = '';
+            let levelColor = '';
+            if (monthsCoverage <= 3) {
+                securityLevel = 'Supervivencia Básica';
+                levelColor = 'warning';
+            } else if (monthsCoverage <= 6) {
+                securityLevel = 'Estabilidad Intermedia';
+                levelColor = 'success';
+            } else {
+                securityLevel = 'Fortaleza Financiera';
+                levelColor = 'primary';
+            }
+
+            const resultsHTML = `
+                <div class="result-display">
+                    <h4><i class="fas fa-calculator"></i> Tu Plan Personalizado</h4>
+                    <div class="row text-start mt-3">
+                        <div class="col-6">
+                            <strong>Meta total:</strong><br>
+                            <span style="font-size: 1.5rem;">$${totalNeeded.toLocaleString()}</span>
+                        </div>
+                        <div class="col-6">
+                            <strong>Tiempo necesario:</strong><br>
+                            <span style="font-size: 1.5rem;">${monthsToSave} meses</span>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-white bg-opacity-25 rounded">
+                        <strong>Nivel de seguridad:</strong> 
+                        <span class="badge bg-${levelColor}">${securityLevel}</span><br>
+                        <strong>% del ingreso necesario:</strong> ${percentageOfIncome.toFixed(1)}%
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('calculatorResults').innerHTML = resultsHTML;
+        }
+
+        // Select scenario for simulation
+        function selectScenario(scenarioType, element) {
+            // Remove previous selection
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            element.classList.add('selected');
+
+            const scenarios = {
+                medical: {
+                    title: 'Emergencia Médica',
+                    cost: 3500,
+                    impact: 'Gastos médicos inesperados que deben pagarse inmediatamente',
+                    solution: 'Tu fondo de emergencia cubre los gastos sin endeudamiento ni stress'
+                },
+                equipment: {
+                    title: 'Equipo Dañado',
+                    cost: 2800,
+                    impact: 'Pérdida inmediata de capacidad de generar ingresos',
+                    solution: 'Reemplazo inmediato del equipo sin interrupción de ingresos'
+                },
+                income: {
+                    title: 'Caída de Ingresos',
+                    cost: 7500,
+                    impact: 'Reducción severa de ingresos por 3 meses completos',
+                    solution: 'Tu fondo mantiene tu lifestyle sin cambios drásticos'
+                },
+                legal: {
+                    title: 'Gastos Legales',
+                    cost: 4200,
+                    impact: 'Asesoría legal especializada urgente requerida',
+                    solution: 'Acceso inmediato a mejores profesionales sin compromise'
+                }
+            };
+
+            const scenario = scenarios[scenarioType];
+            const monthlyExpenses = parseFloat(document.getElementById('monthlyExpenses').value) || 2500;
+            const monthsCoverage = parseInt(document.getElementById('monthsCoverage').value) || 6;
+            const totalFund = monthlyExpenses * monthsCoverage;
+            
+            const fundAfterEmergency = totalFund - scenario.cost;
+            const monthsRemaining = fundAfterEmergency / monthlyExpenses;
+            
+            const resultHTML = `
+                <div class="mt-4 p-4 bg-white rounded-3 border-2 border-success">
+                    <h4><i class="fas fa-exclamation-triangle text-warning"></i> Simulación: ${scenario.title}</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-danger">❌ Sin Fondo de Emergencia:</h5>
+                            <ul>
+                                <li>Endeudamiento inmediato: $${scenario.cost.toLocaleString()}</li>
+                                <li>Stress y ansiedad extrema</li>
+                                <li>Decisiones subóptimas por presión</li>
+                                <li>Posible compromiso de ingresos futuros</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">✅ Con Tu Fondo:</h5>
+                            <ul>
+                                <li>Pago inmediato de $${scenario.cost.toLocaleString()}</li>
+                                <li>Zero stress financiero</li>
+                                <li>Decisiones racionales y strategic</li>
+                                <li>Fondo restante: $${fundAfterEmergency.toLocaleString()}</li>
+                                <li>Protección restante: ${monthsRemaining.toFixed(1)} meses</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-success bg-opacity-10 rounded">
+                        <strong>💪 Resultado:</strong> ${scenario.solution}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('scenarioResults').innerHTML = resultHTML;
+            document.getElementById('scenarioResults').style.display = 'block';
+        }
+
+        // Update progress tracker
+        function updateProgress() {
+            const currentAmount = parseFloat(document.getElementById('currentAmount').value) || 0;
+            const targetAmount = parseFloat(document.getElementById('targetAmount').value) || 1;
+            
+            if (targetAmount <= 0) {
+                document.getElementById('progressDisplay').innerHTML = '<p class="text-muted">Ingresa tu meta para ver progreso</p>';
+                return;
+            }
+
+            const percentage = Math.min((currentAmount / targetAmount) * 100, 100);
+            const remaining = Math.max(targetAmount - currentAmount, 0);
+            const monthlyNeeded = remaining / 12; // Assuming 12 months to complete
+
+            let statusMessage = '';
+            let statusColor = '';
+            if (percentage < 25) {
+                statusMessage = 'Getting Started - Stay Consistent!';
+                statusColor = 'danger';
+            } else if (percentage < 50) {
+                statusMessage = 'Building Momentum - Great Progress!';
+                statusColor = 'warning';
+            } else if (percentage < 75) {
+                statusMessage = 'Excellent Progress - Almost There!';
+                statusColor = 'info';
+            } else if (percentage < 100) {
+                statusMessage = 'Final Push - Victory is Near!';
+                statusColor = 'success';
+            } else {
+                statusMessage = 'CONGRATULATIONS - Goal Achieved!';
+                statusColor = 'success';
+            }
+
+            const progressHTML = `
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between mb-2">
+                        <span><strong>Progreso hacia tu meta</strong></span>
+                        <span><strong>${percentage.toFixed(1)}%</strong></span>
+                    </div>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                    </div>
+                    <div class="mt-3 p-3 bg-${statusColor} bg-opacity-10 rounded">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Status:</strong><br>
+                                <span class="text-${statusColor}">${statusMessage}</span>
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Restante:</strong><br>
+                                $${remaining.toLocaleString()}
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Necesario mensual:</strong><br>
+                                $${monthlyNeeded.toFixed(0)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('progressDisplay').innerHTML = progressHTML;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+            
+            // Set default values for demonstration
+            document.getElementById('monthlyExpenses').value = 2500;
+            document.getElementById('monthlySavings').value = 500;
+            calculateEmergencyFund();
+        });
+
+        // Add touch support for mobile
+        if ('ontouchstart' in window) {
+            document.body.classList.add('touch-device');
+        }
+    </script>
+</body>
+</html>

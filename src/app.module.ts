@@ -12,6 +12,9 @@ import { QuizModule } from './quiz/quiz.module';
 import { GamificationModule } from './gamification/gamification.module';
 import { StudiosModule } from './studios/studios.module';
 import { RatingsModule } from './ratings/ratings.module';
+import { PlatformsModule } from './platforms/platforms.module';
+import { SettingsModule } from './settings/settings.module';
+import { CloudinaryModule } from './cloudinary';
 import configuration from './config/configuration';
 
 @Module({
@@ -36,6 +39,7 @@ import configuration from './config/configuration';
     }),
 
     // Módulos de la aplicación
+    CloudinaryModule,
     UsersModule,
     AuthModule,
     SubscriptionsModule,
@@ -44,6 +48,8 @@ import configuration from './config/configuration';
     GamificationModule,
     StudiosModule,
     RatingsModule,
+    PlatformsModule,
+    SettingsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

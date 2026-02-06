@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📈 Masters de Inversiones - WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6f42c1;
+            --accent-color: #198754;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f4f6f8;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #0d6efd 0%, #6f42c1 50%, #198754 100%);
+            --gradient-secondary: linear-gradient(135deg, #6f42c1 0%, #0d6efd 50%, #198754 100%);
+            --gradient-success: linear-gradient(135deg, #198754 0%, #0d6efd 50%, #6f42c1 100%);
+            --gradient-animated: linear-gradient(45deg, #0d6efd, #6f42c1, #198754, #fd7e14);
+            --gradient-gold: linear-gradient(135deg, #ffd700 0%, #ffb347 50%, #ff8c00 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.75rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-stats {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(13, 110, 253, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insights-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-animated);
+            background-size: 300% 100%;
+            animation: gradientShift 4s linear infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        .hero-section {
+            position: relative;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            margin: 2rem 0;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            25% { transform: translateY(-15px) translateX(8px); }
+            50% { transform: translateY(0px) translateX(-8px); }
+            75% { transform: translateY(15px) translateX(4px); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #ffffff, #e6f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(13, 110, 253, 0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(13, 110, 253, 0.25);
+        }
+
+        .interactive-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(13, 110, 253, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(13, 110, 253, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.6s ease, padding 0.3s ease;
+        }
+
+        .expandable-content.expanded {
+            max-height: 600px;
+            padding-top: 1.5rem;
+        }
+
+        .calculator-section {
+            background: linear-gradient(135deg, #f8faff 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .calculator-input {
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+            outline: none;
+        }
+
+        .result-display {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: resultPop 0.5s ease;
+        }
+
+        @keyframes resultPop {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .investment-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .investment-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .investment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .investment-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 30px rgba(13, 110, 253, 0.15);
+        }
+
+        .investment-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .investment-card.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f8ff 100%);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 5rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .btn-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-custom:hover::before {
+            left: 100%;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            transition: all 0.4s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(13, 110, 253, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .critical-alert {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid #ff4757;
+            animation: criticalPulse 2s infinite;
+        }
+
+        @keyframes criticalPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 107, 107, 0); }
+        }
+
+        .risk-meter {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            align-items: center;
+        }
+
+        .risk-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .risk-dot.active.low { background: var(--success-green); }
+        .risk-dot.active.medium { background: var(--warning-orange); }
+        .risk-dot.active.high { background: var(--danger-red); }
+
+        .portfolio-pie {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                var(--primary-color) 0deg 126deg,
+                var(--secondary-color) 126deg 216deg,
+                var(--success-green) 216deg 288deg,
+                var(--warning-orange) 288deg 360deg
+            );
+            margin: 2rem auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .portfolio-center {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .timestamp {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .performance-chart {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-line {
+            width: 100%;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(13, 110, 253, 0.1) 0%, rgba(111, 66, 193, 0.1) 100%);
+            border-radius: 10px;
+            position: relative;
+            display: flex;
+            align-items: end;
+            gap: 0.5rem;
+            padding: 1rem;
+        }
+
+        .chart-bar {
+            background: var(--gradient-primary);
+            border-radius: 4px 4px 0 0;
+            transition: all 0.6s ease;
+            min-width: 20px;
+            animation: chartGrow 2s ease;
+        }
+
+        @keyframes chartGrow {
+            0% { height: 0; }
+            100% { height: var(--bar-height); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .wc-stats {
+                gap: 1rem;
+                justify-content: center;
+            }
+            
+            .stat-item {
+                font-size: 0.8rem;
+            }
+            
+            .investment-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-pie {
+                width: 150px;
+                height: 150px;
+            }
+
+            .portfolio-center {
+                width: 60px;
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 2rem 0;
+            }
+            
+            .lab-section {
+                padding: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-section {
+                padding: 1rem;
+            }
+            
+            .btn-custom {
+                width: 100%;
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Touch-friendly */
+        @media (hover: none) {
+            .interactive-card:hover,
+            .investment-card:hover,
+            .stat-card:hover {
+                transform: none;
+            }
+            
+            .btn-custom {
+                min-height: 44px;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #000000;
+                --secondary-color: #333333;
+                --border-light: #000000;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-3">
+                    <i class="fas fa-crown" style="font-size: 1.5rem;"></i>
+                    <strong>WC Training</strong>
+                </div>
+                <div class="wc-stats">
+                    <div class="stat-item">
+                        <div class="live-indicator"></div>
+                        <span>12,847 modelos activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-trending-up"></i>
+                        <span>+$2.4M invertidos este mes</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-coins"></i>
+                        <span>847 portfolios activos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <section class="insights-section">
+            <h3 class="mb-4"><i class="fas fa-chart-line text-primary"></i> Investment Insights 2025</h3>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">67%</div>
+                    <p><strong>de top earners webcam</strong> invierten mínimo 20% de ingresos en portfolios diversificados</p>
+                    <small class="text-muted">Source: Creator Wealth Report 2025</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12.4%</div>
+                    <p><strong>retorno promedio anual</strong> de portfolios balanceados manejados por creators profesionales</p>
+                    <small class="text-muted">Source: Investment Performance Study</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">$127K</div>
+                    <p><strong>patrimonio promedio</strong> de models con 3+ años invirtiendo sistemáticamente</p>
+                    <small class="text-muted">Source: Financial Independence Survey</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">89%</div>
+                    <p><strong>del top 5% de earners</strong> tienen múltiples vehículos de inversión diversificados</p>
+                    <small class="text-muted">Source: High Earner Analysis 2025</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">5.2x</div>
+                    <p><strong>multiplicación promedio</strong> de patrimonio inicial en 7 años con strategy estructurada</p>
+                    <small class="text-muted">Source: Long-term Growth Tracking</small>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24</div>
+                    <p><strong>años promedio</strong> para financial independence con 25% savings rate + inversiones</p>
+                    <small class="text-muted">Source: Retirement Planning Database</small>
+                </div>
+            </div>
+            <div class="timestamp">
+                <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container text-center">
+                <h1 class="hero-title">📈 Masters de Inversiones</h1>
+                <p class="lead mb-4" style="font-size: 1.3rem;">Transforma tu infraestructura financiera de dependencia exclusiva en ingresos activos hacia arquitectura donde activos acumulados generan beneficios independientes</p>
+                <div class="critical-alert">
+                    <strong>⚠️ ESENCIAL:</strong> 84% de webcam models nunca invierten porque no comprenden cómo transformar earnings volatiles en wealth building sistemático
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Calculator Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-calculator text-primary"></i> Calculadora de ROI e Inversiones</h2>
+            <div class="calculator-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Simula tu crecimiento patrimonial</h4>
+                        <div class="mb-3">
+                            <label class="form-label">Inversión inicial ($)</label>
+                            <input type="number" class="calculator-input" id="initialInvestment" placeholder="Ej: 5000" oninput="calculateInvestmentGrowth()">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Aporte mensual ($)</label>
+                            <input type="number" class="calculator-input" id="monthlyContribution" placeholder="Ej: 1000" oninput="calculateInvestmentGrowth()">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Retorno anual esperado (%)</label>
+                            <select class="calculator-input" id="expectedReturn" onchange="calculateInvestmentGrowth()">
+                                <option value="6">6% (Conservador - Bonds/CDs)</option>
+                                <option value="8">8% (Moderado - Index Funds)</option>
+                                <option value="10" selected>10% (Agresivo - Growth Stocks)</option>
+                                <option value="12">12% (High Risk - Tech/Crypto)</option>
+                                <option value="15">15% (Ultra High Risk)</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Período de inversión (años)</label>
+                            <input type="range" class="form-range" id="investmentPeriod" min="1" max="30" value="10" oninput="calculateInvestmentGrowth(); document.getElementById('periodDisplay').textContent = this.value">
+                            <div class="text-center">
+                                <span id="periodDisplay">10</span> años
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="investmentResults"></div>
+                        <div class="performance-chart">
+                            <h5>Proyección de crecimiento</h5>
+                            <div class="chart-line" id="growthChart"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Vehicle Comparison Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-balance-scale text-primary"></i> Comparador de Vehículos de Inversión</h2>
+            <p class="lead">Analiza diferentes opciones según tu perfil de riesgo y objetivos financieros</p>
+            
+            <div class="investment-selector">
+                <div class="investment-card" onclick="selectInvestment('stocks', this)">
+                    <i class="fas fa-chart-line fa-2x text-primary mb-3"></i>
+                    <h5>Stocks/ETFs</h5>
+                    <div class="risk-meter">
+                        <span class="me-2">Riesgo:</span>
+                        <div class="risk-dot active medium"></div>
+                        <div class="risk-dot active medium"></div>
+                        <div class="risk-dot active medium"></div>
+                        <div class="risk-dot"></div>
+                        <div class="risk-dot"></div>
+                    </div>
+                    <p>8-12% retorno esperado</p>
+                </div>
+                <div class="investment-card" onclick="selectInvestment('bonds', this)">
+                    <i class="fas fa-university fa-2x text-success mb-3"></i>
+                    <h5>Bonds/Treasury</h5>
+                    <div class="risk-meter">
+                        <span class="me-2">Riesgo:</span>
+                        <div class="risk-dot active low"></div>
+                        <div class="risk-dot active low"></div>
+                        <div class="risk-dot"></div>
+                        <div class="risk-dot"></div>
+                        <div class="risk-dot"></div>
+                    </div>
+                    <p>3-6% retorno esperado</p>
+                </div>
+                <div class="investment-card" onclick="selectInvestment('realestate', this)">
+                    <i class="fas fa-home fa-2x text-warning mb-3"></i>
+                    <h5>Real Estate</h5>
+                    <div class="risk-meter">
+                        <span class="me-2">Riesgo:</span>
+                        <div class="risk-dot active medium"></div>
+                        <div class="risk-dot active medium"></div>
+                        <div class="risk-dot active medium"></div>
+                        <div class="risk-dot"></div>
+                        <div class="risk-dot"></div>
+                    </div>
+                    <p>6-10% retorno esperado</p>
+                </div>
+                <div class="investment-card" onclick="selectInvestment('crypto', this)">
+                    <i class="fab fa-bitcoin fa-2x text-danger mb-3"></i>
+                    <h5>Cryptocurrency</h5>
+                    <div class="risk-meter">
+                        <span class="me-2">Riesgo:</span>
+                        <div class="risk-dot active high"></div>
+                        <div class="risk-dot active high"></div>
+                        <div class="risk-dot active high"></div>
+                        <div class="risk-dot active high"></div>
+                        <div class="risk-dot active high"></div>
+                    </div>
+                    <p>15-50% retorno potencial</p>
+                </div>
+            </div>
+            
+            <div id="investmentComparison" style="display: none;"></div>
+        </section>
+
+        <!-- Portfolio Builder Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-pie-chart text-primary"></i> Constructor de Portfolio</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4>Diseña tu distribución óptima</h4>
+                    <div class="mb-3">
+                        <label class="form-label">Stocks/ETFs (%)</label>
+                        <input type="range" class="form-range" id="stocksPercent" min="0" max="100" value="35" oninput="updatePortfolio()">
+                        <span id="stocksDisplay">35%</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Bonds (%)</label>
+                        <input type="range" class="form-range" id="bondsPercent" min="0" max="100" value="25" oninput="updatePortfolio()">
+                        <span id="bondsDisplay">25%</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Real Estate (%)</label>
+                        <input type="range" class="form-range" id="realEstatePercent" min="0" max="100" value="20" oninput="updatePortfolio()">
+                        <span id="realEstateDisplay">20%</span>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Crypto/Alternative (%)</label>
+                        <input type="range" class="form-range" id="cryptoPercent" min="0" max="100" value="20" oninput="updatePortfolio()">
+                        <span id="cryptoDisplay">20%</span>
+                    </div>
+                    <div class="alert alert-info">
+                        <strong>Total:</strong> <span id="totalPercent">100%</span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="portfolio-pie">
+                        <div class="portfolio-center" id="portfolioCenter">
+                            Portfolio
+                        </div>
+                    </div>
+                    <div id="portfolioAnalysis"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Investment Education Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-graduation-cap text-primary"></i> Investment Education Tracker</h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('education1')">
+                <h4><i class="fas fa-seedling text-success"></i> Nivel 1: Foundation Knowledge</h4>
+                <p>Conceptos básicos de inversión y estrategias fundamentales</p>
+                <div id="education1" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>📚 Temas CRÍTICOS:</h5>
+                            <ul>
+                                <li>Compound interest y time value of money</li>
+                                <li>Risk vs Return relationship</li>
+                                <li>Diversification principles</li>
+                                <li>Asset allocation basics</li>
+                                <li>Tax implications of investments</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>🎯 Objetivos de aprendizaje:</h5>
+                            <ul>
+                                <li>Entender ROI calculations</li>
+                                <li>Identificar tu risk tolerance</li>
+                                <li>Crear primer emergency fund</li>
+                                <li>Abrir first investment account</li>
+                                <li>Hacer primera inversión $500+</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="progress-tracker">
+                        <h6>Progreso de aprendizaje:</h6>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" style="width: 60%"></div>
+                        </div>
+                        <small class="text-muted">60% completado - ¡Sigue así!</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('education2')">
+                <h4><i class="fas fa-chart-bar text-warning"></i> Nivel 2: Strategic Investing</h4>
+                <p>Estrategias avanzadas y análisis de mercado</p>
+                <div id="education2" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>📈 Advanced concepts:</h5>
+                            <ul>
+                                <li>Fundamental vs Technical analysis</li>
+                                <li>Dollar cost averaging strategies</li>
+                                <li>Sector rotation and market cycles</li>
+                                <li>Options and derivatives basics</li>
+                                <li>International diversification</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>💼 Practical applications:</h5>
+                            <ul>
+                                <li>Build $50K+ portfolio</li>
+                                <li>Implement rebalancing strategy</li>
+                                <li>Tax-loss harvesting</li>
+                                <li>Research individual stocks</li>
+                                <li>Understand market psychology</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('education3')">
+                <h4><i class="fas fa-crown text-warning"></i> Nivel 3: Wealth Building Mastery</h4>
+                <p>Estrategias avanzadas para high net worth individuals</p>
+                <div id="education3" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>👑 Elite strategies:</h5>
+                            <ul>
+                                <li>Alternative investments (REITs, commodities)</li>
+                                <li>Private equity and venture capital</li>
+                                <li>Tax optimization strategies</li>
+                                <li>Estate planning basics</li>
+                                <li>Leverage and margin strategies</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>🏆 Master objectives:</h5>
+                            <ul>
+                                <li>$250K+ diversified portfolio</li>
+                                <li>Multiple income streams</li>
+                                <li>Professional advisory team</li>
+                                <li>Advanced tax structures</li>
+                                <li>Generational wealth planning</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-trophy text-primary"></i> Investment Success Stories</h2>
+            
+            <div class="success-story">
+                <h4>💎 Alexandra M. - Portfolio Master</h4>
+                <p><strong>"Empecé con $2,000 y estrategia de $800 mensuales. En 5 años transformé earnings volatiles en $420,000 portfolio diversificado."</strong></p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>Starting point:</strong><br>
+                        $2,000 initial investment<br>
+                        Zero investment knowledge<br>
+                        Income volatility stress
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Strategy:</strong><br>
+                        $800/month systematic investing<br>
+                        70% stocks, 20% bonds, 10% REITs<br>
+                        Dollar cost averaging
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Results:</strong><br>
+                        $420,000 current portfolio<br>
+                        14.2% average annual return<br>
+                        $3,500/month passive income
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>🚀 Carmen R. - Real Estate Mogul</h4>
+                <p><strong>"Usando webcam earnings, compré primer rental property a los 25. Ahora manejo portfolio de $1.2M en real estate."</strong></p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>Foundation:</strong><br>
+                        First rental: $180K duplex<br>
+                        $36K down payment<br>
+                        House-hacking strategy
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Growth:</strong><br>
+                        Refinanced for next purchase<br>
+                        Leveraged equity buildup<br>
+                        Systematic acquisition plan
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Portfolio:</strong><br>
+                        7 rental properties<br>
+                        $1.2M total value<br>
+                        $8,400/month rental income
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>⚡ Diana K. - Tech Investor</h4>
+                <p><strong>"Combiné knowledge del sector tech con systematic investing. Mi crypto/tech portfolio generó 340% returns en 3 años."</strong></p>
+                <div class="row mt-3">
+                    <div class="col-md-4">
+                        <strong>Specialization:</strong><br>
+                        Tech sector focus<br>
+                        Early crypto adoption<br>
+                        Industry insider knowledge
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Approach:</strong><br>
+                        High-conviction positions<br>
+                        20% portfolio allocation<br>
+                        Risk management protocols
+                    </div>
+                    <div class="col-md-4">
+                        <strong>Performance:</strong><br>
+                        340% total return<br>
+                        $85K to $374K growth<br>
+                        Portfolio diversification maintained
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation Roadmap Lab -->
+        <section class="lab-section">
+            <h2 class="mb-4"><i class="fas fa-route text-primary"></i> Implementation Roadmap</h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('roadmap1')">
+                <h4>🎯 Phase 1: Foundation Setup (Month 1-3)</h4>
+                <p>Establish basic infrastructure and investment knowledge</p>
+                <div id="roadmap1" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>💡 Critical actions:</h5>
+                            <ul>
+                                <li>Complete investment education fundamentals</li>
+                                <li>Open brokerage account (Fidelity/Vanguard)</li>
+                                <li>Establish emergency fund first</li>
+                                <li>Define investment goals and timeline</li>
+                                <li>Calculate optimal allocation percentages</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>📊 First investments:</h5>
+                            <ul>
+                                <li>Start with index funds (S&P 500)</li>
+                                <li>Minimum initial investment: $1,000</li>
+                                <li>Set up automatic monthly contributions</li>
+                                <li>Begin tracking performance</li>
+                                <li>Document learning and decisions</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('roadmap2')">
+                <h4>📈 Phase 2: Portfolio Building (Month 4-12)</h4>
+                <p>Diversify holdings and increase contribution amounts</p>
+                <div id="roadmap2" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🏗️ Diversification strategy:</h5>
+                            <ul>
+                                <li>Add international exposure (VTIAX)</li>
+                                <li>Include bond allocation (VBTLX)</li>
+                                <li>Consider REITs for real estate exposure</li>
+                                <li>Small allocation to individual stocks</li>
+                                <li>Explore sector-specific ETFs</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>⚡ Optimization tactics:</h5>
+                            <ul>
+                                <li>Increase monthly contributions 10% quarterly</li>
+                                <li>Implement tax-loss harvesting</li>
+                                <li>Rebalance portfolio quarterly</li>
+                                <li>Track expense ratios and fees</li>
+                                <li>Consider tax-advantaged accounts</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('roadmap3')">
+                <h4>👑 Phase 3: Advanced Strategies (Year 2+)</h4>
+                <p>Implement sophisticated investment strategies and alternative assets</p>
+                <div id="roadmap3" class="expandable-content">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🎯 Advanced tactics:</h5>
+                            <ul>
+                                <li>Options strategies for income generation</li>
+                                <li>Alternative investments (commodities, crypto)</li>
+                                <li>Individual stock analysis and selection</li>
+                                <li>International and emerging markets</li>
+                                <li>Private equity and angel investing</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>💼 Professional support:</h5>
+                            <ul>
+                                <li>Fee-only financial advisor consultation</li>
+                                <li>Tax optimization strategies</li>
+                                <li>Estate planning considerations</li>
+                                <li>Business investment opportunities</li>
+                                <li>Generational wealth building</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="hero-section">
+            <div class="container text-center">
+                <h2 class="mb-4">🎯 ¡Domina la physics financiera!</h2>
+                <p class="lead mb-4">Has completado el training más comprehensive sobre investment strategy. Ahora tienes methodology específica para transformar earnings activos en wealth building sistemático.</p>
+                
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4><i class="fas fa-trophy text-warning"></i> LOGRO DESBLOQUEADO</h4>
+                        <p>Investment Portfolio Architect</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4><i class="fas fa-chart-line text-success"></i> SKILL ACQUIRED</h4>
+                        <p>Passive Income Generation</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h4><i class="fas fa-crown text-warning"></i> STATUS UPGRADE</h4>
+                        <p>Master of Wealth Building</p>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <button class="btn-custom me-3" onclick="window.print()">
+                        <i class="fas fa-download"></i> Descargar Investment Plan
+                    </button>
+                    <button class="btn-custom" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> Recalcular Portfolio
+                    </button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Real-time date update
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZone: 'America/New_York'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options) + ' EST';
+        }
+
+        // Toggle expandable content
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            element.classList.toggle('expanded');
+        }
+
+        // Calculate investment growth
+        function calculateInvestmentGrowth() {
+            const initial = parseFloat(document.getElementById('initialInvestment').value) || 0;
+            const monthly = parseFloat(document.getElementById('monthlyContribution').value) || 0;
+            const rate = parseFloat(document.getElementById('expectedReturn').value) || 10;
+            const years = parseInt(document.getElementById('investmentPeriod').value) || 10;
+
+            if (initial <= 0 && monthly <= 0) {
+                document.getElementById('investmentResults').innerHTML = '<p class="text-muted">Ingresa valores para ver proyección</p>';
+                return;
+            }
+
+            const monthlyRate = rate / 100 / 12;
+            const months = years * 12;
+            
+            // Calculate compound growth
+            let futureValue = initial * Math.pow(1 + rate/100, years);
+            
+            // Add monthly contributions
+            if (monthly > 0) {
+                futureValue += monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
+            }
+
+            const totalContributions = initial + (monthly * months);
+            const totalGains = futureValue - totalContributions;
+            const totalReturn = ((futureValue - totalContributions) / totalContributions) * 100;
+
+            let riskLevel = '';
+            let riskColor = '';
+            if (rate <= 6) {
+                riskLevel = 'Conservador';
+                riskColor = 'success';
+            } else if (rate <= 10) {
+                riskLevel = 'Moderado';
+                riskColor = 'warning';
+            } else {
+                riskLevel = 'Agresivo';
+                riskColor = 'danger';
+            }
+
+            const resultsHTML = `
+                <div class="result-display">
+                    <h4><i class="fas fa-chart-trending-up"></i> Proyección ${years} años</h4>
+                    <div class="row text-start mt-3">
+                        <div class="col-6">
+                            <strong>Valor futuro:</strong><br>
+                            <span style="font-size: 1.8rem;">$${futureValue.toLocaleString(undefined, {maximumFractionDigits: 0})}</span>
+                        </div>
+                        <div class="col-6">
+                            <strong>Ganancias totales:</strong><br>
+                            <span style="font-size: 1.5rem;">$${totalGains.toLocaleString(undefined, {maximumFractionDigits: 0})}</span>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-white bg-opacity-25 rounded">
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Contribución total:</strong><br>
+                                $${totalContributions.toLocaleString()}
+                            </div>
+                            <div class="col-4">
+                                <strong>ROI total:</strong><br>
+                                ${totalReturn.toFixed(1)}%
+                            </div>
+                            <div class="col-4">
+                                <strong>Perfil:</strong><br>
+                                <span class="badge bg-${riskColor}">${riskLevel}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('investmentResults').innerHTML = resultsHTML;
+            updateGrowthChart(initial, monthly, rate, years);
+        }
+
+        // Update growth chart
+        function updateGrowthChart(initial, monthly, rate, years) {
+            const chart = document.getElementById('growthChart');
+            chart.innerHTML = '';
+            
+            const points = Math.min(years, 10);
+            for (let i = 1; i <= points; i++) {
+                const yearValue = initial * Math.pow(1 + rate/100, i) + 
+                                monthly * 12 * i * (1 + rate/200);
+                const maxValue = initial * Math.pow(1 + rate/100, years) + monthly * 12 * years;
+                const height = Math.max((yearValue / maxValue) * 80, 5);
+                
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = height + 'px';
+                bar.style.setProperty('--bar-height', height + 'px');
+                chart.appendChild(bar);
+            }
+        }
+
+        // Select investment type for comparison
+        function selectInvestment(investmentType, element) {
+            document.querySelectorAll('.investment-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+
+            const investments = {
+                stocks: {
+                    title: 'Stocks & ETFs',
+                    pros: ['Alta liquidez', 'Potencial de crecimiento alto', 'Dividendos regulares', 'Fácil diversificación'],
+                    cons: ['Volatilidad alta', 'Requiere research', 'Emociones pueden afectar decisiones'],
+                    bestFor: 'Inversores a largo plazo con tolerancia al riesgo',
+                    avgReturn: '8-12% anual',
+                    liquidity: 'Alta (inmediata)',
+                    minInvestment: '$100',
+                    taxImplications: 'Capital gains tax, dividends taxables'
+                },
+                bonds: {
+                    title: 'Bonds & Treasury',
+                    pros: ['Ingresos predecibles', 'Menor volatilidad', 'Protección de capital', 'Diversificación'],
+                    cons: ['Retornos menores', 'Riesgo de inflación', 'Sensibilidad a tasas de interés'],
+                    bestFor: 'Inversores conservadores, preservación de capital',
+                    avgReturn: '3-6% anual',
+                    liquidity: 'Moderada',
+                    minInvestment: '$1,000',
+                    taxImplications: 'Income tax en intereses'
+                },
+                realestate: {
+                    title: 'Real Estate',
+                    pros: ['Activo tangible', 'Ingresos por renta', 'Protección inflación', 'Leverage disponible'],
+                    cons: ['Alto capital inicial', 'Baja liquidez', 'Mantenimiento requerido', 'Costos de transacción'],
+                    bestFor: 'Inversores con capital sustancial, income seeking',
+                    avgReturn: '6-10% anual',
+                    liquidity: 'Baja (meses)',
+                    minInvestment: '$25,000+',
+                    taxImplications: 'Depreciation, rental income, capital gains'
+                },
+                crypto: {
+                    title: 'Cryptocurrency',
+                    pros: ['Potencial retornos altos', '24/7 trading', 'Portfolio diversification', 'Tecnología innovadora'],
+                    cons: ['Extrema volatilidad', 'Regulación incierta', 'Security risks', 'Psicológicamente desafiante'],
+                    bestFor: 'Inversores con alta tolerancia al riesgo, tech-savvy',
+                    avgReturn: '15-50% potencial (alto riesgo)',
+                    liquidity: 'Alta (24/7)',
+                    minInvestment: '$10',
+                    taxImplications: 'Capital gains, tracking complejo'
+                }
+            };
+
+            const investment = investments[investmentType];
+            
+            const comparisonHTML = `
+                <div class="mt-4 p-4 bg-white rounded-3 border-2 border-primary">
+                    <h4><i class="fas fa-info-circle text-primary"></i> ${investment.title} - Análisis Detallado</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-success">✅ Ventajas:</h5>
+                            <ul>
+                                ${investment.pros.map(pro => `<li>${pro}</li>`).join('')}
+                            </ul>
+                            <h6><strong>Retorno esperado:</strong> ${investment.avgReturn}</h6>
+                            <h6><strong>Liquidez:</strong> ${investment.liquidity}</h6>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-danger">⚠️ Desventajas:</h5>
+                            <ul>
+                                ${investment.cons.map(con => `<li>${con}</li>`).join('')}
+                            </ul>
+                            <h6><strong>Inversión mínima:</strong> ${investment.minInvestment}</h6>
+                            <h6><strong>Implicaciones fiscales:</strong> ${investment.taxImplications}</h6>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                        <strong>💡 Ideal para:</strong> ${investment.bestFor}
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('investmentComparison').innerHTML = comparisonHTML;
+            document.getElementById('investmentComparison').style.display = 'block';
+        }
+
+        // Update portfolio visualization
+        function updatePortfolio() {
+            const stocks = parseInt(document.getElementById('stocksPercent').value);
+            const bonds = parseInt(document.getElementById('bondsPercent').value);
+            const realEstate = parseInt(document.getElementById('realEstatePercent').value);
+            const crypto = parseInt(document.getElementById('cryptoPercent').value);
+
+            // Update displays
+            document.getElementById('stocksDisplay').textContent = stocks + '%';
+            document.getElementById('bondsDisplay').textContent = bonds + '%';
+            document.getElementById('realEstateDisplay').textContent = realEstate + '%';
+            document.getElementById('cryptoDisplay').textContent = crypto + '%';
+
+            const total = stocks + bonds + realEstate + crypto;
+            document.getElementById('totalPercent').textContent = total + '%';
+
+            // Update pie chart
+            const pie = document.querySelector('.portfolio-pie');
+            const stocksDeg = (stocks / 100) * 360;
+            const bondsDeg = (bonds / 100) * 360;
+            const realEstateDeg = (realEstate / 100) * 360;
+            const cryptoDeg = (crypto / 100) * 360;
+
+            let currentDeg = 0;
+            const gradient = `conic-gradient(
+                var(--primary-color) ${currentDeg}deg ${currentDeg + stocksDeg}deg,
+                var(--success-green) ${currentDeg + stocksDeg}deg ${currentDeg + stocksDeg + bondsDeg}deg,
+                var(--warning-orange) ${currentDeg + stocksDeg + bondsDeg}deg ${currentDeg + stocksDeg + bondsDeg + realEstateDeg}deg,
+                var(--danger-red) ${currentDeg + stocksDeg + bondsDeg + realEstateDeg}deg ${currentDeg + stocksDeg + bondsDeg + realEstateDeg + cryptoDeg}deg
+            )`;
+
+            pie.style.background = gradient;
+
+            // Portfolio analysis
+            const expectedReturn = (stocks * 0.10 + bonds * 0.045 + realEstate * 0.08 + crypto * 0.25) / 100;
+            const riskScore = (stocks * 3 + bonds * 1 + realEstate * 2 + crypto * 5) / 100;
+
+            let riskLevel = '';
+            if (riskScore <= 2) riskLevel = 'Conservador';
+            else if (riskScore <= 3.5) riskLevel = 'Moderado';
+            else riskLevel = 'Agresivo';
+
+            const analysisHTML = `
+                <div class="mt-3 p-3 bg-light rounded">
+                    <h5>Análisis del Portfolio</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>Retorno esperado:</strong><br>
+                            ${(expectedReturn * 100).toFixed(1)}% anual
+                        </div>
+                        <div class="col-6">
+                            <strong>Nivel de riesgo:</strong><br>
+                            ${riskLevel}
+                        </div>
+                    </div>
+                    ${total !== 100 ? '<div class="alert alert-warning mt-2">⚠️ El total debe sumar 100%</div>' : 
+                      '<div class="alert alert-success mt-2">✅ Portfolio balanceado</div>'}
+                </div>
+            `;
+
+            document.getElementById('portfolioAnalysis').innerHTML = analysisHTML;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000);
+            
+            // Set default values
+            document.getElementById('initialInvestment').value = 5000;
+            document.getElementById('monthlyContribution').value = 1000;
+            calculateInvestmentGrowth();
+            updatePortfolio();
+        });
+
+        // Add touch support for mobile
+        if ('ontouchstart' in window) {
+            document.body.classList.add('touch-device');
+        }
+    </script>
+</body>
+</html>

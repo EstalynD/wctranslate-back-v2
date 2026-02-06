@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚨 WC Training: Master de Soluciones Rápidas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #dc2626;
+            --secondary-color: #059669;
+            --accent-blue: #2563eb;
+            --accent-orange: #ea580c;
+            --dark-red: #991b1b;
+            --light-red: #fca5a5;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-emergency: linear-gradient(135deg, #dc2626 0%, #ea580c 35%, #2563eb 70%, #059669 100%);
+            --gradient-diagnostic: linear-gradient(45deg, #991b1b 0%, #dc2626 25%, #ea580c 50%, #2563eb 75%, #059669 100%);
+            --gradient-solution: linear-gradient(180deg, #059669 0%, #2563eb 30%, #ea580c 70%, #dc2626 100%);
+            --gradient-protocol: linear-gradient(90deg, #2563eb 0%, #dc2626 25%, #059669 50%, #ea580c 75%, #991b1b 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* WC Training Header */
+        .wc-header {
+            background: var(--gradient-emergency);
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 10l10 20h-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s infinite ease-in-out;
+        }
+
+        .wc-logo {
+            color: white;
+            font-size: 2rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            color: white;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            margin-right: 8px;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            border-left: 6px solid var(--primary-color);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(220, 38, 38, 0.1);
+        }
+
+        .insight-stat {
+            background: var(--gradient-diagnostic);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .insight-stat:hover {
+            transform: translateY(-8px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-emergency);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M40 0l8 32-8 8-8-8zm0 80l-8-32 8-8 8 8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s infinite ease-in-out reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            margin: 3rem 0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .lab-header {
+            background: var(--gradient-diagnostic);
+            color: white;
+            padding: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .lab-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-content {
+            padding: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+
+        .lab-content.expanded {
+            max-height: 2000px;
+            padding: 2rem;
+        }
+
+        /* Interactive Cards */
+        .solution-card {
+            background: var(--gradient-solution);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 50px rgba(220, 38, 38, 0.3);
+        }
+
+        .solution-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .solution-card:hover::before {
+            left: 100%;
+        }
+
+        /* Emergency Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .status-critical {
+            background: var(--primary-color);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .status-warning {
+            background: var(--warning-orange);
+            color: white;
+        }
+
+        .status-solved {
+            background: var(--success-green);
+            color: white;
+        }
+
+        /* Calculator Sections */
+        .calculator-container {
+            background: var(--gradient-protocol);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .calc-result {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Diagnostic Simulator */
+        .diagnostic-simulator {
+            background: var(--gradient-emergency);
+            color: white;
+            padding: 3rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+        }
+
+        .symptom-option {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .symptom-option:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+        }
+
+        .symptom-option.selected {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-emergency);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Manual Structure */
+        .manual-entry {
+            background: white;
+            border: 1px solid var(--border-light);
+            border-radius: 15px;
+            margin: 1rem 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .manual-entry:hover {
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+
+        .entry-header {
+            background: var(--gradient-diagnostic);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+        }
+
+        .entry-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .entry-content.expanded {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: white;
+            border-left: 6px solid var(--secondary-color);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(5, 150, 105, 0.1);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            background: var(--gradient-diagnostic);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        /* Response Time Tracker */
+        .response-time-display {
+            background: var(--gradient-solution);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .time-counter {
+            font-size: 3rem;
+            font-weight: 900;
+            margin: 1rem 0;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-diagnostic);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-badge {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem;
+            font-weight: 700;
+            animation: bounce 2s infinite;
+        }
+
+        /* Problem Categories */
+        .problem-category {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Quick Reference Cards */
+        .quick-ref-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .quick-ref-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        @keyframes alert-blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.3; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .main-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .lab-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .wc-logo {
+                font-size: 1.5rem;
+            }
+
+            .solution-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .calculator-container,
+            .diagnostic-simulator,
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+
+            .time-counter {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .main-subtitle {
+                font-size: 1rem;
+            }
+
+            .lab-header {
+                padding: 1.5rem;
+            }
+
+            .lab-content.expanded {
+                padding: 1.5rem;
+            }
+
+            .solution-card {
+                padding: 1.5rem;
+            }
+
+            .story-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .problem-category {
+                padding: 1rem;
+            }
+        }
+
+        /* Custom buttons and interactions */
+        .btn-emergency {
+            background: var(--gradient-emergency);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-emergency:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+            color: white;
+        }
+
+        .highlight-critical {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            animation: alert-blink 2s infinite;
+        }
+
+        .current-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Diagnostic Tools */
+        .diagnostic-step {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .solution-step {
+            background: rgba(5, 150, 105, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-left: 4px solid var(--secondary-color);
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-video"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <span class="current-date" id="currentDate"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h4><i class="fas fa-chart-line"></i> Insights del Mercado de Soluciones Técnicas 2025</h4>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="insight-stat">
+                        <div class="stat-number">73%</div>
+                        <div>Reducción promedio en tiempo de resolución con manual sistemático</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-stat">
+                        <div class="stat-number">8.7x</div>
+                        <div>ROI en inversión de tiempo documentando vs. improvisación repetida</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-stat">
+                        <div class="stat-number">94%</div>
+                        <div>De problemas técnicos son predecibles y documentables</div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-3 mb-0"><small><strong>Fuente:</strong> Technical Support Industry Report 2025, Emergency Response Analytics</small></p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">🚨 Master de Soluciones Rápidas</h1>
+            <p class="main-subtitle">
+                Transforma el caos técnico en protocolos sistemáticos que convierten crisis potenciales en procedimientos rutinarios ejecutables bajo presión
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Lab Section 1: Fundamentos de Documentación -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('lab1')">
+                <h3><i class="fas fa-book-medical"></i> Lab 1: Fundamentos de Documentación Técnica</h3>
+                <p>Construye tu enciclopedia de resolución sistemática</p>
+                <i class="fas fa-chevron-down float-end"></i>
+            </div>
+            <div class="lab-content" id="lab1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="solution-card" onclick="expandCard(this)">
+                            <h5><i class="fas fa-clipboard-list"></i> Estructura de Entrada Estándar</h5>
+                            <p><span class="status-critical">CRÍTICO</span> Formato consistente para todas las entradas: Síntomas observables, causas probables, diagnóstico paso a paso, solución primaria, alternativas</p>
+                            <div class="card-details" style="display: none;">
+                                <hr>
+                                <div class="diagnostic-step">
+                                    <strong>1. Identificación del Problema:</strong> Descripción clara y observable
+                                </div>
+                                <div class="diagnostic-step">
+                                    <strong>2. Síntomas Específicos:</strong> Lista detallada de manifestaciones
+                                </div>
+                                <div class="diagnostic-step">
+                                    <strong>3. Causas Probables:</strong> Ordenadas por frecuencia de ocurrencia
+                                </div>
+                                <div class="diagnostic-step">
+                                    <strong>4. Protocolo de Diagnóstico:</strong> Pasos para confirmar causa específica
+                                </div>
+                                <div class="solution-step">
+                                    <strong>5. Solución Primaria:</strong> Procedimiento detallado paso a paso
+                                </div>
+                                <div class="solution-step">
+                                    <strong>6. Soluciones Alternativas:</strong> Si la primaria no funciona
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="solution-card" onclick="expandCard(this)">
+                            <h5><i class="fas fa-tags"></i> Sistema de Categorización</h5>
+                            <p><span class="status-warning">ESENCIAL</span> Organización por tipos: Hardware, Software, Red, Audio, Video, Streaming, Usuario</p>
+                            <div class="card-details" style="display: none;">
+                                <hr>
+                                <div class="problem-category">
+                                    <div class="category-icon">🔧</div>
+                                    <strong>Hardware:</strong> Cámaras, micrófonos, luces, dispositivos físicos
+                                </div>
+                                <div class="problem-category">
+                                    <div class="category-icon">💻</div>
+                                    <strong>Software:</strong> Aplicaciones, drivers, configuraciones del sistema
+                                </div>
+                                <div class="problem-category">
+                                    <div class="category-icon">🌐</div>
+                                    <strong>Red:</strong> Conectividad, velocidad, latencia, drops
+                                </div>
+                                <div class="problem-category">
+                                    <div class="category-icon">🎵</div>
+                                    <strong>Audio:</strong> Calidad, sync, ruido, feedback
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator: ROI de Documentación -->
+        <div class="calculator-container">
+            <h3><i class="fas fa-calculator"></i> Calculadora de ROI: Inversión en Documentación vs. Improvisación</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="number" class="calc-input" id="problemsPerMonth" placeholder="Problemas técnicos por mes" oninput="calculateDocROI()">
+                    <input type="number" class="calc-input" id="avgResolutionTime" placeholder="Tiempo promedio de resolución (minutos)" oninput="calculateDocROI()">
+                    <input type="number" class="calc-input" id="hourlyEarning" placeholder="Ganancias por hora ($)" oninput="calculateDocROI()">
+                    <input type="number" class="calc-input" id="docTime" placeholder="Tiempo creando documentación (horas)" value="20" oninput="calculateDocROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="docROIResult">
+                        <h5>Análisis de Retorno</h5>
+                        <p>Ingresa tus datos para ver el análisis completo de ROI</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagnostic Simulator -->
+        <div class="diagnostic-simulator">
+            <h3><i class="fas fa-stethoscope"></i> Simulador de Diagnóstico Técnico</h3>
+            <p>Practica identificación rápida de problemas comunes</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>Síntomas Observados</h5>
+                    <div class="symptom-option" onclick="selectSymptom(this, 'video-freeze')">
+                        <i class="fas fa-video-slash"></i> <strong>Video se congela pero audio continúa</strong>
+                    </div>
+                    <div class="symptom-option" onclick="selectSymptom(this, 'audio-delay')">
+                        <i class="fas fa-clock"></i> <strong>Audio retrasado respecto al video</strong>
+                    </div>
+                    <div class="symptom-option" onclick="selectSymptom(this, 'poor-quality')">
+                        <i class="fas fa-exclamation-triangle"></i> <strong>Calidad de imagen muy baja</strong>
+                    </div>
+                    <div class="symptom-option" onclick="selectSymptom(this, 'connection-drops')">
+                        <i class="fas fa-wifi"></i> <strong>Conexión se corta frecuentemente</strong>
+                    </div>
+                    
+                    <h5 class="mt-4">Nivel de Urgencia</h5>
+                    <div class="symptom-option" onclick="selectUrgency(this, 'critical')">
+                        <span class="status-critical">CRÍTICO</span> - Show en vivo afectado
+                    </div>
+                    <div class="symptom-option" onclick="selectUrgency(this, 'high')">
+                        <span class="status-warning">ALTO</span> - Impacta experiencia usuario
+                    </div>
+                    <div class="symptom-option" onclick="selectUrgency(this, 'medium')">
+                        <span class="status-solved">MEDIO</span> - Molestia menor
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="diagnosticResult">
+                        <h5>Diagnóstico y Protocolo</h5>
+                        <p>Selecciona síntomas para ver diagnóstico y protocolo de resolución</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Protocolos de Emergencia -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('lab2')">
+                <h3><i class="fas fa-ambulance"></i> Lab 2: Protocolos de Emergencia y Respuesta Rápida</h3>
+                <p>Sistemas para crisis técnicas durante shows en vivo</p>
+                <i class="fas fa-chevron-down float-end"></i>
+            </div>
+            <div class="lab-content" id="lab2">
+                <div class="response-time-display">
+                    <h4><i class="fas fa-stopwatch"></i> Objetivo de Respuesta</h4>
+                    <div class="time-counter">≤ 30 segundos</div>
+                    <p>Tiempo máximo para implementar solución temporal y mantener show activo</p>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><span class="highlight-critical">PROTOCOLO 1</span> - Soluciones Temporales Inmediatas</h5>
+                        <div class="quick-ref-card">
+                            <h6><i class="fas fa-video"></i> Video Failure</h6>
+                            <p><strong>≤10 seg:</strong> Switch a cámara backup + mensaje pre-grabado</p>
+                            <p><strong>Diagnóstico:</strong> Reiniciar software + check cables</p>
+                        </div>
+                        <div class="quick-ref-card">
+                            <h6><i class="fas fa-microphone"></i> Audio Issues</h6>
+                            <p><strong>≤5 seg:</strong> Activar micrófono secundario + chat text</p>
+                            <p><strong>Diagnóstico:</strong> Levels + driver + hardware check</p>
+                        </div>
+                        <div class="quick-ref-card">
+                            <h6><i class="fas fa-wifi"></i> Connection Drop</h6>
+                            <p><strong>≤15 seg:</strong> Mobile hotspot + reload stream</p>
+                            <p><strong>Diagnóstico:</strong> Speed test + router restart</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><span class="highlight-critical">PROTOCOLO 2</span> - Comunicación con Audiencia</h5>
+                        <div class="quick-ref-card">
+                            <h6><i class="fas fa-comments"></i> Mensajes Pre-definidos</h6>
+                            <ul class="small">
+                                <li>"Ajustando calidad para mejor experiencia - 30 segundos"</li>
+                                <li>"Pequeño problema técnico - resolviendo inmediatamente"</li>
+                                <li>"Actualizando configuración - momento musical"</li>
+                                <li>"Optimizando conexión - chat activo"</li>
+                            </ul>
+                        </div>
+                        <div class="quick-ref-card">
+                            <h6><i class="fas fa-clock"></i> Timeline de Comunicación</h6>
+                            <ul class="small">
+                                <li><strong>0-10 seg:</strong> Implementar solución temporal</li>
+                                <li><strong>10-15 seg:</strong> Mensaje tranquilizador a audiencia</li>
+                                <li><strong>15-45 seg:</strong> Diagnóstico + solución permanente</li>
+                                <li><strong>45+ seg:</strong> Update de progreso</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Manual Entry Examples -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('lab3')">
+                <h3><i class="fas fa-book"></i> Lab 3: Ejemplos de Entradas de Manual</h3>
+                <p>Plantillas estructuradas para documentación efectiva</p>
+                <i class="fas fa-chevron-down float-end"></i>
+            </div>
+            <div class="lab-content" id="lab3">
+                <div class="manual-entry">
+                    <div class="entry-header" onclick="toggleEntry(this)">
+                        <h6><i class="fas fa-video-slash"></i> PROBLEMA: Stream se corta cada 10-15 minutos</h6>
+                        <span class="status-critical">CRÍTICO</span>
+                    </div>
+                    <div class="entry-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Síntomas Observables</h6>
+                                <ul>
+                                    <li>Desconexión automática cada 10-15 min</li>
+                                    <li>Error "Connection timeout" en software</li>
+                                    <li>LED del router parpadea durante cortes</li>
+                                    <li>Velocidad de upload fluctúa</li>
+                                </ul>
+                                
+                                <h6 class="mt-3">Causas Probables (por frecuencia)</h6>
+                                <ol>
+                                    <li><strong>85%:</strong> Sobrecalentamiento del router</li>
+                                    <li><strong>10%:</strong> ISP throttling</li>
+                                    <li><strong>5%:</strong> Cable ethernet defectuoso</li>
+                                </ol>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Protocolo de Diagnóstico</h6>
+                                <div class="diagnostic-step">1. Verificar temperatura del router (¿está caliente?)</div>
+                                <div class="diagnostic-step">2. Speed test durante 30 minutos continuos</div>
+                                <div class="diagnostic-step">3. Revisar logs del ISP</div>
+                                <div class="diagnostic-step">4. Test con cable ethernet diferente</div>
+                                
+                                <h6 class="mt-3">Solución Primaria</h6>
+                                <div class="solution-step">1. Reposicionar router en área ventilada</div>
+                                <div class="solution-step">2. Instalar ventilador USB para enfriamiento</div>
+                                <div class="solution-step">3. Reducir bitrate durante setup</div>
+                                <div class="solution-step">4. Monitor temperatura post-cambios</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="manual-entry">
+                    <div class="entry-header" onclick="toggleEntry(this)">
+                        <h6><i class="fas fa-microphone-slash"></i> PROBLEMA: Audio con eco y reverb excesivo</h6>
+                        <span class="status-warning">ALTO</span>
+                    </div>
+                    <div class="entry-content">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Síntomas Observables</h6>
+                                <ul>
+                                    <li>Eco perceptible en grabaciones</li>
+                                    <li>Reverb excesivo en voz</li>
+                                    <li>Feedback ocasional</li>
+                                    <li>Sonido "hueco" o "metálico"</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Solución Rápida</h6>
+                                <div class="solution-step">1. Activar noise gate en software</div>
+                                <div class="solution-step">2. Ajustar ganancia del micrófono</div>
+                                <div class="solution-step">3. Reposicionar micrófono más cerca</div>
+                                <div class="solution-step">4. Agregar material absorbente temporal</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h4><i class="fas fa-chart-bar"></i> Tu Progreso en Documentación de Soluciones</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Problemas Documentados</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 67%" id="documentationProgress"></div>
+                    </div>
+                    <p class="small">67% - 23 de 35 problemas comunes documentados</p>
+                    
+                    <h6>Protocolos de Emergencia</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 89%" id="protocolProgress"></div>
+                    </div>
+                    <p class="small">89% - Procedimientos críticos completados</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Tiempo Promedio de Resolución</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 78%" id="resolutionProgress"></div>
+                    </div>
+                    <p class="small">78% - Reducción del tiempo vs. baseline inicial</p>
+                    
+                    <h6>Cobertura de Categorías</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 92%" id="coverageProgress"></div>
+                    </div>
+                    <p class="small">92% - 11 de 12 categorías técnicas cubiertas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-story">
+            <h4><i class="fas fa-trophy"></i> Caso de Éxito: Elena's Technical Crisis Management</h4>
+            <p class="mt-3">
+                Después de 6 meses de problemas técnicos recurrentes que me costaron audiencia y estrés extremo, implementé mi 'Enciclopedia de Resolución Técnica'. Documenté sistemáticamente cada problema con diagnóstico preciso y protocolos paso a paso. Mi manual cubre 47 problemas diferentes organizados en 8 categorías con 152 soluciones verificadas.
+            </p>
+            <div class="story-metrics">
+                <div class="metric-item">
+                    <strong>-73%</strong><br>
+                    <small>Reducción tiempo promedio resolución</small>
+                </div>
+                <div class="metric-item">
+                    <strong>-89%</strong><br>
+                    <small>Disminución en estrés técnico</small>
+                </div>
+                <div class="metric-item">
+                    <strong>+156%</strong><br>
+                    <small>Incremento en confianza profesional</small>
+                </div>
+                <div class="metric-item">
+                    <strong>40 hrs</strong><br>
+                    <small>Tiempo invertido que ahorró 200+ horas</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h4><i class="fas fa-star"></i> Caso de Éxito: Marcus's Emergency Protocol System</h4>
+            <p class="mt-3">
+                Tras perder múltiples shows por fallos técnicos no documentados, desarrollé protocolos específicos para cada tipo de emergencia. Mi sistema incluye soluciones temporales ≤30 segundos, diagnósticos estructurados, y comunicación pre-definida con audiencia. Transformé crisis técnicas en inconvenientes menores manejables.
+            </p>
+            <div class="story-metrics">
+                <div class="metric-item">
+                    <strong>97%</strong><br>
+                    <small>Problemas resueltos sin perder audiencia</small>
+                </div>
+                <div class="metric-item">
+                    <strong>23 seg</strong><br>
+                    <small>Tiempo promedio de respuesta a emergencias</small>
+                </div>
+                <div class="metric-item">
+                    <strong>+$2,400</strong><br>
+                    <small>Ganancias recuperadas vs. shows perdidos</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-crown"></i> ¡Tu Sistema de Respuesta Técnica Está Operativo!</h2>
+            <p class="mb-4">Has transformado el caos técnico en protocolos sistemáticos que convierten emergencias en procedimientos rutinarios</p>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-book-medical"></i><br>
+                        Master en Documentación
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-ambulance"></i><br>
+                        Experto en Emergencias
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-stopwatch"></i><br>
+                        Especialista en Respuesta
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-shield-alt"></i><br>
+                        Ingeniero de Sistemas
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <h4>Tu Próximo Nivel:</h4>
+                <p>Con 35+ problemas documentados, protocolos de emergencia <30 segundos, y 73% reducción en tiempo de resolución, has eliminado el caos técnico y construido confianza profesional inquebrantable.</p>
+                <button class="btn-emergency mt-3" onclick="celebrateCompletion()">
+                    <i class="fas fa-rocket"></i> ¡A Dominar Cada Crisis!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current date display
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateCurrentDate();
+        setInterval(updateCurrentDate, 60000);
+
+        // Toggle lab section details
+        function toggleDetails(labId) {
+            const content = document.getElementById(labId);
+            const header = content.previousElementSibling;
+            const icon = header.querySelector('.fa-chevron-down');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Toggle manual entries
+        function toggleEntry(header) {
+            const content = header.nextElementSibling;
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+            } else {
+                content.classList.add('expanded');
+            }
+        }
+
+        // Expand solution cards
+        function expandCard(card) {
+            const details = card.querySelector('.card-details');
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                card.style.background = 'linear-gradient(135deg, #991b1b 0%, #dc2626 50%, #059669 100%)';
+            } else {
+                details.style.display = 'none';
+                card.style.background = 'var(--gradient-solution)';
+            }
+        }
+
+        // Documentation ROI Calculator
+        function calculateDocROI() {
+            const problems = parseFloat(document.getElementById('problemsPerMonth').value) || 0;
+            const avgTime = parseFloat(document.getElementById('avgResolutionTime').value) || 0;
+            const hourlyRate = parseFloat(document.getElementById('hourlyEarning').value) || 0;
+            const docTime = parseFloat(document.getElementById('docTime').value) || 20;
+            
+            if (problems > 0 && avgTime > 0 && hourlyRate > 0) {
+                const currentLossPerMonth = (problems * avgTime / 60) * hourlyRate;
+                const improvedTime = avgTime * 0.27; // 73% reduction
+                const newLossPerMonth = (problems * improvedTime / 60) * hourlyRate;
+                const monthlySavings = currentLossPerMonth - newLossPerMonth;
+                const docCost = docTime * hourlyRate;
+                const paybackDays = docCost / (monthlySavings / 30);
+                const yearlyROI = (monthlySavings * 12 / docCost * 100);
+                
+                document.getElementById('docROIResult').innerHTML = `
+                    <h5><i class="fas fa-chart-line"></i> Análisis Completo</h5>
+                    <p><strong>Pérdida actual:</strong> $${currentLossPerMonth.toLocaleString()}/mes</p>
+                    <p><strong>Pérdida con manual:</strong> $${newLossPerMonth.toLocaleString()}/mes</p>
+                    <p><strong>Ahorro mensual:</strong> $${monthlySavings.toLocaleString()}</p>
+                    <p><strong>Inversión documentación:</strong> $${docCost.toLocaleString()}</p>
+                    <p><strong>Recuperación:</strong> ${paybackDays.toFixed(1)} días</p>
+                    <p><strong>ROI anual:</strong> ${yearlyROI.toFixed(0)}%</p>
+                    <div class="mt-3 p-2" style="background: rgba(40, 167, 69, 0.2); border-radius: 10px;">
+                        <small><strong>Tiempo ahorrado anualmente:</strong> ${((problems * (avgTime - improvedTime) / 60) * 12).toFixed(0)} horas</small>
+                    </div>
+                `;
+            }
+        }
+
+        // Diagnostic simulator
+        let selectedSymptom = '';
+        let selectedUrgency = '';
+
+        function selectSymptom(element, symptom) {
+            document.querySelectorAll('.symptom-option').forEach(opt => {
+                if (opt.textContent.includes('Video') || opt.textContent.includes('Audio') || opt.textContent.includes('Calidad') || opt.textContent.includes('Conexión')) {
+                    opt.classList.remove('selected');
+                }
+            });
+            element.classList.add('selected');
+            selectedSymptom = symptom;
+            updateDiagnostic();
+        }
+
+        function selectUrgency(element, urgency) {
+            document.querySelectorAll('.symptom-option').forEach(opt => {
+                if (opt.textContent.includes('CRÍTICO') || opt.textContent.includes('ALTO') || opt.textContent.includes('MEDIO')) {
+                    opt.classList.remove('selected');
+                }
+            });
+            element.classList.add('selected');
+            selectedUrgency = urgency;
+            updateDiagnostic();
+        }
+
+        function updateDiagnostic() {
+            if (selectedSymptom && selectedUrgency) {
+                const diagnostics = {
+                    'video-freeze-critical': {
+                        problem: 'Video Congelado - Crítico',
+                        cause: 'Sobrecarga de CPU o memoria insuficiente',
+                        protocol: ['Cerrar aplicaciones innecesarias inmediatamente', 'Reducir resolución de stream', 'Reiniciar software de streaming', 'Verificar uso de CPU'],
+                        solution: 'Switch inmediato a cámara backup + reinicio de software',
+                        time: '≤15 segundos'
+                    },
+                    'video-freeze-high': {
+                        problem: 'Video Congelado - Alto',
+                        cause: 'Driver de video desactualizado o conflicto',
+                        protocol: ['Reiniciar software de streaming', 'Verificar configuración de video', 'Update de drivers si es posible'],
+                        solution: 'Reinicio del software + ajuste de configuración',
+                        time: '≤45 segundos'
+                    },
+                    'audio-delay-critical': {
+                        problem: 'Audio Retrasado - Crítico',
+                        cause: 'Buffer de audio saturado o latencia extrema',
+                        protocol: ['Reducir buffer size inmediatamente', 'Cerrar audio apps secundarias', 'Reiniciar driver de audio'],
+                        solution: 'Ajuste inmediato de buffer + mensaje pre-grabado',
+                        time: '≤10 segundos'
+                    },
+                    'poor-quality-critical': {
+                        problem: 'Calidad Baja - Crítico',
+                        cause: 'Ancho de banda insuficiente',
+                        protocol: ['Speed test inmediato', 'Reducir bitrate 50%', 'Verificar otras aplicaciones usando red'],
+                        solution: 'Reducción automática de calidad + switch a móvil',
+                        time: '≤20 segundos'
+                    },
+                    'connection-drops-critical': {
+                        problem: 'Conexión Inestable - Crítico',
+                        cause: 'Router sobrecalentado o ISP throttling',
+                        protocol: ['Speed test continuo', 'Reinicio de router', 'Switch a conexión móvil backup'],
+                        solution: 'Activación inmediata de hotspot móvil',
+                        time: '≤25 segundos'
+                    }
+                };
+
+                const key = selectedSymptom + '-' + selectedUrgency;
+                const diagnostic = diagnostics[key];
+                
+                if (diagnostic) {
+                    const urgencyClass = selectedUrgency === 'critical' ? 'status-critical' : 
+                                       selectedUrgency === 'high' ? 'status-warning' : 'status-solved';
+                    
+                    document.getElementById('diagnosticResult').innerHTML = `
+                        <h5><i class="fas fa-stethoscope"></i> ${diagnostic.problem}</h5>
+                        <p><span class="${urgencyClass}">${selectedUrgency.toUpperCase()}</span></p>
+                        
+                        <h6 class="mt-3">Causa Probable</h6>
+                        <p>${diagnostic.cause}</p>
+                        
+                        <h6>Protocolo de Diagnóstico</h6>
+                        <ol>
+                            ${diagnostic.protocol.map(step => `<li>${step}</li>`).join('')}
+                        </ol>
+                        
+                        <h6>Solución de Emergencia</h6>
+                        <div class="p-2" style="background: rgba(5, 150, 105, 0.2); border-radius: 10px;">
+                            <strong>${diagnostic.solution}</strong><br>
+                            <small>Tiempo objetivo: ${diagnostic.time}</small>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Progress bar animations
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.width = bar.style.width;
+                }, index * 500);
+            });
+        }
+
+        // Celebration function
+        function celebrateCompletion() {
+            const button = event.target;
+            button.innerHTML = '<i class="fas fa-check"></i> ¡Sistema Activado!';
+            button.style.background = 'var(--success-green)';
+            
+            // Create celebration effect
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 100);
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.background = ['#dc2626', '#059669', '#2563eb', '#ea580c'][Math.floor(Math.random() * 4)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            document.body.appendChild(confetti);
+
+            let pos = -10;
+            const fall = setInterval(() => {
+                pos += 5;
+                confetti.style.top = pos + 'px';
+                confetti.style.transform = `rotate(${pos * 3}deg)`;
+                
+                if (pos > window.innerHeight) {
+                    clearInterval(fall);
+                    confetti.remove();
+                }
+            }, 50);
+        }
+
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            animateProgressBars();
+        });
+
+        // Emergency notification system
+        function showEmergencyNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #dc2626, #ea580c);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 25px rgba(220, 38, 38, 0.3);
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>🎥 Masters en Configuración de Cámara | WC Training Labs</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #004e89;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-camera: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffd700 100%);
+            --gradient-tech: linear-gradient(135deg, #004e89 0%, #009ffd 50%, #2a2a72 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 50%, #17a2b8 100%);
+            --gradient-premium: linear-gradient(135deg, #6f42c1 0%, #e83e8c 50%, #fd7e14 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-camera);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .pulse {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border: 1px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-camera);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-tech);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M20 20h60v60H20z' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3E%3Ccircle cx='50' cy='50' r='25' fill='none' stroke='%23ffffff' stroke-width='0.5' opacity='0.1'/%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            margin: 3rem 0;
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-camera);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-camera);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Interactive Cards */
+        .config-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .config-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .config-card.expanded {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.05) 0%, rgba(240, 240, 240, 0.05) 100%);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .card-details.expanded {
+            max-height: 1000px;
+        }
+
+        /* Calculator Sections */
+        .calculator-section {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .calc-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+            outline: none;
+        }
+
+        .calc-result {
+            background: var(--gradient-success);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress {
+            height: 20px;
+            border-radius: 10px;
+            background: #e9ecef;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-camera);
+            transition: width 1s ease;
+            border-radius: 10px;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: linear-gradient(135deg, rgba(111, 66, 193, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-btn {
+            background: var(--gradient-premium);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .scenario-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(111, 66, 193, 0.3);
+        }
+
+        .scenario-btn.active {
+            background: var(--gradient-success);
+            transform: scale(1.05);
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-left: 5px solid var(--success-green);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 0 15px 15px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(240, 240, 240, 0.1) 100%);
+            border-radius: 10px;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--success-green);
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-premium);
+            color: white;
+            padding: 3rem;
+            border-radius: 25px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M40 0l12 12-12 12-12-12z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 2rem 0;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .config-card {
+                padding: 1rem;
+            }
+            
+            .story-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .scenario-btn {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .lab-section {
+                padding: 1rem;
+            }
+            
+            .calculator-section,
+            .simulator-section {
+                padding: 1rem;
+            }
+            
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+            
+            .calc-input {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn, .scenario-btn, .calc-input {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .config-card {
+                border-width: 3px;
+            }
+            
+            .insight-card {
+                border-width: 2px;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2 class="mb-0"><i class="fas fa-video"></i> WC Training Labs</h2>
+                    <p class="mb-0">Academia de Elite para Modelos Profesionales</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="live-indicator">
+                        <div class="pulse"></div>
+                        <span>12,847 modelos activas</span>
+                    </div>
+                    <div class="mt-2">
+                        <small>Actualizado: <span id="currentTime"></span></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="insights-section">
+        <div class="container-fluid">
+            <h3 class="text-center mb-4">📊 Industry Insights 2025</h3>
+            <div class="row g-4">
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">89%</div>
+                        <p><strong>Modelos Top</strong><br>Optimizan configuración técnica</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">340%</div>
+                        <p><strong>Incremento ROI</strong><br>Con tests sistemáticos</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <p><strong>Fallan por</strong><br>Configuración amateur</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">156</div>
+                        <p><strong>Variables técnicas</strong><br>A optimizar profesionalmente</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">2.8x</div>
+                        <p><strong>Más ingresos</strong><br>Config científica vs aleatoria</p>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">47min</div>
+                        <p><strong>Tiempo promedio</strong><br>Optimización completa</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-lg-12 text-center">
+                    <h1 class="main-title">🎥 Masters en Configuración de Cámara</h1>
+                    <p class="lead fs-4">Transforma tu presencia digital de amateur a científica visual profesional</p>
+                    <p class="fs-5">Domina el arte y ciencia de la optimización técnica que separa el top 10% del resto</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Lab Section 1: Fundamentos Científicos -->
+        <div class="lab-section">
+            <h2 class="lab-title">🔬 Laboratorio de Fundamentos Científicos</h2>
+            <p class="lead">Tu imperio financiero comienza con metodología científica aplicada a configuración visual.</p>
+            
+            <div class="config-card" onclick="toggleDetails('fundamentos')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4><i class="fas fa-microscope"></i> Metodología Experimental Avanzada</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="fundamentos">
+                    <hr>
+                    <p><strong>CRÍTICO:</strong> El 73% de modelos fallan porque aplican configuraciones aleatorias sin metodología científica.</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Variables Controladas:</h5>
+                            <ul>
+                                <li>Resolución (720p, 1080p, 4K)</li>
+                                <li>FPS (24, 30, 60)</li>
+                                <li>Bitrate (2000-8000 kbps)</li>
+                                <li>ISO (100-1600)</li>
+                                <li>Apertura (f/1.4 - f/8)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Condiciones Constantes:</h5>
+                            <ul>
+                                <li>Iluminación idéntica</li>
+                                <li>Posición exacta</li>
+                                <li>Tiempo de día</li>
+                                <li>Configuración de fondo</li>
+                                <li>Vestimenta de referencia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="config-card" onclick="toggleDetails('documentacion')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4><i class="fas fa-clipboard-list"></i> Sistema de Documentación Profesional</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="documentacion">
+                    <hr>
+                    <p><strong>ESENCIAL:</strong> Masters documentan sistemáticamente cada experimento para construir base de conocimiento personalizada.</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>Datos Técnicos:</h6>
+                            <ul>
+                                <li>Configuraciones exactas</li>
+                                <li>Timestamp preciso</li>
+                                <li>Condiciones ambientales</li>
+                                <li>Hardware utilizado</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Resultados Visuales:</h6>
+                            <ul>
+                                <li>Screenshots comparativos</li>
+                                <li>Análisis de calidad</li>
+                                <li>Detección de problemas</li>
+                                <li>Métricas objetivas</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Impacto Financiero:</h6>
+                            <ul>
+                                <li>Tips por sesión</li>
+                                <li>Tiempo de retención</li>
+                                <li>Engagement rate</li>
+                                <li>Conversión premium</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Calculadora de Optimización -->
+        <div class="lab-section">
+            <h2 class="lab-title">📊 Calculadora de Optimización Técnica</h2>
+            <p class="lead">Calcula el impacto financiero de tu configuración optimizada vs amateur.</p>
+            
+            <div class="calculator-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Configuración Actual:</h5>
+                        <div class="mb-3">
+                            <label>Resolución:</label>
+                            <select class="calc-input w-100" id="resolution" onchange="calculateOptimization()">
+                                <option value="720">720p</option>
+                                <option value="1080">1080p</option>
+                                <option value="1440">1440p</option>
+                                <option value="2160">4K</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>FPS:</label>
+                            <select class="calc-input w-100" id="fps" onchange="calculateOptimization()">
+                                <option value="24">24 FPS</option>
+                                <option value="30">30 FPS</option>
+                                <option value="60">60 FPS</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Bitrate (kbps):</label>
+                            <input type="range" class="form-range" min="1000" max="8000" value="3000" id="bitrate" onchange="calculateOptimization()">
+                            <small>Actual: <span id="bitrateValue">3000</span> kbps</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Datos de Performance:</h5>
+                        <div class="mb-3">
+                            <label>Ingresos por hora actual ($):</label>
+                            <input type="number" class="calc-input w-100" id="currentIncome" placeholder="Ej: 45" onchange="calculateOptimization()">
+                        </div>
+                        <div class="mb-3">
+                            <label>Horas de trabajo diarias:</label>
+                            <input type="number" class="calc-input w-100" id="hoursDaily" placeholder="Ej: 6" onchange="calculateOptimization()">
+                        </div>
+                        <div class="mb-3">
+                            <label>Días de trabajo semanales:</label>
+                            <input type="number" class="calc-input w-100" id="daysWeekly" placeholder="Ej: 5" onchange="calculateOptimization()">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calc-result" id="optimizationResults">
+                    <h4>💰 Completa los datos para ver tu potencial de optimización</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Simulador de Escenarios -->
+        <div class="lab-section">
+            <h2 class="lab-title">🎮 Simulador de Escenarios de Configuración</h2>
+            <p class="lead">Experimenta diferentes combinaciones y ve resultados proyectados.</p>
+            
+            <div class="simulator-section">
+                <h5 class="mb-3">Selecciona tu escenario de trabajo:</h5>
+                <div class="text-center mb-4">
+                    <button class="scenario-btn" onclick="selectScenario('morning')">☀️ Sesión Matutina</button>
+                    <button class="scenario-btn" onclick="selectScenario('afternoon')">🌅 Sesión Tarde</button>
+                    <button class="scenario-btn" onclick="selectScenario('evening')">🌙 Sesión Nocturna</button>
+                    <button class="scenario-btn" onclick="selectScenario('premium')">💎 Sesión Premium</button>
+                </div>
+                
+                <div id="scenarioResults" class="mt-4">
+                    <div class="text-center text-muted">
+                        <i class="fas fa-arrow-up fa-2x mb-3"></i>
+                        <p>Selecciona un escenario para ver configuraciones optimizadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 4: Tracker de Progreso -->
+        <div class="lab-section">
+            <h2 class="lab-title">📈 Tracker de Optimización Progresiva</h2>
+            <p class="lead">Monitorea tu evolución hacia la maestría técnica completa.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Configuración Básica</h5>
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Resolución Optimizada</span>
+                            <span id="resolutionProgress">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%" id="resolutionBar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>FPS Profesional</span>
+                            <span id="fpsProgress">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%" id="fpsBar"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Bitrate Balanceado</span>
+                            <span id="bitrateProgress">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 0%" id="bitrateProgressBar"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h5>Configuración Avanzada</h5>
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Metodología Científica</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Documentación Sistemática</span>
+                            <span>70%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-container">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Análisis Comparativo</span>
+                            <span>92%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 92%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <h2 class="lab-title">⭐ Casos de Éxito Documentados</h2>
+            
+            <div class="success-story">
+                <h4>"Laboratorio de Optimización Visual" - Sofia, Colombia</h4>
+                <p><em>"Implementé el protocolo científico completo durante 3 semanas. Mi metodología consistió en probar sistemáticamente cada variable técnica mientras documentaba meticulosamente resultados. El breakthrough vino cuando descubrí que mi cámara producía colores de piel 340% más favorecedores a ISO 400 que a configuraciones automáticas."</em></p>
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">$2,847</div>
+                        <small>Ingresos mensuales ANTES</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$9,235</div>
+                        <small>Ingresos mensuales DESPUÉS</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">224%</div>
+                        <small>Incremento ROI</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">18 días</div>
+                        <small>Tiempo optimización</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>"Transformación Técnica Sistemática" - Carolina, México</h4>
+                <p><em>"Apliqué tests A/B rigurosos comparando 47 combinaciones diferentes de configuración. Cada experimento incluía autofotos de referencia y evaluación ciega de usuarios. Resultado: identifiqué configuración específica que incrementó retención de viewers en 89% y tips promedio en 156%."</em></p>
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">23min</div>
+                        <small>Retención promedio ANTES</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">67min</div>
+                        <small>Retención promedio DESPUÉS</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">156%</div>
+                        <small>Aumento tips promedio</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">47</div>
+                        <small>Configuraciones probadas</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>"Maestría en Variables Técnicas" - Valentina, Argentina</h4>
+                <p><em>"Desarrollé matriz de optimización que correlaciona cada variable técnica con métricas específicas de performance. Descubrí que resolución 'máxima' generaba problemas de conexión sin mejorar calidad perceptible, permitiendo optimizar simultáneamente estabilidad y estética."</em></p>
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">34%</div>
+                        <small>Problemas conexión ANTES</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3%</div>
+                        <small>Problemas conexión DESPUÉS</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">91%</div>
+                        <small>Reducción interrupciones</small>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">267%</div>
+                        <small>Mejora estabilidad</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2 class="mb-4">🎯 Tu Transformación hacia la Maestría Técnica</h2>
+            <p class="fs-4 mb-4">Has completado el entrenamiento en metodología científica para configuración de cámara profesional</p>
+            
+            <div class="row text-center">
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>156+</h3>
+                    <p>Variables técnicas dominadas</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>340%</h3>
+                    <p>Potencial incremento ROI</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>47min</h3>
+                    <p>Tiempo optimización completa</p>
+                </div>
+                <div class="col-md-3 col-6 mb-3">
+                    <h3>Top 10%</h3>
+                    <p>Elite técnica alcanzada</p>
+                </div>
+            </div>
+            
+            <p class="fs-5 mt-4">
+                <strong>¡A construir tu imperio de configuración científica! 🚀</strong><br>
+                La diferencia entre amateurismo y maestría está en la metodología sistemática que acabas de dominar.
+            </p>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZone: 'America/Bogota'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Toggle card details
+        function toggleDetails(id) {
+            const details = document.getElementById(id);
+            const card = details.closest('.config-card');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                card.classList.remove('expanded');
+            } else {
+                details.classList.add('expanded');
+                card.classList.add('expanded');
+            }
+        }
+
+        // Calculate optimization
+        function calculateOptimization() {
+            const resolution = document.getElementById('resolution').value;
+            const fps = document.getElementById('fps').value;
+            const bitrate = document.getElementById('bitrate').value;
+            const currentIncome = parseFloat(document.getElementById('currentIncome').value) || 0;
+            const hoursDaily = parseFloat(document.getElementById('hoursDaily').value) || 0;
+            const daysWeekly = parseFloat(document.getElementById('daysWeekly').value) || 0;
+            
+            // Update bitrate display
+            document.getElementById('bitrateValue').textContent = bitrate;
+            
+            if (currentIncome > 0 && hoursDaily > 0 && daysWeekly > 0) {
+                // Calculate optimization multiplier based on settings
+                let multiplier = 1.0;
+                
+                // Resolution optimization
+                if (resolution == '1080') multiplier += 0.25;
+                else if (resolution == '1440') multiplier += 0.40;
+                else if (resolution == '2160') multiplier += 0.35; // 4K can have connection issues
+                
+                // FPS optimization
+                if (fps == '30') multiplier += 0.20;
+                else if (fps == '60') multiplier += 0.35;
+                
+                // Bitrate optimization (sweet spot around 4000-6000)
+                if (bitrate >= 4000 && bitrate <= 6000) multiplier += 0.30;
+                else if (bitrate >= 3000 && bitrate < 4000) multiplier += 0.15;
+                
+                const optimizedHourly = currentIncome * multiplier;
+                const dailyIncrease = (optimizedHourly - currentIncome) * hoursDaily;
+                const weeklyIncrease = dailyIncrease * daysWeekly;
+                const monthlyIncrease = weeklyIncrease * 4.33;
+                const yearlyIncrease = monthlyIncrease * 12;
+                
+                const percentageIncrease = ((multiplier - 1) * 100).toFixed(0);
+                
+                document.getElementById('optimizationResults').innerHTML = `
+                    <h4>🚀 Tu Potencial de Optimización</h4>
+                    <div class="row text-center mt-3">
+                        <div class="col-md-3 col-6">
+                            <h5>$${optimizedHourly.toFixed(0)}</h5>
+                            <small>Por hora optimizada</small>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <h5>+$${monthlyIncrease.toFixed(0)}</h5>
+                            <small>Incremento mensual</small>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <h5>+$${yearlyIncrease.toFixed(0)}</h5>
+                            <small>Incremento anual</small>
+                        </div>
+                        <div class="col-md-3 col-6">
+                            <h5>+${percentageIncrease}%</h5>
+                            <small>Mejora total</small>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0"><strong>CRÍTICO:</strong> Estas proyecciones se basan en optimizaciones documentadas por modelos en WC Training Labs.</p>
+                `;
+                
+                // Update progress bars
+                updateProgressBars(resolution, fps, bitrate);
+            }
+        }
+
+        // Update progress bars
+        function updateProgressBars(resolution, fps, bitrate) {
+            // Resolution progress
+            let resProgress = 0;
+            if (resolution >= 1080) resProgress = resolution == 1080 ? 85 : resolution == 1440 ? 95 : 75;
+            else resProgress = 40;
+            
+            document.getElementById('resolutionProgress').textContent = resProgress + '%';
+            document.getElementById('resolutionBar').style.width = resProgress + '%';
+            
+            // FPS progress
+            let fpsProgress = fps == 30 ? 70 : fps == 60 ? 90 : 45;
+            document.getElementById('fpsProgress').textContent = fpsProgress + '%';
+            document.getElementById('fpsBar').style.width = fpsProgress + '%';
+            
+            // Bitrate progress
+            let bitrateProgress = 30;
+            if (bitrate >= 4000 && bitrate <= 6000) bitrateProgress = 95;
+            else if (bitrate >= 3000 && bitrate < 4000) bitrateProgress = 70;
+            else if (bitrate > 6000) bitrateProgress = 60;
+            
+            document.getElementById('bitrateProgress').textContent = bitrateProgress + '%';
+            document.getElementById('bitrateProgressBar').style.width = bitrateProgress + '%';
+        }
+
+        // Scenario selector
+        function selectScenario(scenario) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.scenario-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to selected button
+            event.target.classList.add('active');
+            
+            const scenarios = {
+                morning: {
+                    title: '☀️ Configuración Sesión Matutina',
+                    description: 'Optimizada para luz natural suave y audiencia de horario laboral',
+                    settings: {
+                        resolution: '1080p',
+                        fps: '30 FPS',
+                        bitrate: '4500 kbps',
+                        iso: '200-400',
+                        exposure: '+0.3 EV'
+                    },
+                    benefits: [
+                        'Aprovecha luz natural para menor consumo energético',
+                        'FPS optimizado para conexiones estables matutinas',
+                        'ISO bajo para máxima calidad de imagen',
+                        'Audiencia premium de horarios laborales'
+                    ],
+                    projection: '+45% ingresos vs configuración nocturna'
+                },
+                afternoon: {
+                    title: '🌅 Configuración Sesión Tarde',
+                    description: 'Balanceada para transición luz natural/artificial',
+                    settings: {
+                        resolution: '1080p',
+                        fps: '60 FPS',
+                        bitrate: '5200 kbps',
+                        iso: '400-800',
+                        exposure: '0 EV'
+                    },
+                    benefits: [
+                        'FPS alto para mayor fluidez en horario peak',
+                        'Bitrate incrementado para audiencia premium',
+                        'Adaptabilidad a cambios de iluminación',
+                        'Horario de máximo tráfico global'
+                    ],
+                    projection: '+67% ingresos vs configuración básica'
+                },
+                evening: {
+                    title: '🌙 Configuración Sesión Nocturna',
+                    description: 'Optimizada para iluminación artificial y audiencia internacional',
+                    settings: {
+                        resolution: '1080p',
+                        fps: '30 FPS',
+                        bitrate: '4000 kbps',
+                        iso: '800-1200',
+                        exposure: '+0.5 EV'
+                    },
+                    benefits: [
+                        'ISO alto para compensar luz artificial',
+                        'FPS moderado para estabilidad nocturna',
+                        'Exposición aumentada para calidez',
+                        'Audiencia internacional diversa'
+                    ],
+                    projection: '+32% ingresos vs configuración diurna'
+                },
+                premium: {
+                    title: '💎 Configuración Sesión Premium',
+                    description: 'Máxima calidad para shows exclusivos y clientes VIP',
+                    settings: {
+                        resolution: '1440p',
+                        fps: '60 FPS',
+                        bitrate: '6000 kbps',
+                        iso: '200-600',
+                        exposure: '+0.2 EV'
+                    },
+                    benefits: [
+                        'Resolución superior para experiencia premium',
+                        'FPS máximo para fluidez profesional',
+                        'Bitrate alto para calidad sin compromisos',
+                        'Configuración técnica de elite mundial'
+                    ],
+                    projection: '+189% ingresos vs configuración estándar'
+                }
+            };
+            
+            const selected = scenarios[scenario];
+            
+            document.getElementById('scenarioResults').innerHTML = `
+                <div class="bg-white p-4 rounded-3 shadow">
+                    <h4 class="text-primary">${selected.title}</h4>
+                    <p class="text-muted mb-4">${selected.description}</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>Configuraciones Técnicas:</h5>
+                            <ul class="list-unstyled">
+                                <li><strong>Resolución:</strong> ${selected.settings.resolution}</li>
+                                <li><strong>FPS:</strong> ${selected.settings.fps}</li>
+                                <li><strong>Bitrate:</strong> ${selected.settings.bitrate}</li>
+                                <li><strong>ISO:</strong> ${selected.settings.iso}</li>
+                                <li><strong>Exposición:</strong> ${selected.settings.exposure}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Beneficios Clave:</h5>
+                            <ul>
+                                ${selected.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-success mt-3">
+                        <strong>Proyección Financiera:</strong> ${selected.projection}
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html>

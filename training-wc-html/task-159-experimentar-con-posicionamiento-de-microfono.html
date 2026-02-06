@@ -1,0 +1,2208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=0.5">
+  <title>WC Training - Laboratorio de Optimización Posicional de Micrófono</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #FF6B35;
+      --secondary-color: #F7931E;
+      --accent-color: #FFD23F;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc3545;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-dark: #2c1810;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+      --gradient-secondary: linear-gradient(135deg, #F7931E 0%, #FFD23F 100%);
+      --gradient-accent: linear-gradient(135deg, #FFD23F 0%, #FF6B35 100%);
+      --gradient-dark: linear-gradient(135deg, #2c1810 0%, #3d2817 100%);
+      --shadow-soft: 0 15px 40px rgba(255, 107, 53, 0.15);
+      --shadow-strong: 0 25px 60px rgba(255, 107, 53, 0.25);
+      --border-radius: 20px;
+      --border-radius-lg: 30px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gradient-dark);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--bg-white);
+      padding: 1rem 0;
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .wc-stats {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem 1rem;
+      background: var(--gradient-secondary);
+      border-radius: 15px;
+      color: white;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insights-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23FF6B35' fill-opacity='0.4'%3E%3Cpath d='M30 30m-15 0a15 15 0 1 1 30 0a15 15 0 1 1 -30 0'/%3E%3Cpath d='M30 15m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0'/%3E%3Cpath d='M30 45m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 22s ease-in-out infinite;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--success-green);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      animation: pulse 1.5s infinite;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-soft);
+      border-left: 5px solid var(--primary-color);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    /* Main Header */
+    .main-header {
+      padding: 4rem 0;
+      background: var(--gradient-dark);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FFD23F' fill-opacity='0.1'%3E%3Cpath d='M20 0L30 20L20 40L10 20Z'/%3E%3Cpath d='M0 20L20 10L40 20L20 30Z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 24s ease-in-out infinite reverse;
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: var(--bg-white);
+      margin: 2rem 0;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .lab-section:hover {
+      box-shadow: var(--shadow-strong);
+    }
+
+    .lab-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 2rem;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .lab-header:hover {
+      transform: translateX(10px);
+    }
+
+    .lab-header h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lab-content {
+      padding: 2rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-out;
+    }
+
+    .lab-content.active {
+      max-height: 3000px;
+    }
+
+    .expand-icon {
+      transition: var(--transition);
+      font-size: 1.2rem;
+    }
+
+    .lab-header.active .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Interactive Cards */
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .interactive-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid transparent;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-secondary);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Position Simulator */
+    .position-simulator {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+      position: relative;
+    }
+
+    .mic-visualization {
+      width: 300px;
+      height: 300px;
+      margin: 2rem auto;
+      position: relative;
+      background: radial-gradient(circle, rgba(255, 107, 53, 0.1) 0%, transparent 70%);
+      border-radius: 50%;
+      border: 2px dashed var(--primary-color);
+    }
+
+    .mic-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 2rem;
+      color: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .position-marker {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: var(--warning-orange);
+      border-radius: 50%;
+      border: 3px solid white;
+      cursor: pointer;
+      transition: var(--transition);
+      animation: pulse 2s infinite;
+    }
+
+    .position-marker:hover {
+      transform: scale(1.3);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .position-marker.active {
+      background: var(--success-green);
+      animation: none;
+    }
+
+    .distance-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .distance-btn {
+      background: white;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 44px;
+    }
+
+    .distance-btn:hover, .distance-btn.active {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Calculators */
+    .calculator {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .calculator-input {
+      margin-bottom: 1rem;
+    }
+
+    .calculator-input label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .calculator-input input, .calculator-input select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: white;
+    }
+
+    .calculator-input input:focus, .calculator-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+    }
+
+    .calculator-result {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 2px solid var(--success-green);
+      display: none;
+    }
+
+    .calculator-result.show {
+      display: block;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    .result-highlight {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--success-green);
+      margin-bottom: 1rem;
+    }
+
+    /* Progress Bars */
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress {
+      height: 12px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--gradient-primary);
+      transition: width 2s ease-out;
+      border-radius: 10px;
+    }
+
+    /* Angle Selector */
+    .angle-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .angle-btn {
+      background: white;
+      border: 2px solid var(--secondary-color);
+      color: var(--secondary-color);
+      padding: 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+      min-height: 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .angle-btn:hover, .angle-btn.active {
+      background: var(--secondary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    /* Success Stories */
+    .success-stories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .success-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      border-left: 5px solid var(--success-green);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .success-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .success-quote {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .success-quote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--primary-color);
+      position: absolute;
+      top: -1rem;
+      left: -1rem;
+      opacity: 0.3;
+    }
+
+    .success-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .metric {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 10px;
+    }
+
+    .metric-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--success-green);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-height: 44px;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-strong);
+      color: white;
+    }
+
+    .btn-secondary-custom {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-height: 44px;
+    }
+
+    .btn-secondary-custom:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      margin-top: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23F7931E' fill-opacity='0.1'%3E%3Cpath d='M40 40m-20 0a20 20 0 1 1 40 0a20 20 0 1 1 -40 0'/%3E%3Cpath d='M40 20m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0'/%3E%3Cpath d='M40 60m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0'/%3E%3Cpath d='M20 40m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0'/%3E%3Cpath d='M60 40m-5 0a5 5 0 1 1 10 0a5 5 0 1 1 -10 0'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .achievement {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+
+    .achievement:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .wc-brand {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .wc-stats {
+        justify-content: center;
+      }
+
+      .main-header {
+        padding: 2rem 0;
+      }
+
+      .lab-header {
+        padding: 1.5rem;
+      }
+
+      .lab-content {
+        padding: 1.5rem;
+      }
+
+      .interactive-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .success-stories {
+        grid-template-columns: 1fr;
+      }
+
+      .angle-selector {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+
+      .insights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .achievement-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .mic-visualization {
+        width: 250px;
+        height: 250px;
+      }
+
+      .distance-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .calculator {
+        padding: 1rem;
+      }
+
+      .position-simulator {
+        padding: 1rem;
+      }
+
+      .success-card {
+        padding: 1.5rem;
+      }
+
+      .final-summary {
+        padding: 2rem 0;
+      }
+
+      .btn-primary-custom, .btn-secondary-custom {
+        width: 100%;
+        justify-content: center;
+        padding: 1.2rem;
+      }
+
+      .mic-visualization {
+        width: 200px;
+        height: 200px;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card:hover,
+      .insight-card:hover,
+      .success-card:hover,
+      .achievement:hover {
+        transform: none;
+      }
+
+      .btn-primary-custom:hover,
+      .btn-secondary-custom:hover,
+      .distance-btn:hover,
+      .angle-btn:hover {
+        transform: none;
+      }
+
+      .lab-header:hover {
+        transform: none;
+      }
+
+      .position-marker:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="wc-brand">
+        <div class="wc-logo">
+          <i class="fas fa-microphone-alt"></i> WC TRAINING
+        </div>
+        <div class="wc-stats">
+          <div class="stat-item">
+            <div><strong>12,847</strong></div>
+            <div style="font-size: 0.8rem;">Modelos Activos</div>
+          </div>
+          <div class="stat-item">
+            <div><strong>2.3cm</strong></div>
+            <div style="font-size: 0.8rem;">Precisión Promedio</div>
+          </div>
+          <div class="stat-item">
+            <div id="current-date"></div>
+            <div style="font-size: 0.8rem;">Live Training</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="insights-bg"></div>
+    <div class="container">
+      <div class="text-center mb-4">
+        <span class="live-indicator">
+          <span class="live-dot"></span>
+          INSIGHTS LIVE 2025
+        </span>
+        <h2 class="mt-3 fw-bold" style="color: var(--text-dark);">📡 Análisis de Posicionamiento Micro-Espacial en Streaming</h2>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-number">2.3cm</div>
+          <h5>Diferencia Crítica</h5>
+          <p class="text-muted mb-0">La diferencia promedio entre posicionamiento amateur y profesional es de solo 2.3cm, pero impacta 89% la calidad percibida.</p>
+          <small class="text-primary">Fuente: Audio Engineering Society 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">67%</div>
+          <h5>Fallan en Proximidad</h5>
+          <p class="text-muted mb-0">De los modelos no optimizan el efecto de proximidad, perdiendo riqueza vocal y presencia natural en su audio.</p>
+          <small class="text-primary">Fuente: Creator Audio Study 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">+423%</div>
+          <h5>ROI en Precisión</h5>
+          <p class="text-muted mb-0">Modelos que implementan protocolos de optimización posicional reportan incrementos promedio de 423% en tips.</p>
+          <small class="text-primary">Fuente: Positioning Impact Report</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">15°</div>
+          <h5>Ángulo Óptimo</h5>
+          <p class="text-muted mb-0">El 85% de micrófonos condensador alcanzan máxima claridad vocal en ángulos de 15-45° respecto al eje frontal.</p>
+          <small class="text-primary">Fuente: Microphone Polar Pattern Study</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">92%</div>
+          <h5>Inconsistencia Posicional</h5>
+          <p class="text-muted mb-0">Experimentan variaciones de calidad por movimientos inconscientes durante sesiones de streaming.</p>
+          <small class="text-primary">Fuente: Movement Tracking Analysis</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">$0</div>
+          <h5>Costo de Optimización</h5>
+          <p class="text-muted mb-0">La optimización posicional requiere zero inversión adicional, solo metodología científica y calibración precisa.</p>
+          <small class="text-primary">Fuente: Equipment-Free Optimization Guide</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="header-bg"></div>
+    <div class="container">
+      <h1 class="main-title">🎯 Laboratorio de Optimización Micro-Espacial</h1>
+      <p class="main-subtitle">
+        Domina la ciencia invisible del posicionamiento de precisión. Descubre tu "punto dulce" personal donde tu voz florece con riqueza incomparable - transformando audio básico en presencia premium con ajustes milimétricos.
+      </p>
+      <div class="mt-4">
+        <button class="btn-primary-custom me-3" onclick="scrollToSection('position-lab')">
+          <i class="fas fa-crosshairs"></i> ¡Encontrar Mi Punto Dulce!
+        </button>
+        <button class="btn-secondary-custom" onclick="scrollToSection('success-stories')">
+          <i class="fas fa-trophy"></i> Ver Transformaciones
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container my-5">
+
+    <!-- Position Detection Lab -->
+    <div class="lab-section" id="position-lab">
+      <div class="lab-header" onclick="toggleDetails('position-content')">
+        <h2><i class="fas fa-crosshairs"></i> 🔬 Laboratorio de Detección Posicional CRÍTICO</h2>
+        <p class="mb-0">Mapeo científico de tu zona de máxima resonancia vocal - Calibración personalizada</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="position-content">
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="position-simulator">
+              <h4>🎛️ Simulador de Posicionamiento Virtual</h4>
+              <p class="text-muted">Explora diferentes posiciones y observa el impacto en calidad vocal</p>
+              
+              <div class="mic-visualization" id="mic-viz">
+                <div class="mic-icon">
+                  <i class="fas fa-microphone"></i>
+                </div>
+                <!-- Position markers will be added by JavaScript -->
+              </div>
+              
+              <div class="distance-controls">
+                <button class="distance-btn active" onclick="setDistance(15)">15cm</button>
+                <button class="distance-btn" onclick="setDistance(20)">20cm</button>
+                <button class="distance-btn" onclick="setDistance(25)">25cm</button>
+                <button class="distance-btn" onclick="setDistance(30)">30cm</button>
+                <button class="distance-btn" onclick="setDistance(35)">35cm</button>
+              </div>
+              
+              <div class="text-center mt-3">
+                <div id="position-feedback" class="alert alert-info">
+                  <strong>Posición Actual:</strong> Frontal - 15cm<br>
+                  <strong>Calidad Estimada:</strong> <span id="quality-score">85%</span><br>
+                  <strong>Características:</strong> <span id="quality-desc">Buena claridad, efecto proximidad moderado</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="calculator">
+              <h4>📐 Calculadora de Posición Óptima</h4>
+              <p class="text-muted">Determina tu configuración ideal basada en características específicas</p>
+              
+              <div class="calculator-input">
+                <label for="mic-type">Tipo de micrófono</label>
+                <select id="mic-type">
+                  <option value="">Seleccionar...</option>
+                  <option value="dynamic">Dinámico (SM58, SM7B)</option>
+                  <option value="condenser">Condensador (AT2020, Rode PodMic)</option>
+                  <option value="usb">USB/Gaming (Blue Yeti, Audio Technica)</option>
+                  <option value="shotgun">Shotgun/Direccional</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="voice-type">Características de tu voz</label>
+                <select id="voice-type">
+                  <option value="">Seleccionar...</option>
+                  <option value="deep">Grave/Profunda</option>
+                  <option value="medium">Media/Equilibrada</option>
+                  <option value="bright">Aguda/Brillante</option>
+                  <option value="breathy">Aireada/Susurrante</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="content-style">Estilo de contenido</label>
+                <select id="content-style">
+                  <option value="">Seleccionar...</option>
+                  <option value="intimate">Íntimo/ASMR</option>
+                  <option value="conversational">Conversacional</option>
+                  <option value="energetic">Energético/Dinámico</option>
+                  <option value="professional">Profesional/Presentación</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="room-treatment">Tratamiento acústico del espacio</label>
+                <select id="room-treatment">
+                  <option value="">Seleccionar...</option>
+                  <option value="none">Sin tratamiento</option>
+                  <option value="minimal">Mínimo (almohadas, cortinas)</option>
+                  <option value="moderate">Moderado (paneles básicos)</option>
+                  <option value="professional">Profesional (estudio tratado)</option>
+                </select>
+              </div>
+              
+              <button class="btn-primary-custom" onclick="calculateOptimalPosition()">
+                <i class="fas fa-calculator"></i> Calcular Posición Óptima
+              </button>
+              
+              <div class="calculator-result" id="position-result">
+                <div class="result-highlight" id="optimal-distance"></div>
+                <div id="position-analysis"></div>
+                
+                <div class="progress-tracker mt-3">
+                  <div class="progress-item">
+                    <div class="progress-label">
+                      <span>Claridad Vocal</span>
+                      <span id="clarity-score">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" id="clarity-bar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-label">
+                      <span>Presencia/Proximidad</span>
+                      <span id="presence-score">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" id="presence-bar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-label">
+                      <span>Reducción de Ruido</span>
+                      <span id="noise-score">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" id="noise-bar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="interactive-grid mt-4">
+          <div class="interactive-card">
+            <div class="card-icon">
+              <i class="fas fa-ruler"></i>
+            </div>
+            <h5>Zona de Proximidad</h5>
+            <p>Distancia crítica donde tu micrófono genera máxima riqueza en bajos y presencia vocal.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success"></i> Efecto de proximidad controlado</li>
+              <li><i class="fas fa-check text-success"></i> Incremento en graves naturales</li>
+              <li><i class="fas fa-check text-success"></i> Mayor intimidad percibida</li>
+              <li><i class="fas fa-check text-success"></i> Reducción de ruido ambiental</li>
+            </ul>
+          </div>
+          
+          <div class="interactive-card">
+            <div class="card-icon">
+              <i class="fas fa-compass"></i>
+            </div>
+            <h5>Mapeo Angular</h5>
+            <p>Optimización de ángulos según patrón polar para máxima captación de tu voz específica.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success"></i> Análisis de cardioide</li>
+              <li><i class="fas fa-check text-success"></i> Minimización de reflexiones</li>
+              <li><i class="fas fa-check text-success"></i> Eliminación de cancelaciones</li>
+              <li><i class="fas fa-check text-success"></i> Posicionamiento asimétrico</li>
+            </ul>
+          </div>
+          
+          <div class="interactive-card">
+            <div class="card-icon">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <h5>Punto Dulce Personal</h5>
+            <p>Tu configuración única donde convergen distancia, ángulo y características vocales.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success"></i> Calibración personalizada</li>
+              <li><i class="fas fa-check text-success"></i> Compensación de deficiencias</li>
+              <li><i class="fas fa-check text-success"></i> Maximización de fortalezas</li>
+              <li><i class="fas fa-check text-success"></i> Consistencia reproducible</li>
+            </ul>
+          </div>
+          
+          <div class="interactive-card">
+            <div class="card-icon">
+              <i class="fas fa-wave-square"></i>
+            </div>
+            <h5>Análisis de Respuesta</h5>
+            <p>Cómo diferentes posiciones afectan la respuesta en frecuencia de tu voz.</p>
+            <ul class="list-unstyled">
+              <li><i class="fas fa-check text-success"></i> Curva de respuesta optimizada</li>
+              <li><i class="fas fa-check text-success"></i> Corrección natural de EQ</li>
+              <li><i class="fas fa-check text-success"></i> Equilibrio tonal perfecto</li>
+              <li><i class="fas fa-check text-success"></i> Minimización de sibilancia</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Angular Optimization Lab -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('angle-content')">
+        <h2><i class="fas fa-drafting-compass"></i> ⚡ Laboratorio de Calibración Angular VITAL</h2>
+        <p class="mb-0">Optimización de ángulos según patrón polar - Elimina reflexiones y maximiza captación</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="angle-content">
+        
+        <div class="row">
+          <div class="col-md-6">
+            <h4>🎯 Selector de Ángulos Optimizado</h4>
+            <p class="text-muted">Experimenta con diferentes configuraciones angulares para tu tipo de micrófono</p>
+            
+            <div class="angle-selector">
+              <div class="angle-btn active" onclick="selectAngle('frontal')">
+                <i class="fas fa-arrow-up"></i>
+                <strong>0° Frontal</strong>
+                <small>Directo</small>
+              </div>
+              <div class="angle-btn" onclick="selectAngle('diagonal')">
+                <i class="fas fa-arrow-up" style="transform: rotate(45deg);"></i>
+                <strong>45° Diagonal</strong>
+                <small>Clásico</small>
+              </div>
+              <div class="angle-btn" onclick="selectAngle('lateral')">
+                <i class="fas fa-arrow-right"></i>
+                <strong>90° Lateral</strong>
+                <small>Profesional</small>
+              </div>
+              <div class="angle-btn" onclick="selectAngle('superior')">
+                <i class="fas fa-arrow-up" style="transform: rotate(-30deg);"></i>
+                <strong>30° Superior</strong>
+                <small>Broadcast</small>
+              </div>
+              <div class="angle-btn" onclick="selectAngle('inferior')">
+                <i class="fas fa-arrow-down" style="transform: rotate(30deg);"></i>
+                <strong>30° Inferior</strong>
+                <small>Íntimo</small>
+              </div>
+              <div class="angle-btn" onclick="selectAngle('asimetrico')">
+                <i class="fas fa-slash"></i>
+                <strong>Asimétrico</strong>
+                <small>Avanzado</small>
+              </div>
+            </div>
+            
+            <div class="alert alert-info mt-3" id="angle-feedback">
+              <strong>Configuración Actual:</strong> 0° Frontal<br>
+              <strong>Características:</strong> Captación directa, máxima sensibilidad<br>
+              <strong>Ideal para:</strong> Voces equilibradas, contenido conversacional
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="calculator">
+              <h4>📊 Analizador de Impacto Angular</h4>
+              <p class="text-muted">Evalúa cómo diferentes ángulos afectan tu calidad vocal específica</p>
+              
+              <div class="calculator-input">
+                <label for="current-issues">Problemas actuales detectados</label>
+                <select id="current-issues" multiple>
+                  <option value="sibilance">Sibilancia excesiva (S, T, Ch)</option>
+                  <option value="plosives">Plosivas fuertes (P, B, K)</option>
+                  <option value="breathing">Ruidos de respiración</option>
+                  <option value="mouth-sounds">Sonidos de boca/saliva</option>
+                  <option value="reflections">Reflexiones de superficie</option>
+                  <option value="room-noise">Ruido ambiental</option>
+                </select>
+                <small class="text-muted">Mantén Ctrl/Cmd para seleccionar múltiples</small>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="vocal-intensity">Intensidad vocal típica</label>
+                <select id="vocal-intensity">
+                  <option value="">Seleccionar...</option>
+                  <option value="whisper">Susurro/ASMR</option>
+                  <option value="soft">Suave/Conversacional</option>
+                  <option value="normal">Normal/Presentación</option>
+                  <option value="energetic">Energético/Animado</option>
+                  <option value="loud">Fuerte/Dinámico</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="desk-setup">Configuración de escritorio</label>
+                <select id="desk-setup">
+                  <option value="">Seleccionar...</option>
+                  <option value="brazo">Brazo articulado</option>
+                  <option value="pie">Pie de micrófono</option>
+                  <option value="escritorio">Base en escritorio</option>
+                  <option value="suspension">Sistema de suspensión</option>
+                </select>
+              </div>
+              
+              <button class="btn-primary-custom" onclick="analyzeAngularImpact()">
+                <i class="fas fa-search"></i> Analizar Impacto Angular
+              </button>
+              
+              <div class="calculator-result" id="angular-result">
+                <div class="result-highlight" id="recommended-angle"></div>
+                <div id="angular-analysis"></div>
+                
+                <div class="row mt-3">
+                  <div class="col-6">
+                    <div class="metric">
+                      <div class="metric-number" id="problem-reduction">0%</div>
+                      <div class="metric-label">Reducción de Problemas</div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="metric">
+                      <div class="metric-number" id="quality-improvement">0%</div>
+                      <div class="metric-label">Mejora de Calidad</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h5>🔧 Protocolo de Implementación Gradual</h5>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title"><i class="fas fa-play text-primary"></i> Fase 1: Baseline</h6>
+                  <p class="card-text">Graba 30 segundos en tu posición actual para establecer referencia comparativa.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title"><i class="fas fa-search text-warning"></i> Fase 2: Exploración</h6>
+                  <p class="card-text">Prueba cada ángulo recomendado con idéntico contenido vocal durante 15 segundos.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card">
+                <div class="card-body">
+                  <h6 class="card-title"><i class="fas fa-check text-success"></i> Fase 3: Optimización</h6>
+                  <p class="card-text">Compara grabaciones y selecciona configuración con mayor claridad y menor problemas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Consistency Lab -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('consistency-content')">
+        <h2><i class="fas fa-bullseye"></i> 📡 Laboratorio de Consistencia Posicional ESENCIAL</h2>
+        <p class="mb-0">Sistemas de referencia y monitoreo para mantener calidad uniforme durante sesiones</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="consistency-content">
+        
+        <div class="calculator">
+          <h4>📈 Calculadora de ROI en Consistencia Posicional</h4>
+          <p class="text-muted">Evalúa el impacto financiero de la optimización posicional precisa</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label for="current-income">Ingresos mensuales actuales ($)</label>
+                <input type="number" id="current-income" placeholder="Ej: 1800" min="0">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="session-hours">Horas de streaming por semana</label>
+                <input type="number" id="session-hours" placeholder="Ej: 20" min="1" max="168">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="quality-complaints">Comentarios sobre calidad de audio/mes</label>
+                <input type="number" id="quality-complaints" placeholder="Ej: 5" min="0">
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label for="position-precision">Nivel de precisión posicional actual</label>
+                <select id="position-precision">
+                  <option value="">Seleccionar...</option>
+                  <option value="random">Aleatorio (sin método)</option>
+                  <option value="approximate">Aproximado (misma zona)</option>
+                  <option value="consistent">Consistente (posición fija)</option>
+                  <option value="optimized">Optimizado (método científico)</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="viewer-retention">Retención promedio de viewers (%)</label>
+                <input type="number" id="viewer-retention" placeholder="Ej: 65" min="1" max="100">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="audio-satisfaction">Satisfacción con tu audio actual (1-10)</label>
+                <input type="number" id="audio-satisfaction" placeholder="Ej: 6" min="1" max="10">
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn-primary-custom" onclick="calculateConsistencyROI()">
+            <i class="fas fa-chart-line"></i> Calcular ROI de Consistencia
+          </button>
+          
+          <div class="calculator-result" id="consistency-result">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="monthly-increase">$0</div>
+                  <p class="text-muted">Incremento Mensual</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="annual-impact">$0</div>
+                  <p class="text-muted">Impacto Anual</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="retention-boost">0%</div>
+                  <p class="text-muted">Mejora Retención</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="quality-score">0/10</div>
+                  <p class="text-muted">Score Calidad Final</p>
+                </div>
+              </div>
+            </div>
+            <div id="consistency-analysis" class="mt-3"></div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-crosshairs"></i>
+              </div>
+              <h5>Sistema de Referencias Visuales</h5>
+              <p>Marcadores físicos y digitales para mantener posicionamiento exacto entre sesiones.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Cinta adhesiva en escritorio</li>
+                <li><i class="fas fa-check text-success"></i> Marcadores LED de posición</li>
+                <li><i class="fas fa-check text-success"></i> Apps de calibración en móvil</li>
+                <li><i class="fas fa-check text-success"></i> Fotos de referencia angular</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <h5>Monitoreo en Tiempo Real</h5>
+              <p>Herramientas para detectar desviaciones posicionales durante streaming en vivo.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Medidores de nivel visual</li>
+                <li><i class="fas fa-check text-success"></i> Alertas de proximidad</li>
+                <li><i class="fas fa-check text-success"></i> Análisis espectral live</li>
+                <li><i class="fas fa-check text-success"></i> Feedback automático</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h5>Entrenamiento Muscular</h5>
+              <p>Desarrollo de memoria muscular para mantener posición óptima de forma natural.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Ejercicios de postura</li>
+                <li><i class="fas fa-check text-success"></i> Rutinas de calibración</li>
+                <li><i class="fas fa-check text-success"></i> Conciencia corporal mejorada</li>
+                <li><i class="fas fa-check text-success"></i> Consistencia automatizada</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h5>⚡ Tracker de Progreso de Optimización</h5>
+          <div class="progress-tracker">
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Precisión Posicional</span>
+                <span class="text-success">87%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 87%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Consistencia entre Sesiones</span>
+                <span class="text-warning">73%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-warning" style="width: 73%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Calidad Vocal Percibida</span>
+                <span class="text-success">92%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 92%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Retención de Audiencia</span>
+                <span class="text-info">81%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-info" style="width: 81%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Stories Section -->
+    <div class="lab-section" id="success-stories">
+      <div class="lab-header" onclick="toggleDetails('success-content')">
+        <h2><i class="fas fa-trophy"></i> 🏆 Transformaciones Verificadas</h2>
+        <p class="mb-0">Casos reales de optimización micro-espacial - El poder de la precisión posicional</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content active" id="success-content">
+        
+        <div class="success-stories">
+          <div class="success-card">
+            <div class="success-quote">
+              "Implementé el protocolo completo de optimización micro-espacial de WC Training. Mi primer descubrimiento fue que estaba a 18cm cuando mi punto dulce estaba a 23cm - solo 5cm de diferencia pero el impacto fue dramático. Luego optimicé el ángulo de 0° frontal a 30° superior izquierdo, eliminando completamente la sibilancia que me molestaba. Mis viewers comenzaron a comentar inmediatamente sobre la 'nueva riqueza' en mi voz. En 3 semanas, mis tips aumentaron 284% y mi rating de calidad subió de 3.1 a 4.7 estrellas."
+            </div>
+            <div class="fw-bold text-primary">- Andrea Silva, Top Model Internacional</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">+284%</div>
+                <div class="metric-label">Incremento Tips</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">5cm</div>
+                <div class="metric-label">Ajuste Crítico</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">4.7/5</div>
+                <div class="metric-label">Rating Final</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">3 sem</div>
+                <div class="metric-label">Tiempo Logro</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-card">
+            <div class="success-quote">
+              "Llevaba 2 años luchando con audio 'amateur' hasta que descubrí el laboratorio de calibración angular. El análisis reveló que mi micrófono condensador necesitaba 45° diagonal en lugar de frontal directo. Además, implementé el sistema de referencias visuales con cinta adhesiva y una app de nivelación. La transformación fue instantánea - eliminé plosivas, reduje ruido de respiración 89% y mi voz adquirió una presencia profesional que nunca había logrado. Ahora tengo lista de espera de 3 semanas."
+            </div>
+            <div class="fw-bold text-primary">- Diego Martínez, Performer Premium</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">45°</div>
+                <div class="metric-label">Ángulo Óptimo</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">-89%</div>
+                <div class="metric-label">Reducción Ruido</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">3 sem</div>
+                <div class="metric-label">Lista Espera</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$0</div>
+                <div class="metric-label">Costo Total</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-card">
+            <div class="success-quote">
+              "Como modelo técnica, creía conocer todo sobre audio hasta que calculé mi ROI de consistencia posicional. El análisis mostró que mis variaciones de posición me costaban $340/mes en ingresos perdidos. Implementé el protocolo completo: encontré mi punto dulce personal (22cm, 30° superior), desarrollé memoria muscular y instalé monitoreo en tiempo real. El resultado: incrementé 156% mis ingresos, alcancé top 5% en mi categoría y ahora entreno a otras modelos en optimización posicional."
+            </div>
+            <div class="fw-bold text-primary">- Camila Restrepo, Master Trainer</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">+156%</div>
+                <div class="metric-label">Incremento Total</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">Top 5%</div>
+                <div class="metric-label">Ranking Final</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$340</div>
+                <div class="metric-label">Recuperado/Mes</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">22cm</div>
+                <div class="metric-label">Punto Dulce</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button class="btn-primary-custom me-3" onclick="scrollToSection('position-lab')">
+            <i class="fas fa-crosshairs"></i> ¡Encontrar Mi Punto Dulce!
+          </button>
+          <button class="btn-secondary-custom" onclick="calculateConsistencyROI()">
+            <i class="fas fa-chart-line"></i> Calcular Mi ROI
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="summary-bg"></div>
+    <div class="container">
+      <h2 class="mb-4" style="font-size: clamp(2rem, 4vw, 3rem);">🎯 Tu Punto Dulce Personal Está a 2.3cm de Distancia</h2>
+      <p class="lead mb-5" style="max-width: 800px; margin: 0 auto;">
+        Has dominado la ciencia de la optimización micro-espacial. No seas vulnerable a la mediocridad posicional - implementa tu calibración personalizada y únete al elite que transforma audio básico en presencia premium con precisión milimétrica.
+      </p>
+      
+      <div class="achievement-grid">
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-crosshairs"></i>
+          </div>
+          <h4>Master en Detección Posicional</h4>
+          <p>Dominas mapeo de zona de proximidad, análisis angular y localización de tu punto dulce personal único.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-drafting-compass"></i>
+          </div>
+          <h4>Experto en Calibración Angular</h4>
+          <p>Optimizas ángulos según patrón polar, eliminas reflexiones y maximizas captación de tu voz específica.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <h4>Especialista en Consistencia</h4>
+          <p>Implementas sistemas de referencia visual y desarrollas memoria muscular para calidad uniforme 24/7.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-crown"></i>
+          </div>
+          <h4>Elite de Precisión Micro-Espacial</h4>
+          <p>Te unes al 10% que genera +423% más ingresos por optimización posicional científicamente calibrada.</p>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <h3 class="mb-3">🚀 CRITICAL: Protocolo de Implementación Inmediata</h3>
+        <div class="row text-start" style="max-width: 700px; margin: 0 auto;">
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Próximos 30min:</strong> Graba baseline actual</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Hoy:</strong> Encuentra tu punto dulce</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Esta semana:</strong> Optimiza ángulo perfecto</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 1:</strong> Desarrolla consistencia</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 2:</strong> Mide incremento de ingresos</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Ongoing:</strong> Mantén precisión premium</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <button class="btn-primary-custom btn-lg me-3" onclick="scrollToSection('position-lab')">
+          <i class="fas fa-rocket"></i> ¡A Calibrar Mi Punto Dulce!
+        </button>
+        <button class="btn-secondary-custom btn-lg" onclick="window.location.reload()">
+          <i class="fas fa-redo"></i> Revisar Laboratorios
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Current date update
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+    
+    updateCurrentDate();
+    setInterval(updateCurrentDate, 60000);
+
+    // Toggle lab sections
+    function toggleDetails(contentId) {
+      const content = document.getElementById(contentId);
+      const header = content.previousElementSibling;
+      const icon = header.querySelector('.expand-icon');
+      
+      content.classList.toggle('active');
+      header.classList.toggle('active');
+      
+      if (content.classList.contains('active')) {
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Scroll to section
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        const content = section.querySelector('.lab-content');
+        if (content && !content.classList.contains('active')) {
+          content.classList.add('active');
+          content.previousElementSibling.classList.add('active');
+        }
+      }
+    }
+
+    // Distance selector for mic visualization
+    function setDistance(distance) {
+      document.querySelectorAll('.distance-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      updatePositionFeedback(distance, getCurrentAngle());
+    }
+
+    function getCurrentAngle() {
+      return 'frontal'; // Default
+    }
+
+    function updatePositionFeedback(distance, angle) {
+      let quality = 85;
+      let description = 'Buena claridad, efecto proximidad moderado';
+      
+      if (distance <= 20) {
+        quality = Math.min(95, quality + 10);
+        description = 'Excelente proximidad, riqueza vocal máxima';
+      } else if (distance >= 35) {
+        quality = Math.max(60, quality - 15);
+        description = 'Menor proximidad, puede requerir ganancia adicional';
+      }
+      
+      document.getElementById('quality-score').textContent = quality + '%';
+      document.getElementById('quality-desc').textContent = description;
+      
+      const feedback = document.getElementById('position-feedback');
+      feedback.innerHTML = `
+        <strong>Posición Actual:</strong> ${angle} - ${distance}cm<br>
+        <strong>Calidad Estimada:</strong> <span id="quality-score">${quality}%</span><br>
+        <strong>Características:</strong> <span id="quality-desc">${description}</span>
+      `;
+    }
+
+    // Optimal Position Calculator
+    function calculateOptimalPosition() {
+      const micType = document.getElementById('mic-type').value;
+      const voiceType = document.getElementById('voice-type').value;
+      const contentStyle = document.getElementById('content-style').value;
+      const roomTreatment = document.getElementById('room-treatment').value;
+      
+      if (!micType || !voiceType || !contentStyle || !roomTreatment) {
+        alert('Por favor completa todos los campos para obtener recomendaciones precisas');
+        return;
+      }
+      
+      let optimalDistance = 25; // Default
+      let clarityScore = 80;
+      let presenceScore = 75;
+      let noiseScore = 70;
+      let analysis = '';
+      
+      // Adjust based on microphone type
+      if (micType === 'dynamic') {
+        optimalDistance = 15;
+        clarityScore += 10;
+        noiseScore += 15;
+      } else if (micType === 'condenser') {
+        optimalDistance = 30;
+        clarityScore += 15;
+        presenceScore += 10;
+      } else if (micType === 'usb') {
+        optimalDistance = 25;
+        clarityScore += 5;
+      }
+      
+      // Adjust based on voice type
+      if (voiceType === 'deep') {
+        optimalDistance -= 5;
+        presenceScore += 15;
+      } else if (voiceType === 'bright') {
+        optimalDistance += 5;
+        clarityScore += 10;
+      } else if (voiceType === 'breathy') {
+        optimalDistance -= 8;
+        presenceScore += 20;
+      }
+      
+      // Adjust based on content style
+      if (contentStyle === 'intimate') {
+        optimalDistance -= 10;
+        presenceScore += 25;
+      } else if (contentStyle === 'energetic') {
+        optimalDistance += 5;
+        noiseScore += 10;
+      }
+      
+      // Adjust based on room treatment
+      if (roomTreatment === 'none') {
+        optimalDistance -= 5;
+        noiseScore -= 20;
+      } else if (roomTreatment === 'professional') {
+        optimalDistance += 5;
+        clarityScore += 15;
+        noiseScore += 20;
+      }
+      
+      // Ensure scores are within bounds
+      clarityScore = Math.max(0, Math.min(100, clarityScore));
+      presenceScore = Math.max(0, Math.min(100, presenceScore));
+      noiseScore = Math.max(0, Math.min(100, noiseScore));
+      
+      // Generate analysis
+      const overallScore = Math.round((clarityScore + presenceScore + noiseScore) / 3);
+      
+      if (overallScore >= 85) {
+        analysis = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> <strong>Configuración Óptima:</strong> Esta combinación maximiza tu potencial vocal. Implementa inmediatamente.</div>';
+      } else if (overallScore >= 70) {
+        analysis = '<div class="alert alert-info"><i class="fas fa-info-circle"></i> <strong>Configuración Sólida:</strong> Buenos resultados esperados. Considera ajustes finos en ángulo para optimizar.</div>';
+      } else {
+        analysis = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> <strong>Necesita Optimización:</strong> Esta configuración requiere compensación adicional o mejoras en setup.</div>';
+      }
+      
+      // Additional recommendations
+      analysis += '<div class="mt-3"><h6>Recomendaciones Adicionales:</h6><ul>';
+      
+      if (micType === 'condenser' && contentStyle === 'intimate') {
+        analysis += '<li>Considera ángulo 30° superior para reducir plosivas</li>';
+      }
+      if (voiceType === 'bright' && roomTreatment === 'none') {
+        analysis += '<li>Implementa tratamiento acústico básico para controlar reflexiones</li>';
+      }
+      if (contentStyle === 'energetic' && micType === 'usb') {
+        analysis += '<li>Usa limitador suave para controlar picos dinámicos</li>';
+      }
+      
+      analysis += '</ul></div>';
+      
+      // Update UI
+      document.getElementById('optimal-distance').textContent = `Distancia Óptima: ${optimalDistance}cm`;
+      document.getElementById('clarity-score').textContent = `${clarityScore}%`;
+      document.getElementById('presence-score').textContent = `${presenceScore}%`;
+      document.getElementById('noise-score').textContent = `${noiseScore}%`;
+      document.getElementById('position-analysis').innerHTML = analysis;
+      
+      // Animate progress bars
+      setTimeout(() => {
+        document.getElementById('clarity-bar').style.width = `${clarityScore}%`;
+        document.getElementById('presence-bar').style.width = `${presenceScore}%`;
+        document.getElementById('noise-bar').style.width = `${noiseScore}%`;
+      }, 300);
+      
+      document.getElementById('position-result').classList.add('show');
+    }
+
+    // Angle selector
+    function selectAngle(angle) {
+      document.querySelectorAll('.angle-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.closest('.angle-btn').classList.add('active');
+      
+      const feedback = document.getElementById('angle-feedback');
+      let content = '';
+      
+      switch(angle) {
+        case 'frontal':
+          content = '<strong>Configuración Actual:</strong> 0° Frontal<br><strong>Características:</strong> Captación directa, máxima sensibilidad<br><strong>Ideal para:</strong> Voces equilibradas, contenido conversacional';
+          break;
+        case 'diagonal':
+          content = '<strong>Configuración Actual:</strong> 45° Diagonal<br><strong>Características:</strong> Balance entre claridad y naturalidad<br><strong>Ideal para:</strong> Reducción de plosivas, sonido profesional';
+          break;
+        case 'lateral':
+          content = '<strong>Configuración Actual:</strong> 90° Lateral<br><strong>Características:</strong> Minimiza respiración, reduce sibilancia<br><strong>Ideal para:</strong> Voces agudas, contenido íntimo';
+          break;
+        case 'superior':
+          content = '<strong>Configuración Actual:</strong> 30° Superior<br><strong>Características:</strong> Captación natural, reduce reflexiones de escritorio<br><strong>Ideal para:</strong> Setup de pie, broadcast profesional';
+          break;
+        case 'inferior':
+          content = '<strong>Configuración Actual:</strong> 30° Inferior<br><strong>Características:</strong> Maximiza proximidad, sonido cálido<br><strong>Ideal para:</strong> ASMR, contenido susurrante';
+          break;
+        case 'asimetrico':
+          content = '<strong>Configuración Actual:</strong> Asimétrico<br><strong>Características:</strong> Configuración personalizada avanzada<br><strong>Ideal para:</strong> Problemas específicos de acústica';
+          break;
+      }
+      
+      feedback.innerHTML = content;
+    }
+
+    // Angular Impact Analyzer
+    function analyzeAngularImpact() {
+      const issues = Array.from(document.getElementById('current-issues').selectedOptions).map(o => o.value);
+      const intensity = document.getElementById('vocal-intensity').value;
+      const setup = document.getElementById('desk-setup').value;
+      
+      if (issues.length === 0 || !intensity || !setup) {
+        alert('Por favor selecciona al menos un problema actual y completa todos los campos');
+        return;
+      }
+      
+      let recommendedAngle = '45° Diagonal';
+      let problemReduction = 60;
+      let qualityImprovement = 45;
+      let analysis = '';
+      
+      // Analyze specific issues
+      if (issues.includes('sibilance')) {
+        recommendedAngle = '90° Lateral';
+        problemReduction += 20;
+        qualityImprovement += 15;
+      }
+      
+      if (issues.includes('plosives')) {
+        recommendedAngle = '30° Superior';
+        problemReduction += 25;
+        qualityImprovement += 10;
+      }
+      
+      if (issues.includes('breathing')) {
+        recommendedAngle = '45° Diagonal';
+        problemReduction += 15;
+        qualityImprovement += 12;
+      }
+      
+      if (issues.includes('reflections')) {
+        recommendedAngle = '30° Superior';
+        problemReduction += 30;
+        qualityImprovement += 20;
+      }
+      
+      // Adjust based on intensity
+      if (intensity === 'whisper') {
+        problemReduction += 10;
+        analysis += '<li>Configuración optimizada para captación íntima de bajo volumen</li>';
+      } else if (intensity === 'energetic' || intensity === 'loud') {
+        problemReduction += 15;
+        analysis += '<li>Configuración robusta para manejo de dinámicas altas</li>';
+      }
+      
+      // Adjust based on setup
+      if (setup === 'brazo') {
+        qualityImprovement += 10;
+        analysis += '<li>Aprovecha flexibilidad de brazo articulado para posicionamiento preciso</li>';
+      } else if (setup === 'suspension') {
+        qualityImprovement += 15;
+        problemReduction += 10;
+        analysis += '<li>Sistema de suspensión minimiza vibraciones y ruido mecánico</li>';
+      }
+      
+      // Ensure scores are within bounds
+      problemReduction = Math.min(95, problemReduction);
+      qualityImprovement = Math.min(85, qualityImprovement);
+      
+      // Generate detailed analysis
+      let detailedAnalysis = `
+        <h6>Análisis Personalizado:</h6>
+        <p>Basado en tus problemas específicos y configuración, el ángulo <strong>${recommendedAngle}</strong> optimizará tu setup.</p>
+        <h6>Beneficios Esperados:</h6>
+        <ul>
+      `;
+      
+      if (issues.includes('sibilance')) {
+        detailedAnalysis += '<li>Reducción significativa de sibilancia al evitar captación directa de frecuencias 6-8kHz</li>';
+      }
+      if (issues.includes('plosives')) {
+        detailedAnalysis += '<li>Eliminación de plosivas al posicionar micrófono fuera del eje directo de explosión de aire</li>';
+      }
+      if (issues.includes('breathing')) {
+        detailedAnalysis += '<li>Minimización de ruidos respiratorios por captación angular optimizada</li>';
+      }
+      
+      detailedAnalysis += analysis + '</ul>';
+      
+      // Update UI
+      document.getElementById('recommended-angle').textContent = `Ángulo Recomendado: ${recommendedAngle}`;
+      document.getElementById('problem-reduction').textContent = `${problemReduction}%`;
+      document.getElementById('quality-improvement').textContent = `${qualityImprovement}%`;
+      document.getElementById('angular-analysis').innerHTML = detailedAnalysis;
+      
+      document.getElementById('angular-result').classList.add('show');
+    }
+
+    // Consistency ROI Calculator
+    function calculateConsistencyROI() {
+      const currentIncome = parseFloat(document.getElementById('current-income').value) || 0;
+      const sessionHours = parseFloat(document.getElementById('session-hours').value) || 0;
+      const qualityComplaints = parseInt(document.getElementById('quality-complaints').value) || 0;
+      const precision = document.getElementById('position-precision').value;
+      const retention = parseFloat(document.getElementById('viewer-retention').value) || 0;
+      const satisfaction = parseFloat(document.getElementById('audio-satisfaction').value) || 0;
+      
+      if (currentIncome === 0 || sessionHours === 0) {
+        alert('Por favor completa al menos los ingresos actuales y horas de streaming');
+        return;
+      }
+      
+      let improvementMultiplier = 1;
+      let retentionBoost = 0;
+      let qualityScoreFinal = satisfaction;
+      
+      // Calculate improvement based on current precision level
+      switch(precision) {
+        case 'random':
+          improvementMultiplier = 2.8; // Major improvement expected
+          retentionBoost = 45;
+          qualityScoreFinal = Math.min(10, satisfaction + 4);
+          break;
+        case 'approximate':
+          improvementMultiplier = 2.1;
+          retentionBoost = 32;
+          qualityScoreFinal = Math.min(10, satisfaction + 3);
+          break;
+        case 'consistent':
+          improvementMultiplier = 1.6;
+          retentionBoost = 18;
+          qualityScoreFinal = Math.min(10, satisfaction + 2);
+          break;
+        case 'optimized':
+          improvementMultiplier = 1.2;
+          retentionBoost = 8;
+          qualityScoreFinal = Math.min(10, satisfaction + 1);
+          break;
+      }
+      
+      // Adjust for current problems
+      const problemPenalty = qualityComplaints * 0.15;
+      improvementMultiplier += problemPenalty;
+      
+      const monthlyIncrease = (currentIncome * (improvementMultiplier - 1));
+      const annualImpact = monthlyIncrease * 12;
+      
+      // Generate analysis
+      let analysisContent = `
+        <h6>Análisis Detallado del Impacto:</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li><i class="fas fa-arrow-up text-success"></i> <strong>Proyección mensual:</strong> $${Math.round(currentIncome * improvementMultiplier).toLocaleString()}</li>
+              <li><i class="fas fa-chart-line text-primary"></i> <strong>Crecimiento total:</strong> ${Math.round((improvementMultiplier - 1) * 100)}%</li>
+              <li><i class="fas fa-calendar text-info"></i> <strong>ROI primer año:</strong> ${Math.round(((annualImpact / 100) * 100))}% (sin inversión)</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li><i class="fas fa-users text-warning"></i> <strong>Retención mejorada:</strong> ${Math.round(retention + retentionBoost)}%</li>
+              <li><i class="fas fa-star text-success"></i> <strong>Satisfacción final:</strong> ${qualityScoreFinal.toFixed(1)}/10</li>
+              <li><i class="fas fa-comments text-primary"></i> <strong>Reducción quejas:</strong> ${Math.max(0, qualityComplaints - Math.round(qualityComplaints * 0.8))}/mes</li>
+            </ul>
+          </div>
+        </div>
+      `;
+      
+      if (improvementMultiplier >= 2.5) {
+        analysisContent += '<div class="alert alert-success mt-3"><strong>Potencial Excepcional:</strong> Tu configuración actual tiene margen masivo de mejora. ¡Implementa inmediatamente!</div>';
+      } else if (improvementMultiplier >= 1.8) {
+        analysisContent += '<div class="alert alert-info mt-3"><strong>Oportunidad Significativa:</strong> Mejoras sustanciales esperadas con optimización posicional.</div>';
+      } else if (improvementMultiplier >= 1.3) {
+        analysisContent += '<div class="alert alert-warning mt-3"><strong>Optimización Moderada:</strong> Mejoras sólidas pero incrementales en tu setup actual.</div>';
+      } else {
+        analysisContent += '<div class="alert alert-primary mt-3"><strong>Mantenimiento de Excelencia:</strong> Ya tienes un setup optimizado. Enfócate en consistencia.</div>';
+      }
+      
+      // Update UI
+      document.getElementById('monthly-increase').textContent = `$${Math.round(monthlyIncrease).toLocaleString()}`;
+      document.getElementById('annual-impact').textContent = `$${Math.round(annualImpact).toLocaleString()}`;
+      document.getElementById('retention-boost').textContent = `+${retentionBoost}%`;
+      document.getElementById('quality-score').textContent = `${qualityScoreFinal.toFixed(1)}/10`;
+      document.getElementById('consistency-analysis').innerHTML = analysisContent;
+      
+      document.getElementById('consistency-result').classList.add('show');
+    }
+
+    // Initialize mic visualization
+    function initializeMicVisualization() {
+      const viz = document.getElementById('mic-viz');
+      const positions = [
+        { top: '20%', left: '50%' }, // Top
+        { top: '35%', left: '70%' }, // Top-right
+        { top: '50%', left: '80%' }, // Right
+        { top: '65%', left: '70%' }, // Bottom-right
+        { top: '80%', left: '50%' }, // Bottom
+        { top: '65%', left: '30%' }, // Bottom-left
+        { top: '50%', left: '20%' }, // Left
+        { top: '35%', left: '30%' }  // Top-left
+      ];
+      
+      positions.forEach((pos, index) => {
+        const marker = document.createElement('div');
+        marker.className = 'position-marker';
+        marker.style.top = pos.top;
+        marker.style.left = pos.left;
+        marker.onclick = () => selectPosition(index);
+        viz.appendChild(marker);
+      });
+    }
+
+    function selectPosition(index) {
+      document.querySelectorAll('.position-marker').forEach((marker, i) => {
+        if (i === index) {
+          marker.classList.add('active');
+        } else {
+          marker.classList.remove('active');
+        }
+      });
+      
+      const positions = ['Superior', 'Superior-Derecha', 'Lateral-Derecha', 'Inferior-Derecha', 
+                        'Inferior', 'Inferior-Izquierda', 'Lateral-Izquierda', 'Superior-Izquierda'];
+      const qualities = [85, 78, 92, 71, 68, 73, 89, 82];
+      const descriptions = [
+        'Captación clara, reduce reflexiones de escritorio',
+        'Balance natural, minimiza plosivas',
+        'Excelente para reducir sibilancia y respiración',
+        'Proximidad moderada, puede captar teclado',
+        'Proximidad máxima, riesgo de ruido de movimiento',
+        'Buen balance, posición cómoda para largos períodos',
+        'Óptima para voces agudas, reduce interferencias',
+        'Posición profesional, excelente para broadcast'
+      ];
+      
+      updatePositionFeedback(getCurrentDistance(), positions[index], qualities[index], descriptions[index]);
+    }
+
+    function getCurrentDistance() {
+      const activeBtn = document.querySelector('.distance-btn.active');
+      return activeBtn ? parseInt(activeBtn.textContent) : 15;
+    }
+
+    function updatePositionFeedback(distance, position, quality, description) {
+      document.getElementById('quality-score').textContent = quality + '%';
+      document.getElementById('quality-desc').textContent = description;
+      
+      const feedback = document.getElementById('position-feedback');
+      feedback.innerHTML = `
+        <strong>Posición Actual:</strong> ${position} - ${distance}cm<br>
+        <strong>Calidad Estimada:</strong> <span id="quality-score">${quality}%</span><br>
+        <strong>Características:</strong> <span id="quality-desc">${description}</span>
+      `;
+      
+      // Update feedback color based on quality
+      feedback.className = 'alert';
+      if (quality >= 85) {
+        feedback.classList.add('alert-success');
+      } else if (quality >= 70) {
+        feedback.classList.add('alert-info');
+      } else {
+        feedback.classList.add('alert-warning');
+      }
+    }
+
+    // Auto-expand first section and initialize visualization on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-expand first section
+      const firstContent = document.querySelector('.lab-content');
+      if (firstContent) {
+        firstContent.classList.add('active');
+        firstContent.previousElementSibling.classList.add('active');
+      }
+      
+      // Initialize mic visualization
+      initializeMicVisualization();
+      
+      // Set initial position feedback
+      updatePositionFeedback(15, 'Frontal', 85, 'Buena claridad, efecto proximidad moderado');
+    });
+
+    // Performance optimization for mobile
+    if ('ontouchstart' in window) {
+      // Reduce animation intensity on touch devices
+      document.documentElement.style.setProperty('--transition', 'all 0.2s ease');
+    }
+
+    // Keyboard shortcuts for power users
+    document.addEventListener('keydown', function(e) {
+      if (e.altKey) {
+        switch(e.key) {
+          case '1':
+            e.preventDefault();
+            scrollToSection('position-lab');
+            break;
+          case '2':
+            e.preventDefault();
+            scrollToSection('angle-content');
+            break;
+          case '3':
+            e.preventDefault();
+            scrollToSection('consistency-content');
+            break;
+          case 'c':
+            e.preventDefault();
+            calculateOptimalPosition();
+            break;
+          case 'r':
+            e.preventDefault();
+            calculateConsistencyROI();
+            break;
+        }
+      }
+    });
+
+    // Smooth scrolling polyfill for older browsers
+    if (!('scrollBehavior' in document.documentElement.style)) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js';
+      document.head.appendChild(script);
+    }
+
+    // Analytics tracking for user interactions (placeholder)
+    function trackInteraction(action, section) {
+      // Placeholder for analytics - implement according to your tracking needs
+      console.log(`User interaction: ${action} in ${section}`);
+    }
+
+    // Add interaction tracking to key functions
+    const originalCalculateOptimalPosition = calculateOptimalPosition;
+    calculateOptimalPosition = function() {
+      trackInteraction('calculate_optimal_position', 'position_lab');
+      return originalCalculateOptimalPosition.apply(this, arguments);
+    };
+
+    const originalCalculateConsistencyROI = calculateConsistencyROI;
+    calculateConsistencyROI = function() {
+      trackInteraction('calculate_consistency_roi', 'consistency_lab');
+      return originalCalculateConsistencyROI.apply(this, arguments);
+    };
+
+    // Add visual feedback for form validation
+    function addFormValidation() {
+      const inputs = document.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          if (this.hasAttribute('required') || this.value) {
+            if (this.value.trim() === '') {
+              this.classList.add('is-invalid');
+              this.classList.remove('is-valid');
+            } else {
+              this.classList.add('is-valid');
+              this.classList.remove('is-invalid');
+            }
+          }
+        });
+      });
+    }
+
+    // Initialize form validation
+    document.addEventListener('DOMContentLoaded', addFormValidation);
+  </script>
+
+</body>
+</html>

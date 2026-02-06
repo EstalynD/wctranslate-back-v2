@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5.0, minimum-scale=0.5">
+    <title>🎯 Explorar Especializaciones - Descubre Tu Territorio Profesional Único</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6f42c1;
+            --secondary-color: #495057;
+            --accent-color: #e83e8c;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #6f42c1 0%, #495057 50%, #e83e8c 100%);
+            --gradient-secondary: linear-gradient(45deg, #5a189a 0%, #7209b7 100%);
+            --gradient-accent: linear-gradient(90deg, #e83e8c 0%, #f72585 100%);
+            --gradient-animated: linear-gradient(-45deg, #6f42c1, #495057, #e83e8c, #f72585);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-primary);
+            background-size: 400% 400%;
+            animation: gradientShift 24s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(1deg); }
+            66% { transform: translateY(12px) rotate(-1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes radar {
+            0% { transform: scale(0) rotate(0deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 0; }
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 26s infinite ease-in-out;
+        }
+
+        .shape-1 { width: 100px; height: 100px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape-2 { width: 140px; height: 140px; top: 50%; right: 15%; animation-delay: 8s; }
+        .shape-3 { width: 80px; height: 80px; bottom: 30%; left: 25%; animation-delay: 16s; }
+        .shape-4 { width: 110px; height: 110px; top: 75%; right: 35%; animation-delay: 12s; }
+        .shape-5 { width: 90px; height: 90px; top: 35%; left: 60%; animation-delay: 20s; }
+
+        /* WC Training Header */
+        .wc-header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(111, 66, 193, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(111, 66, 193, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease-in-out infinite;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-8 0a8 8 0 1 1 16 0a8 8 0 1 1 -16 0'/%3E%3Cpath d='M30 30m-12 0a12 12 0 1 1 24 0a12 12 0 1 1 -24 0' stroke='%23ffffff' stroke-width='0.5' fill='none'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 35s infinite linear;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 70px rgba(111, 66, 193, 0.15);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 18px;
+            padding: 1.8rem;
+            margin: 1rem 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(111, 66, 193, 0.2);
+            border-color: var(--accent-color);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .card-content.expanded {
+            max-height: 2000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        /* Niche Explorer Grid */
+        .niche-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .niche-card {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .niche-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.3s ease;
+        }
+
+        .niche-card:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .niche-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 40px rgba(232, 62, 140, 0.3);
+        }
+
+        .niche-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .niche-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .niche-metrics {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Competition Analyzer */
+        .competition-analyzer {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .competition-meter {
+            margin: 1.5rem 0;
+        }
+
+        .meter-container {
+            position: relative;
+            height: 30px;
+            background: linear-gradient(90deg, #28a745 0%, #ffc107 50%, #dc3545 100%);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .meter-needle {
+            position: absolute;
+            top: -5px;
+            width: 4px;
+            height: 40px;
+            background: white;
+            border-radius: 2px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: left 0.8s ease-out;
+        }
+
+        .meter-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* Calculators */
+        .calculator-container {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .calc-input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 20px rgba(232, 62, 140, 0.3);
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .result-highlight {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffd700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Opportunity Matrix */
+        .opportunity-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .matrix-cell {
+            background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .matrix-cell:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .matrix-score {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .matrix-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            margin: 1.5rem 0;
+        }
+
+        .progress-bar-custom {
+            height: 25px;
+            background: linear-gradient(45deg, #f0f0f0 25%, transparent 25%), 
+                        linear-gradient(-45deg, #f0f0f0 25%, transparent 25%), 
+                        linear-gradient(45deg, transparent 75%, #f0f0f0 75%), 
+                        linear-gradient(-45deg, transparent 75%, #f0f0f0 75%);
+            background-size: 20px 20px;
+            background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-accent);
+            border-radius: 15px;
+            transition: width 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(
+                -45deg,
+                rgba(255, 255, 255, 0.2) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, 0.2) 50%,
+                rgba(255, 255, 255, 0.2) 75%,
+                transparent 75%,
+                transparent
+            );
+            background-size: 20px 20px;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 20px; }
+        }
+
+        /* Radar Chart Simulation */
+        .radar-chart {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 2rem auto;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, var(--primary-color), var(--accent-color), var(--primary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .radar-center {
+            width: 60%;
+            height: 60%;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .radar-pulse {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            animation: radar 3s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(145deg, #ffffff 0%, #f8fffe 100%);
+            border-left: 5px solid var(--success-green);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent-color);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-family: serif;
+            opacity: 0.3;
+        }
+
+        .story-author {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .story-stats {
+            background: var(--gradient-accent);
+            color: white;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+            display: inline-block;
+        }
+
+        /* Positioning Simulator */
+        .positioning-simulator {
+            background: linear-gradient(135deg, #e8f5e8 0%, #f1f8e9 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--accent-color);
+        }
+
+        .position-btn {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .position-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(111, 66, 193, 0.3);
+        }
+
+        .position-btn.active {
+            background: var(--gradient-secondary);
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .interactive-card {
+                padding: 1.2rem;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .niche-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+
+            .opportunity-matrix {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .radar-chart {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+            }
+            
+            .calculator-container,
+            .positioning-simulator {
+                padding: 1.5rem;
+            }
+
+            .niche-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .position-btn {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn-custom {
+            min-height: 44px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(111, 66, 193, 0.3);
+        }
+
+        .btn-accent-custom {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-accent-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(232, 62, 140, 0.3);
+        }
+
+        /* Current Date Display */
+        .current-date {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            color: white;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background -->
+    <div class="floating-bg">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+        <div class="floating-shape shape-5"></div>
+    </div>
+
+    <!-- WC Training Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-crosshairs me-2"></i>WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> profesionales descubriendo nichos únicos
+                        <span class="ms-3 current-date" id="currentDate"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-search text-primary me-2"></i>
+                Industry Insights 2025 - Especialización Estratégica
+            </h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">87%</span>
+                        <small>menos competencia en nichos especializados vs categorías genéricas</small>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">4.6x</span>
+                        <small>mayor revenue por cliente en especializaciones vs posicionamiento genérico</small>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">94%</span>
+                        <small>de top earners tiene posicionamiento distintivo en nicho específico</small>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">68%</span>
+                        <small>mayor retención de clientes en especializaciones auténticas vs forzadas</small>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <div class="insight-card">
+                        <span class="insight-number">$127K</span>
+                        <small>diferencia promedio anual entre especialistas y generalistas en plataformas</small>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted">
+                <small><i class="fas fa-chart-area me-1"></i>Datos: Niche Specialization Report 2025, Platform Economics Study</small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">🎯 Descubre Tu Territorio Profesional Único</h1>
+            <p class="main-subtitle">
+                Implementa investigación sistemática de nichos perfectamente adaptados a tus capacidades únicas. 
+                Identifica intersecciones específicas donde tus fortalezas distintivas representan ventaja 
+                competitiva excepcional versus posicionamiento genérico en mercados saturados.
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Niche Discovery Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-compass"></i>
+                Lab de Descubrimiento de Nichos
+            </h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('discovery-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-search-plus me-2"></i>Explorador de Especializaciones Potenciales</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="discovery-details-icon"></i>
+                </div>
+                <div class="card-content" id="discovery-details">
+                    <p><strong>ESENCIAL:</strong> 87% menos competencia en nichos especializados. Tu ventaja competitiva está en identificar territorios subatendidos perfectamente alineados con tus características auténticas.</p>
+                    
+                    <div class="niche-grid">
+                        <div class="niche-card" onclick="analyzeNiche('fetish')">
+                            <div class="niche-icon"><i class="fas fa-mask"></i></div>
+                            <div class="niche-title">Fetish & Kink</div>
+                            <div class="niche-metrics">
+                                Demanda: Alta | Competencia: Media<br>
+                                Revenue potencial: $180K+
+                            </div>
+                        </div>
+                        <div class="niche-card" onclick="analyzeNiche('girlfriend')">
+                            <div class="niche-icon"><i class="fas fa-heart"></i></div>
+                            <div class="niche-title">GFE Premium</div>
+                            <div class="niche-metrics">
+                                Demanda: Muy Alta | Competencia: Alta<br>
+                                Revenue potencial: $240K+
+                            </div>
+                        </div>
+                        <div class="niche-card" onclick="analyzeNiche('findom')">
+                            <div class="niche-icon"><i class="fas fa-crown"></i></div>
+                            <div class="niche-title">Financial Domination</div>
+                            <div class="niche-metrics">
+                                Demanda: Media | Competencia: Baja<br>
+                                Revenue potencial: $320K+
+                            </div>
+                        </div>
+                        <div class="niche-card" onclick="analyzeNiche('milf')">
+                            <div class="niche-icon"><i class="fas fa-star"></i></div>
+                            <div class="niche-title">MILF Premium</div>
+                            <div class="niche-metrics">
+                                Demanda: Alta | Competencia: Media<br>
+                                Revenue potencial: $195K+
+                            </div>
+                        </div>
+                        <div class="niche-card" onclick="analyzeNiche('roleplay')">
+                            <div class="niche-icon"><i class="fas fa-theater-masks"></i></div>
+                            <div class="niche-title">Roleplay Specialist</div>
+                            <div class="niche-metrics">
+                                Demanda: Alta | Competencia: Baja<br>
+                                Revenue potencial: $165K+
+                            </div>
+                        </div>
+                        <div class="niche-card" onclick="analyzeNiche('interactive')">
+                            <div class="niche-icon"><i class="fas fa-gamepad"></i></div>
+                            <div class="niche-title">Interactive Gaming</div>
+                            <div class="niche-metrics">
+                                Demanda: Emergente | Competencia: Muy Baja<br>
+                                Revenue potencial: $140K+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="calculator-container mt-4">
+                        <h4><i class="fas fa-calculator me-2"></i>Calculadora de Potencial de Nicho</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select class="calc-input" id="nicheSelect" onchange="calculateNichePotential()">
+                                    <option value="">Selecciona especialización</option>
+                                    <option value="fetish">Fetish & Kink</option>
+                                    <option value="gfe">GFE Premium</option>
+                                    <option value="findom">Financial Domination</option>
+                                    <option value="milf">MILF Premium</option>
+                                    <option value="roleplay">Roleplay Specialist</option>
+                                    <option value="interactive">Interactive Gaming</option>
+                                    <option value="couple">Couples Content</option>
+                                    <option value="latex">Latex & Fashion</option>
+                                </select>
+                                <input type="range" class="form-range mt-3" min="1" max="10" value="5" id="authenticityLevel" onchange="calculateNichePotential()">
+                                <label>Autenticidad personal: <span id="authenticityLevelDisplay">5</span>/10</label>
+                                <input type="range" class="form-range mt-3" min="1" max="10" value="7" id="skillLevel" onchange="calculateNichePotential()">
+                                <label>Nivel de skill actual: <span id="skillLevelDisplay">7</span>/10</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="calc-result" id="nicheResult">
+                                    <div class="result-highlight" id="nicheScore">0%</div>
+                                    <div>Compatibility Score</div>
+                                    <div class="mt-2">
+                                        <small>Revenue proyectado: <span id="projectedRevenue">$0</span></small><br>
+                                        <small>Time to establish: <span id="timeToEstablish">-</span></small><br>
+                                        <small>Competition level: <span id="competitionLevel">-</span></small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Competition Analysis Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chess"></i>
+                Lab de Análisis Competitivo
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('competition-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-chart-bar me-2"></i>Analizador de Saturación de Mercado</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="competition-details-icon"></i>
+                </div>
+                <div class="card-content" id="competition-details">
+                    <p><strong>CRÍTICO:</strong> Evaluar competencia existente es esencial antes de comprometerte. Misma especialización, diferentes niveles de saturación = oportunidades radicalmente diferentes.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>📊 Análisis de Saturación por Nicho</h5>
+                            
+                            <div class="competition-meter">
+                                <label><strong>Fetish & Kink Specialization</strong></label>
+                                <div class="meter-container">
+                                    <div class="meter-needle" style="left: 45%;"></div>
+                                </div>
+                                <div class="meter-labels">
+                                    <span>Low Competition</span>
+                                    <span>Medium</span>
+                                    <span>High Competition</span>
+                                </div>
+                            </div>
+                            
+                            <div class="competition-meter">
+                                <label><strong>GFE Premium Experience</strong></label>
+                                <div class="meter-container">
+                                    <div class="meter-needle" style="left: 78%;"></div>
+                                </div>
+                                <div class="meter-labels">
+                                    <span>Low Competition</span>
+                                    <span>Medium</span>
+                                    <span>High Competition</span>
+                                </div>
+                            </div>
+                            
+                            <div class="competition-meter">
+                                <label><strong>Financial Domination</strong></label>
+                                <div class="meter-container">
+                                    <div class="meter-needle" style="left: 25%;"></div>
+                                </div>
+                                <div class="meter-labels">
+                                    <span>Low Competition</span>
+                                    <span>Medium</span>
+                                    <span>High Competition</span>
+                                </div>
+                            </div>
+                            
+                            <div class="competition-meter">
+                                <label><strong>Interactive Gaming Content</strong></label>
+                                <div class="meter-container">
+                                    <div class="meter-needle" style="left: 15%;"></div>
+                                </div>
+                                <div class="meter-labels">
+                                    <span>Low Competition</span>
+                                    <span>Medium</span>
+                                    <span>High Competition</span>
+                                </div>
+                            </div>
+
+                            <div class="opportunity-matrix mt-4">
+                                <div class="matrix-cell" onclick="selectOpportunity('highdemand-lowcomp')">
+                                    <div class="matrix-score">A+</div>
+                                    <div class="matrix-label">Alta Demanda<br>Baja Competencia</div>
+                                </div>
+                                <div class="matrix-cell" onclick="selectOpportunity('highdemand-medcomp')">
+                                    <div class="matrix-score">A</div>
+                                    <div class="matrix-label">Alta Demanda<br>Media Competencia</div>
+                                </div>
+                                <div class="matrix-cell" onclick="selectOpportunity('meddemand-lowcomp')">
+                                    <div class="matrix-score">B+</div>
+                                    <div class="matrix-label">Media Demanda<br>Baja Competencia</div>
+                                </div>
+                                <div class="matrix-cell" onclick="selectOpportunity('emerging-lowcomp')">
+                                    <div class="matrix-score">A-</div>
+                                    <div class="matrix-label">Emergente<br>Muy Baja Competencia</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="radar-chart">
+                                <div class="radar-pulse"></div>
+                                <div class="radar-center">
+                                    <div>
+                                        Market<br>
+                                        <strong>Scanner</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center">
+                                <button class="btn-custom btn-accent-custom" onclick="runMarketScan()">
+                                    🔍 Escanear Mercado
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Positioning Simulator Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-bullseye"></i>
+                Lab de Simulación de Posicionamiento
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('positioning-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-rocket me-2"></i>Simulador de Estrategias de Posicionamiento</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="positioning-details-icon"></i>
+                </div>
+                <div class="card-content" id="positioning-details">
+                    <div class="positioning-simulator">
+                        <h4><i class="fas fa-play-circle me-2"></i>Simula Tu Posicionamiento Estratégico</h4>
+                        <p>Selecciona tu estrategia de entrada y observa proyecciones específicas:</p>
+                        
+                        <div class="text-center mb-3">
+                            <button class="position-btn" onclick="selectPositioning('specialist')">Especialista Inmediato</button>
+                            <button class="position-btn" onclick="selectPositioning('gradual')">Transición Gradual</button>
+                            <button class="position-btn" onclick="selectPositioning('hybrid')">Híbrido Multi-Niche</button>
+                            <button class="position-btn" onclick="selectPositioning('premium')">Premium Exclusive</button>
+                        </div>
+
+                        <div id="positioningResult" class="calc-result" style="display: none;">
+                            <h5 id="positioningTitle"></h5>
+                            <div id="positioningDescription"></div>
+                            <div class="row mt-3">
+                                <div class="col-md-3">
+                                    <strong>Timeline:</strong><br>
+                                    <span id="positioningTimeline"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Inversión inicial:</strong><br>
+                                    <span id="positioningInvestment"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>ROI proyectado:</strong><br>
+                                    <span id="positioningROI"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Risk level:</strong><br>
+                                    <span id="positioningRisk"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Authenticity Tracker -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-heart"></i>
+                Tracker de Autenticidad y Sostenibilidad
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('authenticity-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-balance-scale me-2"></i>Evaluador de Alineación Personal</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="authenticity-details-icon"></i>
+                </div>
+                <div class="card-content" id="authenticity-details">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>💎 Factores de Autenticidad - CRÍTICOS para Sostenibilidad</h5>
+                            
+                            <div class="progress-container">
+                                <label><strong>Alineación con Preferencias Naturales</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="preferencesProgress" style="width: 75%"></div>
+                                </div>
+                                <small class="text-muted">¿Disfrutas genuinamente este tipo de interacción?</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Sostenibilidad Emocional</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="emotionalProgress" style="width: 60%"></div>
+                                </div>
+                                <small class="text-muted">¿Puedes mantener esta persona/energía consistentemente?</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Capacidades Naturales</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="skillsProgress" style="width: 85%"></div>
+                                </div>
+                                <small class="text-muted">¿Tienes talento natural para esta especialización?</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Potencial de Crecimiento</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="growthProgress" style="width: 70%"></div>
+                                </div>
+                                <small class="text-muted">¿Puedes evolucionar y mejorar en este nicho?</small>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label><strong>Diferenciación Única</strong></label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="uniquenessProgress" style="width: 80%"></div>
+                                </div>
+                                <small class="text-muted">¿Tienes características distintivas para este nicho?</small>
+                            </div>
+
+                            <div class="mt-4">
+                                <button class="btn-custom btn-primary-custom me-2" onclick="updateAuthenticity('preferences', 85)">
+                                    Evaluar Preferencias
+                                </button>
+                                <button class="btn-custom btn-primary-custom me-2" onclick="updateAuthenticity('emotional', 75)">
+                                    Test Emocional
+                                </button>
+                                <button class="btn-custom btn-primary-custom me-2" onclick="updateAuthenticity('skills', 90)">
+                                    Assessment Skills
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="calculator-container">
+                                <h5><i class="fas fa-gem me-2"></i>Authenticity Score</h5>
+                                <div class="calc-result">
+                                    <div class="result-highlight" id="authenticityScore">74%</div>
+                                    <div>Alineación Auténtica</div>
+                                    <div class="mt-2">
+                                        <small>Sostenibilidad: <span id="sustainabilityLevel">Alta</span></small><br>
+                                        <small>Burnout risk: <span id="burnoutRisk">Bajo</span></small><br>
+                                        <small>Growth potential: <span id="growthPotential">Excelente</span></small>
+                                    </div>
+                                </div>
+                                <button class="btn-custom btn-accent-custom w-100 mt-3" onclick="generatePersonalityProfile()">
+                                    📋 Generar Perfil Completo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-trophy"></i>
+                Casos de Éxito - Masters de Especialización
+            </h2>
+
+            <div class="success-story">
+                <p><strong>Luna Mystique, Fetish Specialist:</strong> "Mi 'Sistema de Exploración de Nichos' reveló que mi genuino interés en psicología BDSM + mi background en teatro me posicionaba perfectamente para dominación psicológica. Implementé análisis sistemático: documenté específicamente sub-nichos dentro de fetish, analicé spending patterns de cada demografía, evalué competencia seria vs amateur. Descubrí que psychological domination tenía demand alta pero muy pocas providers auténticas. Mi transición de vanilla a fetish specialist en 8 meses resultó en 340% incremento en revenue. La clave fue autenticidad - no fingía interés, genuinamente disfrutaba la psicología de poder y control."</p>
+                <div class="story-author">Luna Mystique, Top 0.3% Fetish Specialist</div>
+                <div class="story-stats">
+                    <i class="fas fa-chart-line me-2"></i>Revenue jump: +340% | Timeline: 8 meses | Nicho: Psychological Domination
+                </div>
+            </div>
+
+            <div class="success-story">
+                <p><strong>Sophia Matthews, GFE Premium:</strong> "Identifiqué específicamente que mi personalidad naturalmente nurturing + communication skills genuinas creaban ventaja distintiva en girlfriend experience de alta calidad. Mi análisis reveló que GFE tenía alta competencia pero calidad extremadamente variable - mayoría eran performance superficial. Mi diferenciación fue autenticidad emocional real: genuina curiosidad sobre clients, memoria excepcional para detalles personales, y emotional intelligence natural. Posicionamiento como 'premium authentic GFE' me permitió charged rates 280% superiores al promedio porque clients percibían diferencia inmediata en calidad de connection."</p>
+                <div class="story-author">Sophia Matthews, Premium GFE Specialist - Top 1%</div>
+                <div class="story-stats">
+                    <i class="fas fa-heart me-2"></i>Premium rates: +280% | Timeline: 6 meses | Nicho: Authentic GFE
+                </div>
+            </div>
+
+            <div class="success-story">
+                <p><strong>Raven Cross, FinDom Elite:</strong> "Mi exploración sistemática identificó financial domination como nicho con demand específica pero competencia sorprendentemente limitada para providers serias. La clave fue reconocer que mi genuine confidence + business background + natural commanding presence me daban credibilidad auténtica vs típicas performers que intentaban 'fake it'. Implementé business approach profesional: created tiered service offerings, established clear boundaries y protocols, y desarrollé psychological expertise en financial submission dynamics. Result: established como top 5 FinDom globally con average tribute amounts 450% superiores a industry average. Authenticity + professional approach = competitive moat imposible de replicate."</p>
+                <div class="story-author">Raven Cross, Elite Financial Dominatrix</div>
+                <div class="story-stats">
+                    <i class="fas fa-crown me-2"></i>Tribute premium: +450% | Timeline: 12 meses | Nicho: Elite Financial Domination
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Roadmap -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-map-marked-alt"></i>
+                Roadmap de Implementación VITAL
+            </h2>
+
+            <div class="interactive-card" onclick="toggleDetails('roadmap-details')">
+                <div class="card-header">
+                    <span><i class="fas fa-route me-2"></i>Tu Plan de Especialización - Próximos 90 Días</span>
+                    <i class="fas fa-chevron-down toggle-icon" id="roadmap-details-icon"></i>
+                </div>
+                <div class="card-content" id="roadmap-details">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5>🎯 ESENCIAL: Fases de Especialización</h5>
+                            
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updateRoadmap()"> 
+                                    <strong>Fase 1: Research & Análisis (Días 1-21)</strong> - Identificar 3-5 nichos potenciales
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="roadmapTask1" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updateRoadmap()"> 
+                                    <strong>Fase 2: Autenticidad Assessment (Días 22-35)</strong> - Evaluar alignment personal profundo
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="roadmapTask2" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updateRoadmap()"> 
+                                    <strong>Fase 3: Competencia Analysis (Días 36-50)</strong> - Analizar saturación y oportunidades
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="roadmapTask3" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updateRoadmap()"> 
+                                    <strong>Fase 4: Experiment Estructurado (Días 51-75)</strong> - Test controlado en nicho seleccionado
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="roadmapTask4" style="width: 0%"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="progress-container">
+                                <label>
+                                    <input type="checkbox" onchange="updateRoadmap()"> 
+                                    <strong>Fase 5: Posicionamiento & Launch (Días 76-90)</strong> - Implementar especialización completa
+                                </label>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" id="roadmapTask5" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="calculator-container">
+                                <h5><i class="fas fa-calendar me-2"></i>Progreso Timeline</h5>
+                                <div class="calc-result">
+                                    <div class="result-highlight" id="roadmapCompletion">0%</div>
+                                    <div>Especialización Completa</div>
+                                    <div class="mt-2">
+                                        <small>Fases completadas: <span id="completedPhases">0</span>/5</small><br>
+                                        <small>Días restantes: <span id="daysRemaining">90 días</span></small><br>
+                                        <small>Status: <span id="roadmapStatus">Planificación</span></small>
+                                    </div>
+                                </div>
+                                <button class="btn-custom btn-accent-custom w-100 mt-3" onclick="launchSpecialization()">
+                                    🚀 Launch Mi Especialización
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="lab-section">
+            <div class="text-center">
+                <h2 class="section-title justify-content-center">
+                    <i class="fas fa-crosshairs"></i>
+                    ¡Domina Tu Territorio Profesional Único!
+                </h2>
+                <p class="lead">
+                    <strong>La exploración sistemática que acabas de implementar</strong> transforma fundamentalmente tu posicionamiento competitivo. 
+                    No exploraste superficialmente, sino que desarrollaste metodología analítica donde identificas intersecciones específicas 
+                    donde tus particulares fortalezas representan ventaja competitiva excepcional versus generalización indistinta.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <span class="insight-number">87%</span>
+                            <small>Menos competencia en tu nicho especializado vs categorías genéricas</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <span class="insight-number">4.6x</span>
+                            <small>Mayor revenue por cliente con especialización auténtica</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="insight-card">
+                            <span class="insight-number">$185K+</span>
+                            <small>Revenue promedio anual con posicionamiento distintivo establecido</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button class="btn-custom btn-primary-custom me-3" onclick="downloadNicheGuide()">
+                        <i class="fas fa-download me-2"></i>Descargar Mi Guía de Nicho
+                    </button>
+                    <button class="btn-custom btn-accent-custom" onclick="scheduleConsultation()">
+                        <i class="fas fa-user-tie me-2"></i>Consultoría Especializada
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Initialize current date and update every minute
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        
+        updateCurrentDate();
+        setInterval(updateCurrentDate, 60000);
+
+        // Toggle Details Function
+        function toggleDetails(elementId) {
+            const content = document.getElementById(elementId);
+            const icon = document.getElementById(elementId + '-icon');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.classList.remove('rotated');
+            } else {
+                content.classList.add('expanded');
+                icon.classList.add('rotated');
+            }
+        }
+
+        // Analyze Niche Function
+        function analyzeNiche(nicheType) {
+            const niches = {
+                fetish: "Fetish & Kink: Alta demanda con competencia media. Requiere autenticidad genuina y expertise en psicología BDSM. Revenue potential: $180K+ anual.",
+                girlfriend: "GFE Premium: Demanda muy alta pero competencia saturada. Diferenciación clave: emotional intelligence genuina y consistency. Revenue potential: $240K+ anual.",
+                findom: "Financial Domination: Nicho exclusivo con competencia baja pero barriers de entrada altos. Requiere natural confidence y business acumen. Revenue potential: $320K+ anual.",
+                milf: "MILF Premium: Demanda estable con competencia media. Ventaja de edad y experience. Requiere confidence y mature appeal. Revenue potential: $195K+ anual.",
+                roleplay: "Roleplay Specialist: Alta demanda, competencia relativamente baja. Requiere acting skills y creativity. Muy versátil y escalable. Revenue potential: $165K+ anual.",
+                interactive: "Interactive Gaming: Nicho emergente con competencia muy baja. Combina gaming + adult content. Early adopter advantage. Revenue potential: $140K+ anual."
+            };
+            
+            alert(`🎯 ${niches[nicheType] || "Análisis de nicho no disponible. Considera consultoría personalizada para análisis profundo."}`);
+        }
+
+        // Calculate Niche Potential
+        function calculateNichePotential() {
+            const niche = document.getElementById('nicheSelect').value;
+            const authenticity = parseInt(document.getElementById('authenticityLevel').value);
+            const skill = parseInt(document.getElementById('skillLevel').value);
+            
+            document.getElementById('authenticityLevelDisplay').textContent = authenticity;
+            document.getElementById('skillLevelDisplay').textContent = skill;
+            
+            const nicheData = {
+                fetish: { baseScore: 75, revenue: 180000, time: "6-8 meses", competition: "Media" },
+                gfe: { baseScore: 85, revenue: 240000, time: "4-6 meses", competition: "Alta" },
+                findom: { baseScore: 65, revenue: 320000, time: "8-12 meses", competition: "Baja" },
+                milf: { baseScore: 80, revenue: 195000, time: "3-5 meses", competition: "Media" },
+                roleplay: { baseScore: 85, revenue: 165000, time: "4-6 meses", competition: "Baja" },
+                interactive: { baseScore: 70, revenue: 140000, time: "6-10 meses", competition: "Muy Baja" },
+                couple: { baseScore: 90, revenue: 280000, time: "3-4 meses", competition: "Media" },
+                latex: { baseScore: 75, revenue: 155000, time: "5-7 meses", competition: "Baja" }
+            };
+            
+            if (niche && nicheData[niche]) {
+                const data = nicheData[niche];
+                const score = Math.min(95, data.baseScore + (authenticity * 2) + (skill * 1.5));
+                const adjustedRevenue = data.revenue * (score / 100);
+                
+                document.getElementById('nicheScore').textContent = Math.round(score) + '%';
+                document.getElementById('projectedRevenue').textContent = '$' + Math.round(adjustedRevenue).toLocaleString();
+                document.getElementById('timeToEstablish').textContent = data.time;
+                document.getElementById('competitionLevel').textContent = data.competition;
+            }
+        }
+
+        // Select Opportunity
+        function selectOpportunity(type) {
+            const opportunities = {
+                'highdemand-lowcomp': 'Financial Domination, Interactive Gaming, Latex Fashion',
+                'highdemand-medcomp': 'Fetish & Kink, MILF Premium, Roleplay Specialist',
+                'meddemand-lowcomp': 'Niche Fetishes, Specialized Roleplay, Artistic Nude',
+                'emerging-lowcomp': 'VR Content, AI Integration, Cryptocurrency Integration'
+            };
+            
+            alert(`🎯 Oportunidades identificadas:\n\n${opportunities[type] || "Análisis en progreso..."}\n\nEstas especializaciones ofrecen el mejor balance entre demanda y competencia para tu perfil.`);
+        }
+
+        // Run Market Scan
+        function runMarketScan() {
+            alert('🔍 Escaneando mercado en tiempo real...\n\n✅ Fetish & Kink: 45% saturación\n✅ GFE Premium: 78% saturación\n✅ FinDom Elite: 25% saturación\n✅ Interactive Gaming: 15% saturación\n\n💡 Recomendación: Interactive Gaming o FinDom Elite ofrecen mejores oportunidades actuales.');
+        }
+
+        // Select Positioning Strategy
+        function selectPositioning(strategy) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.position-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            const strategies = {
+                specialist: {
+                    title: "🎯 Especialista Inmediato",
+                    description: "Transición directa y completa a nicho específico. Maximum impact, fast results.",
+                    timeline: "4-6 semanas",
+                    investment: "$2,500-4,000",
+                    roi: "300-450%",
+                    risk: "Medio-Alto"
+                },
+                gradual: {
+                    title: "📈 Transición Gradual",
+                    description: "Incorporación progresiva de elementos especializados mientras mantienes base actual.",
+                    timeline: "8-12 semanas",
+                    investment: "$1,500-3,000",
+                    roi: "180-280%",
+                    risk: "Bajo-Medio"
+                },
+                hybrid: {
+                    title: "🔄 Híbrido Multi-Niche",
+                    description: "Desarrollo paralelo en 2-3 nichos complementarios para diversificación.",
+                    timeline: "10-16 semanas",
+                    investment: "$3,000-5,500",
+                    roi: "250-380%",
+                    risk: "Medio"
+                },
+                premium: {
+                    title: "👑 Premium Exclusive",
+                    description: "Posicionamiento ultra-premium en nicho de lujo con pricing tier superior.",
+                    timeline: "6-10 semanas",
+                    investment: "$4,000-8,000",
+                    roi: "400-600%",
+                    risk: "Alto"
+                }
+            };
+            
+            const selected = strategies[strategy];
+            document.getElementById('positioningTitle').textContent = selected.title;
+            document.getElementById('positioningDescription').textContent = selected.description;
+            document.getElementById('positioningTimeline').textContent = selected.timeline;
+            document.getElementById('positioningInvestment').textContent = selected.investment;
+            document.getElementById('positioningROI').textContent = selected.roi;
+            document.getElementById('positioningRisk').textContent = selected.risk;
+            
+            document.getElementById('positioningResult').style.display = 'block';
+        }
+
+        // Update Authenticity Tracking
+        function updateAuthenticity(factor, percentage) {
+            const progressBar = document.getElementById(factor + 'Progress');
+            if (progressBar) {
+                progressBar.style.width = percentage + '%';
+            }
+            updateAuthenticityScore();
+        }
+
+        // Update Overall Authenticity Score
+        function updateAuthenticityScore() {
+            const progressBars = ['preferencesProgress', 'emotionalProgress', 'skillsProgress', 'growthProgress', 'uniquenessProgress'];
+            let totalScore = 0;
+            
+            progressBars.forEach(barId => {
+                const bar = document.getElementById(barId);
+                if (bar) {
+                    const width = parseInt(bar.style.width) || 0;
+                    totalScore += width;
+                }
+            });
+            
+            const averageScore = totalScore / progressBars.length;
+            document.getElementById('authenticityScore').textContent = Math.round(averageScore) + '%';
+            
+            // Update sustainability indicators
+            let sustainability = 'Baja';
+            let burnoutRisk = 'Alto';
+            let growthPotential = 'Limitado';
+            
+            if (averageScore >= 80) {
+                sustainability = 'Excelente';
+                burnoutRisk = 'Muy Bajo';
+                growthPotential = 'Excepcional';
+            } else if (averageScore >= 65) {
+                sustainability = 'Alta';
+                burnoutRisk = 'Bajo';
+                growthPotential = 'Excelente';
+            } else if (averageScore >= 50) {
+                sustainability = 'Media';
+                burnoutRisk = 'Medio';
+                growthPotential = 'Bueno';
+            }
+            
+            document.getElementById('sustainabilityLevel').textContent = sustainability;
+            document.getElementById('burnoutRisk').textContent = burnoutRisk;
+            document.getElementById('growthPotential').textContent = growthPotential;
+        }
+
+        // Update Roadmap Progress
+        function updateRoadmap() {
+            const checkboxes = document.querySelectorAll('#roadmap-details input[type="checkbox"]');
+            const completed = Array.from(checkboxes).filter(cb => cb.checked).length;
+            const total = checkboxes.length;
+            const percentage = (completed / total) * 100;
+            
+            document.getElementById('roadmapCompletion').textContent = percentage.toFixed(0) + '%';
+            document.getElementById('completedPhases').textContent = completed;
+            
+            // Update individual task progress bars
+            checkboxes.forEach((checkbox, index) => {
+                const progressBar = document.getElementById(`roadmapTask${index + 1}`);
+                if (progressBar) {
+                    progressBar.style.width = checkbox.checked ? '100%' : '0%';
+                }
+            });
+            
+            // Update status and days remaining
+            const daysRemaining = Math.max(1, 90 - (completed * 18));
+            document.getElementById('daysRemaining').textContent = daysRemaining + ' días';
+            
+            let status = 'Planificación';
+            if (percentage >= 80) status = 'Launch Ready';
+            else if (percentage >= 60) status = 'Testing';
+            else if (percentage >= 40) status = 'Desarrollo';
+            else if (percentage >= 20) status = 'Research';
+            
+            document.getElementById('roadmapStatus').textContent = status;
+        }
+
+        // Generate Personality Profile
+        function generatePersonalityProfile() {
+            alert('📋 Generando tu Perfil de Especialización Completo...\n\nIncluirá:\n• Authenticity assessment detallado\n• Nichos recomendados específicos\n• Roadmap personalizado\n• Risk factors y mitigación\n• Revenue projections\n• Competitive positioning strategy');
+        }
+
+        // Launch Specialization
+        function launchSpecialization() {
+            alert('🚀 ¡Iniciando Launch de tu Especialización!\n\nPróximos pasos:\n1. Finalizar branding de nicho\n2. Crear content especializado\n3. Implementar pricing strategy\n4. Launch marketing campaign\n5. Monitor performance metrics\n\n¡Tu territorio profesional único está listo para dominar!');
+        }
+
+        // Download Niche Guide
+        function downloadNicheGuide() {
+            alert('📄 Descargando tu Guía de Especialización Personalizada...\n\nIncluye análisis completo de nichos, competitive landscape, authenticity assessment, implementation roadmap, y estrategias específicas para tu perfil único.');
+        }
+
+        // Schedule Consultation
+        function scheduleConsultation() {
+            alert('👥 Programando tu Consultoría de Especialización...\n\nSesión 1-on-1 para:\n• Análisis profundo de afinidades\n• Identificación de nichos óptimos\n• Estrategia de positioning personalizada\n• Roadmap de implementación específico\n• Ongoing support durante transición');
+        }
+
+        // Initialize calculations
+        calculateNichePotential();
+        updateAuthenticityScore();
+        updateRoadmap();
+    </script>
+</body>
+</html>

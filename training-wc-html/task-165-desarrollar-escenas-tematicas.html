@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎭 WC Training: Master de Escenas Temáticas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #8b3cf7;
+            --secondary-color: #f59e0b;
+            --accent-purple: #a855f7;
+            --accent-gold: #fbbf24;
+            --dark-purple: #581c87;
+            --light-purple: #c084fc;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-cinema: linear-gradient(135deg, #8b3cf7 0%, #f59e0b 50%, #a855f7 100%);
+            --gradient-stage: linear-gradient(45deg, #581c87 0%, #8b3cf7 35%, #fbbf24 70%, #f59e0b 100%);
+            --gradient-spotlight: linear-gradient(180deg, #fbbf24 0%, #f59e0b 30%, #8b3cf7 70%, #581c87 100%);
+            --gradient-backdrop: linear-gradient(90deg, #a855f7 0%, #8b3cf7 25%, #581c87 50%, #8b3cf7 75%, #a855f7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* WC Training Header */
+        .wc-header {
+            background: var(--gradient-cinema);
+            padding: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s infinite ease-in-out;
+        }
+
+        .wc-logo {
+            color: white;
+            font-size: 2rem;
+            font-weight: 900;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            color: white;
+            font-size: 0.95rem;
+            opacity: 0.95;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 1.5s infinite;
+            margin-right: 8px;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            border-left: 6px solid var(--primary-color);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(139, 60, 247, 0.1);
+        }
+
+        .insight-stat {
+            background: var(--gradient-stage);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .insight-stat:hover {
+            transform: translateY(-8px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-cinema);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            color: white;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M40 40l20-20v40l-20-20zm0 0l-20-20v40l20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s infinite ease-in-out reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.4rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            margin: 3rem 0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .lab-header {
+            background: var(--gradient-stage);
+            color: white;
+            padding: 2rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .lab-header h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-content {
+            padding: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, padding 0.3s ease;
+        }
+
+        .lab-content.expanded {
+            max-height: 2000px;
+            padding: 2rem;
+        }
+
+        /* Interactive Cards */
+        .scene-card {
+            background: var(--gradient-spotlight);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scene-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 50px rgba(139, 60, 247, 0.3);
+        }
+
+        .scene-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .scene-card:hover::before {
+            left: 100%;
+        }
+
+        /* Calculator Sections */
+        .calculator-container {
+            background: var(--gradient-backdrop);
+            color: white;
+            padding: 2.5rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 12px;
+            padding: 1rem;
+            margin: 1rem 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255,255,255,0.7);
+        }
+
+        .calc-result {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-cinema);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: white;
+            border-left: 6px solid var(--secondary-color);
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(245, 158, 11, 0.1);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--secondary-color);
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            background: var(--gradient-stage);
+            color: white;
+            padding: 1rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        /* Simulator */
+        .simulator-container {
+            background: var(--gradient-cinema);
+            color: white;
+            padding: 3rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .scenario-option:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+        }
+
+        .scenario-option.selected {
+            background: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-stage);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            text-align: center;
+            margin: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-badge {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            display: inline-block;
+            margin: 1rem;
+            font-weight: 700;
+            animation: bounce 2s infinite;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .main-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .lab-header h3 {
+                font-size: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .wc-logo {
+                font-size: 1.5rem;
+            }
+
+            .scene-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .calculator-container,
+            .simulator-container,
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .main-subtitle {
+                font-size: 1rem;
+            }
+
+            .lab-header {
+                padding: 1.5rem;
+            }
+
+            .lab-content.expanded {
+                padding: 1.5rem;
+            }
+
+            .scene-card {
+                padding: 1.5rem;
+            }
+
+            .story-metrics {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Custom buttons and interactions */
+        .btn-cinema {
+            background: var(--gradient-cinema);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-cinema:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(139, 60, 247, 0.3);
+            color: white;
+        }
+
+        .highlight-critical {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        .current-date {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-video"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <span class="current-date" id="currentDate"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h4><i class="fas fa-chart-line"></i> Insights del Mercado de Escenas Temáticas 2025</h4>
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="insight-stat">
+                        <div class="stat-number">89%</div>
+                        <div>Incremento en ganancias con múltiples escenas vs. configuración única</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-stat">
+                        <div class="stat-number">6.3x</div>
+                        <div>ROI promedio en inversión de setup temático profesional</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-stat">
+                        <div class="stat-number">73%</div>
+                        <div>De usuarios prefieren diversidad visual vs. monotonía estética</div>
+                    </div>
+                </div>
+            </div>
+            <p class="mt-3 mb-0"><small><strong>Fuente:</strong> Creator Economy Report 2025, WebCam Industry Survey</small></p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">🎭 Master de Escenas Temáticas</h1>
+            <p class="main-subtitle">
+                Transforma tu estudio en múltiples universos creativos con configuraciones prediseñadas que revolutionan tu versatilidad expresiva y maximizan tu potencial de ganancias
+            </p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Lab Section 1: Fundamentos de Escenas -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('lab1')">
+                <h3><i class="fas fa-theater-masks"></i> Lab 1: Fundamentos de Ambientes Digitales</h3>
+                <p>Construye los cimientos de tu imperio visual temático</p>
+                <i class="fas fa-chevron-down float-end"></i>
+            </div>
+            <div class="lab-content" id="lab1">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="scene-card" onclick="expandCard(this)">
+                            <h5><i class="fas fa-palette"></i> Sistema de Paletas Temáticas</h5>
+                            <p>Desarrolla esquemas de color específicos para cada ambiente: Intimate Noir (monocromático elegant), Celebration Mode (vibrante energético), Performance Space (dramático minimalista)</p>
+                            <div class="card-details" style="display: none;">
+                                <hr>
+                                <ul>
+                                    <li><strong>Intimate Noir:</strong> Negros profundos, grises elegantes, acentos dorados sutiles</li>
+                                    <li><strong>Celebration Mode:</strong> Púrpuras vibrantes, rosas neón, azules eléctricos</li>
+                                    <li><strong>Performance Space:</strong> Blancos puros, sombras dramáticas, iluminación direccional</li>
+                                    <li><strong>Special Event:</strong> Colores personalizados según ocasión específica</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scene-card" onclick="expandCard(this)">
+                            <h5><i class="fas fa-lightbulb"></i> Configuración de Iluminación por Mood</h5>
+                            <p>Cada escena requiere iluminación específica que transforme completamente la atmósfera visual y emocional del ambiente</p>
+                            <div class="card-details" style="display: none;">
+                                <hr>
+                                <p><span class="highlight-critical">CRÍTICO:</span> La iluminación es 67% del impacto visual total</p>
+                                <ul>
+                                    <li>Luz suave difusa para conversaciones íntimas</li>
+                                    <li>Iluminación colorida dinámica para celebraciones</li>
+                                    <li>Spots direccionales para performances</li>
+                                    <li>Efectos especiales para eventos temáticos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator: ROI de Inversión en Escenas -->
+        <div class="calculator-container">
+            <h3><i class="fas fa-calculator"></i> Calculadora de ROI: Inversión en Escenas Temáticas</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="number" class="calc-input" id="monthlyEarnings" placeholder="Ganancias mensuales actuales ($)" oninput="calculateSceneROI()">
+                    <input type="number" class="calc-input" id="sceneInvestment" placeholder="Inversión en setup temático ($)" oninput="calculateSceneROI()">
+                    <input type="number" class="calc-input" id="expectedIncrease" placeholder="% incremento esperado" value="45" oninput="calculateSceneROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="sceneROIResult">
+                        <h5>Análisis de Retorno</h5>
+                        <p>Ingresa tus datos para ver el análisis completo de ROI</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Configuraciones Especializadas -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('lab2')">
+                <h3><i class="fas fa-cogs"></i> Lab 2: Configuraciones Especializadas por Actividad</h3>
+                <p>Optimiza cada ambiente para tipos específicos de experiencias</p>
+                <i class="fas fa-chevron-down float-end"></i>
+            </div>
+            <div class="lab-content" id="lab2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="scene-card">
+                            <h5><i class="fas fa-heart"></i> Intimate Sessions</h5>
+                            <p>Encuadre cercano, iluminación suave, elementos mínimos, audio envolvente</p>
+                            <div class="mt-3">
+                                <small><strong>Elementos clave:</strong></small>
+                                <ul class="small mt-2">
+                                    <li>Cámara posicionada a nivel de ojos</li>
+                                    <li>Iluminación lateral suave</li>
+                                    <li>Fondo desenfocado neutral</li>
+                                    <li>Audio crystal clear</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scene-card">
+                            <h5><i class="fas fa-star"></i> Performance Mode</h5>
+                            <p>Encuadre amplio, iluminación dramática, espacio optimizado para movimiento</p>
+                            <div class="mt-3">
+                                <small><strong>Elementos clave:</strong></small>
+                                <ul class="small mt-2">
+                                    <li>Cámara posicionada para captura completa</li>
+                                    <li>Múltiples fuentes de luz</li>
+                                    <li>Área de movimiento definida</li>
+                                    <li>Props accesibles</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scene-card">
+                            <h5><i class="fas fa-trophy"></i> Celebration Events</h5>
+                            <p>Setup festivo, elementos interactivos, transiciones dinámicas</p>
+                            <div class="mt-3">
+                                <small><strong>Elementos clave:</strong></small>
+                                <ul class="small mt-2">
+                                    <li>Decoración temática específica</li>
+                                    <li>Iluminación colorida variable</li>
+                                    <li>Props y accesorios especiales</li>
+                                    <li>Música de ambiente</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulator: Configurador de Escenas -->
+        <div class="simulator-container">
+            <h3><i class="fas fa-desktop"></i> Simulador: Configurador de Escena Personalizada</h3>
+            <p>Selecciona elementos para crear tu configuración ideal</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>Tipo de Escena</h5>
+                    <div class="scenario-option" onclick="selectScenario(this, 'intimate')">
+                        <strong>Intimate Noir</strong> - Conversaciones personales y conexión emocional
+                    </div>
+                    <div class="scenario-option" onclick="selectScenario(this, 'performance')">
+                        <strong>Performance Space</strong> - Shows dinámicos y entretenimiento
+                    </div>
+                    <div class="scenario-option" onclick="selectScenario(this, 'celebration')">
+                        <strong>Celebration Mode</strong> - Eventos especiales y festividades
+                    </div>
+                    
+                    <h5 class="mt-4">Nivel de Inversión</h5>
+                    <div class="scenario-option" onclick="selectInvestment(this, 'basic')">
+                        <strong>Básico</strong> - $200-500 (Iluminación esencial + elementos básicos)
+                    </div>
+                    <div class="scenario-option" onclick="selectInvestment(this, 'professional')">
+                        <strong>Profesional</strong> - $500-1200 (Setup completo + accesorios)
+                    </div>
+                    <div class="scenario-option" onclick="selectInvestment(this, 'premium')">
+                        <strong>Premium</strong> - $1200+ (Sistema avanzado + automatización)
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="sceneConfig">
+                        <h5>Tu Configuración Recomendada</h5>
+                        <p>Selecciona opciones para ver recomendaciones personalizadas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h4><i class="fas fa-chart-bar"></i> Tu Progreso en Desarrollo de Escenas</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <h6>Planificación de Escenas</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 78%" id="planningProgress"></div>
+                    </div>
+                    <p class="small">78% - Diseños conceptuales definidos</p>
+                    
+                    <h6>Inversión en Equipment</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 45%" id="equipmentProgress"></div>
+                    </div>
+                    <p class="small">45% - Iluminación y accesorios básicos</p>
+                </div>
+                <div class="col-md-6">
+                    <h6>Implementación Técnica</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 62%" id="implementationProgress"></div>
+                    </div>
+                    <p class="small">62% - 2 de 4 escenas completamente operativas</p>
+                    
+                    <h6>Optimización y Testing</h6>
+                    <div class="progress-bar-custom">
+                        <div class="progress-fill" style="width: 34%" id="testingProgress"></div>
+                    </div>
+                    <p class="small">34% - Retroalimentación inicial recopilada</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-story">
+            <h4><i class="fas fa-trophy"></i> Caso de Éxito: Maya's Cinematic Studios</h4>
+            <p class="mt-3">
+                Implementé mi 'Sistema de Ambientes Digitales' después de 8 meses con setup único que limitaba mi versatilidad. Desarrollé 5 configuraciones especializadas: Intimate Noir para conversaciones personales, Celebration Mode para eventos especiales, Performance Space para shows dinámicos, Artistic Expression para contenido creativo, y VIP Experience para clientes premium.
+            </p>
+            <div class="story-metrics">
+                <div class="metric-item">
+                    <strong>+127%</strong><br>
+                    <small>Incremento en ganancias mensuales</small>
+                </div>
+                <div class="metric-item">
+                    <strong>4.2x</strong><br>
+                    <small>Aumento en tiempo de sesión promedio</small>
+                </div>
+                <div class="metric-item">
+                    <strong>$3,200</strong><br>
+                    <small>Inversión total recuperada en 6 semanas</small>
+                </div>
+                <div class="metric-item">
+                    <strong>89%</strong><br>
+                    <small>Usuarios que regresan específicamente por variedad</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h4><i class="fas fa-star"></i> Caso de Éxito: Sophie's Transformation Lab</h4>
+            <p class="mt-3">
+                Después de 14 meses con resultados estancados, implementé sistema de 4 escenas temáticas con transiciones automatizadas. Mi 'Midnight Lounge' para conversaciones íntimas, 'Rainbow Paradise' para celebraciones, 'Artist's Studio' para contenido creativo, y 'VIP Penthouse' para experiencias premium revolucionaron completamente mi oferta.
+            </p>
+            <div class="story-metrics">
+                <div class="metric-item">
+                    <strong>+89%</strong><br>
+                    <small>Incremento en tips promedio</small>
+                </div>
+                <div class="metric-item">
+                    <strong>67%</strong><br>
+                    <small>Reducción en tiempo de setup entre shows</small>
+                </div>
+                <div class="metric-item">
+                    <strong>$1,800</strong><br>
+                    <small>ROI en primer mes post-implementación</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Automatización y Optimización -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('lab3')">
+                <h3><i class="fas fa-robot"></i> Lab 3: Automatización y Transiciones Fluidas</h3>
+                <p>Sistemas que transforman tu estudio instantáneamente</p>
+                <i class="fas fa-chevron-down float-end"></i>
+            </div>
+            <div class="lab-content" id="lab3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><span class="highlight-critical">ESENCIAL</span> - Sistema de Presets</h5>
+                        <p>Configuraciones guardadas que activan instantáneamente todos los elementos de una escena específica con un solo click.</p>
+                        <ul>
+                            <li>Iluminación predefinida para cada ambiente</li>
+                            <li>Posiciones de cámara programadas</li>
+                            <li>Playlists de audio específicas</li>
+                            <li>Filtros y efectos automatizados</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><span class="highlight-critical">VITAL</span> - Transiciones Seamless</h5>
+                        <p>Cambios suaves entre escenas que mantienen engagement sin interrupciones técnicas visibles.</p>
+                        <ul>
+                            <li>Fades programados entre configuraciones</li>
+                            <li>Transiciones musicales automáticas</li>
+                            <li>Secuencias de iluminación fluidas</li>
+                            <li>Backup systems para prevenir fallos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-crown"></i> ¡Tu Imperio de Escenas Temáticas Está Listo!</h2>
+            <p class="mb-4">Has dominado la transformación de limitaciones técnicas en ventajas estratégicas a través de versatilidad visual programada</p>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-palette"></i><br>
+                        Master en Diseño Visual
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-cogs"></i><br>
+                        Experto en Automatización
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-chart-line"></i><br>
+                        Optimizador de ROI
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-star"></i><br>
+                        Innovador Creativo
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5">
+                <h4>Tu Próximo Nivel:</h4>
+                <p>Con 4+ escenas operativas, proyección de +89% incremento en engagement, y sistema automatizado funcionando, estás preparado/a para revolucionar completamente tu versatilidad expresiva y maximizar exponencialmente tu potencial de ganancias.</p>
+                <button class="btn-cinema mt-3" onclick="celebrateCompletion()">
+                    <i class="fas fa-rocket"></i> ¡A Construir Tu Reino Visual!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current date display
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateCurrentDate();
+        setInterval(updateCurrentDate, 60000);
+
+        // Toggle lab section details
+        function toggleDetails(labId) {
+            const content = document.getElementById(labId);
+            const header = content.previousElementSibling;
+            const icon = header.querySelector('.fa-chevron-down');
+            
+            if (content.classList.contains('expanded')) {
+                content.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                content.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Expand scene cards
+        function expandCard(card) {
+            const details = card.querySelector('.card-details');
+            if (details.style.display === 'none') {
+                details.style.display = 'block';
+                card.style.background = 'linear-gradient(135deg, #581c87 0%, #8b3cf7 50%, #fbbf24 100%)';
+            } else {
+                details.style.display = 'none';
+                card.style.background = 'var(--gradient-spotlight)';
+            }
+        }
+
+        // Scene ROI Calculator
+        function calculateSceneROI() {
+            const monthly = parseFloat(document.getElementById('monthlyEarnings').value) || 0;
+            const investment = parseFloat(document.getElementById('sceneInvestment').value) || 0;
+            const increase = parseFloat(document.getElementById('expectedIncrease').value) || 45;
+            
+            if (monthly > 0 && investment > 0) {
+                const newMonthly = monthly * (1 + increase/100);
+                const additionalMonthly = newMonthly - monthly;
+                const paybackMonths = investment / additionalMonthly;
+                const yearlyROI = (additionalMonthly * 12 / investment * 100);
+                
+                document.getElementById('sceneROIResult').innerHTML = `
+                    <h5><i class="fas fa-chart-line"></i> Análisis Completo</h5>
+                    <p><strong>Ganancias actuales:</strong> $${monthly.toLocaleString()}/mes</p>
+                    <p><strong>Ganancias proyectadas:</strong> $${newMonthly.toLocaleString()}/mes</p>
+                    <p><strong>Incremento mensual:</strong> +$${additionalMonthly.toLocaleString()}</p>
+                    <p><strong>Recuperación de inversión:</strong> ${paybackMonths.toFixed(1)} meses</p>
+                    <p><strong>ROI anual:</strong> ${yearlyROI.toFixed(0)}%</p>
+                    <div class="mt-3 p-2" style="background: rgba(40, 167, 69, 0.2); border-radius: 10px;">
+                        <small><strong>Proyección 12 meses:</strong> +$${(additionalMonthly * 12).toLocaleString()} adicionales</small>
+                    </div>
+                `;
+            }
+        }
+
+        // Scene scenario selector
+        let selectedScene = '';
+        let selectedInvestment = '';
+
+        function selectScenario(element, scene) {
+            document.querySelectorAll('.scenario-option').forEach(opt => {
+                if (opt.textContent.includes('Intimate') || opt.textContent.includes('Performance') || opt.textContent.includes('Celebration')) {
+                    opt.classList.remove('selected');
+                }
+            });
+            element.classList.add('selected');
+            selectedScene = scene;
+            updateSceneConfig();
+        }
+
+        function selectInvestment(element, investment) {
+            document.querySelectorAll('.scenario-option').forEach(opt => {
+                if (opt.textContent.includes('Básico') || opt.textContent.includes('Profesional') || opt.textContent.includes('Premium')) {
+                    opt.classList.remove('selected');
+                }
+            });
+            element.classList.add('selected');
+            selectedInvestment = investment;
+            updateSceneConfig();
+        }
+
+        function updateSceneConfig() {
+            if (selectedScene && selectedInvestment) {
+                const configs = {
+                    'intimate-basic': {
+                        title: 'Intimate Noir - Setup Básico',
+                        items: ['Luz LED regulable', 'Fondo neutro minimalista', 'Cámara HD básica', 'Audio mejorado'],
+                        roi: '87%',
+                        time: '2-3 semanas'
+                    },
+                    'intimate-professional': {
+                        title: 'Intimate Noir - Setup Profesional',
+                        items: ['Sistema de iluminación multi-punto', 'Fondos intercambiables', 'Cámara 4K con auto-focus', 'Audio profesional + música ambiente'],
+                        roi: '134%',
+                        time: '4-6 semanas'
+                    },
+                    'intimate-premium': {
+                        title: 'Intimate Noir - Setup Premium',
+                        items: ['Iluminación inteligente automatizada', 'Proyección de ambientes', 'Sistema multi-cámara', 'Audio espacial 3D'],
+                        roi: '198%',
+                        time: '6-8 semanas'
+                    },
+                    'performance-basic': {
+                        title: 'Performance Space - Setup Básico',
+                        items: ['Iluminación RGB variable', 'Área definida de performance', 'Cámara gran angular', 'Sistema de audio con beat'],
+                        roi: '92%',
+                        time: '3-4 semanas'
+                    },
+                    'performance-professional': {
+                        title: 'Performance Space - Setup Profesional',
+                        items: ['Luces LED programables', 'Props y accesorios organizados', 'Multi-cámara switching', 'Sistema audio sincronizado'],
+                        roi: '156%',
+                        time: '5-7 semanas'
+                    },
+                    'performance-premium': {
+                        title: 'Performance Space - Setup Premium',
+                        items: ['Iluminación DMX profesional', 'Automatización completa', 'Cámaras robotizadas', 'Efectos especiales integrados'],
+                        roi: '234%',
+                        time: '8-10 semanas'
+                    },
+                    'celebration-basic': {
+                        title: 'Celebration Mode - Setup Básico',
+                        items: ['Luces de colores festivas', 'Decoración temática básica', 'Playlist automation', 'Props celebración'],
+                        roi: '78%',
+                        time: '2-3 semanas'
+                    },
+                    'celebration-professional': {
+                        title: 'Celebration Mode - Setup Profesional',
+                        items: ['Sistema luces RGB sincronizado', 'Decoraciones intercambiables', 'Audio reactivo a música', 'Props nivel profesional'],
+                        roi: '124%',
+                        time: '4-6 semanas'
+                    },
+                    'celebration-premium': {
+                        title: 'Celebration Mode - Setup Premium',
+                        items: ['Espectáculo de luces automatizado', 'Efectos holográficos', 'Sistema audio inmersivo', 'Experiencias interactivas'],
+                        roi: '187%',
+                        time: '7-9 semanas'
+                    }
+                };
+
+                const config = configs[selectedScene + '-' + selectedInvestment];
+                if (config) {
+                    document.getElementById('sceneConfig').innerHTML = `
+                        <h5><i class="fas fa-star"></i> ${config.title}</h5>
+                        <ul class="mt-3">
+                            ${config.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                        <div class="mt-3 p-2" style="background: rgba(245, 158, 11, 0.2); border-radius: 10px;">
+                            <strong>ROI Proyectado:</strong> ${config.roi} | <strong>Timeline:</strong> ${config.time}
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Progress bar animations
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-fill');
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    bar.style.width = bar.style.width;
+                }, index * 500);
+            });
+        }
+
+        // Celebration function
+        function celebrateCompletion() {
+            const button = event.target;
+            button.innerHTML = '<i class="fas fa-check"></i> ¡Sistema Activado!';
+            button.style.background = 'var(--success-green)';
+            
+            // Create celebration effect
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 100);
+            }
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.background = ['#8b3cf7', '#f59e0b', '#a855f7', '#fbbf24'][Math.floor(Math.random() * 4)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.borderRadius = '50%';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.zIndex = '9999';
+            document.body.appendChild(confetti);
+
+            let pos = -10;
+            const fall = setInterval(() => {
+                pos += 5;
+                confetti.style.top = pos + 'px';
+                confetti.style.transform = `rotate(${pos * 3}deg)`;
+                
+                if (pos > window.innerHeight) {
+                    clearInterval(fall);
+                    confetti.remove();
+                }
+            }, 50);
+        }
+
+        // Initialize animations on load
+        window.addEventListener('load', () => {
+            animateProgressBars();
+        });
+
+        // Smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

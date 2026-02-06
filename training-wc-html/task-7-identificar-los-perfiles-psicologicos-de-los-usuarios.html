@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎯 Segmentación de la Audiencia: Conoce a Tu Tribu</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-purple: #6f42c1;
+      --connection-pink: #e91e63;
+      --experience-orange: #ff9800;
+      --casual-blue: #2196f3;
+      --success-green: #4caf50;
+      --warning-yellow: #ffc107;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-warm: #fff8dc;
+      --border-light: #e0e0e0;
+      --connection-gradient: linear-gradient(135deg, #e91e63 0%, #ad1457 100%);
+      --experience-gradient: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+      --casual-gradient: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+      --audience-gradient: linear-gradient(135deg, #6f42c1 0%, #e91e63 50%, #ff9800 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e3f2fd 25%, #fce4ec 50%, #fff3e0 75%, #f3e5f5 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .audience-header {
+      background: var(--audience-gradient);
+      color: white;
+      padding: 50px 30px;
+      text-align: center;
+      border-radius: 30px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px rgba(111, 66, 193, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .audience-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="people" patternUnits="userSpaceOnUse" width="40" height="40"><circle cx="20" cy="15" r="5" fill="rgba(255,255,255,0.1)"/><path d="M10,25 Q10,20 15,20 L25,20 Q30,20 30,25 L30,35 L10,35 Z" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23people)"/></svg>');
+      animation: peopleFloat 25s infinite ease-in-out;
+    }
+
+    @keyframes peopleFloat {
+      0%, 100% { transform: translateX(-20px) translateY(-20px) scale(1); }
+      50% { transform: translateX(-40px) translateY(-40px) scale(1.1); }
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--primary-purple);
+      border-radius: 25px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(111, 66, 193, 0.2);
+    }
+
+    .wc-logo {
+      background: var(--audience-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .audience-lab {
+      background: var(--bg-white);
+      border-radius: 25px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      margin-bottom: 3rem;
+      border: 3px solid var(--border-light);
+      padding: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .audience-lab::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: var(--audience-gradient);
+      border-radius: 25px 25px 0 0;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      background: var(--audience-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+
+    .audience-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2.5rem;
+      margin: 3rem 0;
+    }
+
+    .audience-card {
+      padding: 2.5rem;
+      border-radius: 25px;
+      position: relative;
+      border: 3px solid;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      background: var(--bg-white);
+      cursor: pointer;
+      transform: perspective(1000px);
+      transition: all 0.4s ease;
+    }
+
+    .audience-card:hover {
+      transform: perspective(1000px) rotateY(5deg) translateY(-10px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .audience-card.selected {
+      transform: perspective(1000px) scale(1.05);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.2);
+    }
+
+    .connection-card {
+      border-color: var(--connection-pink);
+      background: linear-gradient(135deg, rgba(233, 30, 99, 0.05), rgba(255, 255, 255, 0.95));
+    }
+
+    .experience-card {
+      border-color: var(--experience-orange);
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.05), rgba(255, 255, 255, 0.95));
+    }
+
+    .casual-card {
+      border-color: var(--casual-blue);
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.05), rgba(255, 255, 255, 0.95));
+    }
+
+    .audience-icon {
+      font-size: 4rem;
+      margin-bottom: 1.5rem;
+      text-align: center;
+      display: block;
+    }
+
+    .connection-card .audience-icon {
+      color: var(--connection-pink);
+    }
+
+    .experience-card .audience-icon {
+      color: var(--experience-orange);
+    }
+
+    .casual-card .audience-icon {
+      color: var(--casual-blue);
+    }
+
+    .audience-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .audience-percentage {
+      font-size: 3rem;
+      font-weight: 900;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .connection-card .audience-percentage {
+      color: var(--connection-pink);
+    }
+
+    .experience-card .audience-percentage {
+      color: var(--experience-orange);
+    }
+
+    .casual-card .audience-percentage {
+      color: var(--casual-blue);
+    }
+
+    .audience-description {
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .audience-details {
+      display: none;
+      background: var(--bg-light);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-top: 2rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .audience-details.show {
+      display: block;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .example-box {
+      background: var(--bg-white);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-left: 5px solid;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .connection-example {
+      border-left-color: var(--connection-pink);
+    }
+
+    .experience-example {
+      border-left-color: var(--experience-orange);
+    }
+
+    .casual-example {
+      border-left-color: var(--casual-blue);
+    }
+
+    .audience-simulator {
+      background: var(--bg-white);
+      border: 3px solid var(--primary-purple);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 3rem 0;
+      position: relative;
+    }
+
+    .audience-simulator::before {
+      content: '🎯';
+      position: absolute;
+      top: -25px;
+      left: 30px;
+      background: var(--bg-white);
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 2rem;
+      border: 3px solid var(--primary-purple);
+    }
+
+    .scenario-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-option {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover {
+      border-color: var(--primary-purple);
+      background: var(--bg-white);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(111, 66, 193, 0.2);
+    }
+
+    .scenario-option.selected {
+      border-color: var(--primary-purple);
+      background: var(--primary-purple);
+      color: white;
+    }
+
+    .identification-game {
+      background: var(--bg-warm);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      border: 2px solid var(--warning-yellow);
+    }
+
+    .user-message {
+      background: var(--bg-white);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+      border-left: 5px solid var(--primary-purple);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+
+    .answer-options {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .answer-btn {
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      background: var(--bg-white);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s ease;
+      font-weight: 600;
+    }
+
+    .answer-btn:hover {
+      background: var(--bg-light);
+      transform: translateY(-2px);
+    }
+
+    .answer-btn.connection {
+      border-color: var(--connection-pink);
+    }
+
+    .answer-btn.experience {
+      border-color: var(--experience-orange);
+    }
+
+    .answer-btn.casual {
+      border-color: var(--casual-blue);
+    }
+
+    .answer-btn.selected {
+      color: white;
+      font-weight: bold;
+    }
+
+    .answer-btn.connection.selected {
+      background: var(--connection-pink);
+    }
+
+    .answer-btn.experience.selected {
+      background: var(--experience-orange);
+    }
+
+    .answer-btn.casual.selected {
+      background: var(--casual-blue);
+    }
+
+    .result-box {
+      background: var(--bg-white);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 3px solid;
+      display: none;
+    }
+
+    .result-box.show {
+      display: block;
+      animation: bounceIn 0.6s ease-out;
+    }
+
+    @keyframes bounceIn {
+      0% {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+      50% {
+        transform: scale(1.05);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .stats-dashboard {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 3rem 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid var(--border-light);
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: var(--success-green);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .btn {
+      font-weight: 600;
+      padding: 1.2rem 2.5rem;
+      border-radius: 18px;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-audience {
+      background: var(--audience-gradient) !important;
+      color: white !important;
+    }
+
+    .btn-connection {
+      background: var(--connection-gradient) !important;
+      color: white !important;
+    }
+
+    .progress-tracker {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .progress-bar {
+      background: var(--bg-white);
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--audience-gradient);
+      transition: width 0.8s ease;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 768px) {
+      .audience-types {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .audience-lab {
+        padding: 2rem;
+      }
+      
+      .audience-header {
+        padding: 40px 20px;
+      }
+
+      .scenario-selector {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .answer-options {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .audience-lab {
+        padding: 1.5rem;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Domina el arte de conocer a tu audiencia para crear conexiones que generen ingresos reales</p>
+  </div>
+
+  <header class="audience-header">
+    <h1 class="mb-4" style="position: relative; z-index: 1; font-size: 2.8rem;">
+      <i class="fas fa-users"></i>
+      Segmentación de la Audiencia
+      <i class="fas fa-target"></i>
+    </h1>
+    <p class="fs-4 mb-0" style="position: relative; z-index: 1;">
+      Conoce a tu tribu: Entiende quién te ve, qué buscan y cómo darles exactamente lo que necesitan
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Introducción -->
+    <section class="audience-lab">
+      <h2 class="section-title">🤔 ¿Por Qué Esto es Súper Importante?</h2>
+      
+      <div class="connection-card audience-card" style="cursor: default; transform: none;">
+        <div class="audience-icon">💡</div>
+        <h5><strong>Imagínate que tienes una tienda de ropa...</strong></h5>
+        <p>¿Verdad que no le venderías lo mismo a una adolescente de 15 años que a una señora de 50? ¡Obvio que no! Cada una tiene gustos, necesidades y problemas diferentes.</p>
+        <p><strong>¡Con tu audiencia es IGUAL!</strong> No todos los que te ven buscan lo mismo. Algunos quieren charlar y sentirse acompañados, otros buscan aventuras únicas, y otros solo están explorando sin saber qué quieren.</p>
+        <p>Cuando entiendes esto y adaptas tu contenido, <em>¡tus ingresos pueden triplicarse!</em> 🚀</p>
+      </div>
+    </section>
+
+    <!-- Los 3 Tipos de Audiencia -->
+    <section class="audience-lab">
+      <h2 class="section-title">👥 Los 3 Tipos de Personas en Tu Audiencia</h2>
+      <p style="text-align: center; font-size: 1.2rem; color: var(--text-muted); margin-bottom: 3rem;">
+        Haz clic en cada tipo para conocer sus secretos...
+      </p>
+      
+      <div class="audience-types">
+        
+        <!-- Buscadores de Conexión -->
+        <div class="audience-card connection-card" onclick="showAudienceDetails(this, 'connection')">
+          <div class="audience-icon">💕</div>
+          <h3 class="audience-title">Buscadores de Conexión</h3>
+          <div class="audience-percentage">45%</div>
+          <p class="audience-description">
+            Son como <strong>"mejores amigos virtuales"</strong>. Buscan intimidad emocional, alguien que los escuche y los entienda de verdad.
+          </p>
+          
+          <div class="audience-details" id="connection-details">
+            <h5><strong>🔍 ¿Cómo los reconoces?</strong></h5>
+            
+            <div class="example-box connection-example">
+              <h6><strong>💬 Cosas que dicen:</strong></h6>
+              <ul>
+                <li><strong>"¿Cómo estuvo tu día?"</strong> (les importa tu vida real)</li>
+                <li><strong>"Me siento solo/a últimamente"</strong> (buscan compañía emocional)</li>
+                <li><strong>"Contigo puedo ser yo mismo"</strong> (valoran la autenticidad)</li>
+                <li><strong>"Eres diferente a las demás"</strong> (buscan conexión especial)</li>
+              </ul>
+            </div>
+
+            <div class="example-box connection-example">
+              <h6><strong>💖 Lo que realmente buscan:</strong></h6>
+              <ul>
+                <li><strong>Conversaciones reales:</strong> Sobre la vida, sentimientos, sueños</li>
+                <li><strong>Atención personal:</strong> Que los llames por su nombre, recuerdes detalles</li>
+                <li><strong>Empatía genuina:</strong> Que los escuches cuando tienen problemas</li>
+                <li><strong>Exclusividad:</strong> Sentir que son especiales para ti</li>
+              </ul>
+            </div>
+
+            <div class="example-box connection-example">
+              <h6><strong>🎯 Cómo conectar con ellos:</strong></h6>
+              <ul>
+                <li><strong>Sé vulnerable:</strong> Comparte algo personal tuyo (apropiado)</li>
+                <li><strong>Pregunta y escucha:</strong> "¿Qué tal tu trabajo?" y realmente presta atención</li>
+                <li><strong>Recuerda detalles:</strong> "¿Cómo te fue en esa cita que mencionaste?"</li>
+                <li><strong>Ofrece apoyo:</strong> "Aquí puedes desahogarte tranquilo"</li>
+              </ul>
+            </div>
+
+            <div class="example-box connection-example">
+              <h6><strong>💰 Cómo monetizar:</strong></h6>
+              <p><strong>Este grupo paga por TIEMPO y ATENCIÓN, no tanto por contenido sexual.</strong></p>
+              <ul>
+                <li>Chats privados largos hablando de la vida</li>
+                <li>Mensajes personalizados recordando conversaciones</li>
+                <li>Contenido "íntimo" pero más emocional que físico</li>
+                <li>Sesiones de "terapia" virtual donde los escuchas</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coleccionistas de Experiencias -->
+        <div class="audience-card experience-card" onclick="showAudienceDetails(this, 'experience')">
+          <div class="audience-icon">🏆</div>
+          <h3 class="audience-title">Coleccionistas de Experiencias</h3>
+          <div class="audience-percentage">30%</div>
+          <p class="audience-description">
+            Como <strong>"turistas de aventuras"</strong>. Buscan experiencias únicas, originales y personalizadas que no pueden conseguir en otro lado.
+          </p>
+          
+          <div class="audience-details" id="experience-details">
+            <h5><strong>🔍 ¿Cómo los reconoces?</strong></h5>
+            
+            <div class="example-box experience-example">
+              <h6><strong>💬 Cosas que dicen:</strong></h6>
+              <ul>
+                <li><strong>"¿Puedes hacer algo especial para mí?"</strong> (buscan exclusividad)</li>
+                <li><strong>"Nunca he visto esto antes"</strong> (valoran la originalidad)</li>
+                <li><strong>"¿Qué tienes nuevo?"</strong> (siempre buscan novedades)</li>
+                <li><strong>"Quiero algo que solo tú hagas"</strong> (buscan diferenciación)</li>
+              </ul>
+            </div>
+
+            <div class="example-box experience-example">
+              <h6><strong>🎨 Lo que realmente buscan:</strong></h6>
+              <ul>
+                <li><strong>Contenido exclusivo:</strong> Videos, fotos, experiencias que nadie más tiene</li>
+                <li><strong>Personalización:</strong> Que hagas algo específicamente para ellos</li>
+                <li><strong>Creatividad:</strong> Ideas nuevas, temáticas diferentes, roleplay únicos</li>
+                <li><strong>Estatus VIP:</strong> Sentirse como clientes premium</li>
+              </ul>
+            </div>
+
+            <div class="example-box experience-example">
+              <h6><strong>🎯 Cómo conectar con ellos:</strong></h6>
+              <ul>
+                <li><strong>Sé creativa:</strong> Inventa juegos, temas, personajes nuevos</li>
+                <li><strong>Ofrece exclusividad:</strong> "Esto solo lo hago para ti"</li>
+                <li><strong>Cambia constantemente:</strong> Nueva ropa, nuevos escenarios, nuevas ideas</li>
+                <li><strong>Hazlos sentir especiales:</strong> "Eres mi VIP favorito"</li>
+              </ul>
+            </div>
+
+            <div class="example-box experience-example">
+              <h6><strong>💰 Cómo monetizar:</strong></h6>
+              <p><strong>Este grupo paga MUY BIEN por exclusividad y novedad.</strong></p>
+              <ul>
+                <li>Videos personalizados con su nombre</li>
+                <li>Contenido temático exclusivo (cosplay, roleplay)</li>
+                <li>Experiencias VIP en privados</li>
+                <li>Colecciones limitadas de fotos/videos</li>
+                <li>Acceso temprano a contenido nuevo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Espectadores Casuales -->
+        <div class="audience-card casual-card" onclick="showAudienceDetails(this, 'casual')">
+          <div class="audience-icon">🤷‍♂️</div>
+          <h3 class="audience-title">Espectadores Casuales</h3>
+          <div class="audience-percentage">25%</div>
+          <p class="audience-description">
+            Como <strong>"compradores de ventana"</strong>. Navegan sin objetivo claro, pero pueden convertirse en fans si encuentras su botón correcto.
+          </p>
+          
+          <div class="audience-details" id="casual-details">
+            <h5><strong>🔍 ¿Cómo los reconoces?</strong></h5>
+            
+            <div class="example-box casual-example">
+              <h6><strong>💬 Cosas que dicen (o no dicen):</strong></h6>
+              <ul>
+                <li><strong>"Hola"</strong> (mensajes cortos, no muy comprometidos)</li>
+                <li><strong>"¿Qué haces?"</strong> (preguntas generales, no profundas)</li>
+                <li><strong>Solo observan</strong> (entran, miran un rato, se van)</li>
+                <li><strong>"Estoy aburrido"</strong> (buscan entretenimiento casual)</li>
+              </ul>
+            </div>
+
+            <div class="example-box casual-example">
+              <h6><strong>🎯 Lo que realmente buscan:</strong></h6>
+              <ul>
+                <li><strong>Entretenimiento fácil:</strong> Algo que los distraiga sin compromiso</li>
+                <li><strong>Descubrimiento:</strong> Encontrar algo que los sorprenda</li>
+                <li><strong>Bajo riesgo:</strong> Probar sin invertir mucho tiempo o dinero</li>
+                <li><strong>Conexión ligera:</strong> Diversión sin drama ni complicaciones</li>
+              </ul>
+            </div>
+
+            <div class="example-box casual-example">
+              <h6><strong>🎯 Cómo atraerlos:</strong></h6>
+              <ul>
+                <li><strong>Sé súper energética:</strong> Que sientan tu buena vibra inmediatamente</li>
+                <li><strong>Contenido gancho:</strong> Los primeros 30 segundos son CRUCIALES</li>
+                <li><strong>Interacción fácil:</strong> Juegos simples, preguntas divertidas</li>
+                <li><strong>No presiones:</strong> Deja que se sientan cómodos primero</li>
+              </ul>
+            </div>
+
+            <div class="example-box casual-example">
+              <h6><strong>🔄 Cómo convertirlos:</strong></h6>
+              <p><strong>¡Este grupo es tu MINA DE ORO! Son los más fáciles de convertir.</strong></p>
+              <ul>
+                <li><strong>Identifica qué les gusta:</strong> ¿Tu risa? ¿Tu cuerpo? ¿Tu personalidad?</li>
+                <li><strong>Dale más de eso:</strong> Si les gusta tu humor, sé más divertida</li>
+                <li><strong>Crea curiosidad:</strong> "Después te muestro algo especial"</li>
+                <li><strong>Invítalos a regresar:</strong> "Mañana tengo algo nuevo"</li>
+              </ul>
+            </div>
+
+            <div class="example-box casual-example">
+              <h6><strong>💰 Cómo monetizar:</strong></h6>
+              <p><strong>Estrategia: ANZUELO → INTERÉS → CONVERSIÓN</strong></p>
+              <ul>
+                <li>Ofertas de "primera vez" (descuentos especiales)</li>
+                <li>Contenido gratuito de muestra que los enganche</li>
+                <li>Juegos que requieran pequeñas propinas</li>
+                <li>Privados "de prueba" a precio reducido</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Simulador de Identificación -->
+    <section class="audience-lab">
+      <h2 class="section-title">🕵️‍♀️ Simulador: ¿Qué Tipo de Usuario Es?</h2>
+      
+      <div class="audience-simulator">
+        <h5><i class="fas fa-gamepad"></i> Juego de Identificación Rápida</h5>
+        <p style="color: var(--text-muted);">Te voy a mostrar mensajes reales. Tu trabajo es identificar qué tipo de usuario es cada uno:</p>
+        
+        <div class="identification-game">
+          <div class="user-message" id="currentScenario">
+            <h6><strong>👤 Usuario_Misterioso dice:</strong></h6>
+            <p id="scenarioText">"Hola hermosa, ¿cómo estuvo tu día? Yo tuve un día pesado en el trabajo..."</p>
+          </div>
+
+          <div class="answer-options">
+            <div class="answer-btn connection" onclick="selectAnswer(this, 'connection')">
+              💕 Busca Conexión
+            </div>
+            <div class="answer-btn experience" onclick="selectAnswer(this, 'experience')">
+              🏆 Busca Experiencias
+            </div>
+            <div class="answer-btn casual" onclick="selectAnswer(this, 'casual')">
+              🤷‍♂️ Espectador Casual
+            </div>
+          </div>
+
+          <div class="result-box" id="gameResult">
+            <!-- Resultado del juego -->
+          </div>
+
+          <button class="btn btn-audience" onclick="nextScenario()" style="margin-top: 1.5rem;">
+            <i class="fas fa-arrow-right"></i> Siguiente Escenario
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Dashboard de Progreso -->
+    <section class="audience-lab">
+      <h2 class="section-title">📊 Tu Dashboard de Identificación</h2>
+      
+      <div class="stats-dashboard">
+        <h5><i class="fas fa-chart-line"></i> ¿Qué tan bien identificas a tu audiencia?</h5>
+        
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-number" id="correctAnswers">0</span>
+            <div class="stat-label">Respuestas Correctas</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="totalQuestions">0</span>
+            <div class="stat-label">Preguntas Respondidas</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="accuracy">0%</span>
+            <div class="stat-label">Precisión</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number" id="level">Principiante</span>
+            <div class="stat-label">Nivel Actual</div>
+          </div>
+        </div>
+
+        <div class="progress-tracker">
+          <h6><strong>Tu Progreso hacia ser una Experta en Audiencias:</strong></h6>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <p id="progressText">¡Empecemos! Responde más preguntas para subir de nivel.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Consejos Finales -->
+    <section class="audience-lab">
+      <h2 class="section-title">🚀 ¡Ya Sabes los Secretos!</h2>
+      
+      <div class="experience-card audience-card" style="cursor: default; transform: none;">
+        <div class="audience-icon">🎯</div>
+        <h5><strong>El Secreto que las Modelos Exitosas No Cuentan:</strong></h5>
+        <p>No se trata de ser la más bonita o hacer cosas más extremas. Se trata de <strong>dar a cada tipo de usuario exactamente lo que busca</strong>.</p>
+        
+        <div class="row g-3 mt-3">
+          <div class="col-md-4">
+            <div class="connection-card audience-card" style="padding: 1.5rem; cursor: default; transform: none;">
+              <h6>💕 Para Conexiones:</h6>
+              <p><strong>Tiempo + Atención = 💰</strong></p>
+              <small>Conversa, escucha, recuerda detalles</small>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="experience-card audience-card" style="padding: 1.5rem; cursor: default; transform: none;">
+              <h6>🏆 Para Experiencias:</h6>
+              <p><strong>Exclusividad + Creatividad = 💰💰</strong></p>
+              <small>Personaliza, innova, sé única</small>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="casual-card audience-card" style="padding: 1.5rem; cursor: default; transform: none;">
+              <h6>🤷‍♂️ Para Casuales:</h6>
+              <p><strong>Energía + Anzuelo = 💰💰💰</strong></p>
+              <small>Engancha, convierte, fideliza</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="connection-card audience-card" style="cursor: default; transform: none; margin-top: 2rem;">
+        <div class="audience-icon">🏆</div>
+        <h5><strong>Tu Nueva Superpoder:</strong></h5>
+        <p>Ahora puedes <strong>identificar en 30 segundos</strong> qué tipo de usuario tienes enfrente y adaptar tu estrategia instantáneamente. Esto te va a separar del 90% de las modelos que tratan a todos igual.</p>
+        <p><strong>¡Practica todos los días!</strong> Entre más uses este conocimiento, más natural se vuelve y más dinero generas.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let currentScenarioIndex = 0;
+    let correctAnswers = 0;
+    let totalQuestions = 0;
+    
+    const scenarios = [
+      {
+        text: "Hola hermosa, ¿cómo estuvo tu día? Yo tuve un día pesado en el trabajo...",
+        correct: "connection",
+        explanation: "¡CORRECTO! 💕 Este usuario busca CONEXIÓN. Pregunta por tu día (interés personal) y comparte algo de su vida (vulnerabilidad). Quiere conversación y empatía."
+      },
+      {
+        text: "¿Puedes hacer un video personalizado diciendo mi nombre? Quiero algo que nadie más tenga.",
+        correct: "experience",
+        explanation: "¡PERFECTO! 🏆 Este es un COLECCIONISTA DE EXPERIENCIAS. Busca contenido exclusivo y personalizado. Palabras clave: 'personalizado', 'nadie más tenga'."
+      },
+      {
+        text: "Hola",
+        correct: "casual",
+        explanation: "¡EXACTO! 🤷‍♂️ Típico ESPECTADOR CASUAL. Mensaje corto, sin compromiso, solo explorando. Necesita que lo enganches rápidamente."
+      },
+      {
+        text: "Me siento muy solo últimamente. Contigo me siento mejor, eres muy especial para mí.",
+        correct: "connection",
+        explanation: "¡BINGO! 💕 BUSCADOR DE CONEXIÓN puro. Comparte sentimientos personales, busca apoyo emocional y te hace sentir especial. Necesita intimidad emocional."
+      },
+      {
+        text: "¿Qué tienes nuevo? Ya vi todo tu contenido anterior.",
+        correct: "experience",
+        explanation: "¡SÍ! 🏆 COLECCIONISTA DE EXPERIENCIAS. Busca constantemente novedades, ya consumió contenido anterior. Valora la variedad y originalidad."
+      },
+      {
+        text: "estoy aburrido que haces",
+        correct: "casual",
+        explanation: "¡CORRECTO! 🤷‍♂️ ESPECTADOR CASUAL. Mensaje informal, busca entretenimiento sin compromiso. Tu energía debe atraparlo inmediatamente."
+      },
+      {
+        text: "Eres diferente a las demás. Puedo hablar contigo de cosas que no hablo con nadie más.",
+        correct: "connection",
+        explanation: "¡PERFECTO! 💕 BUSCADOR DE CONEXIÓN. Te diferencia (exclusividad emocional), busca intimidad conversacional. Valora la autenticidad y confianza."
+      },
+      {
+        text: "¿Haces roleplay de secretaria? Quiero algo específico que tengo en mente.",
+        correct: "experience",
+        explanation: "¡EXCELENTE! 🏆 COLECCIONISTA DE EXPERIENCIAS. Busca experiencias específicas y temáticas. Le interesan los roleplay y la personalización."
+      }
+    ];
+
+    function showAudienceDetails(element, type) {
+      // Hide all details first
+      document.querySelectorAll('.audience-details').forEach(detail => {
+        detail.classList.remove('show');
+      });
+      
+      // Remove selection from all cards
+      document.querySelectorAll('.audience-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Show selected details
+      const detailsElement = document.getElementById(type + '-details');
+      detailsElement.classList.add('show');
+      
+      // Add selection to clicked card
+      element.classList.add('selected');
+    }
+
+    function selectAnswer(element, answer) {
+      // Remove previous selections
+      document.querySelectorAll('.answer-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      // Select current answer
+      element.classList.add('selected');
+      
+      // Check if correct
+      const currentScenario = scenarios[currentScenarioIndex];
+      const isCorrect = answer === currentScenario.correct;
+      
+      totalQuestions++;
+      if (isCorrect) {
+        correctAnswers++;
+      }
+      
+      // Show result
+      const resultBox = document.getElementById('gameResult');
+      resultBox.className = `result-box show`;
+      resultBox.style.borderColor = isCorrect ? 'var(--success-green)' : 'var(--warning-yellow)';
+      
+      resultBox.innerHTML = `
+        <h6><strong>${isCorrect ? '🎉 ¡CORRECTO!' : '❌ No quite...'}</strong></h6>
+        <p><strong>${currentScenario.explanation}</strong></p>
+        ${!isCorrect ? `<p style="color: var(--text-muted);">La respuesta correcta era: <strong>${getTypeLabel(currentScenario.correct)}</strong></p>` : ''}
+      `;
+      
+      // Update stats
+      updateStats();
+    }
+
+    function nextScenario() {
+      currentScenarioIndex = (currentScenarioIndex + 1) % scenarios.length;
+      const scenario = scenarios[currentScenarioIndex];
+      
+      // Update scenario text
+      document.getElementById('scenarioText').textContent = `"${scenario.text}"`;
+      
+      // Clear selections
+      document.querySelectorAll('.answer-btn').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      
+      // Hide result
+      document.getElementById('gameResult').classList.remove('show');
+    }
+
+    function getTypeLabel(type) {
+      switch(type) {
+        case 'connection': return '💕 Busca Conexión';
+        case 'experience': return '🏆 Busca Experiencias';
+        case 'casual': return '🤷‍♂️ Espectador Casual';
+        default: return '';
+      }
+    }
+
+    function updateStats() {
+      document.getElementById('correctAnswers').textContent = correctAnswers;
+      document.getElementById('totalQuestions').textContent = totalQuestions;
+      
+      const accuracy = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+      document.getElementById('accuracy').textContent = accuracy + '%';
+      
+      // Update level
+      let level = 'Principiante';
+      if (accuracy >= 90 && totalQuestions >= 5) level = 'Experta';
+      else if (accuracy >= 75 && totalQuestions >= 3) level = 'Avanzada';
+      else if (accuracy >= 60 && totalQuestions >= 2) level = 'Intermedia';
+      
+      document.getElementById('level').textContent = level;
+      
+      // Update progress bar
+      const progress = Math.min((correctAnswers * 12.5), 100); // Each correct answer = 12.5%
+      document.getElementById('progressFill').style.width = progress + '%';
+      
+      // Update progress text
+      let progressText = '';
+      if (progress >= 100) {
+        progressText = '🏆 ¡MAESTRA DE AUDIENCIAS! Dominas la identificación perfectamente.';
+      } else if (progress >= 75) {
+        progressText = '🌟 ¡Excelente! Tu habilidad de identificación está muy desarrollada.';
+      } else if (progress >= 50) {
+        progressText = '💪 ¡Bien! Estás desarrollando una buena intuición para identificar tipos.';
+      } else if (progress >= 25) {
+        progressText = '📈 Progresando bien. Sigue practicando para mejorar tu precisión.';
+      } else {
+        progressText = '🌱 ¡Empezando! Cada respuesta te hace mejor identificando tu audiencia.';
+      }
+      
+      document.getElementById('progressText').textContent = progressText;
+    }
+
+    // Initialize first scenario
+    nextScenario();
+  </script>
+</body>
+</html>

@@ -3,7 +3,6 @@ import {
   IsString,
   MinLength,
   MaxLength,
-  Matches,
   ValidateNested,
   IsOptional,
 } from 'class-validator';
@@ -42,10 +41,6 @@ export class RegisterDto {
   @IsString()
   @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
   @MaxLength(100, { message: 'La contraseña no puede exceder 100 caracteres' })
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
-    message:
-      'La contraseña debe contener al menos una mayúscula, una minúscula y un número',
-  })
   password: string;
 
   @ValidateNested()

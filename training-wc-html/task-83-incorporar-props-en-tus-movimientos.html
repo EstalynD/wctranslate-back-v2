@@ -1,0 +1,1772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎭 Maestría en Props Avanzada - WC Training Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7b1fa2;
+            --secondary-color: #f48fb1;
+            --accent-color: #ce93d8;
+            --purple-light: #f3e5f5;
+            --pink-light: #fce4ec;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --info-blue: #17a2b8;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #7b1fa2 0%, #f48fb1 50%, #ce93d8 100%);
+            --gradient-secondary: linear-gradient(45deg, #f48fb1 0%, #ce93d8 50%, #f3e5f5 100%);
+            --gradient-accent: linear-gradient(90deg, #ce93d8 0%, #f3e5f5 100%);
+            --shadow-primary: 0 15px 40px rgba(123, 31, 162, 0.3);
+            --shadow-secondary: 0 10px 30px rgba(244, 143, 177, 0.2);
+            --shadow-light: 0 5px 20px rgba(206, 147, 216, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #fafafa 0%, #fff9f9 100%);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-10 0a10 10 0 1 0 20 0a10 10 0 1 0 -20 0M15 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M45 15m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M15 45m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M45 45m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .wc-brand {
+            color: white;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            color: rgba(255,255,255,0.9);
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: white;
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 3rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-accent);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(206, 147, 216, 0.3);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-secondary);
+        }
+
+        .insight-number {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Main Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            padding: clamp(3rem, 6vw, 6rem) 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M40 20l20 20-20 20M20 20l20 20-20 20M20 20h40M20 60h40'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            border-radius: 25px;
+            padding: clamp(1.5rem, 3vw, 3rem);
+            margin: clamp(1.5rem, 3vw, 3rem) 0;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .section-header {
+            margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .section-description {
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: clamp(1.2rem, 2.5vw, 2rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: var(--shadow-primary);
+            border-color: var(--secondary-color);
+        }
+
+        .interactive-card.expanded {
+            background: var(--purple-light);
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: clamp(3rem, 5vw, 4rem);
+            height: clamp(3rem, 5vw, 4rem);
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+        }
+
+        .card-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--primary-color);
+            flex: 1;
+        }
+
+        .card-toggle {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card-toggle.rotated {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .card-details.expanded {
+            max-height: 2000px;
+            transition: max-height 0.7s ease-in;
+        }
+
+        /* Props Gallery */
+        .props-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .prop-card {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prop-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .prop-card.selected {
+            border-color: var(--primary-color);
+            background: var(--purple-light);
+            transform: scale(1.05);
+        }
+
+        .prop-card.dancing {
+            animation: propDance 3s ease-in-out infinite;
+        }
+
+        .prop-emoji {
+            font-size: clamp(4rem, 7vw, 6rem);
+            margin-bottom: 1rem;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .prop-name {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            position: relative;
+            z-index: 2;
+        }
+
+        .prop-category {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: clamp(0.8rem, 1.4vw, 1rem);
+        }
+
+        .prop-description {
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .prop-techniques {
+            background: var(--bg-light);
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            color: var(--text-dark);
+            position: relative;
+            z-index: 2;
+        }
+
+        .prop-difficulty {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-top: 1rem;
+        }
+
+        .difficulty-star {
+            width: 20px;
+            height: 20px;
+            color: var(--warning-orange);
+            font-size: 1rem;
+        }
+
+        /* Sequence Builder */
+        .sequence-builder {
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            border: 1px solid var(--accent-color);
+        }
+
+        .sequence-timeline {
+            background: white;
+            border-radius: 15px;
+            padding: clamp(1.2rem, 2.5vw, 2rem);
+            margin: 1.5rem 0;
+            border: 2px solid var(--primary-color);
+            min-height: 120px;
+            position: relative;
+        }
+
+        .sequence-timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            right: 1rem;
+            height: 3px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            transform: translateY(-50%);
+        }
+
+        .sequence-prop {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 25px;
+            margin: 0.5rem;
+            display: inline-block;
+            font-weight: 600;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            position: relative;
+            z-index: 2;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sequence-prop:hover {
+            background: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .sequence-prop.active {
+            background: var(--primary-color);
+            box-shadow: 0 0 20px rgba(123, 31, 162, 0.5);
+            animation: propPulse 2s infinite;
+        }
+
+        /* Combination Studio */
+        .combination-studio {
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            border: 1px solid var(--accent-color);
+        }
+
+        .prop-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: clamp(0.8rem, 1.5vw, 1rem);
+            margin-bottom: 2rem;
+        }
+
+        .selector-prop {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: clamp(0.8rem, 1.5vw, 1rem);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .selector-prop:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .selector-prop.active {
+            border-color: var(--primary-color);
+            background: var(--purple-light);
+            transform: scale(1.05);
+        }
+
+        .selector-icon {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .selector-label {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+        }
+
+        /* Calculator Section */
+        .calculator-container {
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            border: 1px solid var(--accent-color);
+        }
+
+        .calculator-input {
+            margin-bottom: 1.5rem;
+        }
+
+        .calculator-input label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .calculator-input input,
+        .calculator-input select {
+            width: 100%;
+            padding: clamp(0.8rem, 1.5vw, 1rem);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator-input input:focus,
+        .calculator-input select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+        }
+
+        .calculator-results {
+            background: white;
+            border-radius: 15px;
+            padding: clamp(1.2rem, 2.5vw, 2rem);
+            margin-top: 1.5rem;
+            border: 2px solid var(--success-green);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: var(--success-green);
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .progress-item {
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .progress-bar-container {
+            background: var(--bg-light);
+            height: clamp(12px, 2vw, 16px);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 25px;
+            transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: white;
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1rem, 2vw, 2rem);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .success-story:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-secondary);
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-avatar {
+            width: clamp(3.5rem, 6vw, 5rem);
+            height: clamp(3.5rem, 6vw, 5rem);
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 700;
+        }
+
+        .story-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 600;
+        }
+
+        .story-info p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+        }
+
+        .metric-value {
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
+            font-weight: 700;
+            color: var(--success-green);
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            min-width: 120px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes propDance {
+            0%, 100% { transform: rotateY(0deg) scale(1); }
+            25% { transform: rotateY(15deg) scale(1.05); }
+            50% { transform: rotateY(0deg) scale(0.95); }
+            75% { transform: rotateY(-15deg) scale(1.05); }
+        }
+
+        @keyframes propPulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(123, 31, 162, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(123, 31, 162, 0.8); }
+        }
+
+        @keyframes stageLights {
+            0%, 100% { background: linear-gradient(45deg, var(--primary-color), var(--secondary-color)); }
+            33% { background: linear-gradient(45deg, var(--secondary-color), var(--accent-color)); }
+            66% { background: linear-gradient(45deg, var(--accent-color), var(--primary-color)); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .hero-section {
+                border-radius: 20px;
+            }
+            
+            .lab-section {
+                border-radius: 15px;
+                padding: 1.5rem;
+            }
+            
+            .props-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .prop-selector {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+            
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .story-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .sequence-prop {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-container {
+                padding: 1rem;
+            }
+            
+            .success-story {
+                padding: 1rem;
+            }
+            
+            .props-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .prop-emoji {
+                font-size: 3rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border-width: 3px;
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-brand">
+                        <i class="fas fa-magic me-2"></i>WC Training Pro
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | <strong id="currentDate"></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-3 px-md-4">
+        <!-- Industry Insights -->
+        <div class="insights-section">
+            <h3 class="text-center mb-4" style="color: var(--primary-color); font-weight: 700;">
+                <i class="fas fa-wand-magic-sparkles me-2"></i>Props Performance Research 2025
+            </h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">84%</div>
+                        <div class="insight-label">Mayor recordación con props signature</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">2.9x</div>
+                        <div class="insight-label">Más tips durante uso de accesorios</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">67%</div>
+                        <div class="insight-label">Prefieren variedad de props vs monotonía</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">18</div>
+                        <div class="insight-label">Props promedio arsenal profesional</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">93%</div>
+                        <div class="insight-label">Usuarios recuerdan shows con props únicos</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">+312%</div>
+                        <div class="insight-label">ROI en dominio avanzado de props</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted">
+                <small>Fuente: Stage Props Institute 2025, Visual Enhancement Research Lab</small>
+            </p>
+        </div>
+
+        <!-- Main Hero Section -->
+        <div class="hero-section text-center">
+            <div class="hero-content">
+                <h1 class="hero-title">🎭 Maestría en Props Avanzada</h1>
+                <p class="hero-subtitle">
+                    Domina el arte de convertir objetos comunes en extensiones expresivas de tu ser. Transforma accesorios simples en herramientas de magnetismo que multiplican tu presencia escénica y crean momentos icónicos inolvidables.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                    <span class="badge bg-white text-dark px-3 py-2 fs-6">+84% Recordación</span>
+                    <span class="badge bg-white text-dark px-3 py-2 fs-6">312% ROI</span>
+                    <span class="badge bg-white text-dark px-3 py-2 fs-6">18 Props Master</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 1: Arsenal de Props -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🎪 Arsenal Master de Props</h2>
+                <p class="section-description">
+                    Explora una colección completa de accesorios escénicos categorizados por función, dificultad y impacto visual. Cada prop incluye técnicas específicas y vocabulario de movimientos.
+                </p>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('elegant-props')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-gem"></i></div>
+                    <div class="card-title">Props de Elegancia y Sofisticación</div>
+                    <div class="card-toggle" id="toggle-elegant-props"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-elegant-props">
+                    <h6 style="color: var(--primary-color); margin-bottom: 1.5rem;">💎 Colección de Elegancia Master</h6>
+                    <div class="props-gallery">
+                        <div class="prop-card" onclick="selectProp('fan')">
+                            <div class="prop-emoji">🪭</div>
+                            <div class="prop-name">Abanico Clásico</div>
+                            <div class="prop-category">Elegancia</div>
+                            <div class="prop-description">
+                                Extensión visual perfecta para crear líneas fluidas, juegos de ocultamiento y amplificación de gestos. Símbolo universal de misterio y seducción refinada.
+                            </div>
+                            <div class="prop-techniques">
+                                <strong>Técnicas Master:</strong> Apertura dramática, flutter rítmico, ocultamiento parcial del rostro, extensión de líneas corporales, cierre en crescendo
+                            </div>
+                            <div class="prop-difficulty">
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                            </div>
+                        </div>
+                        <div class="prop-card" onclick="selectProp('silk')">
+                            <div class="prop-emoji">🧣</div>
+                            <div class="prop-name">Seda Flotante</div>
+                            <div class="prop-category">Elegancia</div>
+                            <div class="prop-description">
+                                Material etéreo que amplifica movimientos y crea texturas visuales hipnóticas. Ideal para secuencias contemplatvas y momentos de máxima expresividad.
+                            </div>
+                            <div class="prop-techniques">
+                                <strong>Técnicas Master:</strong> Ondulación aérea, envoltura corporal, caída controlada, figura de ocho, liberación dramática
+                            </div>
+                            <div class="prop-difficulty">
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                            </div>
+                        </div>
+                        <div class="prop-card" onclick="selectProp('pearls')">
+                            <div class="prop-emoji">📿</div>
+                            <div class="prop-name">Collar de Perlas</div>
+                            <div class="prop-category">Elegancia</div>
+                            <div class="prop-description">
+                                Accesorio clásico que añade sofisticación y permite juegos sutiles de manipulación. Símbolo de clase y refinamiento atemporal.
+                            </div>
+                            <div class="prop-techniques">
+                                <strong>Técnicas Master:</strong> Deslizamiento sensual, manipulación tactil, juego con luz, extensión del cuello, tensión dramática
+                            </div>
+                            <div class="prop-difficulty">
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                            </div>
+                        </div>
+                        <div class="prop-card" onclick="selectProp('champagne')">
+                            <div class="prop-emoji">🥂</div>
+                            <div class="prop-name">Copa de Champagne</div>
+                            <div class="prop-category">Elegancia</div>
+                            <div class="prop-description">
+                                Símbolo de celebración y lujo. Permite crear narrativas de celebración y momentos de brindis virtual con la audiencia.
+                            </div>
+                            <div class="prop-techniques">
+                                <strong>Técnicas Master:</strong> Brindis elegante, juego con reflejo, sip dramático, rotación de muñeca, elevación ceremonial
+                            </div>
+                            <div class="prop-difficulty">
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="fas fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                                <i class="far fa-star difficulty-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('playful-props')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-heart"></i></div>
+                    <div class="card-title">Props de Juego y Fantasía</div>
+                    <div class="card-toggle" id="toggle-playful-props"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-playful-props">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🎠 Arsenal de Fantasía</h6>
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;">
+                                <strong>Peluche Signature:</strong>
+                                <p class="small">Compañero escénico que humaniza la performance y crea momentos de ternura contrastante</p>
+                                
+                                <strong>Plumas Exóticas:</strong>
+                                <p class="small">Texturas que amplifican movimientos suaves y crean efectos visuales hipnóticos</p>
+                                
+                                <strong>Globos Metalizados:</strong>
+                                <p class="small">Props que reflejan luz y crean atmósferas celebratorias o soñadoras</p>
+                                
+                                <strong>Máscara Veneciana:</strong>
+                                <p class="small">Elemento de misterio que permite juegos de revelación y ocultamiento</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🎪 Técnicas de Juego</h6>
+                            <div class="progress-container">
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Contraste Emocional</span>
+                                        <span>Esencial</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 92%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Interacción Narrativa</span>
+                                        <span>Crítico</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 87%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Timing Cómico</span>
+                                        <span>Avanzado</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 78%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: var(--purple-light); padding: 1rem; border-radius: 10px;">
+                                <p class="small"><strong>CLAVE:</strong> Props juguetones deben contrastar con momentos sensuales para crear dinámica emocional rica.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sequence Builder -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🎬 Constructor de Secuencias con Props</h2>
+                <p class="section-description">
+                    Crea narrativas visuales complejas combinando múltiples props en secuencias coreografiadas que cuentan historias específicas.
+                </p>
+            </div>
+
+            <div class="sequence-builder">
+                <h5 style="color: var(--primary-color); margin-bottom: 1.5rem;">Construye tu secuencia narrativa:</h5>
+                
+                <div class="prop-selector">
+                    <div class="selector-prop" onclick="addPropToSequence('fan')">
+                        <div class="selector-icon">🪭</div>
+                        <div class="selector-label">Abanico</div>
+                    </div>
+                    <div class="selector-prop" onclick="addPropToSequence('silk')">
+                        <div class="selector-icon">🧣</div>
+                        <div class="selector-label">Seda</div>
+                    </div>
+                    <div class="selector-prop" onclick="addPropToSequence('pearls')">
+                        <div class="selector-icon">📿</div>
+                        <div class="selector-label">Perlas</div>
+                    </div>
+                    <div class="selector-prop" onclick="addPropToSequence('mirror')">
+                        <div class="selector-icon">🪞</div>
+                        <div class="selector-label">Espejo</div>
+                    </div>
+                    <div class="selector-prop" onclick="addPropToSequence('feather')">
+                        <div class="selector-icon">🪶</div>
+                        <div class="selector-label">Pluma</div>
+                    </div>
+                    <div class="selector-prop" onclick="addPropToSequence('rose')">
+                        <div class="selector-icon">🌹</div>
+                        <div class="selector-label">Rosa</div>
+                    </div>
+                </div>
+
+                <div class="sequence-timeline" id="sequenceTimeline">
+                    <div style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                        Selecciona props para crear tu secuencia narrativa
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button class="btn-primary-custom" onclick="analyzeSequence()">
+                        📊 Analizar Secuencia
+                    </button>
+                    <button class="btn-primary-custom" onclick="generateStoryline()">
+                        📖 Generar Historia
+                    </button>
+                    <button class="btn-primary-custom" onclick="clearSequence()">
+                        🗑️ Limpiar
+                    </button>
+                </div>
+
+                <div id="sequenceAnalysis" style="display: none;">
+                    <div class="calculator-results mt-3">
+                        <h6 style="color: var(--primary-color); text-align: center;">📈 Análisis de Impacto</h6>
+                        <div class="result-item">
+                            <span class="result-label">Complejidad narrativa:</span>
+                            <span class="result-value" id="narrativeComplexity">Básica</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Impacto visual estimado:</span>
+                            <span class="result-value" id="visualImpact">⭐⭐⭐</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-label">Duración recomendada:</span>
+                            <span class="result-value" id="recommendedDuration">0 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Combination Studio -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🎨 Estudio de Combinaciones Avanzadas</h2>
+                <p class="section-description">
+                    Explora sinergias entre diferentes props y descubre combinaciones que multiplican el impacto visual de forma exponencial.
+                </p>
+            </div>
+
+            <div class="combination-studio">
+                <h5 style="color: var(--primary-color); margin-bottom: 1.5rem;">Generador de Combinaciones Sinérgicas:</h5>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 style="color: var(--primary-color);">Selecciona Combinación Base:</h6>
+                        <div class="props-gallery">
+                            <div class="prop-card" style="cursor: pointer;" onclick="loadCombination('romantic')">
+                                <div class="prop-emoji">💕</div>
+                                <div class="prop-name">Romántica Clásica</div>
+                                <div class="prop-description">Rosa + Perlas + Seda</div>
+                            </div>
+                            <div class="prop-card" style="cursor: pointer;" onclick="loadCombination('mysterious')">
+                                <div class="prop-emoji">🔮</div>
+                                <div class="prop-name">Misteriosa Seductora</div>
+                                <div class="prop-description">Abanico + Máscara + Espejo</div>
+                            </div>
+                            <div class="prop-card" style="cursor: pointer;" onclick="loadCombination('ethereal')">
+                                <div class="prop-emoji">🌙</div>
+                                <div class="prop-name">Etérea Celestial</div>
+                                <div class="prop-description">Seda + Plumas + Cristal</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="combinationResult" style="display: none;">
+                            <div class="calculator-results">
+                                <h6 style="color: var(--primary-color); text-align: center;">✨ Combinación Activa</h6>
+                                <div id="combinationDetails"></div>
+                                <div class="text-center mt-3">
+                                    <button class="btn-primary-custom" onclick="practiceCombination()">
+                                        🎭 Iniciar Práctica
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">📊 Calculadora de Impacto de Props</h2>
+                <p class="section-description">
+                    Proyecta el ROI de dominar diferentes tipos de props y su impacto en engagement, memorabilidad e ingresos.
+                </p>
+            </div>
+
+            <div class="calculator-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="calculator-input">
+                            <label for="propsRepertoire">Número de props dominados:</label>
+                            <input type="number" id="propsRepertoire" value="8" min="1" max="30" oninput="calculatePropsImpact()">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="skillLevel">Nivel de dominio técnico:</label>
+                            <select id="skillLevel" onchange="calculatePropsImpact()">
+                                <option value="1.0">Básico - Uso simple</option>
+                                <option value="1.4">Intermedio - Algunas técnicas</option>
+                                <option value="1.8" selected>Avanzado - Vocabulario amplio</option>
+                                <option value="2.3">Master - Narrativa fluida</option>
+                                <option value="2.8">Virtuoso - Arte escénico</option>
+                            </select>
+                        </div>
+                        <div class="calculator-input">
+                            <label for="practiceFrequency">Frecuencia de práctica (horas/semana):</label>
+                            <input type="number" id="practiceFrequency" value="6" min="1" max="30" oninput="calculatePropsImpact()">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="creativityLevel">Nivel de creatividad en combinaciones:</label>
+                            <select id="creativityLevel" onchange="calculatePropsImpact()">
+                                <option value="1.1">Básico - Props individuales</option>
+                                <option value="1.3" selected>Intermedio - Combinaciones simples</option>
+                                <option value="1.6">Avanzado - Secuencias complejas</option>
+                                <option value="2.0">Master - Narrativas completas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="calculator-results" id="propsResults">
+                            <h5 style="color: var(--primary-color); text-align: center; margin-bottom: 1.5rem;">
+                                🎭 Proyección de Props
+                            </h5>
+                            <div class="result-item">
+                                <span class="result-label">Incremento en memorabilidad:</span>
+                                <span class="result-value" id="memorabilityBoost">+0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Aumento en engagement:</span>
+                                <span class="result-value" id="engagementBoost">+0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Nuevos seguidores/semana:</span>
+                                <span class="result-value" id="newFollowers">+0</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">ROI mensual estimado:</span>
+                                <span class="result-value" id="monthlyPropsROI">+$0</span>
+                            </div>
+                            <div style="background: var(--purple-light); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                <div class="text-center">
+                                    <div style="font-size: 1.2rem; font-weight: 600; color: var(--primary-color);">Factor de Props</div>
+                                    <div style="font-size: 2rem; font-weight: 700; color: var(--success-green);" id="propsFactor">1.0x</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🌟 Virtuosas de los Props</h2>
+                <p class="section-description">
+                    Modelos que revolucionaron sus performances dominando el arte de los accesorios escénicos y creando momentos icónicos memorables.
+                </p>
+            </div>
+
+            <div class="success-story">
+                <div class="story-header">
+                    <div class="story-avatar">IC</div>
+                    <div class="story-info">
+                        <h4>Isabella Cruz - @PropQueen_IC</h4>
+                        <p>2.2 años de experiencia | Especialista en accesorios narrativos</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-dark); font-style: italic; margin-bottom: 1.5rem;">
+                    "Desarrollé mi sistema de 'Objetos Narrativos' con 23 props únicos, cada uno con su propio vocabulario de 8-12 movimientos específicos. Mi abanico no es solo decorativo - es extensión visual, herramienta de ocultamiento, amplificador de líneas corporales y marcador rítmico. Practiqué hasta lograr 'fusión corporal' donde cada prop se siente como parte natural de mi cuerpo. Mis usuarios reconocen cada prop inmediatamente y tienen favoritos específicos que me piden en shows privados."
+                </p>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">+423%</div>
+                        <div class="metric-label">Recordación de momentos</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">23</div>
+                        <div class="metric-label">Props signature</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">$12,600</div>
+                        <div class="metric-label">Mejor mes</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">94%</div>
+                        <div class="metric-label">Usuarios que recuerdan props</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <div class="story-header">
+                    <div class="story-avatar">AM</div>
+                    <div class="story-info">
+                        <h4>Ariana Mendez - @SilkMistress_AM</h4>
+                        <p>1.8 años de experiencia | Especialista en combinaciones complejas</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-dark); font-style: italic; margin-bottom: 1.5rem;">
+                    "Mi innovación fue crear 'secuencias-estrella' - mini-coreografías de 2-3 minutos dedicadas completamente a cada prop. Mi 'Danza de la Seda' combina seda flotante + perlas + espejo en una narrativa visual que cuenta la historia de una diosa que se contempla. También desarrollo 'combinaciones sinérgicas' donde 2-3 props se potencian mutuamente. Mis shows son como obras de teatro donde cada prop tiene su momento protagonista y también momentos de ensemble."
+                </p>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">+378%</div>
+                        <div class="metric-label">Engagement durante props</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Secuencias-estrella</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">67 min</div>
+                        <div class="metric-label">Duración promedio sesión</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">+234%</div>
+                        <div class="metric-label">Tips durante uso props</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <div class="story-header">
+                    <div class="story-avatar">VS</div>
+                    <div class="story-info">
+                        <h4>Valeria Storm - @PropMaestro_VS</h4>
+                        <p>3.3 años de experiencia | Top 0.2% en su plataforma</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-dark); font-style: italic; margin-bottom: 1.5rem;">
+                    "Llevé los props al nivel de arte escénico profesional. Tengo 31 props únicos organizados en 'familias temáticas': Elegancia Clásica, Fantasía Juguetona, Misterio Seductor, Poder Dominante. Cada familia tiene su paleta de colores, música específica y narrativa coherente. También desarrollé 'transiciones invisibles' entre props y 'apariciones mágicas' donde props aparecen y desaparecen dramáticamente. Mis usuarios dicen que mis shows son 'experiencias cinematográficas'. Mi récord es $21,000 en un mes solo con shows temáticos de props."
+                </p>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">$21,000</div>
+                        <div class="metric-label">Récord mensual</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">31</div>
+                        <div class="metric-label">Props únicos</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">Top 0.2%</div>
+                        <div class="metric-label">Ranking props</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">+612%</div>
+                        <div class="metric-label">Crecimiento anual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Techniques Lab -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🚀 Laboratorio de Técnicas Virtuosas</h2>
+                <p class="section-description">
+                    Técnicas de nivel maestro para el uso escénico de props que transforman objetos simples en colaboradores artísticos.
+                </p>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('theatrical-integration')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-theater-masks"></i></div>
+                    <div class="card-title">Integración Teatral Avanzada</div>
+                    <div class="card-toggle" id="toggle-theatrical-integration"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-theatrical-integration">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🎭 Técnicas de Teatro Físico</h6>
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;">
+                                <strong>Animación de Objeto:</strong>
+                                <p class="small">Dar "personalidad" al prop - el abanico tiene temperamento, la seda tiene voluntad propia, las perlas tienen historia emocional</p>
+                                
+                                <strong>Diálogo Físico:</strong>
+                                <p class="small">Crear conversaciones visuales entre tú y el prop, donde ambos "responden" a las acciones del otro</p>
+                                
+                                <strong>Metamorfosis Simbólica:</strong>
+                                <p class="small">Un mismo prop representa diferentes elementos según el contexto - la seda es río, nube, memoria, caricia</p>
+                                
+                                <strong>Presencia-Ausencia:</strong>
+                                <p class="small">Usar la aparición y desaparición del prop como puntuación dramática de la narrativa</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">⚡ Principios de Dominio</h6>
+                            <div style="background: var(--purple-light); padding: 1.5rem; border-radius: 15px;">
+                                <p><strong>Ley de Extensión Corporal:</strong></p>
+                                <p class="small">El prop debe sentirse como continuación natural de tu cuerpo, no como objeto externo manipulado</p>
+                                
+                                <p><strong>Principio de Timing Orgánico:</strong></p>
+                                <p class="small">Los movimientos con props deben fluir con tu respiración y ritmo cardíaco natural</p>
+                                
+                                <p><strong>Regla de Propósito Múltiple:</strong></p>
+                                <p class="small">Cada prop debe servir mínimo 3 funciones: estética, narrativa y emocional</p>
+                                
+                                <div style="background: white; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                    <p class="small"><strong>MAESTRÍA:</strong> Cuando dominas un prop, no lo usas - colaboras con él.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('narrative-architecture')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-sitemap"></i></div>
+                    <div class="card-title">Arquitectura Narrativa con Props</div>
+                    <div class="card-toggle" id="toggle-narrative-architecture"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-narrative-architecture">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 style="color: var(--primary-color);">🏗️ Sistema de Construcción Narrativa</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; height: 100%;">
+                                        <div style="text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: var(--info-blue);">📖</div>
+                                        <strong>Acto I - Presentación:</strong>
+                                        <p class="small">El prop aparece de forma intrigante. Se establece su "personalidad" y función en la narrativa. 20-30% del tiempo total.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; height: 100%;">
+                                        <div style="text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: var(--warning-orange);">🎪</div>
+                                        <strong>Acto II - Desarrollo:</strong>
+                                        <p class="small">Exploración completa del vocabulario del prop. Momentos de tensión, juego, seducción. 50-60% del tiempo total.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; height: 100%;">
+                                        <div style="text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: var(--success-green);">✨</div>
+                                        <strong>Acto III - Culminación:</strong>
+                                        <p class="small">Clímax emocional con el prop. Resolución satisfactoria y despedida memorable. 20-30% del tiempo total.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: var(--primary-color); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
+                                <h6>🎯 Meta de la Arquitectura Narrativa</h6>
+                                <p class="mb-0">Crear experiencias donde cada prop cuenta una historia completa, generando conexión emocional que trasciende lo puramente visual y se convierte en memoria afectiva duradera.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="lab-section">
+            <div class="section-header text-center">
+                <h2 class="section-title">🎭 Tu Teatro de Props Personal</h2>
+                <p class="section-description">
+                    Has completado el entrenamiento más avanzado en maestría de props escénicos. Ahora posees las herramientas para transformar cualquier objeto en un colaborador artístico que multiplica tu presencia escénica.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="background: var(--gradient-primary); color: white; padding: 2rem; border-radius: 20px; text-align: center;">
+                        <h4>🏆 Arsenal Completo Desbloqueado</h4>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>18+ Props Categorizados</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Constructor de Secuencias</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Combinaciones Sinérgicas</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Integración Teatral</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Arquitectura Narrativa</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; padding: 2rem; border-radius: 20px; border: 2px solid var(--primary-color);">
+                        <h4 style="color: var(--primary-color); text-align: center;">💰 Proyección de Props</h4>
+                        <div class="text-center mt-3">
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--success-green);">+312%</div>
+                            <p style="color: var(--text-muted);">Incremento en memorabilidad</p>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary-color); margin-top: 1rem;">$22,000+</div>
+                            <p style="color: var(--text-muted);">Potencial mensual con dominio completo</p>
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                            <p class="small text-center" style="color: var(--text-dark);">
+                                <strong>INVERSIÓN:</strong> Adquiere 3 props nuevos por mes durante 6 meses para construir tu arsenal signature.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn-primary-custom" onclick="window.location.reload()">
+                    🔄 Revisar Todo el Teatro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSequence = [];
+        let selectedCombination = null;
+
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(`details-${cardId}`);
+            const toggle = document.getElementById(`toggle-${cardId}`);
+            const card = details.closest('.interactive-card');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                toggle.classList.remove('rotated');
+                card.classList.remove('expanded');
+            } else {
+                details.classList.add('expanded');
+                toggle.classList.add('rotated');
+                card.classList.add('expanded');
+            }
+        }
+
+        // Select prop
+        function selectProp(propId) {
+            // Remove selected and dancing class from all cards
+            document.querySelectorAll('.prop-card').forEach(card => {
+                card.classList.remove('selected', 'dancing');
+            });
+            
+            // Add selected and dancing class to clicked card
+            const selectedCard = event.target.closest('.prop-card');
+            selectedCard.classList.add('selected', 'dancing');
+            
+            // Remove dancing animation after 3 seconds
+            setTimeout(() => {
+                selectedCard.classList.remove('dancing');
+            }, 3000);
+        }
+
+        // Add prop to sequence
+        function addPropToSequence(propName) {
+            const propNames = {
+                fan: 'Abanico Elegante',
+                silk: 'Seda Flotante', 
+                pearls: 'Perlas Vintage',
+                mirror: 'Espejo Mágico',
+                feather: 'Pluma Exótica',
+                rose: 'Rosa Carmesí'
+            };
+
+            currentSequence.push(propNames[propName] || propName);
+            updateSequenceDisplay();
+        }
+
+        // Update sequence display
+        function updateSequenceDisplay() {
+            const timeline = document.getElementById('sequenceTimeline');
+            
+            if (currentSequence.length === 0) {
+                timeline.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 2rem;">Selecciona props para crear tu secuencia narrativa</div>';
+                return;
+            }
+            
+            timeline.innerHTML = currentSequence.map((prop, index) => 
+                `<span class="sequence-prop ${index === 0 ? 'active' : ''}" onclick="activateProp(${index})">${prop}</span>`
+            ).join('');
+        }
+
+        // Activate prop in sequence
+        function activateProp(index) {
+            document.querySelectorAll('.sequence-prop').forEach((prop, i) => {
+                prop.classList.remove('active');
+                if (i === index) {
+                    prop.classList.add('active');
+                }
+            });
+        }
+
+        // Analyze sequence
+        function analyzeSequence() {
+            if (currentSequence.length === 0) {
+                alert('Añade props a tu secuencia primero');
+                return;
+            }
+
+            const complexity = currentSequence.length < 3 ? 'Básica' : 
+                             currentSequence.length < 5 ? 'Intermedia' : 
+                             currentSequence.length < 7 ? 'Avanzada' : 'Master';
+            
+            const stars = Math.min(5, Math.ceil(currentSequence.length / 1.5));
+            const duration = currentSequence.length * 2.5;
+            
+            document.getElementById('narrativeComplexity').textContent = complexity;
+            document.getElementById('visualImpact').textContent = '⭐'.repeat(stars);
+            document.getElementById('recommendedDuration').textContent = `${duration.toFixed(1)} min`;
+            
+            document.getElementById('sequenceAnalysis').style.display = 'block';
+            document.getElementById('sequenceAnalysis').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Generate storyline
+        function generateStoryline() {
+            if (currentSequence.length === 0) {
+                alert('Crea una secuencia primero');
+                return;
+            }
+            
+            const stories = [
+                'Historia de una Princesa que despierta en su palacio y se prepara para un baile real',
+                'Narrativa de una Diosa que contempla su belleza y seduce con su gracia etérea',
+                'Cuento de una Artista que usa sus props para pintar emociones en el aire',
+                'Leyenda de una Hechicera que transforma objetos comunes en instrumentos mágicos'
+            ];
+            
+            const randomStory = stories[Math.floor(Math.random() * stories.length)];
+            alert(`📖 Historia Generada:\n\n"${randomStory}"\n\nProps en secuencia: ${currentSequence.join(' → ')}\nDuración: ${(currentSequence.length * 2.5).toFixed(1)} minutos`);
+        }
+
+        // Clear sequence
+        function clearSequence() {
+            currentSequence = [];
+            updateSequenceDisplay();
+            document.getElementById('sequenceAnalysis').style.display = 'none';
+        }
+
+        // Load combination
+        function loadCombination(type) {
+            selectedCombination = type;
+            
+            const combinations = {
+                romantic: {
+                    title: 'Combinación Romántica Clásica',
+                    props: 'Rosa + Perlas + Seda',
+                    description: 'Narrativa de amor eterno con simbolismo de pureza, belleza y sensualidad. Perfecta para momentos íntimos y conexión emocional profunda.',
+                    techniques: '1. Rosa como protagonista de apertura\n2. Perlas para transición sensual\n3. Seda para culminación etérea\n4. Interacción entre los tres elementos',
+                    duration: '8-12 minutos',
+                    difficulty: 'Intermedio-Avanzado'
+                },
+                mysterious: {
+                    title: 'Combinación Misteriosa Seductora',
+                    props: 'Abanico + Máscara + Espejo',
+                    description: 'Juego de revelación y ocultamiento que crea tensión sexual y misterio. Ideal para audiencias que buscan intriga y seducción sofisticada.',
+                    techniques: '1. Máscara para establecer misterio\n2. Abanico para juegos de ocultamiento\n3. Espejo para autoreflexión seductora\n4. Transiciones teatrales',
+                    duration: '10-15 minutos',
+                    difficulty: 'Avanzado-Master'
+                },
+                ethereal: {
+                    title: 'Combinación Etérea Celestial',
+                    props: 'Seda + Plumas + Cristal',
+                    description: 'Atmosfera celestial y sobrenatural. Perfecta para crear experiencias trascendentales y conexión espiritual-sensual.',
+                    techniques: '1. Seda como elemento base flotante\n2. Plumas para texturas etéreas\n3. Cristal para reflexión de luz\n4. Movimientos angelicales',
+                    duration: '12-18 minutos',
+                    difficulty: 'Master-Virtuoso'
+                }
+            };
+            
+            const combo = combinations[type];
+            document.getElementById('combinationDetails').innerHTML = `
+                <h6 style="color: var(--primary-color);">${combo.title}</h6>
+                <p><strong>Props:</strong> ${combo.props}</p>
+                <p><strong>Narrativa:</strong> ${combo.description}</p>
+                <p><strong>Duración:</strong> ${combo.duration}</p>
+                <p><strong>Dificultad:</strong> ${combo.difficulty}</p>
+                <div style="background: var(--purple-light); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <strong>Técnicas:</strong><br>
+                    <pre style="white-space: pre-line; font-family: inherit; font-size: 0.9rem;">${combo.techniques}</pre>
+                </div>
+            `;
+            
+            document.getElementById('combinationResult').style.display = 'block';
+            document.getElementById('combinationResult').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Practice combination
+        function practiceCombination() {
+            if (!selectedCombination) return;
+            
+            const practiceMessages = {
+                romantic: 'Iniciando práctica Romántica Clásica...\n\n• Comienza con la rosa cerca del corazón\n• Transición suave a las perlas\n• Culmina con la seda como abrazo\n• Enfócate en la narrativa de amor eterno',
+                mysterious: 'Iniciando práctica Misteriosa Seductora...\n\n• La máscara revela más de lo que oculta\n• El abanico crea tensión sexual\n• El espejo refleja tu alma seductora\n• Mantén el misterio hasta el final',
+                ethereal: 'Iniciando práctica Etérea Celestial...\n\n• La seda flota como nubes\n• Las plumas danzan como ángeles\n• El cristal captura la luz divina\n• Trasciende lo terrenal'
+            };
+            
+            alert(`🎭 ${practiceMessages[selectedCombination]}`);
+        }
+
+        // Calculate props impact
+        function calculatePropsImpact() {
+            const repertoire = parseFloat(document.getElementById('propsRepertoire').value) || 8;
+            const skill = parseFloat(document.getElementById('skillLevel').value) || 1.8;
+            const practice = parseFloat(document.getElementById('practiceFrequency').value) || 6;
+            const creativity = parseFloat(document.getElementById('creativityLevel').value) || 1.3;
+            
+            // Calculate improvements
+            const repertoireBonus = Math.min(2.5, repertoire / 12);
+            const practiceBonus = Math.min(1.8, practice / 15);
+            const totalMultiplier = skill * repertoireBonus * practiceBonus * creativity;
+            
+            const memorabilityBoost = (totalMultiplier - 1) * 120;
+            const engagementBoost = (totalMultiplier - 1) * 85;
+            const newFollowersWeek = Math.round(memorabilityBoost / 8);
+            const monthlyROI = Math.round(memorabilityBoost * 95 + engagementBoost * 67);
+            const propsFactor = totalMultiplier;
+            
+            // Update display
+            document.getElementById('memorabilityBoost').textContent = `+${memorabilityBoost.toFixed(1)}%`;
+            document.getElementById('engagementBoost').textContent = `+${engagementBoost.toFixed(1)}%`;
+            document.getElementById('newFollowers').textContent = `+${newFollowersWeek}`;
+            document.getElementById('monthlyPropsROI').textContent = `+$${monthlyROI}`;
+            document.getElementById('propsFactor').textContent = `${propsFactor.toFixed(2)}x`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+            calculatePropsImpact();
+            
+            // Update date every minute
+            setInterval(updateDate, 60000);
+            
+            // Animate progress bars on load
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 500);
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

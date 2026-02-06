@@ -1,0 +1,2057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=0.5">
+  <title>WC Training - Laboratorio de Arquitectura Acústica DIY</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #198754;
+      --secondary-color: #20c997;
+      --accent-color: #0dcaf0;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc3545;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-dark: #0f2419;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #198754 0%, #20c997 100%);
+      --gradient-secondary: linear-gradient(135deg, #20c997 0%, #0dcaf0 100%);
+      --gradient-accent: linear-gradient(135deg, #0dcaf0 0%, #198754 100%);
+      --gradient-dark: linear-gradient(135deg, #0f2419 0%, #1a4731 100%);
+      --shadow-soft: 0 15px 40px rgba(25, 135, 84, 0.15);
+      --shadow-strong: 0 25px 60px rgba(25, 135, 84, 0.25);
+      --border-radius: 20px;
+      --border-radius-lg: 30px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gradient-dark);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--bg-white);
+      padding: 1rem 0;
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .wc-stats {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem 1rem;
+      background: var(--gradient-secondary);
+      border-radius: 15px;
+      color: white;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insights-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23198754' fill-opacity='0.4'%3E%3Cpath d='M30 5L50 25H40v20H20V25H10L30 5z'/%3E%3Cpath d='M15 35h30v10H15V35z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--success-green);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      animation: pulse 1.5s infinite;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-soft);
+      border-left: 5px solid var(--primary-color);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    /* Main Header */
+    .main-header {
+      padding: 4rem 0;
+      background: var(--gradient-dark);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2320c997' fill-opacity='0.1'%3E%3Cpath d='M20 0v40M0 20h40M10 10l20 20M30 10L10 30'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 24s ease-in-out infinite reverse;
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: var(--bg-white);
+      margin: 2rem 0;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .lab-section:hover {
+      box-shadow: var(--shadow-strong);
+    }
+
+    .lab-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 2rem;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .lab-header:hover {
+      transform: translateX(10px);
+    }
+
+    .lab-header h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lab-content {
+      padding: 2rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-out;
+    }
+
+    .lab-content.active {
+      max-height: 4000px;
+    }
+
+    .expand-icon {
+      transition: var(--transition);
+      font-size: 1.2rem;
+    }
+
+    .lab-header.active .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Interactive Cards */
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .interactive-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid transparent;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-secondary);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Material Simulator */
+    .material-simulator {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+      position: relative;
+    }
+
+    .material-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .material-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .material-card:hover, .material-card.active {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    .material-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .material-effectiveness {
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      opacity: 0.8;
+    }
+
+    /* Calculators */
+    .calculator {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .calculator-input {
+      margin-bottom: 1rem;
+    }
+
+    .calculator-input label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .calculator-input input, .calculator-input select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: white;
+    }
+
+    .calculator-input input:focus, .calculator-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.1);
+    }
+
+    .calculator-result {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 2px solid var(--success-green);
+      display: none;
+    }
+
+    .calculator-result.show {
+      display: block;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    .result-highlight {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--success-green);
+      margin-bottom: 1rem;
+    }
+
+    /* Progress Bars */
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress {
+      height: 12px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--gradient-primary);
+      transition: width 2s ease-out;
+      border-radius: 10px;
+    }
+
+    /* Before/After Visualization */
+    .before-after {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+      padding: 2rem;
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+    }
+
+    .before-section, .after-section {
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: 15px;
+    }
+
+    .before-section {
+      background: rgba(220, 53, 69, 0.1);
+      border: 2px solid var(--danger-red);
+    }
+
+    .after-section {
+      background: rgba(25, 135, 84, 0.1);
+      border: 2px solid var(--success-green);
+    }
+
+    .waveform {
+      width: 100%;
+      height: 60px;
+      background: repeating-linear-gradient(
+        90deg,
+        currentColor 0px,
+        currentColor 3px,
+        transparent 3px,
+        transparent 8px
+      );
+      margin: 1rem 0;
+      border-radius: 5px;
+      opacity: 0.6;
+    }
+
+    .waveform.improved {
+      height: 30px;
+      background: repeating-linear-gradient(
+        90deg,
+        currentColor 0px,
+        currentColor 2px,
+        transparent 2px,
+        transparent 6px
+      );
+    }
+
+    /* Success Stories */
+    .success-stories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .success-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      border-left: 5px solid var(--success-green);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .success-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .success-quote {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .success-quote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--primary-color);
+      position: absolute;
+      top: -1rem;
+      left: -1rem;
+      opacity: 0.3;
+    }
+
+    .success-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .metric {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 10px;
+    }
+
+    .metric-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--success-green);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-height: 44px;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-strong);
+      color: white;
+    }
+
+    .btn-secondary-custom {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-height: 44px;
+    }
+
+    .btn-secondary-custom:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    /* Cost Tracker */
+    .cost-tracker {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .cost-breakdown {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .cost-item {
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .cost-amount {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      margin-top: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2320c997' fill-opacity='0.1'%3E%3Cpath d='M40 10L60 30H50v30H30V30H20L40 10z'/%3E%3Cpath d='M20 50h40v20H20V50z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 22s ease-in-out infinite;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .achievement {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+
+    .achievement:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .wc-brand {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .wc-stats {
+        justify-content: center;
+      }
+
+      .main-header {
+        padding: 2rem 0;
+      }
+
+      .lab-header {
+        padding: 1.5rem;
+      }
+
+      .lab-content {
+        padding: 1.5rem;
+      }
+
+      .interactive-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .success-stories {
+        grid-template-columns: 1fr;
+      }
+
+      .material-grid {
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      }
+
+      .insights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .achievement-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .before-after {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .cost-breakdown {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .calculator {
+        padding: 1rem;
+      }
+
+      .material-simulator {
+        padding: 1rem;
+      }
+
+      .success-card {
+        padding: 1.5rem;
+      }
+
+      .final-summary {
+        padding: 2rem 0;
+      }
+
+      .btn-primary-custom, .btn-secondary-custom {
+        width: 100%;
+        justify-content: center;
+        padding: 1.2rem;
+      }
+
+      .cost-tracker {
+        padding: 1rem;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card:hover,
+      .insight-card:hover,
+      .success-card:hover,
+      .achievement:hover {
+        transform: none;
+      }
+
+      .btn-primary-custom:hover,
+      .btn-secondary-custom:hover,
+      .material-card:hover {
+        transform: none;
+      }
+
+      .lab-header:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="wc-brand">
+        <div class="wc-logo">
+          <i class="fas fa-home"></i> WC TRAINING
+        </div>
+        <div class="wc-stats">
+          <div class="stat-item">
+            <div><strong>12,847</strong></div>
+            <div style="font-size: 0.8rem;">Modelos Activos</div>
+          </div>
+          <div class="stat-item">
+            <div><strong>$47</strong></div>
+            <div style="font-size: 0.8rem;">Costo Promedio DIY</div>
+          </div>
+          <div class="stat-item">
+            <div id="current-date"></div>
+            <div style="font-size: 0.8rem;">Live Training</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="insights-bg"></div>
+    <div class="container">
+      <div class="text-center mb-4">
+        <span class="live-indicator">
+          <span class="live-dot"></span>
+          INSIGHTS LIVE 2025
+        </span>
+        <h2 class="mt-3 fw-bold" style="color: var(--text-dark);">🏠 Revolución del Aislamiento Acústico DIY en Streaming</h2>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-number">78%</div>
+          <h5>Usan Soluciones Inadecuadas</h5>
+          <p class="text-muted mb-0">De los streamers implementan tratamientos acústicos improvisados sin comprensión científica, obteniendo resultados contraproducentes.</p>
+          <small class="text-primary">Fuente: Home Studio Acoustics Report 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">+689%</div>
+          <h5>ROI en Tratamiento DIY</h5>
+          <p class="text-muted mb-0">Modelos que implementan arquitectura acústica estratégica reportan incrementos promedio de 689% en calidad percibida vs. inversión.</p>
+          <small class="text-primary">Fuente: DIY Acoustics Impact Study</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">$47</div>
+          <h5>Inversión Promedio Efectiva</h5>
+          <p class="text-muted mb-0">El costo promedio de un tratamiento acústico DIY profesionalmente calibrado que genera resultados equiparables a $2000+ en materiales especializados.</p>
+          <small class="text-primary">Fuente: Material Cost Analysis 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">-84%</div>
+          <h5>Reducción de Reverberación</h5>
+          <p class="text-muted mb-0">Los tratamientos DIY estratégicamente posicionados logran hasta 84% de reducción en tiempo de reverberación problemática.</p>
+          <small class="text-primary">Fuente: RT60 Measurement Studies</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">93%</div>
+          <h5>Materiales Domésticos Efectivos</h5>
+          <p class="text-muted mb-0">De las soluciones acústicas efectivas pueden implementarse con materiales disponibles en ferreterías y tiendas comunes.</p>
+          <small class="text-primary">Fuente: Accessible Materials Study</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">2.4x</div>
+          <h5>Multiplier de Retención</h5>
+          <p class="text-muted mb-0">Streamers con tratamiento acústico DIY optimizado retienen 2.4x más audiencia que aquellos en espacios sin tratar.</p>
+          <small class="text-primary">Fuente: Viewer Retention Analytics</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="header-bg"></div>
+    <div class="container">
+      <h1 class="main-title">🏗️ Laboratorio de Arquitectura Acústica DIY</h1>
+      <p class="main-subtitle">
+        Domina la ingeniería ambiental invisible. Transforma limitaciones espaciales en ventajas acústicas con modificaciones estratégicas calibradas científicamente - construyendo tu microambiente privilegiado con materiales accesibles.
+      </p>
+      <div class="mt-4">
+        <button class="btn-primary-custom me-3" onclick="scrollToSection('materials-lab')">
+          <i class="fas fa-tools"></i> ¡Construir Mi Estudio DIY!
+        </button>
+        <button class="btn-secondary-custom" onclick="scrollToSection('success-stories')">
+          <i class="fas fa-home"></i> Ver Transformaciones
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container my-5">
+
+    <!-- Materials Lab Section -->
+    <div class="lab-section" id="materials-lab">
+      <div class="lab-header" onclick="toggleDetails('materials-content')">
+        <h2><i class="fas fa-hammer"></i> 🔧 Laboratorio de Materiales Acústicos DIY CRÍTICO</h2>
+        <p class="mb-0">Simulador de efectividad de materiales caseros - Optimización de absorción y difusión</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="materials-content">
+        
+        <div class="material-simulator">
+          <h4>🧪 Simulador de Materiales Interactivo</h4>
+          <p class="text-muted">Explora la efectividad de diferentes materiales DIY y sus combinaciones</p>
+          
+          <div class="material-grid">
+            <div class="material-card" onclick="selectMaterial('towels')">
+              <div class="material-icon">🏃</div>
+              <strong>Toallas Gruesas</strong>
+              <div class="material-effectiveness">Absorción: 65%</div>
+              <small>$8-15 por m²</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('blankets')">
+              <div class="material-icon">🛏️</div>
+              <strong>Mantas Pesadas</strong>
+              <div class="material-effectiveness">Absorción: 78%</div>
+              <small>$12-25 por m²</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('foam')">
+              <div class="material-icon">🧽</div>
+              <strong>Espuma de Tapicería</strong>
+              <div class="material-effectiveness">Absorción: 85%</div>
+              <small>$18-35 por m²</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('books')">
+              <div class="material-icon">📚</div>
+              <strong>Biblioteca Densa</strong>
+              <div class="material-effectiveness">Difusión: 72%</div>
+              <small>$0 (reposicionamiento)</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('curtains')">
+              <div class="material-icon">🪟</div>
+              <strong>Cortinas Multicapa</strong>
+              <div class="material-effectiveness">Absorción: 58%</div>
+              <small>$20-40 por m²</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('carpet')">
+              <div class="material-icon">🏠</div>
+              <strong>Alfombras Gruesas</strong>
+              <div class="material-effectiveness">Absorción: 45%</div>
+              <small>$15-30 por m²</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('furniture')">
+              <div class="material-icon">🪑</div>
+              <strong>Muebles Tapizados</strong>
+              <div class="material-effectiveness">Absorción: 52%</div>
+              <small>$0 (reposicionamiento)</small>
+            </div>
+            
+            <div class="material-card" onclick="selectMaterial('hybrid')">
+              <div class="material-icon">⚡</div>
+              <strong>Sistema Híbrido</strong>
+              <div class="material-effectiveness">Optimizado: 92%</div>
+              <small>$35-65 por m²</small>
+            </div>
+          </div>
+          
+          <div class="before-after mt-4">
+            <div class="before-section">
+              <h5><i class="fas fa-times-circle text-danger"></i> Antes del Tratamiento</h5>
+              <div class="waveform" style="color: var(--danger-red);"></div>
+              <ul class="list-unstyled">
+                <li>RT60: 1.2 segundos</li>
+                <li>Reflexiones fuertes</li>
+                <li>Sonido "hueco"</li>
+                <li>Interferencias frecuenciales</li>
+              </ul>
+            </div>
+            
+            <div class="after-section">
+              <h5><i class="fas fa-check-circle text-success"></i> Después del Tratamiento</h5>
+              <div class="waveform improved" style="color: var(--success-green);"></div>
+              <ul class="list-unstyled">
+                <li>RT60: 0.3 segundos</li>
+                <li>Reflexiones controladas</li>
+                <li>Sonido profesional</li>
+                <li>Claridad optimizada</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="alert alert-info mt-3" id="material-feedback">
+            <strong>Selecciona un material</strong> para ver análisis detallado de efectividad, costos e implementación.
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-sponge"></i>
+              </div>
+              <h5>Paneles Absorbentes DIY</h5>
+              <p>Construcción de paneles profesionales con materiales accesibles y bastidores de madera.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Bastidores 5x5cm de pino</li>
+                <li><i class="fas fa-check text-success"></i> Relleno de fibra densa</li>
+                <li><i class="fas fa-check text-success"></i> Tela acústicamente transparente</li>
+                <li><i class="fas fa-check text-success"></i> Montaje estratégico en reflexiones</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-wave-square"></i>
+              </div>
+              <h5>Difusores Bibliográficos</h5>
+              <p>Reorganización estratégica de librerías para crear difusión acústica efectiva.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Libros de diferentes alturas</li>
+                <li><i class="fas fa-check text-success"></i> Disposición irregular científica</li>
+                <li><i class="fas fa-check text-success"></i> Rompe ondas estacionarias</li>
+                <li><i class="fas fa-check text-success"></i> $0 de inversión adicional</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Configuration Lab Section -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('config-content')">
+        <h2><i class="fas fa-drafting-compass"></i> ⚡ Laboratorio de Configuraciones Modulares VITAL</h2>
+        <p class="mb-0">Diseño de sistemas adaptativos y cabinas portátiles - Máxima flexibilidad espacial</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="config-content">
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="calculator">
+              <h4>🏗️ Calculadora de Configuración Óptima</h4>
+              <p class="text-muted">Determina la configuración ideal basada en tu espacio y necesidades</p>
+              
+              <div class="calculator-input">
+                <label for="room-dimensions">Dimensiones de la habitación (m)</label>
+                <div class="row">
+                  <div class="col-4">
+                    <input type="number" id="room-length" placeholder="Largo" min="1" max="20" step="0.1">
+                  </div>
+                  <div class="col-4">
+                    <input type="number" id="room-width" placeholder="Ancho" min="1" max="20" step="0.1">
+                  </div>
+                  <div class="col-4">
+                    <input type="number" id="room-height" placeholder="Alto" min="1" max="10" step="0.1">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="usage-pattern">Patrón de uso del espacio</label>
+                <select id="usage-pattern">
+                  <option value="">Seleccionar...</option>
+                  <option value="dedicated">Dedicado exclusivo al streaming</option>
+                  <option value="shared-bedroom">Dormitorio compartido</option>
+                  <option value="shared-living">Sala de estar compartida</option>
+                  <option value="office">Oficina/estudio multifuncional</option>
+                  <option value="temporary">Espacios temporales/variables</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="budget-range">Presupuesto disponible ($)</label>
+                <select id="budget-range">
+                  <option value="">Seleccionar...</option>
+                  <option value="minimal">$0-25 (Reorganización)</option>
+                  <option value="low">$25-75 (Materiales básicos)</option>
+                  <option value="moderate">$75-150 (Tratamiento moderado)</option>
+                  <option value="comprehensive">$150-300 (Sistema completo)</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="noise-issues">Principales problemas acústicos</label>
+                <select id="noise-issues" multiple>
+                  <option value="echo">Eco/reverberación fuerte</option>
+                  <option value="neighbors">Ruido de vecinos</option>
+                  <option value="traffic">Tráfico exterior</option>
+                  <option value="appliances">Electrodomésticos</option>
+                  <option value="reflections">Reflexiones de superficies</option>
+                  <option value="flutter">Flutter echo (superficies paralelas)</option>
+                </select>
+                <small class="text-muted">Mantén Ctrl/Cmd para seleccionar múltiples</small>
+              </div>
+              
+              <button class="btn-primary-custom" onclick="calculateOptimalConfig()">
+                <i class="fas fa-calculator"></i> Diseñar Configuración
+              </button>
+              
+              <div class="calculator-result" id="config-result">
+                <div class="result-highlight" id="config-type"></div>
+                <div id="config-analysis"></div>
+                
+                <div class="cost-tracker mt-3">
+                  <h6>Desglose de Costos Estimados:</h6>
+                  <div class="cost-breakdown" id="cost-breakdown">
+                    <!-- Will be populated by JavaScript -->
+                  </div>
+                  <div class="text-center mt-2">
+                    <div class="cost-amount" id="total-cost">$0</div>
+                    <small>Costo total estimado</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-grid">
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-cube"></i>
+                </div>
+                <h5>Cabina Vocal Portátil</h5>
+                <p>Sistema modular con estructura PVC y mantas acústicas para máxima portabilidad.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Estructura PVC desmontable</li>
+                  <li><i class="fas fa-check text-success"></i> Mantas acústicas multicapa</li>
+                  <li><i class="fas fa-check text-success"></i> Setup/breakdown en 5 minutos</li>
+                  <li><i class="fas fa-check text-success"></i> Efectividad 85% vs estudio fijo</li>
+                </ul>
+              </div>
+              
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-layer-group"></i>
+                </div>
+                <h5>Sistema de Cortinas Acústicas</h5>
+                <p>Configuración adaptativa con rieles y cortinas especializadas para espacios compartidos.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Rieles de techo flexibles</li>
+                  <li><i class="fas fa-check text-success"></i> Cortinas acústicas densas</li>
+                  <li><i class="fas fa-check text-success"></i> Reconfigurable según necesidad</li>
+                  <li><i class="fas fa-check text-success"></i> Integración estética con decoración</li>
+                </ul>
+              </div>
+              
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-th-large"></i>
+                </div>
+                <h5>Paneles Modulares Magnéticos</h5>
+                <p>Sistema de paneles acústicos con mounting magnético para paredes metálicas.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Montaje sin dañar paredes</li>
+                  <li><i class="fas fa-check text-success"></i> Reconfiguración rápida</li>
+                  <li><i class="fas fa-check text-success"></i> Diferentes densidades por zona</li>
+                  <li><i class="fas fa-check text-success"></i> Ideal para apartamentos rentados</li>
+                </ul>
+              </div>
+              
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-home"></i>
+                </div>
+                <h5>Optimización de Muebles</h5>
+                <p>Reposicionamiento estratégico de mobiliario existente para control acústico.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Mapeo de reflexiones críticas</li>
+                  <li><i class="fas fa-check text-success"></i> Uso de muebles como absorbentes</li>
+                  <li><i class="fas fa-check text-success"></i> Creación de zonas acústicas</li>
+                  <li><i class="fas fa-check text-success"></i> $0 inversión adicional</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h5>📐 Protocolo de Implementación por Fases</h5>
+          <div class="row">
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6 class="card-title"><i class="fas fa-search text-primary"></i> Fase 1: Diagnóstico</h6>
+                  <p class="card-text">Mapeo de reflexiones problemáticas con applause test y medición RT60.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6 class="card-title"><i class="fas fa-tools text-warning"></i> Fase 2: Materiales</h6>
+                  <p class="card-text">Adquisición estratégica de materiales según análisis de efectividad/costo.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6 class="card-title"><i class="fas fa-hammer text-info"></i> Fase 3: Construcción</h6>
+                  <p class="card-text">Implementación gradual priorizando tratamiento de first reflection points.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="card">
+                <div class="card-body text-center">
+                  <h6 class="card-title"><i class="fas fa-chart-line text-success"></i> Fase 4: Optimización</h6>
+                  <p class="card-text">Calibración fina basada en grabaciones antes/después y mediciones.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Effectiveness Lab Section -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('effectiveness-content')">
+        <h2><i class="fas fa-chart-bar"></i> 📊 Laboratorio de Medición de Efectividad ESENCIAL</h2>
+        <p class="mb-0">Análisis científico de resultados y ROI - Validación cuantitativa de mejoras</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="effectiveness-content">
+        
+        <div class="calculator">
+          <h4>📈 Calculadora de ROI en Tratamiento Acústico</h4>
+          <p class="text-muted">Evalúa el retorno de inversión de tus modificaciones DIY</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label for="current-earnings">Ingresos mensuales actuales ($)</label>
+                <input type="number" id="current-earnings" placeholder="Ej: 2200" min="0">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="audio-quality-rating">Rating actual de calidad de audio (1-10)</label>
+                <input type="number" id="audio-quality-rating" placeholder="Ej: 6" min="1" max="10">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="treatment-investment">Inversión total en tratamiento ($)</label>
+                <input type="number" id="treatment-investment" placeholder="Ej: 85" min="0">
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label for="improvement-percentage">Mejora estimada en calidad (%)</label>
+                <input type="number" id="improvement-percentage" placeholder="Ej: 75" min="1" max="100">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="viewer-complaints">Quejas sobre audio por mes</label>
+                <input type="number" id="viewer-complaints" placeholder="Ej: 12" min="0">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="retention-current">Retención actual promedio (%)</label>
+                <input type="number" id="retention-current" placeholder="Ej: 58" min="1" max="100">
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn-primary-custom" onclick="calculateTreatmentROI()">
+            <i class="fas fa-chart-pie"></i> Calcular ROI del Tratamiento
+          </button>
+          
+          <div class="calculator-result" id="treatment-result">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="monthly-boost">$0</div>
+                  <p class="text-muted">Incremento Mensual</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="payback-months">0</div>
+                  <p class="text-muted">Meses Recuperación</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="annual-roi">0%</div>
+                  <p class="text-muted">ROI Anual</p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="text-center">
+                  <div class="result-highlight" id="quality-final">0/10</div>
+                  <p class="text-muted">Rating Final</p>
+                </div>
+              </div>
+            </div>
+            <div id="treatment-analysis" class="mt-3"></div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-stopwatch"></i>
+              </div>
+              <h5>Medición RT60 DIY</h5>
+              <p>Técnicas caseras para medir tiempo de reverberación antes y después del tratamiento.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Applause test con grabación</li>
+                <li><i class="fas fa-check text-success"></i> Apps de análisis espectral</li>
+                <li><i class="fas fa-check text-success"></i> Comparación objetivo pre/post</li>
+                <li><i class="fas fa-check text-success"></i> Documentación de mejoras</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-microphone-alt"></i>
+              </div>
+              <h5>Test de Calidad Vocal</h5>
+              <p>Protocolo para evaluar objetivamente la mejora en claridad y presencia vocal.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Grabaciones A/B controladas</li>
+                <li><i class="fas fa-check text-success"></i> Análisis de frecuencias problemáticas</li>
+                <li><i class="fas fa-check text-success"></i> Evaluación de inteligibilidad</li>
+                <li><i class="fas fa-check text-success"></i> Feedback cuantificado de viewers</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h5>⚡ Dashboard de Progreso en Tiempo Real</h5>
+          <div class="progress-tracker">
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Absorción Acústica Implementada</span>
+                <span class="text-success">78%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 78%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Reducción de RT60</span>
+                <span class="text-info">65%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-info" style="width: 65%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Mejora en Claridad Vocal</span>
+                <span class="text-warning">82%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-warning" style="width: 82%"></div>
+              </div>
+            </div>
+            <div class="progress-item">
+              <div class="progress-label">
+                <span>Satisfacción de Viewers</span>
+                <span class="text-success">91%</span>
+              </div>
+              <div class="progress">
+                <div class="progress-bar bg-success" style="width: 91%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Stories Section -->
+    <div class="lab-section" id="success-stories">
+      <div class="lab-header" onclick="toggleDetails('success-content')">
+        <h2><i class="fas fa-trophy"></i> 🏆 Arquitectos DIY de Éxito</h2>
+        <p class="mb-0">Transformaciones reales documentadas - El poder de la ingeniería acústica casera</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content active" id="success-content">
+        
+        <div class="success-stories">
+          <div class="success-card">
+            <div class="success-quote">
+              "Implementé el sistema completo de arquitectura acústica DIY en mi dormitorio compartido. Construí una cabina vocal portátil con estructura PVC y mantas densas que puedo montar en 5 minutos. Además, reorganicé estratégicamente mi biblioteca como difusor y añadí paneles absorbentes caseros en puntos de primera reflexión. La transformación fue radical - eliminé completamente el eco problemático que tenía y mi voz ahora suena profesional. Mis ingresos se triplicaron en 2 meses y viewers comentan constantemente sobre la 'calidad de estudio' de mi audio. Total invertido: $67."
+            </div>
+            <div class="fw-bold text-primary">- Valentina Torres, Top Model Latina</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">300%</div>
+                <div class="metric-label">Incremento Ingresos</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$67</div>
+                <div class="metric-label">Inversión Total</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">5min</div>
+                <div class="metric-label">Setup Portátil</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">-89%</div>
+                <div class="metric-label">Reducción Eco</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-card">
+            <div class="success-quote">
+              "Como estudiante con presupuesto limitado, pensaba que nunca podría tener audio profesional. El laboratorio de materiales me enseñó a usar toallas gruesas y reorganizar muebles estratégicamente. Seguí exactamente el protocolo de implementación por fases y con solo $28 transformé mi pequeño estudio. Lo más impresionante fue descubrir que mis libros, reposicionados científicamente, eliminaron las ondas estacionarias. Ahora tengo lista de espera de 3 semanas y rating 4.9/5 en calidad. El ROI fue 1,240% en el primer año."
+            </div>
+            <div class="fw-bold text-primary">- Miguel Santos, Performer Estudiantil</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">1,240%</div>
+                <div class="metric-label">ROI Anual</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$28</div>
+                <div class="metric-label">Presupuesto Total</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">4.9/5</div>
+                <div class="metric-label">Rating Calidad</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">3 sem</div>
+                <div class="metric-label">Lista Espera</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-card">
+            <div class="success-quote">
+              "Viviendo en apartamento rentado, no podía hacer modificaciones permanentes. Implementé el sistema de paneles magnéticos modulares y cortinas acústicas adaptativas del laboratorio de configuraciones. La calculadora de ROI me convenció de invertir $142 en el sistema completo. Resultados: eliminé 84% de la reverberación, mis quejas de audio bajaron de 18/mes a 1/mes, y mi retención subió 67%. Ahora entreno a otras modelos en optimización acústica DIY y genero ingresos adicionales como consultora."
+            </div>
+            <div class="fw-bold text-primary">- Isabella Morales, Consultora Acústica</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">-84%</div>
+                <div class="metric-label">Reducción RT60</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">+67%</div>
+                <div class="metric-label">Más Retención</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$142</div>
+                <div class="metric-label">Inversión</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">18→1</div>
+                <div class="metric-label">Quejas/Mes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button class="btn-primary-custom me-3" onclick="scrollToSection('materials-lab')">
+            <i class="fas fa-tools"></i> ¡Construir Mi Estudio DIY!
+          </button>
+          <button class="btn-secondary-custom" onclick="calculateTreatmentROI()">
+            <i class="fas fa-chart-pie"></i> Calcular Mi ROI
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="summary-bg"></div>
+    <div class="container">
+      <h2 class="mb-4" style="font-size: clamp(2rem, 4vw, 3rem);">🏗️ Tu Microambiente Acústico Privilegiado Te Espera</h2>
+      <p class="lead mb-5" style="max-width: 800px; margin: 0 auto;">
+        Has dominado la ingeniería ambiental invisible. No seas vulnerable a las limitaciones espaciales - implementa tu arquitectura acústica DIY y únete al elite que transforma espacios domésticos en estudios profesionales con materiales accesibles.
+      </p>
+      
+      <div class="achievement-grid">
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-hammer"></i>
+          </div>
+          <h4>Master Constructor Acústico</h4>
+          <p>Dominas materiales DIY, efectividad de absorción vs difusión y construcción de paneles profesionales con $47 promedio.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-drafting-compass"></i>
+          </div>
+          <h4>Arquitecto de Configuraciones</h4>
+          <p>Diseñas sistemas modulares adaptativos, cabinas portátiles y optimizas muebles existentes estratégicamente.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h4>Científico de Medición</h4>
+          <p>Implementas protocolos RT60 DIY, análisis antes/después y validación cuantitativa de mejoras acústicas.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-crown"></i>
+          </div>
+          <h4>Elite de Ingeniería Ambiental</h4>
+          <p>Te unes al 22% que genera +689% ROI transformando limitaciones espaciales en ventajas acústicas científicamente calibradas.</p>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <h3 class="mb-3">🚀 CRITICAL: Roadmap de Construcción Inmediata</h3>
+        <div class="row text-start" style="max-width: 700px; margin: 0 auto;">
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Este fin de semana:</strong> Diagnóstico con applause test</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Semana 1:</strong> Adquisición de materiales calculados</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Semana 2:</strong> Construcción fase por fase</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 1:</strong> Implementación y medición RT60</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 2:</strong> Optimización fina y validación</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Ongoing:</strong> Documenta tu transformación</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <button class="btn-primary-custom btn-lg me-3" onclick="scrollToSection('materials-lab')">
+          <i class="fas fa-rocket"></i> ¡A Construir Mi Arquitectura Acústica!
+        </button>
+        <button class="btn-secondary-custom btn-lg" onclick="window.location.reload()">
+          <i class="fas fa-redo"></i> Revisar Laboratorios
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Current date update
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+    
+    updateCurrentDate();
+    setInterval(updateCurrentDate, 60000);
+
+    // Toggle lab sections
+    function toggleDetails(contentId) {
+      const content = document.getElementById(contentId);
+      const header = content.previousElementSibling;
+      const icon = header.querySelector('.expand-icon');
+      
+      content.classList.toggle('active');
+      header.classList.toggle('active');
+      
+      if (content.classList.contains('active')) {
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Scroll to section
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        const content = section.querySelector('.lab-content');
+        if (content && !content.classList.contains('active')) {
+          content.classList.add('active');
+          content.previousElementSibling.classList.add('active');
+        }
+      }
+    }
+
+    // Material selector
+    function selectMaterial(materialType) {
+      // Remove active class from all cards
+      document.querySelectorAll('.material-card').forEach(card => card.classList.remove('active'));
+      // Add active class to selected card
+      event.target.closest('.material-card').classList.add('active');
+      
+      const feedback = document.getElementById('material-feedback');
+      let content = '';
+      let cost = '';
+      let implementation = '';
+      let effectiveness = '';
+      
+      switch(materialType) {
+        case 'towels':
+          content = '<strong>Toallas Gruesas Seleccionadas</strong>';
+          cost = '$8-15 por m²';
+          implementation = 'Colgado en paredes cercanas al micrófono, múltiples capas para mayor absorción';
+          effectiveness = 'Absorción: 65% • Ideal para frecuencias medias • Fácil implementación';
+          break;
+          
+        case 'blankets':
+          content = '<strong>Mantas Pesadas Seleccionadas</strong>';
+          cost = '$12-25 por m²';
+          implementation = 'Suspensión con rieles o ganchos, configuración en L para máxima efectividad';
+          effectiveness = 'Absorción: 78% • Excelente para bajas frecuencias • Versátil y removible';
+          break;
+          
+        case 'foam':
+          content = '<strong>Espuma de Tapicería Seleccionada</strong>';
+          cost = '$18-35 por m²';
+          implementation = 'Corte en paneles de 60x60cm, adhesivo removible o marcos de madera';
+          effectiveness = 'Absorción: 85% • Amplio espectro frecuencial • Máxima efectividad profesional';
+          break;
+          
+        case 'books':
+          content = '<strong>Biblioteca Densa Seleccionada</strong>';
+          cost = '$0 (reposicionamiento)';
+          implementation = 'Reorganización con libros de diferentes alturas, disposición irregular científica';
+          effectiveness = 'Difusión: 72% • Rompe ondas estacionarias • Beneficio estético adicional';
+          break;
+          
+        case 'curtains':
+          content = '<strong>Cortinas Multicapa Seleccionadas</strong>';
+          cost = '$20-40 por m²';
+          implementation = 'Instalación con rieles de techo, múltiples capas densas superpuestas';
+          effectiveness = 'Absorción: 58% • Fácil configuración • Integración decorativa natural';
+          break;
+          
+        case 'carpet':
+          content = '<strong>Alfombras Gruesas Seleccionadas</strong>';
+          cost = '$15-30 por m²';
+          implementation = 'Colocación en suelo y posiblemente paredes, múltiples capas en zonas críticas';
+          effectiveness = 'Absorción: 45% • Control de reflexiones de suelo • Mejora confort general';
+          break;
+          
+        case 'furniture':
+          content = '<strong>Muebles Tapizados Seleccionados</strong>';
+          cost = '$0 (reposicionamiento)';
+          implementation = 'Reubicación estratégica para romper reflexiones, uso como absorbentes pasivos';
+          effectiveness = 'Absorción: 52% • Multifuncional • Optimización sin costo adicional';
+          break;
+          
+        case 'hybrid':
+          content = '<strong>Sistema Híbrido Seleccionado</strong>';
+          cost = '$35-65 por m²';
+          implementation = 'Combinación científica de absorción + difusión, posicionamiento estratégico calibrado';
+          effectiveness = 'Optimizado: 92% • Máximo rendimiento • Solución profesional completa';
+          break;
+      }
+      
+      feedback.innerHTML = `
+        ${content}<br>
+        <strong>Costo:</strong> ${cost}<br>
+        <strong>Implementación:</strong> ${implementation}<br>
+        <strong>Efectividad:</strong> ${effectiveness}
+      `;
+      
+      feedback.className = 'alert alert-success';
+    }
+
+    // Optimal Configuration Calculator
+    function calculateOptimalConfig() {
+      const length = parseFloat(document.getElementById('room-length').value) || 0;
+      const width = parseFloat(document.getElementById('room-width').value) || 0;
+      const height = parseFloat(document.getElementById('room-height').value) || 0;
+      const usage = document.getElementById('usage-pattern').value;
+      const budget = document.getElementById('budget-range').value;
+      const issues = Array.from(document.getElementById('noise-issues').selectedOptions).map(o => o.value);
+      
+      if (length === 0 || width === 0 || height === 0 || !usage || !budget) {
+        alert('Por favor completa las dimensiones de la habitación, patrón de uso y presupuesto');
+        return;
+      }
+      
+      const volume = length * width * height;
+      let configType = '';
+      let totalCost = 0;
+      let analysis = '';
+      let costBreakdown = [];
+      
+      // Determine configuration type based on inputs
+      if (usage === 'temporary' || budget === 'minimal') {
+        configType = 'Configuración Portátil Minimalista';
+        analysis = '<div class="alert alert-info"><i class="fas fa-cube"></i> <strong>Recomendación:</strong> Cabina vocal portátil + reposicionamiento de muebles.</div>';
+        costBreakdown = [
+          { item: 'Tubos PVC', cost: 15 },
+          { item: 'Conectores', cost: 8 },
+          { item: 'Mantas densas', cost: 25 },
+          { item: 'Reorganización', cost: 0 }
+        ];
+        totalCost = 48;
+      } else if (budget === 'low' && volume < 40) {
+        configType = 'Sistema Absorbente Básico';
+        analysis = '<div class="alert alert-success"><i class="fas fa-sponge"></i> <strong>Recomendación:</strong> Paneles DIY + cortinas acústicas para espacios pequeños.</div>';
+        costBreakdown = [
+          { item: 'Bastidores madera', cost: 18 },
+          { item: 'Espuma tapicería', cost: 32 },
+          { item: 'Tela cobertura', cost: 12 },
+          { item: 'Adhesivos', cost: 8 }
+        ];
+        totalCost = 70;
+      } else if (budget === 'moderate') {
+        configType = 'Sistema Modular Intermedio';
+        analysis = '<div class="alert alert-primary"><i class="fas fa-layer-group"></i> <strong>Recomendación:</strong> Combinación absorción/difusión con elementos modulares.</div>';
+        costBreakdown = [
+          { item: 'Paneles absorbentes', cost: 45 },
+          { item: 'Difusores DIY', cost: 28 },
+          { item: 'Sistema rieles', cost: 35 },
+          { item: 'Cortinas acústicas', cost: 42 }
+        ];
+        totalCost = 150;
+      } else {
+        configType = 'Arquitectura Acústica Completa';
+        analysis = '<div class="alert alert-warning"><i class="fas fa-home"></i> <strong>Recomendación:</strong> Sistema profesional DIY con control acústico integral.</div>';
+        costBreakdown = [
+          { item: 'Paneles profesionales', cost: 85 },
+          { item: 'Trampas de graves', cost: 60 },
+          { item: 'Difusores avanzados', cost: 55 },
+          { item: 'Sistema modular', cost: 75 },
+          { item: 'Accesorios', cost: 25 }
+        ];
+        totalCost = 300;
+      }
+      
+      // Adjust for specific issues
+      if (issues.includes('echo')) {
+        analysis += '<li>Prioridad en absorción de first reflection points</li>';
+        if (totalCost < 100) totalCost += 20;
+      }
+      if (issues.includes('neighbors')) {
+        analysis += '<li>Implementar aislamiento adicional en paredes compartidas</li>';
+        if (totalCost < 200) totalCost += 35;
+      }
+      if (issues.includes('flutter')) {
+        analysis += '<li>Difusores obligatorios para romper reflexiones paralelas</li>';
+        if (totalCost < 150) totalCost += 25;
+      }
+      
+      // Adjust for room volume
+      if (volume > 80) {
+        analysis += '<li>Espacio grande requiere tratamiento adicional de graves</li>';
+        totalCost *= 1.3;
+      } else if (volume < 20) {
+        analysis += '<li>Espacio pequeño permite soluciones más económicas</li>';
+        totalCost *= 0.8;
+      }
+      
+      totalCost = Math.round(totalCost);
+      
+      // Generate additional recommendations
+      analysis += `
+        <h6 class="mt-3">Recomendaciones Específicas:</h6>
+        <ul>
+          <li>Volumen de habitación: ${volume.toFixed(1)}m³ - ${volume < 30 ? 'Compacto' : volume < 60 ? 'Mediano' : 'Grande'}</li>
+          <li>RT60 objetivo: ${volume < 30 ? '0.2-0.4' : volume < 60 ? '0.3-0.5' : '0.4-0.6'} segundos</li>
+          <li>Prioridad de tratamiento: ${issues.length > 0 ? issues.join(', ') : 'Absorción general'}</li>
+          <li>Implementación sugerida: ${usage === 'temporary' ? 'Modular/portátil' : 'Fija con opciones modulares'}</li>
+        </ul>
+      `;
+      
+      // Update UI
+      document.getElementById('config-type').textContent = configType;
+      document.getElementById('config-analysis').innerHTML = analysis;
+      document.getElementById('total-cost').textContent = `${totalCost}`;
+      
+      // Update cost breakdown
+      const breakdownDiv = document.getElementById('cost-breakdown');
+      breakdownDiv.innerHTML = '';
+      costBreakdown.forEach(item => {
+        const costItem = document.createElement('div');
+        costItem.className = 'cost-item';
+        costItem.innerHTML = `
+          <div class="cost-amount">${item.cost}</div>
+          <div>${item.item}</div>
+        `;
+        breakdownDiv.appendChild(costItem);
+      });
+      
+      document.getElementById('config-result').classList.add('show');
+    }
+
+    // Treatment ROI Calculator
+    function calculateTreatmentROI() {
+      const currentEarnings = parseFloat(document.getElementById('current-earnings').value) || 0;
+      const qualityRating = parseFloat(document.getElementById('audio-quality-rating').value) || 0;
+      const investment = parseFloat(document.getElementById('treatment-investment').value) || 0;
+      const improvement = parseFloat(document.getElementById('improvement-percentage').value) || 0;
+      const complaints = parseInt(document.getElementById('viewer-complaints').value) || 0;
+      const retention = parseFloat(document.getElementById('retention-current').value) || 0;
+      
+      if (currentEarnings === 0 || qualityRating === 0 || improvement === 0) {
+        alert('Por favor completa al menos ingresos actuales, rating de calidad e improvement esperado');
+        return;
+      }
+      
+      // Calculate improvements
+      const qualityMultiplier = 1 + (improvement / 100 * 0.6); // 60% of improvement affects earnings
+      const retentionBoost = Math.min(95, retention + (improvement / 100 * 20)); // Up to 20% retention improvement
+      const complaintReduction = Math.max(0, complaints * (1 - improvement / 100));
+      
+      const projectedEarnings = currentEarnings * qualityMultiplier;
+      const monthlyIncrease = projectedEarnings - currentEarnings;
+      const paybackMonths = investment > 0 ? Math.ceil(investment / monthlyIncrease) : 0;
+      const annualROI = investment > 0 ? Math.round(((monthlyIncrease * 12) / investment) * 100) : 0;
+      const finalQuality = Math.min(10, qualityRating + (improvement / 100 * 4));
+      
+      // Generate analysis
+      let analysisContent = `
+        <h6>Proyección Detallada:</h6>
+        <div class="row">
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li><i class="fas fa-arrow-up text-success"></i> <strong>Ingresos proyectados:</strong> ${Math.round(projectedEarnings).toLocaleString()}/mes</li>
+              <li><i class="fas fa-chart-line text-primary"></i> <strong>Crecimiento mensual:</strong> ${Math.round(((projectedEarnings / currentEarnings) - 1) * 100)}%</li>
+              <li><i class="fas fa-calendar text-info"></i> <strong>Ganancia año 1:</strong> ${Math.round(monthlyIncrease * 12).toLocaleString()}</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li><i class="fas fa-users text-warning"></i> <strong>Retención mejorada:</strong> ${retentionBoost.toFixed(1)}%</li>
+              <li><i class="fas fa-comments text-success"></i> <strong>Quejas reducidas:</strong> ${Math.round(complaintReduction)}/mes</li>
+              <li><i class="fas fa-star text-primary"></i> <strong>Rating final:</strong> ${finalQuality.toFixed(1)}/10</li>
+            </ul>
+          </div>
+        </div>
+      `;
+      
+      if (annualROI >= 500) {
+        analysisContent += '<div class="alert alert-success mt-3"><strong>ROI Excepcional:</strong> Retorno extraordinario. ¡Implementa inmediatamente para maximizar beneficios!</div>';
+      } else if (annualROI >= 200) {
+        analysisContent += '<div class="alert alert-info mt-3"><strong>ROI Excelente:</strong> Inversión muy sólida con retornos predecibles y rápidos.</div>';
+      } else if (annualROI >= 100) {
+        analysisContent += '<div class="alert alert-warning mt-3"><strong>ROI Bueno:</strong> Inversión rentable. Considera implementar por fases para optimizar flujo de caja.</div>';
+      } else if (investment === 0) {
+        analysisContent += '<div class="alert alert-primary mt-3"><strong>ROI Infinito:</strong> ¡Soluciones sin inversión! Reorganización y optimización de recursos existentes.</div>';
+      }
+      
+      // Update UI
+      document.getElementById('monthly-boost').textContent = `${Math.round(monthlyIncrease).toLocaleString()}`;
+      document.getElementById('payback-months').textContent = paybackMonths === 0 ? 'Inmediato' : `${paybackMonths}`;
+      document.getElementById('annual-roi').textContent = investment === 0 ? '∞%' : `${annualROI}%`;
+      document.getElementById('quality-final').textContent = `${finalQuality.toFixed(1)}/10`;
+      document.getElementById('treatment-analysis').innerHTML = analysisContent;
+      
+      document.getElementById('treatment-result').classList.add('show');
+    }
+
+    // Auto-expand first section on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      const firstContent = document.querySelector('.lab-content');
+      if (firstContent) {
+        firstContent.classList.add('active');
+        firstContent.previousElementSibling.classList.add('active');
+      }
+    });
+
+    // Performance optimization for mobile
+    if ('ontouchstart' in window) {
+      document.documentElement.style.setProperty('--transition', 'all 0.2s ease');
+    }
+
+    // Keyboard shortcuts for power users
+    document.addEventListener('keydown', function(e) {
+      if (e.altKey) {
+        switch(e.key) {
+          case '1':
+            e.preventDefault();
+            scrollToSection('materials-lab');
+            break;
+          case '2':
+            e.preventDefault();
+            scrollToSection('config-content');
+            break;
+          case '3':
+            e.preventDefault();
+            scrollToSection('effectiveness-content');
+            break;
+          case 'c':
+            e.preventDefault();
+            calculateOptimalConfig();
+            break;
+          case 'r':
+            e.preventDefault();
+            calculateTreatmentROI();
+            break;
+        }
+      }
+    });
+
+    // Form validation
+    function addFormValidation() {
+      const inputs = document.querySelectorAll('input, select');
+      inputs.forEach(input => {
+        input.addEventListener('blur', function() {
+          if (this.hasAttribute('required') || this.value) {
+            if (this.value.trim() === '') {
+              this.classList.add('is-invalid');
+              this.classList.remove('is-valid');
+            } else {
+              this.classList.add('is-valid');
+              this.classList.remove('is-invalid');
+            }
+          }
+        });
+      });
+    }
+
+    // Initialize form validation
+    document.addEventListener('DOMContentLoaded', addFormValidation);
+
+    // Analytics tracking placeholder
+    function trackInteraction(action, section) {
+      console.log(`User interaction: ${action} in ${section}`);
+    }
+
+    // Enhanced material selection with animation
+    function enhanceMaterialSelection() {
+      const materialCards = document.querySelectorAll('.material-card');
+      materialCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          if (!this.classList.contains('active')) {
+            this.style.transform = 'translateY(-4px)';
+          }
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          if (!this.classList.contains('active')) {
+            this.style.transform = 'translateY(0)';
+          }
+        });
+      });
+    }
+
+    // Initialize enhanced interactions
+    document.addEventListener('DOMContentLoaded', enhanceMaterialSelection);
+
+    // Smooth scrolling polyfill for older browsers
+    if (!('scrollBehavior' in document.documentElement.style)) {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/smoothscroll/1.4.10/SmoothScroll.min.js';
+      document.head.appendChild(script);
+    }
+
+    // Progress bar animations on scroll
+    function animateProgressBars() {
+      const progressBars = document.querySelectorAll('.progress-bar');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const bar = entry.target;
+            const width = bar.style.width || '0%';
+            bar.style.width = '0%';
+            setTimeout(() => {
+              bar.style.width = width;
+            }, 100);
+          }
+        });
+      }, { threshold: 0.5 });
+
+      progressBars.forEach(bar => observer.observe(bar));
+    }
+
+    // Initialize progress bar animations
+    document.addEventListener('DOMContentLoaded', animateProgressBars);
+
+    // Real-time cost calculator helper
+    function updateCostInRealTime() {
+      const budgetSelect = document.getElementById('budget-range');
+      const issuesSelect = document.getElementById('noise-issues');
+      
+      if (budgetSelect) {
+        budgetSelect.addEventListener('change', function() {
+          if (this.value) {
+            // Trigger automatic calculation hint
+            const hint = document.createElement('div');
+            hint.className = 'alert alert-info mt-2';
+            hint.innerHTML = '<small><i class="fas fa-lightbulb"></i> Completa las dimensiones para ver configuración recomendada</small>';
+            
+            // Remove existing hints
+            const existingHints = this.parentNode.querySelectorAll('.alert-info');
+            existingHints.forEach(h => h.remove());
+            
+            this.parentNode.appendChild(hint);
+            
+            setTimeout(() => hint.remove(), 3000);
+          }
+        });
+      }
+    }
+
+    // Initialize real-time helpers
+    document.addEventListener('DOMContentLoaded', updateCostInRealTime);
+  </script>

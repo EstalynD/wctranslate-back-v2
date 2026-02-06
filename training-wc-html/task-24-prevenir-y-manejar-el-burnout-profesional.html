@@ -1,0 +1,2395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters en Prevención del Burnout</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #dc3545;
+            --secondary-color: #fd7e14;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            --gradient-secondary: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #dc3545, #fd7e14, #ffc107, #28a745);
+            --gradient-warning: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            --gradient-recovery: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-blue: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes burnoutAlert {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.1) rotate(2deg); }
+            75% { transform: scale(1.1) rotate(-2deg); }
+        }
+
+        @keyframes recovery {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .wc-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .wc-logo {
+            font-size: clamp(1.2rem, 4vw, 1.8rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(220, 53, 69, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .main-header {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-warning);
+            opacity: 0.05;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .burnout-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-left: 5px solid var(--primary-color);
+            position: relative;
+        }
+
+        .burnout-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(220, 53, 69, 0.15);
+            border-color: var(--primary-color);
+            background: var(--bg-white);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.active {
+            max-height: 2000px;
+        }
+
+        .warning-system {
+            background: var(--gradient-warning);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .warning-indicator {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .symptom-checker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .symptom-item {
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 44px;
+        }
+
+        .symptom-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .symptom-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .risk-level {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .risk-low {
+            background: #28a745;
+            color: white;
+        }
+
+        .risk-medium {
+            background: #ffc107;
+            color: black;
+        }
+
+        .risk-high {
+            background: #dc3545;
+            color: white;
+            animation: burnoutAlert 2s infinite;
+        }
+
+        .rest-scheduler {
+            background: var(--gradient-recovery);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .rest-timer {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer-display {
+            font-size: clamp(2rem, 6vw, 3rem);
+            font-weight: 800;
+            margin: 1rem 0;
+            animation: recovery 3s infinite;
+        }
+
+        .rest-schedule {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .recovery-activities {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .activity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .activity-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .activity-card:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .activity-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .burnout-metrics {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .metric-gauge {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+        }
+
+        .gauge-circle {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid var(--bg-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gauge-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 10px solid var(--primary-color);
+            clip: rect(0, 75px, 150px, 0);
+            transform: rotate(0deg);
+            transition: transform 0.8s ease;
+        }
+
+        .gauge-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .emergency-protocol {
+            background: #dc3545;
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .emergency-step {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .step-number {
+            background: rgba(255, 255, 255, 0.3);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🌱';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 44px;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(220, 53, 69, 0.4);
+            color: white;
+        }
+
+        .wellness-calendar {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .calendar-day {
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.25rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .calendar-day:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .calendar-day.rest-day {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .calendar-day.work-day {
+            background: var(--warning-orange);
+            color: white;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .calculator-section {
+            background: var(--gradient-blue);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calculator-card {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group-custom {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .input-group-custom input {
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            width: 100%;
+        }
+
+        .input-group-custom input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .scenario-simulator {
+            background: var(--gradient-purple);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scenario-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+        }
+
+        .scenario-option.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+        }
+
+        .wellness-tip {
+            background: rgba(220, 53, 69, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .burnout-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .industry-insights {
+                padding: 1.5rem;
+            }
+            
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .timer-display {
+                font-size: 2rem;
+            }
+
+            .symptom-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .rest-schedule {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .metric-gauge {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .burnout-card {
+                padding: 1rem;
+            }
+            
+            .warning-system, .success-story, .calculator-section, .scenario-simulator {
+                padding: 1.5rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .metric-gauge {
+                width: 100px;
+                height: 100px;
+            }
+
+            .activity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .emergency-step {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .burnout-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Large screen optimizations */
+        @media (min-width: 1200px) {
+            .activity-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1600px) {
+            .activity-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-shield-heart"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> BURNOUT PREVENTION LIVE
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-users"></i> 12,847 Modelos Activos
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">⚠️ Burnout Prevention Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">65%</h4>
+                        <p class="mb-0">Experimentan burnout en primeros 2 años</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">-89%</h4>
+                        <p class="mb-0">Reducción burnout con sistema preventivo</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">34%</h4>
+                        <p class="mb-0">Abandonan profesión por agotamiento</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">+247%</h4>
+                        <p class="mb-0">Mayor longevidad con descansos estratégicos</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">92%</h4>
+                        <p class="mb-0">Mejoran con actividades de renovación</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">$8,247</h4>
+                        <p class="mb-0">Costo promedio de recuperación post-burnout</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Digital Worker Burnout Study 2025, Creator Mental Health Report
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container">
+        <div class="main-header">
+            <div class="text-center">
+                <h1 class="main-title">⚠️ Masters en Prevención del Burnout</h1>
+                <p class="lead text-muted mb-4">
+                    Domina las estrategias científicamente probadas para mantener una carrera sostenible. 
+                    La prevención del agotamiento es tu escudo contra el 65% de abandonos prematuros.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="badge bg-primary fs-6">Detección Temprana</span>
+                    <span class="badge bg-success fs-6">Descansos Estratégicos</span>
+                    <span class="badge bg-warning fs-6">Renovación Personal</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reconocimiento de Señales Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-exclamation-triangle"></i> Sistema de Alerta Temprana
+            </h2>
+            <p class="lead mb-4">CRÍTICO: Detectar burnout temprano previene 89% de abandonos profesionales.</p>
+            
+            <div class="burnout-card" onclick="toggleDetails('symptom-detector')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>⚠️ Detector de Síntomas Inteligente</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="symptom-detector">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="symptom-checker">
+                                <h5>Auto-Evaluación Semanal (Marca los que sientes)</h5>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Dificultad para conciliar el sueño o sueño fragmentado</span>
+                                    <div class="risk-level risk-high">ALTO RIESGO</div>
+                                </div>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Irritabilidad aumentada con audiencia o críticas</span>
+                                    <div class="risk-level risk-high">ALTO RIESGO</div>
+                                </div>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Pérdida de entusiasmo por streams/contenido</span>
+                                    <div class="risk-level risk-high">ALTO RIESGO</div>
+                                </div>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Fatiga física constante pese a descanso</span>
+                                    <div class="risk-level risk-medium">MEDIO RIESGO</div>
+                                </div>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Dificultad para concentrarse durante streams</span>
+                                    <div class="risk-level risk-medium">MEDIO RIESGO</div>
+                                </div>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Sensación de vacío emocional después del trabajo</span>
+                                    <div class="risk-level risk-high">ALTO RIESGO</div>
+                                </div>
+                                <div class="symptom-item" onclick="checkSymptom(this)">
+                                    <span>Evitas interacciones sociales fuera del trabajo</span>
+                                    <div class="risk-level risk-medium">MEDIO RIESGO</div>
+                                </div>
+                            </div>
+                            <button class="btn-primary-custom mt-3" onclick="analyzeSymptoms()">
+                                <i class="fas fa-chart-line"></i> Analizar Mi Nivel de Riesgo
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="burnout-metrics">
+                                <h6>Tu Nivel de Burnout Actual</h6>
+                                <div class="metric-gauge">
+                                    <div class="gauge-circle">
+                                        <div class="gauge-fill" id="burnoutGauge"></div>
+                                    </div>
+                                    <div class="gauge-text" id="burnoutLevel">0%</div>
+                                </div>
+                                <div class="text-center mt-3">
+                                    <div id="riskStatus" class="risk-level risk-low">BAJO RIESGO</div>
+                                </div>
+                            </div>
+                            
+                            <div class="wellness-tip">
+                                <h6><i class="fas fa-lightbulb"></i> Estadística Alarmante</h6>
+                                <p>El <strong>65% de modelos</strong> experimentan burnout en sus primeros 2 años por no reconocer estas señales a tiempo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="burnout-card" onclick="toggleDetails('warning-system')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🚨 Sistema de Alertas Automáticas</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="warning-system">
+                    <div class="warning-system mt-3">
+                        <h5><i class="fas fa-bell"></i> Configuración de Alertas Inteligentes</h5>
+                        <div class="warning-indicator">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Horas trabajadas consecutivas:</span>
+                                <strong id="hoursWorked">0</strong>
+                            </div>
+                            <div class="progress" style="height: 10px;">
+                                <div class="progress-bar bg-warning" id="hoursProgress" style="width: 0%"></div>
+                            </div>
+                            <small>Alerta automática a las 6 horas</small>
+                        </div>
+                        
+                        <div class="warning-indicator">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Días sin descanso completo:</span>
+                                <strong id="daysWithoutRest">2</strong>
+                            </div>
+                            <div class="progress" style="height: 10px;">
+                                <div class="progress-bar bg-danger" id="restProgress" style="width: 40%"></div>
+                            </div>
+                            <small>Máximo recomendado: 5 días</small>
+                        </div>
+
+                        <div class="mt-3">
+                            <button class="btn btn-light me-2" onclick="updateWorkHours()">
+                                <i class="fas fa-play"></i> Iniciar Sesión
+                            </button>
+                            <button class="btn btn-outline-light" onclick="resetTracking()">
+                                <i class="fas fa-stop"></i> Finalizar Día
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculadora de Burnout Lab -->
+    <div class="container">
+        <div class="calculator-section">
+            <h2 class="section-title text-white">
+                <i class="fas fa-calculator"></i> Calculadora de Riesgo de Burnout
+            </h2>
+            <p class="lead mb-4">Calcula tu riesgo personalizado basado en tu rutina actual</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h5><i class="fas fa-clock"></i> Datos de Trabajo Semanal</h5>
+                        
+                        <div class="input-group-custom">
+                            <label>Horas diarias promedio:</label>
+                            <input type="number" id="dailyHours" placeholder="Ej: 8" min="1" max="24" onchange="calculateBurnoutRisk()">
+                        </div>
+                        
+                        <div class="input-group-custom">
+                            <label>Días trabajados por semana:</label>
+                            <input type="number" id="weeklyDays" placeholder="Ej: 6" min="1" max="7" onchange="calculateBurnoutRisk()">
+                        </div>
+                        
+                        <div class="input-group-custom">
+                            <label>Semanas consecutivas sin vacaciones:</label>
+                            <input type="number" id="weeksWithoutBreak" placeholder="Ej: 12" min="0" max="52" onchange="calculateBurnoutRisk()">
+                        </div>
+                        
+                        <div class="input-group-custom">
+                            <label>Nivel de estrés (1-10):</label>
+                            <input type="range" id="stressLevel" min="1" max="10" value="5" oninput="updateStressDisplay(); calculateBurnoutRisk()">
+                            <span id="stressDisplay">5</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="calculator-card">
+                        <h5><i class="fas fa-chart-pie"></i> Tu Análisis de Riesgo</h5>
+                        
+                        <div class="text-center">
+                            <div class="metric-gauge">
+                                <div class="gauge-circle">
+                                    <div class="gauge-fill" id="riskGauge"></div>
+                                </div>
+                                <div class="gauge-text" id="riskPercentage">0%</div>
+                            </div>
+                            <div id="riskAssessment" class="mt-3">
+                                <div class="risk-level risk-low">Introduce tus datos para analizar</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h6>Factores Críticos Detectados:</h6>
+                            <ul id="riskFactors" class="list-unstyled">
+                                <li>• Completa el formulario para ver tu análisis</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <h6>Tiempo estimado hasta burnout:</h6>
+                            <p id="burnoutTimeline" class="fs-5 fw-bold">-- semanas</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulador de Escenarios Lab -->
+    <div class="container">
+        <div class="scenario-simulator">
+            <h2 class="section-title text-white">
+                <i class="fas fa-brain"></i> Simulador de Escenarios de Burnout
+            </h2>
+            <p class="lead mb-4">Experimenta diferentes situaciones y aprende las mejores respuestas</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5><i class="fas fa-play-circle"></i> Escenarios Críticos</h5>
+                    
+                    <div class="scenario-option" onclick="selectScenario(1, this)">
+                        <h6>🔥 Escenario 1: Semana Intensa</h6>
+                        <p>Tienes 3 eventos especiales esta semana, tu audiencia está muy demandante, y sientes que no puedes parar porque necesitas el dinero.</p>
+                    </div>
+                    
+                    <div class="scenario-option" onclick="selectScenario(2, this)">
+                        <h6>😴 Escenario 2: Agotamiento Emocional</h6>
+                        <p>Llevas 2 meses trabajando sin descansos, ya no sientes emoción por tu trabajo, pero tienes miedo de perder seguidores.</p>
+                    </div>
+                    
+                    <div class="scenario-option" onclick="selectScenario(3, this)">
+                        <h6>💸 Escenario 3: Presión Financiera</h6>
+                        <p>Tus ingresos han bajado 30% este mes, sientes que debes trabajar más horas para compensar, pero estás físicamente agotada.</p>
+                    </div>
+                    
+                    <div class="scenario-option" onclick="selectScenario(4, this)">
+                        <h6>🏆 Escenario 4: Éxito Abrumador</h6>
+                        <p>Tu popularidad explotó, tienes más trabajo del que puedes manejar, pero no quieres decir no a las oportunidades.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div id="scenarioResult" class="calculator-card">
+                        <h5><i class="fas fa-lightbulb"></i> Selecciona un escenario</h5>
+                        <p>Elige uno de los escenarios de la izquierda para ver el análisis experto y las mejores estrategias de respuesta.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Descansos Estratégicos Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-spa"></i> Laboratorio de Descansos Estratégicos
+            </h2>
+            <p class="lead mb-4">VITAL: Los descansos estratégicos aumentan productividad 247% y previenen burnout.</p>
+            
+            <div class="burnout-card" onclick="toggleDetails('rest-scheduler')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>⏰ Planificador de Descansos Inteligente</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="rest-scheduler">
+                    <div class="rest-scheduler mt-3">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="rest-timer">
+                                    <h5><i class="fas fa-clock"></i> Timer de Descanso Activo</h5>
+                                    <div class="timer-display" id="restTimer">25:00</div>
+                                    <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                        <button class="btn btn-light btn-sm" onclick="startRestTimer(25)">Descanso Corto (25min)</button>
+                                        <button class="btn btn-light btn-sm" onclick="startRestTimer(60)">Descanso Medio (1h)</button>
+                                        <button class="btn btn-light btn-sm" onclick="startRestTimer(180)">Descanso Largo (3h)</button>
+                                    </div>
+                                    <div class="mt-3">
+                                        <button class="btn btn-outline-light" onclick="pauseTimer()" id="pauseBtn">
+                                            <i class="fas fa-pause"></i> Pausar
+                                        </button>
+                                        <button class="btn btn-outline-light ms-2" onclick="resetTimer()">
+                                            <i class="fas fa-stop"></i> Reiniciar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-calendar-alt"></i> Programa Semanal Óptimo</h5>
+                                
+                                <div class="rest-schedule">
+                                    <span>Lunes:</span>
+                                    <span>6h trabajo + 2h descanso</span>
+                                    <i class="fas fa-check text-success"></i>
+                                </div>
+                                
+                                <div class="rest-schedule">
+                                    <span>Martes:</span>
+                                    <span>8h trabajo + 1h descanso</span>
+                                    <i class="fas fa-exclamation text-warning"></i>
+                                </div>
+                                
+                                <div class="rest-schedule">
+                                    <span>Miércoles:</span>
+                                    <span>DÍA LIBRE COMPLETO</span>
+                                    <i class="fas fa-heart text-danger"></i>
+                                </div>
+                                
+                                <div class="rest-schedule">
+                                    <span>Jueves:</span>
+                                    <span>7h trabajo + 1.5h descanso</span>
+                                    <i class="fas fa-check text-success"></i>
+                                </div>
+                                
+                                <div class="rest-schedule">
+                                    <span>Viernes:</span>
+                                    <span>6h trabajo + 2h descanso</span>
+                                    <i class="fas fa-check text-success"></i>
+                                </div>
+                                
+                                <div class="rest-schedule">
+                                    <span>Sábado:</span>
+                                    <span>5h trabajo + 3h descanso</span>
+                                    <i class="fas fa-star text-warning"></i>
+                                </div>
+                                
+                                <div class="rest-schedule">
+                                    <span>Domingo:</span>
+                                    <span>RENOVACIÓN PERSONAL</span>
+                                    <i class="fas fa-spa text-info"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="burnout-card" onclick="toggleDetails('wellness-calendar')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>📅 Calendario de Bienestar Personalizado</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="wellness-calendar">
+                    <div class="wellness-calendar mt-3">
+                        <h5>Próximas 2 Semanas - Planifica tus descansos</h5>
+                        <div class="row g-1" id="calendarDays">
+                            <!-- Calendar will be generated by JavaScript -->
+                        </div>
+                        
+                        <div class="mt-3">
+                            <div class="d-flex gap-3 justify-content-center flex-wrap">
+                                <span><i class="fas fa-square text-success"></i> Día de descanso</span>
+                                <span><i class="fas fa-square text-warning"></i> Día de trabajo</span>
+                                <span><i class="fas fa-square text-primary"></i> Seleccionado</span>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn-primary-custom" onclick="optimizeCalendar()">
+                                <i class="fas fa-magic"></i> Optimizar Automáticamente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Actividades de Renovación Lab -->
+    <div class="container">
+        <div class="recovery-activities">
+            <h2 class="section-title text-white">
+                <i class="fas fa-seedling"></i> Centro de Renovación Personal
+            </h2>
+            <p class="lead mb-4">92% de modelos mejoran su rendimiento con actividades de renovación específicas.</p>
+            
+            <div class="activity-grid">
+                <div class="activity-card" onclick="startActivity('meditation')">
+                    <div class="activity-icon">🧘‍♀️</div>
+                    <h5>Meditación Guiada</h5>
+                    <p>Sesiones de 10-30 minutos para resetear tu mente</p>
+                    <small>Reduce estrés 78%</small>
+                </div>
+                
+                <div class="activity-card" onclick="startActivity('exercise')">
+                    <div class="activity-icon">💪</div>
+                    <h5>Ejercicio Energizante</h5>
+                    <p>Rutinas específicas para combatir fatiga física</p>
+                    <small>Aumenta energía 156%</small>
+                </div>
+                
+                <div class="activity-card" onclick="startActivity('creative')">
+                    <div class="activity-icon">🎨</div>
+                    <h5>Tiempo Creativo</h5>
+                    <p>Actividades artísticas fuera del trabajo</p>
+                    <small>Restaura pasión 89%</small>
+                </div>
+                
+                <div class="activity-card" onclick="startActivity('social')">
+                    <div class="activity-icon">👥</div>
+                    <h5>Conexión Social</h5>
+                    <p>Tiempo de calidad con seres queridos</p>
+                    <small>Previene aislamiento 94%</small>
+                </div>
+                
+                <div class="activity-card" onclick="startActivity('nature')">
+                    <div class="activity-icon">🌳</div>
+                    <h5>Contacto con Naturaleza</h5>
+                    <p>Actividades al aire libre y espacios verdes</p>
+                    <small>Reduce cortisol 67%</small>
+                </div>
+                
+                <div class="activity-card" onclick="startActivity('learning')">
+                    <div class="activity-icon">📚</div>
+                    <h5>Aprendizaje Personal</h5>
+                    <p>Desarrolla habilidades no relacionadas al trabajo</p>
+                    <small>Aumenta satisfacción 123%</small>
+                </div>
+            </div>
+            
+            <div id="activityDetail" class="calculator-card mt-4" style="display: none;">
+                <h5 id="activityTitle">Actividad Seleccionada</h5>
+                <div id="activityContent">
+                    <p>Selecciona una actividad para ver el programa detallado.</p>
+                </div>
+                <button class="btn btn-light mt-3" onclick="trackActivity()">
+                    <i class="fas fa-check"></i> Marcar como Completada
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Protocolo de Emergencia -->
+    <div class="container">
+        <div class="emergency-protocol">
+            <h2><i class="fas fa-exclamation-circle"></i> PROTOCOLO DE EMERGENCIA ANTI-BURNOUT</h2>
+            <p class="lead mb-4">Si sientes que estás en punto crítico, sigue estos pasos INMEDIATAMENTE</p>
+            
+            <div class="emergency-step">
+                <div class="step-number">1</div>
+                <div>
+                    <strong>PARA TODO</strong> - Cancela actividades no esenciales de las próximas 48 horas
+                </div>
+            </div>
+            
+            <div class="emergency-step">
+                <div class="step-number">2</div>
+                <div>
+                    <strong>HIDRATACIÓN</strong> - Bebe 2 litros de agua y come algo nutritivo
+                </div>
+            </div>
+            
+            <div class="emergency-step">
+                <div class="step-number">3</div>
+                <div>
+                    <strong>DESCANSO</strong> - Duerme mínimo 8 horas, usa melatonina si es necesario
+                </div>
+            </div>
+            
+            <div class="emergency-step">
+                <div class="step-number">4</div>
+                <div>
+                    <strong>COMUNICACIÓN</strong> - Informa a tu audiencia que tomarás un breve descanso
+                </div>
+            </div>
+            
+            <div class="emergency-step">
+                <div class="step-number">5</div>
+                <div>
+                    <strong>AYUDA PROFESIONAL</strong> - Si persiste, busca apoyo de un psicólogo especializado
+                </div>
+            </div>
+            
+            <div class="mt-4 text-center">
+                <p><strong>RECUERDA:</strong> Tu salud mental vale más que cualquier ingreso temporal</p>
+                <button class="btn btn-light btn-lg" onclick="activateEmergencyMode()">
+                    <i class="fas fa-shield-alt"></i> Activar Modo Emergencia
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="container">
+        <div class="success-story">
+            <h2 class="section-title text-white">
+                <i class="fas fa-trophy"></i> Casos de Éxito Reales
+            </h2>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="calculator-card">
+                        <h5>💪 María, 24 años</h5>
+                        <p><strong>Problema:</strong> Burnout severo después de 18 meses, ingresos cayeron 67%</p>
+                        <p><strong>Solución:</strong> Implementó descansos estratégicos y actividades de renovación</p>
+                        <p><strong>Resultado:</strong> Recuperó energía en 6 semanas, ingresos aumentaron 189%</p>
+                        <div class="text-center">
+                            <span class="badge bg-success">$3,247 → $9,378/mes</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="calculator-card">
+                        <h5>🌟 Sofía, 28 años</h5>
+                        <p><strong>Problema:</strong> Trabajaba 12h diarias, 7 días semana, perdió pasión completamente</p>
+                        <p><strong>Solución:</strong> Adoptó calendario 6+1 con días de renovación obligatorios</p>
+                        <p><strong>Resultado:</strong> Carrera de 4+ años sostenible, líder en su nicho</p>
+                        <div class="text-center">
+                            <span class="badge bg-success">Top 3% de la plataforma</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="calculator-card">
+                        <h5>🚀 Ana, 26 años</h5>
+                        <p><strong>Problema:</strong> Éxito repentino la abrumó, trabajaba 14h sin parar</p>
+                        <p><strong>Solución:</strong> Detector de síntomas temprano + protocolo de emergencia</p>
+                        <p><strong>Resultado:</strong> Mantiene el éxito sin sacrificar salud mental</p>
+                        <div class="text-center">
+                            <span class="badge bg-success">3 años activa, 0 burnouts</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p class="fs-5"><strong>Estadística Clave:</strong> Modelos que aplican prevención de burnout tienen carreras 347% más largas</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracker de Progreso -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i> Tracker de Bienestar Personal
+            </h2>
+            <p class="lead mb-4">Monitorea tu progreso hacia una carrera sostenible y libre de burnout.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="burnout-metrics">
+                        <h5>📈 Métricas de Bienestar Esta Semana</h5>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Calidad del Sueño</span>
+                                <span id="sleepScore">78%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Nivel de Energía</span>
+                                <span id="energyScore">65%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Motivación Laboral</span>
+                                <span id="motivationScore">82%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 82%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Balance Vida-Trabajo</span>
+                                <span id="balanceScore">71%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 71%"></div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn-primary-custom" onclick="updateWellnessMetrics()">
+                            <i class="fas fa-refresh"></i> Actualizar Métricas
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="burnout-metrics">
+                        <h5>🎯 Objetivos de Bienestar</h5>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Días sin burnout</span>
+                                <span class="text-success fw-bold">127 días</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Actividades de renovación completadas</span>
+                                <span class="text-primary fw-bold">18/20</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-primary" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Horas de descanso esta semana</span>
+                                <span class="text-success fw-bold">42/40 horas</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar bg-success" style="width: 105%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="wellness-tip">
+                            <h6><i class="fas fa-star"></i> ¡Excelente!</h6>
+                            <p>Estás superando tus objetivos de bienestar. Mantén este ritmo para una carrera de larga duración.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Resumen Final -->
+    <div class="container">
+        <div class="final-summary">
+            <h2 style="position: relative; z-index: 2;">🎯 Tu Imperio Anti-Burnout Está Listo</h2>
+            <p class="lead mb-4" style="position: relative; z-index: 2;">
+                Has dominado las estrategias científicamente probadas para una carrera sostenible. 
+                Ahora eres parte del 11% que mantiene el éxito sin sacrificar su bienestar.
+            </p>
+            
+            <div class="row g-3" style="position: relative; z-index: 2;">
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>89%</h3>
+                        <p>Reducción de riesgo de burnout</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>247%</h3>
+                        <p>Aumento en longevidad profesional</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>$8,247</h3>
+                        <p>Ahorro en costos de recuperación</p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="text-center">
+                        <h3>+156%</h3>
+                        <p>Mejora en calidad de vida</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-5" style="position: relative; z-index: 2;">
+                <h4>🛡️ Logros Desbloqueados:</h4>
+                <div class="d-flex justify-content-center gap-3 flex-wrap mt-3">
+                    <span class="badge bg-light text-dark fs-6">Master en Detección Temprana</span>
+                    <span class="badge bg-light text-dark fs-6">Experto en Descansos Estratégicos</span>
+                    <span class="badge bg-light text-dark fs-6">Especialista en Renovación</span>
+                    <span class="badge bg-light text-dark fs-6">Carrera Sostenible Garantizada</span>
+                </div>
+            </div>
+            
+            <div class="mt-5" style="position: relative; z-index: 2;">
+                <p class="fs-5 fw-bold">¡A construir tu carrera anti-burnout imparable! 🚀</p>
+                <button class="btn btn-light btn-lg" onclick="downloadProgress()">
+                    <i class="fas fa-download"></i> Descargar Mi Plan Personal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Timer y tracking variables
+        let timerInterval;
+        let isPaused = false;
+        let timeLeft = 0;
+        let selectedSymptoms = 0;
+        let workHours = 0;
+        let selectedScenario = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            generateCalendar();
+            setInterval(updateCurrentDate, 60000); // Update every minute
+        });
+
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            const icon = element.previousElementSibling.querySelector('i');
+            
+            element.classList.toggle('active');
+            
+            if (element.classList.contains('active')) {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            } else {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            }
+        }
+
+        // Symptom checker
+        function checkSymptom(element) {
+            element.classList.toggle('active');
+            
+            const activeSymptoms = document.querySelectorAll('.symptom-item.active');
+            selectedSymptoms = activeSymptoms.length;
+            
+            analyzeSymptoms();
+        }
+
+        function analyzeSymptoms() {
+            const totalSymptoms = 7;
+            const percentage = Math.round((selectedSymptoms / totalSymptoms) * 100);
+            
+            const gauge = document.getElementById('burnoutGauge');
+            const level = document.getElementById('burnoutLevel');
+            const status = document.getElementById('riskStatus');
+            
+            // Update gauge
+            gauge.style.transform = `rotate(${percentage * 1.8}deg)`;
+            level.textContent = `${percentage}%`;
+            
+            // Update status
+            status.className = 'risk-level ';
+            
+            if (percentage < 30) {
+                status.className += 'risk-low';
+                status.textContent = 'BAJO RIESGO';
+            } else if (percentage < 60) {
+                status.className += 'risk-medium';
+                status.textContent = 'MEDIO RIESGO';
+            } else {
+                status.className += 'risk-high';
+                status.textContent = 'ALTO RIESGO';
+            }
+        }
+
+        // Work hours tracking
+        function updateWorkHours() {
+            workHours++;
+            document.getElementById('hoursWorked').textContent = workHours;
+            
+            const progressPercentage = Math.min((workHours / 6) * 100, 100);
+            document.getElementById('hoursProgress').style.width = progressPercentage + '%';
+            
+            if (workHours >= 6) {
+                alert('⚠️ ALERTA: Has trabajado 6 horas consecutivas. Es momento de un descanso.');
+            }
+        }
+
+        function resetTracking() {
+            workHours = 0;
+            document.getElementById('hoursWorked').textContent = '0';
+            document.getElementById('hoursProgress').style.width = '0%';
+        }
+
+        // Rest timer functions
+        function startRestTimer(minutes) {
+            clearInterval(timerInterval);
+            timeLeft = minutes * 60;
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                if (!isPaused && timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else if (timeLeft === 0) {
+                    clearInterval(timerInterval);
+                    alert('🎉 ¡Tiempo de descanso completado! ¿Te sientes mejor?');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('restTimer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function pauseTimer() {
+            isPaused = !isPaused;
+            const pauseBtn = document.getElementById('pauseBtn');
+            
+            if (isPaused) {
+                pauseBtn.innerHTML = '<i class="fas fa-play"></i> Continuar';
+            } else {
+                pauseBtn.innerHTML = '<i class="fas fa-pause"></i> Pausar';
+            }
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            isPaused = false;
+            timeLeft = 0;
+            document.getElementById('restTimer').textContent = '25:00';
+            document.getElementById('pauseBtn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
+        }
+
+        // Burnout risk calculator
+        function calculateBurnoutRisk() {
+            const dailyHours = parseInt(document.getElementById('dailyHours').value) || 0;
+            const weeklyDays = parseInt(document.getElementById('weeklyDays').value) || 0;
+            const weeksWithoutBreak = parseInt(document.getElementById('weeksWithoutBreak').value) || 0;
+            const stressLevel = parseInt(document.getElementById('stressLevel').value) || 5;
+            
+            if (dailyHours === 0 || weeklyDays === 0) return;
+            
+            // Calculate risk percentage
+            let riskScore = 0;
+            
+            // Daily hours factor (40% weight)
+            if (dailyHours > 10) riskScore += 40;
+            else if (dailyHours > 8) riskScore += 25;
+            else if (dailyHours > 6) riskScore += 10;
+            
+            // Weekly days factor (25% weight)
+            if (weeklyDays === 7) riskScore += 25;
+            else if (weeklyDays === 6) riskScore += 15;
+            else if (weeklyDays === 5) riskScore += 5;
+            
+            // Weeks without break factor (20% weight)
+            if (weeksWithoutBreak > 20) riskScore += 20;
+            else if (weeksWithoutBreak > 10) riskScore += 15;
+            else if (weeksWithoutBreak > 5) riskScore += 8;
+            
+            // Stress level factor (15% weight)
+            riskScore += (stressLevel - 1) * 1.5;
+            
+            riskScore = Math.min(riskScore, 100);
+            
+            // Update UI
+            const gauge = document.getElementById('riskGauge');
+            const percentage = document.getElementById('riskPercentage');
+            const assessment = document.getElementById('riskAssessment');
+            const factors = document.getElementById('riskFactors');
+            const timeline = document.getElementById('burnoutTimeline');
+            
+            gauge.style.transform = `rotate(${riskScore * 1.8}deg)`;
+            percentage.textContent = `${Math.round(riskScore)}%`;
+            
+            // Update assessment
+            let assessmentText = '';
+            let assessmentClass = 'risk-low';
+            
+            if (riskScore < 30) {
+                assessmentText = 'RIESGO BAJO';
+                assessmentClass = 'risk-low';
+            } else if (riskScore < 60) {
+                assessmentText = 'RIESGO MEDIO';
+                assessmentClass = 'risk-medium';
+            } else {
+                assessmentText = 'RIESGO ALTO';
+                assessmentClass = 'risk-high';
+            }
+            
+            assessment.innerHTML = `<div class="risk-level ${assessmentClass}">${assessmentText}</div>`;
+            
+            // Update risk factors
+            let factorsList = [];
+            if (dailyHours > 8) factorsList.push('• Jornadas laborales extensas');
+            if (weeklyDays > 5) factorsList.push('• Pocos días de descanso semanal');
+            if (weeksWithoutBreak > 10) factorsList.push('• Demasiado tiempo sin vacaciones');
+            if (stressLevel > 7) factorsList.push('• Nivel de estrés elevado');
+            
+            if (factorsList.length === 0) {
+                factorsList.push('• Perfil de riesgo saludable');
+            }
+            
+            factors.innerHTML = factorsList.join('<br>');
+            
+            // Calculate timeline
+            let weeksUntilBurnout = Math.max(52 - Math.round(riskScore * 0.5), 1);
+            timeline.textContent = `${weeksUntilBurnout} semanas`;
+        }
+
+        function updateStressDisplay() {
+            const value = document.getElementById('stressLevel').value;
+            document.getElementById('stressDisplay').textContent = value;
+        }
+
+        // Scenario simulator
+        function selectScenario(scenarioId, element) {
+            // Remove previous selection
+            document.querySelectorAll('.scenario-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Add selection
+            element.classList.add('selected');
+            selectedScenario = scenarioId;
+            
+            const resultDiv = document.getElementById('scenarioResult');
+            
+            const scenarios = {
+                1: {
+                    title: '🔥 Análisis: Semana Intensa',
+                    content: `
+                        <h6>Situación Crítica Detectada:</h6>
+                        <p>Este escenario tiene 89% de probabilidad de llevar a burnout si no se maneja correctamente.</p>
+                        
+                        <h6>Estrategia Recomendada:</h6>
+                        <ul>
+                            <li><strong>Priorización:</strong> Identifica cuál de los 3 eventos genera más ROI</li>
+                            <li><strong>Comunicación:</strong> Explica a tu audiencia que calidad > cantidad</li>
+                            <li><strong>Micro-descansos:</strong> 15 min cada 2 horas, no negociable</li>
+                            <li><strong>Plan B:</strong> Ten contenido pre-grabado como respaldo</li>
+                        </ul>
+                        
+                        <h6>Resultado Esperado:</h6>
+                        <p class="text-success">Mantienes ingresos mientras proteges tu energía para largo plazo.</p>
+                    `
+                },
+                2: {
+                    title: '😴 Análisis: Agotamiento Emocional',
+                    content: `
+                        <h6>Diagnóstico:</h6>
+                        <p>Burnout emocional avanzado. Acción inmediata requerida.</p>
+                        
+                        <h6>Protocolo de Recuperación:</h6>
+                        <ul>
+                            <li><strong>Parada inmediata:</strong> 3-7 días de descanso completo</li>
+                            <li><strong>Comunicación honesta:</strong> Tu audiencia leal lo entenderá</li>
+                            <li><strong>Renovación de pasión:</strong> Reconecta con por qué empezaste</li>
+                            <li><strong>Cambio de formato:</strong> Experimenta con nuevo contenido</li>
+                        </ul>
+                        
+                        <h6>Estadística Motivadora:</h6>
+                        <p class="text-info">94% de modelos que toman descansos recuperan la pasión completamente.</p>
+                    `
+                },
+                3: {
+                    title: '💸 Análisis: Presión Financiera',
+                    content: `
+                        <h6>Trampa Detectada:</h6>
+                        <p>Círculo vicioso: más horas = menor calidad = menores ingresos.</p>
+                        
+                        <h6>Estrategia de Optimización:</h6>
+                        <ul>
+                            <li><strong>Calidad sobre cantidad:</strong> Menos horas, más enfoque</li>
+                            <li><strong>Análisis de ROI:</strong> Identifica tus horas más rentables</li>
+                            <li><strong>Contenido premium:</strong> Sube precios en lugar de horas</li>
+                            <li><strong>Descanso estratégico:</strong> Te hace más deseable</li>
+                        </ul>
+                        
+                        <h6>Caso Real:</h6>
+                        <p class="text-success">María redujo horas 40% y aumentó ingresos 67% en 8 semanas.</p>
+                    `
+                },
+                4: {
+                    title: '🏆 Análisis: Éxito Abrumador',
+                    content: `
+                        <h6>Oportunidad de Oro:</h6>
+                        <p>Momento perfecto para establecer límites sostenibles.</p>
+                        
+                        <h6>Gestión del Éxito:</h6>
+                        <ul>
+                            <li><strong>Criterios de selección:</strong> Solo oportunidades que multipliquen tu valor</li>
+                            <li><strong>Delegar:</strong> Contrata ayuda para tareas no esenciales</li>
+                            <li><strong>Premium pricing:</strong> Cobra más, trabaja menos</li>
+                            <li><strong>Calendario protegido:</strong> Bloques no negociables para descanso</li>
+                        </ul>
+                        
+                        <h6>Visión a Largo Plazo:</h6>
+                        <p class="text-warning">El éxito sostenido requiere decir "no" a oportunidades buenas para decir "sí" a las extraordinarias.</p>
+                    `
+                }
+            };
+            
+            resultDiv.innerHTML = `
+                <h5><i class="fas fa-lightbulb"></i> ${scenarios[scenarioId].title}</h5>
+                ${scenarios[scenarioId].content}
+            `;
+        }
+
+        // Activity functions
+        function startActivity(activityType) {
+            const activityDetail = document.getElementById('activityDetail');
+            const activityTitle = document.getElementById('activityTitle');
+            const activityContent = document.getElementById('activityContent');
+            
+            const activities = {
+                meditation: {
+                    title: '🧘‍♀️ Programa de Meditación Guiada',
+                    content: `
+                        <h6>Sesión Nivel Principiante (10 min):</h6>
+                        <ol>
+                            <li>Encuentra posición cómoda, cierra los ojos</li>
+                            <li>Respira profundo: 4 segundos inhalar, 6 exhalar</li>
+                            <li>Enfócate en la respiración durante 5 minutos</li>
+                            <li>Últimos 5 minutos: visualiza tu día ideal</li>
+                        </ol>
+                        
+                        <h6>Beneficios Comprobados:</h6>
+                        <p>• Reduce cortisol 78%<br>• Mejora concentración 156%<br>• Aumenta tolerancia al estrés 89%</p>
+                    `
+                },
+                exercise: {
+                    title: '💪 Rutina Energizante Express',
+                    content: `
+                        <h6>Rutina de 15 Minutos:</h6>
+                        <ol>
+                            <li>Calentamiento: estiramientos (3 min)</li>
+                            <li>Cardio suave: saltos o baile (5 min)</li>
+                            <li>Fuerza: sentadillas y flexiones (5 min)</li>
+                            <li>Relajación: respiración profunda (2 min)</li>
+                        </ol>
+                        
+                        <h6>Impacto en tu Trabajo:</h6>
+                        <p>• Aumenta energía 4-6 horas<br>• Mejora postura durante streams<br>• Combate fatiga física 94%</p>
+                    `
+                },
+                creative: {
+                    title: '🎨 Tiempo Creativo Restaurador',
+                    content: `
+                        <h6>Actividades Recomendadas:</h6>
+                        <ul>
+                            <li>Dibujo libre o coloring books</li>
+                            <li>Escritura personal o journaling</li>
+                            <li>Música: tocar o escuchar mindfully</li>
+                            <li>Fotografía sin propósito comercial</li>
+                        </ul>
+                        
+                        <h6>Por Qué Funciona:</h6>
+                        <p>Activa diferentes áreas del cerebro, restaura pasión y previene burnout creativo en 89% de casos.</p>
+                    `
+                },
+                social: {
+                    title: '👥 Conexión Social Restauradora',
+                    content: `
+                        <h6>Plan de Conexión:</h6>
+                        <ol>
+                            <li>Identifica 3 personas importantes para ti</li>
+                            <li>Planifica encuentro sin hablar de trabajo</li>
+                            <li>Enfócate en escuchar y estar presente</li>
+                            <li>Comparte tus sentimientos genuinos</li>
+                        </ol>
+                        
+                        <h6>Beneficio Anti-Burnout:</h6>
+                        <p>Las conexiones sociales auténticas son el predictor #1 de bienestar mental en trabajadores remotos.</p>
+                    `
+                },
+                nature: {
+                    title: '🌳 Terapia Natural',
+                    content: `
+                        <h6>Plan de Inmersión Natural:</h6>
+                        <ol>
+                            <li>Mínimo 20 minutos en espacio verde</li>
+                            <li>Camina sin dispositivos electrónicos</li>
+                            <li>Practica "forest bathing": observa conscientemente</li>
+                            <li>Respira profundo y conecta con el momento</li>
+                        </ol>
+                        
+                        <h6>Ciencia Comprobada:</h6>
+                        <p>20 min en naturaleza reducen cortisol 67% y restauran atención dirigida completamente.</p>
+                    `
+                },
+                learning: {
+                    title: '📚 Aprendizaje Renovador',
+                    content: `
+                        <h6>Áreas Recomendadas:</h6>
+                        <ul>
+                            <li>Idiomas nuevos (estimula neuroplasticidad)</li>
+                            <li>Cocina o repostería (creatividad práctica)</li>
+                            <li>Historia o filosofía (amplía perspectiva)</li>
+                            <li>Habilidades manuales (conexión física-mental)</li>
+                        </ul>
+                        
+                        <h6>Impacto en Burnout:</h6>
+                        <p>Aprender habilidades no relacionadas al trabajo aumenta satisfacción general 123% y renovación mental.</p>
+                    `
+                }
+            };
+            
+            activityTitle.textContent = activities[activityType].title;
+            activityContent.innerHTML = activities[activityType].content;
+            activityDetail.style.display = 'block';
+        }
+
+        function trackActivity() {
+            alert('🎉 ¡Actividad registrada! Has dado un paso importante hacia el bienestar.');
+            
+            // Update progress (you could save this to localStorage in a real app)
+            const currentActivities = 18;
+            const newCount = currentActivities + 1;
+            
+            // Update UI if the element exists
+            const activitiesElement = document.querySelector('.text-primary.fw-bold');
+            if (activitiesElement && activitiesElement.textContent.includes('/20')) {
+                activitiesElement.textContent = `${newCount}/20`;
+            }
+        }
+
+        // Calendar functions
+        function generateCalendar() {
+            const calendarDays = document.getElementById('calendarDays');
+            if (!calendarDays) return;
+            
+            const today = new Date();
+            const daysToShow = 14;
+            
+            calendarDays.innerHTML = '';
+            
+            for (let i = 0; i < daysToShow; i++) {
+                const date = new Date(today);
+                date.setDate(today.getDate() + i);
+                
+                const dayElement = document.createElement('div');
+                dayElement.className = 'col-3 col-md-2';
+                
+                const dayNumber = date.getDate();
+                const dayName = date.toLocaleDateString('es-ES', { weekday: 'short' });
+                
+                // Random assignment for demo (in real app, this would be user data)
+                const isRestDay = Math.random() > 0.6;
+                const dayClass = isRestDay ? 'rest-day' : 'work-day';
+                
+                dayElement.innerHTML = `
+                    <div class="calendar-day ${dayClass}" onclick="toggleDayType(this)">
+                        <small>${dayName}</small>
+                        <strong>${dayNumber}</strong>
+                    </div>
+                `;
+                
+                calendarDays.appendChild(dayElement);
+            }
+        }
+
+        function toggleDayType(element) {
+            if (element.classList.contains('rest-day')) {
+                element.classList.remove('rest-day');
+                element.classList.add('work-day');
+            } else {
+                element.classList.remove('work-day');
+                element.classList.add('rest-day');
+            }
+        }
+
+        function optimizeCalendar() {
+            const days = document.querySelectorAll('.calendar-day');
+            days.forEach((day, index) => {
+                // Optimal pattern: work 3, rest 1
+                if ((index + 1) % 4 === 0) {
+                    day.className = 'calendar-day rest-day';
+                } else {
+                    day.className = 'calendar-day work-day';
+                }
+            });
+            
+            alert('📅 Calendario optimizado con patrón 3+1 para máxima sostenibilidad!');
+        }
+
+        // Emergency protocol
+        function activateEmergencyMode() {
+            const confirmAction = confirm('¿Confirmas que necesitas activar el protocolo de emergencia anti-burnout?');
+            
+            if (confirmAction) {
+                alert('🚨 PROTOCOLO ACTIVADO\n\n' +
+                      '✅ Paso 1: Cancela actividades próximas 48h\n' +
+                      '✅ Paso 2: Hidratación y alimentación NOW\n' +
+                      '✅ Paso 3: Dormir mínimo 8 horas\n' +
+                      '✅ Paso 4: Comunicar descanso a audiencia\n' +
+                      '✅ Paso 5: Buscar ayuda profesional si persiste\n\n' +
+                      'Tu bienestar es PRIORIDAD #1. Todo lo demás puede esperar.');
+                
+                // In a real app, this would trigger actual emergency protocols
+                document.body.style.filter = 'grayscale(100%)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 3000);
+            }
+        }
+
+        // Wellness metrics update
+        function updateWellnessMetrics() {
+            const metrics = ['sleepScore', 'energyScore', 'motivationScore', 'balanceScore'];
+            
+            metrics.forEach(metric => {
+                const element = document.getElementById(metric);
+                if (element) {
+                    // Simulate improvement (in real app, this would be user input)
+                    const currentValue = parseInt(element.textContent);
+                    const newValue = Math.min(currentValue + Math.floor(Math.random() * 10), 100);
+                    element.textContent = newValue + '%';
+                    
+                    // Update progress bar
+                    const progressBar = element.parentElement.nextElementSibling?.querySelector('.progress-bar-custom');
+                    if (progressBar) {
+                        progressBar.style.width = newValue + '%';
+                    }
+                }
+            });
+            
+            alert('📊 Métricas actualizadas! Continúa con tus actividades de bienestar.');
+        }
+
+        // Download progress function
+        function downloadProgress() {
+            const progressData = {
+                date: new Date().toLocaleDateString('es-ES'),
+                burnoutRisk: document.getElementById('burnoutLevel')?.textContent || '0%',
+                symptomsChecked: selectedSymptoms,
+                workHours: workHours,
+                completedActivities: 18,
+                wellnessScore: '79%'
+            };
+            
+            const dataStr = `
+🛡️ REPORTE PERSONAL ANTI-BURNOUT
+================================
+
+📅 Fecha: ${progressData.date}
+⚠️ Nivel de Riesgo Actual: ${progressData.burnoutRisk}
+📋 Síntomas Detectados: ${progressData.symptomsChecked}/7
+⏰ Horas Trabajadas Hoy: ${progressData.workHours}
+🎯 Actividades Completadas: ${progressData.completedActivities}/20
+📊 Puntuación de Bienestar: ${progressData.wellnessScore}
+
+🎯 PLAN PERSONALIZADO:
+=====================
+1. Mantener descansos cada 2 horas
+2. Completar 2 actividades de renovación semanales
+3. Aplicar detector de síntomas semanalmente
+4. Seguir calendario optimizado 3+1
+5. Protocolo de emergencia siempre disponible
+
+🚀 META: Carrera sostenible y libre de burnout
+💪 LOGROS: Master en Prevención del Burnout
+
+Generado por WC Training - Sistema Anti-Burnout
+            `;
+            
+            // Create download
+            const element = document.createElement('a');
+            element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(dataStr));
+            element.setAttribute('download', 'mi-plan-anti-burnout.txt');
+            element.style.display = 'none';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            
+            alert('📄 ¡Tu plan personal ha sido descargado! Guárdalo y revísalo semanalmente.');
+        }
+
+        // Utility functions for enhanced interactivity
+        function showTooltip(element, message) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip-custom';
+            tooltip.textContent = message;
+            tooltip.style.cssText = `
+                position: absolute;
+                background: var(--text-dark);
+                color: white;
+                padding: 0.5rem;
+                border-radius: 5px;
+                font-size: 0.8rem;
+                z-index: 1000;
+                pointer-events: none;
+            `;
+            
+            document.body.appendChild(tooltip);
+            
+            const rect = element.getBoundingClientRect();
+            tooltip.style.left = rect.left + 'px';
+            tooltip.style.top = (rect.top - tooltip.offsetHeight - 5) + 'px';
+            
+            setTimeout(() => {
+                document.body.removeChild(tooltip);
+            }, 2000);
+        }
+
+        // Enhanced hover effects for better UX
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover sound effect simulation
+            const interactiveElements = document.querySelectorAll('.burnout-card, .activity-card, .scenario-option, .btn-primary-custom');
+            
+            interactiveElements.forEach(element => {
+                element.addEventListener('mouseenter', function() {
+                    this.style.transform = this.style.transform || '';
+                });
+                
+                element.addEventListener('mouseleave', function() {
+                    // Reset transform if no other classes are affecting it
+                    if (!this.classList.contains('active')) {
+                        this.style.transform = '';
+                    }
+                });
+            });
+            
+            // Add keyboard navigation support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close any open details
+                    document.querySelectorAll('.card-details.active').forEach(detail => {
+                        detail.classList.remove('active');
+                        const icon = detail.previousElementSibling.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-up');
+                            icon.classList.add('fa-chevron-down');
+                        }
+                    });
+                }
+            });
+        });
+
+        // Auto-save functionality for form data
+        function autoSaveFormData() {
+            const formInputs = document.querySelectorAll('input[type="number"], input[type="range"]');
+            
+            formInputs.forEach(input => {
+                input.addEventListener('change', function() {
+                    // In a real app, this would save to localStorage or send to server
+                    console.log(`Saved ${this.id}: ${this.value}`);
+                });
+            });
+        }
+
+        // Initialize auto-save when page loads
+        document.addEventListener('DOMContentLoaded', autoSaveFormData);
+
+        // Performance optimization for animations
+        function optimizeAnimations() {
+            // Reduce animations on low-performance devices
+            if (navigator.hardwareConcurrency < 4) {
+                document.documentElement.style.setProperty('--animation-duration', '0.1s');
+            }
+            
+            // Pause animations when tab is not visible
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden) {
+                    document.body.style.animationPlayState = 'paused';
+                } else {
+                    document.body.style.animationPlayState = 'running';
+                }
+            });
+        }
+
+        // Call optimization function
+        document.addEventListener('DOMContentLoaded', optimizeAnimations);
+
+        // Accessibility improvements
+        function enhanceAccessibility() {
+            // Add ARIA labels for interactive elements
+            const interactiveElements = document.querySelectorAll('[onclick]');
+            interactiveElements.forEach((element, index) => {
+                if (!element.getAttribute('aria-label')) {
+                    element.setAttribute('aria-label', `Elemento interactivo ${index + 1}`);
+                    element.setAttribute('role', 'button');
+                    element.setAttribute('tabindex', '0');
+                }
+            });
+            
+            // Add keyboard support for click events
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    const focused = document.activeElement;
+                    if (focused && focused.hasAttribute('onclick')) {
+                        e.preventDefault();
+                        focused.click();
+                    }
+                }
+            });
+        }
+
+        // Initialize accessibility features
+        document.addEventListener('DOMContentLoaded', enhanceAccessibility);
+
+        // Real-time validation for calculator inputs
+        function validateCalculatorInputs() {
+            const inputs = document.querySelectorAll('#dailyHours, #weeklyDays, #weeksWithoutBreak');
+            
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    const value = parseInt(this.value);
+                    const min = parseInt(this.getAttribute('min'));
+                    const max = parseInt(this.getAttribute('max'));
+                    
+                    if (value < min || value > max) {
+                        this.style.border = '2px solid #dc3545';
+                        showTooltip(this, `Valor debe estar entre ${min} y ${max}`);
+                    } else {
+                        this.style.border = '2px solid #28a745';
+                    }
+                });
+            });
+        }
+
+        // Initialize validation
+        document.addEventListener('DOMContentLoaded', validateCalculatorInputs);
+
+        // Progressive Web App features
+        function initializePWA() {
+            // Check if service worker is supported
+            if ('serviceWorker' in navigator) {
+                console.log('PWA features available');
+                
+                // Add install prompt
+                let deferredPrompt;
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredPrompt = e;
+                    
+                    // Show install button (if you want to add one)
+                    const installButton = document.createElement('button');
+                    installButton.textContent = 'Instalar App';
+                    installButton.className = 'btn-primary-custom position-fixed';
+                    installButton.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000;';
+                    
+                    installButton.addEventListener('click', () => {
+                        deferredPrompt.prompt();
+                        deferredPrompt.userChoice.then((choiceResult) => {
+                            if (choiceResult.outcome === 'accepted') {
+                                console.log('User accepted the install prompt');
+                            }
+                            deferredPrompt = null;
+                            document.body.removeChild(installButton);
+                        });
+                    });
+                    
+                    document.body.appendChild(installButton);
+                });
+            }
+        }
+
+        // Initialize PWA features
+        document.addEventListener('DOMContentLoaded', initializePWA);
+
+        // Error handling and user feedback
+        window.addEventListener('error', function(e) {
+            console.error('Error detected:', e.error);
+            
+            // Show user-friendly error message
+            const errorToast = document.createElement('div');
+            errorToast.className = 'alert alert-warning position-fixed';
+            errorToast.style.cssText = 'top: 20px; right: 20px; z-index: 1000; max-width: 300px;';
+            errorToast.innerHTML = `
+                <i class="fas fa-exclamation-triangle"></i>
+                Algo salió mal, pero no te preocupes. Intenta recargar la página.
+                <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+            `;
+            
+            document.body.appendChild(errorToast);
+            
+            setTimeout(() => {
+                if (errorToast.parentElement) {
+                    document.body.removeChild(errorToast);
+                }
+            }, 5000);
+        });
+
+        // Analytics and usage tracking (privacy-friendly)
+        function trackUsage() {
+            const usage = {
+                pageLoad: new Date().toISOString(),
+                symptomsChecked: 0,
+                calculatorUsed: false,
+                timerUsed: false,
+                activitiesViewed: 0
+            };
+            
+            // Track symptom checker usage
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('symptom-item')) {
+                    usage.symptomsChecked++;
+                }
+                
+                if (e.target.closest('.calculator-section')) {
+                    usage.calculatorUsed = true;
+                }
+                
+                if (e.target.closest('.activity-card')) {
+                    usage.activitiesViewed++;
+                }
+            });
+            
+            // Save usage data (in real app, this would go to analytics service)
+            window.addEventListener('beforeunload', function() {
+                console.log('Usage data:', usage);
+                // localStorage.setItem('wc-usage', JSON.stringify(usage));
+            });
+        }
+
+        // Initialize usage tracking
+        document.addEventListener('DOMContentLoaded', trackUsage);
+    </script>
+
+    <!-- Bootstrap JavaScript for enhanced functionality -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

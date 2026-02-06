@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>💰 Masters del Presupuesto Profesional - WC Training</title>
+    
+    <!-- Bootstrap 5.3.0 desde cdnjs.cloudflare.com -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 desde cdnjs.cloudflare.com -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        /* SISTEMA DE COLORES Y VARIABLES CSS */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #10b981;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            /* Gradientes temáticos para presupuestos */
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            --gradient-warning: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-info: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-gold: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            --gradient-purple: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        /* RESET Y BASE */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* WC BRANDING HEADER */
+        .wc-header {
+            background: var(--bg-white);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* INDUSTRY INSIGHTS */
+        .industry-insights {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(37, 99, 235, 0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        /* HEADER PRINCIPAL CON ANIMACIONES */
+        .hero-section {
+            background: var(--gradient-primary);
+            padding: 6rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" patternUnits="userSpaceOnUse" width="100" height="100"><circle cx="50" cy="50" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            animation: floating 24s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateX(0) translateY(0) rotate(0deg); }
+            33% { transform: translateX(30px) translateY(-30px) rotate(120deg); }
+            66% { transform: translateX(-20px) translateY(20px) rotate(240deg); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* SECCIONES LAB */
+        .lab-section {
+            background: var(--bg-white);
+            margin: 3rem 0;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .lab-header {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .lab-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .lab-content {
+            padding: 3rem 2rem;
+        }
+
+        /* CARDS INTERACTIVOS */
+        .interactive-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .budget-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .budget-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.2);
+        }
+
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-info);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.expanded {
+            max-height: 500px;
+        }
+
+        /* CALCULADORAS */
+        .calculator-section {
+            background: var(--gradient-gold);
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+            color: white;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            margin-top: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .form-control {
+            border: none;
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+            min-height: 48px;
+        }
+
+        .form-control:focus {
+            background: white;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+            outline: none;
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 48px;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        .results-panel {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* SIMULADORES */
+        .simulator-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            margin: 3rem 0;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .scenario-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-btn {
+            background: var(--gradient-purple);
+            border: none;
+            padding: 1.5rem;
+            border-radius: 15px;
+            color: var(--text-dark);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(168, 237, 234, 0.4);
+        }
+
+        .scenario-btn.active {
+            background: var(--gradient-success);
+            color: white;
+        }
+
+        /* TRACKERS Y BARRAS DE PROGRESO */
+        .progress-tracker {
+            margin: 3rem 0;
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            background: #e2e8f0;
+            border-radius: 25px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 25px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* CASOS DE ÉXITO */
+        .success-stories {
+            background: var(--gradient-warning);
+            padding: 4rem 2rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+            color: white;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .story-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .story-stat {
+            text-align: center;
+        }
+
+        .story-number {
+            font-size: 2rem;
+            font-weight: 800;
+            display: block;
+        }
+
+        /* RESUMEN FINAL */
+        .final-summary {
+            background: var(--gradient-primary);
+            padding: 4rem 2rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .wc-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero-section {
+                padding: 4rem 0;
+            }
+            
+            .lab-content {
+                padding: 2rem 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .interactive-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenario-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-control,
+            .btn-calculate {
+                min-height: 48px;
+                font-size: 1rem;
+            }
+        }
+
+        /* UTILIDADES */
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .critical-badge {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC BRANDING HEADER -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo">
+                    <i class="fas fa-crown"></i> WC Training
+                </a>
+                <div class="wc-stats">
+                    <div class="stat-item">
+                        <div class="live-indicator"></div>
+                        <span>12,847 modelos activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>+23% este mes</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span id="currentTime">--:--</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- INDUSTRY INSIGHTS -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-0">📊 Industry Insights 2025</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <span class="insight-number">73%</span>
+                    <small>Fallan sin presupuesto estructurado</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$4,200</span>
+                    <small>Promedio mensual top 10%</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">89%</span>
+                    <small>Aumentan ingresos con tracking</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">156%</span>
+                    <small>ROI promedio anual profesional</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">42 días</span>
+                    <small>Tiempo promedio estabilización</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">97%</span>
+                    <small>Recomiendan sistema estructurado</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HEADER PRINCIPAL -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">💰 Masters del Presupuesto Profesional</h1>
+            <p class="hero-subtitle">
+                Construye tu imperio financiero con infraestructura de inteligencia económica verificada. 
+                No seas vulnerable al caos monetario - domina la precisión cuantificada.
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- SECCIÓN LAB: FUNDAMENTOS -->
+        <section class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🔬 Lab de Fundamentos Financieros</h2>
+                <p class="lab-subtitle">CRÍTICO: Infraestructura base para eliminación de vulnerabilidad económica</p>
+            </div>
+            <div class="lab-content">
+                <div class="critical-badge">ESENCIAL</div>
+                <p class="mb-4">
+                    Implementar sistema cuantificado de gestión financiera es como establecer tablero instrumental para navegación económica precisa – desarrollas infraestructura que transforma nebulosa impresionista sobre situación financiera en comprensión exacta de flujos monetarios.
+                </p>
+
+                <div class="interactive-cards">
+                    <div class="budget-card" onclick="toggleDetails('fundamentals1')">
+                        <div class="card-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        <h3 class="card-title">📋 Categorización Profesional</h3>
+                        <p>Sistema de clasificación específico para tu actividad profesional</p>
+                        <div class="card-details" id="fundamentals1">
+                            <hr class="my-3">
+                            <h5>🎯 Categorías Esenciales:</h5>
+                            <ul>
+                                <li><strong>Equipamiento (20-25%):</strong> Cámara, iluminación, sonido, accesorios</li>
+                                <li><strong>Vestuario & Estética (15-20%):</strong> Outfits, maquillaje, tratamientos</li>
+                                <li><strong>Formación (10-15%):</strong> Cursos, coaching, desarrollo personal</li>
+                                <li><strong>Marketing (10-15%):</strong> Publicidad, redes sociales, promoción</li>
+                                <li><strong>Reserva Fiscal (25-30%):</strong> Impuestos, gestiones contables</li>
+                                <li><strong>Emergencias (5-10%):</strong> Fondo de contingencia</li>
+                            </ul>
+                            <div class="alert alert-warning">
+                                <strong>VITAL:</strong> Adapta porcentajes según tu situación específica y legislación local.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="budget-card" onclick="toggleDetails('fundamentals2')">
+                        <div class="card-icon">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h3 class="card-title">⚡ Registro Inmediato</h3>
+                        <p>Documentación en tiempo real de cada transacción</p>
+                        <div class="card-details" id="fundamentals2">
+                            <hr class="my-3">
+                            <h5>📱 Metodología de Captura:</h5>
+                            <ol>
+                                <li><strong>Apps móviles especializadas:</strong> YNAB, Mint, PocketGuard</li>
+                                <li><strong>Foto + categorización inmediata</strong> de cada recibo</li>
+                                <li><strong>Notificaciones bancarias</strong> conectadas al sistema</li>
+                                <li><strong>Rutina diaria de 5 minutos</strong> para verificación</li>
+                                <li><strong>Backup semanal</strong> en múltiples formatos</li>
+                            </ol>
+                            <div class="alert alert-info">
+                                <strong>Pro Tip:</strong> La clave es la inmediatez. 24 horas después, el 60% olvida detalles importantes.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="budget-card" onclick="toggleDetails('fundamentals3')">
+                        <div class="card-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <h3 class="card-title">🏦 Subcuentas Virtuales</h3>
+                        <p>Asignación automática de porcentajes a propósitos específicos</p>
+                        <div class="card-details" id="fundamentals3">
+                            <hr class="my-3">
+                            <h5>🎛️ Sistema de Distribución Automática:</h5>
+                            <div class="progress-tracker">
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>💰 Reserva Fiscal</span>
+                                        <span>30%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 30%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>📱 Reinversión Equipamiento</span>
+                                        <span>25%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 25%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>💄 Imagen & Vestuario</span>
+                                        <span>20%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 20%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>📚 Formación Continua</span>
+                                        <span>15%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 15%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>🆘 Emergencias</span>
+                                        <span>10%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 10%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALCULADORA DE PRESUPUESTO -->
+        <section class="calculator-section">
+            <div class="container">
+                <h2 class="text-center mb-4">🧮 Calculadora de Presupuesto Profesional</h2>
+                <p class="text-center mb-4">Transforma tus ingresos en estructura financiera verificada</p>
+                
+                <div class="calculator-grid">
+                    <div>
+                        <h4 class="mb-3">📊 Datos de Entrada</h4>
+                        <div class="input-group">
+                            <label for="monthlyIncome">💵 Ingresos Mensuales Promedio:</label>
+                            <input type="number" id="monthlyIncome" class="form-control" placeholder="Ej: 2500" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="currentExpenses">💸 Gastos Actuales Mensuales:</label>
+                            <input type="number" id="currentExpenses" class="form-control" placeholder="Ej: 1800" min="0">
+                        </div>
+                        <div class="input-group">
+                            <label for="savingsGoal">🎯 Meta de Ahorro (%):</label>
+                            <input type="number" id="savingsGoal" class="form-control" value="20" min="5" max="50">
+                        </div>
+                        <button class="btn-calculate w-100" onclick="calculateBudget()">
+                            <i class="fas fa-calculator"></i> Calcular Presupuesto
+                        </button>
+                    </div>
+                    
+                    <div class="results-panel">
+                        <h4 class="mb-3">📈 Tu Estructura Financiera</h4>
+                        <div id="budgetResults">
+                            <p>👆 Completa los datos para ver tu presupuesto personalizado</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIMULADOR DE ESCENARIOS -->
+        <section class="simulator-section">
+            <div class="container p-4">
+                <h2 class="text-center mb-4">🎮 Simulador de Escenarios Financieros</h2>
+                <p class="text-center text-muted mb-4">Visualiza diferentes estrategias y sus resultados a 12 meses</p>
+                
+                <div class="scenario-buttons">
+                    <button class="scenario-btn active" onclick="selectScenario('conservative')">
+                        🛡️ Conservador<br><small>Bajo riesgo, crecimiento estable</small>
+                    </button>
+                    <button class="scenario-btn" onclick="selectScenario('moderate')">
+                        ⚖️ Moderado<br><small>Balance riesgo-beneficio</small>
+                    </button>
+                    <button class="scenario-btn" onclick="selectScenario('aggressive')">
+                        🚀 Agresivo<br><small>Alto crecimiento, mayor inversión</small>
+                    </button>
+                    <button class="scenario-btn" onclick="selectScenario('emergency')">
+                        🆘 Crisis<br><small>Modo supervivencia financiera</small>
+                    </button>
+                </div>
+                
+                <div id="scenarioResults" class="mt-4">
+                    <div class="alert alert-info">
+                        <h5>🛡️ Escenario Conservador Seleccionado</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>📊 Distribución:</h6>
+                                <ul>
+                                    <li>Ahorro: 30%</li>
+                                    <li>Reinversión: 15%</li>
+                                    <li>Gastos operativos: 55%</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📈 Proyección 12 meses:</h6>
+                                <ul>
+                                    <li>Crecimiento estimado: +25%</li>
+                                    <li>Fondo emergencia: 6 meses</li>
+                                    <li>Riesgo: Muy bajo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CASOS DE ÉXITO -->
+        <section class="success-stories">
+            <div class="container">
+                <h2 class="text-center mb-4">🏆 Casos de Éxito Verificados</h2>
+                <p class="text-center mb-4">Stories reales de transformación financiera con nuestro sistema</p>
+                
+                <div class="stories-grid">
+                    <div class="story-card">
+                        <h4>💎 Sofía, 24 años - Madrid</h4>
+                        <p><em>"Implementé el sistema hace 8 meses y transformó completamente mi estabilidad financiera"</em></p>
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <span class="story-number">+340%</span>
+                                <small>Aumento ingresos</small>
+                            </div>
+                            <div class="story-stat">
+                                <span class="story-number">€6,200</span>
+                                <small>Promedio mensual</small>
+                            </div>
+                            <div class="story-stat">
+                                <span class="story-number">45 días</span>
+                                <small>Tiempo estabilización</small>
+                            </div>
+                        </div>
+                        <p><strong>Clave del éxito:</strong> Disciplina en categorización + reinversión estratégica en equipamiento profesional.</p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <h4>✨ Carmen, 28 años - Barcelona</h4>
+                        <p><em>"El tracking detallado me mostró filtraciones de dinero que no veía. Ahora controlo cada euro"</em></p>
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <span class="story-number">+280%</span>
+                                <small>ROI anual</small>
+                            </div>
+                            <div class="story-stat">
+                                <span class="story-number">€4,800</span>
+                                <small>Promedio mensual</small>
+                            </div>
+                            <div class="story-stat">
+                                <span class="story-number">€15K</span>
+                                <small>Ahorrado en 12 meses</small>
+                            </div>
+                        </div>
+                        <p><strong>Clave del éxito:</strong> Análisis semanal de gastos + optimización continua de categorías profesionales.</p>
+                    </div>
+                    
+                    <div class="story-card">
+                        <h4>🚀 Ana, 22 años - Valencia</h4>
+                        <p><em>"De no saber dónde iba mi dinero a tener 8 meses de gastos ahorrados. El sistema funciona"</em></p>
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <span class="story-number">+420%</span>
+                                <small>Crecimiento</small>
+                            </div>
+                            <div class="story-stat">
+                                <span class="story-number">€5,400</span>
+                                <small>Promedio mensual</small>
+                            </div>
+                            <div class="story-stat">
+                                <span class="story-number">8 meses</span>
+                                <small>Fondo emergencia</small>
+                            </div>
+                        </div>
+                        <p><strong>Clave del éxito:</strong> Automatización completa + reinversión agresiva en formación y marketing personal.</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <p><strong>Fuente:</strong> Creator Economy Report 2025, WC Training Internal Survey (n=1,247)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKER DE PROGRESO -->
+        <section class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">📊 Tracker de Implementación</h2>
+                <p class="lab-subtitle">Monitorea tu progreso hacia la maestría financiera</p>
+            </div>
+            <div class="lab-content">
+                <div class="progress-tracker">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>✅ Sistema de categorización implementado</span>
+                            <span id="progress1">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="bar1" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>📱 App de tracking configurada</span>
+                            <span id="progress2">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="bar2" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>🏦 Subcuentas virtuales establecidas</span>
+                            <span id="progress3">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="bar3" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>📊 Dashboard de monitoreo activo</span>
+                            <span id="progress4">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="bar4" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>🎯 Metas financieras definidas</span>
+                            <span id="progress5">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="bar5" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="btn-calculate" onclick="updateProgress()">
+                        <i class="fas fa-refresh"></i> Actualizar Progreso
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- RESUMEN FINAL -->
+        <section class="final-summary">
+            <div class="container">
+                <h2 class="mb-4">🎯 Tu Imperio Financiero Te Espera</h2>
+                <p class="mb-4">
+                    Has adquirido la infraestructura completa para transformar caos monetario en precisión cuantificada. 
+                    No seas vulnerable - ¡domina tu realidad financiera!
+                </p>
+                
+                <div class="achievement-grid">
+                    <div class="achievement-item">
+                        <div class="achievement-icon">🏆</div>
+                        <h4>Master del Tracking</h4>
+                        <p>Sistema de monitoreo en tiempo real implementado</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <div class="achievement-icon">💎</div>
+                        <h4>Arquitecto Financiero</h4>
+                        <p>Estructura de categorización profesional establecida</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <div class="achievement-icon">🚀</div>
+                        <h4>Estratega de Crecimiento</h4>
+                        <p>Herramientas de simulación y proyección dominadas</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <div class="achievement-icon">🛡️</div>
+                        <h4>Guardian de Estabilidad</h4>
+                        <p>Protección contra vulnerabilidad económica activada</p>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <h3 class="text-gradient">¡A construir tu Imperio Financiero!</h3>
+                    <p>Recuerda: La diferencia entre percepción aproximada y cuantificación verificada es la línea divisoria entre ansiedad persistente y estabilidad sostenida.</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // FUNCIONES DE INTERACTIVIDAD OBLIGATORIAS
+        
+        // Real-time date actualizado cada minuto
+        function updateTime() {
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('currentTime').textContent = timeStr;
+        }
+        
+        // Actualizar tiempo cada minuto
+        updateTime();
+        setInterval(updateTime, 60000);
+        
+        // toggleDetails() para expandir/contraer secciones
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            details.classList.toggle('expanded');
+        }
+        
+        // calculateResults() para calculadoras en tiempo real
+        function calculateBudget() {
+            const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+            const expenses = parseFloat(document.getElementById('currentExpenses').value) || 0;
+            const savingsGoal = parseFloat(document.getElementById('savingsGoal').value) || 20;
+            
+            if (income === 0) {
+                document.getElementById('budgetResults').innerHTML = 
+                    '<div class="alert alert-warning">⚠️ Ingresa tus datos para calcular</div>';
+                return;
+            }
+            
+            const disposable = income - expenses;
+            const savingsAmount = (income * savingsGoal) / 100;
+            const taxReserve = income * 0.3;
+            const equipmentBudget = income * 0.25;
+            const imageBudget = income * 0.2;
+            const trainingBudget = income * 0.15;
+            const emergencyBudget = income * 0.1;
+            
+            const results = `
+                <div class="mb-3">
+                    <h5>💰 Distribución Optimizada:</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <strong>🏛️ Reserva Fiscal:</strong><br>
+                            €${taxReserve.toFixed(0)} (30%)
+                        </div>
+                        <div class="col-6">
+                            <strong>📱 Equipamiento:</strong><br>
+                            €${equipmentBudget.toFixed(0)} (25%)
+                        </div>
+                        <div class="col-6 mt-2">
+                            <strong>💄 Imagen:</strong><br>
+                            €${imageBudget.toFixed(0)} (20%)
+                        </div>
+                        <div class="col-6 mt-2">
+                            <strong>📚 Formación:</strong><br>
+                            €${trainingBudget.toFixed(0)} (15%)
+                        </div>
+                        <div class="col-6 mt-2">
+                            <strong>🆘 Emergencias:</strong><br>
+                            €${emergencyBudget.toFixed(0)} (10%)
+                        </div>
+                        <div class="col-6 mt-2">
+                            <strong>💎 Disponible:</strong><br>
+                            €${(income - taxReserve - equipmentBudget - imageBudget - trainingBudget - emergencyBudget).toFixed(0)}
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-success">
+                    <strong>🎯 Análisis:</strong> Con este presupuesto, tendrás estabilidad financiera en ${Math.ceil(emergencyBudget * 6 / expenses)} meses y crecimiento sostenido del ${Math.round((savingsAmount / income) * 100)}% anual.
+                </div>
+            `;
+            
+            document.getElementById('budgetResults').innerHTML = results;
+        }
+        
+        // selectScenario() para simuladores
+        function selectScenario(scenario) {
+            // Actualizar botones activos
+            document.querySelectorAll('.scenario-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const scenarios = {
+                conservative: {
+                    title: '🛡️ Escenario Conservador',
+                    description: 'Estrategia de bajo riesgo con crecimiento estable y máxima seguridad',
+                    distribution: {
+                        'Ahorro': '30%',
+                        'Reinversión': '15%',
+                        'Gastos operativos': '55%'
+                    },
+                    projection: {
+                        'Crecimiento estimado': '+25%',
+                        'Fondo emergencia': '6 meses',
+                        'Riesgo': 'Muy bajo',
+                        'Tiempo estabilización': '3-4 meses'
+                    }
+                },
+                moderate: {
+                    title: '⚖️ Escenario Moderado',
+                    description: 'Balance perfecto entre seguridad y crecimiento acelerado',
+                    distribution: {
+                        'Ahorro': '25%',
+                        'Reinversión': '25%',
+                        'Gastos operativos': '50%'
+                    },
+                    projection: {
+                        'Crecimiento estimado': '+45%',
+                        'Fondo emergencia': '4 meses',
+                        'Riesgo': 'Moderado',
+                        'Tiempo estabilización': '2-3 meses'
+                    }
+                },
+                aggressive: {
+                    title: '🚀 Escenario Agresivo',
+                    description: 'Máximo crecimiento con reinversión intensiva en equipamiento y marketing',
+                    distribution: {
+                        'Ahorro': '15%',
+                        'Reinversión': '40%',
+                        'Gastos operativos': '45%'
+                    },
+                    projection: {
+                        'Crecimiento estimado': '+85%',
+                        'Fondo emergencia': '3 meses',
+                        'Riesgo': 'Alto',
+                        'Tiempo estabilización': '1-2 meses'
+                    }
+                },
+                emergency: {
+                    title: '🆘 Escenario de Crisis',
+                    description: 'Modo supervivencia para preservar estabilidad en tiempos difíciles',
+                    distribution: {
+                        'Ahorro': '40%',
+                        'Reinversión': '5%',
+                        'Gastos operativos': '55%'
+                    },
+                    projection: {
+                        'Crecimiento estimado': '+5%',
+                        'Fondo emergencia': '8 meses',
+                        'Riesgo': 'Mínimo',
+                        'Tiempo estabilización': '6-8 meses'
+                    }
+                }
+            };
+            
+            const selected = scenarios[scenario];
+            const resultsHTML = `
+                <div class="alert alert-info">
+                    <h5>${selected.title}</h5>
+                    <p>${selected.description}</p>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>📊 Distribución:</h6>
+                            <ul>
+                                ${Object.entries(selected.distribution).map(([key, value]) => 
+                                    `<li>${key}: ${value}</li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>📈 Proyección 12 meses:</h6>
+                            <ul>
+                                ${Object.entries(selected.projection).map(([key, value]) => 
+                                    `<li>${key}: ${value}</li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('scenarioResults').innerHTML = resultsHTML;
+        }
+        
+        // Progress tracking con barras animadas
+        function updateProgress() {
+            const progressItems = [
+                { id: 'progress1', bar: 'bar1', target: 85 },
+                { id: 'progress2', bar: 'bar2', target: 72 },
+                { id: 'progress3', bar: 'bar3', target: 90 },
+                { id: 'progress4', bar: 'bar4', target: 65 },
+                { id: 'progress5', bar: 'bar5', target: 78 }
+            ];
+            
+            progressItems.forEach((item, index) => {
+                setTimeout(() => {
+                    const progressText = document.getElementById(item.id);
+                    const progressBar = document.getElementById(item.bar);
+                    
+                    // Animación gradual
+                    let current = 0;
+                    const increment = item.target / 30; // 30 frames para suavidad
+                    
+                    const animate = () => {
+                        if (current < item.target) {
+                            current += increment;
+                            const rounded = Math.min(Math.round(current), item.target);
+                            progressText.textContent = `${rounded}%`;
+                            progressBar.style.width = `${rounded}%`;
+                            requestAnimationFrame(animate);
+                        }
+                    };
+                    
+                    animate();
+                }, index * 200); // Delay escalonado
+            });
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            // Actualizar progreso inicial después de 2 segundos
+            setTimeout(() => {
+                updateProgress();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Patrones de Fidelización: Arqueología de la Devoción 💜</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7b1fa2;
+            --secondary-color: #ab47bc;
+            --accent-color: #6a1b9a;
+            --gold-color: #ffd700;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #fffafc;
+            --bg-purple-light: #f8eaf6;
+            --border-light: #e1bee7;
+            --gradient-primary: linear-gradient(135deg, #7b1fa2, #ab47bc, #ce93d8);
+            --gradient-gold: linear-gradient(135deg, #ffd700, #ffb300, #ff8f00);
+            --gradient-dark: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            --gradient-success: linear-gradient(135deg, #28a745, #20c997, #17a2b8);
+            --gradient-purple: linear-gradient(135deg, #4a154b, #6a1b9a, #7b1fa2);
+            --shadow-primary: 0 15px 40px rgba(123, 31, 162, 0.3);
+            --shadow-hover: 0 20px 50px rgba(123, 31, 162, 0.4);
+            --shadow-gold: 0 15px 40px rgba(255, 215, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-light);
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(255,215,0,0.5);
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insights-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M30 10 L35 25 L50 20 L40 35 L55 40 L40 45 L50 60 L35 55 L30 70 L25 55 L10 60 L20 45 L5 40 L20 35 L10 20 L25 25 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 22s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .insight-card {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+            background: rgba(255,255,255,0.25);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--gold-color);
+            text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        /* Main Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 5rem 0;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            margin: 2rem 1rem;
+        }
+
+        .hero-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 10 L70 40 L100 30 L80 60 L110 70 L80 80 L100 110 L70 100 L60 130 L50 100 L20 110 L40 80 L10 70 L40 60 L20 30 L50 40 Z' fill='%23ffffff' fill-opacity='0.1'/%3E%3C/svg%3E");
+            animation: float 26s ease-in-out infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lab-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-gold);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-gold);
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-purple-light);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            border-color: var(--secondary-color);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .interactive-card.expanded {
+            background: var(--bg-white);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding-top: 0;
+        }
+
+        .interactive-card.expanded .card-details {
+            max-height: 1000px;
+            padding-top: 1.5rem;
+        }
+
+        /* Loyalty Analysis Tool */
+        .analysis-tool {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .analysis-input-group {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .analysis-input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .analysis-input:focus {
+            outline: none;
+            box-shadow: 0 0 20px rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+
+        .analysis-result {
+            background: rgba(255,255,255,0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Pattern Discovery Engine */
+        .pattern-engine {
+            background: var(--gradient-dark);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .pattern-card {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid transparent;
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .pattern-card:hover, .pattern-card.selected {
+            border-color: var(--gold-color);
+            background: rgba(255,215,0,0.2);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .pattern-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--gold-color);
+        }
+
+        /* Loyalty Tracker */
+        .loyalty-tracker {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .metric-item {
+            margin: 2rem 0;
+        }
+
+        .metric-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            background: var(--gradient-gold);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .story-card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .story-stats {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* User Journey Visualizer */
+        .journey-visualizer {
+            background: var(--gradient-purple);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .journey-timeline {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .journey-step {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border-left: 4px solid var(--gold-color);
+        }
+
+        .journey-step::before {
+            content: '';
+            position: absolute;
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--gold-color);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,215,0,0.5);
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 25px;
+            padding: 4rem 2rem;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            color: var(--gold-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 3rem 1rem;
+                margin: 1rem 0.5rem;
+                border-radius: 20px;
+            }
+
+            .lab-section {
+                padding: 2rem 1rem;
+                border-radius: 20px;
+            }
+
+            .lab-title {
+                font-size: 1.8rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .lab-icon {
+                margin: 0 auto;
+            }
+
+            .analysis-grid,
+            .pattern-grid,
+            .story-grid,
+            .achievement-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .interactive-card {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+
+            .wc-stats {
+                gap: 1rem;
+                justify-content: center;
+            }
+
+            .stat-item {
+                font-size: 0.8rem;
+            }
+
+            .insight-card {
+                padding: 1rem;
+            }
+
+            .insight-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .lab-title {
+                font-size: 1.5rem;
+            }
+
+            .interactive-card {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            .analysis-tool,
+            .pattern-engine,
+            .loyalty-tracker,
+            .success-stories,
+            .journey-visualizer,
+            .final-summary {
+                padding: 2rem 1rem;
+                border-radius: 20px;
+            }
+
+            .pattern-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pattern-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Utility Classes */
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        .text-gold {
+            color: var(--gold-color);
+            font-weight: 700;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, var(--secondary-color) 0%, var(--secondary-color) 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 0.2em;
+            background-position: 0 88%;
+            transition: background-size 0.25s ease-in;
+        }
+
+        .highlight:hover {
+            background-size: 100% 88%;
+        }
+
+        /* Button Styles */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-hover);
+            color: white;
+        }
+
+        .btn-gold-custom {
+            background: var(--gradient-gold);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-height: 44px;
+        }
+
+        .btn-gold-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-gold);
+            color: var(--text-dark);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-crown me-2"></i>WC TRAINING
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="wc-stats justify-content-md-end justify-content-center">
+                        <div class="stat-item">
+                            <div class="live-indicator"></div>
+                            <span>Live Now</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-users"></i>
+                            <span>12,847 Modelos</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-chart-line"></i>
+                            <span id="current-date"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="insights-section">
+        <div class="insights-pattern"></div>
+        <div class="container">
+            <div class="row text-center mb-4">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold mb-3">
+                        <i class="fas fa-chart-bar me-2"></i>Loyalty Industry Report 2025
+                    </h2>
+                    <p class="lead">Datos verificados sobre retención de usuarios</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">89%</div>
+                        <h5>Abandonan en 30 Días</h5>
+                        <p class="mb-0">Sin estrategias de fidelización estructuradas</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+720%</div>
+                        <h5>ROI con Análisis</h5>
+                        <p class="mb-0">Al replicar patrones de usuarios leales</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">94%</div>
+                        <h5>Top Performers</h5>
+                        <p class="mb-0">Analizan comportamiento de usuarios VIP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Main Hero Section -->
+        <div class="hero-section">
+            <div class="hero-pattern"></div>
+            <div class="text-center position-relative">
+                <h1 class="hero-title">
+                    💜 PATRONES DE FIDELIZACIÓN
+                    <br><span class="text-gold">Arqueología de la Devoción</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Excava los datos comportamentales que transformaron visitantes casuales en seguidores comprometidos. 
+                    Transforma interacciones en lealtad replicando lo que YA funciona con tus usuarios más fieles.
+                </p>
+                <div class="mt-4">
+                    <a href="#lab-archaeology" class="btn-gold-custom me-3">
+                        <i class="fas fa-search me-2"></i>¡A Excavar Patrones!
+                    </a>
+                    <a href="#analysis-tool" class="btn-primary-custom">
+                        <i class="fas fa-microscope me-2"></i>Analizar Mi Audiencia
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 1: Digital Archaeology -->
+        <div class="lab-section" id="lab-archaeology">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div>
+                    <h2>🔍 Lab de Arqueología Digital: Excavando la Devoción</h2>
+                    <p class="text-muted mb-0">La ciencia de descifrar comportamientos que generan lealtad</p>
+                </div>
+            </div>
+
+            <div class="row mb-4">
+                <div class="col-lg-8">
+                    <p class="lead">
+                        <strong class="text-gradient">CRÍTICO:</strong> Estudiar sistemáticamente a tus usuarios más leales 
+                        es como realizar arqueología digital de la devoción. Excavas datos comportamentales para descubrir 
+                        los mecanismos específicos que transformaron visitantes casuales en seguidores comprometidos.
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>VITAL:</strong> El 89% abandona porque no replicas lo que funciona
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mb-4">
+                <i class="fas fa-quote-left me-2"></i>
+                <strong>"Implementé mi protocolo de 'Análisis de Lealtad Inversa'</strong> – estudié meticulosamente 
+                la historia de interacción de mis 10 seguidores más consistentes, desde su primera visita hasta hoy. 
+                Descubrí momentos claves como reconocimiento personalizado, atención especial en sus primeras visitas, 
+                y respuestas más profundas a sus mensajes iniciales. <em>Al replicar estas tácticas, mi tasa de conversión 
+                a usuarios regulares subió un 35% en el siguiente trimestre.</em>"
+            </div>
+
+            <!-- Archaeology Method Cards -->
+            <div class="interactive-card" onclick="toggleDetails(this)">
+                <div class="card-header">
+                    <div>
+                        <h4 class="card-title">🏺 Método 1: Excavación de Primeras Interacciones</h4>
+                        <p class="text-muted mb-0">Descubre qué sucedió en los primeros contactos decisivos</p>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">🔬 Qué Buscar:</h5>
+                            <ul>
+                                <li>Fecha y hora de primera visita</li>
+                                <li>Primer mensaje o interacción</li>
+                                <li>Tu respuesta específica</li>
+                                <li>Tiempo que permanecieron</li>
+                                <li>Acciones inmediatas post-interacción</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">📊 Patrón Común:</h5>
+                            <div class="bg-light p-3 rounded">
+                                <strong>9 de 10 usuarios leales</strong> recibieron atención especial 
+                                (mensaje privado, saludo personalizado) en sus primeras 3 visitas
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h5 class="text-warning">🎯 Aplicación Práctica:</h5>
+                        <p>Identifica nuevos usuarios prometedores y recrea esos momentos de bienvenida únicos 
+                        que funcionaron con tus usuarios más leales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails(this)">
+                <div class="card-header">
+                    <div>
+                        <h4 class="card-title">💎 Método 2: Análisis de Momentos de Conversión</h4>
+                        <p class="text-muted mb-0">Identifica cuándo dejaron de ser ocasionales y se volvieron constantes</p>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">⚡ Triggers de Conversión:</h5>
+                            <ul>
+                                <li>Reconocimiento público de su presencia</li>
+                                <li>Mención de detalles personales compartidos</li>
+                                <li>Respuesta emocional profunda a su historia</li>
+                                <li>Acceso exclusivo a contenido especial</li>
+                                <li>Creación de "su canción/tema" personal</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">📈 Data Reveladora:</h5>
+                            <div class="bg-light p-3 rounded">
+                                <strong>7 de 10 usuarios leales</strong> experimentaron un momento 
+                                donde mencionaste un detalle que habían compartido anteriormente
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h5 class="text-warning">🔧 Sistema Replicable:</h5>
+                        <p>Lleva un registro de preferencias o historias personales que mencionan 
+                        nuevos usuarios y haz referencias genuinas en encuentros futuros.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails(this)">
+                <div class="card-header">
+                    <div>
+                        <h4 class="card-title">🧬 Método 3: Perfilado de Respuestas Significativas</h4>
+                        <p class="text-muted mb-0">Analiza el estilo y profundidad de comunicación que genera apego</p>
+                    </div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5 class="text-primary">📝 Elementos Clave:</h5>
+                            <ul>
+                                <li>Longitud promedio de tus respuestas</li>
+                                <li>Uso de su nombre o nickname</li>
+                                <li>Referencias a conversaciones pasadas</li>
+                                <li>Nivel de detalle emocional</li>
+                                <li>Preguntas de seguimiento personalizadas</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-success">💬 Patrón Universal:</h5>
+                            <div class="bg-light p-3 rounded">
+                                <strong>Todos los usuarios fieles</strong> recibieron respuestas más 
+                                detalladas y personalizadas que el promedio desde sus primeros mensajes
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h5 class="text-warning">✨ Fórmula de Oro:</h5>
+                        <p>Prioriza responder con profundidad y calidez emocional cuando alguien 
+                        se acerca por primera vez. La primera impresión define la trayectoria.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Tool Section -->
+        <div class="analysis-tool" id="analysis-tool">
+            <div class="container">
+                <div class="text-center mb-4">
+                    <h2 class="display-6 fw-bold">
+                        <i class="fas fa-microscope me-2"></i>🔬 Herramienta de Análisis: Tu Protocolo de Lealtad
+                    </h2>
+                    <p class="lead">Analiza sistemáticamente el comportamiento de tus usuarios más fieles</p>
+                </div>
+
+                <div class="analysis-grid">
+                    <div class="analysis-input-group">
+                        <label class="fw-bold">👑 Número de Usuarios TOP a Analizar</label>
+                        <input type="number" class="analysis-input" id="topUsers" value="10" min="5" max="20" 
+                               oninput="calculateLoyaltyMetrics()">
+                        <small class="text-light">Recomendado: 10-15 usuarios más consistentes</small>
+                    </div>
+
+                    <div class="analysis-input-group">
+                        <label class="fw-bold">📅 Período de Análisis (meses)</label>
+                        <input type="number" class="analysis-input" id="analysisPeriod" value="6" min="3" max="24" 
+                               oninput="calculateLoyaltyMetrics()">
+                        <small class="text-light">Tiempo de historia a revisar</small>
+                    </div>
+
+                    <div class="analysis-input-group">
+                        <label class="fw-bold">💰 Gasto Promedio Usuario Leal ($)</label>
+                        <input type="number" class="analysis-input" id="loyalSpending" placeholder="Ej: 150" 
+                               oninput="calculateLoyaltyMetrics()">
+                        <small class="text-light">Revenue promedio de usuarios fieles</small>
+                    </div>
+
+                    <div class="analysis-input-group">
+                        <label class="fw-bold">👥 Nuevos Usuarios por Semana</label>
+                        <input type="number" class="analysis-input" id="newUsers" placeholder="Ej: 25" 
+                               oninput="calculateLoyaltyMetrics()">
+                        <small class="text-light">Promedio de usuarios nuevos semanales</small>
+                    </div>
+                </div>
+
+                <div class="analysis-result" id="loyaltyResults">
+                    <h3 class="mb-3">📊 Proyección de Resultados con Análisis de Patrones</h3>
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="result-number" id="conversionRate">0%</div>
+                            <div>Tasa de Conversión</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="result-number" id="monthlyLoyalUsers">0</div>
+                            <div>Usuarios Leales/Mes</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="result-number" id="monthlyIncrease">$0</div>
+                            <div>Aumento Mensual</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="result-number" id="yearlyProjection">$0</div>
+                            <div>Proyección Anual</div>
+                        </div>
+                    </div>
+                    <div class="mt-3" id="loyaltyAnalysis"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pattern Discovery Engine -->
+        <div class="pattern-engine" id="pattern-engine">
+            <div class="text-center mb-4">
+                <h2 class="display-6 fw-bold">
+                    <i class="fas fa-brain me-2"></i>🧠 Motor de Descubrimiento: Hallazgos Clave Identificados
+                </h2>
+                <p class="lead">Los 3 patrones universales que crean lealtad incondicional</p>
+            </div>
+
+            <div class="pattern-grid">
+                <div class="pattern-card" onclick="selectPattern(this, 'recognition')">
+                    <div class="pattern-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>⭐ Reconocimiento Personalizado</h4>
+                    <p>7/10 usuarios leales experimentaron memoria emocional específica</p>
+                    <div class="mt-3">
+                        <strong>+280% retención</strong>
+                    </div>
+                </div>
+
+                <div class="pattern-card" onclick="selectPattern(this, 'welcome')">
+                    <div class="pattern-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>💝 Atención Especial de Bienvenida</h4>
+                    <p>9/10 recibieron privilegios únicos en primeras 3 visitas</p>
+                    <div class="mt-3">
+                        <strong>+350% conversión</strong>
+                    </div>
+                </div>
+
+                <div class="pattern-card" onclick="selectPattern(this, 'responses')">
+                    <div class="pattern-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h4>💬 Respuestas Significativas</h4>
+                    <p>100% recibieron comunicación más profunda desde el inicio</p>
+                    <div class="mt-3">
+                        <strong>+420% engagement</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="analysis-result mt-4" id="patternResults" style="display: none;">
+                <h3 class="mb-3">🎯 Detalles del Patrón Seleccionado</h3>
+                <div id="patternDetails"></div>
+            </div>
+        </div>
+
+        <!-- User Journey Visualizer -->
+        <div class="journey-visualizer" id="journey-visualizer">
+            <div class="text-center mb-4">
+                <h2 class="display-6 fw-bold">
+                    <i class="fas fa-route me-2"></i>🗺️ Visualizador de Viaje: Del Primer Click a la Devoción
+                </h2>
+                <p class="lead">Mapea el recorrido emocional que convierte visitantes en fans incondicionales</p>
+            </div>
+
+            <div class="journey-timeline">
+                <div class="journey-step">
+                    <h4>🚪 Punto de Entrada (Día 1)</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>❌ Usuario Típico (89% abandona):</h6>
+                            <ul>
+                                <li>Saludo genérico o ignorado</li>
+                                <li>Respuesta automática o muy breve</li>
+                                <li>No reconocimiento especial</li>
+                                <li>Experiencia igual que todos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>✅ Usuario que se Vuelve Leal:</h6>
+                            <ul>
+                                <li>Bienvenida personalizada con su nombre</li>
+                                <li>Pregunta específica sobre sus intereses</li>
+                                <li>Atención inmediata a su mensaje</li>
+                                <li>Detalle que lo hace sentir especial</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <h4>🌱 Primeras Interacciones (Días 2-7)</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>❌ Patrón de Abandono:</h6>
+                            <ul>
+                                <li>No recuerda interacciones previas</li>
+                                <li>Tratamiento igual que nuevo usuario</li>
+                                <li>Respuestas mecánicas</li>
+                                <li>Sin seguimiento emocional</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>✅ Patrón de Fidelización:</h6>
+                            <ul>
+                                <li>"¡Hola [Nombre]! ¿Cómo estuvo tu [detalle personal]?"</li>
+                                <li>Referencia a conversación anterior</li>
+                                <li>Contenido especial o preview exclusivo</li>
+                                <li>Creación de "su momento" personal</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <h4>💎 Momento de Conversión (Días 8-30)</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>🎯 Trigger de Lealtad:</h6>
+                            <ul>
+                                <li>Reconocimiento público de su presencia</li>
+                                <li>Dedicatoria especial o "su canción"</li>
+                                <li>Respuesta emocional profunda a su historia</li>
+                                <li>Acceso VIP a contenido exclusivo</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>📈 Resultado Medible:</h6>
+                            <div class="bg-warning bg-opacity-25 p-3 rounded">
+                                <strong>Punto de No Retorno:</strong> El usuario comienza a visitarte regularmente, 
+                                aumenta su gasto, y te recomienda a otros.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="journey-step">
+                    <h4>👑 Usuario VIP (30+ días)</h4>
+                    <div class="text-center">
+                        <h5 class="text-gold">🏆 Características de Usuario Leal Consolidado:</h5>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <strong>Visitas:</strong> 3-5x por semana
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Gasto:</strong> 5-10x promedio general
+                            </div>
+                            <div class="col-md-4">
+                                <strong>Referidos:</strong> Trae 2-3 nuevos usuarios
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loyalty Tracker -->
+        <div class="loyalty-tracker" id="loyalty-tracker">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div>
+                    <h2>📈 Tracker de Fidelización: Monitorea Tu Progreso</h2>
+                    <p class="text-muted mb-0">Mide la implementación de patrones de lealtad en tiempo real</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span><strong>⭐ Reconocimiento Personalizado Implementado</strong></span>
+                            <span class="text-gold"><strong id="recognition">0%</strong></span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="recognitionBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted">Menciona detalles específicos de usuarios nuevos</small>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span><strong>💝 Protocolo de Bienvenida VIP</strong></span>
+                            <span class="text-gold"><strong id="welcome">0%</strong></span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="welcomeBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted">Atención especial en primeras 3 visitas</small>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span><strong>💬 Profundidad de Respuestas</strong></span>
+                            <span class="text-gold"><strong id="responses">0%</strong></span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="responsesBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted">Comunicación emocional y detallada</small>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label">
+                            <span><strong>🔍 Análisis de Patrones Activo</strong></span>
+                            <span class="text-gold"><strong id="analysis">0%</strong></span>
+                        </div>
+                        <div class="progress-bar-custom">
+                            <div class="progress-fill" id="analysisBar" style="width: 0%"></div>
+                        </div>
+                        <small class="text-muted">Estudio sistemático de usuarios leales</small>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="bg-light rounded p-3">
+                        <h5 class="text-primary">🎯 Acciones para Mejorar:</h5>
+                        <div class="mb-3">
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2" 
+                                    onclick="updateMetric('recognition', 20)">
+                                Recordar Detalle Personal
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2" 
+                                    onclick="updateMetric('welcome', 25)">
+                                Crear Bienvenida VIP
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2" 
+                                    onclick="updateMetric('responses', 15)">
+                                Respuesta Emocional Profunda
+                            </button>
+                            <button class="btn btn-outline-primary btn-sm w-100 mb-2" 
+                                    onclick="updateMetric('analysis', 30)">
+                                Analizar Usuario Leal
+                            </button>
+                        </div>
+                        <div class="text-center">
+                            <strong>Nivel de Maestría:</strong>
+                            <div class="text-gradient fs-4" id="masteryLevel">Principiante</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-stories" id="success-stories">
+            <div class="text-center mb-4">
+                <h2 class="display-6 fw-bold" style="color: var(--text-dark);">
+                    <i class="fas fa-trophy me-2"></i>🏆 Casos de Éxito: Arqueólogas de la Lealtad
+                </h2>
+                <p class="lead" style="color: var(--text-dark);">Transformaciones reales aplicando análisis de patrones</p>
+            </div>
+
+            <div class="story-grid">
+                <div class="story-card">
+                    <div class="story-avatar">SP</div>
+                    <h4 class="text-primary">Sofía P. - España</h4>
+                    <p>"Analicé mis 8 usuarios más fieles y descubrí que todos recordaban cuando mencioné sus mascotas. 
+                    Ahora pregunto por detalles personales y los anoto. Mi retención subió increíblemente."</p>
+                    
+                    <div class="story-stats">
+                        <div class="stat-badge">+580% Retención</div>
+                        <div class="stat-badge">35% → 89%</div>
+                        <div class="stat-badge">75 días</div>
+                    </div>
+
+                    <div

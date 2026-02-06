@@ -1,0 +1,1574 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>⚖️ WC Training - Master en Vigilancia de Términos de Servicio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6f42c1;
+            --accent-color: #fd7e14;
+            --success-green: #198754;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+            --gradient-secondary: linear-gradient(135deg, #6f42c1 0%, #e83e8c 100%);
+            --gradient-accent: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+            --gradient-legal: linear-gradient(135deg, #495057 0%, #6c757d 100%);
+            --gradient-compliance: linear-gradient(135deg, #198754 0%, #20c997 100%);
+            --gradient-alert: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-bg);
+            opacity: 0.03;
+            animation: float 26s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-35px) rotate(180deg); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .industry-insights {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--gradient-legal);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(73, 80, 87, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="legal-grid" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M 25 0 L 0 0 0 25" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><path d="M 12.5 5 L 12.5 20 M 5 12.5 L 20 12.5" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23legal-grid)"/></svg>');
+            animation: float 27s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-lab {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .section-lab:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .interactive-card {
+            background: var(--gradient-compliance);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(25, 135, 84, 0.3);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            margin-top: 1rem;
+            border-radius: 10px;
+            padding: 0 1rem;
+        }
+
+        .card-details.expanded {
+            max-height: 800px;
+            padding: 1rem;
+        }
+
+        .risk-calculator {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .risk-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .risk-result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: var(--border-light);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .platform-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .platform-option {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: center;
+        }
+
+        .platform-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(253, 126, 20, 0.3);
+        }
+
+        .platform-option.selected {
+            background: var(--gradient-compliance);
+            transform: scale(1.05);
+        }
+
+        .success-story {
+            background: var(--gradient-compliance);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6rem;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .success-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .success-number {
+            text-align: center;
+            margin: 0.5rem;
+        }
+
+        .success-number .number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .terms-comparison {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .terms-card {
+            background: var(--gradient-legal);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .terms-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(73, 80, 87, 0.3);
+        }
+
+        .terms-card.updated {
+            background: var(--gradient-alert);
+            border: 3px solid #ffd700;
+        }
+
+        .alert-system {
+            background: var(--gradient-alert);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .alert-level {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .alert-level.low {
+            background: var(--success-green);
+        }
+
+        .alert-level.medium {
+            background: var(--warning-orange);
+        }
+
+        .alert-level.high {
+            background: var(--danger-red);
+        }
+
+        .alert-level.critical {
+            background: #8b0000;
+            animation: pulse 1s infinite;
+        }
+
+        .compliance-scanner {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .scanner-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .scanner-result {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(13, 110, 253, 0.3);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .current-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .risk-meter {
+            background: var(--border-light);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .risk-fill {
+            height: 100%;
+            background: var(--gradient-alert);
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .risk-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .version-tracker {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .version-tracker:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .version-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .version-date {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .change-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .change-indicator.added {
+            background: var(--success-green);
+        }
+
+        .change-indicator.modified {
+            background: var(--warning-orange);
+        }
+
+        .change-indicator.removed {
+            background: var(--danger-red);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-lab {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .risk-input {
+                max-width: 100%;
+            }
+            
+            .success-numbers {
+                flex-direction: column;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .platform-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-lab {
+                padding: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .risk-calculator {
+                padding: 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn-custom {
+            min-height: 44px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(111, 66, 193, 0.3);
+        }
+
+        .btn-accent-custom {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-accent-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(253, 126, 20, 0.3);
+        }
+
+        .btn-success-custom {
+            background: var(--gradient-compliance);
+            color: white;
+        }
+
+        .btn-success-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(25, 135, 84, 0.3);
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .insight-card {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+    
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="#" class="wc-logo">
+                        <i class="fas fa-shield-alt"></i> WC Training Pro
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activas
+                        <span class="mx-2">|</span>
+                        <strong>847</strong> alertas normativas activas
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <div class="d-flex align-items-center mb-3">
+                <i class="fas fa-gavel fa-2x text-primary me-3"></i>
+                <div>
+                    <h3 class="mb-0">⚖️ Legal Compliance Intelligence 2025</h3>
+                    <p class="text-muted mb-0">Vigilancia normativa actualizada en tiempo real</p>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </div>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <span class="insight-number">89%</span>
+                    <div>de suspensiones por cambios no detectados a tiempo</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">156</span>
+                    <div>cambios normativos promedio por plataforma/año</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">67%</span>
+                    <div>de modelos no revisan términos regularmente</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">24h</span>
+                    <div>tiempo promedio para adaptación con vigilancia</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">+347%</span>
+                    <div>estabilidad operativa con monitoreo sistemático</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">95%</span>
+                    <div>de interrupciones evitables con anticipación</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">⚖️ Master en Vigilancia Normativa</h1>
+            <p class="main-subtitle">Conviértete en cartógrafa especializada de territorios legales constantemente cambiantes</p>
+            <p class="lead">Tu sistema de vigilancia normativa para transformar turbulencia regulatoria en ventaja competitiva</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Lab Section 1: Fundamentos de Vigilancia -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                🔍 Lab de Vigilancia Normativa
+            </h2>
+            <p class="lead">Domina el arte de la detección temprana de cambios regulatorios</p>
+            
+            <button class="interactive-card" onclick="toggleDetails('fundamentos')">
+                <h4><i class="fas fa-file-contract"></i> Sistema de Archivo y Comparación</h4>
+                <p>Mantén versiones históricas para análisis comparativo preciso</p>
+            </button>
+            <div id="fundamentos" class="card-details">
+                <h5>📂 CRÍTICO: Infraestructura de Archivo</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Metodología de Archivo:</h6>
+                        <ul>
+                            <li><strong>Fechas precisas:</strong> Timestamp de cada versión</li>
+                            <li><strong>Estructura organizada:</strong> Carpetas por plataforma</li>
+                            <li><strong>Nomenclatura clara:</strong> Fecha_Plataforma_Version</li>
+                            <li><strong>Backup automático:</strong> Múltiples copias de seguridad</li>
+                            <li><strong>Acceso rápido:</strong> Índice de búsqueda</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Herramientas de Comparación:</h6>
+                        <ul>
+                            <li><strong>Diff tools:</strong> Comparación línea por línea</li>
+                            <li><strong>Resaltado visual:</strong> Cambios en colores</li>
+                            <li><strong>Categorización:</strong> Añadido/Modificado/Eliminado</li>
+                            <li><strong>Impacto assessment:</strong> Nivel de riesgo</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-warning mt-3">
+                    <strong>⚠️ ESENCIAL:</strong> El 78% de suspensiones ocurren por cambios en secciones aparentemente menores
+                </div>
+            </div>
+
+            <button class="interactive-card" onclick="toggleDetails('calendario')">
+                <h4><i class="fas fa-calendar-alt"></i> Calendario de Revisión Sistemática</h4>
+                <p>Establece cronograma garantizando vigilancia consistente</p>
+            </button>
+            <div id="calendario" class="card-details">
+                <h5>📅 Programa de Vigilancia Optimizado</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Revisión Diaria (5 min)</h6>
+                        <ul>
+                            <li>Alertas automáticas</li>
+                            <li>Notificaciones push</li>
+                            <li>Cambios críticos</li>
+                            <li>Emails de plataforma</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Revisión Semanal (30 min)</h6>
+                        <ul>
+                            <li>Análisis comparativo</li>
+                            <li>Documentación cambios</li>
+                            <li>Evaluación impacto</li>
+                            <li>Planificación adaptaciones</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Revisión Mensual (2-3 horas)</h6>
+                        <ul>
+                            <li>Análisis profundo</li>
+                            <li>Tendencias detectadas</li>
+                            <li>Predicciones futuras</li>
+                            <li>Optimización sistema</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Calculadora de Riesgo -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-calculator"></i>
+                📊 Calculadora de Riesgo Regulatorio
+            </h2>
+            
+            <div class="risk-calculator">
+                <h4>Evalúa tu nivel de riesgo normativo actual</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Número de plataformas donde operas:</label>
+                        <input type="number" class="risk-input" id="platformCount" placeholder="3" oninput="calculateRisk()">
+                        
+                        <label>Frecuencia de revisión (días):</label>
+                        <input type="number" class="risk-input" id="reviewFrequency" placeholder="30" oninput="calculateRisk()">
+                        
+                        <label>Tiempo desde última revisión completa (días):</label>
+                        <input type="number" class="risk-input" id="lastReview" placeholder="15" oninput="calculateRisk()">
+                        
+                        <label>Infracciones previas (últimos 12 meses):</label>
+                        <input type="number" class="risk-input" id="previousInfractions" placeholder="0" oninput="calculateRisk()">
+                        
+                        <label>Tipo de contenido (1-5, 5=alto riesgo):</label>
+                        <input type="number" class="risk-input" id="contentRisk" min="1" max="5" placeholder="3" oninput="calculateRisk()">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="risk-result" id="riskResult">
+                            <h5>⚠️ Evaluación de Riesgo</h5>
+                            <div id="riskCalculation">Completa los campos para ver tu evaluación</div>
+                            <div class="risk-meter mt-3">
+                                <div class="risk-fill" id="riskFill" style="width: 0%"></div>
+                                <div class="risk-text" id="riskText">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Selector de Plataformas -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-globe"></i>
+                🌐 Monitor Multi-Plataforma
+            </h2>
+            
+            <p>Selecciona las plataformas que necesitas monitorear</p>
+            
+            <div class="platform-selector">
+                <button class="platform-option" onclick="selectPlatform('chaturbate')">
+                    <i class="fas fa-video"></i>
+                    <h5>Chaturbate</h5>
+                    <p>Términos actualizados: 15 días</p>
+                </button>
+                <button class="platform-option" onclick="selectPlatform('onlyfans')">
+                    <i class="fas fa-crown"></i>
+                    <h5>OnlyFans</h5>
+                    <p>Términos actualizados: 8 días</p>
+                </button>
+                <button class="platform-option" onclick="selectPlatform('streamate')">
+                    <i class="fas fa-stream"></i>
+                    <h5>Streamate</h5>
+                    <p>Términos actualizados: 22 días</p>
+                </button>
+                <button class="platform-option" onclick="selectPlatform('cam4')">
+                    <i class="fas fa-camera"></i>
+                    <h5>Cam4</h5>
+                    <p>Términos actualizados: 45 días</p>
+                </button>
+                <button class="platform-option" onclick="selectPlatform('livejasmin')">
+                    <i class="fas fa-star"></i>
+                    <h5>LiveJasmin</h5>
+                    <p>Términos actualizados: 12 días</p>
+                </button>
+                <button class="platform-option" onclick="selectPlatform('mfc')">
+                    <i class="fas fa-heart"></i>
+                    <h5>MyFreeCams</h5>
+                    <p>Términos actualizados: 30 días</p>
+                </button>
+            </div>
+            
+            <div id="platformResult" class="risk-result" style="display: none;">
+                <h5>📋 Detalles de Plataforma</h5>
+                <div id="platformContent"></div>
+            </div>
+        </div>
+
+        <!-- Lab Section 4: Sistema de Alertas -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-bell"></i>
+                🚨 Sistema de Alertas Inteligente
+            </h2>
+            
+            <div class="alert-system">
+                <h4>Configura alertas basadas en nivel de impacto</h4>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6>Niveles de Alerta:</h6>
+                        <div class="alert-level low" onclick="setAlertLevel('low')">
+                            <i class="fas fa-info-circle"></i> BAJO: Cambios menores
+                        </div>
+                        <div class="alert-level medium" onclick="setAlertLevel('medium')">
+                            <i class="fas fa-exclamation-triangle"></i> MEDIO: Modificaciones significativas
+                        </div>
+                        <div class="alert-level high" onclick="setAlertLevel('high')">
+                            <i class="fas fa-exclamation-circle"></i> ALTO: Cambios críticos
+                        </div>
+                        <div class="alert-level critical" onclick="setAlertLevel('critical')">
+                            <i class="fas fa-skull-crossbones"></i> CRÍTICO: Riesgo inmediato
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="scanner-result" id="alertConfig">
+                            <h6>⚙️ Configuración Actual</h6>
+                            <div id="alertSettings">Selecciona un nivel de alerta</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 5: Escáner de Compliance -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-search-plus"></i>
+                🔍 Escáner de Compliance
+            </h2>
+            
+            <div class="compliance-scanner">
+                <h4>Analiza tu contenido contra términos actuales</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Describe tu contenido típico:</label>
+                        <textarea class="scanner-input" id="contentDescription" rows="4" placeholder="Ejemplo: Transmisiones de baile, conversaciones casuales, contenido artístico..."></textarea>
+                        
+                        <label>Plataforma principal:</label>
+                        <select class="scanner-input" id="mainPlatform">
+                            <option value="">Selecciona plataforma</option>
+                            <option value="chaturbate">Chaturbate</option>
+                            <option value="onlyfans">OnlyFans</option>
+                            <option value="streamate">Streamate</option>
+                            <option value="cam4">Cam4</option>
+                            <option value="livejasmin">LiveJasmin</option>
+                            <option value="mfc">MyFreeCams</option>
+                        </select>
+                        
+                        <label>Edad de tu audiencia principal:</label>
+                        <select class="scanner-input" id="audienceAge">
+                            <option value="">Selecciona rango</option>
+                            <option value="18-24">18-24 años</option>
+                            <option value="25-34">25-34 años</option>
+                            <option value="35-44">35-44 años</option>
+                            <option value="45+">45+ años</option>
+                        </select>
+                        
+                        <button class="btn-custom btn-accent-custom" onclick="scanCompliance()">
+                            <i class="fas fa-scan"></i> Escanear Compliance
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scanner-result" id="complianceResult">
+                            <h5>📊 Resultados del Escaneo</h5>
+                            <div id="complianceAnalysis">Completa el formulario para analizar tu compliance</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 6: Tracker de Versiones -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-history"></i>
+                📚 Biblioteca de Versiones
+            </h2>
+            
+            <div class="terms-comparison">
+                <h4>Historial de cambios en términos de servicio</h4>
+                
+                <div class="version-tracker">
+                    <div class="version-header">
+                        <h5><i class="fas fa-video"></i> Chaturbate</h5>
+                        <div class="version-date">v2.8.4 - 15 dic 2024</div>
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator added"></span>
+                        <strong>Añadido:</strong> Nuevas restricciones sobre contenido de edad
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator modified"></span>
+                        <strong>Modificado:</strong> Política de reembolsos actualizada
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator removed"></span>
+                        <strong>Eliminado:</strong> Excepción para contenido artístico
+                    </div>
+                </div>
+                
+                <div class="version-tracker">
+                    <div class="version-header">
+                        <h5><i class="fas fa-crown"></i> OnlyFans</h5>
+                        <div class="version-date">v3.2.1 - 8 dic 2024</div>
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator modified"></span>
+                        <strong>Modificado:</strong> Términos de pago más estrictos
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator added"></span>
+                        <strong>Añadido:</strong> Verificación de identidad obligatoria
+                    </div>
+                </div>
+                
+                <div class="version-tracker">
+                    <div class="version-header">
+                        <h5><i class="fas fa-stream"></i> Streamate</h5>
+                        <div class="version-date">v1.9.7 - 22 nov 2024</div>
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator modified"></span>
+                        <strong>Modificado:</strong> Horarios de transmisión permitidos
+                    </div>
+                    <div class="mb-2">
+                        <span class="change-indicator added"></span>
+                        <strong>Añadido:</strong> Nuevos requisitos técnicos
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 7: Progress Tracker -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i>
+                📈 Tracker de Maestría Legal
+            </h2>
+            
+            <div class="progress-tracker">
+                <h4>Tu Progreso como Experta en Vigilancia Normativa</h4>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Vigilancia Sistemática</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="surveillanceSkills" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('surveillanceSkills', this.value)">
+                        
+                        <h6>Análisis Comparativo</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="analysisSkills" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('analysisSkills', this.value)">
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Gestión de Riesgos</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="riskManagement" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('riskManagement', this.value)">
+                        
+                        <h6>Adaptación Proactiva</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="proactiveAdaptation" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('proactiveAdaptation', this.value)">
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <h5>Nivel de Experta Legal: <span id="legalLevel">Principiante</span></h5>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-story">
+            <h3><i class="fas fa-trophy"></i> Caso de Éxito: Elena - La Cartógrafa Legal</h3>
+            <p>"Implementé mi <strong>'Sistema de Vigilancia Normativa'</strong> dedicando 2-3 horas mensuales al análisis detallado de documentación regulatoria. Mantengo versiones anteriores, desarrollo sistema codificado para categorizar cambios e inmediatamente desarrollo adaptaciones específicas. Cuando una plataforma implementó restricciones significativas, había identificado indicadores preliminares 6 semanas antes, permitiéndome adaptarme gradualmente mientras competidoras experimentaron interrupciones abruptas."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+289%</span>
+                    <span>Estabilidad operativa</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$6,240</span>
+                    <span>Ingreso mensual estable</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">0</span>
+                    <span>Suspensiones en 2 años</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">24h</span>
+                    <span>Tiempo promedio adaptación</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-star"></i> Caso de Éxito: Carmen - La Experta en Compliance</h3>
+            <p>"Desarrollé mi biblioteca de términos documentando evolución regulatoria cronológicamente. Establezco sistema de alertas con diferentes niveles de urgencia, traduzco lenguaje técnico-legal a implicaciones operativas concretas y mantengo registro cronológico identificando tendencias direccionales. Mi resiliencia regulatoria permite que transforme turbulencia potencialmente disruptiva en variable operativa sistemáticamente gestionada."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+167%</span>
+                    <span>Eficiencia adaptativa</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$5,890</span>
+                    <span>Promedio mensual consistente</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">97%</span>
+                    <span>Anticipación de cambios</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">47</span>
+                    <span>Adaptaciones exitosas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-rocket"></i> Caso de Éxito: Isabella - La Maestra de Vigilancia</h3>
+            <p>"Implementé vigilancia sistemática de infraestructura regulatoria creando plantillas estructuradas para documentar observaciones, sistema de alertas multinivel y proceso para traducir lenguaje técnico en implicaciones prácticas. Esta alfabetización regulatoria transforma mi estabilidad operativa, convirtiendo descubrimiento reactivo en anticipación sistemática que preserva continuidad mientras competidoras experimentan turbulencia."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+378%</span>
+                    <span>Ventaja competitiva</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$8,670</span>
+                    <span>Récord mensual</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">100%</span>
+                    <span>Detección temprana</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">Top 1%</span>
+                    <span>Estabilidad regulatoria</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-graduation-cap"></i> ¡Felicitaciones! Te has convertido en una Experta en Vigilancia Normativa</h2>
+            <p class="lead">Tu infraestructura de vigilancia transforma fundamentalmente tu estabilidad operativa</p>
+            <p>La diferencia entre descubrimiento reactivo y anticipación sistemática es la línea divisoria entre interrupciones traumáticas que comprometen ingresos y transiciones fluidas que preservan continuidad mientras competidoras experimentan turbulencia significativa.</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    <h5>Vigilancia Sistemática</h5>
+                    <p>Monitoreo continuo de cambios</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                    <h5>Gestión de Riesgos</h5>
+                    <p>Evaluación y mitigación proactiva</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                    <h5>Análisis Comparativo</h5>
+                    <p>Detección precisa de modificaciones</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-clock fa-2x mb-2"></i>
+                    <h5>Adaptación Proactiva</h5>
+                    <p>Transiciones fluidas y oportunas</p>
+                </div>
+            </div>
+            
+            <button class="btn-custom btn-primary-custom mt-4" onclick="startSurveillance()">
+                <i class="fas fa-shield-alt"></i> ¡A construir tu sistema de vigilancia!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentTime').textContent = 
+                `Actualizado: ${now.toLocaleDateString('es-ES', options)}`;
+        }
+
+        // Toggle details function
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('expanded');
+        }
+
+        // Calculate risk
+        function calculateRisk() {
+            const platformCount = parseInt(document.getElementById('platformCount').value) || 0;
+            const reviewFrequency = parseInt(document.getElementById('reviewFrequency').value) || 0;
+            const lastReview = parseInt(document.getElementById('lastReview').value) || 0;
+            const previousInfractions = parseInt(document.getElementById('previousInfractions').value) || 0;
+            const contentRisk = parseInt(document.getElementById('contentRisk').value) || 0;
+            
+            if (platformCount > 0 && reviewFrequency > 0) {
+                // Risk calculation formula
+                let riskScore = 0;
+                
+                // Platform multiplier
+                riskScore += platformCount * 10;
+                
+                // Review frequency penalty
+                if (reviewFrequency > 30) riskScore += 25;
+                else if (reviewFrequency > 14) riskScore += 15;
+                else if (reviewFrequency > 7) riskScore += 5;
+                
+                // Last review penalty
+                if (lastReview > 60) riskScore += 30;
+                else if (lastReview > 30) riskScore += 20;
+                else if (lastReview > 14) riskScore += 10;
+                
+                // Previous infractions penalty
+                riskScore += previousInfractions * 15;
+                
+                // Content risk multiplier
+                riskScore += contentRisk * 8;
+                
+                // Normalize to 0-100 scale
+                riskScore = Math.min(riskScore, 100);
+                
+                let riskLevel = 'Bajo';
+                let riskColor = '#198754';
+                let recommendations = [];
+                
+                if (riskScore >= 80) {
+                    riskLevel = 'Crítico';
+                    riskColor = '#dc3545';
+                    recommendations = [
+                        'Revisión inmediata de todos los términos',
+                        'Implementar monitoreo diario',
+                        'Consultar asesoría legal especializada',
+                        'Pausar contenido de alto riesgo'
+                    ];
+                } else if (riskScore >= 60) {
+                    riskLevel = 'Alto';
+                    riskColor = '#fd7e14';
+                    recommendations = [
+                        'Aumentar frecuencia de revisión',
+                        'Implementar sistema de alertas',
+                        'Revisar contenido actual',
+                        'Crear backup de archivos importantes'
+                    ];
+                } else if (riskScore >= 40) {
+                    riskLevel = 'Moderado';
+                    riskColor = '#ffc107';
+                    recommendations = [
+                        'Establecer calendario de revisión',
+                        'Crear archivo de versiones',
+                        'Mejorar documentación',
+                        'Capacitación en compliance'
+                    ];
+                } else {
+                    riskLevel = 'Bajo';
+                    riskColor = '#198754';
+                    recommendations = [
+                        'Mantener vigilancia actual',
+                        'Optimizar sistema existente',
+                        'Considerar automatización',
+                        'Compartir mejores prácticas'
+                    ];
+                }
+                
+                document.getElementById('riskCalculation').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>📊 Análisis de Riesgo</h6>
+                            <p><strong>Puntuación:</strong> ${riskScore}/100</p>
+                            <p><strong>Nivel:</strong> ${riskLevel}</p>
+                            <p><strong>Plataformas:</strong> ${platformCount}</p>
+                            <p><strong>Última revisión:</strong> ${lastReview} días</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🎯 Recomendaciones</h6>
+                            ${recommendations.map(rec => `<p><small>• ${rec}</small></p>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('riskFill').style.width = riskScore + '%';
+                document.getElementById('riskFill').style.background = riskColor;
+                document.getElementById('riskText').textContent = riskScore + '%';
+            }
+        }
+
+        // Select platform
+        function selectPlatform(platform) {
+            document.querySelectorAll('.platform-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            event.target.closest('.platform-option').classList.add('selected');
+            
+            const platforms = {
+                chaturbate: {
+                    name: 'Chaturbate',
+                    lastUpdate: '15 días atrás',
+                    riskLevel: 'Moderado',
+                    changes: [
+                        'Nuevas restricciones de contenido relacionado con edad',
+                        'Actualización en política de reembolsos',
+                        'Cambios en términos de privacidad'
+                    ],
+                    recommendations: [
+                        'Revisar contenido actual vs nuevas restricciones',
+                        'Actualizar políticas de reembolso personal',
+                        'Verificar configuración de privacidad'
+                    ]
+                },
+                onlyfans: {
+                    name: 'OnlyFans',
+                    lastUpdate: '8 días atrás',
+                    riskLevel: 'Alto',
+                    changes: [
+                        'Términos de pago más estrictos',
+                        'Verificación de identidad obligatoria',
+                        'Nuevas restricciones geográficas'
+                    ],
+                    recommendations: [
+                        'Completar verificación de identidad urgente',
+                        'Revisar configuración de pagos',
+                        'Verificar disponibilidad en tu región'
+                    ]
+                },
+                streamate: {
+                    name: 'Streamate',
+                    lastUpdate: '22 días atrás',
+                    riskLevel: 'Bajo',
+                    changes: [
+                        'Modificación en horarios permitidos',
+                        'Nuevos requisitos técnicos',
+                        'Actualización en comisiones'
+                    ],
+                    recommendations: [
+                        'Ajustar horarios de transmisión',
+                        'Verificar requisitos técnicos',
+                        'Revisar estructura de comisiones'
+                    ]
+                }
+            };
+            
+            const selected = platforms[platform];
+            if (selected) {
+                document.getElementById('platformResult').style.display = 'block';
+                document.getElementById('platformContent').innerHTML = `
+                    <h6>🏢 ${selected.name}</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>📅 Última actualización:</strong> ${selected.lastUpdate}</p>
+                            <p><strong>⚠️ Nivel de riesgo:</strong> ${selected.riskLevel}</p>
+                            <h6>📝 Cambios recientes:</h6>
+                            <ul>
+                                ${selected.changes.map(change => `<li>${change}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🎯 Recomendaciones:</h6>
+                            <ul>
+                                ${selected.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Set alert level
+        function setAlertLevel(level) {
+            document.querySelectorAll('.alert-level').forEach(btn => {
+                btn.style.transform = 'scale(1)';
+            });
+            
+            event.target.style.transform = 'scale(1.1)';
+            
+            const alertLevels = {
+                low: {
+                    title: 'Alerta Nivel Bajo',
+                    description: 'Notificaciones por email semanales',
+                    triggers: ['Cambios menores en términos', 'Actualizaciones de formato', 'Correcciones tipográficas']
+                },
+                medium: {
+                    title: 'Alerta Nivel Medio',
+                    description: 'Notificaciones por email cada 3 días',
+                    triggers: ['Modificaciones en políticas', 'Cambios en comisiones', 'Nuevos requisitos']
+                },
+                high: {
+                    title: 'Alerta Nivel Alto',
+                    description: 'Notificaciones inmediatas por email y SMS',
+                    triggers: ['Restricciones de contenido', 'Cambios en pagos', 'Nuevas verificaciones']
+                },
+                critical: {
+                    title: 'Alerta Nivel Crítico',
+                    description: 'Notificaciones inmediatas múltiples canales',
+                    triggers: ['Suspensiones masivas', 'Cambios drásticos TOS', 'Riesgo de cierre cuenta']
+                }
+            };
+            
+            const selected = alertLevels[level];
+            document.getElementById('alertSettings').innerHTML = `
+                <h6>${selected.title}</h6>
+                <p><strong>Frecuencia:</strong> ${selected.description}</p>
+                <p><strong>Triggers:</strong></p>
+                <ul>
+                    ${selected.triggers.map(trigger => `<li><small>${trigger}</small></li>`).join('')}
+                </ul>
+            `;
+        }
+
+        // Scan compliance
+        function scanCompliance() {
+            const content = document.getElementById('contentDescription').value;
+            const platform = document.getElementById('mainPlatform').value;
+            const audience = document.getElementById('audienceAge').value;
+            
+            if (content && platform && audience) {
+                // Simulate compliance analysis
+                const riskFactors = [];
+                let complianceScore = 85;
+                
+                // Content analysis
+                if (content.toLowerCase().includes('baile')) {
+                    riskFactors.push('Contenido de baile: Verificar restricciones específicas');
+                    complianceScore -= 5;
+                }
+                if (content.toLowerCase().includes('artístico')) {
+                    riskFactors.push('Contenido artístico: Generalmente permitido');
+                    complianceScore += 5;
+                }
+                if (content.toLowerCase().includes('conversación')) {
+                    riskFactors.push('Conversaciones: Bajo riesgo');
+                    complianceScore += 3;
+                }
+                
+                // Platform-specific checks
+                if (platform === 'onlyfans') {
+                    complianceScore -= 10;
+                    riskFactors.push('OnlyFans: Verificación de identidad requerida');
+                }
+                
+                // Audience age considerations
+                if (audience === '18-24') {
+                    riskFactors.push('Audiencia joven: Considerar restricciones adicionales');
+                    complianceScore -= 8;
+                }
+                
+                complianceScore = Math.max(0, Math.min(100, complianceScore));
+                
+                let statusColor = '#198754';
+                let status = 'Conforme';
+                if (complianceScore < 70) {
+                    status = 'Riesgo Alto';
+                    statusColor = '#dc3545';
+                } else if (complianceScore < 85) {
+                    status = 'Riesgo Moderado';
+                    statusColor = '#fd7e14';
+                }
+                
+                document.getElementById('complianceAnalysis').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 style="color: ${statusColor}">📋 Estado: ${status}</h6>
+                            <p><strong>Puntuación:</strong> ${complianceScore}/100</p>
+                            <p><strong>Plataforma:</strong> ${platform}</p>
+                            <p><strong>Audiencia:</strong> ${audience}</p>
+                            <h6>⚠️ Consideraciones:</h6>
+                            <ul>
+                                ${riskFactors.map(factor => `<li><small>${factor}</small></li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Update progress
+        function updateProgress(progressId, value) {
+            document.getElementById(progressId).style.width = value + '%';
+            calculateOverallProgress();
+        }
+
+        // Calculate overall progress
+        function calculateOverallProgress() {
+            const surveillance = parseFloat(document.getElementById('surveillanceSkills').style.width) || 0;
+            const analysis = parseFloat(document.getElementById('analysisSkills').style.width) || 0;
+            const riskMgmt = parseFloat(document.getElementById('riskManagement').style.width) || 0;
+            const adaptation = parseFloat(document.getElementById('proactiveAdaptation').style.width) || 0;
+            
+            const overall = (surveillance + analysis + riskMgmt + adaptation) / 4;
+            document.getElementById('overallProgress').style.width = overall + '%';
+            
+            let level = 'Principiante';
+            if (overall >= 80) level = 'Experta';
+            else if (overall >= 60) level = 'Avanzada';
+            else if (overall >= 40) level = 'Intermedia';
+            
+            document.getElementById('legalLevel').textContent = level;
+        }
+
+        // Start surveillance function
+        function startSurveillance() {
+            alert('¡Excelente! Te has convertido en una Experta en Vigilancia Normativa. Tu sistema de vigilancia transformará tu estabilidad operativa y te dará ventaja competitiva. ¡A construir tu infraestructura de vigilancia!');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000); // Update every minute
+            
+            // Add some initial animations
+            setTimeout(() => {
+                document.querySelector('.floating-bg').style.opacity = '0.05';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

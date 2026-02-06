@@ -1,0 +1,1486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🌬️ WC Training - Masters de Respiración en Vivo</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #0ea5e9;
+      --secondary-color: #06b6d4;
+      --accent-color: #3b82f6;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --breath-blue: #0ea5e9;
+      --calm-cyan: #06b6d4;
+      --flow-aqua: #67e8f9;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-breath: #f0f9ff;
+      --border-light: #e0e0e0;
+      --gradient-breath: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 50%, #3b82f6 100%);
+      --gradient-flow: linear-gradient(45deg, #06b6d4 0%, #67e8f9 100%);
+      --gradient-calm: linear-gradient(90deg, #3b82f6 0%, #0ea5e9 100%);
+      --gradient-zen: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 50%, #3b82f6 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--gradient-breath);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='6'/%3E%3Ccircle cx='30' cy='30' r='12'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: breathe 24s infinite ease-in-out;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .wc-stats {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.05) 0%, rgba(6, 182, 212, 0.05) 100%);
+      border: 1px solid rgba(14, 165, 233, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(14, 165, 233, 0.15);
+    }
+
+    .insight-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: var(--gradient-breath);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .insight-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Main Header */
+    .main-header {
+      background: var(--gradient-zen);
+      color: white;
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 10c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40zm0 15c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25z' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E") repeat;
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      padding: 4rem 0;
+      background: var(--bg-white);
+      margin: 2rem 0;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .lab-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-breath);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    /* Interactive Cards */
+    .interactive-card {
+      background: var(--bg-white);
+      border: 2px solid rgba(14, 165, 233, 0.1);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(14, 165, 233, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px) translateX(10px);
+      box-shadow: 0 20px 50px rgba(14, 165, 233, 0.2);
+      border-color: var(--primary-color);
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .card-details.expanded {
+      max-height: 800px;
+    }
+
+    /* Breathing Guide */
+    .breathing-guide {
+      background: var(--bg-breath);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .breath-circle {
+      width: 200px;
+      height: 200px;
+      border: 4px solid var(--primary-color);
+      border-radius: 50%;
+      margin: 2rem auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .breath-circle.inhaling {
+      transform: scale(1.3);
+      background: rgba(14, 165, 233, 0.1);
+      box-shadow: 0 0 30px rgba(14, 165, 233, 0.3);
+    }
+
+    .breath-circle.exhaling {
+      transform: scale(0.8);
+      background: rgba(6, 182, 212, 0.1);
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.2);
+    }
+
+    .breath-circle.holding {
+      transform: scale(1.1);
+      background: rgba(59, 130, 246, 0.1);
+      box-shadow: 0 0 25px rgba(59, 130, 246, 0.25);
+    }
+
+    .breath-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .breath-counter {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--breath-blue);
+    }
+
+    .breath-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    /* Technique Cards */
+    .technique-card {
+      background: var(--bg-white);
+      border: 2px solid rgba(14, 165, 233, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .technique-card:hover,
+    .technique-card.selected {
+      border-color: var(--primary-color);
+      background: rgba(14, 165, 233, 0.05);
+      transform: translateX(10px);
+    }
+
+    .technique-card h6 {
+      color: var(--primary-color);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Calculator Styles */
+    .calculator-container {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.05) 0%, rgba(14, 165, 233, 0.05) 100%);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calc-input {
+      border: 2px solid rgba(14, 165, 233, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      background: var(--bg-white);
+    }
+
+    .calc-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 20px rgba(14, 165, 233, 0.2);
+    }
+
+    .calc-result {
+      background: var(--gradient-breath);
+      color: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Progress Bars */
+    .progress-container {
+      margin: 2rem 0;
+    }
+
+    .progress-bar-custom {
+      height: 20px;
+      border-radius: 15px;
+      background: rgba(14, 165, 233, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-breath);
+      border-radius: 15px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    /* Stress Meter */
+    .stress-meter {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid rgba(14, 165, 233, 0.1);
+      margin: 2rem 0;
+    }
+
+    .stress-gauge {
+      width: 150px;
+      height: 75px;
+      border: 8px solid #e5e7eb;
+      border-bottom: none;
+      border-radius: 150px 150px 0 0;
+      position: relative;
+      margin: 1rem auto;
+    }
+
+    .stress-needle {
+      width: 2px;
+      height: 70px;
+      background: var(--primary-color);
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform-origin: bottom center;
+      transition: transform 0.5s ease;
+    }
+
+    .stress-level {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 1rem;
+    }
+
+    /* Success Stories */
+    .success-story {
+      background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+      color: white;
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-story::before {
+      content: '"';
+      font-size: 8rem;
+      position: absolute;
+      top: -2rem;
+      left: 2rem;
+      opacity: 0.2;
+      font-family: serif;
+    }
+
+    .story-metric {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Simulator */
+    .simulator-container {
+      background: var(--bg-breath);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-option {
+      background: var(--bg-white);
+      border: 2px solid rgba(14, 165, 233, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover,
+    .scenario-option.selected {
+      border-color: var(--primary-color);
+      background: rgba(14, 165, 233, 0.05);
+      transform: translateX(10px);
+    }
+
+    .scenario-result {
+      background: var(--gradient-calm);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      display: none;
+    }
+
+    /* Buttons */
+    .btn-breath {
+      background: var(--gradient-breath);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-breath:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+      color: white;
+    }
+
+    .btn-breath::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-breath:hover::before {
+      left: 100%;
+    }
+
+    /* Critical Badges */
+    .critical-badge {
+      background: var(--warning-orange);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      margin: 0.5rem 0;
+      animation: pulse 2s infinite;
+    }
+
+    /* Breathing Pattern Indicator */
+    .pattern-indicator {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.5rem;
+      margin: 1rem 0;
+    }
+
+    .pattern-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #e5e7eb;
+      transition: all 0.3s ease;
+    }
+
+    .pattern-dot.active {
+      background: var(--primary-color);
+      transform: scale(1.3);
+    }
+
+    /* Animations */
+    @keyframes breathe {
+      0%, 100% { 
+        transform: translateY(0px) scale(1); 
+        opacity: 0.7;
+      }
+      50% { 
+        transform: translateY(-10px) scale(1.05); 
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    @keyframes slideDown {
+      from { max-height: 0; }
+      to { max-height: 800px; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-title { font-size: 2.5rem; }
+      .main-subtitle { font-size: 1.1rem; }
+      .lab-title { font-size: 2rem; }
+      .interactive-card { padding: 1.5rem; margin: 1rem 0; }
+      .calculator-container { padding: 1.5rem; }
+      .main-header { padding: 4rem 0; }
+      .insight-card { margin: 1rem 0; }
+      .breath-circle { width: 150px; height: 150px; }
+      .breath-counter { font-size: 2rem; }
+      .breath-controls { gap: 0.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .main-title { font-size: 2rem; }
+      .main-subtitle { font-size: 1rem; }
+      .lab-title { font-size: 1.8rem; }
+      .interactive-card { padding: 1rem; }
+      .calculator-container { padding: 1rem; }
+      .wc-logo { font-size: 1.5rem; }
+      .insight-number { font-size: 1.8rem; }
+      .breath-circle { width: 120px; height: 120px; }
+      .breath-counter { font-size: 1.8rem; }
+    }
+
+    /* Touch-friendly elements */
+    .interactive-card,
+    .scenario-option,
+    .btn-breath,
+    .technique-card {
+      min-height: 44px;
+    }
+
+    /* High contrast accessibility */
+    @media (prefers-contrast: high) {
+      .interactive-card {
+        border-width: 3px;
+      }
+      
+      .calc-input:focus {
+        box-shadow: 0 0 0 3px var(--primary-color);
+      }
+    }
+
+    /* Reduced motion accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      
+      .breath-circle {
+        transform: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-crown"></i> WC Training
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="wc-stats">
+            <span class="live-indicator"></span>
+            <strong>12,847</strong> modelos activos | <strong>91%</strong> usan técnicas de respiración
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="industry-insights">
+    <div class="container">
+      <h2 class="text-center mb-4"><i class="fas fa-chart-line"></i> Breathing Mastery Insights 2025</h2>
+      <div class="row g-4">
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">89%</div>
+            <div class="insight-label">Menos ansiedad streaming</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">4.7x</div>
+            <div class="insight-label">Control emocional</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">30-60s</div>
+            <div class="insight-label">Tiempo de recalibración</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">78%</div>
+            <div class="insight-label">Mejor performance</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">-70%</div>
+            <div class="insight-label">Streams terminados early</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">Top 1%</div>
+            <div class="insight-label">Elite domina arsenal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="container">
+      <h1 class="main-title">🌬️ Masters de Respiración en Vivo</h1>
+      <p class="main-subtitle">
+        Tu Arsenal Respiratorio Estratégico - Control Remoto Neurológico para Performance de Elite en Transmisiones
+      </p>
+      <div class="mt-4">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">TRANSFORMACIONAL</span>
+        <span class="critical-badge">ESENCIAL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 1: Arsenal Respiratorio Estratégico -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">💨 Arsenal Respiratorio Estratégico</h2>
+      
+      <div class="interactive-card" onclick="toggleDetails('arsenal')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-lungs"></i></div>
+            <h4>Técnicas Calibradas por Situación</h4>
+            <span class="critical-badge">VITAL</span>
+          </div>
+          <div class="expand-icon" id="icon-arsenal"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Herramientas precisas para desafíos específicos durante transmisiones</strong></p>
+        
+        <div class="card-details" id="details-arsenal">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="technique-card" onclick="selectTechnique('4-7-8')">
+                <h6><i class="fas fa-heart"></i> Respiración 4-7-8 (Ansiedad Aguda)</h6>
+                <p>Inhala 4s → Retén 7s → Exhala 8s<br>
+                <small>Activa sistema parasimpático instantáneamente</small></p>
+              </div>
+              
+              <div class="technique-card" onclick="selectTechnique('square')">
+                <h6><i class="fas fa-square"></i> Respiración Cuadrada (Recentrar Atención)</h6>
+                <p>Inhala 4s → Retén 4s → Exhala 4s → Pausa 4s<br>
+                <small>Equilibra ondas cerebrales para máximo enfoque</small></p>
+              </div>
+              
+              <div class="technique-card" onclick="selectTechnique('alternate')">
+                <h6><i class="fas fa-exchange-alt"></i> Respiración Alterna (Balance Energético)</h6>
+                <p>Alterna fosas nasales por ciclos específicos<br>
+                <small>Sincroniza hemisferios cerebrales</small></p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="technique-card" onclick="selectTechnique('invisible')">
+                <h6><i class="fas fa-eye-slash"></i> Micro-Respiración Invisible</h6>
+                <p>Respiración imperceptible durante interacciones<br>
+                <small>Usuarios no detectan cambio alguno</small></p>
+              </div>
+              
+              <div class="technique-card" onclick="selectTechnique('power')">
+                <h6><i class="fas fa-bolt"></i> Power Breathing (Energía Instantánea)</h6>
+                <p>Respiración rápida y profunda controlada<br>
+                <small>Boost de energía para momentos clave</small></p>
+              </div>
+              
+              <div class="technique-card" onclick="selectTechnique('recovery')">
+                <h6><i class="fas fa-leaf"></i> Recovery Breath (Post-Estrés)</h6>
+                <p>Respiración lenta y prolongada<br>
+                <small>Recuperación neurológica post-interacción</small></p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="breathing-guide" id="breathingGuide">
+            <h5><i class="fas fa-play-circle"></i> Guía Interactiva de Respiración</h5>
+            <div class="breath-circle" id="breathCircle">
+              <div class="breath-text" id="breathText">PREPARADO</div>
+            </div>
+            <div class="breath-counter" id="breathCounter">4</div>
+            <div class="pattern-indicator" id="patternIndicator">
+              <div class="pattern-dot"></div>
+              <div class="pattern-dot"></div>
+              <div class="pattern-dot"></div>
+              <div class="pattern-dot"></div>
+            </div>
+            <div class="breath-controls">
+              <button class="btn btn-breath" onclick="startBreathingExercise()">
+                <i class="fas fa-play"></i> Iniciar Ejercicio
+              </button>
+              <button class="btn btn-breath" onclick="pauseBreathingExercise()">
+                <i class="fas fa-pause"></i> Pausar
+              </button>
+              <button class="btn btn-breath" onclick="resetBreathingExercise()">
+                <i class="fas fa-refresh"></i> Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('fisiologia')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-brain"></i></div>
+            <h4>Neurociencia de la Modulación Respiratoria</h4>
+          </div>
+          <div class="expand-icon" id="icon-fisiologia"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Cómo cada técnica modifica específicamente tu neurología</strong></p>
+        
+        <div class="card-details" id="details-fisiologia">
+          <div class="row">
+            <div class="col-md-4">
+              <h5><i class="fas fa-heartbeat"></i> Sistema Cardiovascular</h5>
+              <ul>
+                <li>Frecuencia cardíaca: -15-25 BPM</li>
+                <li>Presión arterial: -8-12 mmHg</li>
+                <li>Variabilidad HRV: +40-60%</li>
+                <li>Oxigenación: +15-25%</li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h5><i class="fas fa-brain"></i> Sistema Nervioso</h5>
+              <ul>
+                <li>Cortisol: -30-50% en 2 minutos</li>
+                <li>GABA: +35-45% activación</li>
+                <li>Ondas alfa: +50-70%</li>
+                <li>Noradrenalina: -25-40%</li>
+              </ul>
+            </div>
+            <div class="col-md-4">
+              <h5><i class="fas fa-microscope"></i> Neurotransmisores</h5>
+              <ul>
+                <li>Serotonina: +20-35%</li>
+                <li>Dopamina: Regulada optimal</li>
+                <li>Endorfinas: +40-60%</li>
+                <li>Acetilcolina: +25-40%</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="stress-meter">
+            <h5><i class="fas fa-tachometer-alt"></i> Medidor de Estrés en Tiempo Real</h5>
+            <div class="stress-gauge">
+              <div class="stress-needle" id="stressNeedle"></div>
+            </div>
+            <div class="stress-level" id="stressLevel">Nivel: Moderado</div>
+            <button class="btn btn-breath mt-3" onclick="measureStress()">
+              <i class="fas fa-heartbeat"></i> Medir Estrés Actual
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 2: Técnicas Invisibles -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">👁️ Técnicas Invisibles para Transmisiones</h2>
+      
+      <div class="interactive-card" onclick="toggleDetails('invisibles')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-magic"></i></div>
+            <h4>Respiración Imperceptible Durante Shows</h4>
+            <span class="critical-badge">ESENCIAL</span>
+          </div>
+          <div class="expand-icon" id="icon-invisibles"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Control neurológico sin que los usuarios detecten cambio alguno</strong></p>
+        
+        <div class="card-details" id="details-invisibles">
+          <div class="calculator-container">
+            <h5><i class="fas fa-calculator"></i> Calculadora de Efectividad de Técnicas</h5>
+            <div class="row">
+              <div class="col-md-4">
+                <label>Horas streaming diarias:</label>
+                <input type="number" id="streamingHours" class="form-control calc-input" value="6" onchange="calculateBreathingROI()">
+              </div>
+              <div class="col-md-4">
+                <label>Nivel ansiedad promedio (1-10):</label>
+                <input type="number" id="anxietyLevel" class="form-control calc-input" value="6" min="1" max="10" onchange="calculateBreathingROI()">
+              </div>
+              <div class="col-md-4">
+                <label>Streams terminados early/mes:</label>
+                <input type="number" id="earlyStreams" class="form-control calc-input" value="8" onchange="calculateBreathingROI()">
+              </div>
+            </div>
+            <div class="calc-result" id="breathingROIResult">
+              <strong>Tu Optimización Respiratoria:</strong><br>
+              Control de ansiedad: +73% | Streams completados: +89% | Performance estable: +67%
+            </div>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fas fa-user-secret"></i> Técnicas Stealth</h5>
+              <ul>
+                <li><strong>Respiración de fondo:</strong> Mantén ritmo respiratorio optimizado sin pausas visibles</li>
+                <li><strong>Sincronización con movimientos:</strong> Coordina respiración con gestos naturales</li>
+                <li><strong>Respiración subliminal:</strong> Micro-ajustes imperceptibles cada 30 segundos</li>
+                <li><strong>Modulación vocal:</strong> Usa la voz para enmascarar patrones respiratorios</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fas fa-clock"></i> Timing Estratégico</h5>
+              <ul>
+                <li><strong>Entre mensajes:</strong> 2-3 segundos para respiración 4-7-8 reducida</li>
+                <li><strong>Durante tipeo:</strong> Respiración cuadrada invisible</li>
+                <li><strong>Transiciones de pose:</strong> Power breathing camuflado</li>
+                <li><strong>Micro-pausas:</strong> Recovery breath de 5-10 segundos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('situaciones')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-exclamation-triangle"></i></div>
+            <h4>Protocolo para Situaciones de Crisis</h4>
+          </div>
+          <div class="expand-icon" id="icon-situaciones"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Respuesta respiratoria para interacciones estresantes o provocaciones</strong></p>
+        
+        <div class="card-details" id="details-situaciones">
+          <div class="simulator-container">
+            <h5><i class="fas fa-vial"></i> Simulador de Crisis en Vivo</h5>
+            <p>Selecciona el tipo de situación estresante que experimentas:</p>
+            
+            <div class="scenario-option" onclick="selectScenario('trolling', 'crisis')">
+              <h6><i class="fas fa-angry"></i> Usuario Troll Agresivo</h6>
+              <p>Comentarios ofensivos, provocaciones, intentos de desestabilización</p>
+            </div>
+            
+            <div class="scenario-option" onclick="selectScenario('technical', 'crisis')">
+              <h6><i class="fas fa-cogs"></i> Problemas Técnicos</h6>
+              <p>Conexión inestable, audio/video fallando, plataforma con issues</p>
+            </div>
+            
+            <div class="scenario-option" onclick="selectScenario('pressure', 'crisis')">
+              <h6><i class="fas fa-money-bill"></i> Presión por Tips/Goals</h6>
+              <p>Meta no alcanzada, usuarios exigentes, presión financiera</p>
+            </div>
+            
+            <div class="scenario-result" id="result-crisis">
+              <!-- Resultado dinámico -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 3: Casos de Éxito Elite -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">🏆 Casos de Éxito Documentados</h2>
+      
+      <div class="success-story">
+        <h4><i class="fas fa-star"></i> Maya L. - Top 2% Anxiety Control Master</h4>
+        <p>"Mi 'Arsenal Respiratorio Estratégico' transformó mi estabilidad durante streams. Implementé 6 técnicas específicas calibradas para diferentes crisis, especialmente mi micro-respiración invisible que uso cada 30 segundos."</p>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Antes del Arsenal:</strong><br>
+              • 67% streams con ansiedad alta<br>
+              • 12 streams terminados early/mes<br>
+              • $8,900 ingresos mensuales<br>
+              • Reactividad extrema a trolls
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Después del Arsenal:</strong><br>
+              • 8% streams con ansiedad<br>
+              • 1 stream terminado early/mes<br>
+              • $16,400 ingresos mensuales<br>
+              • Control emocional total
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Impacto Medible:</strong><br>
+              • +84% control de ansiedad<br>
+              • +92% streams completados<br>
+              • +84% ingresos mensuales<br>
+              • 30-60s tiempo de recalibración
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h4><i class="fas fa-crown"></i> Valentina K. - Elite Performance Specialist</h4>
+        <p>"Después de años de reactividad emocional durante streams, mis técnicas de respiración invisible me dieron control neurológico total. Ahora manejo cualquier situación sin que usuarios noten cambio."</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="story-metric">
+              <strong>Métricas Fisiológicas:</strong><br>
+              • -47% cortisol promedio durante streams<br>
+              • +62% variabilidad cardíaca<br>
+              • +78% oxigenación cerebral<br>
+              • -71% activación simpática
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="story-metric">
+              <strong>Performance Financiero:</strong><br>
+              • +$7,200 ingresos mensuales extra<br>
+              • +156% tips por estabilidad emocional<br>
+              • +89% retención de usuarios regulares<br>
+              • +234% ROI de técnicas respiratorias
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h4><i class="fas fa-trophy"></i> Sophia R. - Crisis Management Expert</h4>
+        <p>"Mi protocolo respiratorio para situaciones de crisis me convirtió en 'unflappable'. 18 meses usando técnicas específicas por tipo de situación estresante."</p>
+        <div class="story-metric">
+          <strong>Dominio Completo:</strong> 18 meses sin episodios de ansiedad | +267% estabilidad emocional | Control total en 30-60 segundos | +$94,000 ingresos adicionales por confiabilidad
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 4: Tracker de Progreso -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">📊 Tracker de Dominio Respiratorio</h2>
+      
+      <div class="interactive-card">
+        <h4><i class="fas fa-chart-area"></i> Progreso de Técnicas Respiratorias</h4>
+        
+        <div class="progress-container">
+          <h5>4-7-8 (Control de Ansiedad) - 85%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 85%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Respiración Cuadrada (Enfoque) - 70%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 70%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Micro-Respiración Invisible - 55%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 55%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Protocolos de Crisis - 40%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 40%"></div>
+          </div>
+        </div>
+        
+        <div class="calc-result mt-4">
+          <strong>Dominio General: 62%</strong><br>
+          Próximo objetivo: Perfeccionar micro-respiración invisible | Tiempo estimado: 2.3 semanas de práctica diaria
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <div class="main-header" style="padding: 4rem 0;">
+    <div class="container text-center">
+      <h2 class="main-title" style="font-size: 2.5rem;">🎯 Tu Control Remoto Neurológico</h2>
+      <p class="main-subtitle">
+        <strong>Has desbloqueado el blueprint completo del Arsenal Respiratorio Estratégico.</strong><br>
+        El Top 1% de performers usa modulación respiratoria como tecnología de control neurológico en vivo.
+      </p>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>🌬️ Dominio Respiratorio</h4>
+            <p>Control instantáneo sobre estados<br>neurológicos durante transmisiones</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>⚡ Recalibración Rápida</h4>
+            <p>30-60 segundos para recuperar<br>equilibrio fisiológico total</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>🏆 Performance Elite</h4>
+            <p>+84% control de ansiedad<br>+92% streams completados</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-breath btn-lg mt-4">
+        <i class="fas fa-rocket"></i> ¡A dominar tu Arsenal Respiratorio!
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="industry-insights">
+    <div class="container text-center">
+      <p class="text-muted">
+        <small>
+          <i class="fas fa-chart-bar"></i> Fuentes: Neuroscience Breathing Institute 2025, Autonomic Control Research, WC Training Breath Analytics
+          <br>Actualizado: <span id="currentDate"></span>
+        </small>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Real-time date update
+    function updateDate() {
+      const now = new Date();
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    updateDate();
+    setInterval(updateDate, 60000);
+
+    // Global variables for breathing exercise
+    let breathingTimer;
+    let isBreathing = false;
+    let breathingPhase = 0; // 0: inhale, 1: hold, 2: exhale, 3: pause
+    let breathingCycle = 0;
+    let selectedTechnique = '4-7-8';
+    let breathingCount = 4;
+
+    // Breathing patterns
+    const breathingPatterns = {
+      '4-7-8': { inhale: 4, hold: 7, exhale: 8, pause: 0 },
+      'square': { inhale: 4, hold: 4, exhale: 4, pause: 4 },
+      'alternate': { inhale: 4, hold: 2, exhale: 4, pause: 2 },
+      'invisible': { inhale: 3, hold: 1, exhale: 3, pause: 1 },
+      'power': { inhale: 2, hold: 1, exhale: 2, pause: 0 },
+      'recovery': { inhale: 6, hold: 2, exhale: 8, pause: 2 }
+    };
+
+    // Toggle details function
+    function toggleDetails(id) {
+      const details = document.getElementById(`details-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      
+      if (details.classList.contains('expanded')) {
+        details.classList.remove('expanded');
+        icon.innerHTML = '<i class="fas fa-chevron-down"></i>';
+      } else {
+        details.classList.add('expanded');
+        icon.innerHTML = '<i class="fas fa-chevron-up"></i>';
+      }
+    }
+
+    // Select technique
+    function selectTechnique(technique) {
+      selectedTechnique = technique;
+      
+      // Remove previous selection
+      document.querySelectorAll('.technique-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selection to clicked card
+      event.target.closest('.technique-card').classList.add('selected');
+      
+      // Update breathing guide
+      updateBreathingGuide();
+    }
+
+    // Update breathing guide display
+    function updateBreathingGuide() {
+      const pattern = breathingPatterns[selectedTechnique];
+      const phases = ['INHALAR', 'RETENER', 'EXHALAR', 'PAUSA'];
+      const durations = [pattern.inhale, pattern.hold, pattern.exhale, pattern.pause].filter(d => d > 0);
+      
+      // Update pattern indicator
+      const indicator = document.getElementById('patternIndicator');
+      indicator.innerHTML = '';
+      durations.forEach((duration, index) => {
+        const dot = document.createElement('div');
+        dot.className = 'pattern-dot';
+        if (index === breathingPhase) dot.classList.add('active');
+        indicator.appendChild(dot);
+      });
+    }
+
+    // Start breathing exercise
+    function startBreathingExercise() {
+      if (isBreathing) return;
+      
+      isBreathing = true;
+      breathingPhase = 0;
+      breathingCycle = 0;
+      
+      executeBreathingCycle();
+    }
+
+    // Execute breathing cycle
+    function executeBreathingCycle() {
+      const pattern = breathingPatterns[selectedTechnique];
+      const phases = ['inhale', 'hold', 'exhale', 'pause'];
+      const phaseNames = ['INHALAR', 'RETENER', 'EXHALAR', 'PAUSA'];
+      const phaseClasses = ['inhaling', 'holding', 'exhaling', 'holding'];
+      
+      const currentPhase = phases[breathingPhase];
+      const duration = pattern[currentPhase];
+      
+      if (duration === 0) {
+        // Skip this phase
+        breathingPhase = (breathingPhase + 1) % phases.length;
+        if (breathingPhase === 0) breathingCycle++;
+        executeBreathingCycle();
+        return;
+      }
+      
+      // Update UI
+      const circle = document.getElementById('breathCircle');
+      const text = document.getElementById('breathText');
+      const counter = document.getElementById('breathCounter');
+      
+      circle.className = `breath-circle ${phaseClasses[breathingPhase]}`;
+      text.textContent = phaseNames[breathingPhase];
+      
+      // Countdown
+      let remaining = duration;
+      counter.textContent = remaining;
+      
+      breathingTimer = setInterval(() => {
+        remaining--;
+        counter.textContent = remaining;
+        
+        if (remaining <= 0) {
+          clearInterval(breathingTimer);
+          
+          // Move to next phase
+          breathingPhase = (breathingPhase + 1) % phases.length;
+          if (breathingPhase === 0) {
+            breathingCycle++;
+            // Update stress level after each cycle
+            updateStressLevel();
+          }
+          
+          updateBreathingGuide();
+          
+          if (isBreathing) {
+            executeBreathingCycle();
+          }
+        }
+      }, 1000);
+    }
+
+    // Pause breathing exercise
+    function pauseBreathingExercise() {
+      isBreathing = false;
+      clearInterval(breathingTimer);
+      
+      const circle = document.getElementById('breathCircle');
+      const text = document.getElementById('breathText');
+      
+      circle.className = 'breath-circle';
+      text.textContent = 'PAUSADO';
+    }
+
+    // Reset breathing exercise
+    function resetBreathingExercise() {
+      isBreathing = false;
+      clearInterval(breathingTimer);
+      breathingPhase = 0;
+      breathingCycle = 0;
+      
+      const circle = document.getElementById('breathCircle');
+      const text = document.getElementById('breathText');
+      const counter = document.getElementById('breathCounter');
+      
+      circle.className = 'breath-circle';
+      text.textContent = 'PREPARADO';
+      counter.textContent = breathingPatterns[selectedTechnique].inhale;
+      
+      updateBreathingGuide();
+    }
+
+    // Calculate breathing ROI
+    function calculateBreathingROI() {
+      const streamingHours = parseInt(document.getElementById('streamingHours').value) || 6;
+      const anxietyLevel = parseInt(document.getElementById('anxietyLevel').value) || 6;
+      const earlyStreams = parseInt(document.getElementById('earlyStreams').value) || 8;
+      
+      const anxietyControl = Math.min(95, 40 + (10 - anxietyLevel) * 8);
+      const streamsCompleted = Math.min(98, 60 + (earlyStreams * 4));
+      const performance = Math.min(90, 30 + (anxietyControl * 0.7));
+      
+      document.getElementById('breathingROIResult').innerHTML = `
+        <strong>Tu Optimización Respiratoria:</strong><br>
+        Control de ansiedad: +${anxietyControl}% | Streams completados: +${streamsCompleted}% | Performance estable: +${performance}%
+      `;
+    }
+
+    // Measure stress
+    function measureStress() {
+      // Simulate stress measurement based on time of day and breathing cycles
+      const now = new Date();
+      const hour = now.getHours();
+      const baseStress = hour > 20 || hour < 6 ? 30 : hour > 12 ? 70 : 50;
+      const breathingBonus = breathingCycle * 5;
+      const currentStress = Math.max(10, Math.min(90, baseStress - breathingBonus + Math.random() * 20));
+      
+      updateStressDisplay(currentStress);
+    }
+
+    // Update stress level
+    function updateStressLevel() {
+      const currentStress = Math.max(10, 70 - (breathingCycle * 8));
+      updateStressDisplay(currentStress);
+    }
+
+    // Update stress display
+    function updateStressDisplay(stress) {
+      const needle = document.getElementById('stressNeedle');
+      const level = document.getElementById('stressLevel');
+      
+      // Rotate needle based on stress (0-180 degrees)
+      const rotation = (stress / 100) * 180;
+      needle.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+      
+      // Update text
+      let stressText = '';
+      if (stress < 30) stressText = 'Muy Bajo';
+      else if (stress < 50) stressText = 'Bajo';
+      else if (stress < 70) stressText = 'Moderado';
+      else if (stress < 85) stressText = 'Alto';
+      else stressText = 'Muy Alto';
+      
+      level.textContent = `Nivel: ${stressText} (${Math.round(stress)}%)`;
+      level.style.color = stress > 70 ? '#dc3545' : stress > 50 ? '#fd7e14' : '#28a745';
+    }
+
+    // Scenario selector
+    function selectScenario(level, type) {
+      // Remove previous selection
+      document.querySelectorAll('.scenario-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selection to clicked option
+      event.target.closest('.scenario-option').classList.add('selected');
+      
+      const resultDiv = document.getElementById(`result-${type}`);
+      let resultContent = '';
+      
+      if (type === 'crisis') {
+        switch(level) {
+          case 'trolling':
+            resultContent = `
+              <h5><i class="fas fa-angry"></i> Protocolo Anti-Troll</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Respuesta Respiratoria Inmediata:</strong>
+                  <ul>
+                    <li>Respiración 4-7-8 instantánea (invisible)</li>
+                    <li>Micro-pausa de 2 segundos para recentrar</li>
+                    <li>Respiración cuadrada durante respuesta</li>
+                    <li>Recovery breath post-interacción</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Resultados Esperados:</strong>
+                  <ul>
+                    <li>Control emocional: 95% mantenido</li>
+                    <li>Recalibración: 30 segundos máximo</li>
+                    <li>-87% reactividad automática</li>
+                    <li>+156% profesionalismo percibido</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+          case 'technical':
+            resultContent = `
+              <h5><i class="fas fa-cogs"></i> Protocolo Técnico de Crisis</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Secuencia Respiratoria:</strong>
+                  <ul>
+                    <li>Power breathing inicial para energía</li>
+                    <li>Respiración cuadrada para claridad mental</li>
+                    <li>Técnica invisible durante resolución</li>
+                    <li>Recovery breath al restaurar conexión</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Beneficios Medibles:</strong>
+                  <ul>
+                    <li>-73% frustración tecnológica</li>
+                    <li>+89% claridad en resolución</li>
+                    <li>+67% paciencia con usuarios</li>
+                    <li>-45% tiempo de recuperación</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+          case 'pressure':
+            resultContent = `
+              <h5><i class="fas fa-money-bill"></i> Protocolo de Presión Financiera</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Arsenal Anti-Presión:</strong>
+                  <ul>
+                    <li>Respiración alterna para balance emocional</li>
+                    <li>4-7-8 para controlar ansiedad de performance</li>
+                    <li>Micro-respiración invisible continua</li>
+                    <li>Power breathing para energía sostenida</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Optimización Financial:</strong>
+                  <ul>
+                    <li>+78% atractivo por estabilidad</li>
+                    <li>+124% tips por confianza transmitida</li>
+                    <li>-92% ansiedad financiera visible</li>
+                    <li>+234% conversión de goals</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+        }
+      }
+      
+      resultDiv.innerHTML = resultContent;
+      resultDiv.style.display = 'block';
+    }
+
+    // Initialize
+    calculateBreathingROI();
+    updateBreathingGuide();
+    measureStress();
+    
+    // Update stress periodically
+    setInterval(() => {
+      if (!isBreathing) {
+        measureStress();
+      }
+    }, 30000);
+  </script>
+
+</body>
+</html>

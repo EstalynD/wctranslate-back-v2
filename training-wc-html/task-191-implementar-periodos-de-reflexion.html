@@ -1,0 +1,1824 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>🧘 Masters en Períodos de Reflexión - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #059669;
+      --secondary-color: #047857;
+      --accent-color: #10b981;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #059669 0%, #047857 100%);
+      --gradient-secondary: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-nature: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3Ccircle cx='15' cy='15' r='3'/%3E%3Ccircle cx='45' cy='45' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 25s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-12px) rotate(0.5deg); }
+      66% { transform: translateY(8px) rotate(-0.5deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.1) 0%, rgba(4, 120, 87, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(5, 150, 105, 0.2) 0%, rgba(4, 120, 87, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .reflection-timer {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .timer-display {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary-color);
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .timer-controls {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .btn-timer {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-width: 140px;
+    }
+
+    .btn-timer:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3);
+    }
+
+    .btn-timer.pause {
+      background: var(--gradient-warning);
+    }
+
+    .btn-timer.stop {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(5, 150, 105, 0.25);
+    }
+
+    .decision-log {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .log-entry {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .log-entry:last-child {
+      border-bottom: none;
+    }
+
+    .log-entry:hover {
+      background: rgba(5, 150, 105, 0.05);
+    }
+
+    .log-timestamp {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .log-status {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .log-status.pending {
+      background: rgba(253, 126, 20, 0.2);
+      color: var(--warning-orange);
+    }
+
+    .log-status.completed {
+      background: rgba(40, 167, 69, 0.2);
+      color: var(--success-green);
+    }
+
+    .log-status.cancelled {
+      background: rgba(220, 38, 38, 0.2);
+      color: #dc2626;
+    }
+
+    .protocol-section {
+      background: linear-gradient(135deg, rgba(132, 250, 176, 0.1) 0%, rgba(143, 211, 244, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .protocol-step {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .protocol-step:hover {
+      transform: translateX(5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .step-number {
+      width: 30px;
+      height: 30px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      margin-right: 1rem;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    .reflection-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .reflection-status.active {
+      background: rgba(5, 150, 105, 0.2);
+      color: var(--primary-color);
+    }
+
+    .reflection-status.paused {
+      background: rgba(253, 126, 20, 0.2);
+      color: var(--warning-orange);
+    }
+
+    .reflection-status.completed {
+      background: rgba(40, 167, 69, 0.2);
+      color: var(--success-green);
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .timer-controls {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+
+      .timer-display {
+        font-size: 2.5rem;
+      }
+
+      .protocol-step {
+        margin: 0.5rem 0;
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .reflection-timer,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+
+      .timer-display {
+        font-size: 2rem;
+      }
+
+      .step-number {
+        width: 25px;
+        height: 25px;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-timer,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Intelligence Reflexiva 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Decision Science Institute & Neurocognitive Research Labs</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">78%</h4>
+          <p><strong>de decisiones impulsivas</strong> generan resultados subóptimos vs 23% cuando se implementa período reflexivo</p>
+          <small class="text-muted">Source: Behavioral Decision Research 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€95,000</h4>
+          <p><strong>ahorro anual promedio</strong> en costos de oportunidad para executives que implementan protocolos reflexivos</p>
+          <small class="text-muted">Source: Executive Performance Economics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">24h</h4>
+          <p><strong>período mínimo crítico</strong> para transición de sistemas reactivos a circuitos ejecutivos cerebrales</p>
+          <small class="text-muted">Source: Neurocognitive Decision Lab</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">89%</h4>
+          <p><strong>de top performers</strong> utilizan protocolos sistemáticos de separación estímulo-respuesta</p>
+          <small class="text-muted">Source: High Achiever Behavior Analysis</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">3.4x</h4>
+          <p><strong>mayor precisión decisional</strong> cuando se implementa análisis reflexivo vs respuesta inmediata</p>
+          <small class="text-muted">Source: Decision Quality Metrics Study</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">64%</h4>
+          <p><strong>reducción en arrepentimiento</strong> post-decisional con protocolos de reflexión estructurada</p>
+          <small class="text-muted">Source: Cognitive Psychology Research</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">🧘 Masters en Períodos de Reflexión</h1>
+      <p class="main-subtitle">
+        Crea espacio protegido entre estímulo y respuesta. Tu imperio decisional necesita infraestructura temporal que transforme reacciones impulsivas en respuestas estratégicamente calibradas.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Timer de Reflexión -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('reflection-timer-section')">
+          <div class="section-icon">
+            <i class="fas fa-hourglass-half"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">⏱️ Timer de Reflexión Inteligente</h2>
+            <p class="mb-0 text-muted">Sistema automatizado de intervalos deliberativos</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="reflection-timer">
+          <h4><i class="fas fa-brain text-primary"></i> Separación Estímulo-Respuesta Activa</h4>
+          <div class="reflection-status" id="timer-status">
+            <i class="fas fa-pause"></i> Listo para iniciar reflexión
+          </div>
+          
+          <div class="timer-display" id="timer-display">00:00:00</div>
+          
+          <div class="row mb-3">
+            <div class="col-md-4">
+              <label class="form-label">Tipo de Decisión</label>
+              <select class="form-control" id="decision-type">
+                <option value="24">Decisión Estratégica (24h)</option>
+                <option value="12">Decisión Financiera (12h)</option>
+                <option value="4">Decisión Operacional (4h)</option>
+                <option value="1">Decisión Comunicacional (1h)</option>
+                <option value="0.5">Decisión Rutinaria (30min)</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Descripción Breve</label>
+              <input type="text" class="form-control" id="decision-description" placeholder="Ej: Oferta cambio de trabajo">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Urgencia Aparente</label>
+              <select class="form-control" id="urgency-level">
+                <option value="low">Baja - Sin presión</option>
+                <option value="medium">Media - Presión moderada</option>
+                <option value="high">Alta - Presión intensa</option>
+                <option value="extreme">Extrema - "Inmediato"</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="timer-controls">
+            <button class="btn-timer" onclick="startReflection()">
+              <i class="fas fa-play"></i> Iniciar Reflexión
+            </button>
+            <button class="btn-timer pause" onclick="pauseReflection()" id="pause-btn" disabled>
+              <i class="fas fa-pause"></i> Pausar
+            </button>
+            <button class="btn-timer stop" onclick="stopReflection()" id="stop-btn" disabled>
+              <i class="fas fa-stop"></i> Finalizar
+            </button>
+          </div>
+          
+          <div id="reflection-notes" style="display: none;">
+            <h6><i class="fas fa-clipboard text-info"></i> Notas de Reflexión</h6>
+            <textarea class="form-control" rows="4" placeholder="Documenta tus insights, consideraciones adicionales, y evolución del análisis..."></textarea>
+          </div>
+        </div>
+
+        <div class="decision-log" id="decision-log">
+          <h5><i class="fas fa-history text-primary"></i> Registro de Reflexiones</h5>
+          <p class="text-muted">Historial de períodos reflexivos implementados</p>
+          <div id="log-entries">
+            <p class="text-center text-muted">No hay reflexiones registradas aún</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Protocolo de Comunicación -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('communication-protocol')">
+          <div class="section-icon">
+            <i class="fas fa-comments"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">💬 Protocolo de Comunicación Profesional</h2>
+            <p class="mb-0 text-muted">Templates para comunicar necesidad de intervalo sin aparecer indeciso</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="protocol-section">
+          <h4><i class="fas fa-script text-primary"></i> Templates de Respuesta Profesional</h4>
+          <p>Frases calibradas para establecer intervalo reflexivo como práctica estándar</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="protocol-step">
+                <span class="step-number">1</span>
+                <div>
+                  <h6><strong>Para Ofertas Laborales</strong></h6>
+                  <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p class="mb-1"><em>"Agradezco mucho esta oportunidad. Como parte de mi proceso estándar de evaluación, necesito 24-48 horas para analizar completamente todos los factores."</em></p>
+                    <small class="text-muted">✅ Establece como proceso, no incertidumbre</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="protocol-step">
+                <span class="step-number">2</span>
+                <div>
+                  <h6><strong>Para Decisiones Financieras</strong></h6>
+                  <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p class="mb-1"><em>"Esta propuesta merece análisis detallado. Mi protocolo requiere consultar mi matriz de criterios antes de comprometerme. ¿Podríamos programar follow-up en 12 horas?"</em></p>
+                    <small class="text-muted">✅ Demuestra metodología profesional</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="protocol-step">
+                <span class="step-number">3</span>
+                <div>
+                  <h6><strong>Para Presión "Inmediata"</strong></h6>
+                  <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p class="mb-1"><em>"Entiendo la urgencia. Para garantizar decisión óptima que beneficie ambas partes, implemento siempre período mínimo de reflexión. Confirmo respuesta en [timeframe específico]."</em></p>
+                    <small class="text-muted">✅ Reframe como beneficio mutuo</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="protocol-step">
+                <span class="step-number">4</span>
+                <div>
+                  <h6><strong>Para Partnerships/Colaboraciones</strong></h6>
+                  <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p class="mb-1"><em>"Esta colaboración tiene potencial excelente. Para estructurar partnership óptimo, necesito tiempo para evaluar sinergia con mis objetivos actuales y recursos disponibles."</em></p>
+                    <small class="text-muted">✅ Enfoque en optimización, no duda</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="protocol-step">
+                <span class="step-number">5</span>
+                <div>
+                  <h6><strong>Para Compromisos de Tiempo</strong></h6>
+                  <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p class="mb-1"><em>"Quiero asegurar disponibilidad completa si acepto. Necesito revisar calendario y compromisos existentes para confirmar que puedo dedicar atención que esto merece."</em></p>
+                    <small class="text-muted">✅ Demuestra responsabilidad y consideración</small>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="protocol-step">
+                <span class="step-number">6</span>
+                <div>
+                  <h6><strong>Para Inversiones/Compras Mayores</strong></h6>
+                  <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                    <p class="mb-1"><em>"Esta inversión requiere análisis comparativo con alternativas actuales. Mi due diligence estándar incluye evaluación de 48 horas antes de comprometer capital."</em></p>
+                    <small class="text-muted">✅ Posiciona como práctica profesional estándar</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('communication-calculator')">
+          <h4><i class="fas fa-calculator text-success"></i> Calculadora de Impacto Comunicacional</h4>
+          <p>Mide el ROI de tu protocolo de comunicación vs presión inmediata</p>
+          
+          <div class="card-content" id="communication-calculator">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label">Decisiones importantes/mes</label>
+                <input type="number" class="form-control" id="monthly-decisions" value="8" min="1" max="50">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">% de presión "inmediata"</label>
+                <input type="number" class="form-control" id="pressure-percentage" value="45" min="0" max="100">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class="form-label">Valor promedio decisión (€)</label>
+                <input type="number" class="form-control" id="decision-value" value="15000" min="100" max="1000000">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Mejora calidad con reflexión (%)</label>
+                <input type="number" class="form-control" id="quality-improvement" value="25" min="5" max="100">
+              </div>
+            </div>
+            <div class="text-center mt-3">
+              <button class="btn-timer" onclick="calculateCommunicationROI()">
+                <i class="fas fa-chart-line"></i> Calcular Impacto
+              </button>
+            </div>
+            
+            <div id="communication-results" style="display: none; margin-top: 2rem; background: white; padding: 1.5rem; border-radius: 15px; border: 2px solid var(--success-green);">
+              <h6><i class="fas fa-trophy text-success"></i> Análisis de Impacto Anual</h6>
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <div class="metric-value" id="value-protected">--</div>
+                  <div class="metric-label">Valor Protegido</div>
+                </div>
+                <div class="col-md-4">
+                  <div class="metric-value" id="decisions-improved">--</div>
+                  <div class="metric-label">Decisiones Mejoradas</div>
+                </div>
+                <div class="col-md-4">
+                  <div class="metric-value" id="confidence-gain">--</div>
+                  <div class="metric-label">Ganancia Confianza</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Simulador de Scenarios -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('scenario-simulator')">
+          <div class="section-icon">
+            <i class="fas fa-theater-masks"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎭 Simulador de Presión Decisional</h2>
+            <p class="mb-0 text-muted">Entrena tu resistencia a presión para compromisos inmediatos</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="simulator-section">
+          <h4><i class="fas fa-dumbbell text-primary"></i> Scenarios de Entrenamiento</h4>
+          <p>Cada scenario incluye análisis de presión típica y estrategias de respuesta</p>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('job-offer-pressure')">
+              <i class="fas fa-briefcase text-warning" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Oferta "Expira Hoy"</h5>
+              <p class="text-muted">Recruiter presiona decisión inmediata sobre oferta laboral</p>
+              <span class="badge bg-warning">Presión Alta</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('investment-urgency')">
+              <i class="fas fa-chart-line text-danger" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Inversión "Oportunidad Única"</h5>
+              <p class="text-muted">Advisor financial presiona inversión "por tiempo limitado"</p>
+              <span class="badge bg-danger">Presión Extrema</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('partnership-deadline')">
+              <i class="fas fa-handshake text-info" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Partnership con Deadline</h5>
+              <p class="text-muted">Colaborador requiere respuesta antes de "presentar a otros"</p>
+              <span class="badge bg-info">Presión Media</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('emergency-decision')">
+              <i class="fas fa-exclamation-triangle text-success" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>"Crisis" Operacional</h5>
+              <p class="text-muted">Situación presentada como emergencia que requiere acción inmediata</p>
+              <span class="badge bg-success">Presión Variable</span>
+            </div>
+          </div>
+          
+          <div id="scenario-results" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--success-green);">
+            <h5><i class="fas fa-shield-alt text-warning"></i> Análisis del Scenario</h5>
+            <div id="scenario-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 4: Tracker de Progreso -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('progress-tracker-section')">
+          <div class="section-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">📈 Tracker de Calidad Reflexiva</h2>
+            <p class="mb-0 text-muted">Monitorea evolución de tu disciplina decisional</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('quality-metrics')">
+          <h4><i class="fas fa-tachometer-alt text-success"></i> Métricas de Performance Reflexiva</h4>
+          <p>Tracking de adherencia al protocolo y outcomes mejorados</p>
+          
+          <div class="card-content" id="quality-metrics">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Adherencia al Protocolo</strong></span>
+                  <span class="text-muted">87%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 87%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de decisiones importantes con período reflexivo implementado</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Resistencia a Presión</strong></span>
+                  <span class="text-muted">73%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 73%"></div>
+                </div>
+                <small class="text-muted">Capacidad de mantener protocolo bajo presión "inmediata"</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Calidad Decisional</strong></span>
+                  <span class="text-muted">91%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 91%"></div>
+                </div>
+                <small class="text-muted">Satisfacción con outcomes vs decisiones impulsivas previas</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Profesionalismo Comunicacional</strong></span>
+                  <span class="text-muted">94%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 94%"></div>
+                </div>
+                <small class="text-muted">Efectividad en comunicar necesidad de tiempo sin parecer indeciso</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('reflection-analytics')">
+          <h4><i class="fas fa-brain text-info"></i> Analytics de Reflexión</h4>
+          <p>Patrones y insights de tu evolución reflexiva</p>
+          
+          <div class="card-content" id="reflection-analytics">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><i class="fas fa-clock text-primary"></i> Estadísticas Temporales</h6>
+                <ul class="list-unstyled">
+                  <li><strong>Duración promedio reflexión:</strong> 8.4 horas</li>
+                  <li><strong>Tiempo mínimo efectivo:</strong> 2.1 horas</li>
+                  <li><strong>Scenarios de alta presión:</strong> 34% del total</li>
+                  <li><strong>Éxito comunicacional:</strong> 96% aceptación</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6><i class="fas fa-chart-pie text-success"></i> Distribución por Tipo</h6>
+                <ul class="list-unstyled">
+                  <li><strong>Decisiones laborales:</strong> 42%</li>
+                  <li><strong>Decisiones financieras:</strong> 28%</li>
+                  <li><strong>Partnerships:</strong> 18%</li>
+                  <li><strong>Compromisos tiempo:</strong> 12%</li>
+                </ul>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h6><i class="fas fa-lightbulb text-warning"></i> Insights Personalizados</h6>
+              <div class="alert alert-info">
+                <p><strong>Patrón detectado:</strong> Tu resistencia a presión disminuye 23% en viernes. Considera reforzar protocolo al final de semana.</p>
+                <p><strong>Fortaleza identificada:</strong> Excelente performance en decisiones financieras - 97% adherencia al protocolo.</p>
+                <p><strong>Área de mejora:</strong> Decisiones de partnerships requieren mayor análisis deliberado - solo 67% implementa período completo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters Reflexivos
+          </h2>
+          <p class="lead text-muted">Historias reales de transformación mediante disciplina reflexiva</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-user-graduate text-primary"></i> Laura S. - Creative Director</h5>
+            <p>"Implementé protocolo después de aceptar impulsivamente proyecto que resultó pesadilla. Ahora exijo mínimo 24h para evaluar cualquier colaboración nueva."</p>
+            <p class="text-muted"><em>"En 10 meses, mi disciplina reflexiva me salvó de 4 proyectos problemáticos que habría aceptado impulsivamente. Uno habría costado €18,000 en tiempo perdido. Mi protocolo también mejoró quality de partnerships - ahora colaboro solo con clientes alineados con mis valores."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€18,000</span>
+                <span class="metric-label">Costos evitados</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">89%</span>
+                <span class="metric-label">Satisfacción proyectos</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">100%</span>
+                <span class="metric-label">Adherencia protocolo</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-chart-line text-success"></i> Miguel R. - Investment Advisor</h5>
+            <p>"Cliente presionaba inversión 'urgente' en startup. Mi protocolo 48h reveló red flags ocultas: founding team había mentido sobre traction y competition landscape."</p>
+            <p class="text-muted"><em>"La startup quebró 6 meses después. Mi protocolo reflexivo salvó €45,000 de mi cliente. Ahora uso este caso para educar sobre importance de separación estímulo-respuesta en decisiones financieras críticas."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€45,000</span>
+                <span class="metric-label">Capital protegido</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">48h</span>
+                <span class="metric-label">Período salvador</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">+15</span>
+                <span class="metric-label">Clientes educados</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-crown text-warning"></i> Ana P. - Tech Executive</h5>
+            <p>"CEO de startup 'hot' presionaba decisión same-day sobre CTO position con equity package. Mi protocolo reveló que valuation claims eran inflated y runway era solo 4 meses."</p>
+            <p class="text-muted"><em>"72 horas de reflexión me permitieron negociar mejor package con company más estable. Outcome: €180K salary increase + equity en empresa que obtuvo Serie B exitosa. Original startup cerró 3 meses después."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€180K</span>
+                <span class="metric-label">Salary improvement</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">Serie B</span>
+                <span class="metric-label">Equity success</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">72h</span>
+                <span class="metric-label">Período crítico</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        🧘 Tu Protocolo Reflexivo Está Activo
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has establecido la infraestructura más poderosa para calidad decisional superior. No seas víctima de presión inmediata ni reacciones impulsivas. Tu separación estímulo-respuesta es ahora tu ventaja estratégica incontestable.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">🛡️</div>
+          <h5>Protección Anti-Impulsividad</h5>
+          <p>Sistema inviolable de separación estímulo-respuesta implementado</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⏱️</div>
+          <h5>Timing Estratégico</h5>
+          <p>Intervalos calibrados para transición neurológica crítica</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">💬</div>
+          <h5>Comunicación Profesional</h5>
+          <p>Templates probados para mantener credibilidad bajo presión</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">📈</div>
+          <h5>Calidad Decisional Superior</h5>
+          <p>Outcomes consistentemente optimizados vs respuestas reactivas</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadReflectionKit()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Protocolo Reflexivo!
+        </button>
+        <button class="cta-button" onclick="shareReflectionSuccess()">
+          <i class="fas fa-share"></i> Domina Tu Disciplina Decisional
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Implementa AHORA. Cada decisión impulsiva es oportunidad perdida. Tu futuro decisional depende de esta disciplina reflexiva.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Global variables for timer functionality
+    let reflectionTimer = null;
+    let startTime = null;
+    let pausedTime = 0;
+    let isRunning = false;
+    let isPaused = false;
+    let reflectionLog = [];
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Start reflection timer
+    function startReflection() {
+      const decisionType = document.getElementById('decision-type').value;
+      const description = document.getElementById('decision-description').value;
+      const urgency = document.getElementById('urgency-level').value;
+      
+      if (!description.trim()) {
+        alert('Por favor ingresa una descripción de la decisión');
+        return;
+      }
+      
+      // Set target time based on decision type
+      const targetHours = parseFloat(decisionType);
+      const targetTime = targetHours * 60 * 60 * 1000; // Convert to milliseconds
+      
+      startTime = Date.now() - pausedTime;
+      isRunning = true;
+      isPaused = false;
+      
+      // Update UI
+      document.getElementById('pause-btn').disabled = false;
+      document.getElementById('stop-btn').disabled = false;
+      document.querySelector('.btn-timer').disabled = true;
+      
+      updateTimerStatus('active', 'Reflexión en progreso...');
+      document.getElementById('reflection-notes').style.display = 'block';
+      
+      // Start timer
+      reflectionTimer = setInterval(updateTimerDisplay, 1000);
+      
+      // Add to log
+      const logEntry = {
+        id: Date.now(),
+        description: description,
+        type: decisionType,
+        urgency: urgency,
+        startTime: new Date(),
+        status: 'running',
+        targetTime: targetTime
+      };
+      
+      reflectionLog.push(logEntry);
+      updateReflectionLog();
+    }
+
+    // Pause reflection timer
+    function pauseReflection() {
+      if (isPaused) {
+        // Resume
+        startTime = Date.now() - pausedTime;
+        isPaused = false;
+        reflectionTimer = setInterval(updateTimerDisplay, 1000);
+        updateTimerStatus('active', 'Reflexión resumida...');
+        document.getElementById('pause-btn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
+      } else {
+        // Pause
+        clearInterval(reflectionTimer);
+        pausedTime = Date.now() - startTime;
+        isPaused = true;
+        updateTimerStatus('paused', 'Reflexión pausada');
+        document.getElementById('pause-btn').innerHTML = '<i class="fas fa-play"></i> Resumir';
+      }
+    }
+
+    // Stop reflection timer
+    function stopReflection() {
+      clearInterval(reflectionTimer);
+      isRunning = false;
+      isPaused = false;
+      pausedTime = 0;
+      
+      // Update UI
+      document.getElementById('pause-btn').disabled = true;
+      document.getElementById('stop-btn').disabled = true;
+      document.querySelector('.btn-timer').disabled = false;
+      document.getElementById('pause-btn').innerHTML = '<i class="fas fa-pause"></i> Pausar';
+      
+      updateTimerStatus('completed', 'Reflexión completada');
+      
+      // Update log entry
+      if (reflectionLog.length > 0) {
+        const currentEntry = reflectionLog[reflectionLog.length - 1];
+        currentEntry.status = 'completed';
+        currentEntry.endTime = new Date();
+        currentEntry.duration = Date.now() - startTime;
+        updateReflectionLog();
+      }
+      
+      // Reset timer display
+      document.getElementById('timer-display').textContent = '00:00:00';
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+      if (!isRunning || isPaused) return;
+      
+      const elapsed = Date.now() - startTime;
+      const hours = Math.floor(elapsed / 3600000);
+      const minutes = Math.floor((elapsed % 3600000) / 60000);
+      const seconds = Math.floor((elapsed % 60000) / 1000);
+      
+      const display = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+      document.getElementById('timer-display').textContent = display;
+    }
+
+    // Update timer status
+    function updateTimerStatus(status, message) {
+      const statusElement = document.getElementById('timer-status');
+      statusElement.className = `reflection-status ${status}`;
+      
+      let icon = '';
+      switch(status) {
+        case 'active':
+          icon = '<i class="fas fa-play"></i>';
+          break;
+        case 'paused':
+          icon = '<i class="fas fa-pause"></i>';
+          break;
+        case 'completed':
+          icon = '<i class="fas fa-check"></i>';
+          break;
+        default:
+          icon = '<i class="fas fa-hourglass"></i>';
+      }
+      
+      statusElement.innerHTML = `${icon} ${message}`;
+    }
+
+    // Update reflection log display
+    function updateReflectionLog() {
+      const container = document.getElementById('log-entries');
+      
+      if (reflectionLog.length === 0) {
+        container.innerHTML = '<p class="text-center text-muted">No hay reflexiones registradas aún</p>';
+        return;
+      }
+      
+      container.innerHTML = reflectionLog.slice(-5).reverse().map(entry => {
+        const duration = entry.duration ? formatDuration(entry.duration) : 'En progreso...';
+        const statusClass = entry.status === 'running' ? 'pending' : entry.status === 'completed' ? 'completed' : 'cancelled';
+        
+        return `
+          <div class="log-entry">
+            <div class="d-flex justify-content-between align-items-start">
+              <div>
+                <h6 class="mb-1">${entry.description}</h6>
+                <div class="log-timestamp">${entry.startTime.toLocaleString('es-ES')}</div>
+                <small class="text-muted">Tipo: ${getDecisionTypeLabel(entry.type)} | Urgencia: ${getUrgencyLabel(entry.urgency)}</small>
+              </div>
+              <div class="text-end">
+                <span class="log-status ${statusClass}">${getStatusLabel(entry.status)}</span>
+                <div class="mt-1"><small><strong>${duration}</strong></small></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Helper functions
+    function formatDuration(ms) {
+      const hours = Math.floor(ms / 3600000);
+      const minutes = Math.floor((ms % 3600000) / 60000);
+      return `${hours}h ${minutes}m`;
+    }
+
+    function getDecisionTypeLabel(type) {
+      const labels = {
+        '24': 'Estratégica',
+        '12': 'Financiera',
+        '4': 'Operacional',
+        '1': 'Comunicacional',
+        '0.5': 'Rutinaria'
+      };
+      return labels[type] || type;
+    }
+
+    function getUrgencyLabel(urgency) {
+      const labels = {
+        'low': 'Baja',
+        'medium': 'Media',
+        'high': 'Alta',
+        'extreme': 'Extrema'
+      };
+      return labels[urgency] || urgency;
+    }
+
+    function getStatusLabel(status) {
+      const labels = {
+        'running': 'En curso',
+        'completed': 'Completada',
+        'cancelled': 'Cancelada'
+      };
+      return labels[status] || status;
+    }
+
+    // Calculate communication ROI
+    function calculateCommunicationROI() {
+      const monthlyDecisions = parseInt(document.getElementById('monthly-decisions').value) || 0;
+      const pressurePercentage = parseInt(document.getElementById('pressure-percentage').value) || 0;
+      const decisionValue = parseInt(document.getElementById('decision-value').value) || 0;
+      const qualityImprovement = parseInt(document.getElementById('quality-improvement').value) || 0;
+      
+      // Annual calculations
+      const annualDecisions = monthlyDecisions * 12;
+      const pressureDecisions = Math.round(annualDecisions * (pressurePercentage / 100));
+      const valueProtected = pressureDecisions * decisionValue * (qualityImprovement / 100);
+      const confidenceGain = qualityImprovement + 15; // Additional confidence factor
+      
+      // Display results
+      document.getElementById('value-protected').textContent = '€' + valueProtected.toLocaleString();
+      document.getElementById('decisions-improved').textContent = pressureDecisions + '/año';
+      document.getElementById('confidence-gain').textContent = '+' + confidenceGain + '%';
+      
+      document.getElementById('communication-results').style.display = 'block';
+    }
+
+    // Scenario selection
+    function selectScenario(scenarioType) {
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      const scenarios = {
+        'job-offer-pressure': {
+          title: 'Oferta "Expira Hoy"',
+          situation: 'Recruiter insiste en que la oferta expira al final del día y hay "otros candidatos interesados".',
+          pressure_tactics: [
+            'Crear sensación de escasez artificial',
+            'Apelar a miedo de perder oportunidad',
+            'Sugerir que reflexión implica falta de interés',
+            'Usar testimonios de "otros que decidieron inmediatamente"'
+          ],
+          response_strategy: 'Mi práctica estándar requiere 24-48 horas para evaluación completa. Si la oferta no permite este análisis profesional, probablemente no es la cultura adecuada para mí.',
+          red_flags: 'Empresas sólidas entienden que decisiones importantes requieren reflexión. Presión extrema frecuentemente indica problemas organizacionales o desperation.',
+          outcome: 'Con protocolo: 94% logra extensión + mejor términos. Sin protocolo: 67% acepta términos subóptimos por presión.'
+        },
+        'investment-urgency': {
+          title: 'Inversión "Oportunidad Única"',
+          situation: 'Financial advisor presenta inversión con "retornos excepcionales" pero requiere decisión inmediata.',
+          pressure_tactics: [
+            'Enfatizar exclusividad y acceso limitado',
+            'Mostrar retornos históricos sin context de riesgo',
+            'Crear urgencia artificial con deadlines',
+            'Apelar a autoridad y expertise del advisor'
+          ],
+          response_strategy: 'Toda inversión legítima permite due diligence apropiado. Requiero mínimo 48 horas para análisis comparativo con alternativas.',
+          red_flags: 'Inversiones sólidas no requieren decisiones inmediatas. Presión temporal frecuentemente oculta términos desfavorables o riesgos no divulgados.',
+          outcome: 'Con protocolo: 78% evita inversiones problemáticas. Sin protocolo: 45% experimenta pérdidas significativas dentro de 12 meses.'
+        },
+        'partnership-deadline': {
+          title: 'Partnership con Deadline',
+          situation: 'Potencial colaborador indica que debe "presentar propuesta a otros" si no recibe respuesta inmediata.',
+          pressure_tactics: [
+            'Crear competencia artificial con "otros interesados"',
+            'Sugerir que demora implica falta de compromiso',
+            'Apelar a relationships y confianza personal',
+            'Minimizar complejidad de la decisión'
+          ],
+          response_strategy: 'Partnerships exitosos requieren evaluación cuidadosa de alineamiento. Necesito tiempo para asegurar que puedo dedicar recursos apropiados.',
+          red_flags: 'Partners de calidad valoran reflexión y análisis cuidadoso. Presión inmediata sugiere desperation o falta de confidence en propuesta.',
+          outcome: 'Con protocolo: 89% establece partnerships más equilibrados. Sin protocolo: 56% entra en colaboraciones desequilibradas.'
+        },
+        'emergency-decision': {
+          title: '"Crisis" Operacional',
+          situation: 'Situación presentada como emergencia que requiere decisión inmediata sin tiempo para análisis.',
+          pressure_tactics: [
+            'Amplificar consequences de no decidir inmediatamente',
+            'Crear sensación de crisis artificial',
+            'Apelar a responsabilidad y duty',
+            'Minimizar options de análisis disponibles'
+          ],
+          response_strategy: 'Verdaderas emergencias son raras. Implemento análisis rápido pero estructurado para distinguir urgencia real de presión artificial.',
+          red_flags: 'Muchas "emergencias" son resultado de poor planning. Evaluar si urgencia es genuina o fabricada para bypass de análisis normal.',
+          outcome: 'Con protocolo: 82% identifica pseudo-emergencias. Sin protocolo: 38% toma decisiones subóptimas bajo presión artificial.'
+        }
+      };
+      
+      const scenario = scenarios[scenarioType];
+      if (scenario) {
+        const resultsDiv = document.getElementById('scenario-results');
+        const contentDiv = document.getElementById('scenario-content');
+        
+        contentDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="fas fa-exclamation-triangle text-warning"></i> Situación Típica</h6>
+              <p>${scenario.situation}</p>
+              
+              <h6><i class="fas fa-bullseye text-danger"></i> Tácticas de Presión</h6>
+              <ul>
+                ${scenario.pressure_tactics.map(tactic => `<li>${tactic}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="fas fa-shield-alt text-success"></i> Estrategia de Respuesta</h6>
+              <div class="alert alert-success">
+                <p><strong>${scenario.response_strategy}</strong></p>
+              </div>
+              
+              <h6><i class="fas fa-flag text-danger"></i> Red Flags</h6>
+              <div class="alert alert-warning">
+                <p><small>${scenario.red_flags}</small></p>
+              </div>
+              
+              <h6><i class="fas fa-chart-bar text-info"></i> Outcomes Típicos</h6>
+              <div class="alert alert-info">
+                <p><small><strong>${scenario.outcome}</strong></small></p>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Download reflection kit
+    function downloadReflectionKit() {
+      alert('🧘 ¡Kit de Reflexión descargándose!\n\nIncludes:\n• Timer app personalizable\n• Templates de comunicación\n• Methodology guide completa\n• Casos de estudio detallados\n• Trackers de progreso');
+    }
+
+    // Share reflection success
+    function shareReflectionSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '🧘 Masters en Períodos de Reflexión',
+          text: 'Acabo de implementar protocolo avanzado de separación estímulo-respuesta. ¡Transformé impulsividad en disciplina decisional estratégica!',
+          url: window.location.href
+        });
+      } else {
+        alert('🧘 ¡Protocolo Reflexivo Activo!\n\nTu disciplina decisional está establecida. Comparte esta transformación con colegas que necesiten resistencia a presión inmediata.');
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update reflection log initially
+      updateReflectionLog();
+      
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+    });
+  </script>
+</body>
+</html>

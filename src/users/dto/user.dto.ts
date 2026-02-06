@@ -9,10 +9,12 @@ import {
   ValidateNested,
   IsNumber,
   IsBoolean,
+  IsMongoId,
   Min,
+  IsDate,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UserRole, UserStatus, PlanType } from '../schemas/user.schema';
+import { UserRole, UserStatus, PlanType, UserStage } from '../schemas/user.schema';
 
 // --- Profile DTOs ---
 export class CreateProfileDto {
@@ -70,6 +72,10 @@ export class UpdateProfileDto {
 }
 
 // --- User DTOs ---
+
+/**
+ * DTO base para crear un usuario (usado internamente por auth.register)
+ */
 export class CreateUserDto {
   @IsEmail({}, { message: 'El email no es válido' })
   email: string;
@@ -77,10 +83,6 @@ export class CreateUserDto {
   @IsString()
   @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
   @MaxLength(100, { message: 'La contraseña no puede exceder 100 caracteres' })
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
-    message:
-      'La contraseña debe contener al menos una mayúscula, una minúscula y un número',
-  })
   password: string;
 
   @ValidateNested()
@@ -90,6 +92,55 @@ export class CreateUserDto {
   @IsOptional()
   @IsEnum(UserRole, { message: 'El rol no es válido' })
   role?: UserRole;
+}
+
+/**
+ * DTO para que un Admin cree un usuario (modelo/admin/studio) con asignación de plataforma
+ */
+export class AdminCreateUserDto {
+  @IsEmail({}, { message: 'El email no es válido' })
+  email: string;
+
+  @IsString()
+  @MinLength(8, { message: 'La contraseña debe tener al menos 8 caracteres' })
+  @MaxLength(100, { message: 'La contraseña no puede exceder 100 caracteres' })
+  password: string;
+
+  @ValidateNested()
+  @Type(() => CreateProfileDto)
+  profile: CreateProfileDto;
+
+  @IsOptional()
+  @IsEnum(UserRole, { message: 'El rol no es válido' })
+  role?: UserRole;
+
+  // --- Campos específicos para modelos ---
+
+  @IsOptional()
+  @IsMongoId({ message: 'ID de plataforma inválido' })
+  platformId?: string;
+
+  @IsOptional()
+  @IsEnum(UserStage, { message: 'Etapa no válida' })
+  stage?: UserStage;
+
+  @IsOptional()
+  @IsBoolean()
+  isSuperUser?: boolean;
+
+  @IsOptional()
+  @IsBoolean()
+  isDemo?: boolean;
+
+  @IsOptional()
+  @IsMongoId({ message: 'ID de estudio inválido' })
+  studioId?: string;
+
+  // --- Campos de suscripción ---
+
+  @IsOptional()
+  @IsEnum(PlanType, { message: 'Tipo de plan no válido' })
+  planType?: PlanType;
 }
 
 export class UpdateUserDto {
@@ -109,6 +160,14 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEnum(UserStatus)
   status?: UserStatus;
+}
+
+/**
+ * DTO para asignar/cambiar plataforma de streaming a un modelo
+ */
+export class AssignPlatformDto {
+  @IsMongoId({ message: 'ID de plataforma inválido' })
+  platformId: string;
 }
 
 export class ChangePasswordDto {
@@ -140,6 +199,15 @@ export class UpdateGamificationDto {
   currentXp?: number;
 }
 
+/**
+ * DTO para agregar XP o estrellas con validación
+ */
+export class AddAmountDto {
+  @IsNumber({}, { message: 'La cantidad debe ser un número' })
+  @Min(1, { message: 'La cantidad debe ser al menos 1' })
+  amount: number;
+}
+
 // --- Subscription Access DTO ---
 export class UpdateSubscriptionAccessDto {
   @IsOptional()
@@ -151,9 +219,38 @@ export class UpdateSubscriptionAccessDto {
   planType?: PlanType;
 
   @IsOptional()
+  @IsDate()
+  @Type(() => Date)
   expiresAt?: Date | null;
 
   @IsOptional()
   @IsString()
   subscriptionId?: string;
+}
+
+// --- Query DTO para listado de usuarios ---
+export class QueryUsersDto {
+  @IsOptional()
+  @IsEnum(UserStatus)
+  status?: UserStatus;
+
+  @IsOptional()
+  @IsEnum(UserRole)
+  role?: UserRole;
+
+  @IsOptional()
+  @IsString()
+  search?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  @Min(1)
+  page?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Type(() => Number)
+  @Min(1)
+  limit?: number;
 }

@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters en Adaptación Cultural de Contenido Global</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #20c997;
+            --secondary-color: #17a2b8;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+            --gradient-secondary: linear-gradient(135deg, #fd7e14 0%, #20c997 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #20c997, #17a2b8, #fd7e14, #28a745);
+            --gradient-world: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-asia: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --gradient-europe: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            --gradient-america: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 22s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes flag-wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .wc-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(32, 201, 151, 0.3);
+        }
+
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(32, 201, 151, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .main-header {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-world);
+            opacity: 0.05;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cultural-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            position: relative;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .cultural-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(32, 201, 151, 0.15);
+            border-color: var(--primary-color);
+            background: var(--bg-white);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            animation: slideDown 0.5s ease when active;
+        }
+
+        .card-details.active {
+            max-height: 2000px;
+        }
+
+        .language-calculator {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 0.75rem;
+            color: white;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            width: 100%;
+            min-height: 44px;
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .region-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .region-option {
+            background: var(--bg-light);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .region-option:hover, .region-option.selected {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(32, 201, 151, 0.3);
+        }
+
+        .region-flag {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            animation: flag-wave 3s ease-in-out infinite;
+        }
+
+        .phrase-trainer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .phrase-item {
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .phrase-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🌍';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(32, 201, 151, 0.4);
+            color: white;
+        }
+
+        .cultural-insights {
+            background: var(--gradient-world);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calendar-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .calendar-event {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 0 10px 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-event:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(32, 201, 151, 0.2);
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .audio-player {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            padding: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audio-player:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .simulator-section {
+            background: var(--gradient-asia);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scenario-card:hover, .scenario-card.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            transform: scale(1.02);
+        }
+
+        .achievement-badge {
+            background: var(--gradient-success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.25rem;
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .cultural-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .region-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .industry-insights {
+                padding: 1.5rem;
+            }
+            
+            .region-option {
+                min-height: 60px;
+                padding: 1rem;
+            }
+
+            .phrase-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .cultural-card {
+                padding: 1rem;
+            }
+            
+            .language-calculator, .success-story, .simulator-section {
+                padding: 1.5rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .cultural-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-globe"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> GLOBAL LIVE
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-users"></i> 12,847 Modelos • 195 Países
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">🌍 Global Culture Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">94%</h4>
+                        <p class="mb-0">Incremento en tips con adaptación cultural</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">+523%</h4>
+                        <p class="mb-0">ROI con frases multilingües estratégicas</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">68%</h4>
+                        <p class="mb-0">Pierden audiencia por insensibilidad cultural</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">7.2x</h4>
+                        <p class="mb-0">Mayor retención con celebraciones locales</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">85%</h4>
+                        <p class="mb-0">Top earners dominan 3+ idiomas básicos</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">$4,892</h4>
+                        <p class="mb-0">Promedio mensual con estrategia cultural</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Global Creator Economy Report 2025, International Streaming Analytics
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container">
+        <div class="main-header">
+            <div class="text-center">
+                <h1 class="main-title">🌍 Masters en Adaptación Cultural de Contenido Global</h1>
+                <p class="lead text-muted mb-4">
+                    Domina el arte de conectar con audiencias de 195 países. Tu imperio financiero 
+                    se expande cuando hablas el idioma del corazón de cada cultura.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="badge bg-primary fs-6">Sensibilidad Cultural</span>
+                    <span class="badge bg-success fs-6">Conexión Multilingüe</span>
+                    <span class="badge bg-warning fs-6">Celebraciones Globales</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diferencias Culturales Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-globe-americas"></i> Laboratorio de Diferencias Culturales
+            </h2>
+            <p class="lead mb-4">CRÍTICO: El 94% de top performers adaptan su comunicación por región.</p>
+            
+            <div class="cultural-card" onclick="toggleDetails('norteamerica')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🇺🇸 Usuarios Norteamericanos - Estrategia Alpha</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="norteamerica">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Comunicación Directa (+67% engagement):</h5>
+                            <ul>
+                                <li>Expresividad alta y emociones claras</li>
+                                <li>Contacto visual directo y constante</li>
+                                <li>Lenguaje corporal abierto y dinámico</li>
+                                <li>Respuestas inmediatas a requests</li>
+                                <li>Promociones y ofertas muy visibles</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Frases Clave de Alto Impacto:</h5>
+                            <div class="phrase-trainer">
+                                <div class="phrase-item">
+                                    <span>"Hey gorgeous! So excited to see you!"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('en1')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"You're absolutely amazing, thank you!"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('en2')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"Let's make this show unforgettable!"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('en3')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cultural-card" onclick="toggleDetails('asia')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🇯🇵 Usuarios Asiáticos - Estrategia Elegant</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="asia">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Comunicación Sutil (+89% retención):</h5>
+                            <ul>
+                                <li>Movimientos suaves y elegantes</li>
+                                <li>Reverencias ligeras al saludar</li>
+                                <li>Sonrisas genuinas y prolongadas</li>
+                                <li>Paciencia en las interacciones</li>
+                                <li>Respeto por jerarquías en chat</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Frases Respetuosas:</h5>
+                            <div class="phrase-trainer">
+                                <div class="phrase-item">
+                                    <span>"こんにちは! (Konnichiwa!) Welcome"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('jp1')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"ありがとうございます (Arigatou gozaimasu)"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('jp2')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"I'm honored by your presence"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('jp3')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cultural-card" onclick="toggleDetails('europa')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🇪🇺 Usuarios Europeos - Estrategia Authentic</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="europa">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Autenticidad y Consistencia (+76% loyalty):</h5>
+                            <ul>
+                                <li>Personalidad genuina y coherente</li>
+                                <li>Conversaciones profundas y significativas</li>
+                                <li>Respeto por privacidad y límites</li>
+                                <li>Humor inteligente y sutil</li>
+                                <li>Referencias culturales apropiadas</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Frases Multilingües Europeas:</h5>
+                            <div class="phrase-trainer">
+                                <div class="phrase-item">
+                                    <span>"Bonjour mes amis! Merci d'être là"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('fr1')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"Hola queridos! Gracias por el apoyo"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('es1')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"Ciao belli! Siete fantastici"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('it1')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cultural-card" onclick="toggleDetails('latinoamerica')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🇲🇽 Usuarios Latinoamericanos - Estrategia Warmth</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="latinoamerica">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Calidez y Familiaridad (+91% tips):</h5>
+                            <ul>
+                                <li>Contacto emocional inmediato</li>
+                                <li>Uso de diminutivos cariñosos</li>
+                                <li>Expresividad corporal amplia</li>
+                                <li>Humor y alegría constante</li>
+                                <li>Menciones familiares y locales</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>Frases que Conectan:</h5>
+                            <div class="phrase-trainer">
+                                <div class="phrase-item">
+                                    <span>"¡Hola mi amor! ¿Cómo estás mi vida?"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('es2')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"Gracias corazón, eres un sol"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('es3')"></i>
+                                </div>
+                                <div class="phrase-item">
+                                    <span>"¡Qué rico tenerte aquí conmigo!"</span>
+                                    <i class="fas fa-play audio-player" onclick="playAudio('es4')"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculadora de Impacto Cultural -->
+    <div class="container">
+        <div class="language-calculator">
+            <h3><i class="fas fa-calculator"></i> Calculadora de Impacto Cultural Global</h3>
+            <p>Descubre tu potencial de ingresos con adaptación multicultural</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="number" class="calc-input" id="currentGlobalIncome" placeholder="Ingresos actuales mensuales ($)" oninput="calculateCulturalImpact()">
+                    <select class="calc-input" id="languageCount" onchange="calculateCulturalImpact()">
+                        <option value="">¿Cuántos idiomas dominas básicamente?</option>
+                        <option value="1">Solo español</option>
+                        <option value="2">Español + Inglés</option>
+                        <option value="3">3 idiomas</option>
+                        <option value="4">4+ idiomas</option>
+                    </select>
+                    <select class="calc-input" id="culturalAdaptation" onchange="calculateCulturalImpact()">
+                        <option value="">Nivel de adaptación cultural actual</option>
+                        <option value="1.1">Básico (sin adaptación)</option>
+                        <option value="1.8">Intermedio (algunas frases)</option>
+                        <option value="2.9">Avanzado (estrategias por región)</option>
+                        <option value="4.2">Master (experto multicultural)</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="culturalResults">
+                        <h5>🎯 Tu Potencial de Crecimiento:</h5>
+                        <p id="monthlyProjection">Ingresa tus datos para ver tu proyección</p>
+                        <p id="yearlyProjection"></p>
+                        <p id="culturalBonus"></p>
+                        <p id="implementationTime"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulador de Escenarios Culturales -->
+    <div class="container">
+        <div class="simulator-section">
+            <h3><i class="fas fa-theater-masks"></i> Simulador de Escenarios Culturales Globales</h3>
+            <p>Practica situaciones reales con usuarios de diferentes culturas</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Selecciona un Escenario:</h5>
+                    <div class="scenario-card" onclick="selectScenario('tip_request')">
+                        <h6>💰 Solicitud de Tip</h6>
+                        <p>Usuario japonés quiere hacer un tip pero no sabe cómo pedirlo</p>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('cultural_celebration')">
+                        <h6>🎉 Celebración Cultural</h6>
+                        <p>Es Diwali y tienes usuarios de India en tu room</p>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('language_barrier')">
+                        <h6>🗣️ Barrera de Idioma</h6>
+                        <p>Usuario francés no entiende inglés pero quiere participar</p>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('time_zones')">
+                        <h6>⏰ Zonas Horarias</h6>
+                        <p>Usuarios de Australia en tu show nocturno</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="scenarioResult" class="scenario-card">
+                        <h5>🎭 Selecciona un escenario para comenzar</h5>
+                        <p>Cada escenario te enseñará estrategias específicas para maximizar tu conexión cultural y aumentar tus ingresos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracker de Progreso Cultural -->
+    <div class="container">
+        <div class="lab-section">
+            <h3 class="section-title">
+                <i class="fas fa-chart-line"></i> Tracker de Progreso Cultural
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <h5>🗣️ Dominio de Idiomas</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Inglés Básico</span>
+                                <span id="englishProgress">75%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 75%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Frases Japonesas</span>
+                                <span id="japaneseProgress">40%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 40%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Expresiones Francesas</span>
+                                <span id="frenchProgress">25%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary-custom" onclick="updateProgress()">
+                            Practicar Idiomas
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-tracker">
+                        <h5>🌍 Conocimiento Cultural</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Celebraciones Globales</span>
+                                <span id="celebrationsProgress">60%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 60%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Etiqueta por Región</span>
+                                <span id="etiquetteProgress">45%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Zonas Horarias</span>
+                                <span id="timezoneProgress">80%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary-custom" onclick="updateCulturalKnowledge()">
+                            Estudiar Culturas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calendario de Celebraciones Globales -->
+    <div class="container">
+        <div class="calendar-section">
+            <h3 class="section-title">
+                <i class="fas fa-calendar-star"></i> Calendario de Celebraciones Globales 2025
+            </h3>
+            <p class="lead">ESENCIAL: Incrementa tips hasta 340% durante celebraciones culturales</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>📅 Próximas Celebraciones:</h5>
+                    <div class="calendar-event">
+                        <strong>27 Junio - Eid al-Adha</strong>
+                        <p>Países Musulmanes • Frases: "Eid Mubarak!" • Colores: Verde y dorado</p>
+                    </div>
+                    <div class="calendar-event">
+                        <strong>4 Julio - Independence Day</strong>
+                        <p>Estados Unidos • Decoración patriótica • Música americana</p>
+                    </div>
+                    <div class="calendar-event">
+                        <strong>14 Julio - Bastille Day</strong>
+                        <p>Francia • "Vive la France!" • Colores franceses</p>
+                    </div>
+                    <div class="calendar-event">
+                        <strong>15 Agosto - Assumption Day</strong>
+                        <p>Países Católicos • Ambiente religioso • Respeto</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>🎊 Estrategias por Celebración:</h5>
+                    <div class="cultural-insights">
+                        <h6>💡 Aumenta ingresos 7.2x durante festivales:</h6>
+                        <ul>
+                            <li>🎨 Adapta decoración de fondo a la celebración</li>
+                            <li>🎵 Incluye música tradicional de la región</li>
+                            <li>👗 Usa colores representativos del festival</li>
+                            <li>🗣️ Aprende 3-5 frases básicas de saludo</li>
+                            <li>🎁 Crea ofertas especiales temáticas</li>
+                            <li>📸 Sube contenido cultural a redes sociales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="success-story">
+                    <h4>🌟 Sofía - México</h4>
+                    <p><strong>De $1,200 a $6,890/mes</strong></p>
+                    <p>"Implementé frases en japonés durante mis shows nocturnos. Mis viewers asiáticos incrementaron 450% y mis tips se multiplicaron por 5."</p>
+                    <div class="achievement-badge">+475% Ingresos</div>
+                    <div class="achievement-badge">3 Meses</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="success-story">
+                    <h4>🌟 Isabella - Colombia</h4>
+                    <p><strong>De $800 a $4,230/mes</strong></p>
+                    <p>"Celebré Diwali con decoración hindú y aprendí 'Namaste'. Mis usuarios indios me llenaron de tips y se volvieron regulares."</p>
+                    <div class="achievement-badge">+428% Ingresos</div>
+                    <div class="achievement-badge">2 Meses</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="success-story">
+                    <h4>🌟 Camila - Argentina</h4>
+                    <p><strong>De $950 a $5,670/mes</strong></p>
+                    <p>"Adapté mi horario a zonas horarias europeas y aprendí saludos en francés e italiano. Mi audiencia europea se triplicó."</p>
+                    <div class="achievement-badge">+497% Ingresos</div>
+                    <div class="achievement-badge">4 Meses</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Herramientas Avanzadas -->
+    <div class="container">
+        <div class="lab-section">
+            <h3 class="section-title">
+                <i class="fas fa-tools"></i> Herramientas Avanzadas de Adaptación Cultural
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="cultural-card">
+                        <h5>🕐 Optimizador de Zonas Horarias</h5>
+                        <p>Descubre los mejores horarios para cada región:</p>
+                        <div class="region-selector">
+                            <div class="region-option" onclick="showTimeZone('asia')">
+                                <div class="region-flag">🇯🇵</div>
+                                <span>Asia-Pacífico</span>
+                            </div>
+                            <div class="region-option" onclick="showTimeZone('europe')">
+                                <div class="region-flag">🇪🇺</div>
+                                <span>Europa</span>
+                            </div>
+                            <div class="region-option" onclick="showTimeZone('americas')">
+                                <div class="region-flag">🇺🇸</div>
+                                <span>Américas</span>
+                            </div>
+                        </div>
+                        <div id="timezoneInfo" class="mt-3">
+                            <p>Selecciona una región para ver horarios óptimos</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="cultural-card">
+                        <h5>🎯 Analizador de Audiencia por País</h5>
+                        <p>Identifica tu audiencia principal y optimiza tu estrategia:</p>
+                        <canvas id="audienceChart" width="300" height="200"></canvas>
+                        <button class="btn btn-primary-custom mt-3" onclick="analyzeAudience()">
+                            Analizar Mi Audiencia
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="container">
+        <div class="final-summary">
+            <h2>🎯 ¡A Construir Tu Imperio Cultural Global!</h2>
+            <p class="lead mb-4">
+                Has descubierto las estrategias que utilizan las top 1% performers para 
+                generar <strong>$4,892+ mensuales</strong> conectando con 195 países.
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h4>🏆 Logros Desbloqueados Hoy:</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li>✅ Estrategias por región dominadas</li>
+                                <li>✅ Frases multilingües aprendidas</li>
+                                <li>✅ Calendario cultural integrado</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li>✅ Herramientas de optimización activadas</li>
+                                <li>✅ Casos de éxito analizados</li>
+                                <li>✅ ROI cultural calculado</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary-custom btn-lg mt-4" onclick="startImplementation()">
+                <i class="fas fa-rocket"></i> IMPLEMENTAR ESTRATEGIA CULTURAL
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const chevron = details.parentElement.querySelector('.fa-chevron-down');
+            
+            details.classList.toggle('active');
+            chevron.style.transform = details.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Calculate cultural impact
+        function calculateCulturalImpact() {
+            const income = parseInt(document.getElementById('currentGlobalIncome').value) || 0;
+            const languages = parseInt(document.getElementById('languageCount').value) || 1;
+            const adaptation = parseFloat(document.getElementById('culturalAdaptation').value) || 1;
+            
+            if (income > 0) {
+                const languageMultiplier = 1 + (languages - 1) * 0.67;
+                const projectedMonthly = Math.round(income * languageMultiplier * adaptation);
+                const yearlyProjection = projectedMonthly * 12;
+                const culturalBonus = projectedMonthly - income;
+                
+                document.getElementById('monthlyProjection').innerHTML = 
+                    `💰 Proyección mensual: <strong>$${projectedMonthly.toLocaleString()}</strong>`;
+                document.getElementById('yearlyProjection').innerHTML = 
+                    `📈 Proyección anual: <strong>$${yearlyProjection.toLocaleString()}</strong>`;
+                document.getElementById('culturalBonus').innerHTML = 
+                    `🎯 Bonus cultural: <strong>+$${culturalBonus.toLocaleString()}/mes</strong>`;
+                document.getElementById('implementationTime').innerHTML = 
+                    `⏱️ Tiempo de implementación: <strong>${Math.ceil(adaptation * 2)} semanas</strong>`;
+            }
+        }
+
+        // Select scenario
+        function selectScenario(scenario) {
+            const scenarios = {
+                'tip_request': {
+                    title: '💰 Solicitud de Tip - Usuario Japonés',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Usuario llamado "Hiroshi_Tokyo" ha estado en tu room por 30 minutos pero no ha hecho tips. En Japón, pedir directamente se considera descortés.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>"Hey Hiroshi, tip me please!"</p>
+                        
+                        <h6>✅ Respuesta Cultural Perfecta:</h6>
+                        <p>"Hiroshi-san, arigatou gozaimasu for spending time with me! Your presence makes me so happy! If you want to support my stream, any gesture is deeply appreciated. No pressure! 🙏"</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>+340% más probable de recibir tip</strong> usando respuesta respetuosa con su cultura.</p>
+                    `
+                },
+                'cultural_celebration': {
+                    title: '🎉 Celebración Cultural - Diwali',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Es Diwali (Festival de Luces) y tienes varios usuarios indios en tu room. Es su celebración más importante del año.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>Ignorar la celebración o no mencionarla.</p>
+                        
+                        <h6>✅ Respuesta Cultural Perfecta:</h6>
+                        <p>"Happy Diwali to all my beautiful Indian friends! 🪔 May this Festival of Lights bring prosperity and joy to your families! Sending love and light from [tu país]! ✨"</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>Tips aumentan 720%</strong> durante celebraciones culturales reconocidas.</p>
+                    `
+                },
+                'language_barrier': {
+                    title: '🗣️ Barrera de Idioma - Usuario Francés',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Usuario "Pierre_Paris" escribe en francés pero tú no hablas el idioma. Quiere participar pero se siente excluido.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>"Sorry, I only speak Spanish and English"</p>
+                        
+                        <h6>✅ Respuesta Cultural Perfecta:</h6>
+                        <p>"Bonjour Pierre! 🇫🇷 Je ne parle pas français très bien, but I'm learning! Please feel comfortable writing in English or French - I'll use translator! Merci beaucoup for being here! ❤️"</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>+280% retención</strong> de usuarios cuando muestras esfuerzo por su idioma.</p>
+                    `
+                },
+                'time_zones': {
+                    title: '⏰ Zonas Horarias - Usuarios Australianos',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Son las 2 AM en Australia pero tus viewers aussies están en tu show nocturno. Están sacrificando sueño por verte.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>No reconocer su sacrificio de tiempo.</p>
+                        
+                        <h6>✅ Respuesta Cultural Perfecta:</h6>
+                        <p>"My amazing Aussie mates! 🇦🇺 I know it's super late there - thank you for staying up with me! You guys are absolute legends! This show is extra special because of your dedication! 💪"</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>+450% lealtad</strong> cuando reconoces el sacrificio de zonas horarias.</p>
+                    `
+                }
+            };
+            
+            const scenarioData = scenarios[scenario];
+            if (scenarioData) {
+                document.getElementById('scenarioResult').innerHTML = 
+                    `<h5>${scenarioData.title}</h5>${scenarioData.content}`;
+                
+                // Mark scenario as selected
+                document.querySelectorAll('.scenario-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                event.target.closest('.scenario-card').classList.add('active');
+            }
+        }
+
+        // Update progress
+        function updateProgress() {
+            const progressBars = ['englishProgress', 'japaneseProgress', 'frenchProgress'];
+            progressBars.forEach(bar => {
+                const element = document.getElementById(bar);
+                const current = parseInt(element.textContent);
+                const newValue = Math.min(current + 5, 100);
+                element.textContent = newValue + '%';
+                element.parentElement.nextElementSibling.firstElementChild.style.width = newValue + '%';
+            });
+        }
+
+        // Update cultural knowledge
+        function updateCulturalKnowledge() {
+            const progressBars = ['celebrationsProgress', 'etiquetteProgress', 'timezoneProgress'];
+            progressBars.forEach(bar => {
+                const element = document.getElementById(bar);
+                const current = parseInt(element.textContent);
+                const newValue = Math.min(current + 3, 100);
+                element.textContent = newValue + '%';
+                element.parentElement.nextElementSibling.firstElementChild.style.width = newValue + '%';
+            });
+        }
+
+        // Show timezone info
+        function showTimeZone(region) {
+            const timezones = {
+                'asia': `
+                    <h6>🕐 Horarios Óptimos Asia-Pacífico:</h6>
+                    <p><strong>Japón/Corea:</strong> 7:00 PM - 11:00 PM JST (mayor actividad)</p>
+                    <p><strong>Australia:</strong> 8:00 PM - 12:00 AM AEST (fines de semana)</p>
+                    <p><strong>Filipinas:</strong> 6:00 PM - 10:00 PM PHT (después del trabajo)</p>
+                    <p>💡 <strong>Tip:</strong> +89% ingresos cambiando a estos horarios</p>
+                `,
+                'europe': `
+                    <h6>🕐 Horarios Óptimos Europa:</h6>
+                    <p><strong>Reino Unido:</strong> 8:00 PM - 12:00 AM GMT (prime time)</p>
+                    <p><strong>Francia/Alemania:</strong> 9:00 PM - 1:00 AM CET (noches)</p>
+                    <p><strong>España/Italia:</strong> 10:00 PM - 2:00 AM CET (cultura nocturna)</p>
+                    <p>💡 <strong>Tip:</strong> +76% engagement en horarios europeos</p>
+                `,
+                'americas': `
+                    <h6>🕐 Horarios Óptimos Américas:</h6>
+                    <p><strong>Costa Este USA:</strong> 7:00 PM - 11:00 PM EST (después del trabajo)</p>
+                    <p><strong>Costa Oeste USA:</strong> 9:00 PM - 1:00 AM PST (entretenimiento nocturno)</p>
+                    <p><strong>Canadá:</strong> 8:00 PM - 12:00 AM (similar a USA)</p>
+                    <p>💡 <strong>Tip:</strong> +67% tips en horarios estadounidenses</p>
+                `
+            };
+            
+            document.getElementById('timezoneInfo').innerHTML = timezones[region];
+            
+            // Update selected region
+            document.querySelectorAll('.region-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.region-option').classList.add('selected');
+        }
+
+        // Analyze audience (mock function)
+        function analyzeAudience() {
+            const countries = ['Estados Unidos: 34%', 'Japón: 18%', 'Reino Unido: 15%', 'Francia: 12%', 'Australia: 10%', 'Otros: 11%'];
+            alert('📊 Análisis de Audiencia:\n\n' + countries.join('\n') + '\n\n💡 Recomendación: Enfócate en horarios estadounidenses y frases en inglés/japonés para maximizar ingresos.');
+        }
+
+        // Play audio (mock function)
+        function playAudio(audioId) {
+            console.log('Playing audio:', audioId);
+            // In a real implementation, this would play actual audio files
+            const audio = event.target;
+            audio.style.color = '#28a745';
+            setTimeout(() => {
+                audio.style.color = '';
+            }, 2000);
+        }
+
+        // Start implementation
+        function startImplementation() {
+            alert('🚀 ¡Perfecto! Tu estrategia cultural está lista.\n\n✅ Próximos pasos:\n1. Implementa frases básicas en inglés y japonés\n2. Adapta tu horario a zonas clave\n3. Prepárate para las próximas celebraciones\n4. Usa el calendario cultural diariamente\n\n¡Tu imperio financiero global comienza ahora!');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            setInterval(updateCurrentDate, 60000); // Update every minute
+        });
+    </script>
+</body>
+</html>

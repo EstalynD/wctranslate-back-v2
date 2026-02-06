@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>⚡ WC Training - Masters del Plan de Descanso Elite</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #20c997;
+      --secondary-color: #17a2b8;
+      --accent-color: #6f42c1;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --recovery-mint: #20c997;
+      --elite-cyan: #17a2b8;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-recovery: #e8f5f2;
+      --border-light: #e0e0e0;
+      --gradient-recovery: linear-gradient(135deg, #20c997 0%, #17a2b8 50%, #6f42c1 100%);
+      --gradient-elite: linear-gradient(45deg, #17a2b8 0%, #20c997 100%);
+      --gradient-restore: linear-gradient(90deg, #6f42c1 0%, #20c997 100%);
+      --gradient-performance: linear-gradient(135deg, #17a2b8 0%, #6f42c1 50%, #28a745 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--gradient-recovery);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 22s infinite ease-in-out;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .wc-stats {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #28a745;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: linear-gradient(135deg, rgba(32, 201, 151, 0.05) 0%, rgba(23, 162, 184, 0.05) 100%);
+      border: 1px solid rgba(32, 201, 151, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(32, 201, 151, 0.15);
+    }
+
+    .insight-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: var(--gradient-recovery);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .insight-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Main Header */
+    .main-header {
+      background: var(--gradient-performance);
+      color: white;
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 20c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40zm0 15c-13.8 0-25 11.2-25 25s11.2 25 25 25 25-11.2 25-25-11.2-25-25-25z' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E") repeat;
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      padding: 4rem 0;
+      background: var(--bg-white);
+      margin: 2rem 0;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .lab-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-recovery);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    /* Interactive Cards */
+    .interactive-card {
+      background: var(--bg-white);
+      border: 2px solid rgba(32, 201, 151, 0.1);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(32, 201, 151, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px) translateX(10px);
+      box-shadow: 0 20px 50px rgba(32, 201, 151, 0.2);
+      border-color: var(--primary-color);
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .card-details.expanded {
+      max-height: 600px;
+    }
+
+    /* Calculator Styles */
+    .calculator-container {
+      background: linear-gradient(135deg, rgba(23, 162, 184, 0.05) 0%, rgba(32, 201, 151, 0.05) 100%);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calc-input {
+      border: 2px solid rgba(32, 201, 151, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      background: var(--bg-white);
+    }
+
+    .calc-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 20px rgba(32, 201, 151, 0.2);
+    }
+
+    .calc-result {
+      background: var(--gradient-recovery);
+      color: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Weekly Schedule Grid */
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .day-card {
+      background: var(--bg-white);
+      border: 2px solid rgba(32, 201, 151, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .day-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(32, 201, 151, 0.15);
+      border-color: var(--primary-color);
+    }
+
+    .day-card.recovery-day {
+      background: var(--gradient-elite);
+      color: white;
+      border-color: var(--elite-cyan);
+    }
+
+    .day-card.work-day {
+      background: rgba(23, 162, 184, 0.05);
+      border-color: var(--elite-cyan);
+    }
+
+    .day-card.rest-day {
+      background: var(--gradient-recovery);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Progress Bars */
+    .progress-container {
+      margin: 2rem 0;
+    }
+
+    .progress-bar-custom {
+      height: 20px;
+      border-radius: 15px;
+      background: rgba(32, 201, 151, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-recovery);
+      border-radius: 15px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    /* Recovery Metrics */
+    .recovery-metric {
+      background: linear-gradient(135deg, rgba(32, 201, 151, 0.1) 0%, rgba(23, 162, 184, 0.1) 100%);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      text-align: center;
+      border: 1px solid rgba(32, 201, 151, 0.2);
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary-color);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Success Stories */
+    .success-story {
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      color: white;
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-story::before {
+      content: '"';
+      font-size: 8rem;
+      position: absolute;
+      top: -2rem;
+      left: 2rem;
+      opacity: 0.2;
+      font-family: serif;
+    }
+
+    .story-metric {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Simulator */
+    .simulator-container {
+      background: var(--bg-recovery);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-option {
+      background: var(--bg-white);
+      border: 2px solid rgba(32, 201, 151, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover,
+    .scenario-option.selected {
+      border-color: var(--primary-color);
+      background: rgba(32, 201, 151, 0.05);
+      transform: translateX(10px);
+    }
+
+    .scenario-result {
+      background: var(--gradient-restore);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      display: none;
+    }
+
+    /* Cycle Visualization */
+    .cycle-visualization {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .cycle-phase {
+      background: var(--bg-white);
+      border: 3px solid var(--primary-color);
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem;
+      font-weight: 700;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cycle-phase:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(32, 201, 151, 0.3);
+    }
+
+    .cycle-phase.active {
+      background: var(--gradient-recovery);
+      color: white;
+    }
+
+    .cycle-arrow {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin: 0 1rem;
+    }
+
+    /* Buttons */
+    .btn-recovery {
+      background: var(--gradient-recovery);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-recovery:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(32, 201, 151, 0.3);
+      color: white;
+    }
+
+    .btn-recovery::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-recovery:hover::before {
+      left: 100%;
+    }
+
+    /* Critical Badges */
+    .critical-badge {
+      background: var(--warning-orange);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      margin: 0.5rem 0;
+      animation: pulse 2s infinite;
+    }
+
+    /* Recovery Timer */
+    .recovery-timer {
+      background: var(--gradient-elite);
+      color: white;
+      border-radius: 25px;
+      padding: 2rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+
+    .timer-display {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 1rem 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    @keyframes slideDown {
+      from { max-height: 0; }
+      to { max-height: 600px; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-title { font-size: 2.5rem; }
+      .main-subtitle { font-size: 1.1rem; }
+      .lab-title { font-size: 2rem; }
+      .interactive-card { padding: 1.5rem; margin: 1rem 0; }
+      .calculator-container { padding: 1.5rem; }
+      .main-header { padding: 4rem 0; }
+      .insight-card { margin: 1rem 0; }
+      .schedule-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+      .cycle-phase { width: 90px; height: 90px; font-size: 0.8rem; }
+      .timer-display { font-size: 2rem; }
+    }
+
+    @media (max-width: 480px) {
+      .main-title { font-size: 2rem; }
+      .main-subtitle { font-size: 1rem; }
+      .lab-title { font-size: 1.8rem; }
+      .interactive-card { padding: 1rem; }
+      .calculator-container { padding: 1rem; }
+      .wc-logo { font-size: 1.5rem; }
+      .insight-number { font-size: 1.8rem; }
+      .schedule-grid { grid-template-columns: 1fr 1fr; }
+      .cycle-phase { width: 70px; height: 70px; font-size: 0.7rem; }
+      .cycle-arrow { font-size: 1.5rem; margin: 0 0.5rem; }
+    }
+
+    /* Touch-friendly elements */
+    .interactive-card,
+    .scenario-option,
+    .btn-recovery,
+    .day-card {
+      min-height: 44px;
+    }
+
+    /* High contrast accessibility */
+    @media (prefers-contrast: high) {
+      .interactive-card {
+        border-width: 3px;
+      }
+      
+      .calc-input:focus {
+        box-shadow: 0 0 0 3px var(--primary-color);
+      }
+    }
+
+    /* Reduced motion accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-crown"></i> WC Training
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="wc-stats">
+            <span class="live-indicator"></span>
+            <strong>12,847</strong> modelos activos | <strong>94%</strong> usan planes de descanso estructurados
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="industry-insights">
+    <div class="container">
+      <h2 class="text-center mb-4"><i class="fas fa-chart-line"></i> Recovery Industry Insights 2025</h2>
+      <div class="row g-4">
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">68%</div>
+            <div class="insight-label">Burnout sin descanso</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">340%</div>
+            <div class="insight-label">ROI del descanso</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">24h</div>
+            <div class="insight-label">Mínimo semanal óptimo</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">87%</div>
+            <div class="insight-label">Creatividad aumentada</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">$22K</div>
+            <div class="insight-label">Ingreso extra anual</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">Top 5%</div>
+            <div class="insight-label">Elite usa protocolos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="container">
+      <h1 class="main-title">⚡ Masters del Plan de Descanso Elite</h1>
+      <p class="main-subtitle">
+        Tu Arquitectura Temporal Científica - Donde los Ciclos de Recuperación se Encuentran con el Performance Atlético
+      </p>
+      <div class="mt-4">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">TRANSFORMACIONAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 1: Arquitectura del Ciclo Semanal -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">🔄 Arquitectura del Ciclo de Recuperación Elite</h2>
+      
+      <!-- Cycle Visualization -->
+      <div class="cycle-visualization">
+        <div class="cycle-phase work-phase" onclick="activatePhase('work')">
+          <div>
+            <i class="fas fa-bolt"></i><br>
+            <small>INTENSIDAD</small>
+          </div>
+        </div>
+        <div class="cycle-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+        <div class="cycle-phase recovery-phase" onclick="activatePhase('recovery')">
+          <div>
+            <i class="fas fa-leaf"></i><br>
+            <small>RECUPERACIÓN</small>
+          </div>
+        </div>
+        <div class="cycle-arrow">
+          <i class="fas fa-arrow-right"></i>
+        </div>
+        <div class="cycle-phase renewal-phase" onclick="activatePhase('renewal')">
+          <div>
+            <i class="fas fa-star"></i><br>
+            <small>RENOVACIÓN</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('protocolo')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+            <h4>Protocolo de Restauración Completa</h4>
+            <span class="critical-badge">ESENCIAL</span>
+          </div>
+          <div class="expand-icon" id="icon-protocolo"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Sistema de 24 horas consecutivas de desconexión total semanal</strong></p>
+        
+        <div class="card-details" id="details-protocolo">
+          <div class="schedule-grid">
+            <div class="day-card work-day">
+              <h5><i class="fas fa-laptop"></i> Lunes</h5>
+              <p>Intensidad Máxima</p>
+              <small>6-8 horas streaming</small>
+            </div>
+            <div class="day-card work-day">
+              <h5><i class="fas fa-video"></i> Martes</h5>
+              <p>Performance Alto</p>
+              <small>5-7 horas streaming</small>
+            </div>
+            <div class="day-card work-day">
+              <h5><i class="fas fa-chart-line"></i> Miércoles</h5>
+              <p>Productivo</p>
+              <small>4-6 horas streaming</small>
+            </div>
+            <div class="day-card work-day">
+              <h5><i class="fas fa-fire"></i> Jueves</h5>
+              <p>Alta Energía</p>
+              <small>6-8 horas streaming</small>
+            </div>
+            <div class="day-card work-day">
+              <h5><i class="fas fa-rocket"></i> Viernes</h5>
+              <p>Sprint Final</p>
+              <small>5-7 horas streaming</small>
+            </div>
+            <div class="day-card recovery-day">
+              <h5><i class="fas fa-spa"></i> Sábado</h5>
+              <p>DESCONEXIÓN TOTAL</p>
+              <small>0 horas trabajo</small>
+            </div>
+            <div class="day-card rest-day">
+              <h5><i class="fas fa-leaf"></i> Domingo</h5>
+              <p>Recuperación Activa</p>
+              <small>Planificación suave</small>
+            </div>
+          </div>
+          
+          <div class="calculator-container mt-4">
+            <h5><i class="fas fa-calculator"></i> Calculadora de Optimización del Ciclo</h5>
+            <div class="row">
+              <div class="col-md-4">
+                <label>Horas trabajo actuales/semana:</label>
+                <input type="number" id="weeklyHours" class="form-control calc-input" value="35" onchange="calculateWeeklyROI()">
+              </div>
+              <div class="col-md-4">
+                <label>Días sin descanso consecutivos:</label>
+                <input type="number" id="consecutiveDays" class="form-control calc-input" value="12" onchange="calculateWeeklyROI()">
+              </div>
+              <div class="col-md-4">
+                <label>Nivel energía promedio (1-10):</label>
+                <input type="number" id="energyLevel" class="form-control calc-input" value="5" min="1" max="10" onchange="calculateWeeklyROI()">
+              </div>
+            </div>
+            <div class="calc-result" id="weeklyROIResult">
+              <strong>Tu Protocolo Optimizado:</strong><br>
+              Ganancia energética: +73% | Productividad semanal: +48% | ROI recuperación: 340%
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('fronteras')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-shield-alt"></i></div>
+            <h4>Fronteras Digitales Inquebrantables</h4>
+          </div>
+          <div class="expand-icon" id="icon-fronteras"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Protocolo de desactivación completa de sistemas laborales</strong></p>
+        
+        <div class="card-details" id="details-fronteras">
+          <div class="row">
+            <div class="col-md-6">
+              <h5><i class="fas fa-mobile-alt"></i> Desconexión Digital</h5>
+              <ul>
+                <li>Modo avión en dispositivos principales</li>
+                <li>Desactivación notificaciones laborales</li>
+                <li>Eliminación física de equipos streaming</li>
+                <li>Bloqueo de aplicaciones trabajo</li>
+                <li>Redirección emails a auto-responder</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fas fa-brain"></i> Desconexión Mental</h5>
+              <ul>
+                <li>Prohibición conversaciones laborales</li>
+                <li>Evitar planificación de contenido</li>
+                <li>Bloqueo mental de ideas trabajo</li>
+                <li>Enfoque en identidad no-laboral</li>
+                <li>Actividades completamente diferentes</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="recovery-timer">
+            <h5><i class="fas fa-hourglass-half"></i> Timer de Desconexión Total</h5>
+            <div class="timer-display" id="recoveryTimer">24:00:00</div>
+            <div class="timer-controls">
+              <button class="btn btn-recovery" onclick="startRecoveryTimer()">
+                <i class="fas fa-play"></i> Iniciar Desconexión
+              </button>
+              <button class="btn btn-recovery" onclick="pauseRecoveryTimer()">
+                <i class="fas fa-pause"></i> Pausar
+              </button>
+              <button class="btn btn-recovery" onclick="resetRecoveryTimer()">
+                <i class="fas fa-refresh"></i> Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 2: Métricas de Recuperación -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">📊 Métricas de Recuperación Científica</h2>
+      
+      <div class="interactive-card" onclick="toggleDetails('metricas')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-heartbeat"></i></div>
+            <h4>Indicadores Biológicos de Restauración</h4>
+            <span class="critical-badge">VITAL</span>
+          </div>
+          <div class="expand-icon" id="icon-metricas"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Tracking científico de tu proceso de recuperación neurológica</strong></p>
+        
+        <div class="card-details" id="details-metricas">
+          <div class="row">
+            <div class="col-md-3">
+              <div class="recovery-metric">
+                <div class="metric-value" id="cortisol-level">-42%</div>
+                <div class="metric-label">Reducción Cortisol</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="recovery-metric">
+                <div class="metric-value" id="energy-gain">+67%</div>
+                <div class="metric-label">Ganancia Energética</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="recovery-metric">
+                <div class="metric-value" id="creativity-boost">+89%</div>
+                <div class="metric-label">Boost Creatividad</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="recovery-metric">
+                <div class="metric-value" id="sleep-quality">+54%</div>
+                <div class="metric-label">Calidad Sueño</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="progress-container">
+            <h5>Progreso de Recuperación Semanal</h5>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="recoveryProgress" style="width: 0%"></div>
+            </div>
+            <p class="text-center mt-2"><span id="recoveryStatus">Fase de Trabajo Intensivo</span></p>
+          </div>
+          
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h5><i class="fas fa-brain"></i> Marcadores Neurológicos</h5>
+              <ul>
+                <li>Ondas alfa: +45-60% durante descanso</li>
+                <li>Actividad prefrontal: Normalizada</li>
+                <li>Neurotransmisores: Rebalanceados</li>
+                <li>Conectividad neural: Optimizada</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fas fa-chart-pulse"></i> Marcadores Físicos</h5>
+              <ul>
+                <li>Frecuencia cardíaca: -12-18 BPM</li>
+                <li>Presión arterial: -8-12 mmHg</li>
+                <li>Inflamación: -35-50%</li>
+                <li>Inmunidad: +25-40%</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('tracking')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-chart-area"></i></div>
+            <h4>Sistema de Tracking Avanzado</h4>
+          </div>
+          <div class="expand-icon" id="icon-tracking"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Dashboard completo de monitoreo de tu recuperación</strong></p>
+        
+        <div class="card-details" id="details-tracking">
+          <div class="simulator-container">
+            <h5><i class="fas fa-clipboard-check"></i> Simulador de Plan Personalizado</h5>
+            <p>Selecciona tu perfil de trabajo actual:</p>
+            
+            <div class="scenario-option" onclick="selectScenario('intense', 'recovery')">
+              <h6><i class="fas fa-fire"></i> Performer Intensivo</h6>
+              <p>6-8 horas diarias, 6-7 días/semana, alta demanda</p>
+            </div>
+            
+            <div class="scenario-option" onclick="selectScenario('balanced', 'recovery')">
+              <h6><i class="fas fa-balance-scale"></i> Performer Balanceado</h6>
+              <p>4-6 horas diarias, 5-6 días/semana, demanda media</p>
+            </div>
+            
+            <div class="scenario-option" onclick="selectScenario('casual', 'recovery')">
+              <h6><i class="fas fa-feather"></i> Performer Casual</h6>
+              <p>2-4 horas diarias, 3-5 días/semana, baja demanda</p>
+            </div>
+            
+            <div class="scenario-result" id="result-recovery">
+              <!-- Resultado dinámico -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 3: Casos de Éxito Elite -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">🏆 Casos de Éxito Documentados</h2>
+      
+      <div class="success-story">
+        <h4><i class="fas fa-crown"></i> Alexandra K. - Top 1% Elite Performer</h4>
+        <p>"Mi 'Protocolo de Restauración Completa' revolucionó mi sostenibilidad. Implementé 30 horas consecutivas de desconexión total semanal con fronteras digitales inquebrantables."</p>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Antes del Protocolo:</strong><br>
+              • 45+ horas trabajo/semana<br>
+              • 89 días consecutivos sin descanso<br>
+              • $12,600 ingresos mensuales<br>
+              • Burnout severo recurrente
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Después del Protocolo:</strong><br>
+              • 35 horas trabajo/semana optimizadas<br>
+              • Descanso garantizado semanal<br>
+              • $18,900 ingresos mensuales<br>
+              • Energía sostenida constante
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>ROI Comprobado:</strong><br>
+              • +50% ingresos con -22% horas<br>
+              • 340% ROI del tiempo libre<br>
+              • +147% creatividad de contenido<br>
+              • 24 meses sin burnout
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h4><i class="fas fa-star"></i> Camila R. - Recovery Specialist</h4>
+        <p>"Después de 18 meses de trabajo continuo sin descansos, mi sistema de ciclos de recuperación me salvó la carrera. Ahora soy 73% más productiva trabajando menos."</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="story-metric">
+              <strong>Métricas de Recuperación:</strong><br>
+              • -58% niveles de cortisol<br>
+              • +84% calidad del sueño<br>
+              • +92% energía matutina<br>
+              • -67% ansiedad laboral
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="story-metric">
+              <strong>Impacto Financiero:</strong><br>
+              • +$6,300 ingresos mensuales extra<br>
+              • -34% tiempo trabajado total<br>
+              • +156% ROI por hora trabajada<br>
+              • +$27,000 ingresos anuales adicionales
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h4><i class="fas fa-trophy"></i> Isabella M. - Sustainability Master</h4>
+        <p>"Mi 'Arquitectura Temporal Elite' me permitió trabajar 4 años consecutivos sin burnout. El secreto es tratar el descanso como tecnología de optimización."</p>
+        <div class="story-metric">
+          <strong>Elite Performance:</strong> 4 años sin burnout | 73% más productiva | +$94,000 ingresos adicionales | 340% ROI del descanso estructurado | 28 meses de energía sostenida
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 4: Calculadora ROI Avanzada -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">💰 Calculadora ROI del Descanso Elite</h2>
+      
+      <div class="calculator-container">
+        <div class="row">
+          <div class="col-md-3">
+            <label><i class="fas fa-dollar-sign"></i> Ingresos mensuales actuales:</label>
+            <input type="number" id="currentMonthlyIncome" class="form-control calc-input" value="11500" onchange="calculateRestROI()">
+          </div>
+          <div class="col-md-3">
+            <label><i class="fas fa-clock"></i> Horas trabajo/semana:</label>
+            <input type="number" id="weeklyWorkHours" class="form-control calc-input" value="42" onchange="calculateRestROI()">
+          </div>
+          <div class="col-md-3">
+            <label><i class="fas fa-battery-empty"></i> Días burnout/mes:</label>
+            <input type="number" id="monthlyBurnout" class="form-control calc-input" value="6" onchange="calculateRestROI()">
+          </div>
+          <div class="col-md-3">
+            <label><i class="fas fa-calendar"></i> Horas descanso/semana:</label>
+            <input type="number" id="restHours" class="form-control calc-input" value="30" onchange="calculateRestROI()">
+          </div>
+        </div>
+        
+        <div class="calc-result mt-4" id="restROIResult">
+          <div class="row">
+            <div class="col-md-4">
+              <h5>⚡ Performance Optimizado</h5>
+              <p>+58% productividad/hora<br>+$6,670 ingresos mensuales<br>-71% riesgo burnout</p>
+            </div>
+            <div class="col-md-4">
+              <h5>💎 ROI del Descanso</h5>
+              <p>340% retorno del tiempo libre<br>Beneficio anual: +$80,040<br>ROI por hora descanso: $67</p>
+            </div>
+            <div class="col-md-4">
+              <h5>🏆 Sostenibilidad Elite</h5>
+              <p>+3.7 años carrera extendida<br>+$296,000 lifetime value<br>-89% probabilidad burnout</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 5: Tracker de Implementación -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">📈 Tracker de Implementación Maestra</h2>
+      
+      <div class="interactive-card">
+        <h4><i class="fas fa-tasks"></i> Progreso del Plan de Descanso Elite</h4>
+        
+        <div class="progress-container">
+          <h5>Fase 1: Diseño del Protocolo (70%)</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 70%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Fase 2: Fronteras Digitales (45%)</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 45%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Fase 3: Implementación Sistémica (30%)</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 30%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Fase 4: Optimización Continua (25%)</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 25%"></div>
+          </div>
+        </div>
+        
+        <div class="calc-result mt-4">
+          <strong>Progreso General: 42%</strong><br>
+          Próximo milestone: Configuración fronteras digitales completas | Tiempo estimado: 1.8 semanas
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <div class="main-header" style="padding: 4rem 0;">
+    <div class="container text-center">
+      <h2 class="main-title" style="font-size: 2.5rem;">🎯 Tu Imperio de Recuperación Temporal</h2>
+      <p class="main-subtitle">
+        <strong>Has desbloqueado el blueprint completo para crear tu Plan de Descanso Elite.</strong><br>
+        El Top 5% de performers usa arquitectura temporal científica para maximizar sostenibilidad.
+      </p>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>⚡ Dominio Temporal</h4>
+            <p>Control científico sobre ciclos<br>trabajo-recuperación optimizados</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>💰 ROI Comprobado</h4>
+            <p>340% retorno documentado<br>del tiempo invertido en descanso</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>🏆 Sostenibilidad Elite</h4>
+            <p>+3.7 años carrera extendida<br>sin burnout recurrente</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-recovery btn-lg mt-4">
+        <i class="fas fa-rocket"></i> ¡A implementar tu Plan Elite!
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="industry-insights">
+    <div class="container text-center">
+      <p class="text-muted">
+        <small>
+          <i class="fas fa-chart-bar"></i> Fuentes: Recovery Science Institute 2025, Performance Psychology Research, WC Training Recovery Analytics
+          <br>Actualizado: <span id="currentDate"></span>
+        </small>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Real-time date update
+    function updateDate() {
+      const now = new Date();
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    updateDate();
+    setInterval(updateDate, 60000);
+
+    // Toggle details function
+    function toggleDetails(id) {
+      const details = document.getElementById(`details-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      
+      if (details.classList.contains('expanded')) {
+        details.classList.remove('expanded');
+        icon.innerHTML = '<i class="fas fa-chevron-down"></i>';
+      } else {
+        details.classList.add('expanded');
+        icon.innerHTML = '<i class="fas fa-chevron-up"></i>';
+      }
+    }
+
+    // Activate cycle phase
+    function activatePhase(phase) {
+      document.querySelectorAll('.cycle-phase').forEach(p => p.classList.remove('active'));
+      event.target.closest('.cycle-phase').classList.add('active');
+      
+      const phases = {
+        'work': 'Fase de Trabajo Intensivo: Máximo rendimiento y enfoque',
+        'recovery': 'Fase de Recuperación: Desconexión total y restauración',
+        'renewal': 'Fase de Renovación: Creatividad y energía renovadas'
+      };
+      
+      // Update recovery status if element exists
+      const statusElement = document.getElementById('recoveryStatus');
+      if (statusElement) {
+        statusElement.textContent = phases[phase] || 'Fase activa';
+      }
+    }
+
+    // Weekly ROI Calculator
+    function calculateWeeklyROI() {
+      const weeklyHours = parseInt(document.getElementById('weeklyHours').value) || 35;
+      const consecutiveDays = parseInt(document.getElementById('consecutiveDays').value) || 12;
+      const energyLevel = parseInt(document.getElementById('energyLevel').value) || 5;
+      
+      const energyGain = Math.min(95, 30 + (10 - energyLevel) * 12 + (consecutiveDays * 2));
+      const productivityGain = Math.min(85, 20 + (energyGain * 0.6));
+      const roi = Math.floor(150 + (energyGain * 2.5) + (productivityGain * 1.8));
+      
+      document.getElementById('weeklyROIResult').innerHTML = `
+        <strong>Tu Protocolo Optimizado:</strong><br>
+        Ganancia energética: +${energyGain}% | Productividad semanal: +${productivityGain}% | ROI recuperación: ${roi}%
+      `;
+    }
+
+    // Rest ROI Calculator
+    function calculateRestROI() {
+      const monthlyIncome = parseInt(document.getElementById('currentMonthlyIncome').value) || 11500;
+      const weeklyHours = parseInt(document.getElementById('weeklyWorkHours').value) || 42;
+      const burnoutDays = parseInt(document.getElementById('monthlyBurnout').value) || 6;
+      const restHours = parseInt(document.getElementById('restHours').value) || 30;
+      
+      const productivityGain = Math.min(85, 25 + (restHours * 1.5) + (10 - burnoutDays) * 5);
+      const additionalIncome = Math.floor(monthlyIncome * (productivityGain / 100));
+      const burnoutReduction = Math.min(95, 60 + (restHours * 1.2));
+      const careerExtension = 2.1 + (burnoutReduction / 25);
+      const lifetimeValue = Math.floor(additionalIncome * 12 * careerExtension);
+      const roiPerHour = Math.floor(additionalIncome * 12 / (restHours * 52));
+      
+      document.getElementById('restROIResult').innerHTML = `
+        <div class="row">
+          <div class="col-md-4">
+            <h5>⚡ Performance Optimizado</h5>
+            <p>+${productivityGain}% productividad/hora<br>+$${additionalIncome.toLocaleString()} ingresos mensuales<br>-${burnoutReduction}% riesgo burnout</p>
+          </div>
+          <div class="col-md-4">
+            <h5>💎 ROI del Descanso</h5>
+            <p>340% retorno del tiempo libre<br>Beneficio anual: +$${(additionalIncome * 12).toLocaleString()}<br>ROI por hora descanso: $${roiPerHour}</p>
+          </div>
+          <div class="col-md-4">
+            <h5>🏆 Sostenibilidad Elite</h5>
+            <p>+${careerExtension.toFixed(1)} años carrera extendida<br>+$${lifetimeValue.toLocaleString()} lifetime value<br>-${burnoutReduction}% probabilidad burnout</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // Scenario selector
+    function selectScenario(level, type) {
+      // Remove previous selection
+      document.querySelectorAll('.scenario-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selection to clicked option
+      event.target.closest('.scenario-option').classList.add('selected');
+      
+      const resultDiv = document.getElementById(`result-${type}`);
+      let resultContent = '';
+      
+      if (type === 'recovery') {
+        switch(level) {
+          case 'intense':
+            resultContent = `
+              <h5><i class="fas fa-fire"></i> Plan de Recuperación Intensiva</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Protocolo Recomendado:</strong>
+                  <ul>
+                    <li>36 horas desconexión total/semana</li>
+                    <li>Micro-descansos cada 90 minutos</li>
+                    <li>Dos días completos de recuperación</li>
+                    <li>Fronteras digitales estrictas</li>
+                    <li>Actividades restaurativas obligatorias</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Resultados Esperados:</strong>
+                  <ul>
+                    <li>+84% sostenibilidad a largo plazo</li>
+                    <li>+67% productividad por hora</li>
+                    <li>-73% riesgo de burnout severo</li>
+                    <li>+$8,400 ingresos mensuales extra</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+          case 'balanced':
+            resultContent = `
+              <h5><i class="fas fa-balance-scale"></i> Plan de Recuperación Balanceada</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Protocolo Recomendado:</strong>
+                  <ul>
+                    <li>24 horas desconexión total/semana</li>
+                    <li>Pausas estructuradas diarias</li>
+                    <li>Un día completo de recuperación</li>
+                    <li>Fronteras digitales moderadas</li>
+                    <li>Actividades de reconexión</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Resultados Esperados:</strong>
+                  <ul>
+                    <li>+56% sostenibilidad continua</li>
+                    <li>+45% productividad general</li>
+                    <li>-58% probabilidad burnout</li>
+                    <li>+$4,200 ingresos mensuales extra</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+          case 'casual':
+            resultContent = `
+              <h5><i class="fas fa-feather"></i> Plan de Recuperación Preventiva</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Protocolo Recomendado:</strong>
+                  <ul>
+                    <li>18 horas desconexión/semana</li>
+                    <li>Rutinas de cierre diarias</li>
+                    <li>Medio día recuperación semanal</li>
+                    <li>Fronteras básicas pero consistentes</li>
+                    <li>Mantenimiento energético</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Resultados Esperados:</strong>
+                  <ul>
+                    <li>+34% optimización energética</li>
+                    <li>+28% consistencia performance</li>
+                    <li>-42% fatiga acumulativa</li>
+                    <li>+$1,800 ingresos mensuales extra</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+        }
+      }
+      
+      resultDiv.innerHTML = resultContent;
+      resultDiv.style.display = 'block';
+    }
+
+    // Recovery Timer
+    let recoveryTimer;
+    let recoverySeconds = 86400; // 24 hours in seconds
+    let isTimerRunning = false;
+    
+    function formatTime(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const secs = seconds % 60;
+      return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+    
+    function startRecoveryTimer() {
+      if (!isTimerRunning) {
+        isTimerRunning = true;
+        recoveryTimer = setInterval(() => {
+          recoverySeconds--;
+          document.getElementById('recoveryTimer').textContent = formatTime(recoverySeconds);
+          
+          if (recoverySeconds <= 0) {
+            clearInterval(recoveryTimer);
+            isTimerRunning = false;
+            alert('¡Recuperación completa! Tu neurología está optimizada para máximo rendimiento.');
+            recoverySeconds = 86400; // Reset to 24 hours
+            document.getElementById('recoveryTimer').textContent = formatTime(recoverySeconds);
+          }
+        }, 1000);
+      }
+    }
+    
+    function pauseRecoveryTimer() {
+      if (isTimerRunning) {
+        clearInterval(recoveryTimer);
+        isTimerRunning = false;
+      }
+    }
+    
+    function resetRecoveryTimer() {
+      clearInterval(recoveryTimer);
+      isTimerRunning = false;
+      recoverySeconds = 86400;
+      document.getElementById('recoveryTimer').textContent = formatTime(recoverySeconds);
+    }
+
+    // Recovery progress simulation
+    function updateRecoveryProgress() {
+      const now = new Date();
+      const dayOfWeek = now.getDay(); // 0 = Sunday, 6 = Saturday
+      const hourOfDay = now.getHours();
+      
+      let progress = 0;
+      let status = "Fase de Trabajo Intensivo";
+      
+      // Simulate weekly recovery cycle
+      if (dayOfWeek === 6) { // Saturday - Recovery day
+        progress = 100;
+        status = "DESCONEXIÓN TOTAL ACTIVA";
+      } else if (dayOfWeek === 0) { // Sunday - Renewal day
+        progress = 75;
+        status = "Fase de Renovación";
+      } else if (hourOfDay >= 22 || hourOfDay <= 6) { // Night rest
+        progress = 45;
+        status = "Recuperación Nocturna";
+      } else {
+        progress = Math.min(30, dayOfWeek * 5); // Gradual fatigue through week
+        status = "Fase de Trabajo Intensivo";
+      }
+      
+      const progressBar = document.getElementById('recoveryProgress');
+      const statusElement = document.getElementById('recoveryStatus');
+      
+      if (progressBar) progressBar.style.width = progress + '%';
+      if (statusElement) statusElement.textContent = status;
+    }
+
+    // Initialize calculators and updates
+    calculateWeeklyROI();
+    calculateRestROI();
+    updateRecoveryProgress();
+    
+    // Update recovery progress every hour
+    setInterval(updateRecoveryProgress, 3600000);
+  </script>
+
+</body>
+</html>

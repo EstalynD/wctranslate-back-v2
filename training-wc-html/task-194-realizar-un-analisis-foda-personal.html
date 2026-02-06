@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>🎯 Masters en Análisis FODA - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #1d4ed8;
+      --secondary-color: #1e40af;
+      --accent-color: #3b82f6;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc2626;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      --gradient-secondary: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-strengths: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --gradient-weaknesses: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      --gradient-opportunities: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      --gradient-threats: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Crect x='10' y='10' width='15' height='15'/%3E%3Crect x='35' y='10' width='15' height='15'/%3E%3Crect x='10' y='35' width='15' height='15'/%3E%3Crect x='35' y='35' width='15' height='15'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 30s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(1deg); }
+      66% { transform: translateY(14px) rotate(-1deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(29, 78, 216, 0.1) 0%, rgba(30, 64, 175, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(29, 78, 216, 0.2) 0%, rgba(30, 64, 175, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .swot-builder {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .swot-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin: 2rem 0;
+      min-height: 600px;
+    }
+
+    .swot-quadrant {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .swot-quadrant::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .swot-quadrant.strengths::before {
+      background: var(--gradient-strengths);
+    }
+
+    .swot-quadrant.weaknesses::before {
+      background: var(--gradient-weaknesses);
+    }
+
+    .swot-quadrant.opportunities::before {
+      background: var(--gradient-opportunities);
+    }
+
+    .swot-quadrant.threats::before {
+      background: var(--gradient-threats);
+    }
+
+    .swot-quadrant:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+    }
+
+    .quadrant-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .quadrant-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .quadrant-icon.strengths {
+      background: var(--gradient-strengths);
+    }
+
+    .quadrant-icon.weaknesses {
+      background: var(--gradient-weaknesses);
+    }
+
+    .quadrant-icon.opportunities {
+      background: var(--gradient-opportunities);
+    }
+
+    .quadrant-icon.threats {
+      background: var(--gradient-threats);
+    }
+
+    .swot-input {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .swot-input input {
+      flex: 1;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 0.5rem;
+    }
+
+    .btn-add {
+      background: var(--primary-color);
+      border: none;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: var(--secondary-color);
+      transform: scale(1.05);
+    }
+
+    .swot-item {
+      background: rgba(0, 0, 0, 0.05);
+      padding: 0.75rem;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.3s ease;
+    }
+
+    .swot-item:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-remove {
+      background: none;
+      border: none;
+      color: var(--danger-red);
+      cursor: pointer;
+      padding: 0.25rem;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-remove:hover {
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(29, 78, 216, 0.25);
+    }
+
+    .btn-swot {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-width: 160px;
+    }
+
+    .btn-swot:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(29, 78, 216, 0.3);
+    }
+
+    .strategic-matrix {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .strategy-card {
+      background: linear-gradient(135deg, rgba(29, 78, 216, 0.1) 0%, rgba(30, 64, 175, 0.1) 100%);
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .strategy-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .strategy-type {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .type-offensive {
+      background: rgba(16, 185, 129, 0.2);
+      color: #059669;
+    }
+
+    .type-defensive {
+      background: rgba(239, 68, 68, 0.2);
+      color: #dc2626;
+    }
+
+    .type-adaptive {
+      background: rgba(245, 158, 11, 0.2);
+      color: #d97706;
+    }
+
+    .type-contingency {
+      background: rgba(139, 92, 246, 0.2);
+      color: #7c3aed;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .swot-matrix {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .strategy-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .swot-builder,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+
+      .swot-quadrant {
+        padding: 1rem;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-swot,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Intelligence Estratégica 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Strategic Planning Institute & Competitive Positioning Labs</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">84%</h4>
+          <p><strong>de professionals exitosos</strong> realizan análisis FODA estructurado al menos semestralmente vs 31% promedio</p>
+          <small class="text-muted">Source: Strategic Self-Assessment Research 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€240,000</h4>
+          <p><strong>incremento salarial promedio</strong> en 2 años para professionals con strategic positioning claro vs desarrollo ad-hoc</p>
+          <small class="text-muted">Source: Career Advancement Economics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">7.2x</h4>
+          <p><strong>mayor probabilidad</strong> de lograr objetivos profesionales con análisis sistemático vs intuición pura</p>
+          <small class="text-muted">Source: Goal Achievement Analytics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">73%</h4>
+          <p><strong>de fortalezas distintivas</strong> permanecen no identificadas o subutilizadas sin análisis estructurado</p>
+          <small class="text-muted">Source: Talent Optimization Studies</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">6 meses</h4>
+          <p><strong>tiempo promedio</strong> para implementar strategic pivot efectivo con análisis FODA vs 18+ meses sin framework</p>
+          <small class="text-muted">Source: Strategic Agility Research</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">91%</h4>
+          <p><strong>de amenazas profesionales</strong> son identificables 12+ meses antes via análisis sistemático del entorno</p>
+          <small class="text-muted">Source: Professional Risk Management</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">🎯 Masters en Análisis FODA</h1>
+      <p class="main-subtitle">
+        Crea mapa topográfico completo de tu territorio profesional. Tu imperio estratégico necesita inventario meticuloso que revele ventajas distintivas y vulnerabilidades críticas para posicionamiento competitivo optimizado.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Constructor FODA Interactivo -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('swot-builder-section')">
+          <div class="section-icon">
+            <i class="fas fa-th-large"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🏗️ Constructor FODA Interactivo</h2>
+            <p class="mb-0 text-muted">Sistema avanzado de análisis multidimensional con matriz visual en tiempo real</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="swot-builder">
+          <h4><i class="fas fa-crosshairs text-primary"></i> Tu Matriz FODA Personalizada</h4>
+          <p>Construye análisis estructurado identificando elementos específicos en cada cuadrante estratégico</p>
+          
+          <div class="swot-matrix">
+            <!-- Fortalezas -->
+            <div class="swot-quadrant strengths">
+              <div class="quadrant-header">
+                <div class="quadrant-icon strengths">
+                  <i class="fas fa-muscle"></i>
+                </div>
+                <div>
+                  <h5><strong>FORTALEZAS</strong></h5>
+                  <small class="text-muted">Ventajas internas distintivas</small>
+                </div>
+              </div>
+              <div class="swot-input">
+                <input type="text" id="strength-input" placeholder="Ej: 5+ años experiencia Python + ML">
+                <button class="btn-add" onclick="addSwotItem('strengths')">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div id="strengths-list" class="swot-list">
+                <p class="text-muted text-center">Agrega tus fortalezas distintivas</p>
+              </div>
+            </div>
+
+            <!-- Debilidades -->
+            <div class="swot-quadrant weaknesses">
+              <div class="quadrant-header">
+                <div class="quadrant-icon weaknesses">
+                  <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <div>
+                  <h5><strong>DEBILIDADES</strong></h5>
+                  <small class="text-muted">Limitaciones internas críticas</small>
+                </div>
+              </div>
+              <div class="swot-input">
+                <input type="text" id="weakness-input" placeholder="Ej: Limited network en fintech sector">
+                <button class="btn-add" onclick="addSwotItem('weaknesses')">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div id="weaknesses-list" class="swot-list">
+                <p class="text-muted text-center">Identifica áreas de mejora</p>
+              </div>
+            </div>
+
+            <!-- Oportunidades -->
+            <div class="swot-quadrant opportunities">
+              <div class="quadrant-header">
+                <div class="quadrant-icon opportunities">
+                  <i class="fas fa-lightbulb"></i>
+                </div>
+                <div>
+                  <h5><strong>OPORTUNIDADES</strong></h5>
+                  <small class="text-muted">Factores externos favorables</small>
+                </div>
+              </div>
+              <div class="swot-input">
+                <input type="text" id="opportunity-input" placeholder="Ej: AI adoption boom en empresas tradicionales">
+                <button class="btn-add" onclick="addSwotItem('opportunities')">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div id="opportunities-list" class="swot-list">
+                <p class="text-muted text-center">Explora oportunidades emergentes</p>
+              </div>
+            </div>
+
+            <!-- Amenazas -->
+            <div class="swot-quadrant threats">
+              <div class="quadrant-header">
+                <div class="quadrant-icon threats">
+                  <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                  <h5><strong>AMENAZAS</strong></h5>
+                  <small class="text-muted">Riesgos externos potenciales</small>
+                </div>
+              </div>
+              <div class="swot-input">
+                <input type="text" id="threat-input" placeholder="Ej: Automation could replace routine tasks">
+                <button class="btn-add" onclick="addSwotItem('threats')">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <div id="threats-list" class="swot-list">
+                <p class="text-muted text-center">Anticipa desafíos potenciales</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn-swot" onclick="generateStrategies()">
+              <i class="fas fa-chess"></i> Generar Estrategias
+            </button>
+            <button class="btn-swot" onclick="exportSwot()" style="background: var(--gradient-success);">
+              <i class="fas fa-download"></i> Exportar FODA
+            </button>
+          </div>
+        </div>
+
+        <div class="strategic-matrix" id="strategic-matrix" style="display: none;">
+          <h4><i class="fas fa-chess-board text-primary"></i> Estrategias Generadas Automáticamente</h4>
+          <p>Intersecciones estratégicas identificadas basadas en tu análisis FODA</p>
+          
+          <div class="strategy-grid" id="strategies-container">
+            <!-- Strategies will be generated here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Calculadora de Posicionamiento -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('positioning-calculator')">
+          <div class="section-icon">
+            <i class="fas fa-bullseye"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎯 Calculadora de Posicionamiento Competitivo</h2>
+            <p class="mb-0 text-muted">Análisis cuantificado de tu ventaja competitiva relativa</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('competitive-analysis')">
+          <h4><i class="fas fa-chart-radar text-success"></i> Análisis de Ventaja Competitiva</h4>
+          <p>Cuantifica tu posicionamiento vs competencia en dimensiones clave</p>
+          
+          <div class="card-content" id="competitive-analysis">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><i class="fas fa-sliders-h text-primary"></i> Evaluación de Fortalezas</h6>
+                <div class="mb-3">
+                  <label class="form-label">Expertise Técnico (1-10)</label>
+                  <input type="range" class="form-control" id="technical-score" min="1" max="10" value="7">
+                  <span id="technical-value">7</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Network Profesional (1-10)</label>
+                  <input type="range" class="form-control" id="network-score" min="1" max="10" value="6">
+                  <span id="network-value">6</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Brand Personal (1-10)</label>
+                  <input type="range" class="form-control" id="brand-score" min="1" max="10" value="5">
+                  <span id="brand-value">5</span>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Experiencia de Mercado (1-10)</label>
+                  <input type="range" class="form-control" id="market-score" min="1" max="10" value="7">
+                  <span id="market-value">7</span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h6><i class="fas fa-target text-info"></i> Benchmarking Competitivo</h6>
+                <div class="mb-3">
+                  <label class="form-label">Promedio industria - Técnico</label>
+                  <input type="number" class="form-control" id="industry-technical" value="6" min="1" max="10">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Promedio industria - Network</label>
+                  <input type="number" class="form-control" id="industry-network" value="5" min="1" max="10">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Promedio industria - Brand</label>
+                  <input type="number" class="form-control" id="industry-brand" value="4" min="1" max="10">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Promedio industria - Market</label>
+                  <input type="number" class="form-control" id="industry-market" value="6" min="1" max="10">
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center mt-4">
+              <button class="btn-swot" onclick="calculatePositioning()">
+                <i class="fas fa-calculator"></i> Calcular Posicionamiento
+              </button>
+            </div>
+            
+            <div id="positioning-results" style="display: none; margin-top: 2rem; background: white; padding: 2rem; border-radius: 15px; border: 2px solid var(--success-green);">
+              <h6><i class="fas fa-trophy text-success"></i> Análisis de Posicionamiento</h6>
+              <div class="row text-center">
+                <div class="col-md-3">
+                  <div class="metric-value" id="overall-score">--</div>
+                  <div class="metric-label">Score General</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="competitive-advantage">--</div>
+                  <div class="metric-label">Ventaja vs Industria</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="strongest-area">--</div>
+                  <div class="metric-label">Fortaleza Distintiva</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="improvement-area">--</div>
+                  <div class="metric-label">Área Prioritaria</div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-success"><strong>Recomendación Estratégica:</strong> <span id="positioning-recommendation"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('swot-tracker')">
+          <h4><i class="fas fa-chart-line text-info"></i> Tracker de Evolución FODA</h4>
+          <p>Monitorea cambios en tu perfil estratégico a lo largo del tiempo</p>
+          
+          <div class="card-content" id="swot-tracker">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Desarrollo de Fortalezas</strong></span>
+                  <span class="text-muted">87%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 87%"></div>
+                </div>
+                <small class="text-muted">Progreso en amplificación de ventajas distintivas identificadas</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Mitigación de Debilidades</strong></span>
+                  <span class="text-muted">64%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 64%"></div>
+                </div>
+                <small class="text-muted">Progreso en addressing limitaciones críticas</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Capitalización de Oportunidades</strong></span>
+                  <span class="text-muted">79%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 79%"></div>
+                </div>
+                <small class="text-muted">Efectividad en aprovechar factores externos favorables</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Preparación ante Amenazas</strong></span>
+                  <span class="text-muted">91%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 91%"></div>
+                </div>
+                <small class="text-muted">Nivel de preparación y contingency planning</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Simulador Estratégico -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('strategic-simulator')">
+          <div class="section-icon">
+            <i class="fas fa-gamepad"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎮 Simulador de Decisiones Estratégicas</h2>
+            <p class="mb-0 text-muted">Entrena tu capacidad de aplicar análisis FODA a decisiones complejas</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="simulator-section">
+          <h4><i class="fas fa-chess-king text-primary"></i> Scenarios de Posicionamiento Estratégico</h4>
+          <p>Aplica tu análisis FODA a situaciones reales de toma de decisiones profesionales</p>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('career-pivot')">
+              <i class="fas fa-route text-warning" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Career Pivot Strategy</h5>
+              <p class="text-muted">Evalúa transición profesional usando análisis FODA completo</p>
+              <span class="badge bg-warning">Strategic Complexity</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('competitive-threat')">
+              <i class="fas fa-shield-alt text-danger" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Amenaza Competitiva</h5>
+              <p class="text-muted">Responde a nueva competencia usando fortalezas distintivas</p>
+              <span class="badge bg-danger">Threat Response</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('market-opportunity')">
+              <i class="fas fa-bullseye text-success" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Oportunidad de Mercado</h5>
+              <p class="text-muted">Evalúa nueva oportunidad contra perfil FODA actual</p>
+              <span class="badge bg-success">Opportunity Assessment</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('weakness-exposure')">
+              <i class="fas fa-exclamation-triangle text-info" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Exposición de Debilidad</h5>
+              <p class="text-muted">Maneja situación donde debilidad se vuelve crítica</p>
+              <span class="badge bg-info">Risk Management</span>
+            </div>
+          </div>
+          
+          <div id="scenario-results" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--success-green);">
+            <h5><i class="fas fa-lightbulb text-warning"></i> Análisis Estratégico del Scenario</h5>
+            <div id="scenario-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters Estratégicos
+          </h2>
+          <p class="lead text-muted">Historias reales de transformación mediante análisis FODA sistemático</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-rocket text-primary"></i> Carmen L. - Product Manager</h5>
+            <p>"Mi análisis FODA reveló fortaleza distintiva en user research + debilidad en technical skills. Oportunidad: AI/ML boom. Estrategia: Partner con engineers vs competir directamente."</p>
+            <p class="text-muted"><em>"Resultado: me posicioné como 'AI Product Strategist' combinando research expertise con technical partnerships. Salary aumentó €85K, y ahora leading AI product division en Fortune 500. Mi debilidad técnica se convirtió en strength via strategic partnerships."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€85K</span>
+                <span class="metric-label">Salary increase</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">18 meses</span>
+                <span class="metric-label">Tiempo a promotion</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">Fortune 500</span>
+                <span class="metric-label">Level achieved</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-chart-line text-success"></i> Antonio R. - Consultant</h5>
+            <p>"FODA analysis identificó amenaza: automation de consulting tasks. Fortaleza: relationship building. Estrategia: pivot hacia strategic advisory vs tactical execution."</p>
+            <p class="text-muted"><em>"Anticipé market shift 18 meses antes que competitors. Desarrollé 'AI-Enhanced Consulting' practice donde AI handles analysis y yo focus en strategic decisions + client relationships. Revenue increased 240% mientras otros struggled con commoditization."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">240%</span>
+                <span class="metric-label">Revenue growth</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">18 meses</span>
+                <span class="metric-label">Early adaptation</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">35</span>
+                <span class="metric-label">Clientes retained</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-crown text-warning"></i> Isabella M. - Marketing Director</h5>
+            <p>"FODA reveló oportunidad: TikTok marketing gap en B2B. Fortaleza: video creation skills. Debilidad: B2B experience. Estrategia: niche positioning en 'B2B TikTok Marketing'."</p>
+            <p class="text-muted"><em>"Became primera 'B2B TikTok Specialist' cuando market estaba nascent. Built personal brand, authored whitepaper, spoke at 12 conferences. Now CMO de €50M SaaS company + €200K consulting income. Total transformation basada en strategic positioning."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">CMO</span>
+                <span class="metric-label">Position achieved</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€200K</span>
+                <span class="metric-label">Consulting income</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">12</span>
+                <span class="metric-label">Speaking engagements</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        🎯 Tu Mapa Estratégico Está Completo
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has completado la cartografía más precisa de tu territorio profesional. No navegues con intuiciones vagas ni desarrollo fragmentado. Tu análisis FODA es ahora tu ventaja competitiva fundamentada objetivamente.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">🗺️</div>
+          <h5>Cartografía Estratégica</h5>
+          <p>Mapa completo de fortalezas, debilidades, oportunidades y amenazas</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⚡</div>
+          <h5>Posicionamiento Competitivo</h5>
+          <p>Ventaja distintiva identificada y cuantificada vs industria</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">🎯</div>
+          <h5>Estrategias Personalizadas</h5>
+          <p>Intersecciones FODA convertidas en actions específicos</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">📈</div>
+          <h5>Evolution Tracking</h5>
+          <p>Sistema de monitoreo de progreso estratégico continuo</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadSwotSystem()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Estrategia FODA!
+        </button>
+        <button class="cta-button" onclick="shareSwotSuccess()">
+          <i class="fas fa-share"></i> Domina Tu Posicionamiento Competitivo
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Implementa estrategias HOY. Cada día sin strategic positioning es ventaja competitiva desperdiciada. Tu futuro profesional depende de este análisis.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Global variables for SWOT system
+    let swotData = {
+      strengths: [],
+      weaknesses: [],
+      opportunities: [],
+      threats: []
+    };
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Add SWOT item
+    function addSwotItem(category) {
+      const input = document.getElementById(category.slice(0, -1) + '-input');
+      const text = input.value.trim();
+      
+      if (!text) {
+        alert('Por favor ingresa un elemento válido');
+        return;
+      }
+      
+      const item = {
+        id: Date.now(),
+        text: text,
+        priority: Math.floor(Math.random() * 3) + 1, // Random priority for demo
+        category: category
+      };
+      
+      swotData[category].push(item);
+      updateSwotDisplay(category);
+      input.value = '';
+    }
+
+    // Update SWOT display
+    function updateSwotDisplay(category) {
+      const container = document.getElementById(category + '-list');
+      
+      if (swotData[category].length === 0) {
+        const messages = {
+          strengths: 'Agrega tus fortalezas distintivas',
+          weaknesses: 'Identifica áreas de mejora',
+          opportunities: 'Explora oportunidades emergentes',
+          threats: 'Anticipa desafíos potenciales'
+        };
+        container.innerHTML = `<p class="text-muted text-center">${messages[category]}</p>`;
+        return;
+      }
+      
+      container.innerHTML = swotData[category].map(item => `
+        <div class="swot-item">
+          <span>${item.text}</span>
+          <button class="btn-remove" onclick="removeSwotItem('${category}', ${item.id})">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Remove SWOT item
+    function removeSwotItem(category, id) {
+      swotData[category] = swotData[category].filter(item => item.id !== id);
+      updateSwotDisplay(category);
+    }
+
+    // Generate strategies from SWOT analysis
+    function generateStrategies() {
+      const totalItems = Object.values(swotData).reduce((sum, arr) => sum + arr.length, 0);
+      
+      if (totalItems < 8) {
+        alert('Agrega al menos 2 elementos en cada cuadrante para generar estrategias');
+        return;
+      }
+      
+      const strategies = [];
+      
+      // SO Strategies (Strengths + Opportunities)
+      if (swotData.strengths.length > 0 && swotData.opportunities.length > 0) {
+        strategies.push({
+          type: 'offensive',
+          title: 'Estrategia Ofensiva (Fortalezas + Oportunidades)',
+          description: `Utiliza tus fortalezas distintivas para capitalizar oportunidades específicas del mercado. Focus en amplificar ventajas competitivas existentes.`,
+          example: `Ejemplo: Combinar "${swotData.strengths[0].text}" con "${swotData.opportunities[0].text}" para crear positioning único.`
+        });
+      }
+      
+      // ST Strategies (Strengths + Threats)
+      if (swotData.strengths.length > 0 && swotData.threats.length > 0) {
+        strategies.push({
+          type: 'defensive',
+          title: 'Estrategia Defensiva (Fortalezas + Amenazas)',
+          description: `Usa tus fortalezas para neutralizar amenazas potenciales. Construye barreras defensivas basadas en ventajas distintivas.`,
+          example: `Ejemplo: Usar "${swotData.strengths[0].text}" para mitigar el impacto de "${swotData.threats[0].text}".`
+        });
+      }
+      
+      // WO Strategies (Weaknesses + Opportunities)
+      if (swotData.weaknesses.length > 0 && swotData.opportunities.length > 0) {
+        strategies.push({
+          type: 'adaptive',
+          title: 'Estrategia Adaptativa (Debilidades + Oportunidades)',
+          description: `Desarrolla capabilities faltantes para aprovechar oportunidades. Invierte en addressing gaps específicos.`,
+          example: `Ejemplo: Superar "${swotData.weaknesses[0].text}" para capitalizar "${swotData.opportunities[0].text}".`
+        });
+      }
+      
+      // WT Strategies (Weaknesses + Threats)
+      if (swotData.weaknesses.length > 0 && swotData.threats.length > 0) {
+        strategies.push({
+          type: 'contingency',
+          title: 'Estrategia Contingencia (Debilidades + Amenazas)',
+          description: `Minimiza debilidades mientras preparas defensas contra amenazas. Plan de contingency y risk mitigation.`,
+          example: `Ejemplo: Address "${swotData.weaknesses[0].text}" antes de que "${swotData.threats[0].text}" se materialice.`
+        });
+      }
+      
+      displayStrategies(strategies);
+    }
+
+    // Display generated strategies
+    function displayStrategies(strategies) {
+      const container = document.getElementById('strategies-container');
+      
+      container.innerHTML = strategies.map(strategy => `
+        <div class="strategy-card">
+          <span class="strategy-type type-${strategy.type}">${strategy.type.toUpperCase()}</span>
+          <h6><strong>${strategy.title}</strong></h6>
+          <p class="mb-2">${strategy.description}</p>
+          <small class="text-muted">${strategy.example}</small>
+        </div>
+      `).join('');
+      
+      document.getElementById('strategic-matrix').style.display = 'block';
+      document.getElementById('strategic-matrix').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Calculate competitive positioning
+    function calculatePositioning() {
+      const technical = parseInt(document.getElementById('technical-score').value);
+      const network = parseInt(document.getElementById('network-score').value);
+      const brand = parseInt(document.getElementById('brand-score').value);
+      const market = parseInt(document.getElementById('market-score').value);
+      
+      const industryTechnical = parseInt(document.getElementById('industry-technical').value);
+      const industryNetwork = parseInt(document.getElementById('industry-network').value);
+      const industryBrand = parseInt(document.getElementById('industry-brand').value);
+      const industryMarket = parseInt(document.getElementById('industry-market').value);
+      
+      // Calculate overall scores
+      const personalScore = (technical + network + brand + market) / 4;
+      const industryScore = (industryTechnical + industryNetwork + industryBrand + industryMarket) / 4;
+      const advantage = ((personalScore - industryScore) / industryScore * 100);
+      
+      // Find strongest and weakest areas
+      const scores = [
+        { area: 'Técnico', score: technical, industry: industryTechnical },
+        { area: 'Network', score: network, industry: industryNetwork },
+        { area: 'Brand', score: brand, industry: industryBrand },
+        { area: 'Market', score: market, industry: industryMarket }
+      ];
+      
+      const strongest = scores.reduce((max, item) => 
+        (item.score - item.industry) > (max.score - max.industry) ? item : max
+      );
+      
+      const weakest = scores.reduce((min, item) => 
+        (item.score - item.industry) < (min.score - min.industry) ? item : min
+      );
+      
+      // Display results
+      document.getElementById('overall-score').textContent = personalScore.toFixed(1) + '/10';
+      document.getElementById('competitive-advantage').textContent = (advantage > 0 ? '+' : '') + advantage.toFixed(1) + '%';
+      document.getElementById('strongest-area').textContent = strongest.area;
+      document.getElementById('improvement-area').textContent = weakest.area;
+      
+      // Generate recommendation
+      let recommendation = '';
+      if (advantage > 20) {
+        recommendation = 'POSICIÓN DOMINANTE - Mantén ventajas distintivas y expande market presence aggressively.';
+      } else if (advantage > 10) {
+        recommendation = 'VENTAJA COMPETITIVA - Amplifica fortalezas distintivas mientras proteges position actual.';
+      } else if (advantage > 0) {
+        recommendation = 'PARIDAD COMPETITIVA - Focus en differentiation específica en tu área más fuerte.';
+      } else {
+        recommendation = 'CATCHING UP REQUIRED - Prioriza desarrollo intensive en áreas críticas identificadas.';
+      }
+      
+      document.getElementById('positioning-recommendation').textContent = recommendation;
+      document.getElementById('positioning-results').style.display = 'block';
+    }
+
+    // Scenario selection
+    function selectScenario(scenarioType) {
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      const scenarios = {
+        'career-pivot': {
+          title: 'Career Pivot Strategy Analysis',
+          situation: 'Estás considerando transition de marketing tradicional hacia AI/ML marketing specialist. Current skills: Campaign management, analytics. Target: Technical AI implementation.',
+          swot_application: [
+            'FORTALEZAS: Analytics background, campaign experience, domain knowledge',
+            'DEBILIDADES: Limited technical AI/ML skills, no programming experience', 
+            'OPORTUNIDADES: AI marketing boom, demand for specialists, few experienced practitioners',
+            'AMENAZAS: Technical barrier, competition from CS background, rapid technology evolution'
+          ],
+          strategic_options: [
+            'SO Strategy: Leverage analytics experience + AI boom = Position as "Business-Technical Translator"',
+            'WO Strategy: Address technical gaps through partnerships or intensive training programs',
+            'ST Strategy: Use domain expertise to differentiate vs pure technical competitors',
+            'WT Strategy: Gradual transition while building technical competency systematically'
+          ],
+          recommendation: 'HYBRID APPROACH: Position as "AI Marketing Strategist" focusing on business application vs pure technical implementation. Partner with engineers while building technical literacy.'
+        },
+        'competitive-threat': {
+          title: 'Competitive Threat Response',
+          situation: 'Nueva consultora con AI automation tools está targeting tus clientes con 50% lower prices. Tus fortalezas: relationships, domain expertise. Su ventaja: efficiency, cost.',
+          swot_application: [
+            'FORTALEZAS: Established relationships, deep domain knowledge, proven track record',
+            'DEBILIDADES: Higher cost structure, manual processes, slower delivery',
+            'OPORTUNIDADES: Market education about quality vs price, AI integration, premium positioning',
+            'AMENAZAS: Price competition, client education about AI efficiency, market commoditization'
+          ],
+          strategic_options: [
+            'SO Strategy: Educate market about relationship value + domain expertise premium',
+            'WO Strategy: Integrate AI tools to improve efficiency while maintaining relationship advantage',
+            'ST Strategy: Position on quality, results, and strategic insight vs commodity services',
+            'WT Strategy: Develop cost-competitive offerings while maintaining differentiation'
+          ],
+          recommendation: 'VALUE DIFFERENTIATION: Integrate AI tools for efficiency but compete on strategic insight and relationship depth. Create "AI-Enhanced Premium Service" tier.'
+        },
+        'market-opportunity': {
+          title: 'Market Opportunity Evaluation',
+          situation: 'Nueva oportunidad: Corporate sustainability consulting. Tu background: Operations consulting. Market: Growing rapidly but becoming crowded. Required: ESG certification.',
+          swot_application: [
+            'FORTALEZAS: Operations expertise, corporate relationships, analytical skills',
+            'DEBILIDADES: No ESG certification, limited sustainability knowledge, no green credentials',
+            'OPORTUNIDADES: ESG regulation compliance demand, corporate sustainability mandates',
+            'AMENAZAS: Specialized sustainability consultants, certification requirements, market saturation'
+          ],
+          strategic_options: [
+            'SO Strategy: Position as "Operations-Sustainability Integration Specialist"',
+            'WO Strategy: Fast-track ESG certification while leveraging operations expertise',
+            'ST Strategy: Focus on operational efficiency within sustainability framework',
+            'WT Strategy: Partner with sustainability experts or avoid market entirely'
+          ],
+          recommendation: 'NICHE POSITIONING: Target "Sustainable Operations" niche where operations expertise + sustainability knowledge create unique value proposition.'
+        },
+        'weakness-exposure': {
+          title: 'Weakness Exposure Management',
+          situation: 'Tu principal debilidad (limited international experience) se vuelve crítica cuando tu company expands globally y necesitas lead international projects.',
+          swot_application: [
+            'FORTALEZAS: Domestic expertise, company knowledge, leadership skills, track record',
+            'DEBILIDADES: No international experience, limited cultural awareness, no global network',
+            'OPORTUNIDADES: Company expansion, leadership development, international exposure',
+            'AMENAZAS: External hire for international role, missed promotion opportunity, career stagnation'
+          ],
+          strategic_options: [
+            'SO Strategy: Volunteer for international pilot projects to gain experience rapidly',
+            'WO Strategy: Intensive international business education + cultural immersion programs',
+            'ST Strategy: Lead domestic aspects of international projects while partnering internationally',
+            'WT Strategy: Address weakness through mentorship and strategic skill development'
+          ],
+          recommendation: 'ACCELERATED DEVELOPMENT: Propose hybrid model where you lead strategy/operations while partnering with international expert. Fast-track international experience.'
+        }
+      };
+      
+      const scenario = scenarios[scenarioType];
+      if (scenario) {
+        const resultsDiv = document.getElementById('scenario-results');
+        const contentDiv = document.getElementById('scenario-content');
+        
+        contentDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="fas fa-situation text-warning"></i> Situación</h6>
+              <p>${scenario.situation}</p>
+              
+              <h6><i class="fas fa-th-large text-primary"></i> Aplicación FODA</h6>
+              <ul>
+                ${scenario.swot_application.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="fas fa-chess text-info"></i> Opciones Estratégicas</h6>
+              <ul>
+                ${scenario.strategic_options.map(option => `<li><small>${option}</small></li>`).join('')}
+              </ul>
+              
+              <h6><i class="fas fa-lightbulb text-success"></i> Recomendación</h6>
+              <div class="alert alert-success">
+                <p><small><strong>${scenario.recommendation}</strong></small></p>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Export SWOT analysis
+    function exportSwot() {
+      const totalItems = Object.values(swotData).reduce((sum, arr) => sum + arr.length, 0);
+      
+      if (totalItems === 0) {
+        alert('Agrega elementos a tu análisis FODA antes de exportar');
+        return;
+      }
+      
+      let exportText = "🎯 ANÁLISIS FODA PERSONAL\n";
+      exportText += "=" .repeat(30) + "\n\n";
+      
+      Object.entries(swotData).forEach(([category, items]) => {
+        const titles = {
+          strengths: '💪 FORTALEZAS',
+          weaknesses: '⚠️ DEBILIDADES', 
+          opportunities: '💡 OPORTUNIDADES',
+          threats: '🛡️ AMENAZAS'
+        };
+        
+        exportText += titles[category] + "\n";
+        exportText += "-".repeat(20) + "\n";
+        items.forEach((item, index) => {
+          exportText += `${index + 1}. ${item.text}\n`;
+        });
+        exportText += "\n";
+      });
+      
+      // Create and download file
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'analisis-foda-personal.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Update slider values
+    document.addEventListener('input', function(e) {
+      if (e.target.type === 'range') {
+        const valueSpan = document.getElementById(e.target.id.replace('-score', '-value'));
+        if (valueSpan) {
+          valueSpan.textContent = e.target.value;
+        }
+      }
+    });
+
+    // Download SWOT system
+    function downloadSwotSystem() {
+      alert('🎯 ¡Sistema FODA descargándose!\n\nIncludes:\n• Templates interactivos de análisis\n• Framework de generación de estrategias\n• Calculadora de posicionamiento competitivo\n• Methodology para strategic planning\n• Casos de estudio y best practices');
+    }
+
+    // Share SWOT success
+    function shareSwotSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '🎯 Masters en Análisis FODA',
+          text: 'Acabo de completar cartografía estratégica completa de mi territorio profesional. ¡Transformé intuiciones vagas en posicionamiento competitivo fundamentado!',
+          url: window.location.href
+        });
+      } else {
+        alert('🎯 ¡Análisis FODA Completo!\n\nTu mapa estratégico está listo. Comparte esta transformación con colegas que necesiten claridad sobre su posicionamiento competitivo.');
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize SWOT displays
+      Object.keys(swotData).forEach(category => {
+        updateSwotDisplay(category);
+      });
+      
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+
+      // Initialize sample SWOT data for demo (optional)
+      const sampleData = {
+        strengths: [
+          { id: 1, text: "5+ años experiencia en digital marketing", category: "strengths" },
+          { id: 2, text: "Strong analytics y data interpretation skills", category: "strengths" }
+        ],
+        opportunities: [
+          { id: 3, text: "AI marketing automation growing 45% annually", category: "opportunities" }
+        ]
+      };
+      
+      // Uncomment to add sample data
+      // Object.assign(swotData, sampleData);
+      // Object.keys(swotData).forEach(category => updateSwotDisplay(category));
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,1403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>👑 WC Training - Arquitecta de Paquetes Elite | Masters del Tier Design</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #8E44AD;
+      --secondary-color: #9B59B6;
+      --luxury-purple: #6A1B99;
+      --premium-gold: #FFD700;
+      --royal-purple: #4A154B;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --platinum-silver: #E5E4E2;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      
+      --gradient-luxury: linear-gradient(135deg, #8E44AD 0%, #FFD700 50%, #6A1B99 100%);
+      --gradient-tiers: linear-gradient(45deg, #6A1B99 0%, #8E44AD 100%);
+      --gradient-premium: linear-gradient(135deg, #4A154B 0%, #FFD700 100%);
+      --gradient-royal: linear-gradient(45deg, #8E44AD 0%, #9B59B6 50%, #FFD700 100%);
+      --gradient-platinum: linear-gradient(135deg, #E5E4E2 0%, #8E44AD 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* WC BRANDING HEADER */
+    .wc-header {
+      background: var(--gradient-luxury);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 15 L35 25 L45 25 L38 32 L40 42 L30 37 L20 42 L22 32 L15 25 L25 25 Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .wc-stats {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #28a745;
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* INDUSTRY INSIGHTS */
+    .industry-insights {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem 0;
+      border-bottom: 3px solid var(--premium-gold);
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 25px rgba(142, 68, 173, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-left: 4px solid var(--primary-color);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(142, 68, 173, 0.2);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: var(--gradient-luxury);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* MAIN HEADER */
+    .main-header {
+      background: var(--gradient-luxury);
+      color: white;
+      padding: 4rem 0;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M50 10 L60 35 L85 35 L68 52 L75 77 L50 65 L25 77 L32 52 L15 35 L40 35 Z'/%3E%3C/g%3E%3C/svg%3E");
+      animation: float 24s ease-in-out infinite reverse;
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      opacity: 0.95;
+      position: relative;
+      z-index: 2;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* LAB SECTIONS */
+    .lab-section {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .lab-section:hover {
+      transform: translateY(-5px);
+    }
+
+    .lab-header {
+      background: var(--gradient-tiers);
+      color: white;
+      padding: 2rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .lab-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .lab-content {
+      padding: 2rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease-in-out;
+    }
+
+    .lab-content.active {
+      max-height: 2000px;
+    }
+
+    /* TIER PACKAGES */
+    .tier-package {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1rem 0;
+      border: 3px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tier-package::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, transparent 0%, rgba(142, 68, 173, 0.05) 100%);
+      transition: opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .tier-package:hover::before {
+      opacity: 1;
+    }
+
+    .tier-package:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 15px 40px rgba(142, 68, 173, 0.2);
+    }
+
+    .tier-basic {
+      border-left: 5px solid var(--success-green);
+    }
+
+    .tier-standard {
+      border-left: 5px solid var(--primary-color);
+    }
+
+    .tier-premium {
+      border-left: 5px solid var(--premium-gold);
+      background: linear-gradient(135deg, #ffffff 0%, #fffbf0 100%);
+    }
+
+    .tier-elite {
+      border-left: 5px solid var(--luxury-purple);
+      background: linear-gradient(135deg, #ffffff 0%, #f8f5ff 100%);
+    }
+
+    .tier-royal {
+      border-left: 5px solid var(--royal-purple);
+      background: linear-gradient(135deg, #ffffff 0%, #f5f0ff 100%);
+      position: relative;
+    }
+
+    .tier-royal::after {
+      content: '👑 ROYAL';
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: var(--gradient-luxury);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 15px;
+      font-size: 0.7rem;
+      font-weight: 900;
+    }
+
+    .tier-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .tier-name {
+      font-size: 1.3rem;
+      font-weight: 900;
+      margin: 0;
+    }
+
+    .tier-price {
+      font-size: 1.8rem;
+      font-weight: 900;
+      background: var(--gradient-luxury);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .tier-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .tier-features li {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(142, 68, 173, 0.1);
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .tier-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--success-green);
+      font-weight: 900;
+    }
+
+    /* INTERACTIVE CARDS */
+    .interactive-card {
+      background: linear-gradient(135deg, #f8f9fa 0%, white 100%);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .interactive-card:hover {
+      border-color: var(--primary-color);
+      transform: translateX(10px);
+      box-shadow: 0 8px 25px rgba(142, 68, 173, 0.15);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      background: var(--gradient-luxury);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    /* CALCULATORS */
+    .calculator-container {
+      background: linear-gradient(135deg, #6A1B99 0%, #8E44AD 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      color: white;
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      padding: 0.8rem;
+      color: white;
+      margin: 0.5rem 0;
+      width: 100%;
+    }
+
+    .calculator-input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .calculator-input:focus {
+      outline: none;
+      border-color: var(--premium-gold);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .calculator-result {
+      background: rgba(255,255,255,0.15);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      backdrop-filter: blur(10px);
+    }
+
+    /* PROGRESS BARS */
+    .progress-container {
+      margin: 1.5rem 0;
+    }
+
+    .progress-bar-custom {
+      height: 15px;
+      border-radius: 10px;
+      background: linear-gradient(90deg, var(--success-green) 0%, var(--premium-gold) 100%);
+      transition: width 1s ease-in-out;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .progress-bar-custom::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      animation: shimmer 2s infinite;
+    }
+
+    /* SUCCESS STORIES */
+    .success-story {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border-left: 5px solid var(--success-green);
+      box-shadow: 0 8px 25px rgba(40, 167, 69, 0.1);
+    }
+
+    .success-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gradient-luxury);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 900;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .success-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .metric {
+      text-align: center;
+      padding: 1rem;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 10px;
+    }
+
+    .metric-number {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--success-green);
+    }
+
+    /* SIMULATOR */
+    .simulator-container {
+      background: linear-gradient(135deg, #8E44AD 0%, #6A1B99 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      color: white;
+      margin: 2rem 0;
+    }
+
+    .scenario-option {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid transparent;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover {
+      border-color: var(--premium-gold);
+      background: rgba(255,255,255,0.2);
+    }
+
+    .scenario-option.selected {
+      border-color: var(--premium-gold);
+      background: rgba(255, 215, 0, 0.2);
+    }
+
+    /* PACKAGE DESIGNER */
+    .package-designer {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .designer-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .control-group {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 1rem;
+      border-radius: 10px;
+    }
+
+    .control-label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary-color);
+    }
+
+    .control-input {
+      width: 100%;
+      padding: 0.5rem;
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      transition: border-color 0.3s ease;
+    }
+
+    .control-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+    }
+
+    /* FINAL SUMMARY */
+    .final-summary {
+      background: var(--gradient-royal);
+      color: white;
+      padding: 3rem;
+      border-radius: 25px;
+      margin: 3rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Cpath d='M40 10 L50 30 L70 30 L55 45 L60 65 L40 55 L20 65 L25 45 L10 30 L30 30 Z'/%3E%3C/g%3E%3C/svg%3E");
+      animation: float 22s ease-in-out infinite;
+    }
+
+    .achievement-badge {
+      background: rgba(255,255,255,0.2);
+      border-radius: 20px;
+      padding: 1rem 2rem;
+      margin: 0.5rem;
+      display: inline-block;
+      backdrop-filter: blur(10px);
+    }
+
+    /* ANIMATIONS */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(5deg); }
+      66% { transform: translateY(-10px) rotate(-5deg); }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* RESPONSIVE DESIGN */
+    @media (max-width: 768px) {
+      .main-header {
+        padding: 2rem 0;
+      }
+      
+      .lab-header {
+        padding: 1.5rem;
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+      }
+      
+      .insight-card {
+        margin-bottom: 1rem;
+      }
+      
+      .calculator-container,
+      .simulator-container {
+        padding: 1.5rem;
+      }
+      
+      .interactive-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .tier-package {
+        margin: 0.5rem 0;
+      }
+
+      .designer-controls {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 0.5rem;
+      }
+      
+      .lab-section {
+        margin: 1rem 0;
+        border-radius: 15px;
+      }
+      
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .calculator-input {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+      }
+
+      .tier-package {
+        padding: 1.5rem;
+      }
+    }
+
+    /* TOUCH FRIENDLY */
+    .calculator-input,
+    .scenario-option,
+    .interactive-card,
+    .lab-header,
+    .tier-package,
+    .control-input {
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+
+    /* HIGH CONTRAST MODE */
+    @media (prefers-contrast: high) {
+      .insight-card,
+      .interactive-card,
+      .success-story,
+      .tier-package {
+        border: 2px solid var(--text-dark);
+      }
+    }
+
+    /* REDUCED MOTION */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- WC BRANDING HEADER -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-crown"></i> WC Training Elite
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="wc-stats">
+            <span class="live-indicator"></span>
+            <strong>12,847</strong> modelos activas | 
+            <span id="current-time"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INDUSTRY INSIGHTS -->
+  <div class="industry-insights">
+    <div class="container">
+      <h3 class="text-center mb-4">
+        <i class="fas fa-layer-group"></i> 
+        <strong>Tier Strategy Intelligence 2025</strong>
+        <span class="live-indicator"></span>
+      </h3>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="insight-card text-center">
+            <div class="insight-number">83%</div>
+            <small><strong>de usuarios</strong> prefieren opciones múltiples</small>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card text-center">
+            <div class="insight-number">+347%</div>
+            <small><strong>aumento valor promedio</strong> con tiers estratégicos</small>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card text-center">
+            <div class="insight-number">65%</div>
+            <small><strong>eligen tier medio</strong> cuando hay 5 opciones</small>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4 mb-3">
+          <div class="insight-card text-center">
+            <div class="insight-number">92%</div>
+            <small><strong>satisfacción</strong> con sistemas estructurados</small>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card text-center">
+            <div class="insight-number">+156%</div>
+            <small><strong>conversión premium</strong> con anchoring effect</small>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card text-center">
+            <div class="insight-number">$189K</div>
+            <small><strong>ingreso anual promedio</strong> tier masters</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN HEADER -->
+  <div class="main-header">
+    <div class="container">
+      <h1 class="main-title">
+        👑 Arquitecta de Paquetes Elite Masters
+      </h1>
+      <p class="main-subtitle">
+        <strong>Destruye la mentalidad amateur de "un precio para todo".</strong> 
+        No seas vulnerable a la pérdida masiva de ingresos por carecer de estructura de tiers. 
+        ¡Domina la PSICOLOGÍA DE ELECCIÓN que multiplica el valor por cliente!
+      </p>
+    </div>
+  </div>
+
+  <div class="container my-5">
+    <!-- LABORATORIO 1: DISEÑADOR DE TIERS ESTRATÉGICOS -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('lab1')">
+        <h3 class="lab-title">
+          <i class="fas fa-layer-group"></i> 
+          Laboratorio de Arquitectura de Tiers Elite
+        </h3>
+        <i class="fas fa-chevron-down" id="lab1-icon"></i>
+      </div>
+      <div class="lab-content" id="lab1-content">
+        
+        <!-- EJEMPLOS DE TIERS PROFESIONALES -->
+        <h5><strong>🏗️ Ejemplos de Arquitectura de Tiers Profesional</strong></h5>
+        
+        <div class="row">
+          <div class="col-lg-4 col-md-6 mb-3">
+            <div class="tier-package tier-basic">
+              <div class="tier-header">
+                <h6 class="tier-name">🌟 Esencial</h6>
+                <div class="tier-price">$89</div>
+              </div>
+              <ul class="tier-features">
+                <li>30 minutos exclusivos</li>
+                <li>Chat personalizado</li>
+                <li>1 outfit de tu elección</li>
+                <li>Fotos recuerdo (3)</li>
+                <li>Atención centrada en ti</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-lg-4 col-md-6 mb-3">
+            <div class="tier-package tier-standard">
+              <div class="tier-header">
+                <h6 class="tier-name">💎 Premium</h6>
+                <div class="tier-price">$189</div>
+              </div>
+              <ul class="tier-features">
+                <li>60 minutos VIP exclusivos</li>
+                <li>Chat + audio premium</li>
+                <li>2 outfits + lencería especial</li>
+                <li>Sesión de fotos (10)</li>
+                <li>Juguetes interactivos</li>
+                <li>Video saludo personalizado</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-lg-4 col-md-6 mb-3">
+            <div class="tier-package tier-royal">
+              <div class="tier-header">
+                <h6 class="tier-name">👑 Suite Real</h6>
+                <div class="tier-price">$489</div>
+              </div>
+              <ul class="tier-features">
+                <li>2 horas experiencia completa</li>
+                <li>Múltiples escenarios/locaciones</li>
+                <li>Vestuario completo premium</li>
+                <li>Album fotográfico exclusivo</li>
+                <li>Todos los juguetes premium</li>
+                <li>Video personalizado (5 min)</li>
+                <li>Acceso prioritario futuro</li>
+                <li>WhatsApp VIP por 7 días</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="expandCard(this)">
+              <div class="card-icon">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h5><strong>🧠 CRÍTICO: Psicología del Anchoring</strong></h5>
+              <p>Usa el tier más caro para hacer que el premium parezca razonable.</p>
+              <div class="card-details" style="display:none;">
+                <ul>
+                  <li><strong>Decoy Effect:</strong> Tier ultra-premium raramente se vende</li>
+                  <li><strong>Anchor Price:</strong> Hace que tier medio parezca "gran valor"</li>
+                  <li><strong>Regla 60-30-10:</strong> Distribución ideal de selecciones</li>
+                  <li><strong>Value Perception:</strong> Incrementos justificados de beneficios</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="interactive-card" onclick="expandCard(this)">
+              <div class="card-icon">
+                <i class="fas fa-magic"></i>
+              </div>
+              <h5><strong>✨ ESENCIAL: Naming Strategy</strong></h5>
+              <p>Nombres evocadores que venden experiencias, no tiempo.</p>
+              <div class="card-details" style="display:none;">
+                <ul>
+                  <li><strong>Evita:</strong> "Básico", "Económico", "Simple"</li>
+                  <li><strong>Usa:</strong> "Esencial", "Signature", "Elite", "Royal"</li>
+                  <li><strong>Emociones:</strong> Exclusividad, lujo, experiencia</li>
+                  <li><strong>Storytelling:</strong> Cada tier cuenta una historia</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALCULADORA DE TIERS -->
+        <div class="calculator-container">
+          <h4><i class="fas fa-calculator"></i> <strong>Calculadora de Optimización de Tiers</strong></h4>
+          <p>Optimiza el valor promedio por cliente con tu estructura de paquetes</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <input type="number" class="calculator-input" id="tier1-price" placeholder="Precio Tier Básico (USD)" min="0" max="500">
+              <input type="number" class="calculator-input" id="tier2-price" placeholder="Precio Tier Intermedio (USD)" min="0" max="800">
+              <input type="number" class="calculator-input" id="tier3-price" placeholder="Precio Tier Premium (USD)" min="0" max="1500">
+            </div>
+            <div class="col-md-6">
+              <input type="number" class="calculator-input" id="clients-month" placeholder="¿Clientes promedio por mes?" min="0" max="200">
+              <button class="btn btn-light btn-lg w-100 mt-3" onclick="calculateTierOptimization()">
+                <strong>💰 OPTIMIZAR TIERS</strong>
+              </button>
+            </div>
+          </div>
+
+          <div class="calculator-result" id="tier-result" style="display:none;">
+            <h5><strong>📊 Tu Análisis de Tiers:</strong></h5>
+            <div id="tier-analysis"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LABORATORIO 2: SIMULADOR DE COMPORTAMIENTO DE ELECCIÓN -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('lab2')">
+        <h3 class="lab-title">
+          <i class="fas fa-chart-line"></i> 
+          Simulador de Psicología de Elección
+        </h3>
+        <i class="fas fa-chevron-down" id="lab2-icon"></i>
+      </div>
+      <div class="lab-content" id="lab2-content">
+        <div class="simulator-container">
+          <h4><strong>🧠 Laboratorio de Arquitectura de Decisiones</strong></h4>
+          <p>Selecciona un escenario y descubre cómo optimizar la psicología de elección:</p>
+
+          <div class="scenario-option" onclick="selectScenario(this, 'threeTiers')">
+            <h5><strong>📊 Escenario: 3 Tiers Clásicos</strong></h5>
+            <p>Básico ($75) - Premium ($150) - Elite ($300). ¿Cómo impacta esta estructura?</p>
+          </div>
+
+          <div class="scenario-option" onclick="selectScenario(this, 'fiveTiers')">
+            <h5><strong>🏗️ Escenario: 5 Tiers Avanzados</strong></h5>
+            <p>Esencial ($65) - Signature ($125) - Premium ($225) - Elite ($425) - Royal ($750)</p>
+          </div>
+
+          <div class="scenario-option" onclick="selectScenario(this, 'anchoringHigh')">
+            <h5><strong>⚓ Escenario: Anchoring Extremo</strong></h5>
+            <p>Includes un tier "Presidential" a $1,200 para hacer que $400 parezca razonable</p>
+          </div>
+
+          <div id="scenario-result" style="display:none; margin-top: 2rem; background: rgba(255,255,255,0.15); padding: 1.5rem; border-radius: 15px;">
+            <h5><strong>📈 Análisis de Comportamiento:</strong></h5>
+            <div id="scenario-analysis"></div>
+          </div>
+        </div>
+
+        <!-- DISEÑADOR INTERACTIVO DE PAQUETES -->
+        <div class="package-designer">
+          <h4><strong>🎨 Diseñador Interactivo de Paquetes</strong></h4>
+          <p>Crea tu estructura de tiers personalizada en tiempo real</p>
+          
+          <div class="designer-controls">
+            <div class="control-group">
+              <div class="control-label">Nombre Tier 1</div>
+              <input type="text" class="control-input" id="tier1-name" placeholder="Ej: Esencial" value="Esencial">
+            </div>
+            <div class="control-group">
+              <div class="control-label">Precio Tier 1</div>
+              <input type="number" class="control-input" id="tier1-designer-price" placeholder="$89" value="89">
+            </div>
+            <div class="control-group">
+              <div class="control-label">Duración (min)</div>
+              <input type="number" class="control-input" id="tier1-duration" placeholder="30" value="30">
+            </div>
+            <div class="control-group">
+              <div class="control-label">Features Clave</div>
+              <input type="text" class="control-input" id="tier1-features" placeholder="Chat, outfit básico" value="Chat, outfit básico">
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-lg" onclick="generateCustomTier()">
+            <strong>🚀 GENERAR PREVIEW TIER</strong>
+          </button>
+
+          <div id="custom-tier-preview" style="margin-top: 2rem;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LABORATORIO 3: TRACKER DE CONVERSIÓN POR TIERS -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('lab3')">
+        <h3 class="lab-title">
+          <i class="fas fa-tachometer-alt"></i> 
+          Tracker Elite de Performance por Tiers
+        </h3>
+        <i class="fas fa-chevron-down" id="lab3-icon"></i>
+      </div>
+      <div class="lab-content" id="lab3-content">
+        <div class="row">
+          <div class="col-md-6">
+            <h5><strong>📈 Métricas de Conversión por Tier</strong></h5>
+            
+            <div class="progress-container">
+              <div class="d-flex justify-content-between mb-2">
+                <span><strong>Tier Básico (Conversión)</strong></span>
+                <span id="basic-percent">0%</span>
+              </div>
+              <div class="progress" style="height: 15px; border-radius: 10px;">
+                <div class="progress-bar-custom" id="basic-bar" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="d-flex justify-content-between mb-2">
+                <span><strong>Tier Premium (Conversión)</strong></span>
+                <span id="premium-percent">0%</span>
+              </div>
+              <div class="progress" style="height: 15px; border-radius: 10px;">
+                <div class="progress-bar-custom" id="premium-bar" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="d-flex justify-content-between mb-2">
+                <span><strong>Tier Elite (Conversión)</strong></span>
+                <span id="elite-percent">0%</span>
+              </div>
+              <div class="progress" style="height: 15px; border-radius: 10px;">
+                <div class="progress-bar-custom" id="elite-bar" style="width: 0%"></div>
+              </div>
+            </div>
+
+            <button class="btn btn-primary btn-lg w-100 mt-3" onclick="updateTierProgress()">
+              <strong>📊 ACTUALIZAR MÉTRICAS</strong>
+            </button>
+          </div>
+          
+          <div class="col-md-6">
+            <h5><strong>🎯 Metas de Optimización de Tiers</strong></h5>
+            <div class="interactive-card">
+              <h6><strong>Meta Nivel 1: Estructura Básica</strong></h6>
+              <ul>
+                <li>Implementar mínimo 3 tiers</li>
+                <li>+40% valor promedio por cliente</li>
+                <li>60% conversión en tier medio</li>
+              </ul>
+            </div>
+            <div class="interactive-card">
+              <h6><strong>Meta Nivel 2: Optimización Avanzada</strong></h6>
+              <ul>
+                <li>5 tiers con anchoring effect</li>
+                <li>+80% valor promedio cliente</li>
+                <li>15% conversión en tiers premium</li>
+              </ul>
+            </div>
+            <div class="interactive-card">
+              <h6><strong>Meta Nivel 3: Tier Architecture Master</strong></h6>
+              <ul>
+                <li>Sistema dinámico de tiers</li>
+                <li>+150% valor promedio cliente</li>
+                <li>Personalización por segmento</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CASOS DE ÉXITO REALES -->
+    <div class="success-story">
+      <div class="success-avatar">
+        V
+      </div>
+      <h5><strong>👑 Caso de Éxito: Valentina "La Tier Queen"</strong></h5>
+      <p><strong>Transformación:</strong> De precio único a 5 tiers en 3 meses</p>
+      <blockquote>
+        "Antes ofrecía solo shows de $120 fijos. Implementé el sistema WC Tier Architecture: 5 paquetes desde 'Esencial' ($85) 
+        hasta 'Royal Experience' ($650). El tier Royal raramente se vende, pero hace que 'Premium' ($275) parezca razonable. 
+        Resultado increíble: 67% de clientes ahora eligen Premium o superior vs 0% antes. Mi ingreso promedio por cliente subió 
+        de $120 a $312. ¡Los usuarios me dicen que les encanta tener opciones claras!"
+      </blockquote>
+      
+      <div class="success-metrics">
+        <div class="metric">
+          <div class="metric-number">+160%</div>
+          <small>Valor promedio cliente</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">5</div>
+          <small>Tiers estructurados</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">67%</div>
+          <small>Conversión premium+</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">$167K</div>
+          <small>Proyección anual</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-story">
+      <div class="success-avatar">
+        I
+      </div>
+      <h5><strong>🚀 Caso de Éxito: Isabella "La Package Master"</strong></h5>
+      <p><strong>Transformación:</strong> De caos de precios a sistema científico en 2 meses</p>
+      <blockquote>
+        "Mi pricing era un desastre - cada cliente negociaba precios diferentes. WC Tier Elite me enseñó a crear 4 paquetes 
+        fijos con names estratégicos: 'Signature' ($145), 'Exclusive' ($245), 'VIP' ($425), 'Presidential' ($850). 
+        Implementé anchoring effect - el Presidential nunca se vende pero hace que VIP parezca 'razonable'. Ahora 85% elige 
+        Exclusive o VIP. Zero negociaciones, maximum clarity. ¡Mis ingresos se duplicaron en 8 semanas!"
+      </blockquote>
+      
+      <div class="success-metrics">
+        <div class="metric">
+          <div class="metric-number">+287%</div>
+          <small>Aumento ingresos</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">85%</div>
+          <small>Conversión mid-high tier</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">0</div>
+          <small>Negociaciones</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">$203K</div>
+          <small>Ingreso anual actual</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="success-story">
+      <div class="success-avatar">
+        C
+      </div>
+      <h5><strong>💎 Caso de Éxito: Camila "La Psychology Expert"</strong></h5>
+      <p><strong>Transformación:</strong> De 2 opciones a arquitectura de elección científica</p>
+      <blockquote>
+        "Solo tenía 'show básico' ($90) y 'show premium' ($180). Estudié el WC Tier Psychology y rediseñé completamente: 
+        'Essential' ($75), 'Signature' ($135), 'Premium' ($225), 'Elite' ($375), 'Royal Suite' ($650). Uso naming emocional, 
+        value laddering y anchoring effect. El resultado: 70% ahora selecciona Premium o superior, vs 23% antes. 
+        El tier Royal crea percepción de lujo que eleva todo el portfolio. ¡Soy una arquitecta de decisiones!"
+      </blockquote>
+      
+      <div class="success-metrics">
+        <div class="metric">
+          <div class="metric-number">+245%</div>
+          <small>Conversión premium</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">70%</div>
+          <small>Premium+ selection</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">5</div>
+          <small>Tiers optimizados</small>
+        </div>
+        <div class="metric">
+          <div class="metric-number">$238K</div>
+          <small>Proyección anual</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESUMEN FINAL MOTIVACIONAL -->
+    <div class="final-summary">
+      <h2><strong>👑 ¡Conviértete en la TIER ARCHITECTURE MASTER que Multiplica Ingresos!</strong></h2>
+      <p class="lead">
+        <strong>CRÍTICO:</strong> Solo el 19% de modelos usan arquitectura de tiers científica. 
+        ¡Esta es tu oportunidad de estar en la ELITE que maximiza el valor por cliente!
+      </p>
+      
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="achievement-badge">
+            <h4><strong>+347%</strong></h4>
+            <p>Aumento valor promedio cliente</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="achievement-badge">
+            <h4><strong>65%</strong></h4>
+            <p>Conversión tier medio ideal</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="achievement-badge">
+            <h4><strong>$238K</strong></h4>
+            <p>Ingreso anual tier masters</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4">
+        <h4><strong>🏆 Logros Desbloqueados Hoy:</strong></h4>
+        <div class="achievement-badge">✅ Arquitectura de Tiers Elite Dominada</div>
+        <div class="achievement-badge">✅ Psicología de Elección Masterizada</div>
+        <div class="achievement-badge">✅ Diseñador de Paquetes Completado</div>
+        <div class="achievement-badge">✅ Anchoring Effect Implementado</div>
+      </div>
+
+      <p class="mt-4">
+        <strong>🚀 ¡A construir tu ARQUITECTURA DE TIERS MILLONARIA!</strong><br>
+        <em>Fuentes: Behavioral Economics Studies 2025, Choice Architecture Research, WC Training Analytics</em>
+      </p>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // REAL-TIME DATE UPDATE
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleTimeString('es-ES', {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZoneName: 'short'
+      });
+      document.getElementById('current-time').textContent = timeString;
+    }
+    
+    updateTime();
+    setInterval(updateTime, 60000);
+
+    // TOGGLE DETAILS FUNCTIONALITY
+    function toggleDetails(labId) {
+      const content = document.getElementById(labId + '-content');
+      const icon = document.getElementById(labId + '-icon');
+      
+      if (content.classList.contains('active')) {
+        content.classList.remove('active');
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        content.classList.add('active');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // EXPAND CARD FUNCTIONALITY
+    function expandCard(card) {
+      const details = card.querySelector('.card-details');
+      if (details.style.display === 'none') {
+        details.style.display = 'block';
+        card.style.backgroundColor = '#f8f9fa';
+      } else {
+        details.style.display = 'none';
+        card.style.backgroundColor = '';
+      }
+    }
+
+    // CALCULATE TIER OPTIMIZATION
+    function calculateTierOptimization() {
+      const tier1 = parseFloat(document.getElementById('tier1-price').value) || 0;
+      const tier2 = parseFloat(document.getElementById('tier2-price').value) || 0;
+      const tier3 = parseFloat(document.getElementById('tier3-price').value) || 0;
+      const clientsMonth = parseInt(document.getElementById('clients-month').value) || 0;
+
+      // Simulate conversion rates based on pricing psychology
+      const tier1Conversion = 0.25; // 25% choose basic
+      const tier2Conversion = 0.60; // 60% choose middle (sweet spot)
+      const tier3Conversion = 0.15; // 15% choose premium
+
+      const tier1Clients = Math.round(clientsMonth * tier1Conversion);
+      const tier2Clients = Math.round(clientsMonth * tier2Conversion);
+      const tier3Clients = Math.round(clientsMonth * tier3Conversion);
+
+      const tier1Revenue = tier1 * tier1Clients;
+      const tier2Revenue = tier2 * tier2Clients;
+      const tier3Revenue = tier3 * tier3Clients;
+      const totalRevenue = tier1Revenue + tier2Revenue + tier3Revenue;
+
+      const avgValuePerClient = totalRevenue / clientsMonth;
+      const singlePriceRevenue = clientsMonth * tier2; // If only middle tier existed
+      const uplift = ((totalRevenue - singlePriceRevenue) / singlePriceRevenue) * 100;
+
+      let analysis = '';
+      let recommendation = '';
+
+      if (tier3 / tier1 > 4) {
+        analysis = "🏆 EXCELENTE: Rango amplio que maximiza anchoring effect";
+        recommendation = "Tu estructura aprovecha perfectamente la psicología de precios.";
+      } else if (tier3 / tier1 > 2.5) {
+        analysis = "🥇 BUENO: Diferenciación sólida entre tiers";
+        recommendation = "Considera ampliar el rango para mayor anchoring effect.";
+      } else {
+        analysis = "⚠️ OPORTUNIDAD: Tiers muy cercanos reducen diferenciación";
+        recommendation = "CRÍTICO: Amplía el rango de precios para mejor psicología de elección.";
+      }
+
+      document.getElementById('tier-result').style.display = 'block';
+      document.getElementById('tier-analysis').innerHTML = `
+        <div class="row">
+          <div class="col-md-6">
+            <h6><strong>Distribución de Clientes:</strong></h6>
+            <p>Tier 1: ${tier1Clients} clientes (${tier1Conversion*100}%)</p>
+            <p>Tier 2: ${tier2Clients} clientes (${tier2Conversion*100}%)</p>
+            <p>Tier 3: ${tier3Clients} clientes (${tier3Conversion*100}%)</p>
+            <h6><strong>Revenue por Tier:</strong></h6>
+            <p>Tier 1: $${tier1Revenue.toLocaleString()}</p>
+            <p>Tier 2: $${tier2Revenue.toLocaleString()}</p>
+            <p>Tier 3: $${tier3Revenue.toLocaleString()}</p>
+          </div>
+          <div class="col-md-6">
+            <h6><strong>Métricas Clave:</strong></h6>
+            <p><strong>Revenue Total:</strong> $${totalRevenue.toLocaleString()}/mes</p>
+            <p><strong>Valor Promedio Cliente:</strong> $${Math.round(avgValuePerClient)}</p>
+            <p><strong>Uplift vs Precio Único:</strong> +${Math.round(uplift)}%</p>
+            <h6><strong>Análisis:</strong></h6>
+            <p>${analysis}</p>
+            <h6><strong>Recomendación:</strong></h6>
+            <p>${recommendation}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // SELECT SCENARIO FUNCTIONALITY
+    function selectScenario(element, scenario) {
+      // Remove previous selections
+      document.querySelectorAll('.scenario-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Select current
+      element.classList.add('selected');
+      
+      let analysis = '';
+      
+      switch(scenario) {
+        case 'threeTiers':
+          analysis = `
+            <strong>📊 Análisis Estructura 3 Tiers:</strong><br>
+            <strong>Conversión Esperada:</strong> Básico 30% | Premium 55% | Elite 15%<br>
+            <strong>Psicología:</strong> Estructura clásica, fácil de entender<br>
+            <strong>Valor Promedio:</strong> ~$165 por cliente<br>
+            <strong>Pros:</strong> Simple, claro, buena conversión al tier medio<br>
+            <strong>Contras:</strong> Limitado anchoring effect, menos maximización de valor<br><br>
+            <strong>💡 Optimización:</strong> Agregar tier "Decoy" a $500+ para mejorar anchoring.
+          `;
+          break;
+        case 'fiveTiers':
+          analysis = `
+            <strong>🏗️ Análisis Estructura 5 Tiers:</strong><br>
+            <strong>Conversión Esperada:</strong> Esencial 15% | Signature 25% | Premium 35% | Elite 20% | Royal 5%<br>
+            <strong>Psicología:</strong> Máxima granularidad de elección, strong anchoring<br>
+            <strong>Valor Promedio:</strong> ~$267 por cliente<br>
+            <strong>Pros:</strong> Excellent anchoring, múltiples puntos de entrada, maximiza valor<br>
+            <strong>Contras:</strong> Puede crear analysis paralysis en algunos usuarios<br><br>
+            <strong>💡 Resultado:</strong> +89% valor promedio vs estructura simple.
+          `;
+          break;
+        case 'anchoringHigh':
+          analysis = `
+            <strong>⚓ Análisis Anchoring Extremo:</strong><br>
+            <strong>Efecto Psicológico:</strong> Presidential ($1,200) hace que $400 parezca "razonable"<br>
+            <strong>Conversión Presidential:</strong> ~2% (principalmente para anchoring)<br>
+            <strong>Uplift en Tier $400:</strong> +180% conversión vs sin anchoring<br>
+            <strong>Valor Promedio:</strong> ~$445 por cliente<br>
+            <strong>Resultado:</strong> Clientes perciben $400 como "good deal" comparado con $1,200<br><br>
+            <strong>💡 Key Insight:</strong> El tier más caro raramente se vende, pero transforma percepción de valor.
+          `;
+          break;
+      }
+      
+      document.getElementById('scenario-result').style.display = 'block';
+      document.getElementById('scenario-analysis').innerHTML = analysis;
+    }
+
+    // GENERATE CUSTOM TIER
+    function generateCustomTier() {
+      const name = document.getElementById('tier1-name').value || 'Custom Tier';
+      const price = document.getElementById('tier1-designer-price').value || '99';
+      const duration = document.getElementById('tier1-duration').value || '30';
+      const features = document.getElementById('tier1-features').value || 'Features básicos';
+
+      const preview = `
+        <div class="tier-package tier-standard" style="max-width: 400px; margin: 0 auto;">
+          <div class="tier-header">
+            <h6 class="tier-name">✨ ${name}</h6>
+            <div class="tier-price">$${price}</div>
+          </div>
+          <ul class="tier-features">
+            <li>${duration} minutos exclusivos</li>
+            <li>${features}</li>
+            <li>Atención personalizada</li>
+            <li>Experiencia memorable</li>
+          </ul>
+        </div>
+      `;
+
+      document.getElementById('custom-tier-preview').innerHTML = `
+        <h5><strong>🎨 Preview de tu Tier Personalizado:</strong></h5>
+        ${preview}
+        <div class="mt-3 p-3" style="background: #f8f9fa; border-radius: 10px;">
+          <strong>💡 Sugerencias:</strong>
+          <ul>
+            <li>Considera agregar 2-4 tiers adicionales para máximo efecto</li>
+            <li>Usa nombres evocadores que sugieran experiencias</li>
+            <li>Incrementa valor percibido, no solo duración</li>
+          </ul>
+        </div>
+      `;
+    }
+
+    // UPDATE TIER PROGRESS
+    function updateTierProgress() {
+      // Simulate realistic tier conversion rates
+      const basic = Math.min(100, Math.random() * 15 + 20); // 20-35%
+      const premium = Math.min(100, Math.random() * 20 + 50); // 50-70%
+      const elite = Math.min(100, Math.random() * 10 + 10); // 10-20%
+      
+      // Animate progress bars
+      animateProgressBar('basic-bar', 'basic-percent', basic);
+      animateProgressBar('premium-bar', 'premium-percent', premium);
+      animateProgressBar('elite-bar', 'elite-percent', elite);
+    }
+
+    function animateProgressBar(barId, percentId, targetValue) {
+      const bar = document.getElementById(barId);
+      const percent = document.getElementById(percentId);
+      let current = 0;
+      
+      const interval = setInterval(() => {
+        if (current >= targetValue) {
+          clearInterval(interval);
+          return;
+        }
+        current += 2;
+        bar.style.width = current + '%';
+        percent.textContent = Math.round(current) + '%';
+      }, 50);
+    }
+
+    // Initialize some progress on load
+    setTimeout(() => {
+      updateTierProgress();
+    }, 2000);
+
+    // Auto-expand first lab section on load
+    setTimeout(() => {
+      toggleDetails('lab1');
+    }, 1000);
+  </script>
+</body>
+</html>

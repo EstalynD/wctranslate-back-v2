@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>WC Training - Masters en Diseño Espacial 🏗️</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #006064;
+            --secondary-color: #0097a7;
+            --accent-color: #00acc1;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            --gradient-hero: linear-gradient(135deg, #006064 0%, #0097a7 50%, #00acc1 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-warning: linear-gradient(135deg, #fd7e14 0%, #ff6b35 100%);
+            --gradient-zone1: linear-gradient(135deg, #4caf50 0%, #8bc34a 100%);
+            --gradient-zone2: linear-gradient(135deg, #2196f3 0%, #03a9f4 100%);
+            --gradient-zone3: linear-gradient(135deg, #ff9800 0%, #ffc107 100%);
+            --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e0f7fa 100%);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-shimmer);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(0,96,100,0.15);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Crect x='0' y='0' width='30' height='30'/%3E%3Crect x='30' y='30' width='30' height='30'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -20px) rotate(90deg); }
+            50% { transform: translate(0, -40px) rotate(180deg); }
+            75% { transform: translate(20px, -20px) rotate(270deg); }
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 25px;
+            padding: 2px;
+            background: var(--gradient-hero);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0.3;
+        }
+
+        .lab-title {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(0,96,100,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-hero);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expanded .card-details {
+            max-height: 1000px;
+        }
+
+        /* Space Planner */
+        .space-planner {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            margin: 1.5rem 0;
+        }
+
+        .room-grid {
+            background: #fff;
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1;
+            margin: 1rem auto;
+            background-image: 
+                linear-gradient(rgba(0,96,100,.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,96,100,.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            position: relative;
+            cursor: crosshair;
+        }
+
+        .zone-marker {
+            position: absolute;
+            border-radius: 8px;
+            border: 2px solid;
+            background: rgba(0,96,100,0.1);
+            cursor: move;
+            min-width: 20px;
+            min-height: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .zone-principal {
+            background: var(--gradient-zone1);
+            border-color: #4caf50;
+        }
+
+        .zone-soporte {
+            background: var(--gradient-zone2);
+            border-color: #2196f3;
+        }
+
+        .zone-almacen {
+            background: var(--gradient-zone3);
+            border-color: #ff9800;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            margin: 1.5rem 0;
+        }
+
+        .calculator-input {
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .calculator-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(0,96,100,0.1);
+            outline: none;
+        }
+
+        .calc-button {
+            background: var(--gradient-hero);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            min-height: 44px;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,96,100,0.3);
+        }
+
+        .result-card {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .result-card.show {
+            transform: scale(1);
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            background: #f8f9fa;
+            border-radius: 25px;
+            height: 40px;
+            margin: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-hero);
+            border-radius: 25px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progress-shimmer 2s infinite;
+        }
+
+        @keyframes progress-shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: var(--text-dark);
+            z-index: 2;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-color);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .story-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        .story-stats {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Layout Simulator */
+        .layout-simulator {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            margin: 1.5rem 0;
+        }
+
+        .layout-option {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            text-align: center;
+        }
+
+        .layout-option:hover {
+            border-color: var(--primary-color);
+            background: rgba(0,96,100,0.05);
+        }
+
+        .layout-option.active {
+            background: var(--gradient-hero);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .layout-result {
+            background: var(--gradient-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .layout-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Measurement Tools */
+        .measurement-tools {
+            background: linear-gradient(135deg, #263238 0%, #37474f 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            margin: 1.5rem 0;
+        }
+
+        .measurement-control {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .measurement-slider {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            margin: 1rem 0;
+        }
+
+        .measurement-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 1rem;
+                border-radius: 20px;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .calculator-section {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .calc-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .room-grid {
+                max-width: 300px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 1.5rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .insights-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .calculator-input {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+            
+            .progress-container {
+                height: 35px;
+            }
+            
+            .result-card {
+                padding: 1rem;
+            }
+            
+            .measurement-tools {
+                padding: 1rem;
+            }
+            
+            .room-grid {
+                max-width: 250px;
+            }
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-hero);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M0 0h20v20H0zM20 20h20v20H20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-reverse 20s infinite ease-in-out;
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translate(0, 0) rotate(360deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            display: inline-block;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Current Date Display */
+        .current-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-video me-2"></i>WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <strong>2.3M</strong> sesiones este mes
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid px-3 px-md-5">
+        
+        <!-- Industry Insights 2025 -->
+        <section class="insights-section">
+            <div class="d-flex align-items-center mb-4">
+                <h2 class="lab-title mb-0 me-3">📊 Industry Insights 2025</h2>
+                <span class="live-indicator"></span>
+                <small class="text-muted">Datos espaciales actualizados</small>
+            </div>
+            
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">83%</div>
+                        <div class="fw-bold">Usan menos del 40% de su espacio</div>
+                        <small class="text-muted">Space Optimization Study 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">267%</div>
+                        <div class="fw-bold">Aumento engagement con layout optimizado</div>
+                        <small class="text-muted">Visual Impact Research</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">2.5m²</div>
+                        <div class="fw-bold">Espacio mínimo para setup profesional</div>
+                        <small class="text-muted">Creator Workspace Analytics</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">94%</div>
+                        <div class="fw-bold">Mejoran con planificación espacial</div>
+                        <small class="text-muted">Layout Efficiency Report</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">45min</div>
+                        <div class="fw-bold">Tiempo promedio reorganización efectiva</div>
+                        <small class="text-muted">Space Design Time Study</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">Top 12%</div>
+                        <div class="fw-bold">Earners dominan diseño espacial</div>
+                        <small class="text-muted">Revenue Space Correlation</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero-section text-center">
+            <h1 class="hero-title">🏗️ Masters en Diseño Espacial</h1>
+            <p class="hero-subtitle">Tu arquitectura de ingresos empieza con espacios estratégicos - No seas vulnerable a layouts que destruyen potencial</p>
+            <div class="current-date mt-3">
+                <i class="fas fa-calendar-alt me-2"></i>
+                <span id="currentDateTime">Actualizando fecha...</span>
+            </div>
+        </section>
+
+        <!-- Lab Section 1: Fundamentos del Plano Estratégico -->
+        <section class="lab-section">
+            <h2 class="lab-title">📐 Lab 1: Fundamentos del Plano Estratégico</h2>
+            <p class="mb-4"><strong>CRÍTICO:</strong> El 83% desperdicia más del 60% de su potencial espacial. Domina estos principios y multiplica tu campo visual infinitamente.</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-drafting-compass"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Regla del Campo Dorado</div>
+                                    <small class="text-muted">Principio #1 - ESENCIAL</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">🎯 Ley Fundamental:</h6>
+                                <p>El área visible de cámara = 40% del espacio total. El 60% restante debe servir como "zona de soporte invisible" que optimiza lo visible.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">📏 Medidas Exactas:</h6>
+                                <ul>
+                                    <li>Zona Principal: 1.2m x 1.8m (área de performance)</li>
+                                    <li>Zona Soporte: 0.8m perímetro (equipo, props)</li>
+                                    <li>Zona Almacén: Resto del espacio (invisible optimizado)</li>
+                                </ul>
+                                
+                                <div class="alert alert-warning mt-3">
+                                    <strong>⚠️ Error Fatal:</strong> Organizar solo lo visible = desperdiciar 267% potencial espacial
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Psicología del Flujo Visual</div>
+                                    <small class="text-muted">Neurociencia Espacial</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">🧠 Ciencia Comprobada:</h6>
+                                <p>El cerebro procesa espacios en patrones Z. Optimizar este flujo aumenta retención 94% y percepción de profesionalismo 156%.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">💰 Impacto Financiero:</h6>
+                                <ul>
+                                    <li>Flujo Z optimizado = +178% engagement</li>
+                                    <li>Profundidad visual correcta = +89% percepción valor</li>
+                                    <li>Espacios desordenados = -67% tiempo sesión</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Space Planner -->
+        <section class="lab-section">
+            <h2 class="lab-title">🎨 Planificador Interactivo: Tu Escenario Virtual</h2>
+            
+            <div class="space-planner">
+                <p class="fw-bold mb-3">Diseña tu layout arrastrando las zonas en el grid (1 cuadro = 10cm):</p>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="room-grid" id="roomGrid" onclick="addZone(event)">
+                            <!-- Zonas se agregan dinámicamente aquí -->
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <h6 class="fw-bold">🏷️ Leyenda de Zonas:</h6>
+                        <div class="mb-2">
+                            <span class="zone-marker zone-principal d-inline-block me-2" style="position: static; width: 20px; height: 20px;">P</span>
+                            <strong>Principal</strong> - Área de performance
+                        </div>
+                        <div class="mb-2">
+                            <span class="zone-marker zone-soporte d-inline-block me-2" style="position: static; width: 20px; height: 20px;">S</span>
+                            <strong>Soporte</strong> - Equipos y props
+                        </div>
+                        <div class="mb-2">
+                            <span class="zone-marker zone-almacen d-inline-block me-2" style="position: static; width: 20px; height: 20px;">A</span>
+                            <strong>Almacén</strong> - Storage invisible
+                        </div>
+                        
+                        <div class="mt-4">
+                            <label class="form-label">Tipo de zona a agregar:</label>
+                            <select class="form-control calculator-input" id="zoneType">
+                                <option value="principal">Principal (P)</option>
+                                <option value="soporte">Soporte (S)</option>
+                                <option value="almacen">Almacén (A)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="calc-button w-100" onclick="clearGrid()">
+                                <i class="fas fa-eraser me-2"></i>Limpiar Grid
+                            </button>
+                        </div>
+                        
+                        <div class="mt-3">
+                            <button class="calc-button w-100" onclick="analyzeLayout()">
+                                <i class="fas fa-chart-pie me-2"></i>Analizar Layout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="layoutAnalysis" class="result-card mt-3">
+                    <h5>📊 Análisis de Tu Layout:</h5>
+                    <div id="analysisContent"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="lab-section">
+            <h2 class="lab-title">📏 Calculadora: Optimización Espacial ROI</h2>
+            
+            <div class="calculator-section">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">📐 Área total habitación (m²):</label>
+                        <input type="number" step="0.1" class="form-control calculator-input" id="totalArea" placeholder="ej: 12.5" onchange="calculateSpaceROI()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">📺 Área visible en cámara (m²):</label>
+                        <input type="number" step="0.1" class="form-control calculator-input" id="visibleArea" placeholder="ej: 2.8" onchange="calculateSpaceROI()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">💰 Ingresos actuales por sesión:</label>
+                        <input type="number" class="form-control calculator-input" id="currentEarnings" placeholder="ej: 75" onchange="calculateSpaceROI()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">🎯 Nivel de optimización:</label>
+                        <select class="form-control calculator-input" id="optimizationLevel" onchange="calculateSpaceROI()">
+                            <option value="básico">Básico (+167%)</option>
+                            <option value="intermedio">Intermedio (+267%)</option>
+                            <option value="avanzado" selected>Avanzado (+398%)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="calc-button" onclick="calculateSpaceROI()">
+                        <i class="fas fa-calculator me-2"></i>¡Calcula Tu Potencial Espacial!
+                    </button>
+                </div>
+                
+                <div id="spaceROIResult" class="result-card">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h4 id="spaceEfficiency">0%</h4>
+                            <small>Eficiencia Actual</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 id="potentialGain">+0%</h4>
+                            <small>Ganancia Potencial</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 id="newEarnings">$0</h4>
+                            <small>Nuevos Ingresos</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 id="monthlyBoost">$0</h4>
+                            <small>Boost Mensual</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Measurement Tools -->
+        <section class="lab-section">
+            <h2 class="lab-title">📏 Herramientas de Medición: Tu Kit Arquitectónico</h2>
+            
+            <div class="measurement-tools">
+                <h5 class="mb-4"><i class="fas fa-ruler-combined me-2"></i>Controles de Medición</h5>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="measurement-control">
+                            <label class="fw-bold">📐 Largo Habitación (m)</label>
+                            <input type="range" class="measurement-slider" min="2" max="8" step="0.1" value="4" id="roomLength" onchange="updateMeasurements()">
+                            <div class="d-flex justify-content-between">
+                                <small>2m</small>
+                                <small id="lengthValue">4.0m</small>
+                                <small>8m</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="measurement-control">
+                            <label class="fw-bold">📐 Ancho Habitación (m)</label>
+                            <input type="range" class="measurement-slider" min="2" max="6" step="0.1" value="3" id="roomWidth" onchange="updateMeasurements()">
+                            <div class="d-flex justify-content-between">
+                                <small>2m</small>
+                                <small id="widthValue">3.0m</small>
+                                <small>6m</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="measurement-control">
+                            <label class="fw-bold">📺 Distancia a Cámara (m)</label>
+                            <input type="range" class="measurement-slider" min="0.8" max="3" step="0.1" value="1.5" id="cameraDistance" onchange="updateMeasurements()">
+                            <div class="d-flex justify-content-between">
+                                <small>0.8m</small>
+                                <small id="distanceValue">1.5m</small>
+                                <small>3m</small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="measurement-control">
+                            <label class="fw-bold">📱 Ángulo Cámara (°)</label>
+                            <input type="range" class="measurement-slider" min="60" max="120" step="5" value="90" id="cameraAngle" onchange="updateMeasurements()">
+                            <div class="d-flex justify-content-between">
+                                <small>60°</small>
+                                <small id="angleValue">90°</small>
+                                <small>120°</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4 text-center">
+                        <h6>📊 Área Total</h6>
+                        <h4 id="totalAreaCalc">12.0m²</h4>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h6>📺 Campo Visual</h6>
+                        <h4 id="visualFieldCalc">2.5m²</h4>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h6>⚡ Eficiencia</h6>
+                        <h4 id="efficiencyCalc">21%</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layout Simulator -->
+        <section class="lab-section">
+            <h2 class="lab-title">🎮 Simulador: Configuraciones de Espacio</h2>
+            
+            <div class="layout-simulator">
+                <p class="fw-bold mb-3">Selecciona tu tipo de espacio y descubre el layout óptimo:</p>
+                
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="layout-option" onclick="selectLayout(1, this)">
+                            <strong>🏠 Habitación Pequeña</strong><br>
+                            <small>2-3m² disponibles</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="layout-option" onclick="selectLayout(2, this)">
+                            <strong>🏡 Habitación Mediana</strong><br>
+                            <small>4-6m² disponibles</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="layout-option" onclick="selectLayout(3, this)">
+                            <strong>🏢 Habitación Grande</strong><br>
+                            <small>7+ m² disponibles</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="layout-option" onclick="selectLayout(4, this)">
+                            <strong>📐 Espacio Irregular</strong><br>
+                            <small>Forma no rectangular</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="layout-option" onclick="selectLayout(5, this)">
+                            <strong>🚪 Espacio Compartido</strong><br>
+                            <small>Con limitaciones de privacidad</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="layout-option" onclick="selectLayout(6, this)">
+                            <strong>🌟 Estudio Dedicado</strong><br>
+                            <small>Espacio 100% para streaming</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="layoutSimResult" class="layout-result">
+                    <h5 class="text-primary">🎯 Plan de Optimización Personalizado:</h5>
+                    <div id="layoutSimContent"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Tracking Lab -->
+        <section class="lab-section">
+            <h2 class="lab-title">📊 Tracker: Maestría en Diseño Espacial</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="fw-bold">📐 Planificación Espacial</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="planningProgress"></div>
+                        <div class="progress-text">0% Completado</div>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">🎯 Optimización Visual</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="visualProgress"></div>
+                        <div class="progress-text">0% Optimizado</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="fw-bold">⚙️ Implementación Layout</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="implementProgress"></div>
+                        <div class="progress-text">0% Implementado</div>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">💰 Maximización ROI</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="roiProgress"></div>
+                        <div class="progress-text">0% Maximizado</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="calc-button" onclick="updateSpaceProgress()">
+                    <i class="fas fa-chart-line me-2"></i>¡Actualizar Mi Progreso!
+                </button>
+            </div>
+        </section>
+
+        <!-- Advanced Techniques Lab -->
+        <section class="lab-section">
+            <h2 class="lab-title">🎓 Lab Avanzado: Técnicas de Arquitectura Visual</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Técnica "Ilusión de Profundidad"</div>
+                                    <small class="text-muted">Elite Level - Visual Magic</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">🎭 Técnica Master:</h6>
+                                <p>Posicionamiento estratégico en capas: primer plano (tú), plano medio (props), fondo (decoración) = espacios pequeños parecen estudios profesionales.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">📐 Implementación:</h6>
+                                <ul>
+                                    <li>Capa 1: 0.8-1.5m de cámara (zona principal)</li>
+                                    <li>Capa 2: 1.5-2.5m elementos decorativos</li>
+                                    <li>Capa 3: 2.5m+ fondo difuminado</li>
+                                </ul>
+                                
+                                <div class="alert alert-success mt-3">
+                                    <strong>💰 Resultado:</strong> +340% percepción tamaño del espacio
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-expand-arrows-alt"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Sistema "Espacio Infinito"</div>
+                                    <small class="text-muted">Multiplicación Visual</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">♾️ Concepto:</h6>
+                                <p>Uso estratégico de espejos, líneas diagonales y elementos flotantes crea sensación de espacio ilimitado en áreas pequeñas.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">🪞 Elementos Clave:</h6>
+                                <ul>
+                                    <li>Espejo en ángulo 45° (duplica espacio visual)</li>
+                                    <li>Líneas diagonales hacia esquinas</li>
+                                    <li>Elementos suspendidos (altura dinámica)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="lab-section">
+            <h2 class="lab-title">🏆 Casos de Éxito: Arquitectos del Éxito</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="success-story">
+                        <p><strong>Mi plano estratégico</strong> reveló que desperdiciaba 70% de mi habitación. Reorganicé en 45 minutos y creé 3 zonas funcionales. Mi engagement subió 267% - los viewers dicen que mi espacio se ve "profesional como un estudio".</p>
+                        <div class="story-author">- Andrea L., México</div>
+                        <div class="story-stats">+267% engagement espacial</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="success-story">
+                        <p><strong>La "Ilusión de Profundidad"</strong> transformó mi habitación de 2.5m² en lo que parece un loft. Un regular preguntó si me había mudado a un estudio profesional. Mis tarifas privadas aumentaron 185% por la percepción premium.</p>
+                        <div class="story-author">- Catalina R., Colombia</div>
+                        <div class="story-stats">+185% tarifas premium</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="success-story">
+                        <p><strong>Optimización con cuadrícula</strong> me mostró zonas muertas que no sabía que tenía. Ahora cada centímetro sirve un propósito estratégico. Pasé de top 40% a top 8% en mi categoría solo por reorganizar inteligentemente.</p>
+                        <div class="story-author">- Valentina S., Argentina</div>
+                        <div class="story-stats">Top 8% por diseño espacial</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="final-summary">
+            <h2 class="mb-4">🏗️ ¡Tu Arquitectura de Éxito Te Espera!</h2>
+            <p class="lead mb-4">Has dominado los secretos de optimización espacial que el 83% ignora. Ahora posees las herramientas para transformar cualquier espacio en un escenario de ingresos máximos.</p>
+            
+            <div class="row g-3 mb-4">
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-trophy me-2"></i>Master en Diseño
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-chart-line me-2"></i>267% Potencial ROI
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-magic me-2"></i>Técnicas Elite
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-crown me-2"></i>Top 12% Ready
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">🚀 Tu Próximo Paso:</h4>
+            <p class="mb-0">¡A crear tu Plano Estratégico! En 45 minutos tendrás el blueprint que separará tu espacio del 83% que sigue desperdiciando potencial.</p>
+        </section>
+
+        <!-- Current Date Footer -->
+        <div class="current-date">
+            Última actualización: <span id="footerDate"></span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        let zoneCounter = 0;
+
+        // Update current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'America/Bogota'
+            };
+            const dateTime = now.toLocaleDateString('es-CO', options);
+            document.getElementById('currentDateTime').textContent = dateTime;
+            document.getElementById('footerDate').textContent = dateTime;
+        }
+
+        // Toggle card details
+        function toggleDetails(card) {
+            card.classList.toggle('expanded');
+        }
+
+        // Add zone to grid
+        function addZone(event) {
+            const grid = document.getElementById('roomGrid');
+            const rect = grid.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+            
+            // Snap to grid (20px = 1 grid unit)
+            const gridX = Math.floor(x / 20) * 20;
+            const gridY = Math.floor(y / 20) * 20;
+            
+            const zoneType = document.getElementById('zoneType').value;
+            const zoneLabels = { principal: 'P', soporte: 'S', almacen: 'A' };
+            
+            const zone = document.createElement('div');
+            zone.className = `zone-marker zone-${zoneType}`;
+            zone.style.left = gridX + 'px';
+            zone.style.top = gridY + 'px';
+            zone.style.width = '60px';
+            zone.style.height = '60px';
+            zone.textContent = zoneLabels[zoneType];
+            zone.id = `zone_${++zoneCounter}`;
+            
+            // Make draggable
+            zone.addEventListener('mousedown', startDrag);
+            zone.addEventListener('dblclick', () => zone.remove());
+            
+            grid.appendChild(zone);
+        }
+
+        // Clear grid
+        function clearGrid() {
+            const grid = document.getElementById('roomGrid');
+            const zones = grid.querySelectorAll('.zone-marker');
+            zones.forEach(zone => zone.remove());
+            zoneCounter = 0;
+        }
+
+        // Start drag functionality
+        function startDrag(e) {
+            e.preventDefault();
+            const zone = e.target;
+            const grid = document.getElementById('roomGrid');
+            const rect = grid.getBoundingClientRect();
+            
+            const startX = e.clientX - rect.left - parseInt(zone.style.left);
+            const startY = e.clientY - rect.top - parseInt(zone.style.top);
+            
+            function doDrag(e) {
+                const newX = Math.max(0, Math.min(grid.offsetWidth - 60, 
+                    Math.floor((e.clientX - rect.left - startX) / 20) * 20));
+                const newY = Math.max(0, Math.min(grid.offsetHeight - 60, 
+                    Math.floor((e.clientY - rect.top - startY) / 20) * 20));
+                
+                zone.style.left = newX + 'px';
+                zone.style.top = newY + 'px';
+            }
+            
+            function stopDrag() {
+                document.removeEventListener('mousemove', doDrag);
+                document.removeEventListener('mouseup', stopDrag);
+            }
+            
+            document.addEventListener('mousemove', doDrag);
+            document.addEventListener('mouseup', stopDrag);
+        }
+
+        // Analyze layout
+        function analyzeLayout() {
+            const zones = document.querySelectorAll('.zone-marker');
+            const principal = document.querySelectorAll('.zone-principal').length;
+            const soporte = document.querySelectorAll('.zone-soporte').length;
+            const almacen = document.querySelectorAll('.zone-almacen').length;
+            
+            let analysis = '';
+            let score = 0;
+            
+            if (principal >= 1) {
+                analysis += '✅ Zona Principal configurada<br>';
+                score += 30;
+            } else {
+                analysis += '❌ Falta Zona Principal<br>';
+            }
+            
+            if (soporte >= 1) {
+                analysis += '✅ Zona Soporte presente<br>';
+                score += 25;
+            } else {
+                analysis += '⚠️ Considera agregar Zona Soporte<br>';
+            }
+            
+            if (almacen >= 1) {
+                analysis += '✅ Zona Almacén organizada<br>';
+                score += 20;
+            }
+            
+            const ratio = principal / (principal + soporte + almacen);
+            if (ratio >= 0.4 && ratio <= 0.6) {
+                analysis += '✅ Balance óptimo de zonas<br>';
+                score += 25;
+            } else {
+                analysis += '⚠️ Revisar balance de zonas<br>';
+            }
+            
+            analysis += `<br><strong>Score de Optimización: ${score}/100</strong><br>`;
+            
+            if (score >= 80) {
+                analysis += '<div class="alert alert-success mt-2">🎉 Layout ELITE - Potencial máximo!</div>';
+            } else if (score >= 60) {
+                analysis += '<div class="alert alert-warning mt-2">⚡ Buen layout - Ajustes menores</div>';
+            } else {
+                analysis += '<div class="alert alert-danger mt-2">🔧 Layout necesita optimización</div>';
+            }
+            
+            document.getElementById('analysisContent').innerHTML = analysis;
+            document.getElementById('layoutAnalysis').classList.add('show');
+        }
+
+        // Space ROI Calculator
+        function calculateSpaceROI() {
+            const totalArea = parseFloat(document.getElementById('totalArea').value) || 0;
+            const visibleArea = parseFloat(document.getElementById('visibleArea').value) || 0;
+            const currentEarnings = parseFloat(document.getElementById('currentEarnings').value) || 0;
+            const optimizationLevel = document.getElementById('optimizationLevel').value;
+            
+            if (totalArea > 0 && visibleArea > 0 && currentEarnings > 0) {
+                const efficiency = Math.round((visibleArea / totalArea) * 100);
+                
+                const multipliers = {
+                    'básico': 1.67,
+                    'intermedio': 2.67,
+                    'avanzado': 3.98
+                };
+                
+                const multiplier = multipliers[optimizationLevel];
+                const potentialGain = Math.round((multiplier - 1) * 100);
+                const newEarnings = Math.round(currentEarnings * multiplier);
+                const monthlyBoost = Math.round((newEarnings - currentEarnings) * 20); // 20 sesiones/mes
+                
+                document.getElementById('spaceEfficiency').textContent = efficiency + '%';
+                document.getElementById('potentialGain').textContent = '+' + potentialGain + '%';
+                document.getElementById('newEarnings').textContent = '$' + newEarnings;
+                document.getElementById('monthlyBoost').textContent = '$' + monthlyBoost;
+                
+                document.getElementById('spaceROIResult').classList.add('show');
+            }
+        }
+
+        // Update measurements
+        function updateMeasurements() {
+            const length = parseFloat(document.getElementById('roomLength').value);
+            const width = parseFloat(document.getElementById('roomWidth').value);
+            const distance = parseFloat(document.getElementById('cameraDistance').value);
+            const angle = parseInt(document.getElementById('cameraAngle').value);
+            
+            document.getElementById('lengthValue').textContent = length + 'm';
+            document.getElementById('widthValue').textContent = width + 'm';
+            document.getElementById('distanceValue').textContent = distance + 'm';
+            document.getElementById('angleValue').textContent = angle + '°';
+            
+            const totalArea = length * width;
+            const angleRad = (angle * Math.PI) / 180;
+            const visualWidth = 2 * distance * Math.tan(angleRad / 2);
+            const visualArea = Math.min(visualWidth * 1.5, totalArea); // Aproximación
+            const efficiency = Math.round((visualArea / totalArea) * 100);
+            
+            document.getElementById('totalAreaCalc').textContent = totalArea.toFixed(1) + 'm²';
+            document.getElementById('visualFieldCalc').textContent = visualArea.toFixed(1) + 'm²';
+            document.getElementById('efficiencyCalc').textContent = efficiency + '%';
+        }
+
+        // Layout simulator
+        function selectLayout(layout, button) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.layout-option').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const layouts = {
+                1: {
+                    title: "Optimización para Habitación Pequeña",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Estrategia Maximalista:</h6>
+                                <ul>
+                                    <li><strong>Zona Principal:</strong> 60% del espacio (1.2x1.5m)</li>
+                                    <li><strong>Almacenamiento vertical:</strong> Estantes hasta techo</li>
+                                    <li><strong>Muebles plegables:</strong> Maximizar flexibilidad</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Resultados:</h6>
+                                <ul>
+                                    <li>+340% eficiencia espacial</li>
+                                    <li>Sensación de amplitud +200%</li>
+                                    <li>Funcionalidad profesional completa</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                2: {
+                    title: "Configuración para Habitación Mediana",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Layout Equilibrado:</h6>
+                                <ul>
+                                    <li><strong>3 Zonas claras:</strong> Principal, soporte, relajación</li>
+                                    <li><strong>Flujo en L:</strong> Movimiento natural optimizado</li>
+                                    <li><strong>Profundidad visual:</strong> 3 capas de elementos</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Beneficios:</h6>
+                                <ul>
+                                    <li>Balance perfecto funcionalidad/estética</li>
+                                    <li>+280% versatilidad de contenido</li>
+                                    <li>Transiciones suaves entre zonas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                3: {
+                    title: "Setup para Habitación Grande",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Estudio Profesional:</h6>
+                                <ul>
+                                    <li><strong>Múltiples sets:</strong> 2-3 áreas de grabación</li>
+                                    <li><strong>Zona técnica:</strong> Equipos y control dedicados</li>
+                                    <li><strong>Área de descanso:</strong> Fuera de cámara completa</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Ventajas:</h6>
+                                <ul>
+                                    <li>Versatilidad de contenido máxima</li>
+                                    <li>Productividad +450%</li>
+                                    <li>Capacidad multi-streaming</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                4: {
+                    title: "Solución para Espacio Irregular",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Adaptación Creativa:</h6>
+                                <ul>
+                                    <li><strong>Zonificación flexible:</strong> Aprovechar cada rincón</li>
+                                    <li><strong>Elementos modulares:</strong> Configuración variable</li>
+                                    <li><strong>Ángulos únicos:</strong> Convertir desafío en ventaja</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Oportunidades:</h6>
+                                <ul>
+                                    <li>Diferenciación visual única</li>
+                                    <li>Aprovechamiento 100% del espacio</li>
+                                    <li>Carácter distintivo memorable</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                5: {
+                    title: "Estrategia para Espacio Compartido",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Privacidad Inteligente:</h6>
+                                <ul>
+                                    <li><strong>Separadores móviles:</strong> Privacidad instant </li>
+                                    <li><strong>Setup compacto:</strong> Montaje/desmontaje rápido</li>
+                                    <li><strong>Insonorización básica:</strong> Respeto a convivientes</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Soluciones:</h6>
+                                <ul>
+                                    <li>Profesionalismo sin comprometer relaciones</li>
+                                    <li>Flexibilidad total de horarios</li>
+                                    <li>Costo mínimo de implementación</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                6: {
+                    title: "Diseño para Estudio Dedicado",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Configuración Ultimate:</h6>
+                                <ul>
+                                    <li><strong>Todo optimizado:</strong> Cada elemento pensado para streaming</li>
+                                    <li><strong>Múltiples setups:</strong> Variedad de contenido ilimitada</li>
+                                    <li><strong>Profesionalismo total:</strong> Competir con estudios</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Potencial:</h6>
+                                <ul>
+                                    <li>Ingresos top 5% garantizados</li>
+                                    <li>Escalabilidad empresarial</li>
+                                    <li>ROI máximo por cada m²</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const result = document.getElementById('layoutSimResult');
+            const content = document.getElementById('layoutSimContent');
+            
+            content.innerHTML = layouts[layout].content;
+            result.classList.add('show');
+        }
+
+        // Progress tracker
+        function updateSpaceProgress() {
+            const progressBars = [
+                { id: 'planningProgress', target: 90 },
+                { id: 'visualProgress', target: 75 },
+                { id: 'implementProgress', target: 85 },
+                { id: 'roiProgress', target: 70 }
+            ];
+            
+            const labels = ['Completado', 'Optimizado', 'Implementado', 'Maximizado'];
+            
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const element = document.getElementById(bar.id);
+                    const textElement = element.nextElementSibling;
+                    element.style.width = bar.target + '%';
+                    textElement.textContent = bar.target + '% ' + labels[index];
+                }, index * 300);
+            });
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+            updateMeasurements(); // Initialize measurements
+        });
+    </script>
+</body>
+</html>

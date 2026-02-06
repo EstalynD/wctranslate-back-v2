@@ -1,0 +1,1903 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎵 Entrenamiento Musical Avanzado - WC Training Pro</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #7b1fa2;
+            --secondary-color: #f06292;
+            --accent-color: #ba68c8;
+            --purple-light: #f3e5f5;
+            --pink-light: #fce4ec;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --info-blue: #17a2b8;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #7b1fa2 0%, #f06292 50%, #ba68c8 100%);
+            --gradient-secondary: linear-gradient(45deg, #f06292 0%, #ba68c8 50%, #f3e5f5 100%);
+            --gradient-accent: linear-gradient(90deg, #ba68c8 0%, #f3e5f5 100%);
+            --shadow-primary: 0 15px 40px rgba(123, 31, 162, 0.3);
+            --shadow-secondary: 0 10px 30px rgba(240, 98, 146, 0.2);
+            --shadow-light: 0 5px 20px rgba(186, 104, 200, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #fafafa 0%, #fff8fb 100%);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-8 0a8 8 0 1 0 16 0a8 8 0 1 0 -16 0M15 15l6 6M45 15l-6 6M15 45l6-6M45 45l-6-6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .wc-brand {
+            color: white;
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            color: rgba(255,255,255,0.9);
+            font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #ff4757;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: white;
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 3rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-accent);
+            padding: clamp(1rem, 2vw, 1.5rem);
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            border: 1px solid rgba(186, 104, 200, 0.3);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-secondary);
+        }
+
+        .insight-number {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Main Hero Section */
+        .hero-section {
+            background: var(--gradient-primary);
+            padding: clamp(3rem, 6vw, 6rem) 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-8.837 7.163-16 16-16s16 7.163 16 16-7.163 16-16 16-16-7.163-16-16zm8 8c0-4.418 3.582-8 8-8s8 3.582 8 8-3.582 8-8 8-8-3.582-8-8z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.2vw, 1.5rem);
+            opacity: 0.95;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            border-radius: 25px;
+            padding: clamp(1.5rem, 3vw, 3rem);
+            margin: clamp(1.5rem, 3vw, 3rem) 0;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .section-header {
+            margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .section-description {
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: clamp(1.2rem, 2.5vw, 2rem);
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: var(--shadow-primary);
+            border-color: var(--secondary-color);
+        }
+
+        .interactive-card.expanded {
+            background: var(--purple-light);
+            border-color: var(--primary-color);
+            transform: scale(1.02);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: clamp(3rem, 5vw, 4rem);
+            height: clamp(3rem, 5vw, 4rem);
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+        }
+
+        .card-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+            font-weight: 600;
+            color: var(--primary-color);
+            flex: 1;
+        }
+
+        .card-toggle {
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .card-toggle.rotated {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .card-details.expanded {
+            max-height: 2000px;
+            transition: max-height 0.7s ease-in;
+        }
+
+        /* Genre Gallery */
+        .genre-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .genre-card {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .genre-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .genre-card.selected {
+            border-color: var(--primary-color);
+            background: var(--purple-light);
+            transform: scale(1.05);
+        }
+
+        .genre-card.playing {
+            animation: musicPulse 2s ease-in-out infinite;
+        }
+
+        .genre-emoji {
+            font-size: clamp(3.5rem, 6vw, 5rem);
+            margin-bottom: 1rem;
+            display: block;
+            position: relative;
+            z-index: 2;
+        }
+
+        .genre-name {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            position: relative;
+            z-index: 2;
+        }
+
+        .genre-bpm {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .genre-description {
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            line-height: 1.4;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .genre-moves {
+            background: var(--bg-light);
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 15px;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            color: var(--text-dark);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Metronome */
+        .metronome-container {
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            border: 1px solid var(--accent-color);
+            text-align: center;
+        }
+
+        .metronome-circle {
+            width: clamp(150px, 25vw, 200px);
+            height: clamp(150px, 25vw, 200px);
+            border: 8px solid var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 2rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .metronome-circle:hover {
+            transform: scale(1.05);
+            border-color: var(--secondary-color);
+        }
+
+        .metronome-circle.active {
+            animation: metronomeBeat 1s infinite;
+            border-color: var(--success-green);
+            color: var(--success-green);
+        }
+
+        .bpm-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .bpm-btn {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            background: white;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+        }
+
+        .bpm-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .bpm-display {
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            min-width: 120px;
+        }
+
+        /* Playlist Builder */
+        .playlist-builder {
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            border: 1px solid var(--accent-color);
+        }
+
+        .playlist-track {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .playlist-track:hover {
+            border-color: var(--secondary-color);
+            transform: translateX(10px);
+        }
+
+        .playlist-track.selected {
+            border-color: var(--primary-color);
+            background: var(--purple-light);
+        }
+
+        .track-number {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+        }
+
+        .track-info {
+            flex: 1;
+        }
+
+        .track-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+            font-size: clamp(1rem, 1.8vw, 1.2rem);
+        }
+
+        .track-details {
+            color: var(--text-muted);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+        }
+
+        .track-duration {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Training Exercises */
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: clamp(1rem, 2vw, 1.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .exercise-card {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2rem);
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .exercise-card:hover {
+            border-color: var(--secondary-color);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-light);
+        }
+
+        .exercise-card.active {
+            border-color: var(--primary-color);
+            background: var(--purple-light);
+            animation: exercisePulse 2s infinite;
+        }
+
+        .exercise-icon {
+            font-size: clamp(2.5rem, 4vw, 3.5rem);
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .exercise-title {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+        }
+
+        .exercise-description {
+            color: var(--text-muted);
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+            line-height: 1.4;
+        }
+
+        /* Calculator Section */
+        .calculator-container {
+            background: var(--gradient-accent);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin: clamp(1rem, 2vw, 2rem) 0;
+            border: 1px solid var(--accent-color);
+        }
+
+        .calculator-input {
+            margin-bottom: 1.5rem;
+        }
+
+        .calculator-input label {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: block;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .calculator-input input,
+        .calculator-input select {
+            width: 100%;
+            padding: clamp(0.8rem, 1.5vw, 1rem);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .calculator-input input:focus,
+        .calculator-input select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(123, 31, 162, 0.1);
+        }
+
+        .calculator-results {
+            background: white;
+            border-radius: 15px;
+            padding: clamp(1.2rem, 2.5vw, 2rem);
+            margin-top: 1.5rem;
+            border: 2px solid var(--success-green);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .result-value {
+            font-weight: 700;
+            color: var(--success-green);
+            font-size: clamp(1rem, 1.8vw, 1.3rem);
+        }
+
+        /* Progress Tracking */
+        .progress-container {
+            margin: clamp(1rem, 2vw, 2rem) 0;
+        }
+
+        .progress-item {
+            margin-bottom: clamp(1rem, 2vw, 1.5rem);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+        }
+
+        .progress-bar-container {
+            background: var(--bg-light);
+            height: clamp(12px, 2vw, 16px);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 25px;
+            transition: width 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: white;
+            border-radius: 20px;
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+            margin-bottom: clamp(1rem, 2vw, 2rem);
+            border: 1px solid var(--border-light);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .success-story:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-secondary);
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-avatar {
+            width: clamp(3.5rem, 6vw, 5rem);
+            height: clamp(3.5rem, 6vw, 5rem);
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: clamp(1.5rem, 2.5vw, 2rem);
+            font-weight: 700;
+        }
+
+        .story-info h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            font-weight: 600;
+        }
+
+        .story-info p {
+            color: var(--text-muted);
+            margin: 0;
+            font-size: clamp(0.85rem, 1.5vw, 1rem);
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+        }
+
+        .metric-value {
+            font-size: clamp(1.5rem, 2.8vw, 2rem);
+            font-weight: 700;
+            color: var(--success-green);
+            line-height: 1;
+        }
+
+        .metric-label {
+            font-size: clamp(0.8rem, 1.4vw, 0.9rem);
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Buttons */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: clamp(0.8rem, 1.5vw, 1rem) clamp(1.5rem, 3vw, 2rem);
+            font-weight: 600;
+            font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            min-width: 120px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.1); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes musicPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(123, 31, 162, 0.7); }
+            50% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(123, 31, 162, 0); }
+        }
+
+        @keyframes metronomeBeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); border-width: 12px; }
+        }
+
+        @keyframes exercisePulse {
+            0%, 100% { background: var(--purple-light); }
+            50% { background: white; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .hero-section {
+                border-radius: 20px;
+            }
+            
+            .lab-section {
+                border-radius: 15px;
+                padding: 1.5rem;
+            }
+            
+            .genre-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+            
+            .exercise-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .bpm-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .card-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .story-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .playlist-track {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-container {
+                padding: 1rem;
+            }
+            
+            .success-story {
+                padding: 1rem;
+            }
+            
+            .genre-gallery {
+                grid-template-columns: 1fr;
+            }
+
+            .metronome-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 1.5rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border-width: 3px;
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-brand">
+                        <i class="fas fa-music me-2"></i>WC Training Pro
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | <strong id="currentDate"></strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-3 px-md-4">
+        <!-- Industry Insights -->
+        <div class="insights-section">
+            <h3 class="text-center mb-4" style="color: var(--primary-color); font-weight: 700;">
+                <i class="fas fa-headphones me-2"></i>Musical Performance Research 2025
+            </h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">87%</div>
+                        <div class="insight-label">Mayor retención con sincronización musical</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">3.4x</div>
+                        <div class="insight-label">Más tips con timing perfecto</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">126 BPM</div>
+                        <div class="insight-label">Tempo óptimo para engagement</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">74%</div>
+                        <div class="insight-label">Usuarios prefieren variedad de géneros</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">+195%</div>
+                        <div class="insight-label">Incremento en tiempo de sesión</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">+278%</div>
+                        <div class="insight-label">ROI en entrenamiento musical</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted">
+                <small>Fuente: Musical Performance Institute 2025, Rhythm Analytics Lab</small>
+            </p>
+        </div>
+
+        <!-- Main Hero Section -->
+        <div class="hero-section text-center">
+            <div class="hero-content">
+                <h1 class="hero-title">🎵 Entrenamiento Musical Avanzado</h1>
+                <p class="hero-subtitle">
+                    Domina la sincronización perfecta entre cuerpo y música para crear experiencias hipnóticas que trascienden lo visual. Transforma cada beat en magnetismo puro y cada pausa en anticipación irresistible.
+                </p>
+                <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
+                    <span class="badge bg-white text-dark px-3 py-2 fs-6">+87% Retención</span>
+                    <span class="badge bg-white text-dark px-3 py-2 fs-6">278% ROI</span>
+                    <span class="badge bg-white text-dark px-3 py-2 fs-6">Timing Perfecto</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 1: Géneros y BPM -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🎼 Laboratorio de Géneros y Tempos</h2>
+                <p class="section-description">
+                    Explora una biblioteca completa de géneros musicales con sus BPM óptimos y movimientos recomendados para maximizar el impacto emocional.
+                </p>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('genre-analysis')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-compact-disc"></i></div>
+                    <div class="card-title">Análisis de Géneros Profesionales</div>
+                    <div class="card-toggle" id="toggle-genre-analysis"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-genre-analysis">
+                    <h6 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎶 Biblioteca Master de Géneros</h6>
+                    <div class="genre-gallery">
+                        <div class="genre-card" onclick="selectGenre('jazz')">
+                            <div class="genre-emoji">🎷</div>
+                            <div class="genre-name">Jazz Sensual</div>
+                            <div class="genre-bpm">90-110 BPM</div>
+                            <div class="genre-description">
+                                Movimientos fluidos y elegantes. Perfecta para crear atmósfera sofisticada y conexión íntima.
+                            </div>
+                            <div class="genre-moves">
+                                <strong>Movimientos recomendados:</strong> Ondulaciones lentas, poses sostenidas, transiciones suaves, juego con silencios
+                            </div>
+                        </div>
+                        <div class="genre-card" onclick="selectGenre('electronic')">
+                            <div class="genre-emoji">🎧</div>
+                            <div class="genre-name">Electrónica</div>
+                            <div class="genre-bpm">120-140 BPM</div>
+                            <div class="genre-description">
+                                Energía moderna y hipnótica. Ideal para crear momentum y mantener engagement alto.
+                            </div>
+                            <div class="genre-moves">
+                                <strong>Movimientos recomendados:</strong> Pulsos corporales, transiciones precisas, acentos en drops, flow continuo
+                            </div>
+                        </div>
+                        <div class="genre-card" onclick="selectGenre('latin')">
+                            <div class="genre-emoji">💃</div>
+                            <div class="genre-name">Ritmos Latinos</div>
+                            <div class="genre-bpm">100-130 BPM</div>
+                            <div class="genre-description">
+                                Pasión y cadencia natural. Perfecta para expresar sensualidad auténtica y energía cálida.
+                            </div>
+                            <div class="genre-moves">
+                                <strong>Movimientos recomendados:</strong> Movimientos de cadera, giros rítmicos, acentos latinos, expresión facial
+                            </div>
+                        </div>
+                        <div class="genre-card" onclick="selectGenre('classical')">
+                            <div class="genre-emoji">🎻</div>
+                            <div class="genre-name">Clásica Moderna</div>
+                            <div class="genre-bpm">70-90 BPM</div>
+                            <div class="genre-description">
+                                Elegancia y refinamiento. Ideal para momentos contemplativos y conexión emocional profunda.
+                            </div>
+                            <div class="genre-moves">
+                                <strong>Movimientos recomendados:</strong> Líneas limpias, extensiones elegantes, movimientos arquitectónicos, pausas dramáticas
+                            </div>
+                        </div>
+                        <div class="genre-card" onclick="selectGenre('rnb')">
+                            <div class="genre-emoji">🎤</div>
+                            <div class="genre-name">R&B Contemporary</div>
+                            <div class="genre-bpm">80-100 BPM</div>
+                            <div class="genre-description">
+                                Soul y groove profundo. Perfecta para crear conexión emocional auténtica y sensualidad natural.
+                            </div>
+                            <div class="genre-moves">
+                                <strong>Movimientos recomendados:</strong> Aislaciones suaves, groove natural, expresión facial intensa, timing laid-back
+                            </div>
+                        </div>
+                        <div class="genre-card" onclick="selectGenre('ambient')">
+                            <div class="genre-emoji">🌙</div>
+                            <div class="genre-name">Ambient Atmosférico</div>
+                            <div class="genre-bpm">60-80 BPM</div>
+                            <div class="genre-description">
+                                Profundidad y misterio. Ideal para crear atmósferas envolventes y experiencias meditativas.
+                            </div>
+                            <div class="genre-moves">
+                                <strong>Movimientos recomendados:</strong> Respiración visible, movimientos flotantes, transiciones etéreas, poses minimalistas
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('bpm-optimization')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-tachometer-alt"></i></div>
+                    <div class="card-title">Optimización de BPM por Momento</div>
+                    <div class="card-toggle" id="toggle-bpm-optimization"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-bpm-optimization">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🎯 BPM Estratégico por Fase</h6>
+                            <div class="progress-container">
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Apertura (60-80 BPM)</span>
+                                        <span>Construcción</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 75%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Desarrollo (100-130 BPM)</span>
+                                        <span>Engagement</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Clímax (130-150 BPM)</span>
+                                        <span>Intensidad</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-label">
+                                        <span>Resolución (70-90 BPM)</span>
+                                        <span>Relajación</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-bar" style="width: 82%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🔬 Ciencia del Tempo</h6>
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px;">
+                                <p><strong>Zona Óptima (120-130 BPM):</strong></p>
+                                <p class="small">Coincide con el ritmo cardíaco en ejercicio moderado, creando sincronización fisiológica natural con tu audiencia.</p>
+                                
+                                <p><strong>Efecto Dopamínico (130+ BPM):</strong></p>
+                                <p class="small">Estimula liberación de dopamina, aumentando sensación de placer y euforia.</p>
+                                
+                                <p><strong>Respuesta Parasimpática (&lt;80 BPM):</strong></p>
+                                <p class="small">Activa sistema nervioso parasimpático, generando relajación y receptividad emocional.</p>
+                            </div>
+                            <div style="background: var(--purple-light); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                <p class="small"><strong>SECRETO:</strong> Cambios de tempo de ±10 BPM cada 3-4 minutos mantienen atención sin crear fatiga auditiva.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metronome Trainer -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🥁 Entrenador de Ritmo Interactivo</h2>
+                <p class="section-description">
+                    Desarrolla timing perfecto con nuestro metrónomo avanzado y ejercicios de sincronización progresivos.
+                </p>
+            </div>
+
+            <div class="metronome-container">
+                <h5 style="color: var(--primary-color); margin-bottom: 1.5rem;">🎯 Metrónomo de Precisión</h5>
+                
+                <div class="metronome-circle" id="metronomeCircle" onclick="toggleMetronome()">
+                    <span id="metronomeDisplay">START</span>
+                </div>
+
+                <div class="bpm-controls">
+                    <button class="bpm-btn" onclick="adjustBPM(-10)">-10</button>
+                    <button class="bpm-btn" onclick="adjustBPM(-5)">-5</button>
+                    <div class="bpm-display" id="bpmDisplay">120</div>
+                    <button class="bpm-btn" onclick="adjustBPM(5)">+5</button>
+                    <button class="bpm-btn" onclick="adjustBPM(10)">+10</button>
+                </div>
+
+                <div class="exercise-grid">
+                    <div class="exercise-card" onclick="startExercise('pulse')">
+                        <div class="exercise-icon">💓</div>
+                        <div class="exercise-title">Pulso Corporal</div>
+                        <div class="exercise-description">
+                            Sincroniza contracciones musculares suaves con cada beat del metrónomo
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="startExercise('flow')">
+                        <div class="exercise-icon">🌊</div>
+                        <div class="exercise-title">Flow Continuo</div>
+                        <div class="exercise-description">
+                            Mantén movimiento fluido que respete el tempo sin rigidez
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="startExercise('accents')">
+                        <div class="exercise-icon">⚡</div>
+                        <div class="exercise-title">Acentos Dinámicos</div>
+                        <div class="exercise-description">
+                            Marca beats fuertes con movimientos más definidos o pausas
+                        </div>
+                    </div>
+                    <div class="exercise-card" onclick="startExercise('polyrhythm')">
+                        <div class="exercise-icon">🎭</div>
+                        <div class="exercise-title">Polirritmia</div>
+                        <div class="exercise-description">
+                            Combina movimientos en diferentes partes del cuerpo con timing independiente
+                        </div>
+                    </div>
+                </div>
+
+                <div id="exerciseInstructions" style="display: none;">
+                    <div class="calculator-results mt-3">
+                        <h6 style="color: var(--primary-color); text-align: center;">🎯 Ejercicio Activo</h6>
+                        <div id="exerciseContent"></div>
+                        <div class="text-center mt-3">
+                            <button class="btn-primary-custom" onclick="completeExercise()">
+                                ✅ Completar (2 min)
+                            </button>
+                            <button class="btn-primary-custom" onclick="resetExercise()">
+                                🔄 Cambiar Ejercicio
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playlist Builder -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🎧 Constructor de Playlists Estratégicas</h2>
+                <p class="section-description">
+                    Crea secuencias musicales perfectamente estructuradas para diferentes tipos de shows y momentos específicos.
+                </p>
+            </div>
+
+            <div class="playlist-builder">
+                <h5 style="color: var(--primary-color); margin-bottom: 1.5rem;">Construye tu playlist temática:</h5>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <button class="btn-primary-custom w-100" onclick="loadPlaylistTemplate('seductive')">
+                            🌹 Playlist Seductora
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn-primary-custom w-100" onclick="loadPlaylistTemplate('energetic')">
+                            ⚡ Playlist Energética
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <button class="btn-primary-custom w-100" onclick="loadPlaylistTemplate('versatile')">
+                            🌈 Playlist Versátil
+                        </button>
+                    </div>
+                </div>
+
+                <div id="playlistContainer">
+                    <div class="text-center py-4" style="color: var(--text-muted);">
+                        Selecciona un template de playlist para comenzar
+                    </div>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button class="btn-primary-custom" onclick="analyzePlaylist()">
+                        📊 Analizar Flujo
+                    </button>
+                    <button class="btn-primary-custom" onclick="exportPlaylist()">
+                        📤 Exportar Lista
+                    </button>
+                    <button class="btn-primary-custom" onclick="optimizePlaylist()">
+                        🎯 Optimizar BPM
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">📊 Calculadora de Impacto Musical</h2>
+                <p class="section-description">
+                    Proyecta el ROI de perfeccionar tu sincronización musical y su impacto en engagement, retención e ingresos.
+                </p>
+            </div>
+
+            <div class="calculator-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="calculator-input">
+                            <label for="musicSkillLevel">Nivel actual de sincronización musical:</label>
+                            <select id="musicSkillLevel" onchange="calculateMusicImpact()">
+                                <option value="1.0">Básico - Sin sincronización consciente</option>
+                                <option value="1.3">Intermedio - Algunos acentos</option>
+                                <option value="1.6" selected>Avanzado - Timing consistente</option>
+                                <option value="2.1">Master - Sincronización perfecta</option>
+                                <option value="2.6">Virtuoso - Interpretación musical</option>
+                            </select>
+                        </div>
+                        <div class="calculator-input">
+                            <label for="genreVariety">Variedad de géneros dominados:</label>
+                            <select id="genreVariety" onchange="calculateMusicImpact()">
+                                <option value="1.1">Limitada - 1-2 géneros</option>
+                                <option value="1.3" selected>Moderada - 3-4 géneros</option>
+                                <option value="1.6">Amplia - 5-6 géneros</option>
+                                <option value="2.0">Completa - 7+ géneros</option>
+                            </select>
+                        </div>
+                        <div class="calculator-input">
+                            <label for="practiceFrequency">Frecuencia de práctica musical (horas/semana):</label>
+                            <input type="number" id="practiceFrequency" value="8" min="1" max="40" oninput="calculateMusicImpact()">
+                        </div>
+                        <div class="calculator-input">
+                            <label for="currentRetention">Retención actual promedio (%):</label>
+                            <input type="number" id="currentRetention" value="68" min="20" max="95" oninput="calculateMusicImpact()">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="calculator-results" id="musicResults">
+                            <h5 style="color: var(--primary-color); text-align: center; margin-bottom: 1.5rem;">
+                                🎵 Proyección Musical
+                            </h5>
+                            <div class="result-item">
+                                <span class="result-label">Mejora en sincronización:</span>
+                                <span class="result-value" id="syncImprovement">+0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Incremento en retención:</span>
+                                <span class="result-value" id="retentionIncrease">+0%</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">Tiempo para dominio:</span>
+                                <span class="result-value" id="masteryTime">0 semanas</span>
+                            </div>
+                            <div class="result-item">
+                                <span class="result-label">ROI mensual estimado:</span>
+                                <span class="result-value" id="monthlyMusicROI">+$0</span>
+                            </div>
+                            <div style="background: var(--purple-light); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                <div class="text-center">
+                                    <div style="font-size: 1.2rem; font-weight: 600; color: var(--primary-color);">Factor Musical</div>
+                                    <div style="font-size: 2rem; font-weight: 700; color: var(--success-green);" id="musicalFactor">1.0x</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🌟 Virtuosas de la Sincronización</h2>
+                <p class="section-description">
+                    Modelos que dominaron el arte de la sincronización musical y transformaron completamente la experiencia de sus shows.
+                </p>
+            </div>
+
+            <div class="success-story">
+                <div class="story-header">
+                    <div class="story-avatar">RM</div>
+                    <div class="story-info">
+                        <h4>Rita Morales - @RhythmQueen_RM</h4>
+                        <p>2.4 años de experiencia | Especialista en sincronización musical</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-dark); font-style: italic; margin-bottom: 1.5rem;">
+                    "Implementé mi metodología de 'Entrenamiento Musical Integrado' entrenando 2 horas diarias con metrónomo y 6 géneros diferentes. Estudié teoría musical básica para entender estructura de canciones y desarrollé mi biblioteca de 45 tracks perfectamente sincronizadas con mis rutinas. Cada movimiento está mapeado al BPM específico. Mis usuarios constantemente comentan que mis shows son 'hipnóticos' y 'perfectamente fluidos'. La diferencia con modelos que no entrenan musicalmente es abismal."
+                </p>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">+345%</div>
+                        <div class="metric-label">Tiempo de retención</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">45</div>
+                        <div class="metric-label">Tracks sincronizadas</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">$11,400</div>
+                        <div class="metric-label">Mejor mes</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">96%</div>
+                        <div class="metric-label">Rating 'fluida'</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <div class="story-header">
+                    <div class="story-avatar">JH</div>
+                    <div class="story-info">
+                        <h4>Jade Harrison - @BeatMaster_JH</h4>
+                        <p>1.6 años de experiencia | Especialista en interpretación musical</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-dark); font-style: italic; margin-bottom: 1.5rem;">
+                    "Mi revolución llegó cuando comencé a 'interpretar' la música en lugar de solo moverme con ella. Estudio cada track que uso - identifico intro, verso, coro, bridge, outro y adapto mi energía y movimientos específicamente a cada sección. También desarrollo 'firmas rítmicas' - patrones únicos de movimiento que son reconocibles como míos. Mis shows tienen la estructura de conciertos profesionales. Los usuarios dicen que parezco 'una con la música'."
+                </p>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">+278%</div>
+                        <div class="metric-label">Engagement musical</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">8</div>
+                        <div class="metric-label">Géneros dominados</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">43 min</div>
+                        <div class="metric-label">Duración promedio</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">+189%</div>
+                        <div class="metric-label">Tips durante beats</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <div class="story-header">
+                    <div class="story-avatar">TC</div>
+                    <div class="story-info">
+                        <h4>Thalia Cruz - @TempoGoddess_TC</h4>
+                        <p>3.1 años de experiencia | Top 0.3% en su plataforma</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-dark); font-style: italic; margin-bottom: 1.5rem;">
+                    "Llevé la sincronización musical al siguiente nivel creando 'paisajes sonoros emocionales' - secuencias de 60-90 minutos donde cada track está estratégicamente elegido para crear una jornada emocional completa. Tengo playlists temáticas para diferentes tipos de audiencia: 'Seduction Journey' (jazz + R&B), 'Energy Storm' (electrónica progresiva), 'Intimate Stories' (ambient + clásica moderna). Mis usuarios reservan tiempo específico para mis 'conciertos'. Mi top spender dice que mis shows son 'experiencias transformadoras'."
+                </p>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">$17,800</div>
+                        <div class="metric-label">Récord mensual</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">12</div>
+                        <div class="metric-label">Playlists temáticas</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">Top 0.3%</div>
+                        <div class="metric-label">Ranking musical</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">+567%</div>
+                        <div class="metric-label">Crecimiento anual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Techniques Lab -->
+        <div class="lab-section">
+            <div class="section-header">
+                <h2 class="section-title">🚀 Laboratorio de Técnicas Virtuosas</h2>
+                <p class="section-description">
+                    Técnicas de nivel maestro para la interpretación musical que transforman la sincronización en arte puro.
+                </p>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('musical-interpretation')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-magic"></i></div>
+                    <div class="card-title">Interpretación Musical Avanzada</div>
+                    <div class="card-toggle" id="toggle-musical-interpretation"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-musical-interpretation">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🎨 Técnicas de Interpretación</h6>
+                            <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;">
+                                <strong>Mapeado Emocional:</strong>
+                                <p class="small">Identifica el "color emocional" de cada sección musical y adapta tu expresión corporal consecuentemente</p>
+                                
+                                <strong>Dinámicas Contrastantes:</strong>
+                                <p class="small">Usa forte/piano (fuerte/suave) corporal siguiendo la intensidad musical</p>
+                                
+                                <strong>Respiración Musical:</strong>
+                                <p class="small">Sincroniza tu respiración con las frases musicales para crear flow natural</p>
+                                
+                                <strong>Uso de Silencios:</strong>
+                                <p class="small">Los espacios sin sonido son tan importantes como los beats - úsalos para pausas dramáticas</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h6 style="color: var(--primary-color);">🎼 Estructura Musical Profesional</h6>
+                            <div style="background: var(--purple-light); padding: 1.5rem; border-radius: 15px;">
+                                <p><strong>Intro (0-16 beats):</strong> Establecimiento sutil del tono</p>
+                                <p><strong>Verso (16-32 beats):</strong> Construcción gradual de energía</p>
+                                <p><strong>Pre-Coro (8-16 beats):</strong> Tensión y anticipación</p>
+                                <p><strong>Coro (16-32 beats):</strong> Liberación y clímax emocional</p>
+                                <p><strong>Bridge (16-24 beats):</strong> Contraste y renovación</p>
+                                <p><strong>Outro (8-16 beats):</strong> Resolución satisfactoria</p>
+                                
+                                <div style="background: white; padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                                    <p class="small"><strong>MAESTRÍA:</strong> Cada sección musical requiere una paleta diferente de movimientos y energía.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('rhythmic-complexity')">
+                <div class="card-header">
+                    <div class="card-icon"><i class="fas fa-infinity"></i></div>
+                    <div class="card-title">Complejidad Rítmica y Polirritmia</div>
+                    <div class="card-toggle" id="toggle-rhythmic-complexity"><i class="fas fa-chevron-down"></i></div>
+                </div>
+                <div class="card-details" id="details-rhythmic-complexity">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6 style="color: var(--primary-color);">🌀 Técnicas de Complejidad Rítmica</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; height: 100%;">
+                                        <div style="text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: var(--info-blue);">🎯</div>
+                                        <strong>Polirritmia Corporal:</strong>
+                                        <p class="small">Cabeza en tempo base, brazos en doble tiempo, caderas en half-time - crea texturas rítmicas complejas</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; height: 100%;">
+                                        <div style="text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: var(--warning-orange);">🌊</div>
+                                        <strong>Syncopation Corporal:</strong>
+                                        <p class="small">Acentúa off-beats con movimientos inesperados que crean tensión rítmica hipnótica</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem; height: 100%;">
+                                        <div style="text-align: center; font-size: 2rem; margin-bottom: 0.5rem; color: var(--success-green);">⚡</div>
+                                        <strong>Metric Modulation:</strong>
+                                        <p class="small">Cambia percepción del beat sin cambiar la música - 4/4 se siente como 3/4 con movimientos específicos</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="background: var(--primary-color); color: white; padding: 1.5rem; border-radius: 15px; text-align: center;">
+                                <h6>🎯 Objetivo de la Complejidad Rítmica</h6>
+                                <p class="mb-0">Crear capas de sofisticación musical que mantengan a tu audiencia descubriendo nuevos detalles en cada viewing, generando adicción a la complejidad sutil.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="lab-section">
+            <div class="section-header text-center">
+                <h2 class="section-title">🎵 Tu Conservatorio Personal</h2>
+                <p class="section-description">
+                    Has completado el entrenamiento más avanzado en sincronización musical. Ahora posees las herramientas para crear experiencias sonoras que trascienden lo visual y se convierten en experiencias multisensoriales memorables.
+                </p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div style="background: var(--gradient-primary); color: white; padding: 2rem; border-radius: 20px; text-align: center;">
+                        <h4>🏆 Habilidades Musicales Desbloqueadas</h4>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>6 Géneros Dominados</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Sincronización BPM</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Interpretación Musical</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>Polirritmia Corporal</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span>Playlists Estratégicas</span>
+                                <span><i class="fas fa-check-circle"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; padding: 2rem; border-radius: 20px; border: 2px solid var(--primary-color);">
+                        <h4 style="color: var(--primary-color); text-align: center;">💰 Proyección Musical</h4>
+                        <div class="text-center mt-3">
+                            <div style="font-size: 2rem; font-weight: 700; color: var(--success-green);">+278%</div>
+                            <p style="color: var(--text-muted);">Incremento en sincronización</p>
+                            <div style="font-size: 1.5rem; font-weight: 600; color: var(--primary-color); margin-top: 1rem;">$20,000+</div>
+                            <p style="color: var(--text-muted);">Potencial mensual con dominio musical</p>
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 10px; margin-top: 1rem;">
+                            <p class="small text-center" style="color: var(--text-dark);">
+                                <strong>PRÁCTICA:</strong> 2 horas diarias con metrónomo durante 8 semanas para automatizar sincronización perfecta.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn-primary-custom" onclick="window.location.reload()">
+                    🔄 Revisar Todo el Conservatorio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let metronomeActive = false;
+        let metronomeInterval = null;
+        let currentBPM = 120;
+        let currentExercise = null;
+        let currentPlaylist = [];
+
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(`details-${cardId}`);
+            const toggle = document.getElementById(`toggle-${cardId}`);
+            const card = details.closest('.interactive-card');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                toggle.classList.remove('rotated');
+                card.classList.remove('expanded');
+            } else {
+                details.classList.add('expanded');
+                toggle.classList.add('rotated');
+                card.classList.add('expanded');
+            }
+        }
+
+        // Select genre
+        function selectGenre(genre) {
+            // Remove selected and playing class from all cards
+            document.querySelectorAll('.genre-card').forEach(card => {
+                card.classList.remove('selected', 'playing');
+            });
+            
+            // Add selected and playing class to clicked card
+            const selectedCard = event.target.closest('.genre-card');
+            selectedCard.classList.add('selected', 'playing');
+            
+            // Remove playing animation after 4 seconds
+            setTimeout(() => {
+                selectedCard.classList.remove('playing');
+            }, 4000);
+        }
+
+        // Toggle metronome
+        function toggleMetronome() {
+            const circle = document.getElementById('metronomeCircle');
+            const display = document.getElementById('metronomeDisplay');
+            
+            if (metronomeActive) {
+                stopMetronome();
+            } else {
+                startMetronome();
+            }
+        }
+
+        // Start metronome
+        function startMetronome() {
+            metronomeActive = true;
+            const circle = document.getElementById('metronomeCircle');
+            const display = document.getElementById('metronomeDisplay');
+            
+            circle.classList.add('active');
+            display.textContent = currentBPM;
+            
+            const interval = 60000 / currentBPM; // ms per beat
+            metronomeInterval = setInterval(() => {
+                // Visual beat indication
+                circle.style.transform = 'scale(1.1)';
+                setTimeout(() => {
+                    circle.style.transform = 'scale(1)';
+                }, 100);
+            }, interval);
+        }
+
+        // Stop metronome
+        function stopMetronome() {
+            metronomeActive = false;
+            const circle = document.getElementById('metronomeCircle');
+            const display = document.getElementById('metronomeDisplay');
+            
+            circle.classList.remove('active');
+            display.textContent = 'START';
+            
+            if (metronomeInterval) {
+                clearInterval(metronomeInterval);
+                metronomeInterval = null;
+            }
+        }
+
+        // Adjust BPM
+        function adjustBPM(change) {
+            currentBPM = Math.max(60, Math.min(200, currentBPM + change));
+            document.getElementById('bpmDisplay').textContent = currentBPM;
+            
+            // Restart metronome with new BPM if active
+            if (metronomeActive) {
+                stopMetronome();
+                startMetronome();
+            }
+        }
+
+        // Start exercise
+        function startExercise(exerciseType) {
+            currentExercise = exerciseType;
+            
+            // Remove active class from all cards
+            document.querySelectorAll('.exercise-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected card
+            event.target.closest('.exercise-card').classList.add('active');
+            
+            // Show exercise instructions
+            const exercises = {
+                pulse: {
+                    title: '💓 Ejercicio: Pulso Corporal',
+                    instructions: '1. Activa el metrónomo a 120 BPM\n2. Contrae suavemente abdomen en cada beat\n3. Mantén respiración natural\n4. Añade pulsos en hombros cada 4 beats'
+                },
+                flow: {
+                    title: '🌊 Ejercicio: Flow Continuo',
+                    instructions: '1. Inicia movimiento ondulante lento\n2. Mantén fluidez sin parar en beats\n3. Cambia dirección cada 8 beats\n4. Siente el tempo, no lo fuerces'
+                },
+                accents: {
+                    title: '⚡ Ejercicio: Acentos Dinámicos',
+                    instructions: '1. Movimiento base suave y continuo\n2. Acentúa beats 1 y 3 con poses\n3. Usa pausas dramáticas en beat 1\n4. Contrasta movimiento vs quietud'
+                },
+                polyrhythm: {
+                    title: '🎭 Ejercicio: Polirritmia',
+                    instructions: '1. Cabeza: tempo base (1, 2, 3, 4)\n2. Brazos: doble tiempo (1-y-2-y-3-y-4-y)\n3. Caderas: half-time (1, -, 3, -)\n4. Mantén independencia de movimientos'
+                }
+            };
+            
+            const exercise = exercises[exerciseType];
+            document.getElementById('exerciseContent').innerHTML = `
+                <h6 style="color: var(--primary-color);">${exercise.title}</h6>
+                <pre style="white-space: pre-line; font-family: inherit;">${exercise.instructions}</pre>
+            `;
+            
+            document.getElementById('exerciseInstructions').style.display = 'block';
+            document.getElementById('exerciseInstructions').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Complete exercise
+        function completeExercise() {
+            alert(`✅ ¡Ejercicio completado!\n\nTipo: ${currentExercise}\nBPM: ${currentBPM}\nDuración: 2 minutos\n\nProgreso guardado en tu perfil de entrenamiento.`);
+        }
+
+        // Reset exercise
+        function resetExercise() {
+            document.querySelectorAll('.exercise-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            document.getElementById('exerciseInstructions').style.display = 'none';
+            currentExercise = null;
+        }
+
+        // Load playlist template
+        function loadPlaylistTemplate(type) {
+            const templates = {
+                seductive: [
+                    { num: 1, title: 'Smooth Operator', details: 'Jazz • 95 BPM', duration: '4:20' },
+                    { num: 2, title: 'Nocturne Dreams', details: 'Neo-Classical • 78 BPM', duration: '5:15' },
+                    { num: 3, title: 'Velvet Touch', details: 'R&B • 88 BPM', duration: '3:45' },
+                    { num: 4, title: 'Midnight Whispers', details: 'Ambient • 72 BPM', duration: '6:30' },
+                    { num: 5, title: 'Silk & Steel', details: 'Jazz Fusion • 102 BPM', duration: '4:50' }
+                ],
+                energetic: [
+                    { num: 1, title: 'Electric Pulse', details: 'Electronic • 128 BPM', duration: '3:30' },
+                    { num: 2, title: 'Neon Nights', details: 'Synthwave • 140 BPM', duration: '4:15' },
+                    { num: 3, title: 'Bass Revolution', details: 'EDM • 132 BPM', duration: '3:20' },
+                    { num: 4, title: 'Digital Storm', details: 'Techno • 136 BPM', duration: '5:00' },
+                    { num: 5, title: 'Future Shock', details: 'Electronic • 144 BPM', duration: '3:45' }
+                ],
+                versatile: [
+                    { num: 1, title: 'Warm Up Flow', details: 'Ambient • 80 BPM', duration: '2:30' },
+                    { num: 2, title: 'Latin Heat', details: 'Reggaeton • 110 BPM', duration: '3:45' },
+                    { num: 3, title: 'Jazz Interlude', details: 'Smooth Jazz • 95 BPM', duration: '4:20' },
+                    { num: 4, title: 'Electronic Build', details: 'Progressive • 125 BPM', duration: '4:10' },
+                    { num: 5, title: 'Grand Finale', details: 'Orchestral • 85 BPM', duration: '5:30' }
+                ]
+            };
+            
+            currentPlaylist = templates[type];
+            const container = document.getElementById('playlistContainer');
+            
+            container.innerHTML = currentPlaylist.map(track => `
+                <div class="playlist-track" onclick="selectTrack(${track.num})">
+                    <div class="track-number">${track.num}</div>
+                    <div class="track-info">
+                        <div class="track-title">${track.title}</div>
+                        <div class="track-details">${track.details}</div>
+                    </div>
+                    <div class="track-duration">${track.duration}</div>
+                </div>
+            `).join('');
+        }
+
+        // Select track
+        function selectTrack(trackNum) {
+            // Remove selected class from all tracks
+            document.querySelectorAll('.playlist-track').forEach(track => {
+                track.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked track
+            event.target.closest('.playlist-track').classList.add('selected');
+        }
+
+        // Analyze playlist
+        function analyzePlaylist() {
+            if (currentPlaylist.length === 0) {
+                alert('Carga una playlist primero');
+                return;
+            }
+            
+            const totalDuration = currentPlaylist.reduce((sum, track) => {
+                const [min, sec] = track.duration.split(':').map(Number);
+                return sum + min + sec/60;
+            }, 0);
+            
+            alert(`📊 Análisis de Playlist:\n\nTracks: ${currentPlaylist.length}\nDuración total: ${Math.round(totalDuration)} minutos\nFlujo: Variado\nOptimización: 87%\n\nRecomendación: Excelente progresión de BPM y variedad de géneros.`);
+        }
+
+        // Export playlist
+        function exportPlaylist() {
+            if (currentPlaylist.length === 0) {
+                alert('Carga una playlist primero');
+                return;
+            }
+            
+            alert('📤 Playlist exportada!\n\nFormatos disponibles:\n• Spotify playlist link\n• Apple Music playlist\n• YouTube Music playlist\n• Texto para copiar\n\nRevisа tu email para los enlaces.');
+        }
+
+        // Optimize playlist
+        function optimizePlaylist() {
+            if (currentPlaylist.length === 0) {
+                alert('Carga una playlist primero');
+                return;
+            }
+            
+            alert('🎯 Playlist optimizada!\n\nAjustes realizados:\n• BPM progresión suavizada\n• Transiciones mejoradas\n• Géneros rebalanceados\n• Duración total optimizada\n\nNueva compatibilidad: 94%');
+        }
+
+        // Calculate music impact
+        function calculateMusicImpact() {
+            const skillLevel = parseFloat(document.getElementById('musicSkillLevel').value) || 1.6;
+            const variety = parseFloat(document.getElementById('genreVariety').value) || 1.3;
+            const practice = parseFloat(document.getElementById('practiceFrequency').value) || 8;
+            const retention = parseFloat(document.getElementById('currentRetention').value) || 68;
+            
+            // Calculate improvements
+            const practiceBonus = Math.min(1.5, practice / 20);
+            const totalMultiplier = skillLevel * variety * practiceBonus;
+            
+            const syncImprovement = (totalMultiplier - 1) * 95;
+            const retentionIncrease = retention * (totalMultiplier - 1) * 0.8;
+            const masteryWeeks = Math.max(4, Math.round(32 / (practice * skillLevel)));
+            const monthlyROI = Math.round(syncImprovement * 125 + retentionIncrease * 85);
+            const musicalFactor = totalMultiplier;
+            
+            // Update display
+            document.getElementById('syncImprovement').textContent = `+${syncImprovement.toFixed(1)}%`;
+            document.getElementById('retentionIncrease').textContent = `+${retentionIncrease.toFixed(1)}%`;
+            document.getElementById('masteryTime').textContent = `${masteryWeeks} semanas`;
+            document.getElementById('monthlyMusicROI').textContent = `+$${monthlyROI}`;
+            document.getElementById('musicalFactor').textContent = `${musicalFactor.toFixed(2)}x`;
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+            calculateMusicImpact();
+            
+            // Update date every minute
+            setInterval(updateDate, 60000);
+            
+            // Animate progress bars on load
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 500);
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

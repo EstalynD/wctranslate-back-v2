@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 OBS Academy - Dominio Total de Producción Digital</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #9b59b6;
+            --secondary-color: #8e44ad;
+            --accent-color: #e74c3c;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --info-blue: #17a2b8;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --border-light: #e0e0e0;
+            --obs-gradient: linear-gradient(135deg, #9b59b6 0%, #e74c3c 50%, #fd7e14 100%);
+            --tech-gradient: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #f5576c);
+            --production-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            --mastery-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .wc-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: perspective(1000px) rotateY(5deg) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--obs-gradient);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--tech-gradient);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--obs-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 40px rgba(155, 89, 182, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .card-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 0;
+        }
+
+        .card-details.active {
+            max-height: 500px;
+            margin-top: 1rem;
+        }
+
+        /* Calculators */
+        .calculator {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-progress {
+            margin: 1rem 0;
+        }
+
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--obs-gradient);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            font-family: serif;
+            color: var(--primary-color);
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Simulators */
+        .simulator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scenario-card:hover,
+        .scenario-card.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        .scenario-result {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .scenario-result.active {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--mastery-gradient);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(1deg); }
+            66% { transform: translateY(-15px) rotate(-1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .main-subtitle {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .lab-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .interactive-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .wc-header {
+                padding: 0.5rem 0;
+            }
+
+            .wc-logo {
+                font-size: 1.5rem;
+            }
+
+            .lab-section {
+                padding: 1rem;
+            }
+
+            .calculator,
+            .simulator,
+            .success-story {
+                padding: 1.5rem;
+            }
+
+            .insight-card {
+                padding: 1rem;
+            }
+
+            .insight-number {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Touch-friendly elements */
+        .interactive-card,
+        .scenario-card,
+        .card-toggle {
+            min-height: 44px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #000;
+                --secondary-color: #333;
+                --text-muted: #666;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo text-decoration-none">
+                    <i class="fas fa-video me-2"></i>WC Training
+                </a>
+                <div class="wc-stats">
+                    <div class="live-indicator"></div>
+                    <span><strong>12,847</strong> modelos activos</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-4 text-dark">📊 Insights de la Industria 2025</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">89%</div>
+                        <div class="insight-label">Streamers usan OBS como herramienta principal</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">$47K</div>
+                        <div class="insight-label">Ingreso promedio anual de streamers profesionales</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <div class="insight-label">Fallan por no dominar configuración técnica</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 mt-3">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">156%</div>
+                        <div class="insight-label">Crecimiento de streaming profesional en 2024</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">92%</div>
+                        <div class="insight-label">Top streamers dominan OBS completamente</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">4.2x</div>
+                        <div class="insight-label">Mayor retención con producción profesional</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted"><em>Fuente: Creator Economy Report 2025, Streaming Industry Survey</em></p>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🎬 OBS Academy</h1>
+            <p class="main-subtitle">
+                Transforma tu dominio técnico en ventaja competitiva absoluta. Domina el ecosistema completo de producción digital que separa amateurs de profesionales - desde arquitectura fundamental hasta optimización avanzada que genera ingresos reales.
+            </p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <!-- Escenas Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-layer-group"></i>
+                </div>
+                🎯 LAB de Escenas: Arquitectura Modular
+            </div>
+            <p class="mb-4">Domina el sistema organizacional que permite producción profesional escalable. Las escenas son tu vocabulario visual - cada una un universo completo de posibilidades expresivas.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('scenes-details')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🏗️ Configuración de Escenas Multi-Nivel</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="scenes-details">
+                    <p><strong>Implementación CRÍTICA:</strong></p>
+                    <ul>
+                        <li><strong>Escena Principal:</strong> Tu "sala de estar digital" - layouts optimizados para engagement</li>
+                        <li><strong>Escena de Transición:</strong> Momentos de pausa profesionales que mantienen retención</li>
+                        <li><strong>Escena de Trabajo:</strong> Screen sharing optimizado para claridad visual máxima</li>
+                        <li><strong>Escena de Chat:</strong> Configuración específica para interacción directa con audiencia</li>
+                        <li><strong>Escena de Emergencia:</strong> Backup instantáneo para problemas técnicos</li>
+                    </ul>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ Tip Profesional:</strong> Los top streamers tienen mínimo 8-12 escenas configuradas. Cada transición cuenta una historia visual.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('scenes-shortcuts')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>⚡ Sistema de Hotkeys Estratégicos</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="scenes-shortcuts">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Hotkeys ESENCIALES:</h6>
+                            <ul>
+                                <li><kbd>F1-F8</kbd>: Escenas principales</li>
+                                <li><kbd>Ctrl+F1</kbd>: Escena de emergencia</li>
+                                <li><kbd>Space</kbd>: Mute/Unmute rápido</li>
+                                <li><kbd>Ctrl+Shift+S</kbd>: Start/Stop stream</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Hotkeys AVANZADOS:</h6>
+                            <ul>
+                                <li><kbd>Alt+1-5</kbd>: Fuentes específicas</li>
+                                <li><kbd>Ctrl+T</kbd>: Toggle Studio Mode</li>
+                                <li><kbd>Ctrl+R</kbd>: Refresh browser sources</li>
+                                <li><kbd>PageUp/Down</kbd>: Volume adjust</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculadora de Performance -->
+        <section class="calculator">
+            <h3 class="text-center mb-4">💎 Calculadora de Performance Profesional</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Horas de Stream por Semana:</label>
+                    <input type="number" class="calc-input" id="streamHours" placeholder="ej: 25" oninput="calculatePerformance()">
+                    
+                    <label class="form-label">Viewers Promedio:</label>
+                    <input type="number" class="calc-input" id="avgViewers" placeholder="ej: 150" oninput="calculatePerformance()">
+                    
+                    <label class="form-label">Donación Promedio ($):</label>
+                    <input type="number" class="calc-input" id="avgDonation" placeholder="ej: 5.50" oninput="calculatePerformance()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result">
+                        <div class="result-value" id="monthlyEarnings">$0</div>
+                        <div>Ingresos Mensuales Estimados</div>
+                        <div class="mt-2">
+                            <small id="performanceAnalysis">Ingresa tus datos para ver tu potencial</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fuentes Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+                🎨 LAB de Fuentes: Componentes Modulares
+            </div>
+            <p class="mb-4">Cada fuente es un módulo independiente con propiedades manipulables. Domina la composición visual que genera engagement y retención superior.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('sources-types')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>📹 Tipos de Fuentes Críticas</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="sources-types">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Fuentes BÁSICAS:</h6>
+                            <ul>
+                                <li><strong>Video Capture Device:</strong> Cámara principal/secundaria</li>
+                                <li><strong>Display Capture:</strong> Screen sharing completo</li>
+                                <li><strong>Window Capture:</strong> Aplicaciones específicas</li>
+                                <li><strong>Image:</strong> Overlays, logos, gráficos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Fuentes AVANZADAS:</h6>
+                            <ul>
+                                <li><strong>Browser Source:</strong> Widgets, chat, alerts</li>
+                                <li><strong>Media Source:</strong> Videos, música, soundbites</li>
+                                <li><strong>Text (GDI+):</strong> Información dinámica</li>
+                                <li><strong>Color Source:</strong> Backgrounds, separadores</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('sources-layering')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🏗️ Sistema de Capas Profesional</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="sources-layering">
+                    <div class="alert alert-info">
+                        <h6>JERARQUÍA VISUAL ÓPTIMA (de arriba hacia abajo):</h6>
+                        <ol>
+                            <li><strong>Alerts & Notificaciones</strong> - Máxima prioridad visual</li>
+                            <li><strong>Chat Overlay</strong> - Interacción directa</li>
+                            <li><strong>Webcam</strong> - Conexión personal</li>
+                            <li><strong>Game/Content</strong> - Contenido principal</li>
+                            <li><strong>Overlays Informativos</strong> - Datos complementarios</li>
+                            <li><strong>Background/Música</strong> - Ambiente base</li>
+                        </ol>
+                    </div>
+                    <p><strong>⚡ Regla Profesional:</strong> Nunca más de 6-8 fuentes visibles simultáneamente para mantener claridad visual.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simulador de Configuración -->
+        <section class="simulator">
+            <h3 class="text-center mb-4">🎮 Simulador de Configuración de Stream</h3>
+            <p class="text-center mb-4">Selecciona tu tipo de contenido y obtén configuración optimizada instantánea:</p>
+            
+            <div class="scenario-grid">
+                <div class="scenario-card" onclick="selectScenario('gaming')">
+                    <i class="fas fa-gamepad fa-2x mb-2"></i>
+                    <h6>Gaming Stream</h6>
+                    <p>Optimizado para juegos</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('education')">
+                    <i class="fas fa-chalkboard-teacher fa-2x mb-2"></i>
+                    <h6>Educativo</h6>
+                    <p>Tutoriales y enseñanza</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('talk')">
+                    <i class="fas fa-microphone fa-2x mb-2"></i>
+                    <h6>Talk Show</h6>
+                    <p>Conversación y entrevistas</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('creative')">
+                    <i class="fas fa-palette fa-2x mb-2"></i>
+                    <h6>Creativo</h6>
+                    <p>Arte y diseño</p>
+                </div>
+            </div>
+
+            <div class="scenario-result" id="scenario-result">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section class="progress-tracker">
+            <h3 class="text-center mb-4">📈 Tracker de Dominio OBS</h3>
+            <p class="text-center mb-4">Tu progreso hacia el dominio técnico completo:</p>
+            
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Configuración de Escenas</span>
+                    <span id="scenes-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="scenes-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Manejo de Fuentes</span>
+                    <span id="sources-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="sources-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Filtros y Efectos</span>
+                    <span id="filters-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="filters-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Configuración Avanzada</span>
+                    <span id="advanced-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="advanced-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg" onclick="updateProgress()" style="background: var(--obs-gradient); border: none; border-radius: 15px; padding: 1rem 2rem;">
+                    🚀 Actualizar Progreso
+                </button>
+            </div>
+        </section>
+
+        <!-- Filtros Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                ✨ LAB de Filtros: Transformaciones Avanzadas
+            </div>
+            <p class="mb-4">Los filtros son multiplicadores de calidad. Cada filtro bien aplicado puede incrementar el valor percibido de tu contenido exponencialmente.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('filters-essential')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🎨 Filtros Esenciales para Profesionales</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="filters-essential">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>FILTROS de AUDIO:</h6>
+                            <ul>
+                                <li><strong>Noise Suppression:</strong> Elimina ruido de fondo (RNNoise)</li>
+                                <li><strong>Gain:</strong> Normaliza volumen de entrada</li>
+                                <li><strong>Compressor:</strong> Controla rango dinámico</li>
+                                <li><strong>Limiter:</strong> Previene picos de audio</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>FILTROS de VIDEO:</h6>
+                            <ul>
+                                <li><strong>Chroma Key:</strong> Green screen profesional</li>
+                                <li><strong>Color Correction:</strong> Ajustes de imagen</li>
+                                <li><strong>Sharpness:</strong> Mejora definición</li>
+                                <li><strong>Image Mask/Blend:</strong> Efectos de composición</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <strong>💡 Setup Óptimo:</strong> Audio: Noise Suppression → Gain → Compressor → Limiter | Video: Color Correction → Sharpness → Chroma Key (si aplica)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Casos de Éxito -->
+        <section class="success-story">
+            <h3 class="text-center mb-4">🏆 Casos de Éxito Verificados</h3>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">347%</div>
+                            <div class="metric-label">Incremento en Viewers</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">$8.2K</div>
+                            <div class="metric-label">Ingresos Mensuales</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>María, Streamer Educativa:</strong> "Implementé el sistema de escenas modulares y configuraciones de audio profesional. En 4 meses pasé de 150 a 682 viewers promedio. La calidad técnica generó confianza que se tradujo en donaciones consistentes."</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">523%</div>
+                            <div class="metric-label">ROI en 6 meses</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">2.1K</div>
+                            <div class="metric-label">Suscriptores Nuevos</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Carlos, Gaming Streamer:</strong> "El dominio completo de filtros y transiciones me diferencia totalmente. Mi setup técnico genera comentarios positivos constantes. Los sponsors ahora me buscan por mi calidad de producción."</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">$15K</div>
+                            <div class="metric-label">Primer Contrato</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">89%</div>
+                            <div class="metric-label">Retención de Audiencia</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Ana, Content Creator:</strong> "Mi 'Academia Personal de Producción' me llevó de amateur a profesional en 3 meses. La diferencia técnica es tan notable que conseguí mi primer contrato corporativo por $15K anuales."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configuración Avanzada Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                ⚙️ LAB de Configuración Avanzada
+            </div>
+            <p class="mb-4">La configuración técnica separa profesionales de amateurs. Cada parámetro optimizado es ventaja competitiva directa.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('encoding-settings')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🎯 Configuración de Encoding Profesional</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="encoding-settings">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>SETTINGS ÓPTIMOS para STREAMING:</h6>
+                            <ul>
+                                <li><strong>Encoder:</strong> x264 (CPU) o NVENC (GPU)</li>
+                                <li><strong>Rate Control:</strong> CBR para estabilidad</li>
+                                <li><strong>Bitrate:</strong> 6000-8000 kbps (1080p 60fps)</li>
+                                <li><strong>Keyframe Interval:</strong> 2 segundos</li>
+                                <li><strong>Profile:</strong> High, Level 4.2</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>SETTINGS para GRABACIÓN:</h6>
+                            <ul>
+                                <li><strong>Encoder:</strong> x264 o Hardware (NVENC/AMF)</li>
+                                <li><strong>Rate Control:</strong> CRF 18-23 para calidad</li>
+                                <li><strong>Format:</strong> MP4 o MKV</li>
+                                <li><strong>Audio:</strong> 192-320 kbps AAC</li>
+                                <li><strong>Preset:</strong> Medium para balance calidad/CPU</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ CRÍTICO:</strong> Test siempre con OBS Studio Mode para preview antes de ir en vivo. Un error técnico puede costar viewers y credibilidad.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('optimization-tips')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🚀 Optimización de Performance</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="optimization-tips">
+                    <h6>OPTIMIZACIONES CRÍTICAS:</h6>
+                    <ul>
+                        <li><strong>Process Priority:</strong> Set OBS to "High" en Task Manager</li>
+                        <li><strong>Scene Collection:</strong> Máximo 10-12 escenas por collection</li>
+                        <li><strong>Browser Sources:</strong> Limita a 3-4 sources activos</li>
+                        <li><strong>Filters:</strong> Usa solo los necesarios, cada filtro consume CPU</li>
+                        <li><strong>Canvas Resolution:</strong> Match tu output resolution exacto</li>
+                        <li><strong>FPS:</strong> 60fps solo si tu content lo justifica (gaming), sino 30fps</li>
+                    </ul>
+                    <div class="alert alert-info mt-3">
+                        <strong>📊 Monitoreo:</strong> View → Stats para CPU usage, dropped frames, y network health en tiempo real.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="final-summary">
+            <h2 class="mb-4">🎓 Tu Imperio Digital Técnico</h2>
+            <p class="lead mb-4">
+                Has completado el sistema más avanzado de dominio OBS disponible. Esta alfabetización técnica es tu diferenciador competitivo permanente - la infraestructura que transforma ideas creativas en experiencias profesionales monetizables.
+            </p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h5>Arquitecto de Producción</h5>
+                    <p>Dominas sistemas modulares que permiten escalabilidad infinita de tu contenido.</p>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h5>Optimizador de Performance</h5>
+                    <p>Tu setup técnico genera ventaja competitiva directa y credibilidad profesional.</p>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h5>Master de Configuración</h5>
+                    <p>Independencia técnica completa - conceptualizas e implementas cualquier visión creativa.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h4 class="text-primary mb-3">🚀 ¡A construir tu imperio de producción digital!</h4>
+                <p class="text-muted">Fecha de dominio: <span id="current-date"></span></p>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle card details
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            const button = details.previousElementSibling.querySelector('.card-toggle i');
+            
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                button.className = 'fas fa-plus';
+            } else {
+                details.classList.add('active');
+                button.className = 'fas fa-minus';
+            }
+        }
+
+        // Performance calculator
+        function calculatePerformance() {
+            const hours = parseFloat(document.getElementById('streamHours').value) || 0;
+            const viewers = parseFloat(document.getElementById('avgViewers').value) || 0;
+            const donation = parseFloat(document.getElementById('avgDonation').value) || 0;
+            
+            // Simplified calculation for demonstration
+            const weeklyEarnings = (viewers * donation * hours * 0.1); // Rough estimate
+            const monthlyEarnings = weeklyEarnings * 4.33;
+            
+            document.getElementById('monthlyEarnings').textContent = `$${monthlyEarnings.toFixed(0)}`;
+            
+            let analysis = '';
+            if (monthlyEarnings > 5000) {
+                analysis = '🔥 ¡Potencial de ingresos EXCEPCIONAL! Estás en el top 5% de streamers.';
+            } else if (monthlyEarnings > 2000) {
+                analysis = '⭐ Excelente potencial. Con optimización técnica puedes alcanzar $5K+/mes.';
+            } else if (monthlyEarnings > 500) {
+                analysis = '📈 Buen inicio. Dominio técnico puede triplicar estos números.';
+            } else if (monthlyEarnings > 0) {
+                analysis = '🌱 Fundación sólida. La configuración profesional puede generar crecimiento exponencial.';
+            } else {
+                analysis = 'Ingresa tus datos para ver tu potencial de ingresos optimizado.';
+            }
+            
+            document.getElementById('performanceAnalysis').textContent = analysis;
+        }
+
+        // Scenario simulator
+        function selectScenario(scenario) {
+            // Remove active class from all cards
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected card
+            event.currentTarget.classList.add('active');
+            
+            const resultDiv = document.getElementById('scenario-result');
+            let content = '';
+            
+            switch(scenario) {
+                case 'gaming':
+                    content = `
+                        <h5>🎮 Configuración Óptima: Gaming Stream</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Escenas Recomendadas:</h6>
+                                <ul>
+                                    <li>Pantalla de Inicio (Logo + Música)</li>
+                                    <li>Gameplay Principal (Game + Webcam)</li>
+                                    <li>Gameplay Full Screen</li>
+                                    <li>Chat Focus (Webcam grande + chat)</li>
+                                    <li>Break Screen (Timer + música)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Settings Críticos:</h6>
+                                <ul>
+                                    <li><strong>Resolution:</strong> 1920x1080 60fps</li>
+                                    <li><strong>Bitrate:</strong> 6000-8000 kbps</li>
+                                    <li><strong>Encoder:</strong> NVENC (GPU)</li>
+                                    <li><strong>Audio:</strong> Game + Mic separados</li>
+                                    <li><strong>Hotkeys:</strong> Scene switching crítico</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>💡 Pro Tip:</strong> Usa Display Capture en lugar de Game Capture para mayor estabilidad con múltiples juegos.
+                        </div>
+                    `;
+                    break;
+                case 'education':
+                    content = `
+                        <h5>📚 Configuración Óptima: Stream Educativo</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Escenas Recomendadas:</h6>
+                                <ul>
+                                    <li>Presentación (Slides + Webcam)</li>
+                                    <li>Screen Share (Full screen content)</li>
+                                    <li>Explicación (Webcam principal)</li>
+                                    <li>Q&A (Chat + Webcam grande)</li>
+                                    <li>Recursos (Enlaces + materiales)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Settings Críticos:</h6>
+                                <ul>
+                                    <li><strong>Resolution:</strong> 1920x1080 30fps</li>
+                                    <li><strong>Bitrate:</strong> 4500-6000 kbps</li>
+                                    <li><strong>Audio:</strong> Noise suppression máximo</li>
+                                    <li><strong>Text:</strong> Fuentes grandes y legibles</li>
+                                    <li><strong>Transitions:</strong> Suaves y profesionales</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                            <strong>🎯 Focus:</strong> Claridad de audio es CRÍTICA. Invierte en micrófono de calidad y configuración de filtros perfecta.
+                        </div>
+                    `;
+                    break;
+                case 'talk':
+                    content = `
+                        <h5>🎙️ Configuración Óptima: Talk Show</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Escenas Recomendadas:</h6>
+                                <ul>
+                                    <li>Intro Show (Logo + música)</li>
+                                    <li>Host Solo (Webcam principal)</li>
+                                    <li>Interview (Dual webcam/screen)</li>
+                                    <li>Audience Q&A (Chat integration)</li>
+                                    <li>Outro (Credits + next episode)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Settings Críticos:</h6>
+                                <ul>
+                                    <li><strong>Resolution:</strong> 1920x1080 30fps</li>
+                                    <li><strong>Audio:</strong> Multiple sources sync</li>
+                                    <li><strong>Lighting:</strong> Professional key light</li>
+                                    <li><strong>Background:</strong> Clean or branded</li>
+                                    <li><strong>Graphics:</strong> Lower thirds, logos</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning mt-3">
+                            <strong>⚡ Esencial:</strong> Audio sync perfecto entre múltiples fuentes. Test exhaustivo antes de cada show.
+                        </div>
+                    `;
+                    break;
+                case 'creative':
+                    content = `
+                        <h5>🎨 Configuración Óptima: Stream Creativo</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Escenas Recomendadas:</h6>
+                                <ul>
+                                    <li>Workspace Overview (Mesa + manos)</li>
+                                    <li>Detail Work (Close-up camera)</li>
+                                    <li>Digital Work (Screen share)</li>
+                                    <li>Process Explanation (Multi-angle)</li>
+                                    <li>Finished Work (Gallery view)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Settings Críticos:</h6>
+                                <ul>
+                                    <li><strong>Cameras:</strong> Multiple angles setup</li>
+                                    <li><strong>Lighting:</strong> Consistent workspace</li>
+                                    <li><strong>Color:</strong> Accurate color balance</li>
+                                    <li><strong>Focus:</strong> Manual camera control</li>
+                                    <li><strong>Timelapse:</strong> Recording capabilities</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>🎯 Pro Setup:</strong> Overhead camera arm + ring light + color-calibrated monitor = professional creative stream.
+                        </div>
+                    `;
+                    break;
+            }
+            
+            resultDiv.innerHTML = content;
+            resultDiv.classList.add('active');
+        }
+
+        // Progress tracker
+        function updateProgress() {
+            const progressBars = [
+                { id: 'scenes', max: 85 },
+                { id: 'sources', max: 78 },
+                { id: 'filters', max: 92 },
+                { id: 'advanced', max: 88 }
+            ];
+            
+            progressBars.forEach(bar => {
+                const progress = Math.min(bar.max, Math.floor(Math.random() * bar.max) + 20);
+                const progressElement = document.getElementById(`${bar.id}-progress`);
+                const percentElement = document.getElementById(`${bar.id}-percent`);
+                
+                setTimeout(() => {
+                    progressElement.style.width = `${progress}%`;
+                    percentElement.textContent = `${progress}%`;
+                }, Math.random() * 1000);
+            });
+        }
+
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
+            
+            // Initialize progress with some random values
+            setTimeout(updateProgress, 1000);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

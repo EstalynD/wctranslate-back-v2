@@ -18,6 +18,10 @@ import { LessonType, LessonStatus, BlockType } from '../schemas/lesson.schema';
 // --- Block Settings DTO (debe estar antes de ContentBlockDto) ---
 export class BlockSettingsDto {
   @IsOptional()
+  @IsString()
+  _id?: string;
+
+  @IsOptional()
   @IsBoolean()
   autoPlay?: boolean;
 
@@ -48,6 +52,10 @@ export class BlockSettingsDto {
 
 // --- Content Block DTO ---
 export class ContentBlockDto {
+  @IsOptional()
+  @IsString()
+  _id?: string;
+
   @IsEnum(BlockType)
   type: BlockType;
 

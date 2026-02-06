@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=3.0">
+  <title>🎭 Creación Impulsada por Audiencia - Masters de la Co-Creación | WC Training</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #a855f7;
+      --secondary-color: #8b5cf6;
+      --accent-color: #c084fc;
+      --creative-magenta: #d946ef;
+      --collaboration-purple: #9333ea;
+      --innovation-pink: #ec4899;
+      --success-green: #10b981;
+      --warning-orange: #f59e0b;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-creative: #faf5ff;
+      --border-light: #e0e0e0;
+      --border-creative: #d8b4fe;
+      --gradient-primary: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #ec4899 100%);
+      --gradient-secondary: linear-gradient(45deg, #8b5cf6 0%, #c084fc 100%);
+      --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --gradient-creative: linear-gradient(135deg, #a855f7 0%, #d946ef 50%, #9333ea 100%);
+      --gradient-collaboration: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #8b5cf6 100%);
+      --shadow-soft: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-medium: 0 15px 40px rgba(168, 85, 247, 0.15);
+      --shadow-strong: 0 25px 50px rgba(168, 85, 247, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #faf5ff 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Floating Background Animation */
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .floating-shapes::before,
+    .floating-shapes::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .floating-shapes::before {
+      width: 300px;
+      height: 300px;
+      background: var(--gradient-creative);
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-shapes::after {
+      width: 220px;
+      height: 220px;
+      background: var(--gradient-collaboration);
+      bottom: 20%;
+      right: 10%;
+      animation-delay: 12s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-30px) rotate(120deg); }
+      66% { transform: translateY(15px) rotate(240deg); }
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 15l10 10-10 10-10-10z'/%3E%3Cpath d='M15 30l10 10-10 10-10-10z'/%3E%3Cpath d='M45 30l10 10-10 10-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: patternMove 26s linear infinite;
+    }
+
+    @keyframes patternMove {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(60px) translateY(60px); }
+    }
+
+    .wc-brand {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin-bottom: 0;
+    }
+
+    .wc-stats {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      margin-right: 5px;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: white;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--creative-magenta);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: var(--gradient-creative);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .insight-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* Main Header */
+    .main-header {
+      padding: 4rem 0;
+      text-align: center;
+      position: relative;
+      background: var(--gradient-collaboration);
+      color: white;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 20l15 15-15 15-15-15z'/%3E%3Cpath d='M20 40l15 15-15 15-15-15z'/%3E%3Cpath d='M60 40l15 15-15 15-15-15z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: backgroundShift 27s ease-in-out infinite;
+    }
+
+    @keyframes backgroundShift {
+      0%, 100% { transform: translateX(0) translateY(0); }
+      25% { transform: translateX(20px) translateY(-12px); }
+      50% { transform: translateX(-15px) translateY(18px); }
+      75% { transform: translateX(12px) translateY(-22px); }
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .main-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: white;
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-medium);
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lab-section:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-strong);
+      border-color: var(--accent-color);
+    }
+
+    .lab-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 6px;
+      height: 100%;
+      background: var(--gradient-creative);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--bg-light);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 0;
+    }
+
+    .section-icon {
+      font-size: 2rem;
+      color: var(--secondary-color);
+    }
+
+    /* Interactive Cards */
+    .interactive-card {
+      background: var(--bg-creative);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      border: 2px solid var(--border-creative);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .interactive-card:hover {
+      transform: translateX(10px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--creative-magenta);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      color: var(--secondary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .card-details.expanded {
+      max-height: 1000px;
+    }
+
+    /* Calculator Sections */
+    .calculator-section {
+      background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--creative-magenta);
+    }
+
+    .calculator-input {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .calculator-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.1);
+    }
+
+    .calc-button {
+      background: var(--gradient-creative);
+      color: white;
+      border: none;
+      border-radius: 15px;
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      width: 100%;
+    }
+
+    .calc-button:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .calc-result {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border-left: 5px solid var(--success-green);
+      min-height: 60px;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Feedback Tracker */
+    .feedback-tracker {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .feedback-item {
+      margin-bottom: 2rem;
+      position: relative;
+    }
+
+    .feedback-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .feedback-bar-container {
+      background: var(--bg-light);
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .feedback-bar {
+      height: 100%;
+      background: var(--gradient-creative);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .feedback-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, transparent 33%, rgba(255,255,255,0.3) 33%, rgba(255,255,255,0.3) 66%, transparent 66%);
+      animation: feedbackShine 2s infinite;
+    }
+
+    @keyframes feedbackShine {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* Creative Stories */
+    .creative-story {
+      background: linear-gradient(135deg, #faf5ff 0%, #e9d5ff 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border-left: 6px solid var(--creative-magenta);
+      position: relative;
+    }
+
+    .creative-story::before {
+      content: '🎭';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 2rem;
+      background: white;
+      padding: 5px 10px;
+      border-radius: 50%;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .story-quote {
+      font-style: italic;
+      font-size: 1.1rem;
+      color: #7c3aed;
+      margin-bottom: 1rem;
+      line-height: 1.7;
+    }
+
+    .story-author {
+      font-weight: bold;
+      color: #5b21b6;
+    }
+
+    .story-metrics {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .metric {
+      text-align: center;
+      background: white;
+      padding: 1rem;
+      border-radius: 15px;
+      min-width: 120px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .metric-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--creative-magenta);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Simulator Section */
+    .simulator-section {
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--success-green);
+    }
+
+    .scenario-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .scenario-option {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover,
+    .scenario-option.selected {
+      border-color: var(--success-green);
+      background: #f0fdf4;
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+    }
+
+    .scenario-results {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      min-height: 150px;
+      border-left: 5px solid var(--success-green);
+    }
+
+    /* Theme Categories Grid */
+    .theme-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .theme-category {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-creative);
+      transition: all 0.3s ease;
+    }
+
+    .theme-category:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-medium);
+      border-color: var(--creative-magenta);
+    }
+
+    .category-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .category-icon {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-right: 0.5rem;
+    }
+
+    .category-title {
+      font-weight: bold;
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    .theme-example {
+      background: var(--bg-creative);
+      border-radius: 10px;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-left: 3px solid var(--creative-magenta);
+      font-style: italic;
+      color: #7c3aed;
+    }
+
+    /* Feedback Process Timeline */
+    .feedback-timeline {
+      position: relative;
+      padding: 2rem 0;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding: 1.5rem 0 1.5rem 3rem;
+      border-left: 3px solid var(--creative-magenta);
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background: var(--creative-magenta);
+      border-radius: 50%;
+      border: 3px solid white;
+    }
+
+    .timeline-content {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow-soft);
+      border-left: 4px solid var(--creative-magenta);
+    }
+
+    .timeline-title {
+      color: var(--creative-magenta);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 1rem;
+      }
+      
+      .lab-section {
+        padding: 1.5rem;
+      }
+      
+      .main-header {
+        padding: 2rem 0;
+      }
+      
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+      
+      .interactive-card:hover {
+        transform: translateY(-5px);
+      }
+      
+      .story-metrics {
+        justify-content: center;
+      }
+      
+      .calc-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .theme-categories {
+        grid-template-columns: 1fr;
+      }
+      
+      .timeline-item {
+        padding-left: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .interactive-card {
+        padding: 1.5rem;
+      }
+      
+      .insight-number {
+        font-size: 2rem;
+      }
+      
+      .metric {
+        min-width: 100px;
+        padding: 0.8rem;
+      }
+      
+      .timeline-item {
+        padding-left: 1.5rem;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (max-width: 768px) {
+      .calc-button,
+      .scenario-option,
+      .interactive-card {
+        min-height: 44px;
+      }
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 3rem 2rem;
+      border-radius: 25px;
+      text-align: center;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M40 20l15 15-15 15-15-15z'/%3E%3Cpath d='M20 40l15 15-15 15-15-15z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: creativeFlow 23s linear infinite;
+    }
+
+    @keyframes creativeFlow {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(80px) translateY(80px); }
+    }
+
+    .summary-title {
+      font-size: 2.5rem;
+      font-weight: bold;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .achievement {
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .achievement-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-shapes"></div>
+
+  <!-- WC Branding Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <h1 class="wc-brand">🎯 WC Training</h1>
+          <p class="wc-stats mb-0">
+            <span class="live-indicator"></span>
+            <strong>12,847</strong> modelos activos • <strong>+1,247</strong> esta semana
+          </p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <p class="mb-0" id="current-date"></p>
+          <small class="text-light">Sistema de Co-Creación y Feedback Avanzado</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="row text-center mb-4">
+        <div class="col-12">
+          <h2 class="mb-3">📊 Co-Creation & Feedback Economy Insights 2025</h2>
+          <p class="text-muted">Datos verificados del Audience-Driven Content & Collaboration Report</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">+267%</div>
+            <div class="insight-label">Incremento en engagement con shows basados en feedback</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">60%</div>
+            <div class="insight-label">Mayor revenue en shows temáticos vs. contenido genérico</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">89%</div>
+            <div class="insight-label">De usuarios valoran ser "colaboradores" en creación</div>
+          </div>
+        </div>
+      </div>
+      <div class="row g-4 mt-2">
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">+$4.7K</div>
+            <div class="insight-label">Incremento promedio mensual con metodología feedback-driven</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">7.2x</div>
+            <div class="insight-label">Mayor retención con usuarios que ven ideas implementadas</div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card">
+            <div class="insight-number">94%</div>
+            <div class="insight-label">De modelos TOP implementan co-creación estructurada</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <header class="main-header">
+    <div class="container">
+      <h1 class="main-title">🎭 Masters de la Creación Impulsada por Audiencia</h1>
+      <p class="main-subtitle">
+        Domina el arte de la co-creación que transforma usuarios en colaboradores valiosos. No seas vulnerable ante 
+        contenido genérico - crea experiencias artesanales personalizadas que literalmente no pueden recibir en ningún otro lugar.
+      </p>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- Lab Section 1: Metodología de Feedback -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">🎯 Lab 1: Metodología de Creación Impulsada por Audiencia</h2>
+        <i class="fas fa-comments section-icon"></i>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('feedback-methodology')">
+        <div class="card-header">
+          <h3 class="card-title">🔥 CRÍTICO: Sistema de Recolección y Análisis de Feedback</h3>
+          <i class="fas fa-chevron-down expand-icon" id="feedback-methodology-icon"></i>
+        </div>
+        <p>Implementa mecanismos estructurados que conviertan sugerencias casuales en experiencias co-creadas que excedan expectativas.</p>
+        
+        <div class="card-details" id="feedback-methodology-details">
+          <div class="mt-3">
+            <h4>🏗️ Proceso de Co-Creación ESENCIAL:</h4>
+            
+            <div class="feedback-timeline">
+              <div class="timeline-item">
+                <div class="timeline-content">
+                  <div class="timeline-title">📝 Fase 1: Recolección Activa</div>
+                  <p><strong>Métodos:</strong> Sesiones de brainstorming, encuestas temáticas, foros de ideas, polls en vivo</p>
+                  <p><strong>Objetivo:</strong> Capturar preferencias expresadas y deseos latentes</p>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-content">
+                  <div class="timeline-title">🔍 Fase 2: Análisis de Patrones</div>
+                  <p><strong>Proceso:</strong> Identificar temas recurrentes, agrupar sugerencias similares, medir nivel de interés</p>
+                  <p><strong>Objetivo:</strong> Encontrar denominadores comunes con máximo potencial</p>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-content">
+                  <div class="timeline-title">🎨 Fase 3: Prototipado Conceptual</div>
+                  <p><strong>Estrategia:</strong> Desarrollar bosquejos de experiencia, validar antes de inversión completa</p>
+                  <p><strong>Objetivo:</strong> Confirmar viabilidad y nivel de entusiasmo real</p>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-content">
+                  <div class="timeline-title">🚀 Fase 4: Implementación Completa</div>
+                  <p><strong>Ejecución:</strong> Desarrollo completo con reconocimiento explícito de fuentes de inspiración</p>
+                  <p><strong>Objetivo:</strong> Entregar experiencia que exceda lo que usuarios podían imaginar</p>
+                </div>
+              </div>
+              
+              <div class="timeline-item">
+                <div class="timeline-content">
+                  <div class="timeline-title">📊 Fase 5: Medición y Iteración</div>
+                  <p><strong>Análisis:</strong> Performance tracking, feedback post-implementación, optimización continua</p>
+                  <p><strong>Objetivo:</strong> Refinar metodología y crear ciclo de mejora continua</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-warning bg-opacity-10 border border-warning rounded-3">
+              <h5>💡 Principios de Co-Creación VITAL:</h5>
+              <p class="mb-2">Tu metodología debe incluir:</p>
+              <ul class="mb-0">
+                <li><strong>Reconocimiento explícito</strong> - creditar fuentes de inspiración durante shows</li>
+                <li><strong>Transformación elevada</strong> - exceder lo que usuarios podían imaginar</li>
+                <li><strong>Calendario estratégico</strong> - balancear feedback-driven con innovaciones propias</li>
+                <li><strong>Validación de comunidad</strong> - hacer sentir colaboradores valiosos</li>
+                <li><strong>Documentación sistemática</strong> - tracking de qué funciona mejor</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('theme-categories')">
+        <div class="card-header">
+          <h3 class="card-title">⚡ Categorías Temáticas de Alto Impacto</h3>
+          <i class="fas fa-chevron-down expand-icon" id="theme-categories-icon"></i>
+        </div>
+        <p>Explora las categorías temáticas más efectivas basadas en data de feedback successful de la industria.</p>
+        
+        <div class="card-details" id="theme-categories-details">
+          <div class="mt-3">
+            <div class="theme-categories">
+              <div class="theme-category">
+                <div class="category-header">
+                  <i class="fas fa-history category-icon"></i>
+                  <h5 class="category-title">🕰️ Épocas Históricas</h5>
+                </div>
+                <p><strong>Potencial:</strong> Nostalgia + educación sensual</p>
+                <div class="theme-example">
+                  "Años 40 vintage: vestuario período, música Glenn Miller, referencias culturales auténticas"
+                </div>
+              </div>
+              
+              <div class="theme-category">
+                <div class="category-header">
+                  <i class="fas fa-book category-icon"></i>
+                  <h5 class="category-title">📚 Fantasías Literarias</h5>
+                </div>
+                <p><strong>Potencial:</strong> Inmersión narrativa + roleplay</p>
+                <div class="theme-example">
+                  "Biblioteca secreta: ambiente académico, sussurros intelectuales, seducción cerebral"
+                </div>
+              </div>
+              
+              <div class="theme-category">
+                <div class="category-header">
+                  <i class="fas fa-globe category-icon"></i>
+                  <h5 class="category-title">🌍 Culturas Exóticas</h5>
+                </div>
+                <p><strong>Potencial:</strong> Escape cultural + misticismo</p>
+                <div class="theme-example">
+                  "Geisha moderna: ceremonia del té sensual, kimonos elegantes, filosofía zen erótica"
+                </div>
+              </div>
+              
+              <div class="theme-category">
+                <div class="category-header">
+                  <i class="fas fa-magic category-icon"></i>
+                  <h5 class="category-title">✨ Mundos Fantásticos</h5>
+                </div>
+                <p><strong>Potencial:</strong> Escapismo total + creatividad</p>
+                <div class="theme-example">
+                  "Hechicera élfica: ambiente místico, pociones de amor, magia erótica interactiva"
+                </div>
+              </div>
+              
+              <div class="theme-category">
+                <div class="category-header">
+                  <i class="fas fa-briefcase category-icon"></i>
+                  <h5 class="category-title">💼 Profesiones Específicas</h5>
+                </div>
+                <p><strong>Potencial:</strong> Roleplay familiar + poder dinámicos</p>
+                <div class="theme-example">
+                  "Profesora universitaria: autoridad intelectual, enseñanza seductiva, campus después de clases"
+                </div>
+              </div>
+              
+              <div class="theme-category">
+                <div class="category-header">
+                  <i class="fas fa-calendar category-icon"></i>
+                  <h5 class="category-title">🎉 Celebraciones Especiales</h5>
+                </div>
+                <p><strong>Potencial:</strong> Timing emocional + festividad</p>
+                <div class="theme-example">
+                  "Nochevieja íntima: countdown personal, champagne sensual, resoluciones eróticas"
+                </div>
+              </div>
+            </div>
+
+            <div class="creative-story mt-4">
+              <div class="story-quote">
+                "Mi metodología de 'Co-Creación Impulsada por Audiencia' transformó todo. Cuando varios usuarios mencionaron fascinación por ambientaciones vintage de los 40s, desarrollé un show completo: vestido de época auténtico, playlist de Glenn Miller, y hasta incorporé jerga de la época. El revenue fue 73% mayor que mis shows regulares. Lo más impactante fue el mensaje de Carlos: 'Ver que tomaste mi idea casual y la transformaste en esta experiencia completa... me hizo sentir como un colaborador valioso, no solo un espectador'."
+              </div>
+              <div class="story-author">— Isabella M., Co-Creation Master</div>
+              <div class="story-metrics">
+                <div class="metric">
+                  <div class="metric-number">+267%</div>
+                  <div class="metric-label">Engagement Shows Temáticos</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">73%</div>
+                  <div class="metric-label">Revenue Boost</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">$8.4K</div>
+                  <div class="metric-label">Monthly Revenue</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section class="calculator-section">
+      <h3>🧮 Calculadora de ROI de Shows Temáticos por Feedback</h3>
+      <p>Proyecta el impacto financiero de implementar tu metodología de co-creación</p>
+      
+      <div class="row g-4">
+        <div class="col-md-6">
+          <label class="form-label"><strong>Shows temáticos planeados por mes:</strong></label>
+          <input type="number" class="calculator-input" id="thematicShows" placeholder="ej: 4" value="4">
+          
+          <label class="form-label"><strong>Revenue promedio show regular ($):</strong></label>
+          <input type="number" class="calculator-input" id="regularShowRevenue" placeholder="ej: 180" value="180">
+          
+          <label class="form-label"><strong>Horas invertidas en desarrollo temático:</strong></label>
+          <input type="number" class="calculator-input" id="developmentTime" placeholder="ej: 6" value="6">
+          
+          <button class="calc-button" onclick="calculateThematicROI()">
+            <i class="fas fa-theater-masks me-2"></i>Calcular Impacto Temático
+          </button>
+        </div>
+        <div class="col-md-6">
+          <div class="calc-result" id="thematicResult">
+            <div class="text-center">
+              <i class="fas fa-chart-pie fa-2x text-muted mb-2"></i>
+              <p class="mb-0 text-muted">Ingresa tus datos para ver la proyección de crecimiento con shows temáticos</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lab Section 2: Implementación y Automatización -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">🤖 Lab 2: Automatización de Feedback Collection</h2>
+        <i class="fas fa-cogs section-icon"></i>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('smart-feedback')">
+        <div class="card-header">
+          <h3 class="card-title">🚀 ESENCIAL: Sistema Inteligente de Feedback Capture</h3>
+          <i class="fas fa-chevron-down expand-icon" id="smart-feedback-icon"></i>
+        </div>
+        <p>Automatiza la recolección y análisis de feedback para identificar oportunidades de co-creación en tiempo real.</p>
+        
+        <div class="card-details" id="smart-feedback-details">
+          <div class="mt-3">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="p-3 bg-info bg-opacity-10 border border-info rounded-3">
+                  <h5>📊 Auto-Collection Tools</h5>
+                  <ul class="mb-0">
+                    <li>Chat keyword analysis automático</li>
+                    <li>Poll integration en múltiples plataformas</li>
+                    <li>Survey automation post-show</li>
+                    <li>Suggestion box digital permanente</li>
+                    <li>Voice-to-text para feedback verbal</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="p-3 bg-success bg-opacity-10 border border-success rounded-3">
+                  <h5>🧠 Pattern Recognition</h5>
+                  <ul class="mb-0">
+                    <li>Trending topic identification</li>
+                    <li>Sentiment analysis de sugerencias</li>
+                    <li>Feasibility scoring automático</li>
+                    <li>User preference clustering</li>
+                    <li>ROI prediction por tema</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 p-3 bg-warning bg-opacity-10 border border-warning rounded-3">
+              <h5>⚙️ Herramientas Recomendadas para Escalabilidad:</h5>
+              <p><strong>Para gestionar feedback de 200+ usuarios:</strong></p>
+              <ul class="mb-0">
+                <li><strong>AI sentiment analysis</strong> - Google Cloud Natural Language API</li>
+                <li><strong>Survey automation</strong> - Typeform + Zapier integrations</li>
+                <li><strong>Chat analysis</strong> - custom bots para keyword detection</li>
+                <li><strong>Trend dashboards</strong> - Google Data Studio visualization</li>
+                <li><strong>Implementation tracking</strong> - Notion databases con automation</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('scaling-cocreation')">
+        <div class="card-header">
+          <h3 class="card-title">📈 Escalabilidad de Co-Creación Multi-Usuario</h3>
+          <i class="fas fa-chevron-down expand-icon" id="scaling-cocreation-icon"></i>
+        </div>
+        <p>Gestiona co-creación con cientos de usuarios manteniendo calidad artesanal y conexión personal.</p>
+        
+        <div class="card-details" id="scaling-cocreation-details">
+          <div class="mt-3">
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="table-dark">
+                  <tr>
+                    <th>Volumen de Feedback</th>
+                    <th>Estrategia</th>
+                    <th>Herramientas</th>
+                    <th>Shows Temáticos/Mes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1-50 sugerencias</strong></td>
+                    <td>Procesamiento manual + selección directa</td>
+                    <td>Sheets + observación personal</td>
+                    <td>2-3 shows temáticos</td>
+                  </tr>
+                  <tr>
+                    <td><strong>51-150 sugerencias</strong></td>
+                    <td>Semi-automated analysis + voting system</td>
+                    <td>Surveys + basic analytics + community voting</td>
+                    <td>4-5 shows temáticos</td>
+                  </tr>
+                  <tr>
+                    <td><strong>151-400 sugerencias</strong></td>
+                    <td>AI-powered pattern recognition + tiered implementation</td>
+                    <td>NLP analysis + automated clustering + VIP co-creation tier</td>
+                    <td>6-8 shows temáticos</td>
+                  </tr>
+                  <tr>
+                    <td><strong>400+ sugerencias</strong></td>
+                    <td>Full automation ecosystem + community governance</td>
+                    <td>Enterprise AI + community moderators + advanced analytics</td>
+                    <td>8-12 shows temáticos</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="creative-story mt-4">
+              <div class="story-quote">
+                "Cuando llegué a 300+ sugerencias mensuales, mi sistema automatizado me salvó. AI analiza todo el feedback, identifica patterns, y me presenta los top 5 temas con mayor potencial cada semana. Ahora produzco 8 shows temáticos mensuales manteniendo 94% satisfaction rate. Mis usuarios se sienten súper valorados porque ven sus ideas implementadas constantemente."
+              </div>
+              <div class="story-author">— Carmen R., Scale Co-Creation Expert</div>
+              <div class="story-metrics">
+                <div class="metric">
+                  <div class="metric-number">300+</div>
+                  <div class="metric-label">Sugerencias/Mes</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">94%</div>
+                  <div class="metric-label">Satisfaction Rate</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-number">$19.7K</div>
+                  <div class="metric-label">Monthly Revenue</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Feedback Progress Tracker -->
+    <section class="feedback-tracker">
+      <h3>📈 Tu Progreso en Implementación de Co-Creación</h3>
+      <p>Trackea tu avance en la construcción del sistema completo de feedback-driven content</p>
+      
+      <div class="feedback-item">
+        <div class="feedback-label">
+          <span>📝 Sistema de Recolección</span>
+          <span id="collection-progress">0%</span>
+        </div>
+        <div class="feedback-bar-container">
+          <div class="feedback-bar" id="collection-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="feedback-item">
+        <div class="feedback-label">
+          <span>🔍 Análisis de Patrones</span>
+          <span id="analysis-progress">0%</span>
+        </div>
+        <div class="feedback-bar-container">
+          <div class="feedback-bar" id="analysis-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="feedback-item">
+        <div class="feedback-label">
+          <span>🎭 Implementación Temática</span>
+          <span id="implementation-progress">0%</span>
+        </div>
+        <div class="feedback-bar-container">
+          <div class="feedback-bar" id="implementation-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="feedback-item">
+        <div class="feedback-label">
+          <span>📊 Medición y Optimización</span>
+          <span id="optimization-progress">0%</span>
+        </div>
+        <div class="feedback-bar-container">
+          <div class="feedback-bar" id="optimization-bar" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-3">
+        <button class="btn btn-outline-primary" onclick="updateFeedbackProgress()">
+          <i class="fas fa-sync-alt me-2"></i>Actualizar Progreso
+        </button>
+      </div>
+    </section>
+
+    <!-- Simulator Section -->
+    <section class="simulator-section">
+      <h3>🎮 Simulador de Estrategias de Co-Creación</h3>
+      <p>Experimenta diferentes niveles de implementación de feedback-driven content y ve resultados proyectados</p>
+      
+      <div class="scenario-selector">
+        <div class="scenario-option" onclick="selectCreativeScenario('basic')">
+          <h5>📝 Básico</h5>
+          <p>Polls ocasionales + implementación selectiva</p>
+        </div>
+        <div class="scenario-option" onclick="selectCreativeScenario('structured')">
+          <h5>🎯 Estructurado</h5>
+          <p>Metodología completa + shows temáticos regulares</p>
+        </div>
+        <div class="scenario-option" onclick="selectCreativeScenario('advanced')">
+          <h5>🚀 Avanzado</h5>
+          <p>AI-powered analysis + ecosystem completo</p>
+        </div>
+      </div>
+      
+      <div class="scenario-results" id="creativeScenarioResults">
+        <div class="text-center">
+          <i class="fas fa-theater-masks fa-2x text-muted mb-3"></i>
+          <p class="text-muted">Selecciona una estrategia arriba para ver la proyección detallada</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lab Section 3: Casos de Éxito Verificados -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">⭐ Lab 3: Casos de Éxito de Co-Creación</h2>
+        <i class="fas fa-trophy section-icon"></i>
+      </div>
+
+      <div class="creative-story">
+        <div class="story-quote">
+          "Mi 'Metodología de Creación Impulsada por Audiencia' me convirtió en la reina de shows temáticos. Implemento 6 shows basados en feedback mensualmente. Mi show vintage años 40 generó $2,400 en una sola sesión - 340% más que mis shows regulares. Los usuarios literalmente planean sus schedules alrededor de mis 'collaboration premieres'. Marco me dijo: 'Siento que co-creamos juntos algo único'."
+        </div>
+        <div class="story-author">— Valentina S., Co-Creation Queen</div>
+        <div class="story-metrics">
+          <div class="metric">
+            <div class="metric-number">+340%</div>
+            <div class="metric-label">Peak Show Revenue</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">6</div>
+            <div class="metric-label">Shows Temáticos/Mes</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">$16.8K</div>
+            <div class="metric-label">Monthly Revenue</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">97%</div>
+            <div class="metric-label">User Satisfaction</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creative-story">
+        <div class="story-quote">
+          "Implementé AI para analizar 400+ sugerencias mensuales. El sistema identifica automáticamente trending themes y me sugiere combinaciones creativas. Mis shows 'Biblioteca Secreta' y 'Geisha Moderna' rompieron todos mis récords. Users comparten mis temáticas en redes sociales como 'experiencias únicas'. Es marketing viral orgánico puro."
+        </div>
+        <div class="story-author">— Sofia K., AI Co-Creation Pioneer</div>
+        <div class="story-metrics">
+          <div class="metric">
+            <div class="metric-number">400+</div>
+            <div class="metric-label">Sugerencias Analizadas</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">+289%</div>
+            <div class="metric-label">Viral Reach</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">$24.3K</div>
+            <div class="metric-label">Monthly Revenue</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="creative-story">
+        <div class="story-quote">
+          "Mi sistema de 'VIP Co-Creation Tier' es increíble. Los top supporters pueden sugerir shows exclusivos solo para ellos. David pagó $800 por un show privado temático 'Profesora Universitaria' que él co-diseñó. Ahora tengo lista de espera de 3 meses para co-creaciones VIP. Es el tier más rentable que he creado."
+        </div>
+        <div class="story-author">— Andrea M., VIP Co-Creation Master</div>
+        <div class="story-metrics">
+          <div class="metric">
+            <div class="metric-number">$800</div>
+            <div class="metric-label">VIP Show Revenue</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">3 meses</div>
+            <div class="metric-label">Waitlist VIP</div>
+          </div>
+          <div class="metric">
+            <div class="metric-number">$31.2K</div>
+            <div class="metric-label">Monthly Revenue</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final Summary -->
+    <section class="final-summary">
+      <h2 class="summary-title">🎭 ¡Tu Sistema de Co-Creación Está Listo!</h2>
+      <p class="lead">
+        Has masterizado el arte de la creación impulsada por audiencia. No eres vulnerable ante contenido genérico - 
+        tienes una metodología que transforma usuarios en colaboradores valiosos creando experiencias artesanales únicas.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement">
+          <div class="achievement-icon">🎭</div>
+          <div class="achievement-title">Maestro de Co-Creación</div>
+          <p>Dominas la transformación de feedback en experiencias que exceden expectativas</p>
+        </div>
+        <div class="achievement">
+          <div class="achievement-icon">🎯</div>
+          <div class="achievement-title">Arquitecto de Experiencias</div>
+          <p>Diseñas shows temáticos que generan validación y sentido de colaboración</p>
+        </div>
+        <div class="achievement">
+          <div class="achievement-icon">🤖</div>
+          <div class="achievement-title">Innovador de Automatización</div>
+          <p>Escalas co-creación con sistemas inteligentes manteniendo toque artesanal</p>
+        </div>
+        <div class="achievement">
+          <div class="achievement-icon">👑</div>
+          <div class="achievement-title">Líder de Comunidad Creativa</div>
+          <p>Creas ecosistemas donde usuarios se sienten co-creadores valorados</p>
+        </div>
+      </div>
+      
+      <div class="mt-4">
+        <h3>🎯 Tu Próximo Paso:</h3>
+        <p class="lead">
+          ¡A construir tu Metodología de Creación Impulsada por Audiencia! Implementa tu primer sistema de 
+          feedback collection y desarrolla tu primer show temático basado en sugerencias. Observa cómo la 
+          co-creación transforma usuarios en colaboradores que experimentan la poderosa validación de ver sus ideas manifestadas.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // Update current date
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+
+    // Toggle card details
+    function toggleDetails(cardId) {
+      const details = document.getElementById(cardId + '-details');
+      const icon = document.getElementById(cardId + '-icon');
+      
+      if (details.classList.contains('expanded')) {
+        details.classList.remove('expanded');
+        icon.style.transform = 'rotate(0deg)';
+      } else {
+        details.classList.add('expanded');
+        icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Calculate Thematic ROI
+    function calculateThematicROI() {
+      const thematicShows = parseInt(document.getElementById('thematicShows').value) || 0;
+      const regularShowRevenue = parseFloat(document.getElementById('regularShowRevenue').value) || 0;
+      const developmentTime = parseFloat(document.getElementById('developmentTime').value) || 0;
+      
+      if (thematicShows && regularShowRevenue && developmentTime) {
+        // Calculations based on industry data
+        const regularMonthlyRevenue = thematicShows * regularShowRevenue;
+        const thematicBoost = 1.60; // 60% more revenue from insights
+        const thematicRevenue = regularMonthlyRevenue * thematicBoost;
+        const monthlyGrowth = thematicRevenue - regularMonthlyRevenue;
+        const annualImpact = monthlyGrowth * 12;
+        const timeROI = monthlyGrowth / (developmentTime * thematicShows); // Per show development time
+        const engagementBoost = 267; // 267% increase from insights
+        
+        const resultHtml = `
+          <div>
+            <h5 class="text-success mb-3">🎭 Proyección Shows Temáticos</h5>
+            <div class="row g-3">
+              <div class="col-6">
+                <strong>Revenue Shows Regulares:</strong><br>
+                <span class="text-primary">$${regularMonthlyRevenue.toLocaleString()}/mes</span>
+              </div>
+              <div class="col-6">
+                <strong>Revenue Shows Temáticos:</strong><br>
+                <span class="text-success">$${thematicRevenue.toLocaleString()}/mes</span>
+              </div>
+              <div class="col-6">
+                <strong>ROI por Hora Desarrollo:</strong><br>
+                <span class="text-info">$${timeROI.toFixed(0)}/hr invertida</span>
+              </div>
+              <div class="col-6">
+                <strong>Engagement Boost:</strong><br>
+                <span class="text-success">+${engagementBoost}%</span>
+              </div>
+              <div class="col-12 text-center">
+                <div class="p-3 bg-success bg-opacity-10 rounded-3 border border-success">
+                  <strong>🎯 Impacto Anual de Co-Creación:</strong><br>
+                  <span class="h4 text-success">$${annualImpact.toLocaleString()}</span><br>
+                  <small>Revenue boost: +60% por show | Retención: +7.2x mejor</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        document.getElementById('thematicResult').innerHTML = resultHtml;
+      }
+    }
+
+    // Update feedback progress bars
+    function updateFeedbackProgress() {
+      const progressItems = [
+        { id: 'collection', max: 87 },
+        { id: 'analysis', max: 74 },
+        { id: 'implementation', max: 91 },
+        { id: 'optimization', max: 68 }
+      ];
+      
+      progressItems.forEach(item => {
+        const randomProgress = Math.floor(Math.random() * item.max) + 13;
+        const bar = document.getElementById(item.id + '-bar');
+        const label = document.getElementById(item.id + '-progress');
+        
+        setTimeout(() => {
+          bar.style.width = randomProgress + '%';
+          label.textContent = randomProgress + '%';
+        }, Math.random() * 500);
+      });
+    }
+
+    // Creative scenario selector
+    function selectCreativeScenario(scenario) {
+      // Remove previous selection
+      document.querySelectorAll('.scenario-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Add selection to clicked option
+      event.target.closest('.scenario-option').classList.add('selected');
+      
+      const scenarios = {
+        basic: {
+          title: '📝 Estrategia Básica de Co-Creación',
+          content: `
+            <h5>📊 Proyección 6 Meses:</h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-primary">+78%</div>
+                  <small>Mejora Engagement</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-success">+$2.4K</div>
+                  <small>Revenue Adicional</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-info">2</div>
+                  <small>Shows Temáticos/Mes</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p><strong>Implementación:</strong> Polls ocasionales, feedback collection manual, implementación selectiva de ideas populares.</p>
+              <p><strong>Esfuerzo:</strong> 4-6 hrs/mes | <strong>Costo:</strong> $0-50 | <strong>Escalabilidad:</strong> Hasta 50 sugerencias</p>
+            </div>
+          `
+        },
+        structured: {
+          title: '🎯 Estrategia Estructurada de Co-Creación',
+          content: `
+            <h5>📊 Proyección 6 Meses:</h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-primary">+156%</div>
+                  <small>Mejora Engagement</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-success">+$6.7K</div>
+                  <small>Revenue Adicional</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-info">4-5</div>
+                  <small>Shows Temáticos/Mes</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p><strong>Implementación:</strong> Metodología completa de 5 fases, pattern analysis, prototipado conceptual, shows temáticos regulares.</p>
+              <p><strong>Esfuerzo:</strong> 8-12 hrs/mes | <strong>Costo:</strong> $100-300 | <strong>Escalabilidad:</strong> Hasta 150 sugerencias</p>
+            </div>
+          `
+        },
+        advanced: {
+          title: '🚀 Sistema Avanzado con AI',
+          content: `
+            <h5>📊 Proyección 6 Meses:</h5>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-primary">+267%</div>
+                  <small>Mejora Engagement</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-success">+$12.8K</div>
+                  <small>Revenue Adicional</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center p-3 border rounded-3">
+                  <div class="h4 text-info">8-10</div>
+                  <small>Shows Temáticos/Mes</small>
+                </div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <p><strong>Implementación:</strong> AI-powered analysis, automated pattern recognition, VIP co-creation tier, community governance, analytics avanzados.</p>
+              <p><strong>Esfuerzo:</strong> 15-20 hrs setup | <strong>Costo:</strong> $500-1200 | <strong>Escalabilidad:</strong> 400+ sugerencias</p>
+            </div>
+          `
+        }
+      };
+      
+      const selectedScenario = scenarios[scenario];
+      document.getElementById('creativeScenarioResults').innerHTML = `
+        <h4>${selectedScenario.title}</h4>
+        ${selectedScenario.content}
+      `;
+    }
+
+    // Initialize
+    updateDateTime();
+    setInterval(updateDateTime, 60000); // Update every minute
+    
+    // Initialize progress on load
+    setTimeout(updateFeedbackProgress, 1000);
+  </script>
+</body>
+</html>

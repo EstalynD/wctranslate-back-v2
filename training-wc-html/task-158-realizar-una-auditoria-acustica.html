@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, minimum-scale=0.5">
+  <title>WC Training - Laboratorio de Auditoría Acústica Avanzada</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #8B5DFF;
+      --secondary-color: #FF6B35;
+      --accent-color: #00D9FF;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc3545;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-dark: #1a1a2e;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #8B5DFF 0%, #FF6B35 100%);
+      --gradient-secondary: linear-gradient(135deg, #00D9FF 0%, #8B5DFF 100%);
+      --gradient-accent: linear-gradient(135deg, #FF6B35 0%, #00D9FF 100%);
+      --gradient-dark: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      --shadow-soft: 0 15px 40px rgba(139, 93, 255, 0.15);
+      --shadow-strong: 0 25px 60px rgba(139, 93, 255, 0.25);
+      --border-radius: 20px;
+      --border-radius-lg: 30px;
+      --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--gradient-dark);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--bg-white);
+      padding: 1rem 0;
+      box-shadow: var(--shadow-soft);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .wc-stats {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem 1rem;
+      background: var(--gradient-secondary);
+      border-radius: 15px;
+      color: white;
+      font-weight: 600;
+      animation: pulse 2s infinite;
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insights-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.05;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%238B5DFF' fill-opacity='0.4'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 20s ease-in-out infinite;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--success-green);
+      color: white;
+      padding: 0.3rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      animation: pulse 1.5s infinite;
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-soft);
+      border-left: 5px solid var(--primary-color);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-primary);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+    }
+
+    /* Main Header */
+    .main-header {
+      padding: 4rem 0;
+      background: var(--gradient-dark);
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2300D9FF' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20s-20-8.954-20-20 8.954-20 20-20 20 8.954 20 20zM0 20c0 11.046 8.954 20 20 20s20-8.954 20-20S31.046 0 20 0 0 8.954 0 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 24s ease-in-out infinite reverse;
+    }
+
+    .main-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: bold;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      background: var(--bg-white);
+      margin: 2rem 0;
+      border-radius: var(--border-radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .lab-section:hover {
+      box-shadow: var(--shadow-strong);
+    }
+
+    .lab-header {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 2rem;
+      position: relative;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .lab-header:hover {
+      transform: translateX(10px);
+    }
+
+    .lab-header h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .lab-content {
+      padding: 2rem;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.6s ease-out;
+    }
+
+    .lab-content.active {
+      max-height: 2000px;
+    }
+
+    .expand-icon {
+      transition: var(--transition);
+      font-size: 1.2rem;
+    }
+
+    .lab-header.active .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    /* Interactive Cards */
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .interactive-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 1.5rem;
+      box-shadow: var(--shadow-soft);
+      border: 2px solid transparent;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-secondary);
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Calculators */
+    .calculator {
+      background: var(--bg-light);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid var(--border-light);
+    }
+
+    .calculator-input {
+      margin-bottom: 1rem;
+    }
+
+    .calculator-input label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .calculator-input input, .calculator-input select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      font-size: 1rem;
+      transition: var(--transition);
+      background: white;
+    }
+
+    .calculator-input input:focus, .calculator-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(139, 93, 255, 0.1);
+    }
+
+    .calculator-result {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      border: 2px solid var(--success-green);
+      display: none;
+    }
+
+    .calculator-result.show {
+      display: block;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    .result-highlight {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--success-green);
+      margin-bottom: 1rem;
+    }
+
+    /* Progress Bars */
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress {
+      height: 12px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      background: var(--gradient-primary);
+      transition: width 2s ease-out;
+      border-radius: 10px;
+    }
+
+    /* Simulators */
+    .simulator {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .scenario-buttons {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .scenario-btn {
+      background: white;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 1rem;
+      border-radius: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .scenario-btn:hover, .scenario-btn.active {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    .scenario-result {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+      display: none;
+    }
+
+    .scenario-result.show {
+      display: block;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    /* Success Stories */
+    .success-stories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .success-card {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-soft);
+      border-left: 5px solid var(--success-green);
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .success-card:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-strong);
+    }
+
+    .success-quote {
+      font-style: italic;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .success-quote::before {
+      content: '"';
+      font-size: 4rem;
+      color: var(--primary-color);
+      position: absolute;
+      top: -1rem;
+      left: -1rem;
+      opacity: 0.3;
+    }
+
+    .success-metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .metric {
+      text-align: center;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 10px;
+    }
+
+    .metric-number {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--success-green);
+    }
+
+    .metric-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-height: 44px;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-strong);
+      color: white;
+    }
+
+    .btn-secondary-custom {
+      background: transparent;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      min-height: 44px;
+    }
+
+    .btn-secondary-custom:hover {
+      background: var(--primary-color);
+      color: white;
+      transform: translateY(-4px);
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      margin-top: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .summary-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23FF6B35' fill-opacity='0.1'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z' fill-rule='evenodd'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float 22s ease-in-out infinite;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin: 3rem 0;
+    }
+
+    .achievement {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 2rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: var(--transition);
+    }
+
+    .achievement:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .wc-brand {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .wc-stats {
+        justify-content: center;
+      }
+
+      .main-header {
+        padding: 2rem 0;
+      }
+
+      .lab-header {
+        padding: 1.5rem;
+      }
+
+      .lab-content {
+        padding: 1.5rem;
+      }
+
+      .interactive-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .success-stories {
+        grid-template-columns: 1fr;
+      }
+
+      .scenario-buttons {
+        grid-template-columns: 1fr;
+      }
+
+      .insights-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .achievement-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 1rem;
+      }
+
+      .calculator {
+        padding: 1rem;
+      }
+
+      .simulator {
+        padding: 1rem;
+      }
+
+      .success-card {
+        padding: 1.5rem;
+      }
+
+      .final-summary {
+        padding: 2rem 0;
+      }
+
+      .btn-primary-custom, .btn-secondary-custom {
+        width: 100%;
+        justify-content: center;
+        padding: 1.2rem;
+      }
+    }
+
+    /* Touch-friendly improvements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card:hover,
+      .insight-card:hover,
+      .success-card:hover,
+      .achievement:hover {
+        transform: none;
+      }
+
+      .btn-primary-custom:hover,
+      .btn-secondary-custom:hover,
+      .scenario-btn:hover {
+        transform: none;
+      }
+
+      .lab-header:hover {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="wc-brand">
+        <div class="wc-logo">
+          <i class="fas fa-microphone-alt"></i> WC TRAINING
+        </div>
+        <div class="wc-stats">
+          <div class="stat-item">
+            <div><strong>12,847</strong></div>
+            <div style="font-size: 0.8rem;">Modelos Activos</div>
+          </div>
+          <div class="stat-item">
+            <div><strong>98.7%</strong></div>
+            <div style="font-size: 0.8rem;">Calidad Audio</div>
+          </div>
+          <div class="stat-item">
+            <div id="current-date"></div>
+            <div style="font-size: 0.8rem;">Live Training</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="insights-bg"></div>
+    <div class="container">
+      <div class="text-center mb-4">
+        <span class="live-indicator">
+          <span class="live-dot"></span>
+          INSIGHTS LIVE 2025
+        </span>
+        <h2 class="mt-3 fw-bold" style="color: var(--text-dark);">📊 Panorama de Calidad Acústica en Streaming</h2>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <div class="insight-number">73%</div>
+          <h5>Fallan por Audio Deficiente</h5>
+          <p class="text-muted mb-0">Los modelos que no realizan auditorías acústicas sistemáticas pierden 73% más clientes por problemas de sonido imperceptibles.</p>
+          <small class="text-primary">Fuente: Creator Economy Report 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">+347%</div>
+          <h5>ROI en Optimización</h5>
+          <p class="text-muted mb-0">Modelos que implementan protocolos de auditoría acústica reportan incrementos promedio de 347% en engagement.</p>
+          <small class="text-primary">Fuente: Audio Quality Study 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">92%</div>
+          <h5>Detección Automatizada</h5>
+          <p class="text-muted mb-0">De los problemas acústicos son completamente imperceptibles al oído humano pero detectables con análisis espectral.</p>
+          <small class="text-primary">Fuente: Acoustic Engineering Journal</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">67%</div>
+          <h5>Abandono por Calidad</h5>
+          <p class="text-muted mb-0">Los usuarios abandonan streams en los primeros 30 segundos si detectan problemas de calidad auditiva.</p>
+          <small class="text-primary">Fuente: User Behavior Analytics 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">$2.3M</div>
+          <h5>Mercado de Herramientas</h5>
+          <p class="text-muted mb-0">El mercado de software de análisis acústico para creators creció 890% en 2024, alcanzando $2.3M.</p>
+          <small class="text-primary">Fuente: TechMarket Research</small>
+        </div>
+        
+        <div class="insight-card">
+          <div class="insight-number">15min</div>
+          <h5>Tiempo Promedio</h5>
+          <p class="text-muted mb-0">Una auditoría acústica profesional completa toma 15 minutos y mejora la calidad percibida en 89%.</p>
+          <small class="text-primary">Fuente: Professional Audio Survey</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="header-bg"></div>
+    <div class="container">
+      <h1 class="main-title">🎯 Laboratorio de Auditoría Acústica Avanzada</h1>
+      <p class="main-subtitle">
+        Domina el arte invisible de la optimización sonora. Transforma tu presencia auditiva con protocolos científicos que detectan y eliminan contaminación acústica imperceptible, construyendo tu imperio de calidad premium.
+      </p>
+      <div class="mt-4">
+        <button class="btn-primary-custom me-3" onclick="scrollToSection('diagnostic-lab')">
+          <i class="fas fa-rocket"></i> ¡Iniciar Diagnóstico Acústico!
+        </button>
+        <button class="btn-secondary-custom" onclick="scrollToSection('success-stories')">
+          <i class="fas fa-chart-line"></i> Ver Casos de Éxito
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="container my-5">
+
+    <!-- Diagnostic Lab Section -->
+    <div class="lab-section" id="diagnostic-lab">
+      <div class="lab-header" onclick="toggleDetails('diagnostic-content')">
+        <h2><i class="fas fa-stethoscope"></i> 🔬 Laboratorio de Diagnóstico Acústico CRÍTICO</h2>
+        <p class="mb-0">Mapeo científico del paisaje sonoro invisible - Detección de frecuencias problemáticas</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="diagnostic-content">
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="calculator">
+              <h4>🎛️ Analizador Espectral Virtual</h4>
+              <p class="text-muted">Simula el análisis de frecuencias problemáticas en tu espacio</p>
+              
+              <div class="calculator-input">
+                <label for="room-size">Tamaño de habitación (m²)</label>
+                <input type="number" id="room-size" placeholder="Ej: 12" min="1" max="100">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="ceiling-height">Altura de techo (m)</label>
+                <input type="number" id="ceiling-height" placeholder="Ej: 2.5" min="1" max="10" step="0.1">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="surface-type">Tipo de superficies predominantes</label>
+                <select id="surface-type">
+                  <option value="">Seleccionar...</option>
+                  <option value="hard">Duras (concreto, vidrio, metal)</option>
+                  <option value="mixed">Mixtas (muebles, cortinas)</option>
+                  <option value="soft">Suaves (alfombras, tapices)</option>
+                </select>
+              </div>
+              
+              <div class="calculator-input">
+                <label for="noise-sources">Fuentes de ruido activas</label>
+                <input type="number" id="noise-sources" placeholder="Ej: 3" min="0" max="20">
+              </div>
+              
+              <button class="btn-primary-custom" onclick="calculateAcoustics()">
+                <i class="fas fa-calculator"></i> Analizar Acústica
+              </button>
+              
+              <div class="calculator-result" id="acoustics-result">
+                <div class="result-highlight" id="acoustics-score"></div>
+                <div id="acoustics-analysis"></div>
+                <div class="progress-tracker mt-3">
+                  <div class="progress-item">
+                    <div class="progress-label">
+                      <span>Reverberación Control</span>
+                      <span id="reverb-score">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" id="reverb-bar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-label">
+                      <span>Aislamiento Acústico</span>
+                      <span id="isolation-score">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" id="isolation-bar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-label">
+                      <span>Claridad Vocal</span>
+                      <span id="clarity-score">0%</span>
+                    </div>
+                    <div class="progress">
+                      <div class="progress-bar" id="clarity-bar" style="width: 0%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-grid">
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-wave-square"></i>
+                </div>
+                <h5>Análisis de Frecuencias</h5>
+                <p>Identifica bandas problemáticas entre 80Hz-8kHz que interfieren con claridad vocal.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Detección de resonancias</li>
+                  <li><i class="fas fa-check text-success"></i> Mapeo de cancelaciones</li>
+                  <li><i class="fas fa-check text-success"></i> Análisis espectral completo</li>
+                </ul>
+              </div>
+              
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-search"></i>
+                </div>
+                <h5>Caza de Ruidos Sistemática</h5>
+                <p>Protocolo para identificar fuentes específicas de contaminación acústica.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Aislamiento de dispositivos</li>
+                  <li><i class="fas fa-check text-success"></i> Grabaciones comparativas</li>
+                  <li><i class="fas fa-check text-success"></i> Documentación sistemática</li>
+                </ul>
+              </div>
+              
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-chart-line"></i>
+                </div>
+                <h5>Medición de RT60</h5>
+                <p>Tiempo de reverberación óptimo para claridad vocal en streaming.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Cálculo automático</li>
+                  <li><i class="fas fa-check text-success"></i> Comparación con estándares</li>
+                  <li><i class="fas fa-check text-success"></i> Recomendaciones precisas</li>
+                </ul>
+              </div>
+              
+              <div class="interactive-card">
+                <div class="card-icon">
+                  <i class="fas fa-microphone"></i>
+                </div>
+                <h5>Posicionamiento Óptimo</h5>
+                <p>Mapeo de puntos dulces acústicos para máxima claridad vocal.</p>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> Zonas de reflexión</li>
+                  <li><i class="fas fa-check text-success"></i> Distancia crítica</li>
+                  <li><i class="fas fa-check text-success"></i> Ángulos optimizados</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optimization Lab Section -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('optimization-content')">
+        <h2><i class="fas fa-tools"></i> ⚡ Laboratorio de Optimización VITAL</h2>
+        <p class="mb-0">Implementación de soluciones científicamente calibradas - Tu arsenal de mejora acústica</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="optimization-content">
+        
+        <div class="simulator">
+          <h4>🎯 Simulador de Escenarios de Optimización</h4>
+          <p class="text-muted">Explora diferentes enfoques de mejora acústica y sus resultados esperados</p>
+          
+          <div class="scenario-buttons">
+            <div class="scenario-btn" onclick="selectScenario('budget')">
+              <i class="fas fa-dollar-sign"></i><br>
+              <strong>Presupuesto Limitado</strong><br>
+              <small>Menos de $100</small>
+            </div>
+            <div class="scenario-btn" onclick="selectScenario('intermediate')">
+              <i class="fas fa-layer-group"></i><br>
+              <strong>Optimización Intermedia</strong><br>
+              <small>$100 - $500</small>
+            </div>
+            <div class="scenario-btn" onclick="selectScenario('professional')">
+              <i class="fas fa-crown"></i><br>
+              <strong>Setup Profesional</strong><br>
+              <small>$500+</small>
+            </div>
+            <div class="scenario-btn" onclick="selectScenario('emergency')">
+              <i class="fas fa-exclamation-triangle"></i><br>
+              <strong>Solución de Emergencia</strong><br>
+              <small>Implementación inmediata</small>
+            </div>
+          </div>
+          
+          <div class="scenario-result" id="scenario-result">
+            <h5 id="scenario-title"></h5>
+            <div id="scenario-content"></div>
+            <div class="mt-3">
+              <strong>Impacto Esperado:</strong>
+              <div class="progress-tracker mt-2">
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Mejora en Claridad</span>
+                    <span id="clarity-improvement">0%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" id="clarity-improvement-bar" style="width: 0%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Reducción de Ruido</span>
+                    <span id="noise-reduction">0%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar" id="noise-reduction-bar" style="width: 0%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-4">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-volume-mute"></i>
+              </div>
+              <h5>Tratamiento Acústico DIY</h5>
+              <p>Soluciones caseras científicamente respaldadas para absorción y difusión.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Paneles de tela y espuma</li>
+                <li><i class="fas fa-check text-success"></i> Trampas de graves en esquinas</li>
+                <li><i class="fas fa-check text-success"></i> Difusores bibliográficos</li>
+                <li><i class="fas fa-check text-success"></i> Alfombras estratégicas</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-filter"></i>
+              </div>
+              <h5>Filtrado Digital Avanzado</h5>
+              <p>Procesamiento en tiempo real para eliminación de frecuencias problemáticas.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> EQ paramétrico quirúrgico</li>
+                <li><i class="fas fa-check text-success"></i> Gates inteligentes</li>
+                <li><i class="fas fa-check text-success"></i> Compresión multibanda</li>
+                <li><i class="fas fa-check text-success"></i> Supresión de ruido AI</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-4">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-cog"></i>
+              </div>
+              <h5>Configuración de Hardware</h5>
+              <p>Optimización de cadena de audio desde captación hasta transmisión.</p>
+              <ul class="list-unstyled">
+                <li><i class="fas fa-check text-success"></i> Ganancia staging óptima</li>
+                <li><i class="fas fa-check text-success"></i> Impedancia matching</li>
+                <li><i class="fas fa-check text-success"></i> Routing de señal limpio</li>
+                <li><i class="fas fa-check text-success"></i> Monitoreo en tiempo real</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Monitoring Lab Section -->
+    <div class="lab-section">
+      <div class="lab-header" onclick="toggleDetails('monitoring-content')">
+        <h2><i class="fas fa-radar"></i> 📡 Laboratorio de Monitoreo Continuo ESENCIAL</h2>
+        <p class="mb-0">Sistemas de vigilancia acústica 24/7 - Detección proactiva de degradación</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content" id="monitoring-content">
+        
+        <div class="calculator">
+          <h4>📊 Calculadora de ROI en Calidad Acústica</h4>
+          <p class="text-muted">Calcula el retorno de inversión de tus mejoras acústicas</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label for="current-earnings">Ingresos mensuales actuales ($)</label>
+                <input type="number" id="current-earnings" placeholder="Ej: 2500" min="0">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="audio-complaints">Quejas de audio por mes</label>
+                <input type="number" id="audio-complaints" placeholder="Ej: 8" min="0">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="stream-hours">Horas de stream por semana</label>
+                <input type="number" id="stream-hours" placeholder="Ej: 25" min="1" max="168">
+              </div>
+            </div>
+            
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label for="investment-amount">Inversión en mejoras ($)</label>
+                <input type="number" id="investment-amount" placeholder="Ej: 300" min="0">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="quality-improvement">Mejora esperada en calidad (%)</label>
+                <input type="number" id="quality-improvement" placeholder="Ej: 85" min="1" max="100">
+              </div>
+              
+              <div class="calculator-input">
+                <label for="retention-improvement">Mejora en retención (%)</label>
+                <input type="number" id="retention-improvement" placeholder="Ej: 40" min="1" max="100">
+              </div>
+            </div>
+          </div>
+          
+          <button class="btn-primary-custom" onclick="calculateROI()">
+            <i class="fas fa-chart-pie"></i> Calcular ROI Completo
+          </button>
+          
+          <div class="calculator-result" id="roi-result">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="text-center">
+                  <div class="result-highlight" id="monthly-gain">$0</div>
+                  <p class="text-muted">Ganancia Mensual Proyectada</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <div class="result-highlight" id="payback-period">0 meses</div>
+                  <p class="text-muted">Período de Recuperación</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="text-center">
+                  <div class="result-highlight" id="annual-roi">0%</div>
+                  <p class="text-muted">ROI Anual</p>
+                </div>
+              </div>
+            </div>
+            <div id="roi-analysis" class="mt-3"></div>
+          </div>
+        </div>
+        
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-heartbeat"></i>
+              </div>
+              <h5>Monitor de Salud Acústica</h5>
+              <p>Vigilancia continua de parámetros críticos de calidad de audio.</p>
+              
+              <div class="progress-tracker mt-3">
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Nivel de Ruido Base</span>
+                    <span class="text-success">-42 dB</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" style="width: 92%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Relación S/N</span>
+                    <span class="text-warning">58 dB</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-warning" style="width: 76%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Distorsión THD</span>
+                    <span class="text-success">0.08%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" style="width: 95%"></div>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Consistencia Temporal</span>
+                    <span class="text-success">97%</span>
+                  </div>
+                  <div class="progress">
+                    <div class="progress-bar bg-success" style="width: 97%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="interactive-card">
+              <div class="card-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <h5>Sistema de Alertas Inteligentes</h5>
+              <p>Notificaciones proactivas ante degradación de calidad acústica.</p>
+              
+              <div class="alert alert-success" role="alert">
+                <i class="fas fa-check-circle"></i> <strong>Todo Normal</strong> - Calidad acústica estable
+              </div>
+              
+              <div class="alert alert-warning" role="alert">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Advertencia</strong> - Incremento de ruido detectado
+              </div>
+              
+              <div class="alert alert-info" role="alert">
+                <i class="fas fa-info-circle"></i> <strong>Sugerencia</strong> - Ajustar ganancia de entrada
+              </div>
+              
+              <ul class="list-unstyled mt-3">
+                <li><i class="fas fa-check text-success"></i> Umbrales personalizables</li>
+                <li><i class="fas fa-check text-success"></i> Alertas por email/SMS</li>
+                <li><i class="fas fa-check text-success"></i> Histórico de eventos</li>
+                <li><i class="fas fa-check text-success"></i> Análisis predictivo</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Stories Section -->
+    <div class="lab-section" id="success-stories">
+      <div class="lab-header" onclick="toggleDetails('success-content')">
+        <h2><i class="fas fa-trophy"></i> 🏆 Casos de Éxito Verificados</h2>
+        <p class="mb-0">Transformaciones reales documentadas - El poder de la auditoría acústica científica</p>
+        <i class="fas fa-chevron-down expand-icon ms-auto"></i>
+      </div>
+      <div class="lab-content active" id="success-content">
+        
+        <div class="success-stories">
+          <div class="success-card">
+            <div class="success-quote">
+              "Implementé el protocolo completo de auditoría acústica de WC Training y los resultados fueron inmediatos. Mi aplicación de análisis espectral reveló un problema de 125Hz que nunca había detectado - una vibración del ventilador de mi PC que creaba un zumbido constante. También descubrí que mi posición habitual generaba cancelación de fase. Después de las correcciones específicas, mis ingresos mensuales aumentaron de $1,800 a $4,200 en solo 6 semanas."
+            </div>
+            <div class="fw-bold text-primary">- Maria Elena, Modelo Premium</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">+133%</div>
+                <div class="metric-label">Incremento Ingresos</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">6 sem</div>
+                <div class="metric-label">Tiempo Logro</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">98%</div>
+                <div class="metric-label">Calidad Final</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$280</div>
+                <div class="metric-label">Inversión Total</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-card">
+            <div class="success-quote">
+              "El simulador de optimización me ayudó a priorizar mis mejoras con presupuesto limitado. Comenzé con $150 y seguí exactamente las recomendaciones del escenario 'Presupuesto Limitado'. Los paneles DIY y el reposicionamiento estratégico eliminaron 89% de mis problemas acústicos. Mis ratings de calidad subieron de 3.2 a 4.8 estrellas, y mi retención de viewers aumentó dramáticamente. Ahora tengo lista de espera."
+            </div>
+            <div class="fw-bold text-primary">- Carlos Ruiz, Performer Internacional</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">+89%</div>
+                <div class="metric-label">Mejora Acústica</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">4.8/5</div>
+                <div class="metric-label">Rating Final</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">$150</div>
+                <div class="metric-label">Presupuesto</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">67%</div>
+                <div class="metric-label">Más Retención</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="success-card">
+            <div class="success-quote">
+              "Como modelo técnica, pensaba que mi setup era perfecto hasta que hice la auditoría completa. El analizador detectó interferencia electromagnética de mi cargador de teléfono y resonancias en frecuencias específicas de mi voz. Implementé las soluciones del laboratorio de optimización y activé el monitoreo continuo. Mi engagement se triplicó y ahora soy top 10% en mi nicho. El ROI fue 847% en el primer año."
+            </div>
+            <div class="fw-bold text-primary">- Sofia Chen, Top Performer Tech</div>
+            <div class="success-metrics">
+              <div class="metric">
+                <div class="metric-number">847%</div>
+                <div class="metric-label">ROI Anual</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">Top 10%</div>
+                <div class="metric-label">Ranking Final</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">300%</div>
+                <div class="metric-label">Más Engagement</div>
+              </div>
+              <div class="metric">
+                <div class="metric-number">12 meses</div>
+                <div class="metric-label">Transformación</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="text-center mt-4">
+          <button class="btn-primary-custom me-3" onclick="scrollToSection('diagnostic-lab')">
+            <i class="fas fa-rocket"></i> ¡Quiero Estos Resultados!
+          </button>
+          <button class="btn-secondary-custom" onclick="calculateROI()">
+            <i class="fas fa-calculator"></i> Calcular Mi ROI Potencial
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="summary-bg"></div>
+    <div class="container">
+      <h2 class="mb-4" style="font-size: clamp(2rem, 4vw, 3rem);">🎯 Tu Imperio de Calidad Acústica Premium Está a UN CLIC</h2>
+      <p class="lead mb-5" style="max-width: 800px; margin: 0 auto;">
+        Has adquirido el arsenal completo de auditoría acústica científica. No seas vulnerable a la mediocridad sonora - implementa estos protocolos y únete al 10% de modelos que dominan la excelencia auditiva.
+      </p>
+      
+      <div class="achievement-grid">
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-microscope"></i>
+          </div>
+          <h4>Master en Diagnóstico</h4>
+          <p>Dominas análisis espectral, detección de frecuencias problemáticas y mapeo acústico profesional.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-tools"></i>
+          </div>
+          <h4>Ingeniero de Optimización</h4>
+          <p>Implementas soluciones calibradas desde presupuesto limitado hasta setups profesionales de $500+.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h4>Analista de ROI Avanzado</h4>
+          <p>Calculas retornos precisos y monitorizas calidad acústica con sistemas de alertas inteligentes.</p>
+        </div>
+        
+        <div class="achievement">
+          <div class="achievement-icon">
+            <i class="fas fa-crown"></i>
+          </div>
+          <h4>Líder en Calidad Premium</h4>
+          <p>Te unes al top 10% que genera +347% más ingresos por excelencia auditiva científicamente respaldada.</p>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <h3 class="mb-3">🚀 CRITICAL: Próximos Pasos Inmediatos</h3>
+        <div class="row text-start" style="max-width: 600px; margin: 0 auto;">
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Hoy:</strong> Ejecuta diagnóstico completo</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Esta semana:</strong> Implementa optimizaciones prioritarias</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 1:</strong> Activa monitoreo continuo</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <ul class="list-unstyled">
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 2:</strong> Mide ROI y ajusta estrategia</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Mes 3:</strong> Documenta tu caso de éxito</li>
+              <li class="mb-2"><i class="fas fa-check text-warning"></i> <strong>Ongoing:</strong> Mantén excelencia acústica</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <button class="btn-primary-custom btn-lg me-3" onclick="scrollToSection('diagnostic-lab')">
+          <i class="fas fa-rocket"></i> ¡A Construir Tu Imperio Acústico!
+        </button>
+        <button class="btn-secondary-custom btn-lg" onclick="window.location.reload()">
+          <i class="fas fa-redo"></i> Revisar Laboratorios
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Current date update
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { 
+        day: '2-digit', 
+        month: '2-digit', 
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+    
+    updateCurrentDate();
+    setInterval(updateCurrentDate, 60000); // Update every minute
+
+    // Toggle lab sections
+    function toggleDetails(contentId) {
+      const content = document.getElementById(contentId);
+      const header = content.previousElementSibling;
+      const icon = header.querySelector('.expand-icon');
+      
+      content.classList.toggle('active');
+      header.classList.toggle('active');
+      
+      if (content.classList.contains('active')) {
+        content.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Scroll to section
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+        // Auto-expand if it's a lab section
+        const content = section.querySelector('.lab-content');
+        if (content && !content.classList.contains('active')) {
+          content.classList.add('active');
+          content.previousElementSibling.classList.add('active');
+        }
+      }
+    }
+
+    // Acoustics Calculator
+    function calculateAcoustics() {
+      const roomSize = parseFloat(document.getElementById('room-size').value) || 0;
+      const ceilingHeight = parseFloat(document.getElementById('ceiling-height').value) || 0;
+      const surfaceType = document.getElementById('surface-type').value;
+      const noiseSources = parseInt(document.getElementById('noise-sources').value) || 0;
+      
+      if (roomSize === 0 || ceilingHeight === 0 || !surfaceType) {
+        alert('Por favor completa todos los campos requeridos');
+        return;
+      }
+      
+      const volume = roomSize * ceilingHeight;
+      
+      // Calculate scores based on inputs
+      let reverbScore = 100;
+      let isolationScore = 100;
+      let clarityScore = 100;
+      
+      // Adjust based on room volume
+      if (volume < 20) {
+        reverbScore -= 30;
+        clarityScore -= 20;
+      } else if (volume > 80) {
+        reverbScore -= 40;
+        isolationScore -= 10;
+      }
+      
+      // Adjust based on surface type
+      switch(surfaceType) {
+        case 'hard':
+          reverbScore -= 50;
+          clarityScore -= 30;
+          break;
+        case 'mixed':
+          reverbScore -= 20;
+          clarityScore -= 10;
+          break;
+        case 'soft':
+          reverbScore += 10;
+          clarityScore += 15;
+          break;
+      }
+      
+      // Adjust based on noise sources
+      isolationScore -= (noiseSources * 8);
+      clarityScore -= (noiseSources * 5);
+      
+      // Ensure scores are within bounds
+      reverbScore = Math.max(0, Math.min(100, reverbScore));
+      isolationScore = Math.max(0, Math.min(100, isolationScore));
+      clarityScore = Math.max(0, Math.min(100, clarityScore));
+      
+      const overallScore = Math.round((reverbScore + isolationScore + clarityScore) / 3);
+      
+      // Update UI
+      document.getElementById('acoustics-score').textContent = `Puntuación Acústica: ${overallScore}/100`;
+      document.getElementById('reverb-score').textContent = `${reverbScore}%`;
+      document.getElementById('isolation-score').textContent = `${isolationScore}%`;
+      document.getElementById('clarity-score').textContent = `${clarityScore}%`;
+      
+      // Animate progress bars
+      setTimeout(() => {
+        document.getElementById('reverb-bar').style.width = `${reverbScore}%`;
+        document.getElementById('isolation-bar').style.width = `${isolationScore}%`;
+        document.getElementById('clarity-bar').style.width = `${clarityScore}%`;
+      }, 300);
+      
+      // Analysis text
+      let analysis = '';
+      if (overallScore >= 80) {
+        analysis = '<div class="alert alert-success"><i class="fas fa-check-circle"></i> <strong>Excelente:</strong> Tu espacio tiene características acústicas muy favorables. Enfócate en optimizaciones finas para alcanzar perfección.</div>';
+      } else if (overallScore >= 60) {
+        analysis = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle"></i> <strong>Bueno:</strong> Tienes una base sólida pero hay margen para mejoras significativas. Prioriza el tratamiento acústico.</div>';
+      } else if (overallScore >= 40) {
+        analysis = '<div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> <strong>Necesita Atención:</strong> Tu espacio requiere intervención acústica urgente. Los problemas detectados afectan severamente la calidad.</div>';
+      } else {
+        analysis = '<div class="alert alert-danger"><i class="fas fa-times-circle"></i> <strong>Crítico:</strong> Calidad acústica deficiente que impacta directamente tus ingresos. Implementa soluciones inmediatamente.</div>';
+      }
+      
+      document.getElementById('acoustics-analysis').innerHTML = analysis;
+      document.getElementById('acoustics-result').classList.add('show');
+    }
+
+    // ROI Calculator
+    function calculateROI() {
+      const currentEarnings = parseFloat(document.getElementById('current-earnings').value) || 0;
+      const audioComplaints = parseInt(document.getElementById('audio-complaints').value) || 0;
+      const streamHours = parseFloat(document.getElementById('stream-hours').value) || 0;
+      const investment = parseFloat(document.getElementById('investment-amount').value) || 0;
+      const qualityImprovement = parseFloat(document.getElementById('quality-improvement').value) || 0;
+      const retentionImprovement = parseFloat(document.getElementById('retention-improvement').value) || 0;
+      
+      if (currentEarnings === 0 || streamHours === 0) {
+        alert('Por favor completa al menos los ingresos actuales y horas de stream');
+        return;
+      }
+      
+      // Calculate improvements
+      const complaintReduction = Math.min(audioComplaints * (qualityImprovement / 100), audioComplaints);
+      const earningsMultiplier = 1 + (qualityImprovement / 100 * 0.5) + (retentionImprovement / 100 * 0.3);
+      const projectedEarnings = currentEarnings * earningsMultiplier;
+      const monthlyGain = projectedEarnings - currentEarnings;
+      const paybackMonths = investment > 0 ? Math.ceil(investment / monthlyGain) : 0;
+      const annualROI = investment > 0 ? Math.round(((monthlyGain * 12) / investment) * 100) : 0;
+      
+      // Update UI
+      document.getElementById('monthly-gain').textContent = `$${Math.round(monthlyGain).toLocaleString()}`;
+      document.getElementById('payback-period').textContent = `${paybackMonths} meses`;
+      document.getElementById('annual-roi').textContent = `${annualROI}%`;
+      
+      // Analysis
+      let roiAnalysis = `
+        <h6>Análisis Detallado:</h6>
+        <ul class="list-unstyled">
+          <li><i class="fas fa-arrow-up text-success"></i> Ingresos proyectados: $${Math.round(projectedEarnings).toLocaleString()}/mes</li>
+          <li><i class="fas fa-chart-line text-primary"></i> Incremento total: ${Math.round(((projectedEarnings / currentEarnings) - 1) * 100)}%</li>
+          <li><i class="fas fa-clock text-info"></i> Retorno total en año 1: $${Math.round(monthlyGain * 12).toLocaleString()}</li>
+          <li><i class="fas fa-star text-warning"></i> Reducción de quejas: ${Math.round(complaintReduction)} por mes</li>
+        </ul>
+      `;
+      
+      if (annualROI >= 300) {
+        roiAnalysis += '<div class="alert alert-success mt-2"><strong>ROI Excepcional:</strong> Esta inversión se pagará múltiples veces. ¡Implementa inmediatamente!</div>';
+      } else if (annualROI >= 100) {
+        roiAnalysis += '<div class="alert alert-info mt-2"><strong>ROI Sólido:</strong> Inversión muy recomendable con retornos predecibles.</div>';
+      } else if (annualROI >= 50) {
+        roiAnalysis += '<div class="alert alert-warning mt-2"><strong>ROI Moderado:</strong> Considera comenzar con mejoras de menor costo.</div>';
+      }
+      
+      document.getElementById('roi-analysis').innerHTML = roiAnalysis;
+      document.getElementById('roi-result').classList.add('show');
+    }
+
+    // Scenario Selector
+    function selectScenario(scenario) {
+      // Remove active class from all buttons
+      document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+      // Add active class to selected button
+      event.target.closest('.scenario-btn').classList.add('active');
+      
+      const resultDiv = document.getElementById('scenario-result');
+      const titleDiv = document.getElementById('scenario-title');
+      const contentDiv = document.getElementById('scenario-content');
+      
+      let title, content, clarityImprovement, noiseReduction;
+      
+      switch(scenario) {
+        case 'budget':
+          title = '💰 Optimización con Presupuesto Limitado';
+          content = `
+            <div class="row">
+              <div class="col-md-6">
+                <h6>🛠️ Soluciones Implementables:</h6>
+                <ul>
+                  <li>Reposicionamiento estratégico del micrófono</li>
+                  <li>Paneles acústicos DIY con toallas gruesas</li>
+                  <li>Eliminación de fuentes de ruido identificadas</li>
+                  <li>Optimización de configuración de software</li>
+                  <li>Uso de alfombras y cojines como absorbentes</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6>💵 Desglose de Costos:</h6>
+                <ul>
+                  <li>Materiales DIY: $30-50</li>
+                  <li>App de análisis espectral: $15</li>
+                  <li>Accesorios menores: $20-35</li>
+                  <li><strong>Total: $65-100</strong></li>
+                </ul>
+                <div class="alert alert-info mt-2">
+                  <small>Resultados visibles en 24-48 horas</small>
+                </div>
+              </div>
+            </div>
+          `;
+          clarityImprovement = 65;
+          noiseReduction = 45;
+          break;
+          
+        case 'intermediate':
+          title = '⚡ Optimización Intermedia';
+          content = `
+            <div class="row">
+              <div class="col-md-6">
+                <h6>🛠️ Soluciones Implementables:</h6>
+                <ul>
+                  <li>Paneles acústicos profesionales (4-6 unidades)</li>
+                  <li>Trampa de graves para esquinas</li>
+                  <li>Brazo articulado premium para micrófono</li>
+                  <li>Interface de audio con mejor preamplificación</li>
+                  <li>Software de procesamiento avanzado</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6>💵 Desglose de Costos:</h6>
+                <ul>
+                  <li>Paneles profesionales: $120-180</li>
+                  <li>Trampa de graves: $80-120</li>
+                  <li>Hardware mejorado: $150-200</li>
+                  <li>Software especializado: $50-100</li>
+                  <li><strong>Total: $400-600</strong></li>
+                </ul>
+                <div class="alert alert-success mt-2">
+                  <small>Setup semi-profesional completo</small>
+                </div>
+              </div>
+            </div>
+          `;
+          clarityImprovement = 85;
+          noiseReduction = 78;
+          break;
+          
+        case 'professional':
+          title = '👑 Setup Profesional Premium';
+          content = `
+            <div class="row">
+              <div class="col-md-6">
+                <h6>🛠️ Soluciones Implementables:</h6>
+                <ul>
+                  <li>Sistema completo de tratamiento acústico</li>
+                  <li>Micrófono condensador de estudio</li>
+                  <li>Interface de audio profesional</li>
+                  <li>Monitor de referencia de calidad</li>
+                  <li>Software de masterización en tiempo real</li>
+                  <li>Sistema de ventilación silenciosa</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6>💵 Desglose de Costos:</h6>
+                <ul>
+                  <li>Tratamiento completo: $300-500</li>
+                  <li>Micrófono profesional: $200-400</li>
+                  <li>Interface premium: $250-400</li>
+                  <li>Monitores de referencia: $150-300</li>
+                  <li>Software suite completa: $100-200</li>
+                  <li><strong>Total: $1000-1800</strong></li>
+                </ul>
+                <div class="alert alert-warning mt-2">
+                  <small>Calidad de estudio profesional</small>
+                </div>
+              </div>
+            </div>
+          `;
+          clarityImprovement = 95;
+          noiseReduction = 92;
+          break;
+          
+        case 'emergency':
+          title = '🚨 Solución de Emergencia Inmediata';
+          content = `
+            <div class="row">
+              <div class="col-md-6">
+                <h6>🛠️ Implementación en 30 minutos:</h6>
+                <ul>
+                  <li>Crear cabina improvisada con mantas</li>
+                  <li>Apagar todos los dispositivos innecesarios</li>
+                  <li>Reubicación óptima inmediata</li>
+                  <li>Configuración de noise gate agresivo</li>
+                  <li>Uso de objetos domésticos como absorbentes</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6>💵 Costo y Tiempo:</h6>
+                <ul>
+                  <li>Materiales disponibles: $0</li>
+                  <li>Tiempo de setup: 15-30 min</li>
+                  <li>Apps gratuitas de análisis</li>
+                  <li>Técnicas de respiración y postura</li>
+                  <li><strong>Total: $0-20</strong></li>
+                </ul>
+                <div class="alert alert-danger mt-2">
+                  <small>Para situaciones urgentes</small>
+                </div>
+              </div>
+            </div>
+          `;
+          clarityImprovement = 35;
+          noiseReduction = 25;
+          break;
+      }
+      
+      titleDiv.textContent = title;
+      contentDiv.innerHTML = content;
+      
+      // Update progress bars
+      document.getElementById('clarity-improvement').textContent = `${clarityImprovement}%`;
+      document.getElementById('noise-reduction').textContent = `${noiseReduction}%`;
+      
+      setTimeout(() => {
+        document.getElementById('clarity-improvement-bar').style.width = `${clarityImprovement}%`;
+        document.getElementById('noise-reduction-bar').style.width = `${noiseReduction}%`;
+      }, 300);
+      
+      resultDiv.classList.add('show');
+    }
+
+    // Initialize some progress bars on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Auto-expand first section
+      const firstContent = document.querySelector('.lab-content');
+      if (firstContent) {
+        firstContent.classList.add('active');
+        firstContent.previousElementSibling.classList.add('active');
+      }
+    });
+  </script>
+
+</body>
+</html>

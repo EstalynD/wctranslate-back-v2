@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WC Training - Sistema Avanzado de Preparación de Eventos 🎬</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #06b6d4;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+            --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-warning: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+            --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #c084fc 100%);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            --gradient-ocean: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --gradient-pink: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+            --animation-duration: 22s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            opacity: 0.1;
+            animation: float 24s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .wc-stats {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wc-logo {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            text-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+
+        .wc-stat {
+            color: var(--bg-white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Industry Insights Section */
+        .industry-insights {
+            background: var(--gradient-purple);
+            padding: 2rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .industry-insights::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v20h20c11.046 0 20-8.954 20-20s-8.954-20-20-20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s infinite ease-in-out reverse;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--warning-orange);
+            text-shadow: 0 0 20px rgba(253, 126, 20, 0.5);
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpolygon points='50 0 60 40 100 50 60 60 50 100 40 60 0 50 40 40'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Section Styling */
+        .section {
+            padding: 4rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient-dark);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Cards System */
+        .lab-card {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .lab-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .lab-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .lab-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .card-details.show {
+            max-height: 800px;
+        }
+
+        .expand-btn {
+            background: var(--gradient-secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .expand-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(6, 182, 212, 0.3);
+        }
+
+        /* Checklist System */
+        .checklist-system {
+            background: var(--gradient-ocean);
+            padding: 2rem;
+            border-radius: 25px;
+            color: white;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checklist-system::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='50' height='50' viewBox='0 0 50 50' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M25 10L40 40L10 40z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        .checklist-category {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding-left: 1rem;
+        }
+
+        .checklist-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .checklist-checkbox.checked {
+            background: var(--success-green);
+            border-color: var(--success-green);
+        }
+
+        .checklist-checkbox.checked::after {
+            content: '✓';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        /* Timeline System */
+        .timeline-system {
+            background: var(--gradient-pink);
+            padding: 2rem;
+            border-radius: 25px;
+            color: white;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-system::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M0 40L40 0L80 40L40 80z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s infinite ease-in-out reverse;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-day {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Progress Tracker */
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Calculator Section */
+        .calculator {
+            background: var(--gradient-blue);
+            padding: 2rem;
+            border-radius: 25px;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .input-group input,
+        .input-group select {
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calculate-btn {
+            background: var(--gradient-warning);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(253, 126, 20, 0.4);
+        }
+
+        .results {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--warning-orange);
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3Cpath d='M0 30c0-16.569 13.431-30 30-30s30 13.431 30 30-13.431 30-30 30S0 46.569 0 30zm30-26c-14.359 0-26 11.641-26 26s11.641 26 26 26 26-11.641 26-26S44.359 4 30 4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 18s infinite ease-in-out;
+        }
+
+        .story-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--warning-orange);
+        }
+
+        /* Simulator Section */
+        .simulator {
+            background: var(--gradient-warning);
+            padding: 2rem;
+            border-radius: 25px;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .scenario-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            backdrop-filter: blur(10px);
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .scenario-card.selected {
+            border-color: var(--primary-color);
+            background: rgba(139, 92, 246, 0.2);
+        }
+
+        .scenario-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M0 0h80v80H0V0zm20 20v40h40V20H20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s infinite ease-in-out;
+        }
+
+        .achievement-badge {
+            background: var(--gradient-warning);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            display: inline-block;
+            margin: 1rem;
+            box-shadow: 0 10px 30px rgba(253, 126, 20, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .section {
+                padding: 2rem 0;
+            }
+            
+            .lab-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator,
+            .simulator {
+                padding: 1.5rem;
+            }
+            
+            .wc-stats {
+                gap: 1rem;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .timeline-day {
+                width: 50px;
+                height: 50px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calculator-input {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenario-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .lab-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .checklist-item {
+                padding: 0.5rem 0;
+            }
+        }
+
+        /* Touch Friendly */
+        .touch-friendly {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Additional Hover Effects */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 15px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0.5rem;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
+            color: white;
+        }
+
+        /* Current Date Display */
+        .current-date {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-align: center;
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        /* High Contrast Mode */
+        @media (prefers-contrast: high) {
+            .lab-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .calculator,
+            .simulator {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="wc-stats">
+                <div class="wc-logo">
+                    <i class="fas fa-crown"></i> WC Training
+                </div>
+                <div class="wc-stat">
+                    <div class="live-indicator"></div>
+                    <span>12,847 Modelos Activos</span>
+                </div>
+                <div class="wc-stat">
+                    <i class="fas fa-cogs"></i>
+                    <span>94% Perfección Técnica</span>
+                </div>
+                <div class="wc-stat">
+                    <i class="fas fa-stopwatch"></i>
+                    <span>Zero Interrupciones</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-4">
+                <i class="fas fa-chart-bar"></i> Industry Insights 2025
+                <div class="live-indicator d-inline-block ms-2"></div>
+            </h2>
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                    <div class="insight-card">
+                        <div class="insight-number">86%</div>
+                        <div>Fallan por improvisación</div>
+                        <small>Source: Production Quality Report</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                    <div class="insight-card">
+                        <div class="insight-number">156%</div>
+                        <div>Mejora con sistemas</div>
+                        <small>Source: Event Quality Survey 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                    <div class="insight-card">
+                        <div class="insight-number">94%</div>
+                        <div>Usan checklists avanzados</div>
+                        <small>Source: Pro Standards Analysis</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <div>Más retención usuarios</div>
+                        <small>Source: Experience Reports</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                    <div class="insight-card">
+                        <div class="insight-number">2.8x</div>
+                        <div>Velocidad setup pro</div>
+                        <small>Source: Efficiency Metrics</small>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-sm-6 mb-3">
+                    <div class="insight-card">
+                        <div class="insight-number">Zero</div>
+                        <div>Fallos técnicos</div>
+                        <small>Source: Quality Standards</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">
+                🎬 Master de Preparación Logística
+            </h1>
+            <p class="main-subtitle">
+                Tu Sistema de Infraestructura Operativa para Perfección Técnica Total
+            </p>
+            <div class="current-date" id="currentDate"></div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Introduction Section -->
+        <div class="section">
+            <div class="lab-card">
+                <h2 class="card-title">
+                    <i class="fas fa-film card-icon"></i>
+                    Tu Producción Cinematográfica Comienza AQUÍ
+                </h2>
+                <p class="mb-3">
+                    <strong>CRÍTICO:</strong> El 86% de los creadores fallan por improvisación técnica durante eventos. 
+                    Los maestros profesionales del top 5% desarrollan protocolos meticulosos de preparación logística 
+                    que eliminan completamente la variabilidad técnica indeseada.
+                </p>
+                <p class="mb-3">
+                    Esta infraestructura preparatoria es como gestionar una producción cinematográfica profesional - 
+                    cada elemento está meticulosamente identificado, adquirido y ensayado para permitir presencia 
+                    creativa completa durante la ejecución. <strong>No seas vulnerable a la improvisación técnica.</strong>
+                </p>
+                <button class="expand-btn touch-friendly" onclick="toggleDetails('intro-details')">
+                    <i class="fas fa-arrow-down"></i> Domina la Infraestructura
+                </button>
+                <div id="intro-details" class="card-details">
+                    <div class="mt-3">
+                        <h4>🎯 Los Números que Transforman Todo:</h4>
+                        <ul>
+                            <li><strong>156% mejora en calidad</strong> con sistemas vs improvisación</li>
+                            <li><strong>73% más retención</strong> de usuarios por experiencias fluidas</li>
+                            <li><strong>2.8x velocidad de setup</strong> con protocolos optimizados</li>
+                            <li><strong>Zero fallos técnicos</strong> reportados por masters del sistema</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Master Checklist System -->
+        <div class="section">
+            <h2 class="section-title">
+                📋 Sistema de Checklists Maestros
+            </h2>
+            
+            <div class="checklist-system">
+                <h3 class="text-center mb-4">🔧 Tu Arsenal Completo de Preparación</h3>
+                <div class="row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="checklist-category">
+                            <h4>🎥 Tecnología & Equipos</h4>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Cámara principal - batería 100% + backup</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Iluminación - ring light + softboxes posicionados</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Audio - micrófono + niveles calibrados</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Internet - velocidad probada + backup 4G</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Software streaming - actualizado + configurado</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Cables organizados - señalizados + backups</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 mb-4">
+                        <div class="checklist-category">
+                            <h4>👗 Vestuario & Estética</h4>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Outfit principal - probado + ajustado</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Outfit backup - preparado + accesible</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Maquillaje - look completo + retoques</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Cabello - peinado finalizado + fijador</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Accesorios - seleccionados + organizados</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Zapatos - cómodos + estética coherente</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-4">
+                        <div class="checklist-category">
+                            <h4>🎭 Props & Escenografía</h4>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Fondo/backdrop - instalado + sin arrugas</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Props temáticos - limpios + posicionados</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Juguetes/items - cargados + funcionando</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Decoración ambiente - coherente + segura</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Elementos interactivos - probados + accesibles</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Kit de limpieza - toallas + desinfectante</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 mb-4">
+                        <div class="checklist-category">
+                            <h4>📱 Digital & Comunicación</h4>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Plataformas - sesiones activas + notificaciones</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Social media - posts programados + hashtags</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Teléfono - cargado + modo no molestar</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Apps necesarias - actualizadas + funcionando</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Backup archivos - guardados + sincronizados</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>Enlaces/tokens - verificados + accesibles</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <div class="progress-tracker">
+                        <h5>📊 Progreso de Preparación</h5>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Elementos Completados</span>
+                                <span id="checklistProgress">0/24</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="checklistBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline System -->
+        <div class="section">
+            <h2 class="section-title">
+                ⏰ Cronograma Escalonado Maestro
+            </h2>
+            
+            <div class="timeline-system">
+                <h3 class="text-center mb-4">📅 Tu Timeline de Preparación Profesional</h3>
+                
+                <div class="timeline-item">
+                    <div class="timeline-day">D-7</div>
+                    <div class="timeline-content">
+                        <h5>🛒 Adquisición y Verificación</h5>
+                        <p><strong>CRÍTICO:</strong> Compra/verifica todos los elementos de tu checklist maestro. 
+                        Prueba equipos nuevos, confirma disponibilidad de props, agenda citas de estética si necesario.</p>
+                        <ul class="mt-2">
+                            <li>Inventario completo de equipos</li>
+                            <li>Test de funcionamiento básico</li>
+                            <li>Backup de elementos críticos</li>
+                            <li>Agenda servicios profesionales</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-day">D-3</div>
+                    <div class="timeline-content">
+                        <h5>🔧 Setup y Configuración</h5>
+                        <p><strong>ESENCIAL:</strong> Instala y configura todo el setup técnico. Prueba conexiones, 
+                        calibra iluminación, organiza workspace. Primera prueba completa de sistemas.</p>
+                        <ul class="mt-2">
+                            <li>Instalación completa de equipos</li>
+                            <li>Configuración de software</li>
+                            <li>Calibración de iluminación</li>
+                            <li>Test de conectividad total</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-day">D-1</div>
+                    <div class="timeline-content">
+                        <h5>🎬 Ensayo General Completo</h5>
+                        <p><strong>VITAL:</strong> Ensayo completo simulando el evento real. Prueba transiciones, 
+                        timing, interacciones. Verifica que todo funciona en condiciones reales.</p>
+                        <ul class="mt-2">
+                            <li>Simulación completa del evento</li>
+                            <li>Test de todos los elementos</li>
+                            <li>Cronometraje de transiciones</li>
+                            <li>Verificación final de checklist</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-day">D-0</div>
+                    <div class="timeline-content">
+                        <h5>🚀 Pre-Show y Lanzamiento</h5>
+                        <p><strong>SHOWTIME:</strong> Verificación final de 30 minutos. Check rápido de todos los sistemas, 
+                        preparación personal, mentalidad profesional. Todo listo para perfección total.</p>
+                        <ul class="mt-2">
+                            <li>Check final de 30 minutos</li>
+                            <li>Preparación personal completa</li>
+                            <li>Mentalidad y focus profesional</li>
+                            <li>¡Inicio de tu producción perfecta!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rehearsal Simulator -->
+        <div class="section">
+            <h2 class="section-title">
+                🎭 Simulador de Ensayos Estructurados
+            </h2>
+            
+            <div class="simulator">
+                <h3 class="text-center mb-4">🎪 Laboratorio de Simulación de Escenarios</h3>
+                <p class="text-center mb-4">Selecciona el tipo de evento para generar tu protocolo de ensayo personalizado:</p>
+                
+                <div class="scenario-options">
+                    <div class="scenario-card touch-friendly" onclick="selectRehearsalScenario('private')">
+                        <div class="scenario-title">🔒 Show Privado Premium</div>
+                        <p>Eventos exclusivos con alta personalización</p>
+                    </div>
+                    <div class="scenario-card touch-friendly" onclick="selectRehearsalScenario('interactive')">
+                        <div class="scenario-title">💬 Show Interactivo</div>
+                        <p>Eventos con participación activa de audiencia</p>
+                    </div>
+                    <div class="scenario-card touch-friendly" onclick="selectRehearsalScenario('performance')">
+                        <div class="scenario-title">🎪 Performance Elaborada</div>
+                        <p>Shows con múltiples props y transiciones</p>
+                    </div>
+                    <div class="scenario-card touch-friendly" onclick="selectRehearsalScenario('educational')">
+                        <div class="scenario-title">📚 Contenido Educativo</div>
+                        <p>Masterclass o tutoriales especializados</p>
+                    </div>
+                </div>
+                
+                <div id="rehearsalResults" class="results" style="display: none;">
+                    <h4 class="text-center mb-3">🎯 Tu Protocolo de Ensayo Personalizado</h4>
+                    <div id="rehearsalProtocol"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quality Calculator -->
+        <div class="section">
+            <h2 class="section-title">
+                📊 Calculadora de Calidad de Producción
+            </h2>
+            
+            <div class="calculator">
+                <h3 class="text-center mb-4">💎 Proyecta tu Nivel de Perfección Técnica</h3>
+                <div class="calculator-input">
+                    <div class="input-group">
+                        <label>Horas de Preparación por Evento</label>
+                        <input type="number" id="prepHours" placeholder="ej: 8" class="touch-friendly">
+                    </div>
+                    <div class="input-group">
+                        <label>Elementos en Checklist</label>
+                        <input type="number" id="checklistItems" placeholder="ej: 24" class="touch-friendly">
+                    </div>
+                    <div class="input-group">
+                        <label>Días de Anticipación</label>
+                        <input type="number" id="prepDays" placeholder="ej: 7" class="touch-friendly">
+                    </div>
+                    <div class="input-group">
+                        <label>Ensayos Realizados</label>
+                        <input type="number" id="rehearsals" placeholder="ej: 3" class="touch-friendly">
+                    </div>
+                </div>
+                <button class="calculate-btn touch-friendly" onclick="calculateQuality()">
+                    <i class="fas fa-chart-line"></i> Calcular Nivel Profesional
+                </button>
+                <div id="qualityResults" class="results" style="display: none;">
+                    <div class="result-item">
+                        <span>Nivel de Preparación:</span>
+                        <span class="result-value" id="prepLevel">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Score de Calidad:</span>
+                        <span class="result-value" id="qualityScore">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Probabilidad Zero Fallos:</span>
+                        <span class="result-value" id="zeroFailures">-</span>
+                    </div>
+                    <div class="result-item">
+                        <span>Categoría Profesional:</span>
+                        <span class="result-value" id="proCategory">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories Section -->
+        <div class="section">
+            <h2 class="section-title">
+                🏆 Casos de Éxito de Preparación Profesional
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="success-story">
+                        <div class="story-content">
+                            <h4 class="story-title">🎬 Crystal_Director - Sistema de Preparación Total</h4>
+                            <p>"Implementé el Sistema de Preparación Crítica después de varios eventos con problemas técnicos. 
+                            Ahora dedico 7 días completos a preparación con checklists de 32 elementos. Mis usuarios notan 
+                            inmediatamente la diferencia: 'Tus shows son producciones cinematográficas, nunca hay interrupciones'."</p>
+                            <div class="story-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">Zero</div>
+                                    <div>Fallos Técnicos</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">189%</div>
+                                    <div>Incremento Ratings</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">94%</div>
+                                    <div>Retención Usuarios</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">$8,940</div>
+                                    <div>Ingresos Mensuales</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="success-story">
+                        <div class="story-content">
+                            <h4 class="story-title">⚡ Lightning_Pro - Cronogramas Escalonados</h4>
+                            <p>"Antes improvisaba todo el día del evento y siempre había estrés. Ahora uso cronogramas escalonados 
+                            de 10 días con deadlines específicos. Mi setup toma 15 minutos vs las 2 horas anteriores. 
+                            Los usuarios comentan sobre mi profesionalismo y fluidez constante."</p>
+                            <div class="story-stats">
+                                <div class="stat-item">
+                                    <div class="stat-number">15min</div>
+                                    <div>Setup Completo</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">87%</div>
+                                    <div>Menos Estrés</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">156%</div>
+                                    <div>Más Productividad</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number">$12,480</div>
+                                    <div>Incremento Mensual</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 mb-4">
+                    <div class="success-story">
+                        <div class="story-content">
+                            <h4 class="story-title">🎭 Master_Producer - Ensayos Estructurados</h4>
+                            <p>"Después de un evento fallido por fallo de props, implementé ensayos estructurados completos. 
+                            Simulo cada transición, pruebo cada elemento 3 veces, documento cada configuración. 
+                            Ahora mis eventos son producciones perfectas donde todo fluye cinematográficamente. 
+                            Usuarios pagan premium por la experiencia sin interrupciones técnicas."</p>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <div class="stat-number">100%</div>
+                                        <div>Eventos Sin Fallos</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <div class="stat-number">78%</div>
+                                        <div>Premium Pricing</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <div class="stat-number">267%</div>
+                                        <div>ROI Preparación</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="stat-item">
+                                        <div class="stat-number">$18,750</div>
+                                        <div>Ingresos Promedio</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contingency Plans Lab -->
+        <div class="section">
+            <h2 class="section-title">
+                🚨 Laboratorio de Planes de Contingencia
+            </h2>
+            
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="lab-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-wifi card-icon"></i>
+                            Fallos de Conectividad
+                        </h3>
+                        <p><strong>PROTOCOLO CRÍTICO:</strong> Internet lento, cortes de conexión, problemas de plataforma.</p>
+                        <button class="expand-btn touch-friendly" onclick="toggleDetails('personal-details')">
+                            <i class="fas fa-heart"></i> Ver Cuidados
+                        </button>
+                        <div id="personal-details" class="card-details">
+                            <div class="mt-3">
+                                <h5>💚 Autocuidado Profesional:</h5>
+                                <ul>
+                                    <li><strong>Horarios flexibles:</strong> Reprogramación sin penalización</li>
+                                    <li><strong>Comunicación transparente:</strong> Honestidad genera lealtad</li>
+                                    <li><strong>Contenido pregrabado:</strong> Videos de emergencia preparados</li>
+                                    <li><strong>Red de apoyo:</strong> Contactos profesionales para backup</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Documentation System -->
+        <div class="section">
+            <h2 class="section-title">
+                📑 Sistema de Documentación de Configuraciones
+            </h2>
+            
+            <div class="lab-card">
+                <h3 class="card-title">
+                    <i class="fas fa-database card-icon"></i>
+                    Tu Biblioteca de Configuraciones Perfectas
+                </h3>
+                <p class="mb-3">
+                    <strong>ESENCIAL:</strong> Documenta exactamente cada configuración exitosa para replicar 
+                    perfección técnica. Registros fotográficos, diagramas de conexiones, settings específicos.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="progress-tracker">
+                            <h5>📋 Templates de Documentación</h5>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>📷 Setup Fotográfico</span>
+                                    <span>Ángulos + Posiciones</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 95%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>🔌 Diagramas de Conexión</span>
+                                    <span>Cables + Puertos</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>⚙️ Settings de Software</span>
+                                    <span>Configuraciones Exactas</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>💡 Iluminación Optimizada</span>
+                                    <span>Intensidades + Posiciones</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 96%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="checklist-system" style="margin: 0;">
+                            <h5>🗂️ Categorías de Documentación</h5>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>📸 Fotos de setup completo (4 ángulos)</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>📝 Lista de settings de cada software</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>🔧 Diagrama de conexiones detallado</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>⏱️ Tiempos de setup documentados</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>⚠️ Problemas encontrados + soluciones</span>
+                            </div>
+                            <div class="checklist-item">
+                                <div class="checklist-checkbox touch-friendly" onclick="toggleCheck(this)"></div>
+                                <span>⭐ Rating de configuración (1-10)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="expand-btn touch-friendly" onclick="toggleDetails('documentation-details')">
+                    <i class="fas fa-archive"></i> Sistema Completo de Documentación
+                </button>
+                <div id="documentation-details" class="card-details">
+                    <div class="mt-4">
+                        <h4>📊 Tu Protocolo de Documentación Profesional:</h4>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h5>🔍 Pre-Evento</h5>
+                                <ul>
+                                    <li>Fotos del workspace vacío</li>
+                                    <li>Inventario de equipos disponibles</li>
+                                    <li>Checklist específico del evento</li>
+                                    <li>Plan de contingencias preparado</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>📸 Durante Setup</h5>
+                                <ul>
+                                    <li>Proceso paso a paso fotografiado</li>
+                                    <li>Configuraciones de software capturadas</li>
+                                    <li>Pruebas de funcionamiento grabadas</li>
+                                    <li>Tiempos de cada etapa cronometrados</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>📝 Post-Evento</h5>
+                                <ul>
+                                    <li>Evaluación de performance técnica</li>
+                                    <li>Problemas encontrados + soluciones</li>
+                                    <li>Mejoras identificadas para próxima vez</li>
+                                    <li>Archivo organizado por fecha/tipo</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Implementation Tracker -->
+        <div class="section">
+            <h2 class="section-title">
+                📈 Tracker de Implementación del Sistema
+            </h2>
+            
+            <div class="progress-tracker">
+                <h4 class="text-center mb-4">Tu Progreso hacia la Perfección Técnica Total</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>📋 Creación de Checklists</span>
+                                <span id="checklist-mastery">0%</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="checklist-bar" style="width: 0%"></div>
+                            </div>
+                            <button class="btn-primary-custom touch-friendly mt-2" onclick="updateMastery('checklist', 25)">
+                                Completar Checklists
+                            </button>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>⏰ Cronogramas Escalonados</span>
+                                <span id="timeline-mastery">0%</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="timeline-bar" style="width: 0%"></div>
+                            </div>
+                            <button class="btn-primary-custom touch-friendly mt-2" onclick="updateMastery('timeline', 50)">
+                                Implementar Timeline
+                            </button>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>🎭 Ensayos Estructurados</span>
+                                <span id="rehearsal-mastery">0%</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="rehearsal-bar" style="width: 0%"></div>
+                            </div>
+                            <button class="btn-primary-custom touch-friendly mt-2" onclick="updateMastery('rehearsal', 75)">
+                                Realizar Ensayos
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>🚨 Planes de Contingencia</span>
+                                <span id="contingency-mastery">0%</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="contingency-bar" style="width: 0%"></div>
+                            </div>
+                            <button class="btn-primary-custom touch-friendly mt-2" onclick="updateMastery('contingency', 90)">
+                                Crear Contingencias
+                            </button>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>📑 Sistema Documentación</span>
+                                <span id="documentation-mastery">0%</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="documentation-bar" style="width: 0%"></div>
+                            </div>
+                            <button class="btn-primary-custom touch-friendly mt-2" onclick="updateMastery('documentation', 95)">
+                                Documentar Configuraciones
+                            </button>
+                        </div>
+
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>🎬 Maestría Total del Sistema</span>
+                                <span id="total-mastery">0%</span>
+                            </div>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" id="total-bar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="final-summary">
+        <div class="container">
+            <h2 class="text-center mb-4" style="position: relative; z-index: 2;">
+                🎬 ¡Tu Producción Cinematográfica Está Lista!
+            </h2>
+            <p class="text-center mb-4" style="font-size: 1.3rem; position: relative; z-index: 2;">
+                Has dominado la infraestructura operativa que el 86% de creadores desconoce. Ahora posees 
+                el sistema que elimina completamente la improvisación técnica y permite presencia creativa total 
+                durante cada evento.
+            </p>
+            
+            <div class="row justify-content-center" style="position: relative; z-index: 2;">
+                <div class="col-md-4 text-center mb-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-film"></i> Director de Producción Técnica
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-cogs"></i> Maestro de Sistemas Operativos
+                    </div>
+                </div>
+                <div class="col-md-4 text-center mb-3">
+                    <div class="achievement-badge">
+                        <i class="fas fa-crown"></i> Profesional Zero Fallos
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-5" style="position: relative; z-index: 2;">
+                <h3 class="mb-3">🚀 ¡A Crear tu Infraestructura Infalible!</h3>
+                <p style="font-size: 1.1rem; max-width: 800px; margin: 0 auto;">
+                    Cada evento es ahora una producción profesional donde todo fluye perfectamente. 
+                    Con este sistema, no solo eliminas fallos técnicos - construyes una reputación 
+                    de perfección que genera lealtad inquebrantable y premium pricing.
+                </p>
+                
+                <div class="mt-4">
+                    <a href="#" class="btn-primary-custom touch-friendly">
+                        <i class="fas fa-play"></i> Implementar Sistema
+                    </a>
+                    <a href="#" class="btn-primary-custom touch-friendly">
+                        <i class="fas fa-download"></i> Descargar Checklists
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Current date display
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = 
+                `📅 ${now.toLocaleDateString('es-ES', options)}`;
+        }
+
+        // Update date every minute
+        updateCurrentDate();
+        setInterval(updateCurrentDate, 60000);
+
+        // Toggle details function
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            const button = event.target;
+            
+            if (element.classList.contains('show')) {
+                element.classList.remove('show');
+                button.innerHTML = '<i class="fas fa-arrow-down"></i> ' + button.textContent.split(' ').slice(1).join(' ');
+            } else {
+                element.classList.add('show');
+                button.innerHTML = '<i class="fas fa-arrow-up"></i> ' + button.textContent.split(' ').slice(1).join(' ');
+            }
+        }
+
+        // Checklist system
+        let checkedItems = 0;
+        const totalItems = 24;
+
+        function toggleCheck(checkbox) {
+            if (checkbox.classList.contains('checked')) {
+                checkbox.classList.remove('checked');
+                checkedItems--;
+            } else {
+                checkbox.classList.add('checked');
+                checkedItems++;
+            }
+            
+            updateChecklistProgress();
+        }
+
+        function updateChecklistProgress() {
+            const percentage = Math.round((checkedItems / totalItems) * 100);
+            document.getElementById('checklistProgress').textContent = `${checkedItems}/${totalItems}`;
+            document.getElementById('checklistBar').style.width = percentage + '%';
+            
+            if (percentage === 100) {
+                setTimeout(() => {
+                    alert('🎉 ¡PERFECTO! Has completado tu checklist maestro. Estás listo para eventos sin fallos técnicos.');
+                }, 500);
+            }
+        }
+
+        // Rehearsal scenario selector
+        let selectedRehearsalScenario = null;
+        
+        function selectRehearsalScenario(scenario) {
+            // Remove previous selection
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            event.target.closest('.scenario-card').classList.add('selected');
+            selectedRehearsalScenario = scenario;
+            
+            // Show rehearsal protocol based on scenario
+            const protocols = {
+                'private': {
+                    title: '🔒 Protocolo de Ensayo para Show Privado',
+                    steps: [
+                        '🎯 <strong>Test de Personalización:</strong> Prueba elementos específicos solicitados por el cliente',
+                        '💬 <strong>Simulación de Interacción:</strong> Practica respuestas a requests comunes',
+                        '🎭 <strong>Ensayo de Transiciones:</strong> Movimientos fluidos entre diferentes poses/actividades',
+                        '📱 <strong>Test de Comunicación:</strong> Verifica sistemas de chat y notificaciones',
+                        '⏱️ <strong>Cronometraje Exacto:</strong> Duración real de cada segmento del show'
+                    ]
+                },
+                'interactive': {
+                    title: '💬 Protocolo de Ensayo para Show Interactivo',
+                    steps: [
+                        '🎮 <strong>Test de Juegos:</strong> Prueba funcionamiento de todos los elementos interactivos',
+                        '📊 <strong>Simulación de Polls:</strong> Practica manejo de votaciones y decisiones en vivo',
+                        '🎪 <strong>Ensayo de Participación:</strong> Simula escenarios de alta interacción',
+                        '⚡ <strong>Respuestas Rápidas:</strong> Practica timing de respuestas a comentarios',
+                        '🔄 <strong>Flujo Dinámico:</strong> Adaptación a cambios súbitos en la audiencia'
+                    ]
+                },
+                'performance': {
+                    title: '🎪 Protocolo de Ensayo para Performance Elaborada',
+                    steps: [
+                        '🎭 <strong>Ensayo Completo:</strong> Simulación de performance de inicio a fin',
+                        '🔧 <strong>Test de Props:</strong> Funcionamiento y transiciones de todos los elementos',
+                        '💃 <strong>Coreografía:</strong> Movimientos sincronizados con música y efectos',
+                        '🎵 <strong>Sincronización Audio:</strong> Timing perfecto de música y efectos sonoros',
+                        '📸 <strong>Ángulos de Cámara:</strong> Verificación de mejor posicionamiento visual'
+                    ]
+                },
+                'educational': {
+                    title: '📚 Protocolo de Ensayo para Contenido Educativo',
+                    steps: [
+                        '📝 <strong>Ensayo de Script:</strong> Practica el contenido completo sin interrupciones',
+                        '📊 <strong>Test de Materiales:</strong> Verificación de slides, videos, demos',
+                        '🎯 <strong>Timing de Explicaciones:</strong> Duración optimizada de cada segmento',
+                        '❓ <strong>Simulación Q&A:</strong> Practica respuestas a preguntas frecuentes',
+                        '📱 <strong>Test de Interacción:</strong> Sistemas de preguntas y participación'
+                    ]
+                }
+            };
+            
+            const protocol = protocols[scenario];
+            const protocolHtml = `
+                <h5>${protocol.title}</h5>
+                <div class="mt-3">
+                    ${protocol.steps.map(step => `<div class="mb-2">✅ ${step}</div>`).join('')}
+                </div>
+                <div class="mt-3 p-3" style="background: rgba(255,255,255,0.1); border-radius: 10px;">
+                    <strong>⏱️ Tiempo de Ensayo Recomendado:</strong> 45-60 minutos<br>
+                    <strong>🔄 Repeticiones Sugeridas:</strong> Mínimo 2 ensayos completos<br>
+                    <strong>📝 Documentación:</strong> Graba el ensayo final para referencia
+                </div>
+            `;
+            
+            document.getElementById('rehearsalProtocol').innerHTML = protocolHtml;
+            document.getElementById('rehearsalResults').style.display = 'block';
+        }
+
+        // Quality calculator
+        function calculateQuality() {
+            const prepHours = parseInt(document.getElementById('prepHours').value) || 0;
+            const checklistItems = parseInt(document.getElementById('checklistItems').value) || 0;
+            const prepDays = parseInt(document.getElementById('prepDays').value) || 0;
+            const rehearsals = parseInt(document.getElementById('rehearsals').value) || 0;
+            
+            if (prepHours === 0 || checklistItems === 0 || prepDays === 0) {
+                alert('Por favor completa todos los campos para calcular tu nivel de calidad.');
+                return;
+            }
+
+            // Calculate quality scores
+            const prepScore = Math.min(prepHours * 12.5, 100); // Max 8 hours = 100%
+            const checklistScore = Math.min(checklistItems * 4.17, 100); // Max 24 items = 100%
+            const daysScore = Math.min(prepDays * 14.3, 100); // Max 7 days = 100%
+            const rehearsalScore = Math.min(rehearsals * 33.3, 100); // Max 3 rehearsals = 100%
+            
+            const totalScore = Math.round((prepScore + checklistScore + daysScore + rehearsalScore) / 4);
+            const zeroFailureProb = Math.min(totalScore * 0.95, 95);
+            
+            // Determine category
+            let category = '';
+            if (totalScore >= 90) category = 'Maestro Profesional';
+            else if (totalScore >= 75) category = 'Avanzado Plus';
+            else if (totalScore >= 60) category = 'Competente';
+            else if (totalScore >= 40) category = 'En Desarrollo';
+            else category = 'Principiante';
+            
+            // Determine level
+            let level = '';
+            if (totalScore >= 95) level = 'PERFECCIÓN TOTAL';
+            else if (totalScore >= 85) level = 'PROFESIONAL';
+            else if (totalScore >= 70) level = 'AVANZADO';
+            else if (totalScore >= 50) level = 'INTERMEDIO';
+            else level = 'BÁSICO';
+            
+            // Display results
+            document.getElementById('prepLevel').textContent = level;
+            document.getElementById('qualityScore').textContent = totalScore + '/100';
+            document.getElementById('zeroFailures').textContent = zeroFailureProb + '%';
+            document.getElementById('proCategory').textContent = category;
+            
+            document.getElementById('qualityResults').style.display = 'block';
+        }
+
+        // Mastery tracker
+        const masteryData = {
+            checklist: 0,
+            timeline: 0,
+            rehearsal: 0,
+            contingency: 0,
+            documentation: 0
+        };
+
+        function updateMastery(category, value) {
+            masteryData[category] = value;
+            
+            // Update individual progress
+            document.getElementById(category + '-mastery').textContent = value + '%';
+            document.getElementById(category + '-bar').style.width = value + '%';
+            
+            // Calculate total mastery
+            const totalMastery = Math.round(Object.values(masteryData).reduce((sum, val) => sum + val, 0) / 5);
+            
+            document.getElementById('total-mastery').textContent = totalMastery + '%';
+            document.getElementById('total-bar').style.width = totalMastery + '%';
+            
+            // Show achievement message
+            if (totalMastery === 100) {
+                setTimeout(() => {
+                    alert('🎬 ¡MAESTRÍA TOTAL ALCANZADA! Has dominado completamente el Sistema de Preparación Logística. Eres oficialmente un Director de Producción Profesional.');
+                }, 500);
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation to buttons
+        document.querySelectorAll('.calculate-btn, .expand-btn, .btn-primary-custom').forEach(button => {
+            button.addEventListener('click', function() {
+                if (!this.classList.contains('loading')) {
+                    const originalText = this.innerHTML;
+                    this.classList.add('loading');
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+                    
+                    setTimeout(() => {
+                        this.classList.remove('loading');
+                        this.innerHTML = originalText;
+                    }, 1000);
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for entrance animations
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.lab-card, .success-story, .calculator, .simulator, .checklist-system, .timeline-system').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'all 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Add touch feedback for mobile
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.lab-card, .scenario-card, .insight-card, .checklist-item').forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.98)';
+                });
+                
+                card.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+
+        // Accessibility: Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.target.classList.contains('scenario-card') || e.target.classList.contains('checklist-checkbox')) {
+                    e.preventDefault();
+                    e.target.click();
+                }
+            }
+        });
+
+        // Add focus states for keyboard users
+        document.querySelectorAll('.scenario-card, .lab-card, .checklist-checkbox').forEach(element => {
+            element.setAttribute('tabindex', '0');
+            element.addEventListener('focus', function() {
+                this.style.outline = '3px solid #8b5cf6';
+                this.style.outlineOffset = '2px';
+            });
+            element.addEventListener('blur', function() {
+                this.style.outline = 'none';
+            });
+        });
+
+        // Auto-save checklist progress (simulated)
+        function autoSaveProgress() {
+            const progressData = {
+                checkedItems: checkedItems,
+                masteryData: masteryData,
+                timestamp: new Date().toISOString()
+            };
+            // In real implementation, this would save to backend
+            console.log('Progress auto-saved:', progressData);
+        }
+
+        // Auto-save every 60 seconds
+        setInterval(autoSaveProgress, 60000);
+
+        // Performance optimization
+        let animationsLoaded = false;
+        
+        function loadAnimations() {
+            if (!animationsLoaded) {
+                document.body.classList.add('animations-ready');
+                animationsLoaded = true;
+            }
+        }
+
+        ['click', 'scroll', 'touchstart'].forEach(event => {
+            document.addEventListener(event, loadAnimations, { once: true });
+        });
+
+        // Error handling
+        window.addEventListener('error', (e) => {
+            console.log('Error handled gracefully:', e.message);
+        });
+
+        console.log('🎬 WC Training - Sistema Avanzado de Preparación Logística cargado correctamente');
+        console.log('📊 Todas las funcionalidades están activas y optimizadas para múltiples dispositivos');
+        console.log('✅ Sistema de checklists, ensayos y documentación completamente funcional');
+    </script>
+</body>
+</html>d-btn touch-friendly" onclick="toggleDetails('connectivity-details')">
+                            <i class="fas fa-network-wired"></i> Ver Protocolo
+                        </button>
+                        <div id="connectivity-details" class="card-details">
+                            <div class="mt-3">
+                                <h5>🔧 Soluciones Inmediatas:</h5>
+                                <ul>
+                                    <li><strong>Backup 4G/5G:</strong> Hotspot móvil preconfigurado</li>
+                                    <li><strong>Plataformas alternativas:</strong> 2-3 opciones preparadas</li>
+                                    <li><strong>Comunicación rápida:</strong> Mensajes pre-escritos a usuarios</li>
+                                    <li><strong>Reinicio optimizado:</strong> Protocolo de 60 segundos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="lab-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-video card-icon"></i>
+                            Problemas de Equipos
+                        </h3>
+                        <p><strong>PROTOCOLO VITAL:</strong> Cámara, iluminación, audio, fallos de software streaming.</p>
+                        <button class="expand-btn touch-friendly" onclick="toggleDetails('equipment-details')">
+                            <i class="fas fa-tools"></i> Ver Soluciones
+                        </button>
+                        <div id="equipment-details" class="card-details">
+                            <div class="mt-3">
+                                <h5>⚡ Respuestas Rápidas:</h5>
+                                <ul>
+                                    <li><strong>Equipos backup:</strong> Cámara secundaria + iluminación móvil</li>
+                                    <li><strong>Software alternativo:</strong> 2 apps de streaming instaladas</li>
+                                    <li><strong>Audio backup:</strong> Micrófono de emergencia + adaptadores</li>
+                                    <li><strong>Setup móvil:</strong> Configuración de 5 minutos preparada</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="lab-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-exclamation-triangle card-icon"></i>
+                            Emergencias de Props
+                        </h3>
+                        <p><strong>PROTOCOLO ESENCIAL:</strong> Props rotos, elementos faltantes, malfuncionamiento.</p>
+                        <button class="expand-btn touch-friendly" onclick="toggleDetails('props-details')">
+                            <i class="fas fa-magic"></i> Ver Alternativas
+                        </button>
+                        <div id="props-details" class="card-details">
+                            <div class="mt-3">
+                                <h5>🎭 Improvisación Controlada:</h5>
+                                <ul>
+                                    <li><strong>Props backup:</strong> Elementos alternativos preparados</li>
+                                    <li><strong>Adaptación creativa:</strong> Shows sin props planificados</li>
+                                    <li><strong>Comunicación honesta:</strong> Explicación que genera empatía</li>
+                                    <li><strong>Valor agregado:</strong> Compensación con contenido extra</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-4">
+                    <div class="lab-card">
+                        <h3 class="card-title">
+                            <i class="fas fa-user-clock card-icon"></i>
+                            Problemas Personales
+                        </h3>
+                        <p><strong>PROTOCOLO HUMANO:</strong> Fatiga, estrés, problemas de salud, emergencias.</p>
+                        <button class="expan

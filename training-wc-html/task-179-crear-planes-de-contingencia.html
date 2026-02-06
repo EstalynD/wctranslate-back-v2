@@ -1,0 +1,1660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🛡️ WC Training - Master en Planes de Contingencia Estratégicos</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #dc3545;
+            --accent-color: #ffc107;
+            --success-green: #198754;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, #0d6efd 0%, #0dcaf0 100%);
+            --gradient-secondary: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            --gradient-accent: linear-gradient(135deg, #ffc107 0%, #ffca2c 100%);
+            --gradient-crisis: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+            --gradient-resilience: linear-gradient(135deg, #198754 0%, #20c997 100%);
+            --gradient-alert: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-bg);
+            opacity: 0.03;
+            animation: float 28s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-40px) rotate(180deg); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .industry-insights {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--gradient-crisis);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(220, 53, 69, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="crisis-grid" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><circle cx="15" cy="15" r="3" fill="rgba(255,255,255,0.05)"/><path d="M 10 15 L 20 15 M 15 10 L 15 20" stroke="rgba(255,255,255,0.03)" stroke-width="2"/></pattern></defs><rect width="100" height="100" fill="url(%23crisis-grid)"/></svg>');
+            animation: float 30s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-lab {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .section-lab:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .interactive-card {
+            background: var(--gradient-resilience);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(25, 135, 84, 0.3);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            margin-top: 1rem;
+            border-radius: 10px;
+            padding: 0 1rem;
+        }
+
+        .card-details.expanded {
+            max-height: 900px;
+            padding: 1rem;
+        }
+
+        .resilience-calculator {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .resilience-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 300px;
+        }
+
+        .resilience-result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: var(--border-light);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .scenario-option {
+            background: var(--gradient-alert);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: center;
+        }
+
+        .scenario-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(253, 126, 20, 0.3);
+        }
+
+        .scenario-option.selected {
+            background: var(--gradient-resilience);
+            transform: scale(1.05);
+        }
+
+        .success-story {
+            background: var(--gradient-resilience);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6rem;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .success-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .success-number {
+            text-align: center;
+            margin: 0.5rem;
+        }
+
+        .success-number .number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .crisis-simulator {
+            background: var(--gradient-crisis);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .crisis-timeline {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 30px rgba(255, 193, 7, 0.3);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 15px;
+            height: 15px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+
+        .protocol-builder {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .protocol-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .protocol-result {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .alert-system {
+            background: var(--gradient-alert);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .alert-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        .alert-indicator.green {
+            background: var(--success-green);
+        }
+
+        .alert-indicator.yellow {
+            background: var(--warning-orange);
+        }
+
+        .alert-indicator.red {
+            background: var(--danger-red);
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(13, 110, 253, 0.3);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .current-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .readiness-meter {
+            background: var(--border-light);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .readiness-fill {
+            height: 100%;
+            background: var(--gradient-resilience);
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .readiness-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .contingency-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .contingency-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contingency-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .contingency-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .severity-badge {
+            background: var(--gradient-alert);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .severity-badge.high {
+            background: var(--gradient-crisis);
+        }
+
+        .severity-badge.medium {
+            background: var(--gradient-alert);
+        }
+
+        .severity-badge.low {
+            background: var(--gradient-resilience);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-lab {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .resilience-input {
+                max-width: 100%;
+            }
+            
+            .success-numbers {
+                flex-direction: column;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenario-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-lab {
+                padding: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .resilience-calculator {
+                padding: 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn-custom {
+            min-height: 44px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .btn-accent-custom {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-accent-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(255, 193, 7, 0.3);
+        }
+
+        .btn-success-custom {
+            background: var(--gradient-resilience);
+            color: white;
+        }
+
+        .btn-success-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(25, 135, 84, 0.3);
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .insight-card {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+    
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="#" class="wc-logo">
+                        <i class="fas fa-shield-alt"></i> WC Training Pro
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activas
+                        <span class="mx-2">|</span>
+                        <strong>1,347</strong> planes de contingencia activos
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <div class="d-flex align-items-center mb-3">
+                <i class="fas fa-exclamation-triangle fa-2x text-primary me-3"></i>
+                <div>
+                    <h3 class="mb-0">🛡️ Crisis Management Intelligence 2025</h3>
+                    <p class="text-muted mb-0">Datos de gestión de crisis actualizada en tiempo real</p>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </div>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <span class="insight-number">73%</span>
+                    <div>de modelos sufren interrupciones críticas sin preparación</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">48h</span>
+                    <div>tiempo promedio recuperación sin plan de contingencia</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">+456%</span>
+                    <div>resiliencia operativa con planes estratégicos</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">89%</span>
+                    <div>de interrupciones evitables con protocolo adecuado</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$2,840</span>
+                    <div>pérdida promedio por crisis no gestionada</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">24min</span>
+                    <div>tiempo promedio activación con planes preparados</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">🛡️ Master en Planes de Contingencia</h1>
+            <p class="main-subtitle">Diseña tu sistema inmunitario organizacional especializado</p>
+            <p class="lead">Tu arquitectura de resiliencia estratégica para transformar crisis en eventos procedimentales</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Lab Section 1: Identificación de Escenarios -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-search"></i>
+                🔍 Lab de Identificación de Escenarios
+            </h2>
+            <p class="lead">Identifica sistemáticamente escenarios disruptivos potenciales</p>
+            
+            <button class="interactive-card" onclick="toggleDetails('escenarios')">
+                <h4><i class="fas fa-exclamation-triangle"></i> Mapa de Riesgos Operativos</h4>
+                <p>Identifica y clasifica amenazas potenciales a tu operación</p>
+            </button>
+            <div id="escenarios" class="card-details">
+                <h5>⚠️ CRÍTICO: Taxonomía de Crisis</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Crisis Técnicas:</h6>
+                        <ul>
+                            <li><strong>Fallas de internet:</strong> Pérdida de conexión</li>
+                            <li><strong>Problemas de hardware:</strong> Cámara, audio, iluminación</li>
+                            <li><strong>Cortes eléctricos:</strong> Interrupciones prolongadas</li>
+                            <li><strong>Fallos de plataforma:</strong> Caídas masivas</li>
+                            <li><strong>Problemas de software:</strong> Aplicaciones, drivers</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Crisis Administrativas:</h6>
+                        <ul>
+                            <li><strong>Suspensiones:</strong> Temporales y permanentes</li>
+                            <li><strong>Bloqueos financieros:</strong> Pagos retenidos</li>
+                            <li><strong>Cambios regulatorios:</strong> Nuevas restricciones</li>
+                            <li><strong>Problemas de verificación:</strong> Documentos, identidad</li>
+                            <li><strong>Disputas legales:</strong> Copyright, quejas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6>Crisis Personales:</h6>
+                        <ul>
+                            <li><strong>Emergencias médicas:</strong> Enfermedad, accidentes</li>
+                            <li><strong>Problemas familiares:</strong> Situaciones urgentes</li>
+                            <li><strong>Burnout:</strong> Agotamiento, estrés</li>
+                            <li><strong>Conflictos interpersonales:</strong> Usuarios problemáticos</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Crisis Externas:</h6>
+                        <ul>
+                            <li><strong>Desastres naturales:</strong> Terremotos, huracanes</li>
+                            <li><strong>Inestabilidad política:</strong> Protestas, toques de queda</li>
+                            <li><strong>Crisis económicas:</strong> Recesión, inflación</li>
+                            <li><strong>Pandemias:</strong> Restricciones sanitarias</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-warning mt-3">
+                    <strong>⚠️ ESENCIAL:</strong> El 67% de crisis son predecibles - la preparación es más efectiva que la reacción
+                </div>
+            </div>
+
+            <button class="interactive-card" onclick="toggleDetails('probabilidad')">
+                <h4><i class="fas fa-chart-line"></i> Matriz de Probabilidad-Impacto</h4>
+                <p>Evalúa la probabilidad y gravedad de cada escenario</p>
+            </button>
+            <div id="probabilidad" class="card-details">
+                <h5>📊 Evaluación Sistemática de Riesgos</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Alto Impacto - Alta Probabilidad</h6>
+                        <p><strong>PRIORIDAD MÁXIMA</strong></p>
+                        <ul>
+                            <li>Problemas técnicos menores</li>
+                            <li>Interrupciones de internet</li>
+                            <li>Usuarios problemáticos</li>
+                            <li>Fluctuaciones de ingresos</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Alto Impacto - Baja Probabilidad</h6>
+                        <p><strong>PLANES ESPECÍFICOS</strong></p>
+                        <ul>
+                            <li>Suspensiones permanentes</li>
+                            <li>Desastres naturales</li>
+                            <li>Crisis económicas severas</li>
+                            <li>Emergencias médicas graves</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Bajo Impacto - Alta Probabilidad</h6>
+                        <p><strong>PROTOCOLOS RUTINARIOS</strong></p>
+                        <ul>
+                            <li>Fallas menores de equipos</li>
+                            <li>Días de bajo tráfico</li>
+                            <li>Cambios menores de plataforma</li>
+                            <li>Comentarios negativos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Calculadora de Resiliencia -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-calculator"></i>
+                📊 Calculadora de Resiliencia Operativa
+            </h2>
+            
+            <div class="resilience-calculator">
+                <h4>Evalúa tu preparación actual para crisis</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Planes de contingencia documentados:</label>
+                        <input type="number" class="resilience-input" id="contingencyPlans" placeholder="3" oninput="calculateResilience()">
+                        
+                        <label>Respaldos de equipos/sistemas:</label>
+                        <input type="number" class="resilience-input" id="backupSystems" placeholder="2" oninput="calculateResilience()">
+                        
+                        <label>Plataformas alternativas configuradas:</label>
+                        <input type="number" class="resilience-input" id="alternativePlatforms" placeholder="1" oninput="calculateResilience()">
+                        
+                        <label>Meses de reserva financiera:</label>
+                        <input type="number" class="resilience-input" id="financialReserve" placeholder="2" oninput="calculateResilience()">
+                        
+                        <label>Frecuencia de simulaciones (por año):</label>
+                        <input type="number" class="resilience-input" id="simulationFrequency" placeholder="4" oninput="calculateResilience()">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="resilience-result" id="resilienceResult">
+                            <h5>🛡️ Evaluación de Resiliencia</h5>
+                            <div id="resilienceCalculation">Completa los campos para evaluar tu preparación</div>
+                            <div class="readiness-meter mt-3">
+                                <div class="readiness-fill" id="readinessFill" style="width: 0%"></div>
+                                <div class="readiness-text" id="readinessText">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Simulador de Crisis -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-play-circle"></i>
+                🎮 Simulador de Crisis
+            </h2>
+            
+            <p>Experimenta con diferentes escenarios de crisis y practica tu respuesta</p>
+            
+            <div class="scenario-selector">
+                <button class="scenario-option" onclick="selectScenario('suspension')">
+                    <i class="fas fa-ban"></i>
+                    <h5>Suspensión Temporal</h5>
+                    <p>Cuenta bloqueada por 7 días</p>
+                </button>
+                <button class="scenario-option" onclick="selectScenario('technical')">
+                    <i class="fas fa-wifi"></i>
+                    <h5>Fallo Técnico</h5>
+                    <p>Internet interrumpido 6 horas</p>
+                </button>
+                <button class="scenario-option" onclick="selectScenario('regulatory')">
+                    <i class="fas fa-gavel"></i>
+                    <h5>Cambio Regulatorio</h5>
+                    <p>Nuevas restricciones inmediatas</p>
+                </button>
+                <button class="scenario-option" onclick="selectScenario('financial')">
+                    <i class="fas fa-credit-card"></i>
+                    <h5>Bloqueo Financiero</h5>
+                    <p>Pagos retenidos 30 días</p>
+                </button>
+                <button class="scenario-option" onclick="selectScenario('platform')">
+                    <i class="fas fa-server"></i>
+                    <h5>Caída de Plataforma</h5>
+                    <p>Servicio no disponible 24h</p>
+                </button>
+                <button class="scenario-option" onclick="selectScenario('personal')">
+                    <i class="fas fa-user-injured"></i>
+                    <h5>Emergencia Personal</h5>
+                    <p>Indisponible por 14 días</p>
+                </button>
+            </div>
+            
+            <div class="crisis-simulator" id="crisisSimulator" style="display: none;">
+                <h4>🚨 Simulación de Crisis en Curso</h4>
+                <div id="scenarioContent"></div>
+                <div class="mt-3">
+                    <button class="btn-custom btn-accent-custom" onclick="activateProtocol()">
+                        <i class="fas fa-rocket"></i> Activar Protocolo
+                    </button>
+                    <button class="btn-custom btn-secondary-custom" onclick="evaluateResponse()">
+                        <i class="fas fa-check"></i> Evaluar Respuesta
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 4: Constructor de Protocolos -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-tools"></i>
+                🔧 Constructor de Protocolos
+            </h2>
+            
+            <div class="protocol-builder">
+                <h4>Diseña protocolos específicos para cada tipo de crisis</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Tipo de crisis:</label>
+                        <select class="protocol-input" id="crisisType">
+                            <option value="">Selecciona tipo de crisis</option>
+                            <option value="suspension">Suspensión de cuenta</option>
+                            <option value="technical">Fallo técnico</option>
+                            <option value="financial">Bloqueo financiero</option>
+                            <option value="regulatory">Cambio regulatorio</option>
+                            <option value="platform">Caída de plataforma</option>
+                            <option value="personal">Emergencia personal</option>
+                        </select>
+                        
+                        <label>Severidad del impacto:</label>
+                        <select class="protocol-input" id="impactSeverity">
+                            <option value="">Selecciona severidad</option>
+                            <option value="low">Baja - Impacto mínimo</option>
+                            <option value="medium">Media - Impacto significativo</option>
+                            <option value="high">Alta - Impacto crítico</option>
+                        </select>
+                        
+                        <label>Tiempo estimado de resolución:</label>
+                        <select class="protocol-input" id="resolutionTime">
+                            <option value="">Selecciona tiempo</option>
+                            <option value="immediate">Inmediato (< 1 hora)</option>
+                            <option value="short">Corto (1-24 horas)</option>
+                            <option value="medium">Medio (1-7 días)</option>
+                            <option value="long">Largo (> 1 semana)</option>
+                        </select>
+                        
+                        <label>Recursos disponibles:</label>
+                        <select class="protocol-input" id="availableResources">
+                            <option value="">Selecciona recursos</option>
+                            <option value="full">Completos - Todos los recursos</option>
+                            <option value="limited">Limitados - Recursos básicos</option>
+                            <option value="minimal">Mínimos - Solo esenciales</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="protocol-result" id="protocolResult">
+                            <h5>📋 Protocolo Personalizado</h5>
+                            <div id="protocolContent">Selecciona los parámetros para generar tu protocolo</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <button class="btn-custom btn-accent-custom" onclick="buildProtocol()">
+                        <i class="fas fa-cog"></i> Generar Protocolo
+                    </button>
+                    <button class="btn-custom btn-success-custom" onclick="saveProtocol()">
+                        <i class="fas fa-save"></i> Guardar Protocolo
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 5: Sistema de Alertas Tempranas -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-bell"></i>
+                🚨 Sistema de Alertas Tempranas
+            </h2>
+            
+            <div class="alert-system">
+                <h4>Configuración de indicadores tempranos de crisis</h4>
+                <div class="row">
+                    <div class="col-md-8">
+                        <h6>Estado Actual del Sistema:</h6>
+                        <div class="mb-3">
+                            <div class="alert-indicator green"></div>
+                            <strong>Plataforma Principal:</strong> Operativa normal
+                        </div>
+                        <div class="mb-3">
+                            <div class="alert-indicator yellow"></div>
+                            <strong>Ingresos:</strong> Descenso detectado (-15% última semana)
+                        </div>
+                        <div class="mb-3">
+                            <div class="alert-indicator green"></div>
+                            <strong>Sistemas Técnicos:</strong> Funcionando correctamente
+                        </div>
+                        <div class="mb-3">
+                            <div class="alert-indicator red"></div>
+                            <strong>Términos de Servicio:</strong> Cambios recientes detectados
+                        </div>
+                        <div class="mb-3">
+                            <div class="alert-indicator green"></div>
+                            <strong>Reservas Financieras:</strong> Nivel adecuado
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="protocol-result">
+                            <h6>⚙️ Configuración de Alertas</h6>
+                            <div>
+                                <p><strong>Monitoreo activo:</strong> 24/7</p>
+                                <p><strong>Sensibilidad:</strong> Media</p>
+                                <p><strong>Canales:</strong> Email, SMS, Push</p>
+                                <p><strong>Umbral crítico:</strong> 2+ alertas rojas</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 6: Línea de Tiempo de Crisis -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-clock"></i>
+                ⏰ Línea de Tiempo de Respuesta
+            </h2>
+            
+            <div class="crisis-timeline">
+                <h4>Protocolo estándar de respuesta cronológica</h4>
+                
+                <div class="timeline-item">
+                    <h5>⚡ Primeros 5 minutos</h5>
+                    <p><strong>Evaluación inicial:</strong> Identificar tipo y gravedad de crisis</p>
+                    <ul>
+                        <li>Confirmar naturaleza del problema</li>
+                        <li>Evaluar impacto inmediato</li>
+                        <li>Activar protocolo correspondiente</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>🔧 Primeros 30 minutos</h5>
+                    <p><strong>Contención:</strong> Implementar medidas de emergencia</p>
+                    <ul>
+                        <li>Activar sistemas de respaldo</li>
+                        <li>Comunicar con usuarios clave</li>
+                        <li>Implementar soluciones temporales</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>📞 Primera hora</h5>
+                    <p><strong>Comunicación:</strong> Notificar a stakeholders</p>
+                    <ul>
+                        <li>Informar a audiencia sobre situación</li>
+                        <li>Activar canales alternativos</li>
+                        <li>Coordinar con plataformas/soporte</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>🎯 Primeras 24 horas</h5>
+                    <p><strong>Resolución:</strong> Implementar solución definitiva</p>
+                    <ul>
+                        <li>Ejecutar plan de contingencia completo</li>
+                        <li>Monitorear progreso y ajustar</li>
+                        <li>Mantener comunicación constante</li>
+                    </ul>
+                </div>
+                
+                <div class="timeline-item">
+                    <h5>📊 Post-crisis</h5>
+                    <p><strong>Análisis:</strong> Evaluar respuesta y mejorar</p>
+                    <ul>
+                        <li>Documentar lecciones aprendidas</li>
+                        <li>Actualizar protocolos</li>
+                        <li>Preparar para futuras crisis</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 7: Biblioteca de Contingencias -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-book"></i>
+                📚 Biblioteca de Contingencias
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contingency-card">
+                        <div class="contingency-header">
+                            <div class="contingency-title">Suspensión de Cuenta</div>
+                            <div class="severity-badge high">Alta Severidad</div>
+                        </div>
+                        <p><strong>Acciones inmediatas:</strong></p>
+                        <ul>
+                            <li>Activar cuenta de respaldo</li>
+                            <li>Contactar soporte técnico</li>
+                            <li>Migrar audiencia a plataforma alternativa</li>
+                            <li>Implementar comunicación de crisis</li>
+                        </ul>
+                        <p><strong>Tiempo estimado:</strong> 2-4 horas</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="contingency-card">
+                        <div class="contingency-header">
+                            <div class="contingency-title">Fallo Técnico Mayor</div>
+                            <div class="severity-badge medium">Media Severidad</div>
+                        </div>
+                        <p><strong>Acciones inmediatas:</strong></p>
+                        <ul>
+                            <li>Activar equipos de respaldo</li>
+                            <li>Implementar configuración móvil</li>
+                            <li>Notificar a audiencia sobre retraso</li>
+                            <li>Coordinar reparación/reemplazo</li>
+                        </ul>
+                        <p><strong>Tiempo estimado:</strong> 1-6 horas</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="contingency-card">
+                        <div class="contingency-header">
+                            <div class="contingency-title">Cambio Regulatorio</div>
+                            <div class="severity-badge high">Alta Severidad</div>
+                        </div>
+                        <p><strong>Acciones inmediatas:</strong></p>
+                        <ul>
+                            <li>Revisar nuevas restricciones</li>
+                            <li>Adaptar contenido inmediatamente</li>
+                            <li>Comunicar cambios a audiencia</li>
+                            <li>Evaluar impacto en ingresos</li>
+                        </ul>
+                        <p><strong>Tiempo estimado:</strong> 4-24 horas</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="contingency-card">
+                        <div class="contingency-header">
+                            <div class="contingency-title">Emergencia Personal</div>
+                            <div class="severity-badge low">Baja Severidad</div>
+                        </div>
+                        <p><strong>Acciones inmediatas:</strong></p>
+                        <ul>
+                            <li>Activar mensaje automático</li>
+                            <li>Programar contenido pregrabado</li>
+                            <li>Coordinar con moderadores</li>
+                            <li>Establecer fecha de regreso</li>
+                        </ul>
+                        <p><strong>Tiempo estimado:</strong> 30 minutos</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 8: Progress Tracker -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i>
+                📈 Tracker de Maestría en Crisis
+            </h2>
+            
+            <div class="progress-tracker">
+                <h4>Tu Progreso como Experta en Gestión de Crisis</h4>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Identificación de Escenarios</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="scenarioIdentification" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('scenarioIdentification', this.value)">
+                        
+                        <h6>Desarrollo de Protocolos</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="protocolDevelopment" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('protocolDevelopment', this.value)">
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Implementación de Respuesta</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="responseImplementation" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('responseImplementation', this.value)">
+                        
+                        <h6>Preparación Proactiva</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="proactivePreparation" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('proactivePreparation', this.value)">
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <h5>Nivel de Experta en Crisis: <span id="crisisLevel">Principiante</span></h5>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-story">
+            <h3><i class="fas fa-trophy"></i> Caso de Éxito: María - La Maestra de la Resiliencia</h3>
+            <p>"Implementé mi <strong>'Sistema de Resiliencia Estratégica'</strong> con protocolos detallados para diferentes escenarios disruptivos. Cuando enfrenté suspensión temporal inesperada, activé inmediatamente protocolo predefinido, manteniendo 70% de ingresos regulares mientras colegas sin preparación experimentaron interrupción completa. Mi plan de migración de emergencia me permitió transferir operación a plataforma alternativa en 4 horas."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+378%</span>
+                    <span>Resiliencia operativa</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$4,890</span>
+                    <span>Ingresos durante crisis</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">4h</span>
+                    <span>Tiempo de recuperación</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">70%</span>
+                    <span>Retención de ingresos</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-star"></i> Caso de Éxito: Carmen - La Estratega de Crisis</h3>
+            <p>"Desarrollé arquitectura sistemática de respuesta con protocolos específicos activables inmediatamente. Creé configuración alternativa completamente preparada, protocolos de comunicación a través de canales secundarios y plan de migración detallando transferencia a plataforma alternativa. Esta preparación transformó potenciales desastres en inconvenientes gestionables, convirtiendo crisis en eventos procedimentales."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+245%</span>
+                    <span>Velocidad de respuesta</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$6,340</span>
+                    <span>Promedio durante crisis</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">95%</span>
+                    <span>Continuidad operativa</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">12</span>
+                    <span>Crisis gestionadas exitosamente</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-rocket"></i> Caso de Éxito: Isabella - La Experta en Continuidad</h3>
+            <p>"Implementé infraestructura de resiliencia que elimina necesidad de improvisación cuando recursos cognitivos están comprometidos por estrés. Realizo simulaciones periódicas, reviso planes incorporando nuevos escenarios y mantengo información crítica accesible durante crisis. Mi sistema inmunitario organizacional transforma situaciones paralizantes en eventos procedimentales gestionados mediante secuencias predefinidas."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+467%</span>
+                    <span>Estabilidad bajo presión</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$8,750</span>
+                    <span>Récord durante crisis</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">98%</span>
+                    <span>Eficiencia protocolos</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">Top 1%</span>
+                    <span>Ranking resiliencia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-graduation-cap"></i> ¡Felicitaciones! Te has convertido en una Experta en Gestión de Crisis</h2>
+            <p class="lead">Tu infraestructura de resiliencia transforma fundamentalmente tu estabilidad operativa</p>
+            <p>La diferencia entre improvisación bajo presión y activación de protocolos prediseñados es la línea divisoria entre prolongadas interrupciones durante adaptación caótica y continuidad operativa con mínima disrupción de ingresos y pérdida de audiencia.</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <i class="fas fa-search fa-2x mb-2"></i>
+                    <h5>Identificación de Escenarios</h5>
+                    <p>Mapeo completo de riesgos</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                    <h5>Protocolos Estratégicos</h5>
+                    <p>Respuestas específicas documentadas</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-clock fa-2x mb-2"></i>
+                    <h5>Respuesta Rápida</h5>
+                    <p>Activación inmediata de medidas</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                    <h5>Continuidad Operativa</h5>
+                    <p>Mínima interrupción de ingresos</p>
+                </div>
+            </div>
+            
+            <button class="btn-custom btn-primary-custom mt-4" onclick="startCrisisPreparation()">
+                <i class="fas fa-shield-alt"></i> ¡A construir tu sistema de resiliencia!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentTime').textContent = 
+                `Actualizado: ${now.toLocaleDateString('es-ES', options)}`;
+        }
+
+        // Toggle details function
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('expanded');
+        }
+
+        // Calculate resilience
+        function calculateResilience() {
+            const plans = parseInt(document.getElementById('contingencyPlans').value) || 0;
+            const backups = parseInt(document.getElementById('backupSystems').value) || 0;
+            const platforms = parseInt(document.getElementById('alternativePlatforms').value) || 0;
+            const reserves = parseInt(document.getElementById('financialReserve').value) || 0;
+            const simulations = parseInt(document.getElementById('simulationFrequency').value) || 0;
+            
+            if (plans > 0 || backups > 0 || platforms > 0 || reserves > 0 || simulations > 0) {
+                // Resilience calculation
+                let resilienceScore = 0;
+                
+                // Contingency plans (0-30 points)
+                resilienceScore += Math.min(plans * 5, 30);
+                
+                // Backup systems (0-20 points)
+                resilienceScore += Math.min(backups * 7, 20);
+                
+                // Alternative platforms (0-15 points)
+                resilienceScore += Math.min(platforms * 10, 15);
+                
+                // Financial reserves (0-25 points)
+                resilienceScore += Math.min(reserves * 5, 25);
+                
+                // Simulation frequency (0-10 points)
+                resilienceScore += Math.min(simulations * 2, 10);
+                
+                let resilienceLevel = 'Baja';
+                let resilienceColor = '#dc3545';
+                let recommendations = [];
+                
+                if (resilienceScore >= 85) {
+                    resilienceLevel = 'Excelente';
+                    resilienceColor = '#198754';
+                    recommendations = [
+                        'Mantener nivel actual de preparación',
+                        'Realizar simulaciones regulares',
+                        'Actualizar protocolos continuamente',
+                        'Compartir mejores prácticas'
+                    ];
+                } else if (resilienceScore >= 70) {
+                    resilienceLevel = 'Buena';
+                    resilienceColor = '#ffc107';
+                    recommendations = [
+                        'Ampliar número de plataformas alternativas',
+                        'Aumentar frecuencia de simulaciones',
+                        'Documentar más escenarios específicos',
+                        'Mejorar sistemas de respaldo'
+                    ];
+                } else if (resilienceScore >= 50) {
+                    resilienceLevel = 'Moderada';
+                    resilienceColor = '#fd7e14';
+                    recommendations = [
+                        'Desarrollar más planes de contingencia',
+                        'Establecer reservas financieras',
+                        'Implementar sistemas de respaldo',
+                        'Configurar plataformas alternativas'
+                    ];
+                } else {
+                    resilienceLevel = 'Baja';
+                    resilienceColor = '#dc3545';
+                    recommendations = [
+                        'URGENTE: Crear planes básicos de contingencia',
+                        'Establecer fondo de emergencia',
+                        'Configurar cuenta alternativa',
+                        'Implementar respaldos básicos'
+                    ];
+                }
+                
+                document.getElementById('resilienceCalculation').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>📊 Evaluación de Resiliencia</h6>
+                            <p><strong>Puntuación:</strong> ${resilienceScore}/100</p>
+                            <p><strong>Nivel:</strong> ${resilienceLevel}</p>
+                            <p><strong>Planes:</strong> ${plans}</p>
+                            <p><strong>Respaldos:</strong> ${backups}</p>
+                            <p><strong>Reservas:</strong> ${reserves} meses</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🎯 Recomendaciones</h6>
+                            ${recommendations.map(rec => `<p><small>• ${rec}</small></p>`).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('readinessFill').style.width = resilienceScore + '%';
+                document.getElementById('readinessFill').style.background = resilienceColor;
+                document.getElementById('readinessText').textContent = resilienceScore + '%';
+            }
+        }
+
+        // Select crisis scenario
+        function selectScenario(scenario) {
+            document.querySelectorAll('.scenario-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            event.target.closest('.scenario-option').classList.add('selected');
+            
+            const scenarios = {
+                suspension: {
+                    title: '🚨 Suspensión Temporal - Cuenta Bloqueada',
+                    description: 'Tu cuenta principal ha sido suspendida por 7 días por violación de términos.',
+                    impact: 'CRÍTICO: Pérdida total de ingresos en plataforma principal',
+                    timeframe: '7 días de suspensión',
+                    actions: [
+                        '1. Activar cuenta de respaldo inmediatamente',
+                        '2. Contactar soporte técnico para aclaración',
+                        '3. Migrar audiencia a plataforma alternativa',
+                        '4. Implementar comunicación de crisis'
+                    ]
+                },
+                technical: {
+                    title: '⚡ Fallo Técnico - Internet Interrumpido',
+                    description: 'Fallo masivo de internet en tu área, sin servicio por 6 horas.',
+                    impact: 'ALTO: Imposibilidad de transmitir desde ubicación principal',
+                    timeframe: '6 horas sin conectividad',
+                    actions: [
+                        '1. Activar conexión móvil/hotspot',
+                        '2. Relocalizarse a área con internet',
+                        '3. Usar equipo móvil de respaldo',
+                        '4. Notificar a audiencia sobre situación'
+                    ]
+                },
+                regulatory: {
+                    title: '⚖️ Cambio Regulatorio - Nuevas Restricciones',
+                    description: 'La plataforma implementa nuevas restricciones de contenido inmediatamente.',
+                    impact: 'ALTO: Necesidad de adaptación inmediata del contenido',
+                    timeframe: 'Efectivo inmediatamente',
+                    actions: [
+                        '1. Revisar nuevas restricciones en detalle',
+                        '2. Adaptar contenido para cumplir normas',
+                        '3. Comunicar cambios a audiencia',
+                        '4. Evaluar impacto en ingresos'
+                    ]
+                }
+            };
+            
+            const selected = scenarios[scenario];
+            if (selected) {
+                document.getElementById('crisisSimulator').style.display = 'block';
+                document.getElementById('scenarioContent').innerHTML = `
+                    <h5>${selected.title}</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>📝 Descripción:</strong> ${selected.description}</p>
+                            <p><strong>⚠️ Impacto:</strong> ${selected.impact}</p>
+                            <p><strong>⏰ Tiempo:</strong> ${selected.timeframe}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🎯 Acciones Recomendadas:</h6>
+                            <ul>
+                                ${selected.actions.map(action => `<li>${action}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Build protocol
+        function buildProtocol() {
+            const crisisType = document.getElementById('crisisType').value;
+            const severity = document.getElementById('impactSeverity').value;
+            const timeframe = document.getElementById('resolutionTime').value;
+            const resources = document.getElementById('availableResources').value;
+            
+            if (crisisType && severity && timeframe && resources) {
+                const protocolTemplates = {
+                    suspension: {
+                        high: {
+                            immediate: 'Activación inmediata de cuenta alternativa, contacto urgente con soporte, migración de audiencia',
+                            short: 'Configuración completa en plataforma alternativa, comunicación masiva, plan de retención',
+                            medium: 'Establecimiento temporal en nueva plataforma, análisis de causa, preparación para reactivación',
+                            long: 'Migración permanente, reconstrucción de audiencia, diversificación de plataformas'
+                        }
+                    },
+                    technical: {
+                        high: {
+                            immediate: 'Activación de equipos móviles, conexión alternativa, transmisión desde ubicación alterna',
+                            short: 'Configuración de respaldo completa, notificación de audiencia, coordinación de reparaciones',
+                            medium: 'Implementación de soluciones temporales, evaluación de daños, planificación de reemplazo',
+                            long: 'Renovación completa de equipos, mejora de infraestructura, implementación de redundancia'
+                        }
+                    }
+                };
+                
+                const protocol = protocolTemplates[crisisType]?.[severity]?.[timeframe] || 'Protocolo personalizado generado';
+                
+                document.getElementById('protocolContent').innerHTML = `
+                    <h6>📋 Protocolo Generado</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p><strong>Tipo:</strong> ${crisisType}</p>
+                            <p><strong>Severidad:</strong> ${severity}</p>
+                            <p><strong>Tiempo:</strong> ${timeframe}</p>
+                            <p><strong>Recursos:</strong> ${resources}</p>
+                            <hr>
+                            <p><strong>Protocolo:</strong> ${protocol}</p>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Activate protocol
+        function activateProtocol() {
+            alert('🚀 Protocolo activado! Siguiendo secuencia predefinida de respuesta a crisis.');
+        }
+
+        // Evaluate response
+        function evaluateResponse() {
+            alert('✅ Respuesta evaluada: Protocolo ejecutado correctamente. Tiempo de activación: 24 minutos.');
+        }
+
+        // Save protocol
+        function saveProtocol() {
+            alert('💾 Protocolo guardado en tu biblioteca de contingencias!');
+        }
+
+        // Update progress
+        function updateProgress(progressId, value) {
+            document.getElementById(progressId).style.width = value + '%';
+            calculateOverallProgress();
+        }
+
+        // Calculate overall progress
+        function calculateOverallProgress() {
+            const scenarios = parseFloat(document.getElementById('scenarioIdentification').style.width) || 0;
+            const protocols = parseFloat(document.getElementById('protocolDevelopment').style.width) || 0;
+            const implementation = parseFloat(document.getElementById('responseImplementation').style.width) || 0;
+            const preparation = parseFloat(document.getElementById('proactivePreparation').style.width) || 0;
+            
+            const overall = (scenarios + protocols + implementation + preparation) / 4;
+            document.getElementById('overallProgress').style.width = overall + '%';
+            
+            let level = 'Principiante';
+            if (overall >= 80) level = 'Experta';
+            else if (overall >= 60) level = 'Avanzada';
+            else if (overall >= 40) level = 'Intermedia';
+            
+            document.getElementById('crisisLevel').textContent = level;
+        }
+
+        // Start crisis preparation function
+        function startCrisisPreparation() {
+            alert('¡Excelente! Te has convertido en una Experta en Gestión de Crisis. Tu sistema de resiliencia estratégica transformará situaciones paralizantes en eventos procedimentales. ¡A construir tu infraestructura de resiliencia!');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000); // Update every minute
+            
+            // Add some initial animations
+            setTimeout(() => {
+                document.querySelector('.floating-bg').style.opacity = '0.05';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

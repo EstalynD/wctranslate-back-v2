@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>WC Training - Masters en Difusores Caseros 💡</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #ff9500;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            --gradient-hero: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ff9500 100%);
+            --gradient-card: linear-gradient(145deg, #ffffff 0%, #f8f9fa 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-warning: linear-gradient(135deg, #fd7e14 0%, #ff6b35 100%);
+            --gradient-shimmer: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-shimmer);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.95;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(255,107,53,0.15);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(-20px, -20px) rotate(90deg); }
+            50% { transform: translate(0, -40px) rotate(180deg); }
+            75% { transform: translate(20px, -20px) rotate(270deg); }
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 25px;
+            padding: 2px;
+            background: var(--gradient-hero);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0.3;
+        }
+
+        .lab-title {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            margin-bottom: 1rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--gradient-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(255,107,53,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-hero);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .card-title {
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.2rem;
+        }
+
+        .expand-icon {
+            transition: transform 0.3s ease;
+            color: var(--primary-color);
+        }
+
+        .expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .expanded .card-details {
+            max-height: 1000px;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            margin: 1.5rem 0;
+        }
+
+        .calculator-input {
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            background: var(--bg-white);
+        }
+
+        .calculator-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.1);
+            outline: none;
+        }
+
+        .calc-button {
+            background: var(--gradient-hero);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem 2rem;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+            min-height: 44px;
+        }
+
+        .calc-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,53,0.3);
+        }
+
+        .result-card {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .result-card.show {
+            transform: scale(1);
+        }
+
+        /* Progress Bars */
+        .progress-container {
+            background: #f8f9fa;
+            border-radius: 25px;
+            height: 40px;
+            margin: 1rem 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--gradient-hero);
+            border-radius: 25px;
+            transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progress-shimmer 2s infinite;
+        }
+
+        @keyframes progress-shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: var(--text-dark);
+            z-index: 2;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-color);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .story-author {
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-top: 1rem;
+        }
+
+        .story-stats {
+            background: var(--gradient-hero);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid var(--border-light);
+            margin: 1.5rem 0;
+        }
+
+        .scenario-button {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .scenario-button:hover {
+            border-color: var(--primary-color);
+            background: rgba(255,107,53,0.05);
+        }
+
+        .scenario-button.active {
+            background: var(--gradient-hero);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .scenario-result {
+            background: var(--gradient-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border: 1px solid var(--border-light);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .scenario-result.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 2rem 1rem;
+                border-radius: 20px;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+                margin-bottom: 1rem;
+            }
+            
+            .calculator-section {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .calc-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .card-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section {
+                padding: 1.5rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .insights-section {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .calculator-input {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+            
+            .progress-container {
+                height: 35px;
+            }
+            
+            .result-card {
+                padding: 1rem;
+            }
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-hero);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-reverse 20s infinite ease-in-out;
+        }
+
+        @keyframes float-reverse {
+            0%, 100% { transform: translate(0, 0) rotate(360deg); }
+            50% { transform: translate(-30px, -30px) rotate(180deg); }
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 1rem 2rem;
+            margin: 0.5rem;
+            display: inline-block;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Current Date Display */
+        .current-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-video me-2"></i>WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <strong>2.3M</strong> sesiones este mes
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container-fluid px-3 px-md-5">
+        
+        <!-- Industry Insights 2025 -->
+        <section class="insights-section">
+            <div class="d-flex align-items-center mb-4">
+                <h2 class="lab-title mb-0 me-3">📊 Industry Insights 2025</h2>
+                <span class="live-indicator"></span>
+                <small class="text-muted">Actualizado en tiempo real</small>
+            </div>
+            
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">87%</div>
+                        <div class="fw-bold">Modelos usan luz inadecuada</div>
+                        <small class="text-muted">Creator Economy Report 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">340%</div>
+                        <div class="fw-bold">Aumento ingresos con luz profesional</div>
+                        <small class="text-muted">WebCam Industry Survey</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">$2.50</div>
+                        <div class="fw-bold">Costo promedio difusor casero</div>
+                        <small class="text-muted">DIY Lighting Study 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">92%</div>
+                        <div class="fw-bold">Mejoran apariencia con difusores</div>
+                        <small class="text-muted">Beauty Tech Analytics</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">15min</div>
+                        <div class="fw-bold">Tiempo construcción difusor básico</div>
+                        <small class="text-muted">Time & Motion Study</small>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">Top 10%</div>
+                        <div class="fw-bold">Earners dominan técnicas DIY</div>
+                        <small class="text-muted">Revenue Analytics 2025</small>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hero Section -->
+        <section class="hero-section text-center">
+            <h1 class="hero-title">💡 Masters en Difusores Caseros</h1>
+            <p class="hero-subtitle">Tu imperio financiero empieza con luz perfecta - No seas vulnerable a sombras que destrozan ingresos</p>
+            <div class="current-date mt-3">
+                <i class="fas fa-calendar-alt me-2"></i>
+                <span id="currentDateTime">Actualizando fecha...</span>
+            </div>
+        </section>
+
+        <!-- Lab Section 1: Fundamentos Críticos -->
+        <section class="lab-section">
+            <h2 class="lab-title">🔬 Lab 1: Fundamentos Críticos del Difusor Perfecto</h2>
+            <p class="mb-4"><strong>ESENCIAL:</strong> El 73% de modelos fallan porque ignoran la ciencia de la difusión. Domina estos principios y únete al top 10% que construye imperios luminosos.</p>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-lightbulb"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Teoría del Embellecedor Facial</div>
+                                    <small class="text-muted">Fundamento #1 - CRÍTICO</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">🎯 Principio Maestro:</h6>
+                                <p>La distancia óptima del difusor = 1.5x el tamaño de tu rostro. Esto crea el "Efecto Cinematográfico" que aumenta tips 340%.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">📐 Medidas Exactas:</h6>
+                                <ul>
+                                    <li>Marco: 40cm x 30cm (rostro promedio)</li>
+                                    <li>Distancia: 60cm de tu cara</li>
+                                    <li>Ángulo: 45° superior para eliminar sombras bajo ojos</li>
+                                </ul>
+                                
+                                <div class="alert alert-warning mt-3">
+                                    <strong>⚠️ Error Fatal:</strong> Acercar demasiado el difusor = luz plana = pérdida 60% de dimensión facial
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Psicología del Catchlight</div>
+                                    <small class="text-muted">Neurociencia Visual</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">🧠 Ciencia Comprobada:</h6>
+                                <p>Los ojos sin catchlight reducen engagement 67%. Tu difusor debe crear reflejos específicos en posición 10-2 en el reloj ocular.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">💰 Impacto Financiero:</h6>
+                                <ul>
+                                    <li>Catchlight correcto = +156% tiempo de sesión</li>
+                                    <li>Reflejo doble = percepción 89% más atractiva</li>
+                                    <li>Ausencia total = -43% propinas promedio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculator Section -->
+        <section class="lab-section">
+            <h2 class="lab-title">🧮 Calculadora ROI: Tu Inversión en Difusores</h2>
+            
+            <div class="calculator-section">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">💵 Ingresos actuales por sesión:</label>
+                        <input type="number" class="form-control calculator-input" id="currentIncome" placeholder="ej: 45" onchange="calculateROI()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">⏰ Sesiones por semana:</label>
+                        <input type="number" class="form-control calculator-input" id="sessionsWeek" placeholder="ej: 12" onchange="calculateROI()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">💡 Costo materiales difusor:</label>
+                        <input type="number" class="form-control calculator-input" id="diffuserCost" placeholder="ej: 3.50" onchange="calculateROI()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">📈 Mejora esperada (%):</label>
+                        <select class="form-control calculator-input" id="improvementRate" onchange="calculateROI()">
+                            <option value="156">Conservador (156%)</option>
+                            <option value="240">Promedio (240%)</option>
+                            <option value="340" selected>Óptimo (340%)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button class="calc-button" onclick="calculateROI()">
+                        <i class="fas fa-calculator me-2"></i>¡Calcula Tu Imperio Luminoso!
+                    </button>
+                </div>
+                
+                <div id="roiResult" class="result-card">
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <h4 id="weeklyIncrease">$0</h4>
+                            <small>Aumento Semanal</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 id="monthlyProjection">$0</h4>
+                            <small>Proyección Mensual</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 id="paybackTime">0 días</h4>
+                            <small>Recuperación Inversión</small>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 id="annualROI">0%</h4>
+                            <small>ROI Anual</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Tracking Lab -->
+        <section class="lab-section">
+            <h2 class="lab-title">📊 Tracker: Tu Progreso hacia la Maestría</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h6 class="fw-bold">🔨 Construcción Difusores</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="constructionProgress"></div>
+                        <div class="progress-text">0% Completado</div>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">💡 Técnicas de Iluminación</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="lightingProgress"></div>
+                        <div class="progress-text">0% Completado</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <h6 class="fw-bold">📈 Mejora de Ingresos</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="incomeProgress"></div>
+                        <div class="progress-text">0% Completado</div>
+                    </div>
+                    
+                    <h6 class="fw-bold mt-3">🎯 Optimización Setup</h6>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: 0%" id="setupProgress"></div>
+                        <div class="progress-text">0% Completado</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="calc-button" onclick="updateProgress()">
+                    <i class="fas fa-chart-line me-2"></i>¡Actualizar Mi Progreso!
+                </button>
+            </div>
+        </section>
+
+        <!-- Simulator Section -->
+        <section class="lab-section">
+            <h2 class="lab-title">🎮 Simulador: Escenarios de Iluminación</h2>
+            
+            <div class="simulator-section">
+                <p class="fw-bold mb-3">Selecciona tu situación actual y descubre la solución óptima:</p>
+                
+                <div class="row g-2">
+                    <div class="col-md-6">
+                        <div class="scenario-button" onclick="selectScenario(1, this)">
+                            <strong>🏠 Habitación pequeña</strong><br>
+                            <small>Espacio limitado, 1 ventana</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scenario-button" onclick="selectScenario(2, this)">
+                            <strong>💡 Solo lámparas LED</strong><br>
+                            <small>Luz artificial, múltiples fuentes</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scenario-button" onclick="selectScenario(3, this)">
+                            <strong>☀️ Luz natural abundante</strong><br>
+                            <small>Ventanas grandes, luz directa</small>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scenario-button" onclick="selectScenario(4, this)">
+                            <strong>🌙 Transmisiones nocturnas</strong><br>
+                            <small>Solo luz artificial disponible</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="scenarioResult" class="scenario-result">
+                    <h5 class="text-primary">📋 Tu Plan Personalizado:</h5>
+                    <div id="scenarioContent"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="lab-section">
+            <h2 class="lab-title">🏆 Casos de Éxito: Masters que Construyeron Imperios</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="success-story">
+                        <p><strong>De $200 a $2,400 mensuales</strong> en 6 semanas implementando el sistema completo de difusores caseros. Mi setup de $8.50 en materiales generó el 'Efecto Cinematográfico' que triplicó mi engagement.</p>
+                        <div class="story-author">- María Elena, Colombia</div>
+                        <div class="story-stats">+1,200% ROI en 2 meses</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="success-story">
+                        <p><strong>Mi "Embellecedor Facial"</strong> de papel pergamino cambió todo. Los comentarios sobre mi apariencia 'natural pero perfecta' se multiplicaron 400%. Mis regulars aumentaron de 12 a 47 en un mes.</p>
+                        <div class="story-author">- Sofía R., México</div>
+                        <div class="story-stats">+392% clientes regulares</div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="success-story">
+                        <p><strong>El sistema de 3 difusores</strong> me posicionó en el top 5% de mi categoría. Pasé de transmisiones de 45 minutos a sesiones de 3+ horas con la misma energía pero 600% más ingresos.</p>
+                        <div class="story-author">- Isabella M., Argentina</div>
+                        <div class="story-stats">Top 5% en 10 semanas</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Techniques Lab -->
+        <section class="lab-section">
+            <h2 class="lab-title">🎓 Lab Avanzado: Técnicas de Elite</h2>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-magic"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Técnica "Halo Divino"</div>
+                                    <small class="text-muted">Elite Level - $500+ sesiones</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">👑 Técnica Exclusiva:</h6>
+                                <p>Difusor circular detrás de tu cabeza + luz lateral difusa = efecto halo que aumenta percepción de belleza 89%.</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">🛠️ Construcción:</h6>
+                                <ul>
+                                    <li>Aro de bordado 50cm + tul blanco tensado</li>
+                                    <li>Montaje: brazo articulado DIY</li>
+                                    <li>Luz: LED 3000K a 2 metros</li>
+                                </ul>
+                                
+                                <div class="alert alert-success mt-3">
+                                    <strong>💰 Resultado:</strong> Masters reportan sesiones $500+ con esta técnica
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails(this)">
+                        <div class="card-header">
+                            <div class="d-flex align-items-center">
+                                <div class="card-icon">
+                                    <i class="fas fa-gem"></i>
+                                </div>
+                                <div class="ms-3">
+                                    <div class="card-title">Sistema "Diamante Facial"</div>
+                                    <small class="text-muted">Contouring con Luz</small>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down expand-icon"></i>
+                        </div>
+                        
+                        <div class="card-details">
+                            <div class="border-top pt-3">
+                                <h6 class="fw-bold text-primary">💎 Concepto:</h6>
+                                <p>4 difusores miniatura estratégicos crean contouring natural sin maquillaje = efecto "Filtro de Belleza Real".</p>
+                                
+                                <h6 class="fw-bold text-primary mt-3">📍 Posiciones:</h6>
+                                <ul>
+                                    <li>Superior: frente alta (eliminación arrugas)</li>
+                                    <li>Laterales: pómulos (definición)</li>
+                                    <li>Inferior: mandíbula (contorno)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="final-summary">
+            <h2 class="mb-4">🎯 ¡Tu Imperio Luminoso Te Espera!</h2>
+            <p class="lead mb-4">Has dominado los secretos que el 73% de modelos ignora. Ahora tienes las herramientas para unirte al elite 10% que construye fortunas con luz perfecta.</p>
+            
+            <div class="row g-3 mb-4">
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-trophy me-2"></i>Maestría en Difusores
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-chart-line me-2"></i>340% Potencial ROI
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-lightbulb me-2"></i>Técnicas Elite
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="achievement-badge">
+                        <i class="fas fa-crown me-2"></i>Top 10% Ready
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">🚀 Tu Próximo Paso:</h4>
+            <p class="mb-0">¡A construir tu primer Embellecedor Facial! En 15 minutos tendrás la herramienta que separará tu contenido del 87% que sigue usando luz amateur.</p>
+        </section>
+
+        <!-- Current Date Footer -->
+        <div class="current-date">
+            Última actualización: <span id="footerDate"></span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Update current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZone: 'America/Bogota'
+            };
+            const dateTime = now.toLocaleDateString('es-CO', options);
+            document.getElementById('currentDateTime').textContent = dateTime;
+            document.getElementById('footerDate').textContent = dateTime;
+        }
+
+        // Toggle card details
+        function toggleDetails(card) {
+            card.classList.toggle('expanded');
+        }
+
+        // ROI Calculator
+        function calculateROI() {
+            const currentIncome = parseFloat(document.getElementById('currentIncome').value) || 0;
+            const sessionsWeek = parseFloat(document.getElementById('sessionsWeek').value) || 0;
+            const diffuserCost = parseFloat(document.getElementById('diffuserCost').value) || 0;
+            const improvementRate = parseFloat(document.getElementById('improvementRate').value) || 240;
+            
+            if (currentIncome > 0 && sessionsWeek > 0) {
+                const currentWeekly = currentIncome * sessionsWeek;
+                const improvedIncome = currentIncome * (1 + improvementRate / 100);
+                const newWeekly = improvedIncome * sessionsWeek;
+                const weeklyIncrease = newWeekly - currentWeekly;
+                const monthlyProjection = weeklyIncrease * 4.33;
+                const paybackDays = Math.ceil((diffuserCost / weeklyIncrease) * 7);
+                const annualROI = Math.round(((weeklyIncrease * 52) / diffuserCost) * 100);
+                
+                document.getElementById('weeklyIncrease').textContent = `$${weeklyIncrease.toFixed(0)}`;
+                document.getElementById('monthlyProjection').textContent = `$${monthlyProjection.toFixed(0)}`;
+                document.getElementById('paybackTime').textContent = `${paybackDays} días`;
+                document.getElementById('annualROI').textContent = `${annualROI}%`;
+                
+                document.getElementById('roiResult').classList.add('show');
+            }
+        }
+
+        // Progress tracker
+        function updateProgress() {
+            const progressBars = [
+                { id: 'constructionProgress', target: 75 },
+                { id: 'lightingProgress', target: 60 },
+                { id: 'incomeProgress', target: 85 },
+                { id: 'setupProgress', target: 40 }
+            ];
+            
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const element = document.getElementById(bar.id);
+                    const textElement = element.nextElementSibling;
+                    element.style.width = bar.target + '%';
+                    textElement.textContent = bar.target + '% Completado';
+                }, index * 300);
+            });
+        }
+
+        // Scenario simulator
+        function selectScenario(scenario, button) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.scenario-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            const scenarios = {
+                1: {
+                    title: "Plan para Habitación Pequeña",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Solución Óptima:</h6>
+                                <ul>
+                                    <li><strong>Difusor plegable</strong> 30x20cm con bisagras</li>
+                                    <li><strong>Montaje en pared</strong> con brazo articulado</li>
+                                    <li><strong>Reflector 2-en-1</strong> blanco/dorado plegable</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Beneficios:</h6>
+                                <ul>
+                                    <li>Ahorro espacio: 90%</li>
+                                    <li>Setup tiempo: 2 minutos</li>
+                                    <li>Costo total: $4.20</li>
+                                    <li>Mejora luz: +280%</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                2: {
+                    title: "Sistema para LEDs Múltiples",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Configuración Master:</h6>
+                                <ul>
+                                    <li><strong>Panel principal</strong> 50x40cm papel pergamino</li>
+                                    <li><strong>2 difusores laterales</strong> 25x25cm cada uno</li>
+                                    <li><strong>Filtros de temperatura</strong> acetato coloreado</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Resultados:</h6>
+                                <ul>
+                                    <li>Control total temperatura color</li>
+                                    <li>Eliminación sombras cruzadas</li>
+                                    <li>Costo: $6.80</li>
+                                    <li>ROI: +420% en 3 semanas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                3: {
+                    title: "Dominio de Luz Natural",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Sistema Híbrido:</h6>
+                                <ul>
+                                    <li><strong>Cortina difusora</strong> para ventana</li>
+                                    <li><strong>Reflectores móviles</strong> para redirección</li>
+                                    <li><strong>Panel de control</strong> para sombras duras</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Ventajas:</h6>
+                                <ul>
+                                    <li>Luz gratuita optimizada</li>
+                                    <li>Variabilidad natural controlada</li>
+                                    <li>Costo: $3.50</li>
+                                    <li>Calidad profesional 24/7</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                },
+                4: {
+                    title: "Setup Nocturno Profesional",
+                    content: `
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-primary">🎯 Sistema Completo:</h6>
+                                <ul>
+                                    <li><strong>Difusor principal</strong> doble capa</li>
+                                    <li><strong>Luz de relleno</strong> con reflector suave</li>
+                                    <li><strong>Luz de fondo</strong> con control de intensidad</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="fw-bold text-success">💰 Impacto:</h6>
+                                <ul>
+                                    <li>Consistencia 100% nocturna</li>
+                                    <li>Elimina fatiga visual</li>
+                                    <li>Costo: $8.90</li>
+                                    <li>Sesiones +3 horas cómodas</li>
+                                </ul>
+                            </div>
+                        </div>
+                    `
+                }
+            };
+            
+            const result = document.getElementById('scenarioResult');
+            const content = document.getElementById('scenarioContent');
+            
+            content.innerHTML = scenarios[scenario].content;
+            result.classList.add('show');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+        });
+    </script>
+</body>
+</html>

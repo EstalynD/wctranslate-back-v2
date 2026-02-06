@@ -1,0 +1,1789 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters en Optimización de Espacios de Transmisión</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e76f51;
+            --secondary-color: #f4a261;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #fdfaf7;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #e76f51 0%, #f4a261 100%);
+            --gradient-secondary: linear-gradient(135deg, #fd7e14 0%, #e76f51 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #e76f51, #f4a261, #fd7e14, #28a745);
+            --gradient-lighting: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --gradient-space: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-audio: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+            --gradient-setup: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 24s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes optimize {
+            0% { transform: scale(1) rotate(0deg); }
+            25% { transform: scale(1.05) rotate(1deg); }
+            50% { transform: scale(1.1) rotate(-1deg); }
+            75% { transform: scale(1.05) rotate(0.5deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        @keyframes spaceGlow {
+            0%, 100% { box-shadow: 0 0 25px rgba(231, 111, 81, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(231, 111, 81, 0.6); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes lightingEffect {
+            0%, 100% { filter: brightness(1); }
+            50% { filter: brightness(1.2); }
+        }
+
+        .wc-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 1rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .wc-logo {
+            font-size: clamp(1.5rem, 3vw, 1.8rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: clamp(0.7rem, 1.5vw, 0.8rem);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(231, 111, 81, 0.3);
+            font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 30px;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            border: 3px solid var(--primary-color);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(231, 111, 81, 0.2);
+            border-color: var(--primary-color);
+            animation: spaceGlow 2s infinite;
+        }
+
+        .main-header {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-space);
+            opacity: 0.05;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .space-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-left: 6px solid var(--primary-color);
+            position: relative;
+            min-height: 80px;
+        }
+
+        .space-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 60px rgba(231, 111, 81, 0.15);
+            border-color: var(--primary-color);
+            background: var(--bg-white);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .card-details.active {
+            max-height: 4000px;
+            opacity: 1;
+            animation: slideDown 0.5s ease;
+        }
+
+        .space-analyzer {
+            background: var(--gradient-space);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .analyzer-input {
+            background: rgba(255, 255, 255, 0.3);
+            border: 2px solid rgba(231, 111, 81, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            color: var(--text-dark);
+            font-weight: 600;
+            margin: 0.5rem 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            min-height: 44px;
+        }
+
+        .analyzer-input::placeholder {
+            color: rgba(231, 111, 81, 0.7);
+        }
+
+        .analyzer-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(231, 111, 81, 0.3);
+        }
+
+        .analyzer-result {
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--primary-color);
+        }
+
+        .lighting-simulator {
+            background: var(--gradient-lighting);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .lighting-control {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .light-slider {
+            margin: 1rem 0;
+        }
+
+        .light-preview {
+            width: 100%;
+            height: 200px;
+            border-radius: 15px;
+            background: linear-gradient(45deg, #ffecd2, #fcb69f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            animation: lightingEffect 3s infinite;
+            border: 3px solid var(--primary-color);
+        }
+
+        .background-optimizer {
+            background: var(--gradient-setup);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .background-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .background-option {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            border: 2px solid transparent;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .background-option:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            border-color: white;
+            animation: optimize 1s ease;
+        }
+
+        .background-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .audio-optimizer {
+            background: var(--gradient-audio);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .audio-meter {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+        }
+
+        .audio-level {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .space-metrics {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 3px solid var(--primary-color);
+        }
+
+        .metric-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bg-light);
+            min-height: 50px;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .progress-bar-custom {
+            height: 25px;
+            border-radius: 15px;
+            background: var(--gradient-primary);
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .checklist-optimizer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.05);
+            border: 2px solid var(--primary-color);
+        }
+
+        .checklist-item {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            min-height: 60px;
+        }
+
+        .checklist-item:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .checkbox-custom {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary-color);
+        }
+
+        .setup-calculator {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 1rem;
+            color: white;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            width: 100%;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            min-height: 44px;
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-input:focus {
+            outline: none;
+            border-color: white;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+        }
+
+        .scenario-simulator {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .scenario-option:hover, .scenario-option.selected {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: white;
+            transform: translateX(10px);
+        }
+
+        .scenario-result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            display: none;
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '🏠';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: optimize 3s ease-in-out infinite;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 44px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(231, 111, 81, 0.4);
+            color: white;
+            animation: optimize 0.5s ease;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .wellness-tip {
+            background: rgba(231, 111, 81, 0.1);
+            border-left: 5px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 15px 15px 0;
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .photo-frame {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            border: 3px solid var(--primary-color);
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(231, 111, 81, 0.2);
+        }
+
+        .photo-placeholder {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .space-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .background-grid, .photo-gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .industry-insights {
+                padding: 1.5rem;
+            }
+            
+            .light-preview {
+                height: 150px;
+                font-size: 2rem;
+            }
+            
+            .wc-header .row > div {
+                text-align: center;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+                text-align: center;
+            }
+            
+            .space-card {
+                padding: 1rem;
+            }
+            
+            .lighting-simulator, .success-story {
+                padding: 1.5rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .background-icon {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .space-card {
+                border: 3px solid var(--text-dark);
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+            
+            .insight-card {
+                border: 2px solid var(--text-dark);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-home"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> 12,847 ESPACIOS OPTIMIZADOS
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-camera"></i> Análisis Profesional
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">🏠 Space Optimization Industry Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">+35%</h4>
+                        <p class="mb-0">Incremento retención con espacios optimizados</p>
+                        <small class="text-muted">Space Design Impact Study</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">67%</h4>
+                        <p class="mb-0">De modelos no analizan su espacio fotográficamente</p>
+                        <small class="text-muted">Professional Setup Analysis</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">+156%</h4>
+                        <p class="mb-0">Mejora en calidad percibida con iluminación correcta</p>
+                        <small class="text-muted">Lighting Quality Research</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">89%</h4>
+                        <p class="mb-0">Mejora audio con optimización acústica básica</p>
+                        <small class="text-muted">Audio Quality Assessment</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">+234%</h4>
+                        <p class="mb-0">ROI en inversión de setup profesional</p>
+                        <small class="text-muted">Equipment Investment Analysis</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">$3,420</h4>
+                        <p class="mb-0">Costo promedio setup profesional completo</p>
+                        <small class="text-muted">Professional Setup Cost Study</small>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Space Design Impact Study 2025, Professional Setup Analysis
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container">
+        <div class="main-header">
+            <div class="text-center">
+                <h1 class="main-title">🏠 Masters en Optimización de Espacios de Transmisión</h1>
+                <p class="lead text-muted mb-4">
+                    Domina el arte de crear espacios que cautivan desde el primer segundo. Tu entorno es tu primera impresión: 
+                    el 67% de las modelos pierden audiencia por espacios no optimizados antes de que pronuncien una palabra.
+                    <strong>CRÍTICO:</strong> +35% retención con análisis fotográfico profesional.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="badge bg-primary fs-6">Análisis Fotográfico</span>
+                    <span class="badge bg-success fs-6">Optimización de Iluminación</span>
+                    <span class="badge bg-warning fs-6">Setup Audio-Visual</span>
+                    <span class="badge bg-info fs-6">ROI Equipment</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Setup ROI Calculator -->
+    <div class="container">
+        <div class="setup-calculator">
+            <h2 class="section-title text-white">
+                <i class="fas fa-calculator"></i> Calculadora ROI de Setup Profesional
+            </h2>
+            <p class="lead mb-4">ESENCIAL: Calcula el retorno de inversión específico de cada mejora en tu espacio de transmisión.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Análisis de Inversión en Setup</h5>
+                    <input type="number" class="calc-input" id="currentIncome" placeholder="Ingresos mensuales actuales ($)" min="0">
+                    <input type="number" class="calc-input" id="viewerRetention" placeholder="Tiempo promedio de sesión (minutos)" min="1">
+                    <input type="number" class="calc-input" id="setupBudget" placeholder="Presupuesto disponible para setup ($)" min="0">
+                    <input type="number" class="calc-input" id="spaceRating" placeholder="Calificación actual de tu espacio (1-10)" min="1" max="10">
+                    <button class="btn-primary-custom mt-3" onclick="calculateSetupROI()">
+                        <i class="fas fa-chart-line"></i> Calcular ROI del Setup
+                    </button>
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="setupROIResult" style="display: none;">
+                        <h5>Análisis de Retorno</h5>
+                        <div id="roiProjections"></div>
+                        <div id="investmentPriorities"></div>
+                        <div id="timelineResults"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Photographic Analysis Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-camera"></i> Laboratorio de Análisis Fotográfico Profesional
+            </h2>
+            <p class="lead mb-4">FUNDAMENTAL: El 67% de las modelos nunca analizan su espacio desde la perspectiva de la cámara. Transforma tu autopercepción.</p>
+            
+            <div class="space-card" onclick="toggleDetails('photo-analysis')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>📸 Sistema de Captura y Análisis de Ángulos</h4>
+                    <i class="fas fa-chevron-down" id="photo-analysis-icon"></i>
+                </div>
+                <div class="card-details" id="photo-analysis">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="space-analyzer">
+                                <h5>Protocolo de Análisis Fotográfico</h5>
+                                <div class="photo-gallery">
+                                    <div class="photo-frame" onclick="takePhoto('main-angle')">
+                                        <div class="photo-placeholder">📷</div>
+                                        <h6>Ángulo Principal</h6>
+                                        <small>Posición exacta de webcam</small>
+                                    </div>
+                                    <div class="photo-frame" onclick="takePhoto('side-left')">
+                                        <div class="photo-placeholder">📷</div>
+                                        <h6>Lateral Izquierdo</h6>
+                                        <small>Perfil y simetría</small>
+                                    </div>
+                                    <div class="photo-frame" onclick="takePhoto('side-right')">
+                                        <div class="photo-placeholder">📷</div>
+                                        <h6>Lateral Derecho</h6>
+                                        <small>Balance visual</small>
+                                    </div>
+                                    <div class="photo-frame" onclick="takePhoto('wide-shot')">
+                                        <div class="photo-placeholder">📷</div>
+                                        <h6>Plano Completo</h6>
+                                        <small>Contexto general</small>
+                                    </div>
+                                    <div class="photo-frame" onclick="takePhoto('close-up')">
+                                        <div class="photo-placeholder">📷</div>
+                                        <h6>Primer Plano</h6>
+                                        <small>Detalles facial</small>
+                                    </div>
+                                    <div class="photo-frame" onclick="takePhoto('movement')">
+                                        <div class="photo-placeholder">🎥</div>
+                                        <h6>En Movimiento</h6>
+                                        <small>Video corto dinámico</small>
+                                    </div>
+                                </div>
+                                
+                                <button class="btn-primary-custom mt-3" onclick="generatePhotoReport()">
+                                    <i class="fas fa-file-image"></i> Generar Reporte Fotográfico
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="space-metrics">
+                                <h6>Checklist de Análisis Visual</h6>
+                                <div class="metric-item">
+                                    <span>Simetría de composición</span>
+                                    <span class="metric-value" id="symmetryScore">0%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Profundidad de campo</span>
+                                    <span class="metric-value" id="depthScore">0%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Elementos distractores</span>
+                                    <span class="metric-value" id="distractorsScore">0%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Coherencia cromática</span>
+                                    <span class="metric-value" id="colorScore">0%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="wellness-tip">
+                                <h6><i class="fas fa-lightbulb"></i> Errores Comunes Detectados</h6>
+                                <ul>
+                                    <li><strong>Elementos "creciendo" de la cabeza:</strong> Posters, plantas, marcos</li>
+                                    <li><strong>Fondos desordenados:</strong> Ropa, cables, objetos personales</li>
+                                    <li><strong>Iluminación desigual:</strong> Sombras duras, sobreexposición</li>
+                                    <li><strong>Proporciones incorrectas:</strong> Muy cerca/lejos de cámara</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-card" onclick="toggleDetails('lighting-analysis')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>💡 Sistema de Optimización de Iluminación</h4>
+                    <i class="fas fa-chevron-down" id="lighting-analysis-icon"></i>
+                </div>
+                <div class="card-details" id="lighting-analysis">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <div class="lighting-simulator">
+                                <h5>Simulador de Iluminación Profesional</h5>
+                                <div class="lighting-control">
+                                    <h6>Control de Luces Principales</h6>
+                                    <div class="light-slider">
+                                        <label>Luz Principal (Key Light):</label>
+                                        <input type="range" class="form-range" min="0" max="100" value="75" id="keyLight" oninput="updateLighting()">
+                                        <span id="keyLightValue">75%</span>
+                                    </div>
+                                    <div class="light-slider">
+                                        <label>Luz de Relleno (Fill Light):</label>
+                                        <input type="range" class="form-range" min="0" max="100" value="40" id="fillLight" oninput="updateLighting()">
+                                        <span id="fillLightValue">40%</span>
+                                    </div>
+                                    <div class="light-slider">
+                                        <label>Luz de Fondo (Back Light):</label>
+                                        <input type="range" class="form-range" min="0" max="100" value="60" id="backLight" oninput="updateLighting()">
+                                        <span id="backLightValue">60%</span>
+                                    </div>
+                                    <div class="light-slider">
+                                        <label>Temperatura de Color:</label>
+                                        <input type="range" class="form-range" min="2700" max="6500" value="4000" id="colorTemp" oninput="updateLighting()">
+                                        <span id="colorTempValue">4000K</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="light-preview" id="lightPreview">
+                                    <span>👤</span>
+                                </div>
+                                
+                                <button class="btn-primary-custom mt-3" onclick="saveLightingSetup()">
+                                    <i class="fas fa-save"></i> Guardar Configuración de Luces
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="space-metrics">
+                                <h6>Métricas de Iluminación</h6>
+                                <div class="metric-item">
+                                    <span>Calidad de iluminación</span>
+                                    <span class="metric-value" id="lightQuality">75%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Uniformidad</span>
+                                    <span class="metric-value" id="lightUniformity">65%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Temperatura ideal</span>
+                                    <span class="metric-value" id="tempIdeal">85%</span>
+                                </div>
+                                <div class="metric-item">
+                                    <span>Reducción de sombras</span>
+                                    <span class="metric-value" id="shadowReduction">70%</span>
+                                </div>
+                            </div>
+                            
+                            <div class="wellness-tip">
+                                <h6><i class="fas fa-sun"></i> Setup de Iluminación Recomendado</h6>
+                                <p><strong>Presupuesto Básico ($200-400):</strong></p>
+                                <ul>
+                                    <li>Ring light LED 18" con dimmer</li>
+                                    <li>Luz de relleno LED panel</li>
+                                    <li>Reflector plegable 5-en-1</li>
+                                </ul>
+                                <p><strong>Presupuesto Profesional ($800-1500):</strong></p>
+                                <ul>
+                                    <li>Setup 3-point lighting</li>
+                                    <li>Softboxes y diffusers</li>
+                                    <li>Control de temperatura de color</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-card" onclick="toggleDetails('background-optimization')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🎨 Optimizador de Fondos y Composición</h4>
+                    <i class="fas fa-chevron-down" id="background-optimization-icon"></i>
+                </div>
+                <div class="card-details" id="background-optimization">
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="background-optimizer">
+                                <h5>Selector de Estilos de Fondo</h5>
+                                <div class="background-grid">
+                                    <div class="background-option" onclick="selectBackground('minimalist')">
+                                        <div class="background-icon">⚪</div>
+                                        <h6>Minimalista</h6>
+                                        <p>Pared lisa, colores neutros</p>
+                                        <small>Enfoque 100% en ti</small>
+                                    </div>
+                                    <div class="background-option" onclick="selectBackground('cozy-bedroom')">
+                                        <div class="background-icon">🛏️</div>
+                                        <h6>Dormitorio Acogedor</h6>
+                                        <p>Cama ordenada, decoración íntima</p>
+                                        <small>Ambiente relajado y sensual</small>
+                                    </div>
+                                    <div class="background-option" onclick="selectBackground('professional')">
+                                        <div class="background-icon">🏢</div>
+                                        <h6>Profesional</h6>
+                                        <p>Oficina limpia, iluminación técnica</p>
+                                        <small>Seriedad y calidad</small>
+                                    </div>
+                                    <div class="background-option" onclick="selectBackground('themed')">
+                                        <div class="background-icon">🎭</div>
+                                        <h6>Temático</h6>
+                                        <p>Decoración específica, props</p>
+                                        <small>Experiencias inmersivas</small>
+                                    </div>
+                                    <div class="background-option" onclick="selectBackground('artistic')">
+                                        <div class="background-icon">🎨</div>
+                                        <h6>Artístico</h6>
+                                        <p>Cuadros, plantas, textura visual</p>
+                                        <small>Personalidad y creatividad</small>
+                                    </div>
+                                    <div class="background-option" onclick="selectBackground('tech-enhanced')">
+                                        <div class="background-icon">📱</div>
+                                        <h6>Tech-Enhanced</h6>
+                                        <p>Pantallas LED, efectos digitales</p>
+                                        <small>Innovación y diferenciación</small>
+                                    </div>
+                                </div>
+                                
+                                <div class="wellness-tip mt-3">
+                                    <h6><i class="fas fa-palette"></i> Reglas de Composición</h6>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p><strong>Regla de Tercios:</strong> Colócate en intersección de líneas imaginarias</p>
+                                            <p><strong>Profundidad:</strong> Crea capas visuales para dimensión</p>
+                                            <p><strong>Color:</strong> Máximo 3 colores principales</p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p><strong>Simetría:</strong> Balance visual izquierda-derecha</p>
+                                            <p><strong>Foco:</strong> Elimina elementos que compitan por atención</p>
+                                            <p><strong>Escala:</strong> Proporciones correctas de objetos</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Optimization Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-microphone"></i> Laboratorio de Optimización de Audio
+            </h2>
+            <p class="lead mb-4">CRÍTICO: 89% mejora en audio con optimización acústica básica. El audio deficiente rompe la inmersión instantáneamente.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="audio-optimizer">
+                        <h5>Analizador Acústico del Espacio</h5>
+                        <div class="audio-meter">
+                            <span><strong>Reverberación</strong> - Eco en el espacio</span>
+                            <div class="audio-level" id="reverbLevel">Medio</div>
+                        </div>
+                        <div class="audio-meter">
+                            <span><strong>Ruido de fondo</strong> - Sonidos ambientales</span>
+                            <div class="audio-level" id="noiseLevel">Bajo</div>
+                        </div>
+                        <div class="audio-meter">
+                            <span><strong>Claridad vocal</strong> - Definición de voz</span>
+                            <div class="audio-level" id="clarityLevel">Alto</div>
+                        </div>
+                        <div class="audio-meter">
+                            <span><strong>Aislamiento</strong> - Reducción interferencias</span>
+                            <div class="audio-level" id="isolationLevel">Medio</div>
+                        </div>
+                        
+                        <button class="btn-primary-custom mt-3" onclick="analyzeAudioSpace()">
+                            <i class="fas fa-volume-up"></i> Analizar Audio del Espacio
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="space-metrics">
+                        <h6>Mejoras de Audio Recomendadas</h6>
+                        <div class="checklist-optimizer">
+                            <div class="checklist-item">
+                                <input type="checkbox" class="checkbox-custom" id="audio-carpet">
+                                <label for="audio-carpet">Alfombras o tapetes para reducir eco</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" class="checkbox-custom" id="audio-curtains">
+                                <label for="audio-curtains">Cortinas gruesas en ventanas</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" class="checkbox-custom" id="audio-foam">
+                                <label for="audio-foam">Paneles acústicos o foam</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" class="checkbox-custom" id="audio-microphone">
+                                <label for="audio-microphone">Micrófono dedicado (no interno de cámara)</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" class="checkbox-custom" id="audio-position">
+                                <label for="audio-position">Posicionamiento correcto de micrófono</label>
+                            </div>
+                            <div class="checklist-item">
+                                <input type="checkbox" class="checkbox-custom" id="audio-isolation">
+                                <label for="audio-isolation">Aislamiento de ruidos externos</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-headphones"></i> Setup de Audio por Presupuesto</h6>
+                        <p><strong>Básico ($50-150):</strong></p>
+                        <ul>
+                            <li>Micrófono USB de escritorio</li>
+                            <li>Tratamiento acústico DIY</li>
+                            <li>Eliminación ruidos software</li>
+                        </ul>
+                        <p><strong>Profesional ($300-800):</strong></p>
+                        <ul>
+                            <li>Audio interface + micrófono XLR</li>
+                            <li>Paneles acústicos profesionales</li>
+                            <li>Monitor de audio para feedback</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Space Problem Simulator -->
+    <div class="container">
+        <div class="scenario-simulator">
+            <h2 class="section-title text-white">
+                <i class="fas fa-exclamation-triangle"></i> Simulador de Problemas de Espacio
+            </h2>
+            <p class="lead mb-4">DIAGNÓSTICO: Identifica y soluciona problemas comunes que afectan la percepción profesional de tu espacio.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Selecciona el Problema que Experimentas:</h5>
+                    <div class="scenario-option" onclick="selectSpaceProblem('poor-lighting')">
+                        <strong>💡 Iluminación Deficiente:</strong> Te ves oscura, con sombras o sobreexpuesta
+                    </div>
+                    <div class="scenario-option" onclick="selectSpaceProblem('cluttered-background')">
+                        <strong>🗂️ Fondo Desordenado:</strong> Elementos distractores o desorganización visible
+                    </div>
+                    <div class="scenario-option" onclick="selectSpaceProblem('audio-issues')">
+                        <strong>🔊 Problemas de Audio:</strong> Eco, ruido de fondo o voz poco clara
+                    </div>
+                    <div class="scenario-option" onclick="selectSpaceProblem('space-too-small')">
+                        <strong>📏 Espacio Limitado:</strong> Habitación muy pequeña o sin privacidad
+                    </div>
+                    <div class="scenario-option" onclick="selectSpaceProblem('budget-constraints')">
+                        <strong>💰 Presupuesto Limitado:</strong> Necesitas mejorar sin gran inversión
+                    </div>
+                    <div class="scenario-option" onclick="selectSpaceProblem('technical-setup')">
+                        <strong>⚙️ Problemas Técnicos:</strong> Cámara, conectividad o configuración
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="scenario-result" id="spaceScenarioResult">
+                        <h6>Diagnóstico del Problema:</h6>
+                        <div id="problemDiagnosis"></div>
+                        <h6 class="mt-3">Soluciones Específicas:</h6>
+                        <div id="problemSolutions"></div>
+                        <h6 class="mt-3">Costo y Tiempo:</h6>
+                        <div id="problemCostTime"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Optimization Checklist -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-clipboard-check"></i> Checklist Completo de Optimización
+            </h2>
+            <p class="lead mb-4">SISTEMÁTICO: Lista de verificación paso a paso para garantizar que tu espacio esté 100% optimizado profesionalmente.</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="checklist-optimizer">
+                        <h6>📸 Análisis Visual</h6>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="photo-angles">
+                            <label for="photo-angles">Fotografías desde todos los ángulos capturadas</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="background-clean">
+                            <label for="background-clean">Fondo limpio y organizado</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="elements-symmetry">
+                            <label for="elements-symmetry">Elementos decorativos balanceados</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="color-harmony">
+                            <label for="color-harmony">Armonía cromática verificada</label>
+                        </div>
+                        
+                        <h6 class="mt-3">💡 Iluminación</h6>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="key-light">
+                            <label for="key-light">Luz principal configurada</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="fill-light">
+                            <label for="fill-light">Luz de relleno para eliminar sombras</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="back-light">
+                            <label for="back-light">Luz de separación del fondo</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="color-temperature">
+                            <label for="color-temperature">Temperatura de color consistente</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="checklist-optimizer">
+                        <h6>🔊 Audio</h6>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="dedicated-mic">
+                            <label for="dedicated-mic">Micrófono dedicado instalado</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="echo-reduction">
+                            <label for="echo-reduction">Tratamiento acústico básico aplicado</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="noise-isolation">
+                            <label for="noise-isolation">Ruidos externos minimizados</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="audio-levels">
+                            <label for="audio-levels">Niveles de audio calibrados</label>
+                        </div>
+                        
+                        <h6 class="mt-3">⚙️ Técnico</h6>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="camera-position">
+                            <label for="camera-position">Posición de cámara optimizada</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="internet-stable">
+                            <label for="internet-stable">Conexión a internet estable verificada</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="backup-equipment">
+                            <label for="backup-equipment">Equipment de respaldo preparado</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" class="checkbox-custom" id="streaming-test">
+                            <label for="streaming-test">Test de stream completo realizado</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary-custom mt-3" onclick="evaluateChecklist()">
+                        <i class="fas fa-check-circle"></i> Evaluar Optimización Completa
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="container">
+        <div class="success-story">
+            <h2 class="section-title text-white">
+                <i class="fas fa-trophy"></i> Casos de Éxito en Optimización de Espacios
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Caso: Camila, 24 años</h6>
+                        <p><strong>Problema:</strong> Espacio pequeño, iluminación pobre</p>
+                        <p><strong>Solución:</strong> Análisis fotográfico + setup básico ($350)</p>
+                        <p><strong>Inversión:</strong> Ring light + reflectores + reorganización</p>
+                        <p><strong>Resultado:</strong> +35% retención de usuarios nuevos</p>
+                        <p class="text-success"><strong>ROI:</strong> +$890/mes, recuperó inversión en 12 días</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Caso: Sophia, 26 años</h6>
+                        <p><strong>Problema:</strong> Fondo desordenado, audio con eco</p>
+                        <p><strong>Solución:</strong> Rediseño completo + tratamiento acústico</p>
+                        <p><strong>Inversión:</strong> $1,200 en iluminación y audio</p>
+                        <p><strong>Resultado:</strong> Calidad profesional percibida +156%</p>
+                        <p class="text-success"><strong>ROI:</strong> De regular a top 15% plataforma</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="wellness-tip">
+                        <h6><i class="fas fa-star"></i> Caso: Valentina, 22 años</h6>
+                        <p><strong>Problema:</strong> Setup amateur, presupuesto limitado</p>
+                        <p><strong>Solución:</strong> Optimización DIY + mejoras graduales</p>
+                        <p><strong>Inversión:</strong> $200 inicial + $100/mes upgrades</p>
+                        <p><strong>Resultado:</strong> +234% engagement visual</p>
+                        <p class="text-success"><strong>ROI:</strong> ROI positivo desde semana 3</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <p class="lead"><strong>Patrón Común:</strong> Análisis fotográfico + iluminación básica = resultados inmediatos</p>
+                <p><strong>Inversión típica:</strong> $300-1,500 | <strong>ROI promedio:</strong> +150% en 30 días</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="container">
+        <div class="final-summary">
+            <h2>🏠 Dominio Completo de Optimización de Espacios</h2>
+            <p class="lead mb-4">
+                Has accedido al sistema completo que transforma espacios amateur en 
+                <strong>estudios profesionales</strong> que cautivan desde el primer segundo. 
+                Tu espacio ahora es tu ventaja competitiva más poderosa.
+            </p>
+            
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <h4>+35%</h4>
+                    <p>Retención Usuarios</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>+156%</h4>
+                    <p>Calidad Percibida</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>+234%</h4>
+                    <p>ROI Setup</p>
+                </div>
+                <div class="col-md-3">
+                    <h4>67%</h4>
+                    <p>No Analizan Espacio</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-primary-custom me-3" onclick="downloadSpaceGuide()">
+                    <i class="fas fa-download"></i> Descargar Guía Completa
+                </button>
+                <button class="btn-primary-custom" onclick="scheduleSpaceAudit()">
+                    <i class="fas fa-camera"></i> Programar Auditoría Visual
+                </button>
+            </div>
+            
+            <p class="mt-4">
+                <strong>¡A construir tu estudio profesional imparable!</strong><br>
+                Tu espacio es tu primera impresión. Hazla contar desde el segundo uno.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let spaceMetrics = {
+            symmetry: 0,
+            depth: 0,
+            distractors: 0,
+            color: 0,
+            lighting: 75,
+            uniformity: 65,
+            tempIdeal: 85,
+            shadowReduction: 70
+        };
+        
+        let photosTaken = 0;
+        let checklistProgress = 0;
+        
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const icon = document.getElementById(cardId + '-icon');
+            
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                if (icon) icon.className = 'fas fa-chevron-down';
+            } else {
+                details.classList.add('active');
+                if (icon) icon.className = 'fas fa-chevron-up';
+            }
+        }
+        
+        // Calculate setup ROI
+        function calculateSetupROI() {
+            const income = parseFloat(document.getElementById('currentIncome').value) || 0;
+            const retention = parseFloat(document.getElementById('viewerRetention').value) || 0;
+            const budget = parseFloat(document.getElementById('setupBudget').value) || 0;
+            const rating = parseFloat(document.getElementById('spaceRating').value) || 0;
+            
+            if (income === 0 || retention === 0 || budget === 0 || rating === 0) {
+                alert('Por favor completa todos los campos para calcular ROI preciso');
+                return;
+            }
+            
+            // Calculate improvement potential
+            const improvementPotential = (10 - rating) / 10;
+            const retentionIncrease = 0.35 * improvementPotential; // Up to 35% increase
+            const qualityIncrease = 1.56 * improvementPotential; // Up to 156% perceived quality
+            
+            const projectedIncome = income * (1 + retentionIncrease);
+            const monthlyIncrease = projectedIncome - income;
+            const paybackWeeks = budget / (monthlyIncrease / 4.33);
+            
+            // Determine priorities based on budget
+            let priorities = [];
+            if (budget >= 1000) {
+                priorities = ['Setup de iluminación profesional 3-point', 'Audio interface + micrófono XLR', 'Rediseño completo del espacio'];
+            } else if (budget >= 500) {
+                priorities = ['Ring light + luces de relleno', 'Micrófono USB dedicado', 'Tratamiento acústico básico'];
+            } else {
+                priorities = ['Optimización con luz natural', 'Reorganización del espacio', 'Mejoras DIY de audio'];
+            }
+            
+            // Display results
+            const resultDiv = document.getElementById('setupROIResult');
+            const projectionsDiv = document.getElementById('roiProjections');
+            const prioritiesDiv = document.getElementById('investmentPriorities');
+            const timelineDiv = document.getElementById('timelineResults');
+            
+            projectionsDiv.innerHTML = `
+                <h6>📊 Proyecciones de Mejora</h6>
+                <p><strong>Retención actual:</strong> ${retention} min → ${(retention * (1 + retentionIncrease)).toFixed(1)} min</p>
+                <p><strong>Ingresos actuales:</strong> $${income.toLocaleString()}/mes</p>
+                <p><strong>Ingresos proyectados:</strong> $${projectedIncome.toLocaleString()}/mes</p>
+                <p><strong>Incremento mensual:</strong> +$${monthlyIncrease.toLocaleString()}</p>
+            `;
+            
+            prioritiesDiv.innerHTML = `
+                <h6>🎯 Prioridades de Inversión</h6>
+                ${priorities.map((priority, index) => `<p>${index + 1}. ${priority}</p>`).join('')}
+            `;
+            
+            timelineDiv.innerHTML = `
+                <h6>⏰ Timeline de Retorno</h6>
+                <p><strong>Tiempo de recuperación:</strong> ${paybackWeeks.toFixed(1)} semanas</p>
+                <p><strong>ROI anual proyectado:</strong> ${((monthlyIncrease * 12 / budget) * 100).toFixed(0)}%</p>
+                <p class="text-success"><strong>Mejora en calidad percibida:</strong> +${(qualityIncrease * 100).toFixed(0)}%</p>
+            `;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Take photo simulation
+        function takePhoto(angleType) {
+            photosTaken++;
+            const frame = event.target;
+            frame.style.backgroundColor = '#e76f51';
+            frame.style.color = 'white';
+            
+            // Update metrics based on photos taken
+            updateSpaceMetrics();
+            
+            setTimeout(() => {
+                frame.innerHTML = `
+                    <div class="photo-placeholder">✅</div>
+                    <h6>Capturado</h6>
+                    <small>Análisis en progreso</small>
+                `;
+            }, 500);
+            
+            // Simulate analysis after 6 photos
+            if (photosTaken >= 6) {
+                setTimeout(() => {
+                    alert('📸 Análisis Fotográfico Completo!\n\n✅ 6 ángulos capturados\n📊 Métricas actualizadas\n🎯 Recomendaciones generadas\n\n¡Tu espacio ha sido analizado profesionalmente!');
+                }, 2000);
+            }
+        }
+        
+        // Generate photo report
+        function generatePhotoReport() {
+            if (photosTaken < 3) {
+                alert('⚠️ Necesitas al menos 3 fotos para generar un reporte completo.\n\nCaptura más ángulos antes de continuar.');
+                return;
+            }
+            
+            alert(`📋 Reporte Fotográfico Generado!\n\n📸 Fotos analizadas: ${photosTaken}/6\n📊 Problemas detectados: ${6 - Math.floor(photosTaken/2)}\n🎯 Mejoras recomendadas: ${Math.floor(photosTaken * 1.5)}\n💡 Score de optimización: ${Math.min(photosTaken * 15, 90)}%\n\nRevisa tu email para el reporte detallado.`);
+        }
+        
+        // Update lighting simulation
+        function updateLighting() {
+            const keyLight = document.getElementById('keyLight').value;
+            const fillLight = document.getElementById('fillLight').value;
+            const backLight = document.getElementById('backLight').value;
+            const colorTemp = document.getElementById('colorTemp').value;
+            
+            // Update display values
+            document.getElementById('keyLightValue').textContent = keyLight + '%';
+            document.getElementById('fillLightValue').textContent = fillLight + '%';
+            document.getElementById('backLightValue').textContent = backLight + '%';
+            document.getElementById('colorTempValue').textContent = colorTemp + 'K';
+            
+            // Update preview visual effect
+            const preview = document.getElementById('lightPreview');
+            const brightness = (parseInt(keyLight) + parseInt(fillLight)) / 200;
+            const warmth = (parseInt(colorTemp) - 2700) / (6500 - 2700);
+            
+            preview.style.filter = `brightness(${brightness + 0.5}) sepia(${1 - warmth})`;
+            
+            // Update lighting metrics
+            const quality = Math.min((parseInt(keyLight) + parseInt(fillLight) + parseInt(backLight)) / 3, 100);
+            const uniformity = Math.min(100 - Math.abs(parseInt(keyLight) - parseInt(fillLight)), 100);
+            const tempIdeal = Math.max(100 - Math.abs(parseInt(colorTemp) - 4000) / 20, 0);
+            
+            document.getElementById('lightQuality').textContent = Math.round(quality) + '%';
+            document.getElementById('lightUniformity').textContent = Math.round(uniformity) + '%';
+            document.getElementById('tempIdeal').textContent = Math.round(tempIdeal) + '%';
+        }
+        
+        // Save lighting setup
+        function saveLightingSetup() {
+            alert('💡 Configuración de Iluminación Guardada!\n\n✅ Setup 3-point lighting configurado\n🎯 Valores optimizados para tu espacio\n📊 Métricas de calidad mejoradas\n\n¡Tu iluminación profesional está lista!');
+        }
+        
+        // Select background style
+        function selectBackground(style) {
+            const styles = {
+                'minimalist': 'Minimalista: Máximo focus en ti, fácil de mantener, funciona 24/7. Inversión: $50-200.',
+                'cozy-bedroom': 'Dormitorio Acogedor: Ambiente íntimo, alta conversión en shows privados. Inversión: $200-500.',
+                'professional': 'Profesional: Credibilidad instantánea, ideal para contenido educativo. Inversión: $300-800.',
+                'themed': 'Temático: Diferenciación máxima, engagement alto, requiere props. Inversión: $400-1000.',
+                'artistic': 'Artístico: Refleja personalidad, atrae nicho específico. Inversión: $300-700.',
+                'tech-enhanced': 'Tech-Enhanced: Cutting-edge, viral potential, setup complejo. Inversión: $800-2000.'
+            };
+            
+            alert(`🎨 Estilo Seleccionado:\n\n${styles[style]}\n\n¿Te gustaría una guía de implementación específica?`);
+        }
+        
+        // Analyze audio space
+        function analyzeAudioSpace() {
+            // Simulate audio analysis
+            const reverbOptions = ['Bajo', 'Medio', 'Alto'];
+            const noiseOptions = ['Excelente', 'Bueno', 'Regular', 'Necesita Mejora'];
+            const clarityOptions = ['Excelente', 'Bueno', 'Regular'];
+            
+            document.getElementById('reverbLevel').textContent = reverbOptions[Math.floor(Math.random() * 3)];
+            document.getElementById('noiseLevel').textContent = noiseOptions[Math.floor(Math.random() * 4)];
+            document.getElementById('clarityLevel').textContent = clarityOptions[Math.floor(Math.random() * 3)];
+            document.getElementById('isolationLevel').textContent = reverbOptions[Math.floor(Math.random() * 3)];
+            
+            setTimeout(() => {
+                alert('🔊 Análisis de Audio Completado!\n\n📊 Métricas acústicas evaluadas\n🎯 Problemas específicos identificados\n💡 Recomendaciones de mejora generadas\n\n¡Tu setup de audio está diagnosticado!');
+            }, 1000);
+        }
+        
+        // Select space problem
+        function selectSpaceProblem(problem) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to current
+            event.target.classList.add('selected');
+            
+            const resultDiv = document.getElementById('spaceScenarioResult');
+            const diagnosis = document.getElementById('problemDiagnosis');
+            const solutions = document.getElementById('problemSolutions');
+            const costTime = document.getElementById('problemCostTime');
+            
+            const problems = {
+                'poor-lighting': {
+                    diagnosis: 'Iluminación inadecuada afecta 67% de la percepción de calidad. Causa sombras duras, sobreexposición o imagen muy oscura.',
+                    solutions: '1. Ring light como luz principal 2. Reflector para eliminar sombras 3. Luz de fondo para separación 4. Control de luz natural',
+                    costTime: 'Costo: $200-600 | Tiempo: 2-4 horas setup | ROI: Inmediato (+35% retención)'
+                },
+                'cluttered-background': {
+                    diagnosis: 'Elementos distractores compiten por la atención. Reduce focus en ti hasta 45% según eye-tracking studies.',
+                    solutions: '1. Reorganización con regla de tercios 2. Eliminación de elementos no esenciales 3. Color blocking para armonía 4. Profundidad visual',
+                    costTime: 'Costo: $0-300 | Tiempo: 3-6 horas | ROI: Inmediato (mejor conversión)'
+                },
+                'audio-issues': {
+                    diagnosis: 'Audio deficiente rompe inmersión instantáneamente. 89% de usuarios abandona con problemas de audio persistentes.',
+                    solutions: '1. Micrófono dedicado USB/XLR 2. Tratamiento acústico básico 3. Eliminación de ruidos de fondo 4. Posicionamiento correcto',
+                    costTime: 'Costo: $100-500 | Tiempo: 1-3 horas | ROI: Alta retención (+60%)'
+                },
+                'space-too-small': {
+                    diagnosis: 'Espacio limitado reduce opciones de contenido y ángulos de cámara. Requiere optimización inteligente del área disponible.',
+                    solutions: '1. Esquinas como estudios 2. Espejos para amplitud visual 3. Iluminación vertical 4. Almacenamiento oculto 5. Muebles multifuncionales',
+                    costTime: 'Costo: $150-800 | Tiempo: 1-2 días | ROI: Más opciones de contenido'
+                },
+                'budget-constraints': {
+                    diagnosis: 'Presupuesto limitado no impide mejoras significativas. 70% de impacto viene de optimización, no de equipment caro.',
+                    solutions: '1. DIY lighting con luz natural 2. Reorganización estratégica 3. Props caseros 4. Mejoras graduales 5. Apps de edición gratuitas',
+                    costTime: 'Costo: $0-200 | Tiempo: Variable | ROI: Progresivo pero efectivo'
+                },
+                'technical-setup': {
+                    diagnosis: 'Problemas técnicos reducen calidad percibida y confiabilidad. Afecta retención y conversión significativamente.',
+                    solutions: '1. Cámara externa vs webcam integrada 2. Internet estable + backup 3. Software de streaming optimizado 4. Cables y conexiones',
+                    costTime: 'Costo: $300-1200 | Tiempo: 4-8 horas | ROI: Estabilidad y calidad profesional'
+                }
+            };
+            
+            const selected = problems[problem];
+            diagnosis.textContent = selected.diagnosis;
+            solutions.textContent = selected.solutions;
+            costTime.textContent = selected.costTime;
+            
+            resultDiv.style.display = 'block';
+        }
+        
+        // Update space metrics
+        function updateSpaceMetrics() {
+            spaceMetrics.symmetry = Math.min(photosTaken * 15, 90);
+            spaceMetrics.depth = Math.min(photosTaken * 12, 85);
+            spaceMetrics.distractors = Math.max(100 - photosTaken * 8, 20);
+            spaceMetrics.color = Math.min(photosTaken * 18, 95);
+            
+            document.getElementById('symmetryScore').textContent = spaceMetrics.symmetry + '%';
+            document.getElementById('depthScore').textContent = spaceMetrics.depth + '%';
+            document.getElementById('distractorsScore').textContent = spaceMetrics.distractors + '%';
+            document.getElementById('colorScore').textContent = spaceMetrics.color + '%';
+        }
+        
+        // Evaluate checklist
+        function evaluateChecklist() {
+            const checkboxes = document.querySelectorAll('.checkbox-custom:checked');
+            const total = document.querySelectorAll('.checkbox-custom').length;
+            const completion = (checkboxes.length / total) * 100;
+            
+            let status, recommendation;
+            if (completion >= 90) {
+                status = 'Espacio Profesional Completo';
+                recommendation = '¡Excelente! Tu espacio está optimizado al nivel profesional. Considera upgrade gradual de equipment.';
+            } else if (completion >= 70) {
+                status = 'Optimización Avanzada';
+                recommendation = 'Muy buen progreso. Completa elementos pendientes para perfección total.';
+            } else if (completion >= 50) {
+                status = 'En Progreso';
+                recommendation = 'Buen comienzo. Enfócate en elementos críticos: iluminación y audio.';
+            } else {
+                status = 'Necesita Optimización';
+                recommendation = 'URGENTE: Implementa mejoras básicas para competir profesionalmente.';
+            }
+            
+            alert(`📋 Evaluación de Optimización:\n\nCompletado: ${completion.toFixed(0)}%\nStatus: ${status}\n\n${recommendation}\n\n¿Necesitas guía específica para elementos pendientes?`);
+        }
+        
+        // Download space guide
+        function downloadSpaceGuide() {
+            alert(`🏠 Guía Completa de Optimización descargada!\n\n✅ Protocolo de análisis fotográfico\n💡 Setup de iluminación paso a paso\n🔊 Optimización de audio profesional\n🎨 Guías de composición y color\n📊 Calculadoras de ROI específicas\n\nRevisa tu email en 24 horas.`);
+        }
+        
+        // Schedule space audit
+        function scheduleSpaceAudit() {
+            alert(`📸 Auditoría Visual Programada!\n\n🔍 Análisis fotográfico remoto\n📊 Evaluación de setup actual\n💡 Recomendaciones personalizadas\n🎯 Plan de optimización específico\n\nSesión programada en 48-72 horas.`);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            updateLighting(); // Initialize lighting controls
+            
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
+        });
+    </script>
+</body>
+</html>

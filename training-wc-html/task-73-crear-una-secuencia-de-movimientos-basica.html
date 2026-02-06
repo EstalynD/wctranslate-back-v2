@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0">
+    <title>WC Training: Master de Secuencias Coreográficas - Rutinas Estratégicas</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #f06292;
+            --secondary-color: #ec407a;
+            --accent-color: #f48fb1;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #fff7f5;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #f06292 0%, #ec407a 50%, #f48fb1 100%);
+            --gradient-secondary: linear-gradient(45deg, #f48fb1, #fce4ec);
+            --gradient-success: linear-gradient(135deg, #28a745, #20c997);
+            --gradient-header: linear-gradient(135deg, #f06292, #ec407a, #f48fb1, #fce4ec);
+            --shadow-light: 0 4px 15px rgba(240, 98, 146, 0.1);
+            --shadow-medium: 0 8px 25px rgba(240, 98, 146, 0.15);
+            --shadow-heavy: 0 15px 40px rgba(240, 98, 146, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* WC BRANDING HEADER */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 5l5 20l20 5l-20 5l-5 20l-5-20l-20-5l20-5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: floatPattern 24s infinite linear;
+        }
+
+        @keyframes floatPattern {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-60px) translateY(-60px); }
+        }
+
+        .wc-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* INDUSTRY INSIGHTS */
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .insight-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* MAIN HEADER */
+        .main-header {
+            background: var(--gradient-header);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 10c15 0 30 15 30 30s-15 30-30 30-30-15-30-30 15-30 30-30zm0 10c-10 0-20 10-20 20s10 20 20 20 20-10 20-20-10-20-20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: floatCircles 22s infinite ease-in-out;
+        }
+
+        @keyframes floatCircles {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* SECTION LABS */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .lab-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* INTERACTIVE CARDS */
+        .interactive-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--primary-color);
+        }
+
+        .interactive-card.expanded {
+            background: linear-gradient(135deg, #ffe5ec, #ffffff);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .card-details.show {
+            max-height: 1200px;
+        }
+
+        /* SEQUENCE BUILDER */
+        .sequence-builder {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border: 2px solid var(--accent-color);
+        }
+
+        .movement-library {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .movement-card {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .movement-card:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .movement-card.selected {
+            background: var(--gradient-primary);
+            border: 3px solid white;
+            transform: scale(1.1);
+        }
+
+        .movement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .movement-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .movement-duration {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* SEQUENCE TIMELINE */
+        .sequence-timeline {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--accent-color);
+            min-height: 200px;
+        }
+
+        .timeline-slot {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 0.5rem;
+            display: inline-block;
+            min-width: 120px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .timeline-slot:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .timeline-slot.empty {
+            background: linear-gradient(45deg, #f0f0f0, #e0e0e0);
+            color: var(--text-muted);
+            border: 2px dashed #ccc;
+        }
+
+        .timeline-duration {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* CALCULATORS */
+        .calculator-section {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .progress-custom {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--border-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-custom {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+
+        .progress-bar-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* SIMULATOR SECTION */
+        .simulator-section {
+            background: linear-gradient(135deg, #9c27b0 0%, #673ab7 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .scenario-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .scenario-card.selected {
+            background: rgba(255,255,255,0.3);
+            border: 2px solid white;
+        }
+
+        /* SUCCESS STORIES */
+        .success-story {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 8rem;
+            position: absolute;
+            top: -2rem;
+            left: 1rem;
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .success-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* BUTTONS */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+            color: white;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            border: none;
+            border-radius: 20px;
+            padding: 0.6rem 1.5rem;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+
+        /* DANCE PREVIEW */
+        .dance-preview {
+            background: linear-gradient(135deg, #4a90e2, #357abd);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .preview-stage {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .preview-dancer {
+            font-size: 4rem;
+            animation: dance 3s ease-in-out infinite;
+        }
+
+        @keyframes dance {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            25% { transform: rotate(5deg) scale(1.1); }
+            50% { transform: rotate(-3deg) scale(0.9); }
+            75% { transform: rotate(3deg) scale(1.05); }
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .lab-section, .insights-section, .calculator-section, .simulator-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .success-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-brand {
+                font-size: 1.4rem;
+            }
+            
+            .movement-library {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 0.5rem;
+            }
+            
+            .timeline-slot {
+                min-width: 80px;
+                padding: 0.8rem;
+                margin: 0.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.4rem;
+            }
+            
+            .interactive-card {
+                padding: 0.8rem;
+            }
+            
+            .calculator-section, .simulator-section, .success-story {
+                padding: 1rem;
+            }
+            
+            .movement-library {
+                grid-template-columns: 1fr;
+            }
+            
+            .preview-dancer {
+                font-size: 3rem;
+            }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* EMOJI STYLES */
+        .emoji {
+            font-style: normal;
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
+
+        /* SEQUENCE COUNTER */
+        .sequence-counter {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+            border: 2px solid var(--accent-color);
+        }
+
+        .counter-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- WC BRANDING HEADER -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-brand">
+                        <i class="fas fa-crown me-2"></i>WC Training Academy
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <span id="currentDateTime"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- INDUSTRY INSIGHTS -->
+    <section class="container mt-4">
+        <div class="insights-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">📊</span>Industry Insights 2025: Impacto de Secuencias Coreográficas
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+285%</div>
+                        <div>Retención con rutinas estructuradas</div>
+                        <small>Movement Performance Analytics 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">92%</div>
+                        <div>Modelos sin secuencias preparadas</div>
+                        <small>Creator Choreography Study</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">4.7x</div>
+                        <div>Más tips con rutinas profesionales</div>
+                        <small>Revenue Dance Impact Report</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">
+                <span class="emoji">💃</span>Master de Secuencias Coreográficas
+            </h1>
+            <p class="main-subtitle">
+                Diseña rutinas estratégicas que hipnoticen y conviertan
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- LAB SECTION: MOVEMENT FOUNDATION -->
+        <section class="lab-section fade-in">
+            <h2 class="lab-title">
+                <span class="emoji">🎯</span>Lab Fundacional: Anatomía del Movimiento Estratégico
+            </h2>
+            <p>CRÍTICO: Una secuencia de 60 segundos bien diseñada puede ser tu carta de presentación más efectiva. Cada movimiento debe tener propósito, fluidez y impacto visual calculado.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('foundation1')">
+                <div class="card-header">
+                    <span><i class="fas fa-dna"></i> Estructura de Secuencia Profesional</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="foundation1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>FASES DE UNA SECUENCIA PERFECTA:</h6>
+                            <ul>
+                                <li><strong>Apertura (0-15s):</strong> Contacto visual + posición inicial impactante</li>
+                                <li><strong>Desarrollo (15-35s):</strong> Transiciones fluidas entre ángulos óptimos</li>
+                                <li><strong>Clímax (35-50s):</strong> Movimiento signature más atractivo</li>
+                                <li><strong>Cierre (50-60s):</strong> Regreso elegante a posición de control</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>PRINCIPIOS DE DISEÑO:</h6>
+                            <ul>
+                                <li><strong>Fluidez:</strong> Sin pausas bruscas o movimientos mecánicos</li>
+                                <li><strong>Propósito:</strong> Cada gesto resalta un atributo específico</li>
+                                <li><strong>Naturalidad:</strong> Preparada pero no ensayada visiblemente</li>
+                                <li><strong>Adaptabilidad:</strong> Versiones para diferentes contextos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('foundation2')">
+                <div class="card-header">
+                    <span><i class="fas fa-eye"></i> Psicología del Movimiento Visual</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="foundation2">
+                    <h6>EFECTOS PSICOLÓGICOS DE MOVIMIENTOS ESPECÍFICOS:</h6>
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <h6 style="color: var(--primary-color);">MOVIMIENTOS DE PODER</h6>
+                            <ul>
+                                <li>Extensión de brazos controlada</li>
+                                <li>Postura erguida dominante</li>
+                                <li>Giros lentos y deliberados</li>
+                                <li>Ocupación total del espacio</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 style="color: var(--secondary-color);">MOVIMIENTOS DE GRACIA</h6>
+                            <ul>
+                                <li>Transiciones suaves tipo ballet</li>
+                                <li>Gestos circulares fluidos</li>
+                                <li>Movimientos de cabello estilizados</li>
+                                <li>Poses asimétricas elegantes</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 style="color: var(--accent-color);">MOVIMIENTOS SEDUCTORES</h6>
+                            <ul>
+                                <li>Curvas corporales acentuadas</li>
+                                <li>Movimientos de cadera hipnóticos</li>
+                                <li>Contacto visual prolongado</li>
+                                <li>Gestos de invitación sutil</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 style="color: var(--warning-orange);">MOVIMIENTOS LÚDICOS</h6>
+                            <ul>
+                                <li>Giros espontáneos controlados</li>
+                                <li>Gestos expresivos animados</li>
+                                <li>Movimientos de manos juguetones</li>
+                                <li>Cambios de ritmo dinámicos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEQUENCE BUILDER -->
+        <section class="sequence-builder fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🏗️</span>Constructor de Secuencias: Tu Rutina Personalizada
+            </h2>
+            <p class="text-center mb-4">Selecciona movimientos de la librería para crear tu secuencia de presentación óptima.</p>
+            
+            <div class="movement-library">
+                <div class="movement-card" onclick="selectMovement(this, 'contact-visual', 8)">
+                    <div class="movement-icon">👁️</div>
+                    <div class="movement-name">Contacto Visual</div>
+                    <div class="movement-duration">8 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'giro-elegante', 12)">
+                    <div class="movement-icon">🌀</div>
+                    <div class="movement-name">Giro Elegante</div>
+                    <div class="movement-duration">12 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'pose-poder', 10)">
+                    <div class="movement-icon">👑</div>
+                    <div class="movement-name">Pose de Poder</div>
+                    <div class="movement-duration">10 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'transicion-fluida', 6)">
+                    <div class="movement-icon">🌊</div>
+                    <div class="movement-name">Transición Fluida</div>
+                    <div class="movement-duration">6 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'movimiento-cabello', 8)">
+                    <div class="movement-icon">💁</div>
+                    <div class="movement-name">Movimiento Cabello</div>
+                    <div class="movement-duration">8 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'curva-corporal', 14)">
+                    <div class="movement-icon">〰️</div>
+                    <div class="movement-name">Curva Corporal</div>
+                    <div class="movement-duration">14 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'gesto-invitacion', 7)">
+                    <div class="movement-icon">🤲</div>
+                    <div class="movement-name">Gesto Invitación</div>
+                    <div class="movement-duration">7 seg</div>
+                </div>
+
+                <div class="movement-card" onclick="selectMovement(this, 'cierre-magnetico', 9)">
+                    <div class="movement-icon">🎯</div>
+                    <div class="movement-name">Cierre Magnético</div>
+                    <div class="movement-duration">9 seg</div>
+                </div>
+            </div>
+
+            <div class="sequence-counter">
+                <div class="counter-number" id="sequenceDuration">0</div>
+                <div>segundos totales</div>
+                <div class="mt-2">
+                    <small>Óptimo: 45-75 segundos</small>
+                </div>
+            </div>
+
+            <div class="sequence-timeline">
+                <h5 class="text-center mb-3">Tu Secuencia Personalizada</h5>
+                <div id="sequenceTimeline">
+                    <div class="timeline-slot empty" onclick="removeFromSequence(this)">
+                        <div>Selecciona movimiento</div>
+                        <div class="timeline-duration">0s</div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <button class="btn btn-primary-custom" onclick="clearSequence()">
+                        <i class="fas fa-trash"></i> Limpiar Secuencia
+                    </button>
+                    <button class="btn btn-secondary-custom ms-2" onclick="previewSequence()">
+                        <i class="fas fa-play"></i> Vista Previa
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALCULATOR SECTION -->
+        <section class="calculator-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">💰</span>Calculadora de ROI Coreográfico
+            </h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Retención actual primeros 60s (%)</label>
+                    <input type="number" class="calculator-input" id="currentRetention" placeholder="45" min="0" max="100" oninput="calculateChoreographyROI()">
+                    
+                    <label>Movimientos dominados (#)</label>
+                    <input type="number" class="calculator-input" id="movementsMastered" placeholder="4" oninput="calculateChoreographyROI()">
+                    
+                    <label>Secuencias preparadas (#)</label>
+                    <input type="number" class="calculator-input" id="sequencesPrepared" placeholder="2" oninput="calculateChoreographyROI()">
+                    
+                    <label>Ingresos mensuales actuales ($)</label>
+                    <input type="number" class="calculator-input" id="monthlyIncome" placeholder="5800" oninput="calculateChoreographyROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calculator-result">
+                        <h4>Proyección de Impacto Coreográfico:</h4>
+                        <div id="choreographyROIResults">
+                            <p><strong>Mejora en retención:</strong> <span id="retentionIncrease">+0%</span></p>
+                            <p><strong>Ingresos proyectados:</strong> <span id="projectedIncome">$0</span></p>
+                            <p><strong>ROI por rutinas:</strong> <span id="routineROI">0%</span></p>
+                            <p><strong>Tiempo de dominio:</strong> <span id="masteryTime">0 semanas</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-3">
+                        <div class="sequence-counter">
+                            <div class="counter-number" id="overallScore">-</div>
+                            <div>Puntuación Coreográfica</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DANCE PREVIEW -->
+        <section class="dance-preview fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🎭</span>Vista Previa: Tu Secuencia en Acción
+            </h2>
+            <div class="preview-stage">
+                <div class="preview-dancer" id="previewDancer">💃</div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary-custom btn-lg" onclick="startPreview()">
+                    <i class="fas fa-play"></i> Reproducir Secuencia
+                </button>
+                <button class="btn btn-secondary-custom btn-lg ms-3" onclick="stopPreview()">
+                    <i class="fas fa-stop"></i> Detener
+                </button>
+            </div>
+            <div class="mt-3 text-center">
+                <div id="previewStatus">Presiona "Reproducir" para ver tu secuencia</div>
+            </div>
+        </section>
+
+        <!-- SIMULATOR SECTION -->
+        <section class="simulator-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🎬</span>Simulador de Contextos: Rutinas Adaptativas
+            </h2>
+            <p class="text-center mb-4">Practica tu secuencia en diferentes escenarios. Cada contexto requiere ajustes específicos en tu rutina.</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="scenario-card" onclick="selectChoreographyScenario('entrada-nueva')">
+                        <h5><i class="fas fa-door-open"></i> Entrada de Nuevos</h5>
+                        <p>10+ usuarios nuevos entran simultáneamente</p>
+                        <small>Foco: Impresión memorable + retención</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="scenario-card" onclick="selectChoreographyScenario('momento-tips')">
+                        <h5><i class="fas fa-dollar-sign"></i> Momento de Tips</h5>
+                        <p>Audiencia receptiva esperando performance</p>
+                        <small>Foco: Seducción + conversión</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="scenario-card" onclick="selectChoreographyScenario('recuperacion')">
+                        <h5><i class="fas fa-chart-line"></i> Recuperación de Energía</h5>
+                        <p>Chat silencioso, necesitas reactivar</p>
+                        <small>Foco: Dinamismo + engagement</small>
+                    </div>
+                </div>
+            </div>
+
+            <div id="choreographyScenarioResults" class="mt-4" style="display: none;">
+                <div class="calculator-result">
+                    <h4 id="choreographyScenarioTitle">Guía de Contexto</h4>
+                    <div id="choreographyScenarioAnalysis"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUCCESS STORIES -->
+        <section class="fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">👑</span>Casos de Éxito: Masters de la Coreografía Estratégica
+            </h2>
+
+            <div class="success-story">
+                <h4>Daniela - "La Emperatriz de las Rutinas Hipnóticas"</h4>
+                <p>"Mi 'Secuencia de Presentación Óptima' de 65 segundos se convirtió en mi signature. Combina contacto visual directo, giro hacia mi perfil favorito, movimiento fluido que estiliza mi figura y regreso a posición frontal mejorada. Los resultados fueron inmediatos."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">+340%</span>
+                        <span>Retención inicial</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">65s</span>
+                        <span>Secuencia perfecta</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$10,200</span>
+                        <span>Ingresos mensuales</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>Alejandra - "Master de las Transiciones Fluidas"</h4>
+                <p>"Diseñé 4 rutinas específicas: una juguetona, una sensual, una casual y una de alto impacto. Cambio entre ellas según el contexto de entrada. Es como tener un arsenal coreográfico que nunca falla en causar impresión."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">4</span>
+                        <span>Rutinas adaptativas</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">89%</span>
+                        <span>Conversión nuevos usuarios</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">+420%</span>
+                        <span>Tips por performance</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>Valeria - "La Arquitecta del Movimiento Estratégico"</h4>
+                <p>"Cada movimiento en mis secuencias tiene propósito calculado. Mi rutina de 'recuperación de energía' puede reactivar un chat silencioso en menos de 2 minutos. La clave está en la sincronización perfecta entre movimiento, música y timing."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">100%</span>
+                        <span>Precisión de timing</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$14,800</span>
+                        <span>Mes récord</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">95%</span>
+                        <span>Reactivación de chats</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKING SECTION -->
+        <section class="lab-section fade-in">
+            <h2 class="lab-title">
+                <span class="emoji">📈</span>Tracker de Progreso: Dominio Coreográfico
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <label>Fluidez de Movimientos (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="fluidityProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('fluidityProgress', 20)">
+                            Actualizar Fluidez
+                        </button>
+                    </div>
+
+                    <div class="progress-container">
+                        <label>Precisión de Timing (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="timingProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('timingProgress', 20)">
+                            Actualizar Timing
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <label>Naturalidad Expresiva (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="naturalityProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('naturalityProgress', 20)">
+                            Actualizar Naturalidad
+                        </button>
+                    </div>
+
+                    <div class="progress-container">
+                        <label>Impacto Visual Global (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="visualImpactProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('visualImpactProgress', 20)">
+                            Actualizar Impacto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL SUMMARY -->
+        <section class="lab-section fade-in text-center">
+            <h2 class="lab-title justify-content-center">
+                <span class="emoji">🏆</span>Tu Imperio Coreográfico: Resumen de Maestría
+            </h2>
+            <p class="lead">Has masterizado el arte de las secuencias estratégicas. Tus rutinas ahora son instrumentos de seducción visual que convierten espectadores en fans devotos.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">4+</div>
+                        <div>Rutinas adaptativas dominadas</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">100%</div>
+                        <div>Fluidez en transiciones</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">∞</div>
+                        <div>Potencial hipnótico</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button class="btn btn-primary-custom btn-lg" onclick="celebrateChoreographyCompletion()">
+                    <i class="fas fa-crown me-2"></i>¡A Construir Tu Imperio Coreográfico!
+                </button>
+            </div>
+
+            <p class="mt-4 text-muted">
+                <strong>Mantra del Master Coreográfico:</strong> "La espontaneidad aparente requiere preparación meticulosa. Tu rutina no es improvisación, es ejecución experta que transmite exactamente lo que quieres que tu audiencia perciba."
+            </p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="wc-header mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 WC Training Academy - Formando Masters de Secuencias Coreográficas</p>
+            <p><small>Fuentes: Movement Performance Analytics 2025, Creator Choreography Study, Revenue Dance Impact Report</small></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let selectedMovements = [];
+        let sequenceDuration = 0;
+        let previewInterval = null;
+        let previewIndex = 0;
+
+        // Update current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const card = details.parentElement;
+            const icon = card.querySelector('.fa-chevron-down');
+            
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                card.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                details.classList.add('show');
+                card.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Select movement for sequence
+        function selectMovement(movementCard, movementId, duration) {
+            if (selectedMovements.length >= 8) {
+                showAchievement('Máximo 8 movimientos por secuencia 🎭');
+                return;
+            }
+            
+            // Add visual feedback
+            movementCard.classList.add('selected');
+            setTimeout(() => {
+                movementCard.classList.remove('selected');
+            }, 1000);
+            
+            // Add to sequence
+            const movement = {
+                id: movementId,
+                name: movementCard.querySelector('.movement-name').textContent,
+                icon: movementCard.querySelector('.movement-icon').textContent,
+                duration: duration
+            };
+            
+            selectedMovements.push(movement);
+            sequenceDuration += duration;
+            
+            updateSequenceDisplay();
+            updateSequenceDuration();
+            showAchievement(`${movement.name} añadido a la secuencia ✨`);
+        }
+
+        // Update sequence display
+        function updateSequenceDisplay() {
+            const timeline = document.getElementById('sequenceTimeline');
+            timeline.innerHTML = '';
+            
+            selectedMovements.forEach((movement, index) => {
+                const slot = document.createElement('div');
+                slot.className = 'timeline-slot';
+                slot.onclick = () => removeFromSequence(slot, index);
+                slot.innerHTML = `
+                    <div>${movement.icon}</div>
+                    <div style="font-size: 0.8rem;">${movement.name}</div>
+                    <div class="timeline-duration">${movement.duration}s</div>
+                `;
+                timeline.appendChild(slot);
+            });
+            
+            // Add empty slot if sequence not full
+            if (selectedMovements.length < 8) {
+                const emptySlot = document.createElement('div');
+                emptySlot.className = 'timeline-slot empty';
+                emptySlot.innerHTML = `
+                    <div>Añadir movimiento</div>
+                    <div class="timeline-duration">0s</div>
+                `;
+                timeline.appendChild(emptySlot);
+            }
+        }
+
+        // Remove movement from sequence
+        function removeFromSequence(slot, index) {
+            if (index !== undefined && selectedMovements[index]) {
+                sequenceDuration -= selectedMovements[index].duration;
+                selectedMovements.splice(index, 1);
+                updateSequenceDisplay();
+                updateSequenceDuration();
+                showAchievement('Movimiento removido de la secuencia 🗑️');
+            }
+        }
+
+        // Update sequence duration counter
+        function updateSequenceDuration() {
+            document.getElementById('sequenceDuration').textContent = sequenceDuration;
+            document.getElementById('sequencesPrepared').value = selectedMovements.length > 0 ? 1 : 0;
+            calculateChoreographyROI();
+        }
+
+        // Clear entire sequence
+        function clearSequence() {
+            selectedMovements = [];
+            sequenceDuration = 0;
+            updateSequenceDisplay();
+            updateSequenceDuration();
+            showAchievement('Secuencia limpiada completamente 🧹');
+        }
+
+        // Preview sequence
+        function previewSequence() {
+            if (selectedMovements.length === 0) {
+                showAchievement('Primero crea una secuencia 🎭');
+                return;
+            }
+            
+            startPreview();
+        }
+
+        // Start preview animation
+        function startPreview() {
+            if (previewInterval) return;
+            
+            const dancer = document.getElementById('previewDancer');
+            const status = document.getElementById('previewStatus');
+            previewIndex = 0;
+            
+            if (selectedMovements.length === 0) {
+                // Default preview if no sequence
+                previewInterval = setInterval(() => {
+                    const emojis = ['💃', '🕺', '💫', '✨', '🌟'];
+                    dancer.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                }, 1000);
+                status.textContent = 'Reproduciendo secuencia de demostración...';
+            } else {
+                // Preview custom sequence
+                status.textContent = `Reproduciendo: ${selectedMovements[0].name}`;
+                dancer.textContent = selectedMovements[0].icon;
+                
+                previewInterval = setInterval(() => {
+                    previewIndex = (previewIndex + 1) % selectedMovements.length;
+                    dancer.textContent = selectedMovements[previewIndex].icon;
+                    status.textContent = `Reproduciendo: ${selectedMovements[previewIndex].name}`;
+                }, 2000);
+            }
+            
+            showAchievement('¡Vista previa iniciada! 🎬');
+        }
+
+        // Stop preview animation
+        function stopPreview() {
+            if (previewInterval) {
+                clearInterval(previewInterval);
+                previewInterval = null;
+                document.getElementById('previewDancer').textContent = '💃';
+                document.getElementById('previewStatus').textContent = 'Vista previa detenida';
+                showAchievement('Vista previa detenida ⏹️');
+            }
+        }
+
+        // Calculate choreography ROI
+        function calculateChoreographyROI() {
+            const retention = parseFloat(document.getElementById('currentRetention').value) || 0;
+            const movements = parseFloat(document.getElementById('movementsMastered').value) || 0;
+            const sequences = parseFloat(document.getElementById('sequencesPrepared').value) || 0;
+            const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+
+            if (retention > 0 && income > 0) {
+                const retentionBoost = Math.min(movements * 6 + sequences * 15, 70);
+                const incomeMultiplier = 1 + (retentionBoost / 100) * 2.2;
+                const projectedIncome = income * incomeMultiplier;
+                const roi = ((projectedIncome - income) / income) * 100;
+                const masteryWeeks = Math.max(12 - movements - sequences * 2, 3);
+
+                document.getElementById('retentionIncrease').textContent = `+${retentionBoost.toFixed(1)}%`;
+                document.getElementById('projectedIncome').textContent = `$${projectedIncome.toFixed(0)}`;
+                document.getElementById('routineROI').textContent = `${roi.toFixed(0)}%`;
+                document.getElementById('masteryTime').textContent = `${masteryWeeks} semanas`;
+
+                // Update overall score
+                const score = Math.min(((retention + retentionBoost) / 100) * 10, 10);
+                document.getElementById('overallScore').textContent = score.toFixed(1);
+            }
+        }
+
+        // Select choreography scenario
+        function selectChoreographyScenario(scenario) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Select current
+            event.target.closest('.scenario-card').classList.add('selected');
+            
+            // Show results
+            const resultsDiv = document.getElementById('choreographyScenarioResults');
+            const titleDiv = document.getElementById('choreographyScenarioTitle');
+            const analysisDiv = document.getElementById('choreographyScenarioAnalysis');
+            
+            let title, analysis;
+            
+            switch(scenario) {
+                case 'entrada-nueva':
+                    title = '🚪 Guía: Entrada de Nuevos Usuarios';
+                    analysis = `
+                        <p><strong>Objetivo:</strong> Causar impresión memorable que garantice retención inmediata.</p>
+                        <p><strong>Secuencia recomendada (60s):</strong></p>
+                        <ol>
+                            <li><strong>Contacto Visual Directo (0-8s):</strong> Establece conexión inmediata</li>
+                            <li><strong>Giro Elegante (8-20s):</strong> Muestra tu perfil más favorecedor</li>
+                            <li><strong>Movimiento Signature (20-40s):</strong> Tu movimiento más atractivo</li>
+                            <li><strong>Pose de Poder (40-50s):</strong> Proyecta confianza dominante</li>
+                            <li><strong>Cierre Magnético (50-60s):</strong> Regreso elegante que invita a quedarse</li>
+                        </ol>
+                        <p><strong>Resultado esperado:</strong> +85% retención de nuevos usuarios</p>
+                    `;
+                    break;
+                case 'momento-tips':
+                    title = '💰 Guía: Momento de Conversión';
+                    analysis = `
+                        <p><strong>Objetivo:</strong> Maximizar tips con rutina seductora estratégica.</p>
+                        <p><strong>Secuencia de conversión (45s):</strong></p>
+                        <ol>
+                            <li><strong>Gesto de Invitación (0-7s):</strong> Crea anticipación</li>
+                            <li><strong>Curva Corporal (7-21s):</strong> Movimientos hipnóticos sensuales</li>
+                            <li><strong>Contacto Visual Intenso (21-28s):</strong> Conexión personal directa</li>
+                            <li><strong>Movimiento Cabello (28-36s):</strong> Gesto femenino seductor</li>
+                            <li><strong>Cierre Sugerente (36-45s):</strong> Deja con ganas de más</li>
+                        </ol>
+                        <p><strong>Resultado esperado:</strong> +150% conversión de tips</p>
+                    `;
+                    break;
+                case 'recuperacion':
+                    title = '📈 Guía: Reactivación de Energía';
+                    analysis = `
+                        <p><strong>Objetivo:</strong> Revitalizar chat silencioso con dinamismo estratégico.</p>
+                        <p><strong>Secuencia energizante (30s):</strong></p>
+                        <ol>
+                            <li><strong>Movimiento Dinámico (0-8s):</strong> Rompe el silencio con acción</li>
+                            <li><strong>Transiciones Rápidas (8-16s):</strong> Cambia ritmo dramáticamente</li>
+                            <li><strong>Gesto Lúdico (16-22s):</strong> Genera sonrisas y engagement</li>
+                            <li><strong>Pose Dominante (22-30s):</strong> Cierra con autoridad renovada</li>
+                        </ol>
+                        <p><strong>Resultado esperado:</strong> +200% reactivación de chat</p>
+                    `;
+                    break;
+            }
+            
+            titleDiv.textContent = title;
+            analysisDiv.innerHTML = analysis;
+            resultsDiv.style.display = 'block';
+            
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Update progress bars
+        function updateProgress(progressId, increment) {
+            const progressBar = document.getElementById(progressId);
+            const currentWidth = parseInt(progressBar.style.width) || 0;
+            const newWidth = Math.min(currentWidth + increment, 100);
+            progressBar.style.width = newWidth + '%';
+            
+            if (newWidth === 100) {
+                progressBar.style.background = 'var(--gradient-success)';
+                setTimeout(() => {
+                    showAchievement('¡Habilidad Coreográfica Perfeccionada! 💃');
+                }, 500);
+            }
+        }
+
+        // Show achievement notification
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-success);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 15px;
+                box-shadow: var(--shadow-heavy);
+                z-index: 9999;
+                animation: slideInRight 0.5s ease;
+                max-width: 320px;
+            `;
+            achievement.textContent = message;
+            document.body.appendChild(achievement);
+            
+            setTimeout(() => {
+                achievement.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => achievement.remove(), 500);
+            }, 3000);
+        }
+
+        // Celebrate completion
+        function celebrateChoreographyCompletion() {
+            showAchievement('¡Felicidades! Eres un Master de Secuencias Coreográficas 💃🏆');
+            
+            // Create celebration effect
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 80);
+            }
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                top: -10px;
+                left: ${Math.random() * 100}%;
+                width: 12px;
+                height: 12px;
+                background: ${['#f06292', '#ec407a', '#f48fb1', '#28a745'][Math.floor(Math.random() * 4)]};
+                border-radius: 50%;
+                transform: rotate(${Math.random() * 360}deg);
+                animation: fall 3s linear infinite;
+                z-index: 9999;
+            `;
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes fall {
+                to { transform: translateY(100vh) rotate(720deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+            
+            // Observe all fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Initialize sequence display
+            updateSequenceDisplay();
+            
+            // Auto-populate initial values
+            setTimeout(() => {
+                document.getElementById('currentRetention').value = '45';
+                document.getElementById('movementsMastered').value = '4';
+                document.getElementById('sequencesPrepared').value = selectedMovements.length > 0 ? 1 : 0;
+                document.getElementById('monthlyIncome').value = '5800';
+                calculateChoreographyROI();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

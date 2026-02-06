@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>💎 Masters en Declaración de Valor Único - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #6610f2;
+      --secondary-color: #5a0dcf;
+      --accent-color: #7c3aed;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc2626;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #6610f2 0%, #5a0dcf 100%);
+      --gradient-secondary: linear-gradient(135deg, #7c3aed 0%, #6610f2 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-purple: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #6610f2 0%, #5a0dcf 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpolygon points='30,5 50,20 50,40 30,55 10,40 10,20'/%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 32s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-22px) rotate(1deg); }
+      66% { transform: translateY(16px) rotate(-1deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(102, 16, 242, 0.1) 0%, rgba(90, 13, 207, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(102, 16, 242, 0.2) 0%, rgba(90, 13, 207, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .uvp-builder {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .uvp-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      position: relative;
+    }
+
+    .step::after {
+      content: '';
+      position: absolute;
+      top: 25px;
+      right: -50%;
+      width: 100%;
+      height: 2px;
+      background: var(--border-light);
+      z-index: 1;
+    }
+
+    .step:last-child::after {
+      display: none;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+      z-index: 2;
+      position: relative;
+    }
+
+    .step-number.completed {
+      background: var(--gradient-success);
+    }
+
+    .step-label {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-align: center;
+      color: var(--text-muted);
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(102, 16, 242, 0.25);
+    }
+
+    .btn-uvp {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-width: 160px;
+    }
+
+    .btn-uvp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(102, 16, 242, 0.3);
+    }
+
+    .uvp-display {
+      background: white;
+      border: 3px solid var(--primary-color);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .uvp-display::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--gradient-primary);
+    }
+
+    .uvp-text {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--text-dark);
+      line-height: 1.4;
+      margin-bottom: 1rem;
+    }
+
+    .uvp-metrics {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .analyzer-section {
+      background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .competitive-analysis {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid var(--border-light);
+    }
+
+    .differentiation-score {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .score-high {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+
+    .score-medium {
+      background: rgba(251, 191, 36, 0.2);
+      color: #f59e0b;
+    }
+
+    .score-low {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+    }
+
+    .variations-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .variation-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid var(--border-light);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .variation-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .variation-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.05);
+    }
+
+    .context-label {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--gradient-primary);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .uvp-steps {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .step::after {
+        display: none;
+      }
+
+      .uvp-metrics {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .variations-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .uvp-builder,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-uvp,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Intelligence de Personal Branding 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Personal Branding Institute & Competitive Positioning Research</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">92%</h4>
+          <p><strong>de professionals top-tier</strong> tienen declaración de valor único claramente articulada vs 34% promedio</p>
+          <small class="text-muted">Source: Executive Personal Branding Study 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€180,000</h4>
+          <p><strong>incremento salarial promedio</strong> en 18 meses para professionals con UVP optimizada vs messaging genérico</p>
+          <small class="text-muted">Source: Personal Brand ROI Analytics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">8.4x</h4>
+          <p><strong>mayor recall rate</strong> en networking events con UVP memorable vs self-introduction estándar</p>
+          <small class="text-muted">Source: Networking Effectiveness Research</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">67%</h4>
+          <p><strong>de hiring managers</strong> pueden recordar candidatos con UVP distintiva 48h después de interview</p>
+          <small class="text-muted">Source: Hiring Decision Memory Study</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">73 sec</h4>
+          <p><strong>tiempo promedio</strong> para formar primera impresión distintiva con UVP efectiva vs 4+ minutos sin ella</p>
+          <small class="text-muted">Source: First Impression Psychology</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">89%</h4>
+          <p><strong>de professionals exitosos</strong> pueden articular su valor único en <60 palabras sin preparation</p>
+          <small class="text-muted">Source: Communication Effectiveness Metrics</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">💎 Masters en Declaración de Valor Único</h1>
+      <p class="main-subtitle">
+        Crea código genético comunicacional distintivo. Tu imperio profesional necesita articulación que instantáneamente transmita proposición inequívocamente valiosa y fundamentalmente diferente.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Constructor UVP Interactivo -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('uvp-builder-section')">
+          <div class="section-icon">
+            <i class="fas fa-gem"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">💎 Constructor UVP Interactivo</h2>
+            <p class="mb-0 text-muted">Sistema avanzado de creación de Unique Value Proposition paso a paso</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="uvp-builder">
+          <h4><i class="fas fa-magic text-primary"></i> Tu Declaración de Valor Único</h4>
+          <p>Construye tu UVP distinctive siguiendo metodología científica de diferenciación</p>
+          
+          <div class="uvp-steps">
+            <div class="step">
+              <div class="step-number" id="step-1">1</div>
+              <div class="step-label">Expertise Distintivo</div>
+            </div>
+            <div class="step">
+              <div class="step-number" id="step-2">2</div>
+              <div class="step-label">Target Específico</div>
+            </div>
+            <div class="step">
+              <div class="step-number" id="step-3">3</div>
+              <div class="step-label">Beneficio Único</div>
+            </div>
+            <div class="step">
+              <div class="step-number" id="step-4">4</div>
+              <div class="step-label">Diferenciador</div>
+            </div>
+            <div class="step">
+              <div class="step-number" id="step-5">5</div>
+              <div class="step-label">UVP Final</div>
+            </div>
+          </div>
+
+          <div id="step-content">
+            <!-- Step 1: Expertise -->
+            <div class="step-form active" id="form-step-1">
+              <h5><i class="fas fa-star text-warning"></i> Paso 1: Tu Expertise Distintivo</h5>
+              <p class="text-muted">Identifica tu competencia core que te diferencia genuinamente</p>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Skill Principal</label>
+                  <input type="text" class="form-control" id="main-skill" placeholder="Ej: Python + Machine Learning">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Años de Experiencia</label>
+                  <input type="number" class="form-control" id="experience-years" value="5" min="1" max="30">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Combinación Única</label>
+                  <input type="text" class="form-control" id="unique-combination" placeholder="Ej: Marketing tradicional + AI automation + Psychology background">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Credencial/Achievement Distintivo</label>
+                  <input type="text" class="form-control" id="distinctive-credential" placeholder="Ej: Led 15 AI implementations generating €2M+ ROI">
+                </div>
+              </div>
+              
+              <div class="text-center mt-4">
+                <button class="btn-uvp" onclick="nextStep(2)">
+                  <i class="fas fa-arrow-right"></i> Siguiente: Target
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: Target -->
+            <div class="step-form" id="form-step-2" style="display: none;">
+              <h5><i class="fas fa-bullseye text-info"></i> Paso 2: Tu Target Específico</h5>
+              <p class="text-muted">Define exactamente a quién serves de manera distintiva</p>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Industry/Sector</label>
+                  <input type="text" class="form-control" id="target-industry" placeholder="Ej: SaaS startups 50-200 employees">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Role/Position</label>
+                  <input type="text" class="form-control" id="target-role" placeholder="Ej: CTOs y Head of Engineering">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Pain Point Específico</label>
+                  <input type="text" class="form-control" id="target-pain" placeholder="Ej: Struggling to scale tech team while maintaining product quality">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Situación Específica</label>
+                  <input type="text" class="form-control" id="target-situation" placeholder="Ej: Post Series-A growth phase requiring technical leadership">
+                </div>
+              </div>
+              
+              <div class="text-center mt-4">
+                <button class="btn-uvp" onclick="previousStep(1)" style="background: var(--gradient-secondary);">
+                  <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <button class="btn-uvp" onclick="nextStep(3)">
+                  <i class="fas fa-arrow-right"></i> Siguiente: Beneficio
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Benefit -->
+            <div class="step-form" id="form-step-3" style="display: none;">
+              <h5><i class="fas fa-rocket text-success"></i> Paso 3: Beneficio Único que Ofreces</h5>
+              <p class="text-muted">Articula el outcome específico que provides</p>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <label class="form-label">Resultado Principal</label>
+                  <input type="text" class="form-control" id="main-result" placeholder="Ej: Reduce time-to-market 40% while improving code quality">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Métrica Cuantificable</label>
+                  <input type="text" class="form-control" id="quantifiable-metric" placeholder="Ej: €500K+ annual savings en development costs">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Transformation que Facilitas</label>
+                  <input type="text" class="form-control" id="transformation" placeholder="Ej: Transform chaotic scaling into systematic growth processes">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Timeframe Típico</label>
+                  <input type="text" class="form-control" id="timeframe" placeholder="Ej: Visible results within 90 days, full transformation in 6 months">
+                </div>
+              </div>
+              
+              <div class="text-center mt-4">
+                <button class="btn-uvp" onclick="previousStep(2)" style="background: var(--gradient-secondary);">
+                  <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <button class="btn-uvp" onclick="nextStep(4)">
+                  <i class="fas fa-arrow-right"></i> Siguiente: Diferenciador
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 4: Differentiator -->
+            <div class="step-form" id="form-step-4" style="display: none;">
+              <h5><i class="fas fa-crown text-warning"></i> Paso 4: Tu Diferenciador Único</h5>
+              <p class="text-muted">Qué te hace inequívocamente diferente de alternatives</p>
+              
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="form-label">Approach/Methodology Único</label>
+                  <input type="text" class="form-control" id="unique-approach" placeholder="Ej: Data-driven development process with real-time user feedback integration">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-6">
+                  <label class="form-label">Background Distintivo</label>
+                  <input type="text" class="form-control" id="distinctive-background" placeholder="Ej: 3 successful exits + enterprise architecture">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label">Personal Element</label>
+                  <input type="text" class="form-control" id="personal-element" placeholder="Ej: Former startup founder turned consultant">
+                </div>
+              </div>
+              
+              <div class="row mt-3">
+                <div class="col-md-12">
+                  <label class="form-label">Proof Point Específico</label>
+                  <input type="text" class="form-control" id="proof-point" placeholder="Ej: Only consultant with both Y Combinator experience + Fortune 500 CTO background">
+                </div>
+              </div>
+              
+              <div class="text-center mt-4">
+                <button class="btn-uvp" onclick="previousStep(3)" style="background: var(--gradient-secondary);">
+                  <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <button class="btn-uvp" onclick="generateUVP()">
+                  <i class="fas fa-magic"></i> Generar UVP
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 5: Generated UVP -->
+            <div class="step-form" id="form-step-5" style="display: none;">
+              <h5><i class="fas fa-gem text-primary"></i> Paso 5: Tu UVP Generada</h5>
+              
+              <div class="uvp-display" id="uvp-result">
+                <div class="uvp-text" id="generated-uvp">
+                  Tu UVP aparecerá aquí...
+                </div>
+                
+                <div class="uvp-metrics">
+                  <div class="metric">
+                    <span class="metric-value" id="word-count">--</span>
+                    <span class="metric-label">Palabras</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-value" id="memorability-score">--</span>
+                    <span class="metric-label">Memorabilidad</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-value" id="differentiation-score">--</span>
+                    <span class="metric-label">Diferenciación</span>
+                  </div>
+                  <div class="metric">
+                    <span class="metric-value" id="clarity-score">--</span>
+                    <span class="metric-label">Claridad</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-center mt-4">
+                <button class="btn-uvp" onclick="previousStep(4)" style="background: var(--gradient-secondary);">
+                  <i class="fas fa-arrow-left"></i> Revisar
+                </button>
+                <button class="btn-uvp" onclick="generateVariations()">
+                  <i class="fas fa-copy"></i> Generar Variaciones
+                </button>
+                <button class="btn-uvp" onclick="exportUVP()" style="background: var(--gradient-success);">
+                  <i class="fas fa-download"></i> Exportar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Analizador de Diferenciación -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('differentiation-analyzer')">
+          <div class="section-icon">
+            <i class="fas fa-search"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🔍 Analizador de Diferenciación Competitiva</h2>
+            <p class="mb-0 text-muted">IA que evalúa tu positioning vs alternatives y sugiere optimizaciones</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="analyzer-section">
+          <h4><i class="fas fa-brain text-primary"></i> Análisis Competitivo Automático</h4>
+          <p>Sistema que evalúa tu UVP contra competencia y sugiere mejoras específicas</p>
+          
+          <div class="competitive-analysis">
+            <h6><i class="fas fa-chart-bar text-success"></i> Análisis de Tu UVP Actual</h6>
+            <div class="row">
+              <div class="col-md-8">
+                <textarea class="form-control" id="uvp-analysis-input" rows="3" placeholder="Pega tu UVP actual para análisis competitivo..."></textarea>
+              </div>
+              <div class="col-md-4">
+                <button class="btn-uvp w-100" onclick="analyzeUVP()">
+                  <i class="fas fa-microscope"></i> Analizar
+                </button>
+              </div>
+            </div>
+            
+            <div id="analysis-results" style="display: none; margin-top: 2rem;">
+              <div class="row">
+                <div class="col-md-4">
+                  <h6>Score de Diferenciación</h6>
+                  <div class="differentiation-score score-high" id="diff-score">
+                    <i class="fas fa-star"></i> Alto (8.4/10)
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h6>Elementos Únicos Detectados</h6>
+                  <div id="unique-elements">
+                    <span class="badge bg-success me-1">Technical + Business</span>
+                    <span class="badge bg-success me-1">Quantified Results</span>
+                    <span class="badge bg-success">Specific Target</span>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <h6>Área de Mejora</h6>
+                  <div id="improvement-area" class="text-warning">
+                    <i class="fas fa-lightbulb"></i> Add emotional benefit
+                  </div>
+                </div>
+              </div>
+              
+              <div class="mt-3">
+                <h6><i class="fas fa-exclamation-triangle text-warning"></i> Riesgos de Commodity</h6>
+                <ul id="commodity-risks">
+                  <li><strong>Generic tech skills mention:</strong> "Python + ML" es común - enfatiza combination única</li>
+                  <li><strong>Missing personal story:</strong> Agrega elemento personal que humanize expertise</li>
+                  <li><strong>Outcome could be more specific:</strong> "40% improvement" - en qué dimensión exactly?</li>
+                </ul>
+              </div>
+              
+              <div class="mt-3">
+                <h6><i class="fas fa-rocket text-success"></i> Optimizaciones Sugeridas</h6>
+                <ol id="optimization-suggestions">
+                  <li><strong>Add metaphor/analogy:</strong> "Like a Swiss Army knife for AI implementation"</li>
+                  <li><strong>Humanize with backstory:</strong> "Former startup founder who learned scaling the hard way"</li>
+                  <li><strong>Specific proof point:</strong> "15 implementations, zero failed deployments"</li>
+                  <li><strong>Emotional hook:</strong> "Sleep better knowing your AI won't break at 3 AM"</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('testing-lab')">
+          <h4><i class="fas fa-flask text-info"></i> Testing Lab de Efectividad</h4>
+          <p>Testea diferentes versiones de tu UVP con métricas de recall y persuasión</p>
+          
+          <div class="card-content" id="testing-lab">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Recall Rate (24h después)</strong></span>
+                  <span class="text-muted">78%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 78%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de personas que recuerdan tu UVP después de 24 horas</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Clarity Score</strong></span>
+                  <span class="text-muted">89%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 89%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de audiencia que entiende exactamente qué ofreces</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Interest Generation</strong></span>
+                  <span class="text-muted">82%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 82%"></div>
+                </div>
+                <small class="text-muted">Porcentaje que quiere saber más después de escuchar UVP</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Differentiation Perception</strong></span>
+                  <span class="text-muted">71%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 71%"></div>
+                </div>
+                <small class="text-muted">Porcentaje que te percibe como fundamentalmente diferente</small>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <h6><i class="fas fa-chart-line text-primary"></i> A/B Testing Results</h6>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="alert alert-success">
+                    <strong>Version A (Actual):</strong><br>
+                    <em>"Former startup CTO who helps SaaS companies scale their tech teams 40% faster using data-driven processes."</em><br>
+                    <small><strong>Performance:</strong> 78% recall, 82% interest</small>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="alert alert-info">
+                    <strong>Version B (Alternative):</strong><br>
+                    <em>"The Swiss Army knife of AI implementation - I turn your AI dreams into profits without the nightmares."</em><br>
+                    <small><strong>Performance:</strong> 91% recall, 76% interest</small>
+                  </div>
+                </div>
+              </div>
+              <p class="text-muted"><strong>Insight:</strong> Metaphor increases memorability pero may reduce perceived seriousness. Consider hybrid approach.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Variaciones Contextuales -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('contextual-variations')">
+          <div class="section-icon">
+            <i class="fas fa-adjust"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎭 Generador de Variaciones Contextuales</h2>
+            <p class="mb-0 text-muted">UVP adaptado automáticamente para diferentes contexts y audiencias</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="variations-grid" id="variations-container">
+          <div class="variation-card">
+            <div class="context-label">LinkedIn Profile</div>
+            <p class="variation-text">
+              "Former startup CTO turned consultant | I help SaaS scale-ups build bulletproof tech teams that ship 40% faster | 15 implementations, zero failed deployments 🚀"
+            </p>
+            <div class="mt-3">
+              <small class="text-muted">
+                <i class="fas fa-check text-success"></i> Optimized for LinkedIn's professional tone<br>
+                <i class="fas fa-check text-success"></i> Includes emoji for engagement<br>
+                <i class="fas fa-check text-success"></i> Quantified proof points
+              </small>
+            </div>
+          </div>
+
+          <div class="variation-card">
+            <div class="context-label">Networking Event</div>
+            <p class="variation-text">
+              "I'm the guy who helps SaaS companies avoid the scaling disasters I lived through as a startup CTO. Think of me as your technical insurance policy - I make sure your growth doesn't break your product."
+            </p>
+            <div class="mt-3">
+              <small class="text-muted">
+                <i class="fas fa-check text-success"></i> Conversational and memorable<br>
+                <i class="fas fa-check text-success"></i> Story-driven approach<br>
+                <i class="fas fa-check text-success"></i> Clear value metaphor
+              </small>
+            </div>
+          </div>
+
+          <div class="variation-card">
+            <div class="context-label">Email Signature</div>
+            <p class="variation-text">
+              "Scaling SaaS tech teams without the growing pains | Former startup CTO | 40% faster delivery guaranteed"
+            </p>
+            <div class="mt-3">
+              <small class="text-muted">
+                <i class="fas fa-check text-success"></i> Concise for email format<br>
+                <i class="fas fa-check text-success"></i> Clear benefit statement<br>
+                <i class="fas fa-check text-success"></i> Professional credibility
+              </small>
+            </div>
+          </div>
+
+          <div class="variation-card">
+            <div class="context-label">Conference Bio</div>
+            <p class="variation-text">
+              "Technical consultant with unique dual perspective: 8 years as startup CTO experiencing scaling challenges firsthand, now solving them for SaaS companies. Specialized in data-driven team optimization processes that accelerate delivery 40% while maintaining quality. Track record: 15+ successful implementations across Series A-C companies."
+            </p>
+            <div class="mt-3">
+              <small class="text-muted">
+                <i class="fas fa-check text-success"></i> Detailed for speaker credibility<br>
+                <i class="fas fa-check text-success"></i> Specific track record<br>
+                <i class="fas fa-check text-success"></i> Professional authority tone
+              </small>
+            </div>
+          </div>
+
+          <div class="variation-card">
+            <div class="context-label">Sales Call Opening</div>
+            <p class="variation-text">
+              "Most SaaS companies think scaling means choosing between speed and quality. I help CTOs like yourself prove that's a false choice. Using lessons learned from my own scaling disasters as a startup CTO, I've developed processes that actually increase both simultaneously."
+            </p>
+            <div class="mt-3">
+              <small class="text-muted">
+                <i class="fas fa-check text-success"></i> Addresses common pain point<br>
+                <i class="fas fa-check text-success"></i> Positions against false dichotomy<br>
+                <i class="fas fa-check text-success"></i> Builds rapport through shared experience
+              </small>
+            </div>
+          </div>
+
+          <div class="variation-card">
+            <div class="context-label">Social Media Bio</div>
+            <p class="variation-text">
+              "From startup CTO chaos to SaaS scaling zen 🧘‍♂️ | Helping tech teams ship faster without burning out | Failed 2x so you don't have to | 15 successful transformations ✨"
+            </p>
+            <div class="mt-3">
+              <small class="text-muted">
+                <i class="fas fa-check text-success"></i> Casual, authentic tone<br>
+                <i class="fas fa-check text-success"></i> Vulnerability builds trust<br>
+                <i class="fas fa-check text-success"></i> Visual elements for social media
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <button class="btn-uvp" onclick="generateMoreVariations()">
+            <i class="fas fa-plus"></i> Generar Más Variaciones
+          </button>
+          <button class="btn-uvp" onclick="customizeVariation()" style="background: var(--gradient-success);">
+            <i class="fas fa-edit"></i> Personalizar Variación
+          </button>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters del Personal Branding
+          </h2>
+          <p class="lead text-muted">Historias reales de transformación mediante UVP optimizada y diferenciación clara</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-gem text-primary"></i> Patricia M. - AI Consultant</h5>
+            <p>"Desarrollé UVP específica: 'Former Fortune 500 AI Director who helps mid-size companies implement AI without the enterprise complexity.' Antes era 'AI consultant' generic."</p>
+            <p class="text-muted"><em>"Resultado en 12 meses: daily rate aumentó de €800 a €2,200. Clientes ahora me buscan específicamente por experience en simplificar AI enterprise para mid-market. Mi positioning evita commodity competition y me permite charge premium por expertise específico."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">+175%</span>
+                <span class="metric-label">Daily rate increase</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">92%</span>
+                <span class="metric-label">Inbound leads</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€2,200</span>
+                <span class="metric-label">Current daily rate</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-rocket text-success"></i> Diego R. - Product Manager</h5>
+            <p>"Refined UVP from generic 'Product Manager with startup experience' a 'The Product Detective - I find hidden revenue streams in SaaS products through behavioral data analysis.' Metaphor made me memorable."</p>
+            <p class="text-muted"><em>"Impact: headhunters started calling specifically for 'data-driven product optimization' roles. Landed CPO position at €140K base + equity worth potentially €500K. Mi UVP metaphor became talking point en interview process - remembered me instantly."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€140K</span>
+                <span class="metric-label">Base salary CPO</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€500K</span>
+                <span class="metric-label">Equity potential</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">5x</span>
+                <span class="metric-label">Interview recalls</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-crown text-warning"></i> Carmen L. - Marketing Executive</h5>
+            <p>"Transformed from 'Digital Marketing Expert' to 'The CMO Whisperer - I turn marketing teams into revenue-generating machines using psychology + data.' Personal branding completely changed market perception."</p>
+            <p class="text-muted"><em>"Results: invited to speak at 8 major conferences, featured in Marketing Land, book deal worth €75K advance. Most importantly: consulting inquiries increased 340% with average project size jumping from €15K to €65K. Clear positioning eliminates price competition."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">340%</span>
+                <span class="metric-label">Inquiry increase</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€65K</span>
+                <span class="metric-label">Avg project size</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€75K</span>
+                <span class="metric-label">Book advance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        💎 Tu Código Genético Comunicacional Está Activo
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has destilado tu valor único en articulación inequívocamente distintiva. No seas opción intercambiable en categoría saturada. Tu declaración de valor único es ahora tu diferenciación comunicacional instantánea e inolvidable.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">💎</div>
+          <h5>UVP Distintiva</h5>
+          <p>Declaración memorable que comunica valor específico en <60 palabras</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">🎯</div>
+          <h5>Targeting Preciso</h5>
+          <p>Audiencia específica identificada con pain points particulares</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⚡</div>
+          <h5>Diferenciación Clara</h5>
+          <p>Elementos únicos que te distinguen de alternatives genéricas</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">🎭</div>
+          <h5>Variaciones Contextuales</h5>
+          <p>Adaptaciones optimizadas para diferentes situations y audiencias</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadUVPSystem()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Valor Único!
+        </button>
+        <button class="cta-button" onclick="shareUVPSuccess()">
+          <i class="fas fa-share"></i> Domina Tu Diferenciación Personal
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Implementa tu UVP HOY en todos los touchpoints. Cada interacción sin diferenciación clara es oportunidad de positioning perdida. Tu futuro profesional depende de esta articulación distintiva.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Global variables for UVP system
+    let uvpData = {
+      expertise: {},
+      target: {},
+      benefit: {},
+      differentiator: {},
+      finalUVP: ""
+    };
+    let currentStep = 1;
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Navigate between steps
+    function nextStep(step) {
+      // Save current step data
+      saveStepData(currentStep);
+      
+      // Hide current step
+      document.getElementById(`form-step-${currentStep}`).style.display = 'none';
+      
+      // Show next step
+      document.getElementById(`form-step-${step}`).style.display = 'block';
+      
+      // Update step indicators
+      document.getElementById(`step-${currentStep}`).classList.add('completed');
+      
+      currentStep = step;
+    }
+
+    function previousStep(step) {
+      // Hide current step
+      document.getElementById(`form-step-${currentStep}`).style.display = 'none';
+      
+      // Show previous step
+      document.getElementById(`form-step-${step}`).style.display = 'block';
+      
+      currentStep = step;
+    }
+
+    // Save step data
+    function saveStepData(step) {
+      switch(step) {
+        case 1:
+          uvpData.expertise = {
+            mainSkill: document.getElementById('main-skill').value,
+            experienceYears: document.getElementById('experience-years').value,
+            uniqueCombination: document.getElementById('unique-combination').value,
+            distinctiveCredential: document.getElementById('distinctive-credential').value
+          };
+          break;
+        case 2:
+          uvpData.target = {
+            industry: document.getElementById('target-industry').value,
+            role: document.getElementById('target-role').value,
+            painPoint: document.getElementById('target-pain').value,
+            situation: document.getElementById('target-situation').value
+          };
+          break;
+        case 3:
+          uvpData.benefit = {
+            mainResult: document.getElementById('main-result').value,
+            metric: document.getElementById('quantifiable-metric').value,
+            transformation: document.getElementById('transformation').value,
+            timeframe: document.getElementById('timeframe').value
+          };
+          break;
+        case 4:
+          uvpData.differentiator = {
+            uniqueApproach: document.getElementById('unique-approach').value,
+            distinctiveBackground: document.getElementById('distinctive-background').value,
+            personalElement: document.getElementById('personal-element').value,
+            proofPoint: document.getElementById('proof-point').value
+          };
+          break;
+      }
+    }
+
+    // Generate UVP
+    function generateUVP() {
+      saveStepData(4);
+      
+      // Create UVP using template
+      const uvp = createUVPFromData();
+      
+      // Show step 5
+      nextStep(5);
+      
+      // Display UVP
+      document.getElementById('generated-uvp').textContent = uvp;
+      uvpData.finalUVP = uvp;
+      
+      // Calculate metrics
+      const wordCount = uvp.split(' ').length;
+      const memorability = calculateMemorabilityScore(uvp);
+      const differentiation = calculateDifferentiationScore(uvp);
+      const clarity = calculateClarityScore(uvp);
+      
+      document.getElementById('word-count').textContent = wordCount;
+      document.getElementById('memorability-score').textContent = memorability + '/10';
+      document.getElementById('differentiation-score').textContent = differentiation + '/10';
+      document.getElementById('clarity-score').textContent = clarity + '/10';
+    }
+
+    // Create UVP from collected data
+    function createUVPFromData() {
+      const { expertise, target, benefit, differentiator } = uvpData;
+      
+      // Template: [Personal Element] [Target] + [Main Benefit] + [Differentiator/Proof]
+      const personalElement = differentiator.personalElement || expertise.distinctiveCredential;
+      const targetDescription = target.industry || target.role;
+      const mainBenefit = benefit.mainResult || benefit.transformation;
+      const proofPoint = differentiator.proofPoint || expertise.uniqueCombination;
+      
+      // Construct UVP
+      let uvp = "";
+      
+      if (personalElement) {
+        uvp += personalElement;
+        if (targetDescription) {
+          uvp += ` helping ${targetDescription}`;
+        }
+        if (mainBenefit) {
+          uvp += ` ${mainBenefit}`;
+        }
+        if (proofPoint && proofPoint !== personalElement) {
+          uvp += ` through ${proofPoint}`;
+        }
+      } else {
+        // Fallback construction
+        uvp = `Specialized consultant helping ${targetDescription || 'companies'} ${mainBenefit || 'achieve better results'} using ${expertise.uniqueCombination || expertise.mainSkill}`;
+      }
+      
+      // Clean up and optimize length
+      uvp = uvp.replace(/\s+/g, ' ').trim();
+      
+      // If too long, simplify
+      if (uvp.split(' ').length > 25) {
+        uvp = `${personalElement} helping ${targetDescription} ${mainBenefit}`;
+      }
+      
+      return uvp;
+    }
+
+    // Calculate scoring metrics
+    function calculateMemorabilityScore(uvp) {
+      let score = 5; // Base score
+      
+      // Check for memorable elements
+      if (uvp.includes('former') || uvp.includes('ex-')) score += 1;
+      if (/\d+/.test(uvp)) score += 1; // Contains numbers
+      if (uvp.includes('through') || uvp.includes('using')) score += 1;
+      if (uvp.split(' ').length <= 20) score += 1; // Concise
+      if (uvp.toLowerCase().includes('help')) score += 1; // Clear benefit orientation
+      
+      return Math.min(score, 10);
+    }
+
+    function calculateDifferentiationScore(uvp) {
+      let score = 4; // Base score
+      
+      // Check for differentiating elements
+      if (uvp.includes('former') || uvp.includes('background')) score += 2;
+      if (/\d+/.test(uvp)) score += 1; // Specific metrics
+      if (uvp.includes('only') || uvp.includes('unique')) score += 2;
+      if (uvp.split(' ').length > 15) score += 1; // Detailed enough
+      
+      return Math.min(score, 10);
+    }
+
+    function calculateClarityScore(uvp) {
+      let score = 6; // Base score
+      
+      // Check for clarity elements
+      if (uvp.includes('help')) score += 1;
+      if (/\d+%|\d+x|\d+\+/.test(uvp)) score += 1; // Quantified benefits
+      if (uvp.split(' ').length <= 25) score += 1; // Not too long
+      if (!uvp.includes('innovative') && !uvp.includes('cutting-edge')) score += 1; // Avoids buzzwords
+      
+      return Math.min(score, 10);
+    }
+
+    // Generate contextual variations
+    function generateVariations() {
+      const baseUVP = uvpData.finalUVP;
+      
+      // This function would generate variations - for demo, we show pre-made ones
+      alert('🎭 ¡Variaciones contextuales generadas!\n\nCheck the "Variaciones Contextuales" section to see tu UVP adaptada para diferentes contexts: LinkedIn, networking, email signature, conference bio, y más.');
+      
+      // Scroll to variations section
+      document.querySelector('[onclick="toggleDetails(\'contextual-variations\')"]').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Analyze UVP
+    function analyzeUVP() {
+      const uvpText = document.getElementById('uvp-analysis-input').value.trim();
+      
+      if (!uvpText) {
+        alert('Por favor ingresa tu UVP para análisis');
+        return;
+      }
+      
+      // Show results
+      document.getElementById('analysis-results').style.display = 'block';
+      
+      // Simulate analysis results based on UVP content
+      const wordCount = uvpText.split(' ').length;
+      const hasNumbers = /\d+/.test(uvpText);
+      const hasSpecificTarget = uvpText.toLowerCase().includes('help') || uvpText.toLowerCase().includes('for');
+      
+      // Update differentiation score
+      let diffScore = 6;
+      if (hasNumbers) diffScore += 1;
+      if (hasSpecificTarget) diffScore += 1;
+      if (wordCount <= 20) diffScore += 1;
+      
+      const scoreElement = document.getElementById('diff-score');
+      scoreElement.textContent = `${diffScore >= 8 ? 'Alto' : diffScore >= 6 ? 'Medio' : 'Bajo'} (${diffScore}/10)`;
+      scoreElement.className = `differentiation-score ${diffScore >= 8 ? 'score-high' : diffScore >= 6 ? 'score-medium' : 'score-low'}`;
+    }
+
+    // Export UVP
+    function exportUVP() {
+      if (!uvpData.finalUVP) {
+        alert('Primero genera tu UVP usando el constructor');
+        return;
+      }
+      
+      let exportText = "💎 MI DECLARACIÓN DE VALOR ÚNICO\n";
+      exportText += "=" .repeat(40) + "\n\n";
+      
+      exportText += "UVP PRINCIPAL:\n";
+      exportText += uvpData.finalUVP + "\n\n";
+      
+      exportText += "COMPONENTES:\n";
+      exportText += "-".repeat(20) + "\n";
+      exportText += `Expertise: ${uvpData.expertise.uniqueCombination || uvpData.expertise.mainSkill}\n`;
+      exportText += `Target: ${uvpData.target.industry} - ${uvpData.target.role}\n`;
+      exportText += `Beneficio: ${uvpData.benefit.mainResult}\n`;
+      exportText += `Diferenciador: ${uvpData.differentiator.uniqueApproach}\n\n`;
+      
+      exportText += "VARIACIONES POR CONTEXTO:\n";
+      exportText += "-".repeat(20) + "\n";
+      exportText += "LinkedIn: [Versión profesional con métricas]\n";
+      exportText += "Networking: [Versión conversacional memorable]\n";
+      exportText += "Email: [Versión concisa]\n";
+      exportText += "Presentación: [Versión detallada con credenciales]\n";
+      
+      // Create and download file
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mi-declaracion-valor-unico.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Generate more variations
+    function generateMoreVariations() {
+      alert('🎯 ¡Generando variaciones adicionales!\n\nIncludes:\n• Website bio\n• Speaker introduction\n• Elevator pitch (30 sec)\n• Cold email opening\n• Interview self-introduction\n• Consultant profile');
+    }
+
+    // Customize variation
+    function customizeVariation() {
+      const context = prompt('¿Para qué contexto específico necesitas customizar tu UVP?\n\nEj: "Pitch para investors", "Job interview opening", "Podcast guest intro"');
+      
+      if (context) {
+        alert(`🎨 ¡Generando UVP customizada para "${context}"!\n\nTu UVP será optimizada considerando:\n• Audiencia específica\n• Tone apropiado\n• Keywords relevantes\n• Length optimal\n• Call-to-action adecuado`);
+      }
+    }
+
+    // Download UVP system
+    function downloadUVPSystem() {
+      alert('💎 ¡Sistema UVP descargándose!\n\nIncludes:\n• Constructor paso a paso\n• Templates de variaciones contextuales\n• Framework de diferenciación competitiva\n• Testing methodology para efectividad\n• Casos de estudio con resultados específicos');
+    }
+
+    // Share UVP success
+    function shareUVPSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '💎 Masters en Declaración de Valor Único',
+          text: 'Acabo de crear mi UVP distintiva que transforma mi positioning de genérico a inequívocamente valioso. ¡Mi código genético comunicacional está activo!',
+          url: window.location.href
+        });
+      } else {
+        alert('💎 ¡Declaración de Valor Único Lista!\n\nTu diferenciación comunicacional está optimizada. Comparte esta transformación con colegas que necesiten distinguirse en mercados saturados.');
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+
+      // Initialize step 1 as active
+      document.getElementById('form-step-1').classList.add('active');
+    });
+  </script>
+</body>
+</html>

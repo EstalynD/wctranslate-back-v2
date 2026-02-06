@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>🔍 WC Training - Masters de Escaneo Corporal</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #8b5cf6;
+      --secondary-color: #7c3aed;
+      --accent-color: #6366f1;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --soma-purple: #8b5cf6;
+      --neuro-indigo: #6366f1;
+      --body-violet: #7c3aed;
+      --tension-red: #ef4444;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-soma: #faf5ff;
+      --border-light: #e0e0e0;
+      --gradient-soma: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6366f1 100%);
+      --gradient-neuro: linear-gradient(45deg, #6366f1 0%, #8b5cf6 100%);
+      --gradient-body: linear-gradient(90deg, #7c3aed 0%, #8b5cf6 100%);
+      --gradient-intero: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #7c3aed 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* WC Branding Header */
+    .wc-header {
+      background: var(--gradient-soma);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M40 0c22.1 0 40 17.9 40 40s-17.9 40-40 40S0 62.1 0 40 17.9 0 40 0zm0 20c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: intero-pulse 28s infinite ease-in-out;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .wc-stats {
+      font-size: 0.9rem;
+      opacity: 0.9;
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Industry Insights */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+      border: 1px solid rgba(139, 92, 246, 0.1);
+      border-radius: 20px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(139, 92, 246, 0.15);
+    }
+
+    .insight-number {
+      font-size: 2.2rem;
+      font-weight: 800;
+      background: var(--gradient-soma);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .insight-label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Main Header */
+    .main-header {
+      background: var(--gradient-intero);
+      color: white;
+      padding: 6rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M60 20c22.1 0 40 17.9 40 40s-17.9 40-40 40-40-17.9-40-40 17.9-40 40-40zm0 10c-16.6 0-30 13.4-30 30s13.4 30 30 30 30-13.4 30-30-13.4-30-30-30zm0 10c11 0 20 9 20 20s-9 20-20 20-20-9-20-20 9-20 20-20z' fill='%23ffffff' fill-opacity='0.06'/%3E%3C/svg%3E") repeat;
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+      position: relative;
+      z-index: 2;
+    }
+
+    .main-subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      padding: 4rem 0;
+      background: var(--bg-white);
+      margin: 2rem 0;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    }
+
+    .lab-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: var(--gradient-soma);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    /* Interactive Cards */
+    .interactive-card {
+      background: var(--bg-white);
+      border: 2px solid rgba(139, 92, 246, 0.1);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.1), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px) translateX(10px);
+      box-shadow: 0 20px 50px rgba(139, 92, 246, 0.2);
+      border-color: var(--primary-color);
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease;
+    }
+
+    .card-details.expanded {
+      max-height: 1000px;
+    }
+
+    /* Body Scan Visualizer */
+    .body-scan-visualizer {
+      background: var(--bg-soma);
+      border-radius: 25px;
+      padding: 3rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .body-diagram {
+      max-width: 300px;
+      margin: 2rem auto;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .body-part {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(139, 92, 246, 0.3);
+      border: 2px solid var(--soma-purple);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      color: white;
+      font-size: 0.8rem;
+    }
+
+    .body-part:hover {
+      transform: scale(1.2);
+      background: var(--soma-purple);
+      box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+    }
+
+    .body-part.scanning {
+      animation: scan-pulse 2s infinite ease-in-out;
+      background: var(--neuro-indigo);
+    }
+
+    .body-part.tension {
+      background: var(--tension-red);
+      border-color: var(--tension-red);
+      animation: tension-alert 1s infinite ease-in-out;
+    }
+
+    /* Body Parts Positioning */
+    .head { top: 10px; left: 50%; transform: translateX(-50%); }
+    .neck { top: 60px; left: 50%; transform: translateX(-50%); }
+    .shoulders-left { top: 80px; left: 20%; }
+    .shoulders-right { top: 80px; right: 20%; }
+    .arms-left { top: 120px; left: 5%; }
+    .arms-right { top: 120px; right: 5%; }
+    .chest { top: 110px; left: 50%; transform: translateX(-50%); }
+    .back { top: 140px; left: 50%; transform: translateX(-50%); }
+    .hands-left { top: 180px; left: 0%; }
+    .hands-right { top: 180px; right: 0%; }
+    .abdomen { top: 170px; left: 50%; transform: translateX(-50%); }
+    .hips { top: 210px; left: 50%; transform: translateX(-50%); }
+    .legs-left { top: 250px; left: 35%; }
+    .legs-right { top: 250px; right: 35%; }
+    .feet-left { top: 320px; left: 35%; }
+    .feet-right { top: 320px; right: 35%; }
+
+    /* Scan Timer */
+    .scan-timer {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+      border: 2px solid rgba(139, 92, 246, 0.1);
+    }
+
+    .timer-display {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--soma-purple);
+      font-family: 'Courier New', monospace;
+      margin: 1rem 0;
+    }
+
+    .timer-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .scan-duration {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .duration-option {
+      background: var(--bg-white);
+      border: 2px solid var(--soma-purple);
+      color: var(--soma-purple);
+      padding: 0.5rem 1rem;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .duration-option:hover,
+    .duration-option.selected {
+      background: var(--soma-purple);
+      color: white;
+    }
+
+    /* Technique Cards */
+    .technique-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .technique-card {
+      background: var(--bg-white);
+      border: 2px solid rgba(124, 58, 237, 0.2);
+      border-radius: 20px;
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .technique-card:hover,
+    .technique-card.selected {
+      border-color: var(--body-violet);
+      background: rgba(124, 58, 237, 0.05);
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(124, 58, 237, 0.15);
+    }
+
+    .technique-icon {
+      font-size: 3rem;
+      color: var(--body-violet);
+      margin-bottom: 1rem;
+    }
+
+    .technique-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--body-violet);
+      margin-bottom: 1rem;
+    }
+
+    /* Calculator Styles */
+    .calculator-container {
+      background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 100%);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calc-input {
+      border: 2px solid rgba(139, 92, 246, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      background: var(--bg-white);
+    }
+
+    .calc-input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+    }
+
+    .calc-result {
+      background: var(--gradient-soma);
+      color: white;
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    /* Progress Tracking */
+    .progress-container {
+      margin: 2rem 0;
+    }
+
+    .progress-bar-custom {
+      height: 20px;
+      border-radius: 15px;
+      background: rgba(139, 92, 246, 0.1);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-soma);
+      border-radius: 15px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    /* Tension Detector */
+    .tension-detector {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      border: 2px solid rgba(139, 92, 246, 0.1);
+      margin: 2rem 0;
+    }
+
+    .tension-gauge {
+      width: 180px;
+      height: 90px;
+      border: 8px solid #e5e7eb;
+      border-bottom: none;
+      border-radius: 180px 180px 0 0;
+      position: relative;
+      margin: 1rem auto;
+    }
+
+    .tension-needle {
+      width: 3px;
+      height: 80px;
+      background: var(--primary-color);
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform-origin: bottom center;
+      transition: transform 0.5s ease;
+    }
+
+    .tension-level {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-top: 1rem;
+      color: var(--soma-purple);
+    }
+
+    /* Hot Spots Map */
+    .hotspots-map {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .hotspot-item {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .hotspot-severity {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+    }
+
+    .severity-low { color: #10b981; }
+    .severity-medium { color: #f59e0b; }
+    .severity-high { color: #ef4444; }
+
+    .hotspot-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    /* Success Stories */
+    .success-story {
+      background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 100%);
+      color: white;
+      border-radius: 25px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-story::before {
+      content: '"';
+      font-size: 8rem;
+      position: absolute;
+      top: -2rem;
+      left: 2rem;
+      opacity: 0.2;
+      font-family: serif;
+    }
+
+    .story-metric {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 1rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+    }
+
+    /* Simulator */
+    .simulator-container {
+      background: var(--bg-soma);
+      border-radius: 25px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-option {
+      background: var(--bg-white);
+      border: 2px solid rgba(139, 92, 246, 0.2);
+      border-radius: 20px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover,
+    .scenario-option.selected {
+      border-color: var(--primary-color);
+      background: rgba(139, 92, 246, 0.05);
+      transform: translateX(10px);
+    }
+
+    .scenario-result {
+      background: var(--gradient-body);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin-top: 2rem;
+      display: none;
+    }
+
+    /* Buttons */
+    .btn-soma {
+      background: var(--gradient-soma);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-soma:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
+      color: white;
+    }
+
+    .btn-soma::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn-soma:hover::before {
+      left: 100%;
+    }
+
+    /* Critical Badges */
+    .critical-badge {
+      background: var(--warning-orange);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      display: inline-block;
+      margin: 0.5rem 0;
+      animation: pulse 2s infinite;
+    }
+
+    /* Scan Progress Indicator */
+    .scan-progress {
+      width: 100%;
+      height: 8px;
+      background: rgba(139, 92, 246, 0.2);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+
+    .scan-progress-fill {
+      height: 100%;
+      background: var(--gradient-soma);
+      border-radius: 10px;
+      transition: width 0.3s ease;
+      width: 0%;
+    }
+
+    /* Animations */
+    @keyframes intero-pulse {
+      0%, 100% { 
+        transform: translateY(0px) scale(1); 
+        opacity: 0.6;
+      }
+      50% { 
+        transform: translateY(-12px) scale(1.02); 
+        opacity: 1;
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.05); }
+    }
+
+    @keyframes scan-pulse {
+      0%, 100% { 
+        transform: scale(1); 
+        opacity: 0.8;
+      }
+      50% { 
+        transform: scale(1.3); 
+        opacity: 1;
+      }
+    }
+
+    @keyframes tension-alert {
+      0%, 100% { 
+        transform: scale(1); 
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+      }
+      50% { 
+        transform: scale(1.1); 
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+      }
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    @keyframes slideDown {
+      from { max-height: 0; }
+      to { max-height: 1000px; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .main-title { font-size: 2.5rem; }
+      .main-subtitle { font-size: 1.1rem; }
+      .lab-title { font-size: 2rem; }
+      .interactive-card { padding: 1.5rem; margin: 1rem 0; }
+      .calculator-container { padding: 1.5rem; }
+      .main-header { padding: 4rem 0; }
+      .insight-card { margin: 1rem 0; }
+      .body-diagram { max-width: 250px; }
+      .technique-grid { grid-template-columns: 1fr; }
+      .timer-display { font-size: 2.5rem; }
+    }
+
+    @media (max-width: 480px) {
+      .main-title { font-size: 2rem; }
+      .main-subtitle { font-size: 1rem; }
+      .lab-title { font-size: 1.8rem; }
+      .interactive-card { padding: 1rem; }
+      .calculator-container { padding: 1rem; }
+      .wc-logo { font-size: 1.5rem; }
+      .insight-number { font-size: 1.8rem; }
+      .body-diagram { max-width: 200px; }
+      .body-part { width: 30px; height: 30px; font-size: 0.7rem; }
+      .timer-display { font-size: 2rem; }
+    }
+
+    /* Touch-friendly elements */
+    .interactive-card,
+    .scenario-option,
+    .btn-soma,
+    .technique-card,
+    .duration-option,
+    .body-part {
+      min-height: 44px;
+    }
+
+    /* High contrast accessibility */
+    @media (prefers-contrast: high) {
+      .interactive-card {
+        border-width: 3px;
+      }
+      
+      .calc-input:focus {
+        box-shadow: 0 0 0 3px var(--primary-color);
+      }
+    }
+
+    /* Reduced motion accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-crown"></i> WC Training
+          </div>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="wc-stats">
+            <span class="live-indicator"></span>
+            <strong>12,847</strong> modelos activos | <strong>76%</strong> practican escaneo corporal
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="industry-insights">
+    <div class="container">
+      <h2 class="text-center mb-4"><i class="fas fa-chart-line"></i> Body Scan Mastery Insights 2025</h2>
+      <div class="row g-4">
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">80%</div>
+            <div class="insight-label">Menos dolores tensionales</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">5.2x</div>
+            <div class="insight-label">Detección temprana tensión</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">20-30s</div>
+            <div class="insight-label">Micro-escaneos óptimos</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">91%</div>
+            <div class="insight-label">Mejor comfort sostenido</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">+67%</div>
+            <div class="insight-label">Performance physical</div>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4 col-6">
+          <div class="insight-card">
+            <div class="insight-number">Elite</div>
+            <div class="insight-label">Top 8% domina técnica</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="container">
+      <h1 class="main-title">🔍 Masters de Escaneo Corporal</h1>
+      <p class="main-subtitle">
+        Tu Protocolo de Vigilancia Somática - Sistema Diagnóstico Interno para Performance Físico Sostenido
+      </p>
+      <div class="mt-4">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">TRANSFORMACIONAL</span>
+        <span class="critical-badge">ESENCIAL</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 1: Protocolo de Vigilancia Somática -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">🔬 Protocolo de Vigilancia Somática</h2>
+      
+      <div class="interactive-card" onclick="toggleDetails('vigilancia')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-search"></i></div>
+            <h4>Sistema de Monitoreo Interoceptivo</h4>
+            <span class="critical-badge">VITAL</span>
+          </div>
+          <div class="expand-icon" id="icon-vigilancia"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Detección y desactivación automática de patrones de tensión antes que escalen</strong></p>
+        
+        <div class="card-details" id="details-vigilancia">
+          <div class="body-scan-visualizer">
+            <h5><i class="fas fa-user"></i> Escáner Corporal Interactivo</h5>
+            <div class="body-diagram" id="bodyDiagram">
+              <svg width="300" height="400" viewBox="0 0 300 400">
+                <!-- Body outline -->
+                <ellipse cx="150" cy="200" rx="80" ry="180" fill="rgba(139, 92, 246, 0.1)" stroke="rgba(139, 92, 246, 0.3)" stroke-width="2"/>
+                <!-- Head -->
+                <circle cx="150" cy="60" r="35" fill="rgba(139, 92, 246, 0.1)" stroke="rgba(139, 92, 246, 0.3)" stroke-width="2"/>
+              </svg>
+              
+              <!-- Clickable body parts -->
+              <div class="body-part head" data-part="head" onclick="scanBodyPart('head')">H</div>
+              <div class="body-part neck" data-part="neck" onclick="scanBodyPart('neck')">N</div>
+              <div class="body-part shoulders-left" data-part="left-shoulder" onclick="scanBodyPart('left-shoulder')">HL</div>
+              <div class="body-part shoulders-right" data-part="right-shoulder" onclick="scanBodyPart('right-shoulder')">HR</div>
+              <div class="body-part arms-left" data-part="left-arm" onclick="scanBodyPart('left-arm')">BL</div>
+              <div class="body-part arms-right" data-part="right-arm" onclick="scanBodyPart('right-arm')">BR</div>
+              <div class="body-part chest" data-part="chest" onclick="scanBodyPart('chest')">P</div>
+              <div class="body-part back" data-part="back" onclick="scanBodyPart('back')">E</div>
+              <div class="body-part hands-left" data-part="left-hand" onclick="scanBodyPart('left-hand')">ML</div>
+              <div class="body-part hands-right" data-part="right-hand" onclick="scanBodyPart('right-hand')">MR</div>
+              <div class="body-part abdomen" data-part="abdomen" onclick="scanBodyPart('abdomen')">A</div>
+              <div class="body-part hips" data-part="hips" onclick="scanBodyPart('hips')">C</div>
+              <div class="body-part legs-left" data-part="left-leg" onclick="scanBodyPart('left-leg')">PL</div>
+              <div class="body-part legs-right" data-part="right-leg" onclick="scanBodyPart('right-leg')">PR</div>
+              <div class="body-part feet-left" data-part="left-foot" onclick="scanBodyPart('left-foot')">PiL</div>
+              <div class="body-part feet-right" data-part="right-foot" onclick="scanBodyPart('right-foot')">PiR</div>
+            </div>
+            
+            <div class="scan-progress">
+              <div class="scan-progress-fill" id="scanProgressFill"></div>
+            </div>
+            
+            <div class="scan-timer">
+              <h6>Timer de Escaneo Programable</h6>
+              <div class="timer-display" id="scanTimerDisplay">00:30</div>
+              <div class="scan-duration">
+                <div class="duration-option selected" onclick="setScanDuration(30)">30s Micro</div>
+                <div class="duration-option" onclick="setScanDuration(300)">5min Completo</div>
+                <div class="duration-option" onclick="setScanDuration(1200)">20min Profundo</div>
+              </div>
+              <div class="timer-controls">
+                <button class="btn btn-soma" onclick="startBodyScan()">
+                  <i class="fas fa-play"></i> Iniciar Escaneo
+                </button>
+                <button class="btn btn-soma" onclick="pauseBodyScan()">
+                  <i class="fas fa-pause"></i> Pausar
+                </button>
+                <button class="btn btn-soma" onclick="resetBodyScan()">
+                  <i class="fas fa-refresh"></i> Reset
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="calculator-container">
+            <h5><i class="fas fa-calculator"></i> Calculadora ROI Preventivo vs Correctivo</h5>
+            <div class="row">
+              <div class="col-md-4">
+                <label>Horas streaming diarias:</label>
+                <input type="number" id="dailyStreamingHours" class="form-control calc-input" value="6" onchange="calculateBodyScanROI()">
+              </div>
+              <div class="col-md-4">
+                <label>Días con tensión/dolor actual:</label>
+                <input type="number" id="tensionDays" class="form-control calc-input" value="15" onchange="calculateBodyScanROI()">
+              </div>
+              <div class="col-md-4">
+                <label>Minutos escaneo diarios:</label>
+                <input type="number" id="scanMinutes" class="form-control calc-input" value="10" onchange="calculateBodyScanROI()">
+              </div>
+            </div>
+            <div class="calc-result" id="bodyScanROIResult">
+              <strong>Tu ROI de Vigilancia Somática:</strong><br>
+              Prevención vs Tratamiento: 847% | Comfort sostenido: +89% | Performance físico: +67%
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('tecnicas')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-tools"></i></div>
+            <h4>Arsenal de Técnicas Específicas</h4>
+          </div>
+          <div class="expand-icon" id="icon-tecnicas"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Herramientas interoceptivas calibradas para diferentes duraciones y objetivos</strong></p>
+        
+        <div class="card-details" id="details-tecnicas">
+          <div class="technique-grid">
+            <div class="technique-card" onclick="selectTechnique('micro')">
+              <div class="technique-icon"><i class="fas fa-stopwatch"></i></div>
+              <div class="technique-title">Micro-Escaneos</div>
+              <p>20-30 segundos cada 20 minutos. Evaluación rápida de áreas críticas: mandíbula, cuello, hombros, muñecas.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('complete')">
+              <div class="technique-icon"><i class="fas fa-user-md"></i></div>
+              <div class="technique-title">Escaneo Completo</div>
+              <p>5 minutos pre/post transmisión. Recorrido metódico completo de todo el cuerpo head-to-toe.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('targeted')">
+              <div class="technique-icon"><i class="fas fa-crosshairs"></i></div>
+              <div class="technique-title">Escaneo Dirigido</div>
+              <p>1-2 minutos en puntos calientes. Enfoque específico en áreas de tensión recurrente personal.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('progressive')">
+              <div class="technique-icon"><i class="fas fa-layer-group"></i></div>
+              <div class="technique-title">Escaneo Progresivo</div>
+              <p>10-15 minutos con liberación. Identificación + relajación activa de cada área detectada.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('comparative')">
+              <div class="technique-icon"><i class="fas fa-balance-scale"></i></div>
+              <div class="technique-title">Escaneo Comparativo</div>
+              <p>3-5 minutos antes/después. Evaluación de cambios en patrones tras intervenciones específicas.</p>
+            </div>
+            
+            <div class="technique-card" onclick="selectTechnique('predictive')">
+              <div class="technique-icon"><i class="fas fa-chart-line"></i></div>
+              <div class="technique-title">Escaneo Predictivo</div>
+              <p>2-3 minutos pattern recognition. Identificación temprana de tensión emergente pre-sintomática.</p>
+            </div>
+          </div>
+          
+          <div class="tension-detector">
+            <h5><i class="fas fa-tachometer-alt"></i> Detector de Tensión en Tiempo Real</h5>
+            <div class="tension-gauge">
+              <div class="tension-needle" id="tensionNeedle"></div>
+            </div>
+            <div class="tension-level" id="tensionLevel">Tensión: Moderada</div>
+            <button class="btn btn-soma mt-3" onclick="assessTension()">
+              <i class="fas fa-search"></i> Evaluar Tensión Actual
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 2: Mapa de Puntos Calientes -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">🗺️ Mapa de Puntos Calientes Personalizados</h2>
+      
+      <div class="interactive-card" onclick="toggleDetails('hotspots')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-map-marked-alt"></i></div>
+            <h4>Patrón Personal de Tensión Recurrente</h4>
+            <span class="critical-badge">ESENCIAL</span>
+          </div>
+          <div class="expand-icon" id="icon-hotspots"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Identificación científica de tus áreas de vulnerabilidad específicas</strong></p>
+        
+        <div class="card-details" id="details-hotspots">
+          <div class="hotspots-map">
+            <div class="hotspot-item">
+              <div class="hotspot-severity severity-high" id="neckSeverity">89%</div>
+              <div class="hotspot-label">Cuello/Cervicales</div>
+            </div>
+            <div class="hotspot-item">
+              <div class="hotspot-severity severity-high" id="shoulderSeverity">76%</div>
+              <div class="hotspot-label">Hombros/Trapecios</div>
+            </div>
+            <div class="hotspot-item">
+              <div class="hotspot-severity severity-medium" id="wristSeverity">63%</div>
+              <div class="hotspot-label">Muñecas/Manos</div>
+            </div>
+            <div class="hotspot-item">
+              <div class="hotspot-severity severity-medium" id="backSeverity">58%</div>
+              <div class="hotspot-label">Región Lumbar</div>
+            </div>
+            <div class="hotspot-item">
+              <div class="hotspot-severity severity-medium" id="jawSeverity">54%</div>
+              <div class="hotspot-label">Mandíbula/ATM</div>
+            </div>
+            <div class="hotspot-item">
+              <div class="hotspot-severity severity-low" id="eyeSeverity">32%</div>
+              <div class="hotspot-label">Ojos/Facial</div>
+            </div>
+          </div>
+          
+          <div class="row mt-4">
+            <div class="col-md-6">
+              <h5><i class="fas fa-exclamation-triangle"></i> Áreas Críticas</h5>
+              <ul>
+                <li><strong>Cuello/Cervicales:</strong> 89% frecuencia tensión</li>
+                <li><strong>Hombros/Trapecios:</strong> 76% acumulación diaria</li>
+                <li><strong>Muñecas/Manos:</strong> 63% fatiga repetitiva</li>
+                <li><strong>Región Lumbar:</strong> 58% postura prolongada</li>
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h5><i class="fas fa-clock"></i> Protocolo de Monitoreo</h5>
+              <ul>
+                <li>Áreas rojas: Escaneo cada 15 minutos</li>
+                <li>Áreas naranjas: Escaneo cada 25 minutos</li>
+                <li>Áreas verdes: Escaneo cada 45 minutos</li>
+                <li>Intervención inmediata al detectar tensión</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="interactive-card" onclick="toggleDetails('patrones')">
+        <div class="card-header">
+          <div>
+            <div class="card-icon"><i class="fas fa-chart-area"></i></div>
+            <h4>Análisis de Patrones Temporales</h4>
+          </div>
+          <div class="expand-icon" id="icon-patrones"><i class="fas fa-chevron-down"></i></div>
+        </div>
+        <p><strong>Correlación entre horarios, actividades y desarrollo de tensión muscular</strong></p>
+        
+        <div class="card-details" id="details-patrones">
+          <div class="simulator-container">
+            <h5><i class="fas fa-vial"></i> Simulador de Patrón Personal</h5>
+            <p>Selecciona tu perfil de trabajo predominante:</p>
+            
+            <div class="scenario-option" onclick="selectScenario('intensive', 'bodyscan')">
+              <h6><i class="fas fa-fire"></i> Performer Intensivo</h6>
+              <p>6-8 horas diarias, movimiento mínimo, alta concentración sostenida</p>
+            </div>
+            
+            <div class="scenario-option" onclick="selectScenario('interactive', 'bodyscan')">
+              <h6><i class="fas fa-comments"></i> Performer Interactivo</h6>
+              <p>4-6 horas con mucha comunicación, gestos frecuentes, variabilidad postural</p>
+            </div>
+            
+            <div class="scenario-option" onclick="selectScenario('performance', 'bodyscan')">
+              <h6><i class="fas fa-star"></i> Performer de Shows</h6>
+              <p>2-4 horas alta intensidad, movimiento dinámico, expresión corporal</p>
+            </div>
+            
+            <div class="scenario-result" id="result-bodyscan">
+              <!-- Resultado dinámico -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 3: Casos de Éxito Elite -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">🏆 Casos de Éxito Documentados</h2>
+      
+      <div class="success-story">
+        <h4><i class="fas fa-star"></i> Carmen R. - Somatic Awareness Master</h4>
+        <p>"Mi 'Protocolo de Vigilancia Somática' eliminó completamente el efecto acumulativo de tensión. Implementé micro-escaneos de 30 segundos cada 20 minutos + escaneos completos de 5 minutos pre/post transmisión."</p>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Antes del Protocolo:</strong><br>
+              • 89% transmisiones con dolor final<br>
+              • 18 días/mes con tensión significativa<br>
+              • $9,800 ingresos mensuales<br>
+              • 6-8 horas máximo sostenible
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Después del Protocolo:</strong><br>
+              • 8% transmisiones con molestias<br>
+              • 2 días/mes tensión ligera<br>
+              • $16,700 ingresos mensuales<br>
+              • 10+ horas comfort sostenido
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="story-metric">
+              <strong>Transformación Medible:</strong><br>
+              • +89% comfort corporal sostenido<br>
+              • -80% dolores tensionales<br>
+              • +70% ingresos por consistencia<br>
+              • +5.2x detección temprana
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h4><i class="fas fa-crown"></i> Daniela L. - Interoceptive Expert</h4>
+        <p>"Después de años de dolores de cabeza post-transmisión, mi sistema de escaneo corporal me devolvió el control. Mapé mis puntos calientes específicos y creé protocolos personalizados de intervención inmediata."</p>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="story-metric">
+              <strong>Métricas Físicas:</strong><br>
+              • -87% dolores de cabeza tensionales<br>
+              • -92% rigidez cervical crónica<br>
+              • +78% flexibilidad general<br>
+              • +156% resistencia física sostenida
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="story-metric">
+              <strong>Performance Profesional:</strong><br>
+              • +$8,400 ingresos mensuales extra<br>
+              • +89% días laborales sin limitaciones<br>
+              • +234% ROI tiempo invertido escaneos<br>
+              • +67% extensión carrera sostenible
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-story">
+        <h4><i class="fas fa-infinity"></i> Violeta M. - Body Scan Innovation Leader</h4>
+        <p>"Mi sistema de vigilancia somática es tecnología preventiva de elite. 16 meses perfeccionando técnicas interoceptivas me convirtieron en referente de sostenibilidad física."</p>
+        <div class="story-metric">
+          <strong>Maestría Completa:</strong> 16 meses sin dolor tensional | +847% ROI preventivo vs correctivo | +523% resistencia física | +$178,000 lifetime value por sostenibilidad corporal
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Lab Section 4: Tracker de Progreso -->
+  <div class="lab-section">
+    <div class="container">
+      <h2 class="lab-title">📊 Tracker de Dominio Interoceptivo</h2>
+      
+      <div class="interactive-card">
+        <h4><i class="fas fa-chart-area"></i> Progreso de Técnicas de Escaneo</h4>
+        
+        <div class="progress-container">
+          <h5>Micro-Escaneos (20-30s) - 94%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 94%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Escaneos Completos (5min) - 81%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 81%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Detección Temprana de Tensión - 67%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 67%"></div>
+          </div>
+        </div>
+        
+        <div class="progress-container">
+          <h5>Mapeo de Puntos Calientes - 73%</h5>
+          <div class="progress-bar-custom">
+            <div class="progress-fill" style="width: 73%"></div>
+          </div>
+        </div>
+        
+        <div class="calc-result mt-4">
+          <strong>Dominio General: 79%</strong><br>
+          Próximo objetivo: Perfeccionar detección pre-sintomática | Tiempo estimado: 2.8 semanas de práctica consistente
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <div class="main-header" style="padding: 4rem 0;">
+    <div class="container text-center">
+      <h2 class="main-title" style="font-size: 2.5rem;">🎯 Tu Sistema Diagnóstico Interno</h2>
+      <p class="main-subtitle">
+        <strong>Has desbloqueado el blueprint completo del Protocolo de Vigilancia Somática.</strong><br>
+        El Top 8% de performers usa escaneo corporal como tecnología preventiva de sostenibilidad física.
+      </p>
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>🔍 Maestría Interoceptiva</h4>
+            <p>Control científico sobre patrones<br>de tensión antes que escalen</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>⚡ Prevención Elite</h4>
+            <p>+847% ROI preventivo vs correctivo<br>-80% dolores tensionales</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="calc-result">
+            <h4>🏆 Sostenibilidad Física</h4>
+            <p>+89% comfort sostenido<br>+67% performance físico</p>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-soma btn-lg mt-4">
+        <i class="fas fa-rocket"></i> ¡A dominar tu Vigilancia Somática!
+      </button>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="industry-insights">
+    <div class="container text-center">
+      <p class="text-muted">
+        <small>
+          <i class="fas fa-chart-bar"></i> Fuentes: Interoceptive Neuroscience Institute 2025, Somatic Awareness Research, WC Training Body Scan Analytics
+          <br>Actualizado: <span id="currentDate"></span>
+        </small>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Real-time date update
+    function updateDate() {
+      const now = new Date();
+      document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    }
+    
+    updateDate();
+    setInterval(updateDate, 60000);
+
+    // Global variables for body scan
+    let scanTimer;
+    let isScanning = false;
+    let scanSeconds = 30;
+    let currentBodyPart = 0;
+    let selectedTechnique = 'micro';
+
+    const bodyParts = [
+      'head', 'neck', 'left-shoulder', 'right-shoulder', 'left-arm', 'right-arm',
+      'chest', 'back', 'left-hand', 'right-hand', 'abdomen', 'hips',
+      'left-leg', 'right-leg', 'left-foot', 'right-foot'
+    ];
+
+    // Toggle details function
+    function toggleDetails(id) {
+      const details = document.getElementById(`details-${id}`);
+      const icon = document.getElementById(`icon-${id}`);
+      
+      if (details.classList.contains('expanded')) {
+        details.classList.remove('expanded');
+        icon.innerHTML = '<i class="fas fa-chevron-down"></i>';
+      } else {
+        details.classList.add('expanded');
+        icon.innerHTML = '<i class="fas fa-chevron-up"></i>';
+      }
+    }
+
+    // Set scan duration
+    function setScanDuration(seconds) {
+      scanSeconds = seconds;
+      
+      // Update duration buttons
+      document.querySelectorAll('.duration-option').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+      event.target.classList.add('selected');
+      
+      // Update timer display
+      updateTimerDisplay();
+    }
+
+    // Format time for display
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const secs = seconds % 60;
+      return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    // Update timer display
+    function updateTimerDisplay() {
+      document.getElementById('scanTimerDisplay').textContent = formatTime(scanSeconds);
+    }
+
+    // Start body scan
+    function startBodyScan() {
+      if (isScanning) return;
+      
+      isScanning = true;
+      currentBodyPart = 0;
+      
+      // Reset all body parts
+      document.querySelectorAll('.body-part').forEach(part => {
+        part.classList.remove('scanning', 'tension');
+      });
+      
+      executeBodyScan();
+    }
+
+    // Execute body scan sequence
+    function executeBodyScan() {
+      const totalParts = bodyParts.length;
+      const timePerPart = scanSeconds / totalParts;
+      
+      scanTimer = setInterval(() => {
+        // Remove scanning class from previous part
+        if (currentBodyPart > 0) {
+          const prevPart = document.querySelector(`[data-part="${bodyParts[currentBodyPart - 1]}"]`);
+          if (prevPart) prevPart.classList.remove('scanning');
+        }
+        
+        // Add scanning class to current part
+        if (currentBodyPart < totalParts) {
+          const currentPart = document.querySelector(`[data-part="${bodyParts[currentBodyPart]}"]`);
+          if (currentPart) {
+            currentPart.classList.add('scanning');
+            
+            // Randomly add tension to some parts
+            if (Math.random() < 0.3) {
+              currentPart.classList.add('tension');
+            }
+          }
+          
+          // Update progress
+          const progress = ((currentBodyPart + 1) / totalParts) * 100;
+          document.getElementById('scanProgressFill').style.width = progress + '%';
+          
+          currentBodyPart++;
+        } else {
+          // Scan complete
+          completeScan();
+        }
+      }, timePerPart * 1000);
+    }
+
+    // Complete scan
+    function completeScan() {
+      isScanning = false;
+      clearInterval(scanTimer);
+      
+      // Remove scanning classes
+      document.querySelectorAll('.body-part').forEach(part => {
+        part.classList.remove('scanning');
+      });
+      
+      // Update tension assessment
+      updateTensionLevel();
+      
+      alert('Escaneo corporal completado. Revisa las áreas de tensión detectadas.');
+      
+      // Reset
+      setTimeout(() => {
+        resetBodyScan();
+      }, 2000);
+    }
+
+    // Pause body scan
+    function pauseBodyScan() {
+      if (!isScanning) return;
+      
+      isScanning = false;
+      clearInterval(scanTimer);
+      
+      document.querySelectorAll('.body-part').forEach(part => {
+        part.classList.remove('scanning');
+      });
+    }
+
+    // Reset body scan
+    function resetBodyScan() {
+      isScanning = false;
+      clearInterval(scanTimer);
+      currentBodyPart = 0;
+      
+      document.querySelectorAll('.body-part').forEach(part => {
+        part.classList.remove('scanning', 'tension');
+      });
+      
+      document.getElementById('scanProgressFill').style.width = '0%';
+      updateTimerDisplay();
+    }
+
+    // Scan specific body part
+    function scanBodyPart(part) {
+      if (isScanning) return;
+      
+      const bodyPartElement = document.querySelector(`[data-part="${part}"]`);
+      if (bodyPartElement) {
+        bodyPartElement.classList.add('scanning');
+        
+        setTimeout(() => {
+          bodyPartElement.classList.remove('scanning');
+          
+          // Random tension detection
+          if (Math.random() < 0.4) {
+            bodyPartElement.classList.add('tension');
+            alert(`Tensión detectada en ${part}. Considera aplicar técnica de liberación específica.`);
+          } else {
+            alert(`${part}: Estado normal. Sin tensión detectada.`);
+          }
+        }, 2000);
+      }
+    }
+
+    // Select technique
+    function selectTechnique(technique) {
+      selectedTechnique = technique;
+      
+      // Remove previous selection
+      document.querySelectorAll('.technique-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      // Add selection to clicked card
+      event.target.closest('.technique-card').classList.add('selected');
+    }
+
+    // Calculate body scan ROI
+    function calculateBodyScanROI() {
+      const dailyHours = parseInt(document.getElementById('dailyStreamingHours').value) || 6;
+      const tensionDays = parseInt(document.getElementById('tensionDays').value) || 15;
+      const scanMinutes = parseInt(document.getElementById('scanMinutes').value) || 10;
+      
+      const preventiveROI = Math.floor(400 + (tensionDays * 30) + (scanMinutes * 15));
+      const comfortGain = Math.min(95, 50 + (scanMinutes * 3) + (30 - tensionDays) * 2);
+      const performanceGain = Math.min(90, 35 + (comfortGain * 0.6));
+      
+      document.getElementById('bodyScanROIResult').innerHTML = `
+        <strong>Tu ROI de Vigilancia Somática:</strong><br>
+        Prevención vs Tratamiento: ${preventiveROI}% | Comfort sostenido: +${comfortGain}% | Performance físico: +${performanceGain}%
+      `;
+    }
+
+    // Assess tension level
+    function assessTension() {
+      // Count tension points
+      const tensionParts = document.querySelectorAll('.body-part.tension').length;
+      const totalParts = bodyParts.length;
+      const tensionPercentage = (tensionParts / totalParts) * 100;
+      
+      updateTensionDisplay(tensionPercentage);
+    }
+
+    // Update tension level
+    function updateTensionLevel() {
+      const tensionParts = document.querySelectorAll('.body-part.tension').length;
+      const totalParts = bodyParts.length;
+      const tensionPercentage = (tensionParts / totalParts) * 100;
+      
+      updateTensionDisplay(tensionPercentage);
+    }
+
+    // Update tension display
+    function updateTensionDisplay(tension) {
+      const needle = document.getElementById('tensionNeedle');
+      const level = document.getElementById('tensionLevel');
+      
+      // Rotate needle based on tension (0-180 degrees)
+      const rotation = (tension / 100) * 180;
+      needle.style.transform = `translateX(-50%) rotate(${rotation}deg)`;
+      
+      // Update text
+      let tensionText = '';
+      if (tension < 20) tensionText = 'Mínima';
+      else if (tension < 40) tensionText = 'Baja';
+      else if (tension < 60) tensionText = 'Moderada';
+      else if (tension < 80) tensionText = 'Alta';
+      else tensionText = 'Crítica';
+      
+      level.textContent = `Tensión: ${tensionText} (${Math.round(tension)}%)`;
+      level.style.color = tension > 60 ? '#ef4444' : tension > 40 ? '#f59e0b' : '#10b981';
+    }
+
+    // Update hotspot severities
+    function updateHotspotSeverities() {
+      const severities = {
+        neck: Math.floor(75 + Math.random() * 20),
+        shoulder: Math.floor(60 + Math.random() * 25),
+        wrist: Math.floor(50 + Math.random() * 20),
+        back: Math.floor(45 + Math.random() * 20),
+        jaw: Math.floor(40 + Math.random() * 20),
+        eye: Math.floor(25 + Math.random() * 15)
+      };
+      
+      for (const [area, severity] of Object.entries(severities)) {
+        const element = document.getElementById(`${area}Severity`);
+        if (element) {
+          element.textContent = severity + '%';
+          
+          // Update severity class
+          element.className = 'hotspot-severity';
+          if (severity >= 70) element.classList.add('severity-high');
+          else if (severity >= 50) element.classList.add('severity-medium');
+          else element.classList.add('severity-low');
+        }
+      }
+    }
+
+    // Scenario selector
+    function selectScenario(level, type) {
+      // Remove previous selection
+      document.querySelectorAll('.scenario-option').forEach(option => {
+        option.classList.remove('selected');
+      });
+      
+      // Add selection to clicked option
+      event.target.closest('.scenario-option').classList.add('selected');
+      
+      const resultDiv = document.getElementById(`result-${type}`);
+      let resultContent = '';
+      
+      if (type === 'bodyscan') {
+        switch(level) {
+          case 'intensive':
+            resultContent = `
+              <h5><i class="fas fa-fire"></i> Protocolo para Performer Intensivo</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Patrón de Riesgo:</strong>
+                  <ul>
+                    <li>Tensión cervical: +89% probabilidad</li>
+                    <li>Rigidez lumbar: +76% frecuencia</li>
+                    <li>Fatiga ocular: +92% incidencia</li>
+                    <li>Síndrome túnel carpiano: +65% riesgo</li>
+                    <li>Cefaleas tensionales: +78% frecuencia</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Protocolo Preventivo:</strong>
+                  <ul>
+                    <li>Micro-escaneos cada 15 minutos</li>
+                    <li>Enfoque en cuello/hombros/muñecas</li>
+                    <li>Escaneo completo cada 2 horas</li>
+                    <li>Intervención inmediata al detectar</li>
+                    <li>Escaneo post-sesión obligatorio</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+          case 'interactive':
+            resultContent = `
+              <h5><i class="fas fa-comments"></i> Protocolo para Performer Interactivo</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Patrón de Variabilidad:</strong>
+                  <ul>
+                    <li>Tensión facial: +67% por expresión</li>
+                    <li>Asimetría postural: +54% frecuencia</li>
+                    <li>Fatiga vocal: +43% incidencia</li>
+                    <li>Tensión mandibular: +61% desarrollo</li>
+                    <li>Compensaciones dinámicas: +78%</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Protocolo Adaptativo:</strong>
+                  <ul>
+                    <li>Escaneos comparativos simétricos</li>
+                    <li>Monitoreo facial/mandibular frecuente</li>
+                    <li>Evaluación post-interacciones intensas</li>
+                    <li>Balanceo postural proactivo</li>
+                    <li>Técnicas de liberación expresiva</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+          case 'performance':
+            resultContent = `
+              <h5><i class="fas fa-star"></i> Protocolo para Performer de Shows</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <strong>Patrón de Intensidad:</strong>
+                  <ul>
+                    <li>Fatiga muscular global: +82% post-show</li>
+                    <li>Sobrecarga cardiovascular: +45%</li>
+                    <li>Desequilibrios dinámicos: +67%</li>
+                    <li>Compensaciones asimétricas: +56%</li>
+                    <li>Recovery prolongado: +134% tiempo</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <strong>Protocolo de Recovery:</strong>
+                  <ul>
+                    <li>Escaneo pre-show para baseline</li>
+                    <li>Monitoreo durante shows intensos</li>
+                    <li>Escaneo post-show exhaustivo</li>
+                    <li>Técnicas de recovery específicas</li>
+                    <li>Tracking de patterns de fatiga</li>
+                  </ul>
+                </div>
+              </div>
+            `;
+            break;
+        }
+      }
+      
+      resultDiv.innerHTML = resultContent;
+      resultDiv.style.display = 'block';
+    }
+
+    // Initialize
+    calculateBodyScanROI();
+    assessTension();
+    updateHotspotSeverities();
+    updateTimerDisplay();
+    
+    // Update assessments periodically
+    setInterval(() => {
+      if (!isScanning) {
+        updateHotspotSeverities();
+        assessTension();
+      }
+    }, 30000);
+  </script>
+
+</body>
+</html>

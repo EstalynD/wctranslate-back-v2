@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💬 Contenedor de Chat - Maestría en Conversación para Máximas Ganancias</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #1a1a1a;
+            --secondary-dark: #2d2d2d;
+            --accent-red: #e53e3e;
+            --accent-pink: #ed64a6;
+            --text-light: #e2e8f0;
+            --text-muted: #a0aec0;
+            --bg-dark: #121212;
+            --card-dark: #1e1e1e;
+            --border-dark: #3a3a3a;
+            --success-green: #38a169;
+            --warning-orange: #dd6b20;
+            --chat-blue: #4299e1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, var(--bg-dark) 0%, var(--primary-dark) 100%);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-dark);
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            overflow: hidden;
+            border: 1px solid var(--border-dark);
+        }
+
+        .hero-header {
+            background: linear-gradient(135deg, var(--secondary-dark), var(--primary-dark));
+            color: var(--text-light);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            border-bottom: 2px solid var(--accent-red);
+        }
+
+        .hero-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(229, 62, 62, 0.1) 0%, transparent 70%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            margin-bottom: 0;
+        }
+
+        .content-section {
+            padding: 40px;
+            background: var(--card-dark);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--secondary-dark), var(--accent-red));
+            color: var(--text-light);
+            padding: 25px;
+            text-align: center;
+            margin: 0 -40px 30px -40px;
+            border-bottom: 3px solid var(--accent-pink);
+        }
+
+        .field-card {
+            background: linear-gradient(135deg, var(--secondary-dark), var(--card-dark));
+            border-radius: 15px;
+            padding: 25px;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 1px solid var(--border-dark);
+            border-left: 5px solid var(--accent-red);
+            transition: all 0.3s ease;
+        }
+
+        .field-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(229, 62, 62, 0.2);
+            border-left-color: var(--accent-pink);
+        }
+
+        .field-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-pink));
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 1rem;
+            margin-right: 15px;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+        }
+
+        .field-title {
+            color: var(--text-light);
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon-field {
+            color: var(--accent-red);
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+
+        .pro-tip {
+            background: linear-gradient(135deg, rgba(221, 107, 32, 0.2), rgba(221, 107, 32, 0.1));
+            border: 1px solid var(--warning-orange);
+            border-left: 4px solid var(--warning-orange);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: var(--text-light);
+        }
+
+        .money-tip {
+            background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(56, 161, 105, 0.1));
+            border: 1px solid var(--success-green);
+            border-left: 4px solid var(--success-green);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: var(--text-light);
+        }
+
+        .chat-tip {
+            background: linear-gradient(135deg, rgba(66, 153, 225, 0.2), rgba(66, 153, 225, 0.1));
+            border: 1px solid var(--chat-blue);
+            border-left: 4px solid var(--chat-blue);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            color: var(--text-light);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.8), rgba(30, 30, 30, 0.8));
+            border: 2px dashed var(--accent-red);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            font-style: italic;
+            color: var(--text-muted);
+        }
+
+        .image-section {
+            text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            margin: 40px -40px;
+            border-top: 3px solid var(--accent-red);
+            border-bottom: 3px solid var(--accent-red);
+            position: relative;
+        }
+
+        .image-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(229, 62, 62, 0.1) 0%, transparent 70%);
+        }
+
+        .image-container {
+            position: relative;
+            z-index: 1;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        .interface-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            border: 3px solid var(--accent-red);
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .interface-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px rgba(229, 62, 62, 0.3);
+        }
+
+        .image-description {
+            color: var(--text-muted);
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(30, 30, 30, 0.5);
+            border-radius: 10px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .interactive-quiz {
+            background: linear-gradient(135deg, var(--secondary-dark), var(--card-dark));
+            border: 2px solid var(--accent-red);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .quiz-question {
+            margin: 20px 0;
+        }
+
+        .quiz-option {
+            background: linear-gradient(135deg, var(--accent-red), var(--accent-pink));
+            border: none;
+            color: white;
+            padding: 12px 20px;
+            margin: 8px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(229, 62, 62, 0.4);
+        }
+
+        .quiz-option.selected {
+            background: linear-gradient(135deg, var(--success-green), #48bb78);
+        }
+
+        .quiz-result {
+            background: linear-gradient(135deg, rgba(56, 161, 105, 0.2), rgba(56, 161, 105, 0.1));
+            border: 1px solid var(--success-green);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .message-simulator {
+            background: linear-gradient(135deg, var(--secondary-dark), var(--card-dark));
+            border: 2px solid var(--chat-blue);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+
+        .simulator-input {
+            margin: 15px 0;
+        }
+
+        .simulator-input select, .simulator-input input {
+            width: 100%;
+            background: var(--primary-dark);
+            border: 1px solid var(--border-dark);
+            color: var(--text-light);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .chat-preview {
+            background: var(--primary-dark);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            min-height: 200px;
+            border: 1px solid var(--border-dark);
+        }
+
+        .chat-message {
+            background: linear-gradient(135deg, var(--chat-blue), #3182ce);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 18px;
+            margin: 8px 0;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .user-message {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-red));
+            margin-left: auto;
+        }
+
+        .chat-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .chat-card {
+            background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(237, 100, 166, 0.1));
+            border: 1px solid var(--accent-red);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .chat-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(229, 62, 62, 0.3);
+        }
+
+        .chat-scenario {
+            background: var(--accent-red);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .success-rate {
+            background: var(--success-green);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .copy-button {
+            background: linear-gradient(135deg, var(--warning-orange), #ed8936);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-left: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .copy-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(221, 107, 32, 0.4);
+        }
+
+        .emoji-large {
+            font-size: 2rem;
+            margin: 15px 0;
+            opacity: 0.8;
+        }
+
+        .tip-icon {
+            color: var(--warning-orange);
+            margin-right: 8px;
+        }
+
+        .money-icon {
+            color: var(--success-green);
+            margin-right: 8px;
+        }
+
+        .chat-icon {
+            color: var(--chat-blue);
+            margin-right: 8px;
+        }
+
+        .final-section {
+            text-align: center;
+            padding: 50px 0;
+            background: linear-gradient(135deg, var(--secondary-dark), var(--primary-dark));
+            margin: 40px -40px 0 -40px;
+            border-top: 3px solid var(--accent-red);
+        }
+
+        .final-card {
+            background: linear-gradient(135deg, rgba(229, 62, 62, 0.1), rgba(237, 100, 166, 0.1));
+            border: 1px solid var(--accent-red);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .hero-header {
+                padding: 25px 20px;
+            }
+            
+            .content-section {
+                padding: 25px 20px;
+            }
+            
+            .field-card {
+                padding: 20px 15px;
+                margin: 20px 0;
+            }
+            
+            .section-header {
+                margin: 0 -20px 25px -20px;
+                padding: 20px;
+            }
+            
+            .image-section {
+                margin: 30px -20px;
+                padding: 30px 15px;
+            }
+            
+            .final-section {
+                margin: 30px -20px 0 -20px;
+                padding: 40px 20px;
+            }
+            
+            .field-title {
+                font-size: 1.1rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .field-number {
+                margin-bottom: 10px;
+            }
+
+            .quiz-option {
+                display: block;
+                width: 100%;
+                margin: 8px 0;
+            }
+
+            .chat-examples {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-header {
+                padding: 20px 15px;
+            }
+            
+            .content-section {
+                padding: 20px 15px;
+            }
+            
+            .field-card {
+                padding: 15px;
+            }
+            
+            .pro-tip, .money-tip, .example-box {
+                padding: 15px;
+                margin: 10px 0;
+            }
+            
+            .interface-image {
+                border-radius: 10px;
+                border-width: 2px;
+            }
+        }
+
+        /* High DPI displays */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            .interface-image {
+                image-rendering: -webkit-optimize-contrast;
+                image-rendering: crisp-edges;
+            }
+        }
+
+        /* Dark theme scrollbar */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--primary-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-red);
+            border-radius: 6px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-pink);
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Header -->
+        <header class="hero-header">
+            <div class="hero-content">
+                <h1 class="hero-title display-5 fw-bold">
+                    <i class="fas fa-comments"></i> Maestría del Chat - Conversaciones que Generan Dinero
+                </h1>
+                <p class="hero-subtitle lead">
+                    ¡Domina el arte de la conversación! Cada mensaje puede convertir visitantes en clientes leales y generar más tips 💬💰
+                </p>
+                <div class="emoji-large">💭✨💎</div>
+            </div>
+        </header>
+
+        <!-- Contenido Principal -->
+        <main class="content-section">
+            
+            <!-- PRIMERA SECCIÓN - Campos antes de la imagen -->
+            <section>
+                <div class="section-header">
+                    <h2 class="mb-0">
+                        <i class="fas fa-heart"></i> Primera Parte: El Chat Como Herramienta de Conexión
+                    </h2>
+                </div>
+
+                <!-- Campo 1: Psicología del Chat -->
+                <article class="field-card">
+                    <h3 class="field-title">
+                        <span class="field-number">1</span>
+                        <i class="fas fa-brain icon-field"></i>
+                        Psicología del Chat: Conectar para Convertir
+                    </h3>
+                    
+                    <p><strong>¿Qué significa esto?</strong> El chat es tu herramienta más poderosa para crear conexión emocional. Los usuarios pagan por la experiencia, no solo por el show visual.</p>
+                    
+                    <div class="money-tip">
+                        <h5><i class="fas fa-heart money-icon"></i> ¿Por qué la conexión genera más dinero?</h5>
+                        <p class="mb-0">Modelos que dominan el chat ganan <strong>300% más</strong> que las que solo se enfocan en lo visual. Los usuarios regresan por la conexión emocional.</p>
+                    </div>
+                    
+                    <div class="chat-tip">
+                        <h5><i class="fas fa-users chat-icon"></i> Los 4 tipos de usuarios en chat:</h5>
+                        <ul class="mb-0">
+                            <li><strong>Conversadores:</strong> Buscan charla y conexión (40% de tu audiencia)</li>
+                            <li><strong>Demandantes:</strong> Quieren shows específicos directo (25%)</li>
+                            <li><strong>Observadores silenciosos:</strong> Solo miran sin escribir (30%)</li>
+                            <li><strong>Bromistas:</strong> Buscan diversión y risas (5%)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        🧠 <strong>Técnica psicológica:</strong> Usa el nombre del usuario en tus respuestas. "Gracias Juan por el tip ❤️" genera 60% más repetición que solo "Gracias ❤️"
+                        <button class="copy-button" onclick="copyTip('Usar nombre usuario = 60% más repetición de tips')">Copiar Técnica</button>
+                    </div>
+                </article>
+
+                <!-- Campo 2: Primeras Impresiones -->
+                <article class="field-card">
+                    <h3 class="field-title">
+                        <span class="field-number">2</span>
+                        <i class="fas fa-user-plus icon-field"></i>
+                        Primeras Impresiones: Los Primeros 30 Segundos
+                    </h3>
+                    
+                    <p><strong>¿Qué significa esto?</strong> Tienes 30 segundos para captar la atención de un usuario nuevo. Tu saludo inicial determina si se queda o se va.</p>
+                    
+                    <div class="money-tip">
+                        <h5><i class="fas fa-stopwatch money-icon"></i> ¿Por qué los primeros segundos son cruciales?</h5>
+                        <p class="mb-0">70% de usuarios nuevos se van en los primeros 30 segundos. Un saludo estratégico puede aumentar la retención hasta un <strong>250%</strong>.</p>
+                    </div>
+                    
+                    <div class="pro-tip">
+                        <h5><i class="fas fa-magic tip-icon"></i> Fórmula del saludo perfecto:</h5>
+                        <ul class="mb-0">
+                            <li><strong>Reconocimiento inmediato:</strong> "¡Hola [nombre]! Bienvenido ❤️"</li>
+                            <li><strong>Pregunta engaging:</strong> "¿Cómo está tu día/noche?"</li>
+                            <li><strong>Oferta sutil:</strong> "Estoy súper traviesa hoy 😈"</li>
+                            <li><strong>Call to action suave:</strong> "¿Te quedas a acompañarme?"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        💬 <strong>Saludo ganador:</strong> "¡Hola amor! ❤️ Bienvenido a mi mundo travieso 😈 ¿Cómo estás? Estoy súper caliente esperando por ti... ¿te quedas conmigo? 💕"
+                        <button class="copy-button" onclick="copyTip('Hola amor + bienvenida + pregunta + estado + invitación')">Copiar Saludo</button>
+                    </div>
+                </article>
+
+                <!-- Campo 3: Engagement Constante -->
+                <article class="field-card">
+                    <h3 class="field-title">
+                        <span class="field-number">3</span>
+                        <i class="fas fa-fire icon-field"></i>
+                        Mantener el Engagement: Chat Activo = Sala Activa
+                    </h3>
+                    
+                    <p><strong>¿Qué significa esto?</strong> Una sala silenciosa se siente vacía y aburrida. Debes mantener conversación constante para crear ambiente dinámico.</p>
+                    
+                    <div class="chat-tip">
+                        <h5><i class="fas fa-bolt chat-icon"></i> Estrategias para chat siempre activo:</h5>
+                        <ul class="mb-0">
+                            <li><strong>Preguntas abiertas:</strong> "¿Qué les gusta más de mí?" cada 3-5 minutos</li>
+                            <li><strong>Comentarios sobre ti:</strong> "Me encanta esta música" "Tengo frío"</li>
+                            <li><strong>Reacciones a tips:</strong> Celebra CADA tip, sin importar el tamaño</li>
+                            <li><strong>Incluir silenciosos:</strong> "Los que no escriben también me calientan 😘"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="chat-examples">
+                        <div class="chat-card">
+                            <div class="chat-scenario">Sala Nueva</div>
+                            <p><strong>"¡Hola mis amores! ¿Alguien quiere conocerme? Soy nueva y súper curiosa 😍"</strong></p>
+                            <div class="success-rate">Efectividad: 85%</div>
+                        </div>
+                        
+                        <div class="chat-card">
+                            <div class="chat-scenario">Hora Sin Tips</div>
+                            <p><strong>"¿Qué puedo hacer para calentar el ambiente? Ustedes mandan 🔥"</strong></p>
+                            <div class="success-rate">Efectividad: 78%</div>
+                        </div>
+                        
+                        <div class="chat-card">
+                            <div class="chat-scenario">Usuario Tímido</div>
+                            <p><strong>"[Nombre], veo que estás ahí callado... ¿me dices hola? 😊"</strong></p>
+                            <div class="success-rate">Efectividad: 92%</div>
+                        </div>
+                        
+                        <div class="chat-card">
+                            <div class="chat-scenario">Generar Expectativa</div>
+                            <p><strong>"En 10 minutos voy a hacer algo súper hot... ¿quién se queda? 😈"</strong></p>
+                            <div class="success-rate">Efectividad: 95%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        ⚡ <strong>Regla 3-2-1:</strong> Cada 3 minutos haz una pregunta, cada 2 minutos comenta algo sobre ti, cada 1 minuto agradece la presencia de todos.
+                        <button class="copy-button" onclick="copyTip('Regla 3-2-1: pregunta/comentario/agradecimiento constante')">Copiar Regla</button>
+                    </div>
+                </article>
+            </section>
+
+            <!-- IMAGEN EN EL CENTRO -->
+            <section class="image-section">
+                <div class="image-container">
+                    <h2 class="mb-4" style="color: var(--text-light);">
+                        <i class="fas fa-comment-dots" style="color: var(--accent-red);"></i> Tu Centro de Comunicación - Donde Ocurre la Magia
+                    </h2>
+                    <img src="https://iam.jcstudios.com.co/wp-content/uploads/2025/06/Contenedor-de-chat.png" 
+                         alt="Contenedor de chat donde se escriben mensajes entre modelo y usuarios en StripChat" 
+                         class="interface-image"
+                         loading="lazy">
+                    <div class="image-description">
+                        <p class="mb-0">
+                            <strong>📍 Tu herramienta más valiosa:</strong> Este contenedor de chat es donde construyes relaciones que generan dinero. 
+                            Cada mensaje puede convertir un visitante casual en un fan leal. 
+                            ¡Dominar este espacio es dominar el arte de ganar en webcam!
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEGUNDA SECCIÓN - Campos después de la imagen -->
+            <section>
+                <div class="section-header">
+                    <h2 class="mb-0">
+                        <i class="fas fa-dollar-sign"></i> Segunda Parte: Estrategias Avanzadas de Monetización
+                    </h2>
+                </div>
+
+                <!-- Campo 4: Conversión a Tips -->
+                <article class="field-card">
+                    <h3 class="field-title">
+                        <span class="field-number">4</span>
+                        <i class="fas fa-coins icon-field"></i>
+                        Convertir Conversación en Tips
+                    </h3>
+                    
+                    <p><strong>¿Qué significa esto?</strong> Saber cómo dirigir naturalmente la conversación hacia solicitudes de tips sin sonar desesperada o agresiva.</p>
+                    
+                    <div class="money-tip">
+                        <h5><i class="fas fa-chart-arrow-up money-icon"></i> Técnicas de conversión probadas:</h5>
+                        <ul class="mb-0">
+                            <li><strong>Gratitud primero:</strong> "Me encanta charlar contigo" → "¿me ayudas con un tipito?"</li>
+                            <li><strong>Crear escasez:</strong> "Solo voy a hacer esto si llego a X tokens"</li>
+                            <li><strong>Hacerlo personal:</strong> "Para ti haría cualquier cosa" → sugerir tip</li>
+                            <li><strong>Urgencia suave:</strong> "Solo me quedan 30 min online"</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pro-tip">
+                        <h5><i class="fas fa-lightbulb tip-icon"></i> Frases que convierten a tips:</h5>
+                        <ul class="mb-0">
+                            <li><strong>"Me haces sentir especial, ¿me haces sentir valorada también?"</strong></li>
+                            <li><strong>"Estoy súper hot pero necesito motivación 🔥"</strong></li>
+                            <li><strong>"Los tips me ponen súper húmeda 💦"</strong></li>
+                            <li><strong>"¿Quién quiere ser mi héroe hoy? 👑"</strong></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        💰 <strong>Secuencia ganadora:</strong> Charla 5 min → "Me encanta hablar contigo" → "Eres súper lindo" → "¿Me ayudas a sentirme especial con un tip?" → Reacción positiva
+                        <button class="copy-button" onclick="copyTip('Charla→elogiar→valorar→pedir tip→reaccionar positivo')">Copiar Secuencia</button>
+                    </div>
+                </article>
+
+                <!-- Campo 5: Manejo de Usuarios Difíciles -->
+                <article class="field-card">
+                    <h3 class="field-title">
+                        <span class="field-number">5</span>
+                        <i class="fas fa-shield-alt icon-field"></i>
+                        Manejo de Usuarios Difíciles
+                    </h3>
+                    
+                    <p><strong>¿Qué significa esto?</strong> Estrategias para lidiar con usuarios problemáticos sin arruinar el ambiente de la sala para otros usuarios.</p>
+                    
+                    <div class="chat-tip">
+                        <h5><i class="fas fa-users-cog chat-icon"></i> Tipos de usuarios problemáticos:</h5>
+                        <ul class="mb-0">
+                            <li><strong>El demandante sin tips:</strong> Pide shows gratis constantemente</li>
+                            <li><strong>El negativo:</strong> Critica tu cuerpo, show o precios</li>
+                            <li><strong>El spam:</strong> Repite lo mismo una y otra vez</li>
+                            <li><strong>El competidor:</strong> Promociona otras modelos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="pro-tip">
+                        <h5><i class="fas fa-chess tip-icon"></i> Estrategias de manejo profesional:</h5>
+                        <ul class="mb-0">
+                            <li><strong>Redirección positiva:</strong> "Amor, aquí celebramos lo positivo ❤️"</li>
+                            <li><strong>Establecer límites:</strong> "Sin tips, no hay requests cariño"</li>
+                            <li><strong>Usar humor:</strong> "Jajaja, qué gracioso, pero vamos a algo más hot 😈"</li>
+                            <li><strong>Ignorar estratégicamente:</strong> No alimentar a los trolls</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        🛡️ <strong>Respuesta universal:</strong> "Aquí todos somos familia y nos apoyamos. Si no te gusta mi estilo, hay muchas chicas lindas esperándote ❤️ Los que se quedan, ¡gracias por el amor!"
+                        <button class="copy-button" onclick="copyTip('Familia→apoyo→opción de irse→agradecer a los que quedan')">Copiar Manejo</button>
+                    </div>
+                </article>
+
+                <!-- Campo 6: Construir Fanbase Leal -->
+                <article class="field-card">
+                    <h3 class="field-title">
+                        <span class="field-number">6</span>
+                        <i class="fas fa-crown icon-field"></i>
+                        Construir Fanbase Leal a Largo Plazo
+                    </h3>
+                    
+                    <p><strong>¿Qué significa esto?</strong> Usar el chat para crear relaciones duraderas que generen ingresos consistentes mes tras mes.</p>
+                    
+                    <div class="money-tip">
+                        <h5><i class="fas fa-repeat money-icon"></i> ¿Por qué la lealtad vale oro?</h5>
+                        <p class="mb-0">Un fan leal vale <strong>50 veces más</strong> que un usuario casual. Usuarios regulares generan 80% de las ganancias de modelos exitosas.</p>
+                    </div>
+                    
+                    <div name="pro-tip">
+                        <h5><i class="fas fa-heart tip-icon"></i> Elementos para crear lealtad:</h5>
+                        <ul class="mb-0">
+                            <li><strong>Recordar detalles personales:</strong> "¿Cómo te fue en el trabajo Juan?"</li>
+                            <li><strong>Crear rituales:</strong> "Es martes de usuarios especiales"</li>
+                            <li><strong>Dar atención exclusiva:</strong> "Este baile es especial para ti"</li>
+                            <li><strong>Ser consistente:</strong> Misma energía y cariño siempre</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="example-box">
+                        👑 <strong>Estrategia VIP:</strong> "Mis usuarios regulares tienen privilegios especiales. [Nombre], tú ya eres parte de mi familia VIP ❤️ ¿Qué quieres ver hoy?"
+                        <button class="copy-button" onclick="copyTip('Usuarios regulares→privilegios→familia VIP→atención especial')">Copiar VIP</button>
+                    </div>
+                </article>
+
+                <!-- Simulador de Chat -->
+                <div class="message-simulator">
+                    <h4 style="color: var(--chat-blue);"><i class="fas fa-comments"></i> 💬 Simulador de Conversaciones Exitosas</h4>
+                    <p>Practica diferentes escenarios de chat para perfeccionar tu técnica:</p>
+                    
+                    <div class="simulator-input">
+                        <label style="color: var(--text-light); display: block; margin-bottom: 8px;">Escenario de práctica:</label>
+                        <select id="chatScenario" onchange="generateChatExample()">
+                            <option value="">Selecciona un escenario...</option>
+                            <option value="newuser">Usuario nuevo entra a la sala</option>
+                            <option value="regularuser">Usuario regular regresa</option>
+                            <option value="request">Usuario pide algo sin tip</option>
+                            <option value="compliment">Usuario te hace un cumplido</option>
+                            <option value="negative">Usuario hace comentario negativo</option>
+                            <option value="quiet">Sala muy silenciosa</option>
+                            <option value="promotion">Promocionar show privado</option>
+                        </select>
+                    </div>
+                    
+                    <div class="simulator-input">
+                        <label style="color: var(--text-light); display: block; margin-bottom: 8px;">Tu personalidad de modelo:</label>
+                        <select id="modelPersonality" onchange="generateChatExample()">
+                            <option value="">Selecciona personalidad...</option>
+                            <option value="sweet">Dulce y tierna</option>
+                            <option value="seductive">Seductora y misteriosa</option>
+                            <option value="funny">Divertida y juguetona</option>
+                            <option value="dominant">Dominante y segura</option>
+                            <option value="girlfriend">Novia cariñosa</option>
+                        </select>
+                    </div>
+                    
+                    <div class="chat-preview" id="chatExample">
+                        <div style="text-align: center; color: var(--text-muted); margin-top: 60px;">
+                            <strong>💬 Conversación de ejemplo aparecerá aquí...</strong><br>
+                            Selecciona un escenario y personalidad para ver el diálogo optimizado.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Test Interactivo -->
+                <div class="interactive-quiz">
+                    <h4 style="color: var(--accent-red);"><i class="fas fa-gamepad"></i> 🎮 Test: ¿Cuál es tu estilo de chat ideal?</h4>
+                    
+                    <div class="quiz-question">
+                        <p><strong>1. ¿Cómo te sientes más cómoda comunicándote?</strong></p>
+                        <button class="quiz-option" data-category="style" data-value="natural">Naturalmente y espontánea</button>
+                        <button class="quiz-option" data-category="style" data-value="strategic">Estratégica y calculada</button>
+                        <button class="quiz-option" data-category="style" data-value="emotional">Emocional y empática</button>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <p><strong>2. ¿Qué tipo de relación prefieres con los usuarios?</strong></p>
+                        <button class="quiz-option" data-category="relationship" data-value="friendly">Amigable y cercana</button>
+                        <button class="quiz-option" data-category="relationship" data-value="professional">Profesional pero cálida</button>
+                        <button class="quiz-option" data-category="relationship" data-value="intimate">Íntima y personal</button>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <p><strong>3. ¿Cómo manejas mejor las situaciones difíciles?</strong></p>
+                        <button class="quiz-option" data-category="conflict" data-value="ignore">Ignorando y redirigiendo</button>
+                        <button class="quiz-option" data-category="conflict" data-value="humor">Con humor y ligereza</button>
+                        <button class="quiz-option" data-category="conflict" data-value="direct">Siendo directa pero amable</button>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <p><strong>4. ¿Cuál es tu objetivo principal en el chat?</strong></p>
+                        <button class="quiz-option" data-category="goal" data-value="connection">Crear conexión genuina</button>
+                        <button class="quiz-option" data-category="goal" data-value="sales">Maximizar tips y ventas</button>
+                        <button class="quiz-option" data-category="goal" data-value="entertainment">Entretener y divertir</button>
+                    </div>
+                    
+                    <div class="quiz-result" id="quizResult">
+                        <!-- El resultado aparecerá aquí -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Sección Final -->
+        <section class="final-section">
+            <div class="emoji-large">🎉💬💰</div>
+            <h2 class="mb-4" style="color: var(--text-light);">
+                <i class="fas fa-comments" style="color: var(--accent-red);"></i> ¡Perfecto! Tu maestría del chat está optimizada
+            </h2>
+            
+            <p class="lead mb-4" style="color: var(--text-muted);">
+                Con estas técnicas de conversación, cada mensaje será una oportunidad de generar conexión, 
+                aumentar tips y construir una fanbase leal que regrese constantemente.
+            </p>
+            
+            <div class="final-card">
+                <h4 style="color: var(--accent-red);"><i class="fas fa-chart-line"></i> Resultados esperados con chat profesional:</h4>
+                <ul class="text-start mb-4" style="color: var(--text-light);">
+                    <li>💬 <strong>+300% más engagement</strong> por conversación estratégica</li>
+                    <li>💰 <strong>+250% más tips espontáneos</strong> por conexión emocional</li>
+                    <li>👥 <strong>+400% más usuarios regulares</strong> por relaciones genuinas</li>
+                    <li>⏰ <strong>+200% más tiempo en sala</strong> por ambiente dinámico</li>
+                </ul>
+                
+                <div class="pro-tip">
+                    <h5><i class="fas fa-lightbulb tip-icon"></i> ¡Secreto final del chat!</h5>
+                    <p class="mb-0">
+                        La velocidad de respuesta importa. Responde mensajes en menos de 30 segundos para mantener 
+                        la energía alta. Los usuarios sienten cuando los ignoras, ¡incluso por poco tiempo! ⚡
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables del quiz
+        let quizAnswers = {
+            style: '',
+            relationship: '',
+            conflict: '',
+            goal: ''
+        };
+
+        // Animaciones on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Aplicar animación a field cards
+            document.querySelectorAll('.field-card').forEach((card) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+
+            // Imagen lazy loading
+            const image = document.querySelector('.interface-image');
+            if (image) {
+                image.addEventListener('load', function() {
+                    this.style.opacity = '1';
+                });
+                
+                image.addEventListener('error', function() {
+                    this.alt = 'Error al cargar la imagen. Verifica la conexión a internet.';
+                    this.style.border = '3px solid var(--accent-red)';
+                });
+            }
+
+            // Animación para chat cards
+            document.querySelectorAll('.chat-card').forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = `all 0.6s ease ${index * 0.1}s`;
+                observer.observe(card);
+            });
+        });
+
+        // Función para copiar tips
+        function copyTip(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                const notification = document.createElement('div');
+                notification.innerHTML = '✅ ¡Copiado al portapapeles!';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: var(--success-green);
+                    color: white;
+                    padding: 15px;
+                    border-radius: 10px;
+                    z-index: 9999;
+                    animation: slideIn 0.3s ease;
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            });
+        }
+
+        // Generador de ejemplos de chat
+        function generateChatExample() {
+            const scenario = document.getElementById('chatScenario').value;
+            const personality = document.getElementById('modelPersonality').value;
+            
+            if (!scenario || !personality) return;
+            
+            let chatExample = '';
+            
+            // Generar ejemplo basado en escenario y personalidad
+            if (scenario === 'newuser' && personality === 'sweet') {
+                chatExample = `
+                    <div class="chat-message user-message">Usuario_Nuevo ha entrado a la sala</div>
+                    <div class="chat-message">¡Hola hermoso! ❤️ Bienvenido a mi mundito 😊</div>
+                    <div class="chat-message">Soy nueva aquí pero súper emocionada de conocerte</div>
+                    <div class="chat-message">¿Cómo está tu día? Cuéntame de ti ✨</div>
+                `;
+            } else if (scenario === 'request' && personality === 'seductive') {
+                chatExample = `
+                    <div class="chat-message user-message">Usuario: muestra las tetas</div>
+                    <div class="chat-message">Mmm qué directo eres 😈</div>
+                    <div class="chat-message">Me encanta cuando saben lo que quieren...</div>
+                    <div class="chat-message">Pero primero necesito sentirme deseada 💕</div>
+                    <div class="chat-message">¿Me muestras cuánto con un tipito? 😘</div>
+                `;
+            } else if (scenario === 'quiet' && personality === 'funny') {
+                chatExample = `
+                    <div class="chat-message">¿Hola? ¿Hay alguien ahí? 👻</div>
+                    <div class="chat-message">Creo que todos se fueron a buscar el wifi jajaja 😂</div>
+                    <div class="chat-message">O tal vez están hipnotizados por mi belleza 💫</div>
+                    <div class="chat-message">¡Denme una señal de vida! ¿Qué quieren hacer? 🎉</div>
+                `;
+            } else {
+                // Ejemplo genérico
+                chatExample = `
+                    <div class="chat-message">¡Hola mis amores! ❤️</div>
+                    <div class="chat-message">¿Cómo están hoy? Cuéntenme todo 😊</div>
+                    <div class="chat-message">Estoy súper feliz de verlos aquí ✨</div>
+                `;
+            }
+            
+            document.getElementById('chatExample').innerHTML = chatExample;
+        }
+
+        // Quiz interactivo
+        document.querySelectorAll('.quiz-option').forEach(button => {
+            button.addEventListener('click', function() {
+                const category = this.dataset.category;
+                const value = this.dataset.value;
+                
+                document.querySelectorAll(`[data-category="${category}"]`).forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                
+                this.classList.add('selected');
+                quizAnswers[category] = value;
+                
+                if (Object.values(quizAnswers).every(answer => answer !== '')) {
+                    showQuizResult();
+                }
+            });
+        });
+
+        function showQuizResult() {
+            let chatStyle = '';
+            let strengths = '';
+            let recommendations = '';
+            
+            if (quizAnswers.style === 'natural' && quizAnswers.relationship === 'friendly') {
+                chatStyle = 'Comunicadora Natural Amigable';
+                strengths = 'Tu autenticidad genera confianza. Los usuarios se sienten cómodos contigo.';
+                recommendations = 'Enfócate en crear ambiente relajado y conversaciones genuinas.';
+            } else if (quizAnswers.style === 'strategic' && quizAnswers.goal === 'sales') {
+                chatStyle = 'Vendedora Estratégica Profesional';
+                strengths = 'Sabes dirigir conversaciones hacia objetivos. Eres efectiva en conversiones.';
+                recommendations = 'Balanca estrategia con calidez para no sonar robótica.';
+            } else if (quizAnswers.relationship === 'intimate' && quizAnswers.goal === 'connection') {
+                chatStyle = 'Constructora de Relaciones Íntimas';
+                strengths = 'Creas vínculos profundos. Generas usuarios super leales.';
+                recommendations = 'Usa tu habilidad para crear fanbase VIP que regrese constantemente.';
+            } else {
+                chatStyle = 'Comunicadora Balanceada Versátil';
+                strengths = 'Puedes adaptarte a diferentes situaciones y tipos de usuarios.';
+                recommendations = 'Desarrolla técnicas específicas para cada escenario común.';
+            }
+            
+            const resultDiv = document.getElementById('quizResult');
+            resultDiv.innerHTML = `
+                <h5 style="color: var(--success-green);"><i class="fas fa-star"></i> Tu Estilo de Chat Personalizado:</h5>
+                
+                <div style="background: rgba(66, 153, 225, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h6 style="color: var(--chat-blue);">💬 ESTILO IDENTIFICADO:</h6>
+                    <strong>${chatStyle}</strong>
+                </div>
+                
+                <div style="background: rgba(56, 161, 105, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h6 style="color: var(--success-green);">💪 TUS FORTALEZAS:</h6>
+                    ${strengths}
+                </div>
+                
+                <div style="background: rgba(221, 107, 32, 0.1); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <h6 style="color: var(--warning-orange);">📈 RECOMENDACIONES:</h6>
+                    ${recommendations}
+                </div>
+                
+                <div style="background: var(--accent-red); color: white; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <strong>🎯 PLAN DE DESARROLLO:</strong><br>
+                    1. Practica tu estilo identificado<br>
+                    2. Observa reacciones de usuarios durante 1 semana<br>
+                    3. Ajusta técnicas según feedback<br>
+                    4. Especialízate en tus fortalezas naturales
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        // CSS para animaciones
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

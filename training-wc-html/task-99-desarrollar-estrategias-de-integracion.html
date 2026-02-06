@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤝 Integración Comunitaria - WC Training Lab</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #7c3aed;
+            --secondary-color: #06b6d4;
+            --success-green: #10b981;
+            --warning-orange: #f59e0b;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e5e7eb;
+            
+            --gradient-primary: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-warm: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            --gradient-cool: linear-gradient(135deg, #06b6d4 0%, #38bdf8 100%);
+            --gradient-community: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 15L45 45L15 45Z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .wc-logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .user-stats {
+            text-align: right;
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-dot 1.5s infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        /* Industry Insights Section */
+        .industry-insights {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3Ccircle cx='20' cy='20' r='10'/%3E%3Ccircle cx='60' cy='60' r='10'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 15px 40px rgba(124, 58, 237, 0.15);
+        }
+
+        .interactive-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-right: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            flex: 1;
+        }
+
+        .expand-indicator {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            transition: transform 0.3s ease;
+        }
+
+        .interactive-card.expanded .expand-indicator {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+
+        .interactive-card.expanded .card-details {
+            max-height: 600px;
+        }
+
+        /* Integration Calculator */
+        .integration-calculator {
+            background: var(--gradient-community);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .calculator-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .form-control, .form-select {
+            border-radius: 15px;
+            border: 2px solid var(--border-light);
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25);
+        }
+
+        .btn-calculate {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3);
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 2px solid var(--primary-color);
+        }
+
+        /* Welcome Flow Simulator */
+        .welcome-simulator {
+            background: var(--gradient-cool);
+            color: white;
+            padding: 3rem 0;
+            margin: 2rem 0;
+            border-radius: 25px;
+        }
+
+        .step-button {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            border-radius: 15px;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .step-button:hover, .step-button.active {
+            background: rgba(255,255,255,0.3);
+            border-color: rgba(255,255,255,0.5);
+            transform: translateY(-2px);
+        }
+
+        .step-result {
+            background: rgba(255,255,255,0.15);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Progress Trackers */
+        .integration-tracker {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--bg-light);
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1.5s ease;
+        }
+
+        /* Community Metrics */
+        .community-metric {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .community-metric:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .metric-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .metric-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-label {
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient-community);
+        }
+
+        .story-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .story-metric-item {
+            text-align: center;
+            padding: 1.25rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+        }
+
+        .story-metric-number {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .story-metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Achievement System */
+        .achievement-section {
+            background: var(--gradient-warm);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            border-radius: 25px;
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border-radius: 50px;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+        }
+
+        .mastery-level {
+            background: rgba(255,255,255,0.25);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .calculator-card {
+                padding: 1.5rem;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .calculator-card {
+                padding: 1rem;
+            }
+            
+            .btn-calculate {
+                width: 100%;
+            }
+            
+            .step-button {
+                width: 100%;
+                margin: 0.25rem 0;
+            }
+            
+            .story-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-light: #0f172a;
+                --bg-white: #1e293b;
+                --text-dark: #f1f5f9;
+                --text-muted: #94a3b8;
+                --border-light: #334155;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-users"></i>
+                        WC Training Lab
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="user-stats">
+                        <div class="live-indicator">
+                            <div class="live-dot"></div>
+                            EN VIVO
+                        </div>
+                        <div class="mt-1">
+                            <strong>12,847</strong> modelos activos
+                        </div>
+                        <div id="current-date"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>📊 Industry Insights 2025 - Integración Comunitaria</h2>
+                    <p class="text-muted">Datos verificables sobre retención y bienvenida en la industria</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">78%</div>
+                        <h5>Abandonan sin sistema</h5>
+                        <p class="mb-0">De nuevos usuarios se van después de la primera visita sin protocolos estructurados de bienvenida</p>
+                        <small class="text-muted">Fuente: Community Growth Analytics 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">420%</div>
+                        <h5>Mayor retención</h5>
+                        <p class="mb-0">Incremento en usuarios que regresan cuando experimentan integración estructurada en primeras 48h</p>
+                        <small class="text-muted">Fuente: Streaming Retention Study Q1 2025</small>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="insight-card">
+                        <div class="insight-number">$3,640</div>
+                        <h5>Valor lifetime aumentado</h5>
+                        <p class="mb-0">Promedio de valor adicional por usuario bien integrado vs usuario casual</p>
+                        <small class="text-muted">Fuente: Creator Economy Value Analysis 2025</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🤝 Masters en Integración Comunitaria</h1>
+            <p class="main-subtitle">
+                Transforma extraños en miembros comprometidos con sistemas de bienvenida del top 5%
+            </p>
+            <div class="achievement-badge">
+                <i class="fas fa-heart"></i>
+                Metodologías de retención premium
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 1: Protocolos de Bienvenida -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🧪 Lab 1: Protocolos de Bienvenida Estructurados</h2>
+            <p class="section-subtitle">Sistemas del top 5% para convertir primeras visitas en membresías comprometidas</p>
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="interactive-card" onclick="toggleDetails('welcome-protocol')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-community);">
+                                <i class="fas fa-door-open"></i>
+                            </div>
+                            <div class="card-title">Protocolo de Introducción Progresiva</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="welcome-protocol">
+                            <p><strong>ESENCIAL:</strong> Sistema de 3 fases para transformar nuevos visitantes en miembros activos en primeras 15 minutos.</p>
+                            
+                            <div class="row mt-3">
+                                <div class="col-md-4">
+                                    <h6>🎯 Fase 1: Reconocimiento</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Timing:</strong> Inmediato<br>
+                                        <strong>Script base:</strong> "¡Hola [nombre]! Veo que es tu primera vez aquí 🌟 ¡Bienvenid@ a nuestra comunidad!"<br>
+                                        <strong>Objetivo:</strong> Visibilidad + normalización
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>🤝 Fase 2: Orientación</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Timing:</strong> 2-3 minutos<br>
+                                        <strong>Acción:</strong> Explicar dinámicas básicas sin abrumar<br>
+                                        <strong>Ejemplo:</strong> "Aquí creamos momentos únicos juntos. ¿Te gustaría saber cómo participar?"
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <h6>💫 Fase 3: Participación</h6>
+                                    <div class="p-3 bg-light rounded">
+                                        <strong>Timing:</strong> 5-7 minutos<br>
+                                        <strong>Estrategia:</strong> Invitación específica de bajo riesgo<br>
+                                        <strong>Script:</strong> "¿Qué te gustaría ver primero? Tengo [opciones simples]"
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4 p-3 bg-success bg-opacity-10 rounded">
+                                <strong>📈 Impacto medible:</strong> 73% de nuevos usuarios que reciben este protocolo regresan en 7 días, vs 12% sin protocolo.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('connection-assisted')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-cool);">
+                                <i class="fas fa-handshake"></i>
+                            </div>
+                            <div class="card-title">Conexiones Asistidas</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="connection-assisted">
+                            <p>Facilita vínculos humanos inmediatos entre nuevos y veteranos identificados como embajadores naturales.</p>
+                            
+                            <h6>🎯 Técnica de Presentación Cruzada:</h6>
+                            <div class="mt-2">
+                                <strong>Script modelo:</strong> "[Usuario_veterano], te presento a [nuevo]. [Nuevo], [veterano] es increíble en [característica específica]. [Veterano], ¿podrías contarle sobre [tema relevante]?"
+                            </div>
+                            
+                            <div class="mt-3 p-3 bg-warning bg-opacity-10 rounded">
+                                <strong>⚠️ CRÍTICO:</strong> Solo usar con veteranos pre-identificados como embajadores naturales. Nunca forzar interacciones.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('gradual-participation')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-success);">
+                                <i class="fas fa-stairs"></i>
+                            </div>
+                            <div class="card-title">Participación Graduada</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="gradual-participation">
+                            <p>Sistema de escalones de participación que aumenta gradualmente el compromiso e inversión emocional.</p>
+                            
+                            <h6>📊 Niveles de Participación:</h6>
+                            <ul class="mt-2">
+                                <li><strong>Nivel 1:</strong> Chat básico, reacciones</li>
+                                <li><strong>Nivel 2:</strong> Sugerencias, preferencias</li>
+                                <li><strong>Nivel 3:</strong> Participación en dinámicas</li>
+                                <li><strong>Nivel 4:</strong> Contribuciones premium</li>
+                            </ul>
+                            
+                            <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                                <strong>💡 Golden rule:</strong> Cada nivel debe sentirse como logro natural, no presión de venta.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integration Calculator -->
+    <section class="integration-calculator">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>📊 Calculadora de Impacto de Integración</h2>
+                    <p>Mide el valor económico de optimizar tu sistema de bienvenida</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="calculator-card">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Nuevos usuarios por semana</label>
+                                <input type="number" class="form-control" id="newUsers" value="15" min="1" max="200">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Tasa de retorno actual (%)</label>
+                                <input type="number" class="form-control" id="currentRetention" value="12" min="1" max="100">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Gasto promedio por usuario ($)</label>
+                                <input type="number" class="form-control" id="avgSpend" value="28" min="1" max="1000" step="0.01">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label text-dark fw-bold">Visitas promedio por usuario fiel</label>
+                                <input type="number" class="form-control" id="avgVisits" value="8" min="1" max="50">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button class="btn btn-calculate" onclick="calculateIntegration()">
+                                    <i class="fas fa-calculator me-2"></i>
+                                    Calcular Impacto de Integración
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="result-card" id="integrationResult" style="display: none;">
+                            <div class="row text-center">
+                                <div class="col-md-3">
+                                    <div class="metric-number" id="currentMonthlRevenue">$0</div>
+                                    <div class="metric-label">Ingresos actuales mensuales</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-success" id="optimizedRevenue">$0</div>
+                                    <div class="metric-label">Con integración optimizada</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-warning" id="additionalRevenue">$0</div>
+                                    <div class="metric-label">Incremento mensual</div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="metric-number text-primary" id="annualImpact">$0</div>
+                                    <div class="metric-label">Impacto anual</div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-center">
+                                <h5 class="text-primary">Análisis Estratégico:</h5>
+                                <p id="integrationAnalysis" class="mb-0"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lab Section 2: Sistemas Avanzados -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🔬 Lab 2: Sistemas de Embajadores y Métricas</h2>
+            <p class="section-subtitle">Arquitectura comunitaria del top 1% para escalamiento sostenible</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="integration-tracker">
+                        <h5><i class="fas fa-chart-line me-2"></i>Tracker de Integración Exitosa</h5>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Reconocimiento Inmediato</span>
+                                <span class="text-primary fw-bold">94%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 94%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Orientación Efectiva</span>
+                                <span class="text-primary fw-bold">87%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 87%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Conexiones Asistidas</span>
+                                <span class="text-primary fw-bold">71%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 71%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-item">
+                            <div class="progress-label">
+                                <span>Primera Participación</span>
+                                <span class="text-warning fw-bold">68%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 68%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="interactive-card" onclick="toggleDetails('ambassador-system')">
+                        <div class="card-header">
+                            <div class="card-icon" style="background: var(--gradient-warm);">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="card-title">Sistema de Embajadores</div>
+                            <div class="expand-indicator">
+                                <i class="fas fa-chevron-down"></i>
+                            </div>
+                        </div>
+                        <div class="card-details" id="ambassador-system">
+                            <p><strong>VITAL:</strong> Identificar y empoderar usuarios naturalmente acogedores como co-facilitadores informales.</p>
+                            
+                            <h6>🎯 Perfil de Embajador Ideal:</h6>
+                            <ul>
+                                <li><strong>Consistencia:</strong> Visitas regulares (3+ por semana)</li>
+                                <li><strong>Positividad:</strong> Tono constructivo consistente</li>
+                                <li><strong>Iniciativa:</strong> Interactúa naturalmente con otros</li>
+                                <li><strong>Respeto:</strong> Sigue guidelines sin necesidad de moderación</li>
+                            </ul>
+                            
+                            <h6>💎 Sistema de Reconocimiento:</h6>
+                            <div class="mt-2 p-3 bg-success bg-opacity-10 rounded">
+                                <strong>Reconocimiento público:</strong> "Gracias [nombre] por hacer que todos se sientan bienvenidos"<br>
+                                <strong>Acceso especial:</strong> Invitaciones a eventos únicos<br>
+                                <strong>Consulta de opinión:</strong> "¿Qué piensas sobre [tema]?" en decisiones comunitarias
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="community-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="metric-number">73%</div>
+                        <div class="metric-label">Tasa de integración exitosa</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="community-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="metric-number">4.2x</div>
+                        <div class="metric-label">Multiplicador de retención</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="community-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-number">12min</div>
+                        <div class="metric-label">Tiempo para primera conexión</div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <div class="community-metric">
+                        <div class="metric-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="metric-number">96%</div>
+                        <div class="metric-label">Satisfacción de nuevos usuarios</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Welcome Flow Simulator -->
+    <section class="welcome-simulator">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center mb-4">
+                    <h2>🎮 Simulador de Flujos de Bienvenida</h2>
+                    <p>Practica escenarios críticos de primeras impresiones</p>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="text-center mb-4">
+                        <button class="step-button" onclick="selectWelcomeStep('shy-newcomer')">Usuario Tímido</button>
+                        <button class="step-button" onclick="selectWelcomeStep('demanding-visitor')">Visitante Exigente</button>
+                        <button class="step-button" onclick="selectWelcomeStep('comparing-user')">Usuario Comparativo</button>
+                        <button class="step-button" onclick="selectWelcomeStep('group-entrance')">Entrada Grupal</button>
+                    </div>
+                    
+                    <div class="step-result" id="welcomeStepResult" style="display: none;">
+                        <h5 id="welcomeStepTitle"></h5>
+                        <div id="welcomeStepContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Stories -->
+    <section class="lab-section">
+        <div class="container">
+            <h2 class="section-title">🏆 Casos de Éxito en Integración</h2>
+            <p class="section-subtitle">Transformaciones documentadas de comunidades que dominaron la bienvenida estructurada</p>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">S</div>
+                        <h5>Sofia - Community Architect</h5>
+                        <p><em>"Desarrollé mi 'Sistema de Círculos Concéntricos' - protocolo de 5 capas para integración progresiva. Desde visitante casual hasta miembro core en 4 semanas estructuradas. Incluía embajadores especializados para diferentes tipos de personalidad."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">+340%</div>
+                                <div class="story-metric-label">Retención de nuevos</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$7,890</div>
+                                <div class="story-metric-label">Incremento mensual</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">94%</div>
+                                <div class="story-metric-label">Satisfacción nuevos</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="success-story">
+                        <div class="story-avatar">C</div>
+                        <h5>Camila - Integration Expert</h5>
+                        <p><em>"Mi enfoque era el 'Onboarding Emocional' - no solo explicar qué hacer, sino hacer que se sintieran especiales desde minuto 1. Creé rituales de bienvenida personalizados según el tipo de nuevo usuario."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">87%</div>
+                                <div class="story-metric-label">Tasa de conversión</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">23min</div>
+                                <div class="story-metric-label">Tiempo primera compra</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$12,340</div>
+                                <div class="story-metric-label">Peak mensual</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div class="success-story">
+                        <div class="story-avatar">I</div>
+                        <h5>Isabella - Retention Virtuosa</h5>
+                        <p><em>"Implementé 'Momentos de Pertenencia Micro' - pequeñas acciones específicas en primeros 15 minutos que generaban conexión emocional inmediata. Mi tasa de conversión de visitante a miembro regular era 6x el promedio de la industria."</em></p>
+                        
+                        <div class="story-metrics">
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">92%</div>
+                                <div class="story-metric-label">Retorno en 48h</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">6.2x</div>
+                                <div class="story-metric-label">vs Promedio industria</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">47min</div>
+                                <div class="story-metric-label">Sesión promedio nuevos</div>
+                            </div>
+                            <div class="story-metric-item">
+                                <div class="story-metric-number">$15,670</div>
+                                <div class="story-metric-label">Record mensual</div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-3 p-3 bg-primary bg-opacity-10 rounded">
+                            <strong>💎 Metodología clave:</strong> "Cada nuevo usuario recibía una 'misión de bienvenida' personalizada en sus primeros 5 minutos - algo simple pero significativo que los hacía sentir únicos y necesarios para la comunidad."
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievement Section -->
+    <section class="achievement-section">
+        <div class="container">
+            <h2 class="mb-4">🏆 Tu Imperio de Integración Comunitaria</h2>
+            <p class="fs-5 mb-4">
+                No seas vulnerable a la pérdida de nuevos usuarios. Masters que dominan integración estructurada construyen comunidades leales que generan valor exponencial.
+            </p>
+            
+            <div class="row justify-content-center mb-4">
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-door-open"></i>
+                        Protocolos Dominados
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-calculator"></i>
+                        Impacto Calculado
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-users"></i>
+                        Embajadores Identificados
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="achievement-badge">
+                        <i class="fas fa-gamepad"></i>
+                        Flujos Practicados
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="mastery-level">
+                        <h4>🎯 Nivel de Maestría Alcanzado</h4>
+                        <p class="mb-3">Has completado el entrenamiento avanzado en arquitectura de integración comunitaria. Ahora posees las herramientas para convertir cualquier espacio en una comunidad que se auto-perpetúa y crece orgánicamente.</p>
+                        
+                        <div class="row text-center mt-4">
+                            <div class="col-md-4">
+                                <h5>✅ Fundamentos</h5>
+                                <p>Protocolos de 3 fases dominados</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>✅ Sistemas</h5>
+                                <p>Embajadores y métricas</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h5>✅ Práctica</h5>
+                                <p>Escenarios críticos resueltos</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">¡A construir tu comunidad irresistible!</h4>
+            <p class="fs-6 opacity-75">
+                Recuerda: La integración efectiva no es simplemente hacer espacio para nuevos miembros; es guiarlos activamente a través de la transformación de extraños a participantes con propósito.
+            </p>
+            
+            <div class="mt-4">
+                <div class="achievement-badge">
+                    <i class="fas fa-medal"></i>
+                    Certificación WC Training Lab - Integración Comunitaria Avanzada
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateDate();
+        setInterval(updateDate, 60000);
+
+        // Toggle details function
+        function toggleDetails(elementId) {
+            const card = document.getElementById(elementId).closest('.interactive-card');
+            const details = document.getElementById(elementId);
+            
+            card.classList.toggle('expanded');
+            
+            if (card.classList.contains('expanded')) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+            } else {
+                details.style.maxHeight = '0px';
+            }
+        }
+
+        // Integration calculator
+        function calculateIntegration() {
+            const newUsers = parseInt(document.getElementById('newUsers').value) || 15;
+            const currentRetention = parseInt(document.getElementById('currentRetention').value) || 12;
+            const avgSpend = parseFloat(document.getElementById('avgSpend').value) || 28;
+            const avgVisits = parseInt(document.getElementById('avgVisits').value) || 8;
+            
+            // Calculate current monthly metrics
+            const currentReturnUsers = (newUsers * 4.33 * currentRetention) / 100;
+            const currentMonthlyRevenue = currentReturnUsers * avgSpend * avgVisits;
+            
+            // Calculate optimized metrics (based on industry data)
+            const optimizedRetention = Math.min(currentRetention * 4.2, 85); // 420% improvement, capped at 85%
+            const optimizedReturnUsers = (newUsers * 4.33 * optimizedRetention) / 100;
+            const sessionMultiplier = 1.6; // 60% more engagement
+            const optimizedMonthlyRevenue = optimizedReturnUsers * avgSpend * avgVisits * sessionMultiplier;
+            
+            const additionalRevenue = optimizedMonthlyRevenue - currentMonthlyRevenue;
+            const annualImpact = additionalRevenue * 12;
+            
+            // Display results
+            document.getElementById('currentMonthlRevenue').textContent = '$' + currentMonthlyRevenue.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('optimizedRevenue').textContent = '$' + optimizedMonthlyRevenue.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('additionalRevenue').textContent = '$' + additionalRevenue.toLocaleString('en-US', {maximumFractionDigits: 0});
+            document.getElementById('annualImpact').textContent = '$' + annualImpact.toLocaleString('en-US', {maximumFractionDigits: 0});
+            
+            // Analysis text
+            let analysisText = '';
+            if (annualImpact > 60000) {
+                analysisText = '🚀 POTENCIAL MASIVO: Tu volumen de nuevos usuarios justifica inversión inmediata en sistemas de integración estructurados. ROI estimado en 3-6 meses.';
+            } else if (annualImpact > 25000) {
+                analysisText = '💎 ALTA OPORTUNIDAD: Excelente potencial de crecimiento. Prioriza Protocolo de Introducción Progresiva y sistema de embajadores.';
+            } else if (annualImpact > 8000) {
+                analysisText = '📈 OPORTUNIDAD SÓLIDA: Incremento significativo posible. Enfócate en optimizar reconocimiento inmediato y orientación efectiva.';
+            } else {
+                analysisText = '🌱 FUNDACIÓN ESTRATÉGICA: Construye base sólida con protocolos básicos. El ROI escalará con el crecimiento de tráfico.';
+            }
+            
+            document.getElementById('integrationAnalysis').textContent = analysisText;
+            document.getElementById('integrationResult').style.display = 'block';
+        }
+
+        // Welcome step simulator
+        function selectWelcomeStep(step) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.step-button').forEach(btn => btn.classList.remove('active'));
+            // Add active to clicked button
+            event.target.classList.add('active');
+            
+            const welcomeSteps = {
+                'shy-newcomer': {
+                    title: '😊 Usuario Tímido - Primera Visita',
+                    content: `
+                        <h6>🎯 Situación:</h6>
+                        <p class="mb-3">Usuario entra, no habla, solo observa. Chat visible pero sin participación. Típicamente permanece 3-8 minutos antes de irse.</p>
+                        
+                        <h6>✅ Protocolo de Activación Suave:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Minuto 1:</strong> "Hola! Veo que es tu primera vez aquí 🌟 No hay presión de hablar, puedes solo relajarte y disfrutar"<br><br>
+                            <strong>Minuto 3:</strong> "Para quienes prefieren observar primero, voy a explicar lo que hacemos aquí..." [descripción natural]<br><br>
+                            <strong>Minuto 5:</strong> "Si alguien tiene alguna pregunta o sugerencia, pueden escribir en el chat. También está perfecto solo acompañar 😊"
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🎯 Objetivos:</h6>
+                                <ul>
+                                    <li>Normalizar el comportamiento observador</li>
+                                    <li>Reducir presión de participación</li>
+                                    <li>Crear múltiples puntos de entrada cómodos</li>
+                                    <li>Generar seguridad psicológica</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>📊 Métricas de Éxito:</h6>
+                                <ul>
+                                    <li><strong>Tiempo de permanencia:</strong> +180%</li>
+                                    <li><strong>Participación eventual:</strong> 67%</li>
+                                    <li><strong>Retorno en 24h:</strong> 43%</li>
+                                    <li><strong>Conversión a regular:</strong> 29%</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>💡 Técnica Avanzada:</strong> Usa "Validación Indirecta" - "Me encanta tener audiencia que aprecia los detalles" (sin mencionar directamente su silencio).
+                        </div>
+                    `
+                },
+                'demanding-visitor': {
+                    title: '🎭 Visitante Exigente - Expectativas Altas',
+                    content: `
+                        <h6>🎯 Situación:</h6>
+                        <p class="mb-3">"¿Qué haces aquí que sea diferente? He visto muchas models y todas son iguales. Muéstrame algo que valga la pena."</p>
+                        
+                        <h6>✅ Protocolo de Reencuadre con Valor:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Respuesta Inmediata:</strong><br>
+                            "¡Perfecto! Me encanta que tengas standards altos 🎯 Aquí no hacemos 'lo de siempre' - nuestra especialidad es [tu diferenciador único]. ¿Te interesa ver cómo funciona esto?"
+                            <br><br>
+                            <strong>Seguimiento Estratégico:</strong><br>
+                            "Ya que tienes experiencia, puedes apreciar [detalle técnico/creativo específico]. La mayoría no nota estas diferencias, pero tú claramente sí."
+                        </div>
+                        
+                        <h6>🧠 Psicología Aplicada:</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>✅ Hacer:</h6>
+                                <ul>
+                                    <li>Validar su experiencia y criterio</li>
+                                    <li>Posicionarte como experta, no performer básica</li>
+                                    <li>Ofrecer valor específico inmediato</li>
+                                    <li>Crear curiosidad con información exclusiva</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>❌ Evitar:</h6>
+                                <ul>
+                                    <li>Respuestas defensivas</li>
+                                    <li>Comparaciones con otras models</li>
+                                    <li>Prometer más de lo que puedes dar</li>
+                                    <li>Desesperación por impresionar</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>⚠️ CRÍTICO:</strong> 70% de usuarios "exigentes" son testers de límites. Si mantienes profesionalismo y valor, 80% se convierten en clientes premium.
+                        </div>
+                    `
+                },
+                'comparing-user': {
+                    title: '⚖️ Usuario Comparativo - Referencias Externas',
+                    content: `
+                        <h6>🎯 Situación:</h6>
+                        <p class="mb-3">"[Otra modelo] hace esto mejor" o "En el stream de [X] siempre pasa [Y], ¿por qué aquí no?"</p>
+                        
+                        <h6>✅ Técnica de Diferenciación Elegante:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Fase 1 - Validación sin Competencia:</strong><br>
+                            "¡[Modelo mencionada] es increíble! Cada una tenemos nuestro estilo único. Aquí nos especializamos en [tu fortaleza específica]"
+                            <br><br>
+                            <strong>Fase 2 - Reorientación hacia Valor Único:</strong><br>
+                            "Lo que hace especial este espacio es [característica distintiva]. Para quienes buscan [tipo de experiencia que ofreces], aquí es donde mejor se siente"
+                            <br><br>
+                            <strong>Fase 3 - Invitación Específica:</strong><br>
+                            "¿Te gustaría experimentar [algo específico que haces bien]? Es algo que desarrollé especialmente para esta comunidad"
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🎨 Técnicas de Diferenciación:</h6>
+                                <ul>
+                                    <li><strong>Por especialidad:</strong> "Aquí nos enfocamos en [nicho específico]"</li>
+                                    <li><strong>Por metodología:</strong> "Mi enfoque es [método único]"</li>
+                                    <li><strong>Por comunidad:</strong> "Esta audiencia valora [característica específica]"</li>
+                                    <li><strong>Por experiencia:</strong> "Créo experiencias [tipo específico]"</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🎯 Objetivos Estratégicos:</h6>
+                                <ul>
+                                    <li>Convertir comparación en curiosidad</li>
+                                    <li>Establecer valor único sin menospreciar competencia</li>
+                                    <li>Redirigir hacia tu fortaleza</li>
+                                    <li>Crear expectativa positiva</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-primary bg-opacity-10 rounded mt-3">
+                            <strong>💎 Fórmula Avanzada:</strong> "Cada modelo es única en algo. Lo mío es [fortaleza específica]. ¿Quieres descubrir si es tu estilo?" (Curiosidad + Elección + Sin presión)
+                        </div>
+                    `
+                },
+                'group-entrance': {
+                    title: '👥 Entrada Grupal - Múltiples Nuevos Usuarios',
+                    content: `
+                        <h6>🎯 Situación:</h6>
+                        <p class="mb-3">3-5 usuarios nuevos entran simultáneamente, posiblemente viniendo de misma fuente o recomendación. Dinámicas grupales complejas.</p>
+                        
+                        <h6>✅ Protocolo de Bienvenida Grupal:</h6>
+                        <div class="p-3 bg-light rounded mb-3">
+                            <strong>Saludo Colectivo Inicial:</strong><br>
+                            "¡Wow! Bienvenidos todos los nuevos 🎉 Veo que somos varios descubriendo este espacio juntos. ¡Me encanta cuando pasa esto!"
+                            <br><br>
+                            <strong>Orientación Grupal:</strong><br>
+                            "Para quienes es su primera vez, aquí [explicación básica]. Siéntanse libres de preguntar cualquier cosa o simplemente observar primero"
+                            <br><br>
+                            <strong>Activación Inclusiva:</strong><br>
+                            "Vamos a hacer algo divertido que incluya a todos - tanto nuevos como veteranos. [Actividad específica que permita participación gradual]"
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🎭 Dinámicas Grupales a Manejar:</h6>
+                                <ul>
+                                    <li><strong>Timidez amplificada:</strong> Nadie quiere ser el primero</li>
+                                    <li><strong>Efecto manada:</strong> Todos esperan ver qué hacen otros</li>
+                                    <li><strong>Comparación interna:</strong> Se evalúan entre ellos</li>
+                                    <li><strong>Presión social:</strong> Temor al juicio del grupo</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>🛡️ Estrategias de Manejo:</h6>
+                                <ul>
+                                    <li><strong>Normalizar la novedad:</strong> "Es normal sentirse así al principio"</li>
+                                    <li><strong>Crear actividad común:</strong> Objetivo compartido inmediato</li>
+                                    <li><strong>Reconocer diversidad:</strong> "Cada uno puede participar a su ritmo"</li>
+                                    <li><strong>Usar veteranos:</strong> Modelar comportamiento positivo</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="p-3 bg-success bg-opacity-10 rounded mt-3">
+                            <strong>🎯 Técnica Golden:</strong> "Iniciación Colectiva" - crear un momento especial que solo este grupo específico experimentará juntos, generando memoria compartida y vínculo instantáneo.
+                        </div>
+                        
+                        <div class="p-3 bg-warning bg-opacity-10 rounded mt-3">
+                            <strong>⚠️ Riesgo Mayor:</strong> Si pierdes al grupo, pierdes múltiples oportunidades simultáneamente. Prioriza retener al 60% sobre impresionar al 100%.
+                        </div>
+                    `
+                }
+            };
+            
+            const selectedStep = welcomeSteps[step];
+            document.getElementById('welcomeStepTitle').textContent = selectedStep.title;
+            document.getElementById('welcomeStepContent').innerHTML = selectedStep.content;
+            document.getElementById('welcomeStepResult').style.display = 'block';
+        }
+
+        // Auto-update progress bars on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+
+        // Smooth scroll for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.interactive-card, .insight-card, .community-metric').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

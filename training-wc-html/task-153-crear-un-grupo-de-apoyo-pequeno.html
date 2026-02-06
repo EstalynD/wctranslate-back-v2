@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>👥 Círculos de Evolución Profesional - WC Training</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #10b981;
+      --secondary-color: #8b5cf6;
+      --accent-color: #f59e0b;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --danger-red: #dc3545;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --bg-dark: #1a1a2e;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      --gradient-success: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+      --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+      --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+      --gradient-circle: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.15);
+      --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: var(--bg-light);
+      overflow-x: hidden;
+    }
+
+    /* WC Training Header */
+    .wc-header {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wc-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float-pattern 24s linear infinite;
+    }
+
+    .wc-logo {
+      font-size: 1.8rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .user-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+
+    .live-indicator {
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Industry Insights Section */
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insight-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .insight-number {
+      font-size: 2rem;
+      font-weight: 800;
+      background: var(--gradient-circle);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero Section */
+    .hero-section {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 5rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1'/%3E%3C/svg%3E") repeat;
+      animation: float-bg 20s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    /* Lab Sections */
+    .lab-section {
+      padding: 3rem 0;
+      background: var(--bg-white);
+      margin-bottom: 2rem;
+      border-radius: 25px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lab-section:nth-child(even) {
+      background: var(--bg-light);
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      font-weight: 800;
+      margin-bottom: 2rem;
+      background: var(--gradient-secondary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+
+    /* Interactive Cards */
+    .circle-card {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border: 1px solid var(--border-light);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .circle-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.6s;
+    }
+
+    .circle-card:hover::before {
+      left: 100%;
+    }
+
+    .circle-card:hover {
+      transform: translateY(-8px) translateX(5px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-color);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      background: var(--gradient-circle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s ease;
+    }
+
+    .card-details.active {
+      max-height: 800px;
+    }
+
+    /* Group Composition Calculator */
+    .calculator-container {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      margin-bottom: 1.5rem;
+    }
+
+    .calculator-input label {
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .calculator-input input,
+    .calculator-input select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid var(--border-light);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .calculator-input input:focus,
+    .calculator-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+    }
+
+    .calculator-result {
+      background: var(--gradient-success);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    .result-number {
+      font-size: 3rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Meeting Structure Builder */
+    .meeting-builder {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin: 2rem 0;
+    }
+
+    .agenda-item {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: move;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .agenda-item:hover {
+      border-color: var(--primary-color);
+      background: white;
+    }
+
+    .agenda-item.active {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .time-duration {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* Group Dynamics Simulator */
+    .simulator-container {
+      background: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: var(--shadow-lg);
+      margin: 2rem 0;
+    }
+
+    .dynamics-scenario {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dynamics-scenario:hover {
+      border-color: var(--primary-color);
+      background: white;
+    }
+
+    .dynamics-scenario.active {
+      border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: white;
+    }
+
+    .simulation-result {
+      background: var(--gradient-secondary);
+      color: white;
+      padding: 2rem;
+      border-radius: 15px;
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.5s ease;
+    }
+
+    .simulation-result.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Progress Tracker */
+    .progress-tracker {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .progress-bar-custom {
+      height: 12px;
+      background: var(--bg-light);
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-circle);
+      transition: width 2s ease;
+      border-radius: 10px;
+    }
+
+    /* Circle Visualization */
+    .circle-visualization {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      margin: 2rem 0;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .member-avatar {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: var(--gradient-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 4px solid white;
+    }
+
+    .member-avatar:hover {
+      transform: scale(1.1);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .member-avatar.facilitator {
+      background: var(--gradient-warning);
+      width: 120px;
+      height: 120px;
+    }
+
+    .connection-pulse {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      animation: pulse-connection 3s infinite;
+    }
+
+    /* Protocol Steps */
+    .protocol-step {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.3s ease;
+    }
+
+    .protocol-step:hover {
+      transform: translateX(5px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background: var(--gradient-circle);
+      color: white;
+      border-radius: 50%;
+      font-weight: 800;
+      margin-right: 1rem;
+    }
+
+    /* Success Stories */
+    .success-story {
+      background: white;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: var(--shadow-md);
+      border-left: 5px solid var(--success-green);
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .success-story::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 4rem;
+      color: var(--success-green);
+      opacity: 0.2;
+      font-family: serif;
+    }
+
+    .story-author {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-top: 1rem;
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--success-green);
+    }
+
+    .stat-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    /* Buttons */
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-height: 48px;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Final Summary */
+    .final-summary {
+      background: var(--gradient-dark);
+      color: white;
+      padding: 4rem 0;
+      border-radius: 25px;
+      margin: 3rem 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: float-pattern 22s linear infinite reverse;
+    }
+
+    .achievement-badge {
+      background: var(--gradient-warning);
+      color: var(--text-dark);
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.2rem;
+      display: inline-block;
+      margin: 1rem;
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* Animations */
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.1); }
+    }
+
+    @keyframes pulse-connection {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.5); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes float-bg {
+      0%, 100% { transform: translateY(0px) translateX(0px); }
+      25% { transform: translateY(-10px) translateX(5px); }
+      50% { transform: translateY(0px) translateX(10px); }
+      75% { transform: translateY(10px) translateX(5px); }
+    }
+
+    @keyframes float-pattern {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(60px); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero-section {
+        padding: 3rem 0;
+      }
+      
+      .lab-section {
+        padding: 2rem 0;
+        margin-bottom: 1rem;
+      }
+      
+      .circle-card {
+        padding: 1.5rem;
+      }
+      
+      .calculator-container,
+      .simulator-container,
+      .meeting-builder {
+        padding: 1.5rem;
+      }
+      
+      .user-stats {
+        font-size: 0.8rem;
+        gap: 0.5rem;
+      }
+      
+      .insight-card {
+        padding: 1rem;
+      }
+      
+      .insight-number {
+        font-size: 1.5rem;
+      }
+      
+      .story-stats {
+        gap: 1rem;
+      }
+      
+      .achievement-badge {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+      }
+      
+      .member-avatar {
+        width: 80px;
+        height: 80px;
+        font-size: 0.9rem;
+      }
+      
+      .member-avatar.facilitator {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .protocol-step {
+        padding: 1rem;
+      }
+      
+      .agenda-item {
+        padding: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-title {
+        font-size: 2rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .circle-card {
+        padding: 1rem;
+      }
+      
+      .card-icon {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+      }
+      
+      .calculator-input input,
+      .calculator-input select {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+      
+      .result-number {
+        font-size: 2rem;
+      }
+      
+      .btn-primary-custom {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+      
+      .member-avatar {
+        width: 60px;
+        height: 60px;
+        font-size: 0.8rem;
+      }
+      
+      .member-avatar.facilitator {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .agenda-item {
+        padding: 1rem;
+      }
+      
+      .time-duration {
+        position: static;
+        display: inline-block;
+        margin-top: 0.5rem;
+      }
+    }
+
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-white: #1e1e2e;
+        --bg-light: #181825;
+        --text-dark: #f8f9fa;
+        --text-muted: #9ca3af;
+        --border-light: #374151;
+      }
+      
+      .circle-card,
+      .calculator-container,
+      .simulator-container,
+      .progress-tracker,
+      .success-story,
+      .circle-visualization,
+      .protocol-step,
+      .meeting-builder,
+      .agenda-item {
+        background: var(--bg-white);
+        color: var(--text-dark);
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      .wc-header,
+      .btn-primary-custom,
+      .calculator-container,
+      .simulator-container,
+      .meeting-builder {
+        display: none !important;
+      }
+      
+      .circle-card {
+        break-inside: avoid;
+        box-shadow: none;
+        border: 1px solid #ccc;
+      }
+      
+      .hero-section {
+        background: white !important;
+        color: black !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Training Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">WC Training</div>
+        </div>
+        <div class="col-md-6 text-end">
+          <div class="user-stats">
+            <div class="live-indicator"></div>
+            <span>12,847 modelos activos</span>
+            <i class="fas fa-users"></i>
+            <span id="current-date"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="industry-insights">
+    <div class="container">
+      <h2 class="text-center mb-4">📊 Datos de Grupos de Apoyo 2025</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="insight-card text-center">
+            <div class="insight-number">94%</div>
+            <p class="mb-0">de modelos top-tier participan en grupos de apoyo estructurados</p>
+            <small class="text-muted">Support Groups Effectiveness Study 2025</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card text-center">
+            <div class="insight-number">680%</div>
+            <p class="mb-0">mayor retención durante crisis con apoyo grupal sistémico</p>
+            <small class="text-muted">Resilience in Creator Economy Report</small>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="insight-card text-center">
+            <div class="insight-number">$31.2K</div>
+            <p class="mb-0">aumento promedio mensual con círculos de evolución activos</p>
+            <small class="text-muted">Collective Intelligence Impact Analysis</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="container text-center">
+      <h1 class="hero-title">👥 Masters de Círculos de Evolución</h1>
+      <p class="hero-subtitle">Construye tu consejo asesor personal especializado que multiplicará tu inteligencia profesional. No navegues sola - crea tu sistema neurológico extendido.</p>
+      <button class="btn-primary-custom" onclick="scrollToSection('circle-section')">
+        <i class="fas fa-circle-nodes"></i>
+        ¡A crear tu círculo de evolución!
+      </button>
+    </div>
+  </div>
+
+  <!-- Círculo de Evolución Section -->
+  <div class="container my-5">
+    <div class="lab-section" id="circle-section">
+      <div class="container">
+        <h2 class="section-title">🎯 Lab de Formación de Círculo Estratégico</h2>
+        
+        <div class="row">
+          <div class="col-lg-8 mx-auto">
+            <div class="circle-card" onclick="toggleDetails('circle-formation')">
+              <div class="card-header">
+                <div class="card-icon">
+                  <i class="fas fa-users-cog"></i>
+                </div>
+                <div>
+                  <h4>Protocolo de Formación de Círculo</h4>
+                  <p class="text-muted mb-0">Metodología sistemática para crear grupos de alto rendimiento</p>
+                </div>
+              </div>
+              <div class="card-details" id="circle-formation">
+                <p><strong>CRÍTICO:</strong> Desarrollar un círculo íntimo de soporte profesional es como establecer un consejo asesor personal especializado. Esta infraestructura colaborativa transforma fundamentalmente tu capacidad de navegación profesional.</p>
+                
+                <div class="mt-4">
+                  <h6>🔥 Los 8 Fundamentos del Círculo de Evolución:</h6>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">1</span>
+                    <strong>Selección Estratégica:</strong> 3-5 modelos con diversidad complementaria de experiencias, fortalezas y perspectivas específicas.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">2</span>
+                    <strong>Estructura Inquebrantable:</strong> Reuniones cada dos semanas en formato sistemático con agenda predefinida.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">3</span>
+                    <strong>Facilitación Rotativa:</strong> Cada miembro lidera una sesión mensual, desarrollando habilidades de liderazgo grupal.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">4</span>
+                    <strong>Confidencialidad Absoluta:</strong> Acuerdos explícitos sobre privacidad que permitan vulnerabilidad constructiva.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">5</span>
+                    <strong>Documentación Colectiva:</strong> Sistema compartido privado para continuidad de insights y compromisos.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">6</span>
+                    <strong>Accountability Sistémico:</strong> Seguimiento de compromisos con apoyo para implementación efectiva.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">7</span>
+                    <strong>Evolución Continua:</strong> Evaluación periódica de efectividad con ajustes según necesidades emergentes.
+                  </div>
+                  
+                  <div class="protocol-step">
+                    <span class="step-number">8</span>
+                    <strong>Resolución de Conflictos:</strong> Protocolos específicos para manejar tensiones inevitables de manera constructiva.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calculadora de Composición Grupal -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">🧮 Calculadora de Composición Óptima</h2>
+        
+        <div class="calculator-container">
+          <h5>📊 Evalúa la Efectividad Potencial de Tu Grupo</h5>
+          <p>Ingresa información sobre los miembros potenciales para calcular la sinergia grupal:</p>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Número Total de Miembros:</label>
+                <select id="group-size" onchange="calculateGroupEffectiveness()">
+                  <option value="">Selecciona tamaño</option>
+                  <option value="3">3 miembros (mínimo)</option>
+                  <option value="4">4 miembros (óptimo)</option>
+                  <option value="5">5 miembros (máximo recomendado)</option>
+                  <option value="6">6+ miembros (riesgo de dilución)</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Diversidad de Experiencia (años):</label>
+                <input type="range" id="experience-diversity" min="1" max="10" value="5" oninput="updateExperienceLabel(); calculateGroupEffectiveness()">
+                <span id="experience-label">5 años de rango</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Complementariedad de Habilidades:</label>
+                <select id="skill-complementarity" onchange="calculateGroupEffectiveness()">
+                  <option value="">Evalúa complementariedad</option>
+                  <option value="1">Muy similares (riesgo de eco)</option>
+                  <option value="2">Algunas diferencias</option>
+                  <option value="3">Bien complementarias</option>
+                  <option value="4">Altamente complementarias</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Compromiso de Tiempo Disponible:</label>
+                <select id="time-commitment" onchange="calculateGroupEffectiveness()">
+                  <option value="">Selecciona compromiso</option>
+                  <option value="1">Mínimo (1 hora/quincena)</option>
+                  <option value="2">Moderado (2 horas/quincena)</option>
+                  <option value="3">Fuerte (3+ horas/quincena)</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Nivel de Confianza Mutua:</label>
+                <input type="range" id="trust-level" min="1" max="10" value="7" oninput="updateTrustLabel(); calculateGroupEffectiveness()">
+                <span id="trust-label">7/10</span>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="calculator-input">
+                <label>Historial de Colaboración:</label>
+                <select id="collaboration-history" onchange="calculateGroupEffectiveness()">
+                  <option value="">Selecciona historial</option>
+                  <option value="0">Sin experiencia previa</option>
+                  <option value="1">Algunos proyectos exitosos</option>
+                  <option value="2">Historial sólido de colaboración</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          <div class="calculator-result" id="group-effectiveness-result" style="display: none;">
+            <div class="result-number" id="effectiveness-score">0</div>
+            <div id="effectiveness-analysis">Tu análisis de efectividad aparecerá aquí</div>
+            <div id="composition-recommendations" class="mt-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Constructor de Estructura de Reuniones -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">⏰ Constructor de Estructura de Reuniones</h2>
+        
+        <div class="meeting-builder">
+          <h5>🎯 Diseña la Agenda Perfecta para Tu Círculo</h5>
+          <p>Arrastra y organiza los componentes para crear tu estructura de reunión ideal:</p>
+          
+          <div class="row">
+            <div class="col-md-8">
+              <div id="agenda-builder">
+                <div class="agenda-item" draggable="true">
+                  <div class="time-duration">5 min</div>
+                  <h6>🌟 Check-in Personal</h6>
+                  <p class="mb-0">Estado emocional, energía actual y destacados de la quincena</p>
+                </div>
+                
+                <div class="agenda-item" draggable="true">
+                  <div class="time-duration">10 min</div>
+                  <h6>🏆 Celebración de Éxitos</h6>
+                  <p class="mb-0">Reconocimiento específico de logros y wins recientes</p>
+                </div>
+                
+                <div class="agenda-item" draggable="true">
+                  <div class="time-duration">25 min</div>
+                  <h6>🔍 Análisis Colectivo de Desafíos</h6>
+                  <p class="mb-0">Foco principal: un desafío específico con perspectivas múltiples</p>
+                </div>
+                
+                <div class="agenda-item" draggable="true">
+                  <div class="time-duration">15 min</div>
+                  <h6>💡 Intercambio de Recursos</h6>
+                  <p class="mb-0">Compartir estrategias, herramientas y conexiones útiles</p>
+                </div>
+                
+                <div class="agenda-item" draggable="true">
+                  <div class="time-duration">10 min</div>
+                  <h6>📋 Compromisos de Implementación</h6>
+                  <p class="mb-0">Acciones específicas que cada miembro se compromete a realizar</p>
+                </div>
+                
+                <div class="agenda-item" draggable="true">
+                  <div class="time-duration">5 min</div>
+                  <h6>🔄 Feedback de Sesión</h6>
+                  <p class="mb-0">Evaluación rápida y mejoras para próxima reunión</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-4">
+              <div class="meeting-summary p-3 bg-light rounded">
+                <h6>📊 Resumen de Agenda</h6>
+                <div id="total-time">Duración total: <strong>70 minutos</strong></div>
+                <div class="mt-3">
+                  <small><strong>💡 Tip:</strong> La duración ideal es 60-90 minutos para mantener energía y focus grupal óptimo.</small>
+                </div>
+                <button class="btn-primary-custom mt-3 w-100" onclick="saveAgenda()">
+                  <i class="fas fa-save"></i>
+                  Guardar Agenda
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Simulador de Dinámicas Grupales -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">🎭 Simulador de Dinámicas Grupales</h2>
+        
+        <div class="simulator-container">
+          <h5>⚡ Simula escenarios comunes y aprende a manejarlos</h5>
+          <p>Selecciona una situación para ver estrategias de manejo:</p>
+          
+          <div class="dynamics-scenario" onclick="selectDynamics('dominant-member')">
+            <h6>👑 Miembro Dominante</h6>
+            <p class="mb-0">Un miembro monopoliza las conversaciones y decisiones grupales</p>
+          </div>
+          
+          <div class="dynamics-scenario" onclick="selectDynamics('conflict-resolution')">
+            <h6>⚔️ Conflicto Entre Miembros</h6>
+            <p class="mb-0">Tensión directa entre dos miembros afecta la dinámica grupal</p>
+          </div>
+          
+          <div class="dynamics-scenario" onclick="selectDynamics('low-participation')">
+            <h6>😴 Participación Baja</h6>
+            <p class="mb-0">Algunos miembros se vuelven pasivos y no contribuyen activamente</p>
+          </div>
+          
+          <div class="dynamics-scenario" onclick="selectDynamics('goal-misalignment')">
+            <h6>🎯 Desalineación de Objetivos</h6>
+            <p class="mb-0">Los miembros tienen expectativas diferentes del grupo</p>
+          </div>
+          
+          <div class="simulation-result" id="dynamics-result">
+            <h5 id="dynamics-title">Manejo de Dinámicas</h5>
+            <p id="dynamics-analysis">El análisis aparecerá aquí</p>
+            <div id="dynamics-strategies"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Visualización del Círculo -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">🔗 Visualización Interactiva del Círculo</h2>
+        
+        <div class="circle-visualization" id="circle-viz">
+          <div class="member-avatar facilitator" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="showMemberInfo('facilitator')">
+            FACILITADOR<br>del mes
+          </div>
+          <div class="member-avatar" style="top: 15%; left: 35%;" onclick="showMemberInfo('member1')">
+            MIEMBRO<br>A
+          </div>
+          <div class="member-avatar" style="top: 15%; left: 65%;" onclick="showMemberInfo('member2')">
+            MIEMBRO<br>B
+          </div>
+          <div class="member-avatar" style="top: 75%; left: 25%;" onclick="showMemberInfo('member3')">
+            MIEMBRO<br>C
+          </div>
+          <div class="member-avatar" style="top: 75%; left: 75%;" onclick="showMemberInfo('member4')">
+            MIEMBRO<br>D
+          </div>
+          
+          <!-- Connection pulses -->
+          <div class="connection-pulse" style="top: 35%; left: 45%;"></div>
+          <div class="connection-pulse" style="top: 35%; left: 55%;"></div>
+          <div class="connection-pulse" style="top: 65%; left: 40%;"></div>
+          <div class="connection-pulse" style="top: 65%; left: 60%;"></div>
+          <div class="connection-pulse" style="top: 50%; left: 30%;"></div>
+          <div class="connection-pulse" style="top: 50%; left: 70%;"></div>
+        </div>
+        
+        <div class="text-center mt-3">
+          <button class="btn-primary-custom" onclick="rotateFacilitator()">
+            <i class="fas fa-sync-alt"></i>
+            Rotar Facilitador
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">📈 Tracker de Evolución del Círculo</h2>
+        
+        <div class="progress-tracker">
+          <h5>🎯 Progreso de Desarrollo Grupal</h5>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Formación y Establecimiento</span>
+              <span id="formation-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="formation-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Desarrollo de Confianza</span>
+              <span id="trust-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="trust-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Efectividad Colaborativa</span>
+              <span id="collaboration-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="collaboration-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="progress-item">
+            <div class="progress-label">
+              <span>Impacto en Resultados</span>
+              <span id="impact-percentage">0%</span>
+            </div>
+            <div class="progress-bar-custom">
+              <div class="progress-fill" id="impact-progress" style="width: 0%"></div>
+            </div>
+          </div>
+          
+          <div class="text-center mt-4">
+            <button class="btn-primary-custom" onclick="updateCircleProgress()">
+              <i class="fas fa-chart-line"></i>
+              Actualizar Progreso
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="lab-section">
+      <div class="container">
+        <h2 class="section-title">🏆 Casos de Éxito de Círculos</h2>
+        
+        <div class="row g-4">
+          <div class="col-md-6">
+            <div class="success-story">
+              <h6>🚀 El Círculo de las Estrategas</h6>
+              <p>"Nuestro círculo de 4 miembros se reúne religiosamente cada dos semanas desde hace 18 meses. Hemos resuelto colectivamente crisis que individualmente habrían sido devastadoras. Un ejemplo: cuando una de nosotras enfrentó un problema de usuarios tóxicos, el análisis grupal reveló un patrón en su comunicación inicial que atraía exactamente ese tipo de interacción. El ajuste sugerido eliminó el problema completamente."</p>
+              <div class="story-author">- Elena M., Círculo Fundador</div>
+              <div class="story-stats">
+                <div class="stat-item">
+                  <div class="stat-number">18</div>
+                  <div class="stat-label">Meses activas</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">100%</div>
+                  <div class="stat-label">Retención de miembros</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">450%</div>
+                  <div class="stat-label">Crecimiento promedio</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-6">
+            <div class="success-story">
+              <h6>💡 Inteligencia Colectiva en Acción</h6>
+              <p>"El poder de nuestro círculo se mostró cuando enfrenté una decisión de diversificación compleja. El análisis colectivo produjo insights que ninguna habría generado independientemente. Implementamos una estrategia híbrida que resultó en $45K adicionales en 3 meses, algo imposible de lograr con pensamiento individual."</p>
+              <div class="story-author">- Victoria L., Miembro Estratega</div>
+              <div class="story-stats">
+                <div class="stat-item">
+                  <div class="stat-number">$45K</div>
+                  <div class="stat-label">Beneficio directo</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">5</div>
+                  <div class="stat-label">Perspectivas integradas</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">3</div>
+                  <div class="stat-label">Meses de implementación</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-12">
+            <div class="success-story">
+              <h6>🌟 Transformación Sistémica Grupal</h6>
+              <p>"Nuestro círculo evolucionó de ser un grupo de apoyo a convertirnos en un think tank profesional. Documentamos todos nuestros insights y creamos un sistema de conocimiento compartido que beneficia a cada nueva situación. Hemos desarrollado frameworks únicos que nos dan ventajas competitivas significativas. Tres miembros han triplicado sus ingresos, dos han lanzado líneas de productos exitosas, y todas hemos desarrollado habilidades de liderazgo que nunca habríamos alcanzado solas."</p>
+              <div class="story-author">- Patricia R., Círculo Evolution Leaders</div>
+              <div class="story-stats">
+                <div class="stat-item">
+                  <div class="stat-number">5</div>
+                  <div class="stat-label">Miembros fundadoras</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">300%</div>
+                  <div class="stat-label">Crecimiento promedio</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">12</div>
+                  <div class="stat-label">Frameworks desarrollados</div>
+                </div>
+                <div class="stat-item">
+                  <div class="stat-number">24</div>
+                  <div class="stat-label">Meses de evolución</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="final-summary">
+      <div class="container text-center">
+        <h2>🧠 Tu Sistema Neurológico Extendido Te Espera</h2>
+        <p class="lead">Has completado tu transformación en la creación de círculos de evolución profesional. Ahora tienes las herramientas para crear un consejo asesor que multiplicará tu inteligencia exponencialmente.</p>
+        
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="achievement-badge">🏆 Arquitecta de Círculos de Evolución</div>
+            <div class="achievement-badge">🎯 Especialista en Dinámicas Grupales</div>
+            <div class="achievement-badge">⚡ Expert en Facilitación Colaborativa</div>
+            <div class="achievement-badge">📈 Maestra de Inteligencia Colectiva</div>
+          </div>
+        </div>
+        
+        <div class="mt-4">
+          <h4>🌟 Lo que has dominado:</h4>
+          <div class="row g-3 mt-3">
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">8</div>
+                <div>Fundamentos implementados</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">6</div>
+                <div>Componentes de agenda</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">4</div>
+                <div>Dinámicas grupales dominadas</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="text-center">
+                <div style="font-size: 2rem; font-weight: 800;">∞</div>
+                <div>Potencial de inteligencia colectiva</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <p class="mt-4 lead">
+          <strong>Tu círculo de evolución es tu ventaja competitiva definitiva.</strong> 
+          La sabiduría colectiva que cultives hoy será tu recurso más valioso mañana.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Global variables
+    let currentFacilitator = 0;
+    const facilitatorRole = ['facilitator', 'member1', 'member2', 'member3', 'member4'];
+    
+    // Update current date
+    function updateCurrentDate() {
+      const now = new Date();
+      const options = { 
+        weekday: 'short', 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+    }
+
+    // Toggle details function
+    function toggleDetails(id) {
+      const element = document.getElementById(id);
+      element.classList.toggle('active');
+    }
+
+    // Update experience diversity label
+    function updateExperienceLabel() {
+      const value = document.getElementById('experience-diversity').value;
+      document.getElementById('experience-label').textContent = value + ' años de rango';
+    }
+
+    // Update trust level label
+    function updateTrustLabel() {
+      const value = document.getElementById('trust-level').value;
+      document.getElementById('trust-label').textContent = value + '/10';
+    }
+
+    // Calculate group effectiveness
+    function calculateGroupEffectiveness() {
+      const groupSize = parseInt(document.getElementById('group-size').value) || 0;
+      const experienceDiversity = parseInt(document.getElementById('experience-diversity').value) || 0;
+      const skillComplementarity = parseInt(document.getElementById('skill-complementarity').value) || 0;
+      const timeCommitment = parseInt(document.getElementById('time-commitment').value) || 0;
+      const trustLevel = parseInt(document.getElementById('trust-level').value) || 0;
+      const collaborationHistory = parseInt(document.getElementById('collaboration-history').value) || 0;
+
+      // Complex scoring algorithm
+      let sizeScore = 0;
+      if (groupSize === 4) sizeScore = 25;
+      else if (groupSize === 3 || groupSize === 5) sizeScore = 20;
+      else if (groupSize === 6) sizeScore = 10;
+      else sizeScore = 5;
+
+      const diversityScore = experienceDiversity * 2;
+      const complementarityScore = skillComplementarity * 15;
+      const commitmentScore = timeCommitment * 12;
+      const trustScore = trustLevel * 2;
+      const historyScore = collaborationHistory * 8;
+      
+      const totalScore = Math.min(100, sizeScore + diversityScore + complementarityScore + commitmentScore + trustScore + historyScore);
+      
+      let analysis = '';
+      let recommendations = '';
+      
+      if (totalScore >= 85) {
+        analysis = '🏆 EXCEPCIONAL: Tu composición grupal es ideal para inteligencia colectiva de alto rendimiento.';
+        recommendations = '<strong>Maximiza el potencial:</strong> Implementa documentación avanzada y considera expandir a mentoría de otros grupos.';
+      } else if (totalScore >= 70) {
+        analysis = '✅ EXCELENTE: Tienes una base sólida para un círculo efectivo con ajustes menores.';
+        recommendations = '<strong>Optimiza:</strong> Mejora la complementariedad de habilidades y aumenta el compromiso de tiempo.';
+      } else if (totalScore >= 55) {
+        analysis = '⚡ PROMETEDOR: Tu grupo tiene potencial pero necesita desarrollo estratégico en áreas clave.';
+        recommendations = '<strong>Desarrolla:</strong> Enfócate en construir confianza y establecer compromisos claros de participación.';
+      } else if (totalScore >= 35) {
+        analysis = '⚠️ MODERADO: Requiere trabajo significativo para crear efectividad grupal real.';
+        recommendations = '<strong>Reestructura:</strong> Considera cambiar la composición o invertir más tiempo en desarrollo de confianza.';
+      } else {
+        analysis = '🚨 CRÍTICO: Esta composición tiene alta probabilidad de fallar. Requiere rediseño completo.';
+        recommendations = '<strong>Acción inmediata:</strong> Aplica los 8 fundamentos sistemáticamente antes de proceder.';
+      }
+
+      document.getElementById('effectiveness-score').textContent = totalScore + '/100';
+      document.getElementById('effectiveness-analysis').textContent = analysis;
+      document.getElementById('composition-recommendations').innerHTML = recommendations;
+      document.getElementById('group-effectiveness-result').style.display = 'block';
+    }
+
+    // Select group dynamics scenario
+    function selectDynamics(scenario) {
+      // Remove active class from all scenarios
+      document.querySelectorAll('.dynamics-scenario').forEach(option => {
+        option.classList.remove('active');
+      });
+      
+      // Add active class to selected scenario
+      event.currentTarget.classList.add('active');
+      
+      let title, analysis, strategies;
+      
+      switch(scenario) {
+        case 'dominant-member':
+          title = '👑 Manejo: Miembro Dominante';
+          analysis = 'Comportamiento dominante puede destruir la dinámica grupal si no se maneja estratégicamente. Requiere intervención firme pero diplomática.';
+          strategies = `
+            <div class="mt-3">
+              <strong>Estrategias efectivas:</strong><br>
+              • Establecer reglas de tiempo para cada participación<br>
+              • Rotar facilitación para distribuir poder<br>
+              • Usar técnicas de "ronda silenciosa" antes de discusión<br>
+              • Conversación privada sobre impacto en dinámica grupal<br>
+              • Implementar sistema de accountability para todos los miembros
+            </div>
+          `;
+          break;
+        case 'conflict-resolution':
+          title = '⚔️ Manejo: Conflicto Entre Miembros';
+          analysis = 'Conflictos no resueltos pueden destruir la efectividad grupal. La clave es abordarlos directamente con estructura y neutralidad.';
+          strategies = `
+            <div class="mt-3">
+              <strong>Protocolo de resolución:</strong><br>
+              • Pausa inmediata y reconocimiento del conflicto<br>
+              • Sesión específica para abordar la tensión<br>
+              • Facilitación neutral (miembro tercero o externo)<br>
+              • Enfoque en comportamientos específicos, no personalidades<br>
+              • Acuerdos concretos sobre interacción futura
+            </div>
+          `;
+          break;
+        case 'low-participation':
+          title = '😴 Manejo: Participación Baja';
+          analysis = 'Participación pasiva reduce el valor grupal exponencialmente. Requiere identificar causas raíz y activar engagement específico.';
+          strategies = `
+            <div class="mt-3">
+              <strong>Estrategias de activación:</strong><br>
+              • Check-in individual sobre barreras de participación<br>
+              • Asignar roles específicos que requieran participación<br>
+              • Crear espacios seguros para contribuciones menores<br>
+              • Formato de preguntas directas y tiempo de respuesta<br>
+              • Reevaluar si el grupo satisface necesidades de todos
+            </div>
+          `;
+          break;
+        case 'goal-misalignment':
+          title = '🎯 Manejo: Desalineación de Objetivos';
+          analysis = 'Objetivos diferentes pueden crear frustración y inefectividad. La alineación periódica es crucial para mantener valor grupal.';
+          strategies = `
+            <div class="mt-3">
+              <strong>Proceso de realineación:</strong><br>
+              • Sesión específica para revisar objetivos individuales<br>
+              • Identificar intersecciones y sinergias comunes<br>
+              • Redefinir propósito grupal basado en consenso<br>
+              • Establecer métricas claras de éxito grupal<br>
+              • Evaluación trimestral de alineación y ajustes
+            </div>
+          `;
+          break;
+      }
+      
+      document.getElementById('dynamics-title').textContent = title;
+      document.getElementById('dynamics-analysis').textContent = analysis;
+      document.getElementById('dynamics-strategies').innerHTML = strategies;
+      
+      const resultElement = document.getElementById('dynamics-result');
+      resultElement.classList.add('show');
+    }
+
+    // Show member information
+    function showMemberInfo(memberType) {
+      const infoMap = {
+        'facilitator': 'FACILITADOR del mes - Lidera la sesión, mantiene agenda, modera discusiones',
+        'member1': 'MIEMBRO A - Especialista en estrategia de contenido y growth hacking',
+        'member2': 'MIEMBRO B - Experta en diversificación de ingresos y business models',
+        'member3': 'MIEMBRO C - Líder en community building y engagement strategies',
+        'member4': 'MIEMBRO D - Especialista en tecnología, herramientas y optimización'
+      };
+      
+      alert(infoMap[memberType] || 'Información de miembro');
+    }
+
+    // Rotate facilitator
+    function rotateFacilitator() {
+      const avatars = document.querySelectorAll('.member-avatar');
+      
+      // Remove facilitator class from current
+      avatars.forEach(avatar => {
+        avatar.classList.remove('facilitator');
+      });
+      
+      // Move to next facilitator
+      currentFacilitator = (currentFacilitator + 1) % facilitatorRole.length;
+      
+      // Add facilitator class to new one
+      avatars[currentFacilitator].classList.add('facilitator');
+      
+      // Update text content
+      avatars[currentFacilitator].innerHTML = 'FACILITADOR<br>del mes';
+      
+      // Reset other avatars
+      avatars.forEach((avatar, index) => {
+        if (index !== currentFacilitator) {
+          const memberLetter = String.fromCharCode(65 + index - (index > currentFacilitator ? 0 : 1));
+          avatar.innerHTML = `MIEMBRO<br>${memberLetter}`;
+        }
+      });
+    }
+
+    // Save agenda
+    function saveAgenda() {
+      const agendaItems = document.querySelectorAll('.agenda-item');
+      let agenda = [];
+      
+      agendaItems.forEach(item => {
+        const title = item.querySelector('h6').textContent;
+        const duration = item.querySelector('.time-duration').textContent;
+        const description = item.querySelector('p').textContent;
+        
+        agenda.push({
+          title: title,
+          duration: duration,
+          description: description
+        });
+      });
+      
+      // Simulate saving (in real app, would save to backend)
+      alert('✅ Agenda guardada exitosamente! Tu estructura de reunión está lista para implementar.');
+    }
+
+    // Update circle progress
+    function updateCircleProgress() {
+      const progress = [
+        { id: 'formation', percentage: Math.floor(Math.random() * 25) + 75 },
+        { id: 'trust', percentage: Math.floor(Math.random() * 20) + 70 },
+        { id: 'collaboration', percentage: Math.floor(Math.random() * 30) + 60 },
+        { id: 'impact', percentage: Math.floor(Math.random() * 25) + 65 }
+      ];
+      
+      progress.forEach(item => {
+        document.getElementById(item.id + '-progress').style.width = item.percentage + '%';
+        document.getElementById(item.id + '-percentage').textContent = item.percentage + '%';
+      });
+    }
+
+    // Smooth scroll to section
+    function scrollToSection(sectionId) {
+      document.getElementById(sectionId).scrollIntoView({
+        behavior: 'smooth'
+      });
+    }
+
+    // Drag and drop functionality for agenda builder
+    function initializeDragAndDrop() {
+      const agendaItems = document.querySelectorAll('.agenda-item');
+      
+      agendaItems.forEach(item => {
+        item.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/html', e.target.outerHTML);
+          e.dataTransfer.effectAllowed = 'move';
+        });
+        
+        item.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+        });
+        
+        item.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const draggedHTML = e.dataTransfer.getData('text/html');
+          const draggedElement = document.createElement('div');
+          draggedElement.innerHTML = draggedHTML;
+          
+          // Insert the dragged element
+          e.target.closest('.agenda-item').parentNode.insertBefore(
+            draggedElement.firstElementChild, 
+            e.target.closest('.agenda-item')
+          );
+          
+          // Re-initialize drag and drop for new elements
+          initializeDragAndDrop();
+        });
+      });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      updateCurrentDate();
+      updateCircleProgress();
+      initializeDragAndDrop();
+      
+      // Update date every minute
+      setInterval(updateCurrentDate, 60000);
+      
+      // Add animation delays to cards
+      const cards = document.querySelectorAll('.circle-card, .insight-card');
+      cards.forEach((card, index) => {
+        card.style.animationDelay = (index * 0.1) + 's';
+      });
+
+      // Initialize connection pulses animation
+      const pulses = document.querySelectorAll('.connection-pulse');
+      pulses.forEach((pulse, index) => {
+        pulse.style.animationDelay = (index * 0.5) + 's';
+      });
+    });
+
+    // Touch support for mobile
+    if ('ontouchstart' in window) {
+      document.body.classList.add('touch-device');
+    }
+
+    // Keyboard navigation support
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        if (e.target.classList.contains('circle-card') || 
+            e.target.classList.contains('dynamics-scenario') ||
+            e.target.classList.contains('member-avatar')) {
+          e.target.click();
+        }
+      }
+    });
+
+    // Performance optimization for animations
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reducedMotion.matches) {
+      document.body.classList.add('reduced-motion');
+    }
+  </script>
+</body>
+</html>

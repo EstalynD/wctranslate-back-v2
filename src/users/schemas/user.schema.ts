@@ -7,6 +7,7 @@ export type UserDocument = User & Document;
 export enum UserRole {
   MODEL = 'MODEL',
   ADMIN = 'ADMIN',
+  STUDIO = 'STUDIO',
 }
 
 export enum UserStatus {
@@ -26,18 +27,6 @@ export enum UserStage {
   INICIACION = 'INICIACION',
   INTERMEDIO = 'INTERMEDIO',
   AVANZADO = 'AVANZADO',
-}
-
-export enum StreamingPlatform {
-  CHATURBATE = 'CHATURBATE',
-  LIVEJASMIN = 'LIVEJASMIN',
-  STRIPCHAT = 'STRIPCHAT',
-  BONGACAMS = 'BONGACAMS',
-  CAM4 = 'CAM4',
-  MYFREECAMS = 'MYFREECAMS',
-  FLIRT4FREE = 'FLIRT4FREE',
-  STREAMATE = 'STREAMATE',
-  OTHER = 'OTHER',
 }
 
 // --- Subdocument Interfaces ---
@@ -71,7 +60,7 @@ export interface DailyProgress {
 
 // --- Nuevo: Configuración del Modelo ---
 export interface ModelConfig {
-  streamingPlatform: StreamingPlatform | null;
+  platformId: Types.ObjectId | null;  // Referencia a la plataforma de streaming
   stage: UserStage;
   isSuperUser: boolean;      // Acceso completo sin restricciones
   isDemo: boolean;           // Cuenta de demostración
@@ -163,14 +152,14 @@ export class User {
   // --- �‍💻 Configuración del Modelo ---
   @Prop({
     type: {
-      streamingPlatform: { type: String, enum: StreamingPlatform, default: null },
+      platformId: { type: Types.ObjectId, ref: 'Platform', default: null },
       stage: { type: String, enum: UserStage, default: UserStage.INICIACION },
       isSuperUser: { type: Boolean, default: false },
       isDemo: { type: Boolean, default: false },
       studioId: { type: Types.ObjectId, ref: 'Studio', default: null },
     },
     default: {
-      streamingPlatform: null,
+      platformId: null,
       stage: UserStage.INICIACION,
       isSuperUser: false,
       isDemo: false,
@@ -221,7 +210,7 @@ UserSchema.index({ role: 1 });
 UserSchema.index({ 'subscriptionAccess.isActive': 1 });
 UserSchema.index({ 'subscriptionAccess.planType': 1 });
 UserSchema.index({ 'gamification.level': -1 });
-UserSchema.index({ 'modelConfig.streamingPlatform': 1 });
+UserSchema.index({ 'modelConfig.platformId': 1 });
 UserSchema.index({ 'modelConfig.stage': 1 });
 UserSchema.index({ 'modelConfig.studioId': 1 });
 UserSchema.index({ 'modelConfig.isSuperUser': 1 });

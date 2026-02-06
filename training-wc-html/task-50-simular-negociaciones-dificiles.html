@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔥 Masters de Negociación Táctica - Simulador WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e74c3c;
+            --secondary-color: #c0392b;
+            --accent-color: #f39c12;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            --gradient-secondary: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(270deg, #e74c3c, #f39c12, #e67e22, #c0392b);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fef7cd 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientFloat 24s ease-in-out infinite;
+            opacity: 0.05;
+        }
+
+        @keyframes gradientFloat {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes slideDown {
+            from { max-height: 0; opacity: 0; }
+            to { max-height: 1000px; opacity: 1; }
+        }
+
+        @keyframes progressFill {
+            from { width: 0%; }
+            to { width: var(--progress-width); }
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            animation: gradientFloat 20s ease-in-out infinite;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .user-stats {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        .industry-insights {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.1);
+            border: 2px solid #fee;
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #fff5f5 0%, #fef5e7 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(231, 76, 60, 0.15);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-header {
+            text-align: center;
+            padding: 4rem 0;
+            position: relative;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><circle cx="20" cy="20" r="15" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><circle cx="80" cy="80" r="25" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+            animation: gradientFloat 22s ease-in-out infinite reverse;
+            z-index: 1;
+        }
+
+        .main-header .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: 0 15px 40px rgba(231, 76, 60, 0.08);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .section-title {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            font-size: 2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .interactive-card {
+            background: linear-gradient(135deg, #fff8f0 0%, #fef5e7 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid #fee;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(231, 76, 60, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            flex: 1;
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .card-expanded .card-details {
+            max-height: 2000px;
+            opacity: 1;
+            animation: slideDown 0.5s ease;
+        }
+
+        .calculator-section {
+            background: linear-gradient(135deg, #f8f9ff 0%, #e8f4fd 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid #e3f2fd;
+        }
+
+        .input-group {
+            margin: 1.5rem 0;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border-radius: 12px;
+            border: 2px solid var(--border-light);
+            padding: 0.8rem 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(231, 76, 60, 0.25);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 15px;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            min-height: 44px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+            background: var(--gradient-primary);
+        }
+
+        .result-display {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .progress-tracker {
+            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .progress-item {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 10px;
+            background: #f0f0f0;
+        }
+
+        .progress-bar {
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            transition: width 1s ease;
+        }
+
+        .scenario-simulator {
+            background: linear-gradient(135deg, #fefefe 0%, #f9f9f9 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .scenario-option {
+            background: linear-gradient(135deg, #fff5f5 0%, #fef5e7 100%);
+            border: 2px solid #fee;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .scenario-option:hover {
+            border-color: var(--primary-color);
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.1);
+        }
+
+        .scenario-option.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #f0fff4 0%, #f7fff1 100%);
+            border-left: 6px solid var(--success-green);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.1);
+        }
+
+        .story-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--success-green);
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><polygon points="50,10 90,90 10,90" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="2"/><circle cx="25" cy="25" r="20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+            animation: gradientFloat 20s ease-in-out infinite;
+        }
+
+        .final-summary .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .achievement-badge {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 20px;
+            padding: 1rem 2rem;
+            display: inline-block;
+            margin: 1rem;
+            backdrop-filter: blur(10px);
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 0.5rem;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1.5rem 0;
+            }
+            
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .insight-card {
+                margin-bottom: 1rem;
+            }
+            
+            .story-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .wc-header {
+                padding: 0.5rem 0;
+            }
+            
+            .wc-logo {
+                font-size: 1.4rem;
+            }
+            
+            .user-stats {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .industry-insights {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .calculator-section,
+            .progress-tracker,
+            .scenario-simulator {
+                padding: 1rem;
+            }
+            
+            .story-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .interactive-card:hover,
+            .insight-card:hover,
+            .scenario-option:hover {
+                transform: none;
+            }
+            
+            .interactive-card:active {
+                transform: scale(0.98);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    
+    <!-- WC Training Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="d-flex justify-content-between align-items-center">
+                <div class="wc-logo">
+                    <i class="fas fa-fire"></i> WC Training
+                </div>
+                <div class="user-stats">
+                    <span class="live-indicator"></span>
+                    <strong>12,847</strong> modelos activas
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <!-- Industry Insights -->
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">
+                <i class="fas fa-chart-line"></i> Industry Insights 2025
+                <span class="live-indicator"></span>
+                <small class="text-muted">Actualizado: <span id="currentDate"></span></small>
+            </h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <div><strong>Fallan en negociaciones</strong><br>Por falta de práctica previa</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">340%</div>
+                        <div><strong>Incremento en ingresos</strong><br>Con entrenamiento táctico</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">89%</div>
+                        <div><strong>Top modelos usan</strong><br>Simuladores de escenarios</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">156%</div>
+                        <div><strong>Menos estrés</strong><br>Con práctica regular</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">92%</div>
+                        <div><strong>Retienen usuarios</strong><br>Con límites claros</div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <div class="insight-number">$2,847</div>
+                        <div><strong>Promedio mensual</strong><br>Maestras en negociación</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <div class="main-header">
+            <div class="content">
+                <h1 class="main-title">
+                    🔥 Masters de Negociación Táctica
+                </h1>
+                <p class="main-subtitle">
+                    Domina el arte de las negociaciones difíciles y convierte cada confrontación en una oportunidad de crecimiento profesional. ¡No seas vulnerable ante usuarios manipuladores!
+                </p>
+            </div>
+        </div>
+
+        <!-- Simulador de Escenarios Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-theater-masks section-icon"></i>
+                Simulador de Escenarios Críticos
+            </h2>
+            
+            <div class="scenario-simulator">
+                <h4 class="mb-3"><i class="fas fa-play-circle"></i> Selecciona tu escenario de entrenamiento:</h4>
+                <div class="scenario-option" onclick="selectScenario('price')">
+                    <div>
+                        <strong>🎯 Negociación de Precios</strong><br>
+                        "Todas las otras modelos lo hacen por menos"
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('emotional')">
+                    <div>
+                        <strong>💔 Manipulación Emocional</strong><br>
+                        "Creí que realmente te importaba"
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('limits')">
+                    <div>
+                        <strong>⚠️ Desafío a Límites</strong><br>
+                        "Solo esta vez, nadie se enterará"
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('comparison')">
+                    <div>
+                        <strong>👥 Comparaciones Tóxicas</strong><br>
+                        "Vi a [Modelo X] haciéndolo"
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('group')">
+                    <div>
+                        <strong>🎭 Presión Grupal</strong><br>
+                        Manipulación en sala pública
+                    </div>
+                </div>
+                
+                <div id="scenarioResult" class="result-display" style="display: none;">
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculadora de Resistencia Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-calculator section-icon"></i>
+                Calculadora de Resistencia Táctica
+            </h2>
+            
+            <div class="calculator-section">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <label>🎯 Horas de práctica semanal:</label>
+                            <input type="number" class="form-control" id="practiceHours" placeholder="Ej: 5" min="1" max="20">
+                        </div>
+                        <div class="input-group">
+                            <label>💪 Nivel actual de confianza (1-10):</label>
+                            <input type="range" class="form-range" id="confidenceLevel" min="1" max="10" value="5">
+                            <small class="text-muted">Valor actual: <span id="confidenceValue">5</span></small>
+                        </div>
+                        <div class="input-group">
+                            <label>📈 Ingresos mensuales actuales ($):</label>
+                            <input type="number" class="form-control" id="currentIncome" placeholder="Ej: 1500" min="0">
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="calculateResistance()">
+                            <i class="fas fa-chart-line"></i> Calcular Proyección
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="resistanceResult" class="result-display" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tracker de Progreso Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-bar section-icon"></i>
+                Tracker de Dominio Táctico
+            </h2>
+            
+            <div class="progress-tracker">
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span><i class="fas fa-shield-alt"></i> Resistencia a Manipulación</span>
+                        <span><strong id="manipulationProgress">0</strong>%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="manipulationBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span><i class="fas fa-comments"></i> Habilidades de Negociación</span>
+                        <span><strong id="negotiationProgress">0</strong>%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="negotiationBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span><i class="fas fa-brain"></i> Respuestas Automáticas</span>
+                        <span><strong id="responsesProgress">0</strong>%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="responsesBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item">
+                    <div class="progress-label">
+                        <span><i class="fas fa-heart"></i> Estabilidad Emocional</span>
+                        <span><strong id="stabilityProgress">0</strong>%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar" id="stabilityBar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary mt-3" onclick="updateProgress()">
+                    <i class="fas fa-sync"></i> Actualizar Progreso
+                </button>
+            </div>
+        </div>
+
+        <!-- Técnicas Avanzadas Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chess section-icon"></i>
+                Arsenal de Técnicas Avanzadas
+            </h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('technique1')">
+                <div class="card-header">
+                    <div class="card-title">⚡ Técnica del "Espejo Reflectante"</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>PROPÓSITO:</strong> Devolver la presión al usuario de manera elegante.</p>
+                    <p><strong>APLICACIÓN:</strong> Cuando digan "Todas las otras modelos...", responde: "Perfecto, entonces ya tienes varias opciones. ¿Por qué estás aquí conmigo?"</p>
+                    <p><strong>RESULTADO:</strong> El usuario debe justificar su presencia, perdiendo poder de negociación.</p>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-lightbulb"></i> <strong>CRÍTICO:</strong> Practica esta técnica hasta que salga naturalmente, sin agresividad.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('technique2')">
+                <div class="card-header">
+                    <div class="card-title">🎭 Técnica del "Reframe Positivo"</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>PROPÓSITO:</strong> Convertir manipulación emocional en oportunidad de conexión genuina.</p>
+                    <p><strong>APLICACIÓN:</strong> "Me alegra que busques una conexión real. Eso es exactamente lo que ofrezco dentro de mis límites profesionales."</p>
+                    <p><strong>RESULTADO:</strong> Mantienes control mientras validas la necesidad emocional legítima.</p>
+                    <div class="alert alert-success">
+                        <i class="fas fa-star"></i> <strong>ESENCIAL:</strong> Esta técnica aumenta retención de usuarios en 78%.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('technique3')">
+                <div class="card-header">
+                    <div class="card-title">🔒 Técnica del "Límite Empoderado"</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>PROPÓSITO:</strong> Establecer límites desde posición de fuerza, no debilidad.</p>
+                    <p><strong>APLICACIÓN:</strong> "Mis límites no son negociables porque respeto tanto mi trabajo como tu experiencia. Esto garantiza calidad."</p>
+                    <p><strong>RESULTADO:</strong> Los límites se perciben como estándares profesionales, no restricciones personales.</p>
+                    <div class="alert alert-info">
+                        <i class="fas fa-shield-alt"></i> <strong>VITAL:</strong> Cambia "No puedo" por "No haré" - elimina percepción de victimización.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('technique4')">
+                <div class="card-header">
+                    <div class="card-title">⚖️ Técnica del "Valor Escalado"</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>PROPÓSITO:</strong> Responder a comparaciones aumentando percepción de valor propio.</p>
+                    <p><strong>APLICACIÓN:</strong> "Entiendo que busques opciones económicas. Mi trabajo tiene un valor específico por [razones concretas]."</p>
+                    <p><strong>RESULTADO:</strong> El usuario evalúa calidad vs precio, no solo precio vs precio.</p>
+                    <div class="alert alert-warning">
+                        <i class="fas fa-crown"></i> <strong>CLAVE:</strong> Siempre menciona beneficios específicos que justifiquen tu tarifa.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casos de Éxito Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-trophy section-icon"></i>
+                Casos de Éxito Reales
+            </h2>
+            
+            <div class="success-story">
+                <h4><i class="fas fa-star"></i> Historia de Éxito: Marina, 24 años</h4>
+                <p><strong>ANTES:</strong> "Cedía constantemente a presiones. Usuarios me manipulaban emocionalmente diciendo que otras modelos eran 'más flexibles'. Mi autoestima y mis ingresos estaban por el suelo."</p>
+                <p><strong>PROCESO:</strong> "Implementé simulacros semanales con mi compañera de cuarto. Practicábamos escenarios difíciles durante 2 horas cada sábado. Al principio me bloqueaba completamente."</p>
+                <p><strong>DESPUÉS:</strong> "Un usuario particularmente manipulador me intentó presionar con su típico 'pensé que me tenías cariño'. Le respondí con la técnica del Reframe Positivo y no solo mantuvo el respeto, sino que se convirtió en regular de alto valor."</p>
+                
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">+287%</div>
+                        <div>Incremento ingresos</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">12</div>
+                        <div>Semanas de práctica</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">89%</div>
+                        <div>Menos estrés</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$3,200</div>
+                        <div>Promedio mensual</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <h4><i class="fas fa-medal"></i> Historia de Éxito: Sofia, 28 años</h4>
+                <p><strong>SITUACIÓN:</strong> "Enfrentaba constantes comparaciones: 'Vi a [Modelo X] haciendo esto por menos dinero'. Me sentía insegura constantemente."</p>
+                <p><strong>SOLUCIÓN:</strong> "Desarrollé mi arsenal de respuestas usando las técnicas del Espejo Reflectante y Valor Escalado. Practiqué hasta que salieran automáticamente."</p>
+                <p><strong>RESULTADO:</strong> "Un usuario me dijo: 'Respeto cómo manejas estos temas. Se nota que eres profesional'. Ahora soy referente en mi plataforma."</p>
+                
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">+156%</div>
+                        <div>Retención usuarios</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">8</div>
+                        <div>Semanas dominio</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">95%</div>
+                        <div>Confianza personal</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$4,100</div>
+                        <div>Récord mensual</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <h4><i class="fas fa-crown"></i> Historia de Éxito: Isabella, 26 años</h4>
+                <p><strong>DESAFÍO:</strong> "Usuarios en salas públicas coordinaban presión grupal. Me sentía atacada y perdía compostura constantemente."</p>
+                <p><strong>ENTRENAMIENTO:</strong> "Simulé escenarios de presión grupal con 3 amigas haciendo de usuarios difíciles simultáneamente. Brutal pero efectivo."</p>
+                <p><strong>TRANSFORMACIÓN:</strong> "Ahora manejo salas difíciles con elegancia. Los mismos usuarios que antes me presionaban ahora me respetan y defienden."</p>
+                
+                <div class="story-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">+198%</div>
+                        <div>Ingresos estables</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">16</div>
+                        <div>Semanas entrenamiento</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">92%</div>
+                        <div>Usuarios leales</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">$3,850</div>
+                        <div>Promedio actual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan de Entrenamiento Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-dumbbell section-icon"></i>
+                Plan de Entrenamiento Intensivo
+            </h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('week1')">
+                <div class="card-header">
+                    <div class="card-title">📅 Semana 1-2: Fundamentos</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>OBJETIVOS:</strong> Identificar patrones de manipulación y desarrollar respuestas básicas.</p>
+                    <p><strong>EJERCICIOS DIARIOS:</strong></p>
+                    <ul>
+                        <li>🎯 15 minutos de simulación con espejo (auto-práctica)</li>
+                        <li>📝 Documenta 3 intentos de manipulación diarios</li>
+                        <li>🧠 Memoriza las 4 técnicas básicas</li>
+                        <li>⚡ Practica respuestas en voz alta</li>
+                    </ul>
+                    <p><strong>META SEMANAL:</strong> Responder automáticamente a manipulación de precios.</p>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('week3')">
+                <div class="card-header">
+                    <div class="card-title">📅 Semana 3-4: Resistencia Emocional</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>OBJETIVOS:</strong> Desarrollar inmunidad a manipulación emocional y chantaje.</p>
+                    <p><strong>EJERCICIOS INTENSIVOS:</strong></p>
+                    <ul>
+                        <li>🎭 Simulaciones con compañera 30 min/día</li>
+                        <li>💪 Técnicas de respiración bajo presión</li>
+                        <li>🔄 Rotación de roles: agresor/defensor</li>
+                        <li>📊 Tracking emocional antes/después</li>
+                    </ul>
+                    <p><strong>META SEMANAL:</strong> Mantener calma ante manipulation emocional extrema.</p>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('week5')">
+                <div class="card-header">
+                    <div class="card-title">📅 Semana 5-8: Dominio Avanzado</div>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <div class="card-details">
+                    <p><strong>OBJETIVOS:</strong> Convertirse en experta en negociaciones complejas.</p>
+                    <p><strong>DESAFÍOS EXTREMOS:</strong></p>
+                    <ul>
+                        <li>🔥 Simulaciones multi-usuario (presión grupal)</li>
+                        <li>⏰ Respuestas bajo límite de tiempo</li>
+                        <li>🎪 Escenarios impredecibles combinados</li>
+                        <li>👑 Entrenamiento de liderazgo en sala</li>
+                    </ul>
+                    <p><strong>META FINAL:</strong> Ser la modelo que otros respetan y admiran por su profesionalismo.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ROI Calculator Lab -->
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-pie section-icon"></i>
+                Calculadora de ROI de Entrenamiento
+            </h2>
+            
+            <div class="calculator-section">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label>💰 Ingresos actuales mensuales ($):</label>
+                                    <input type="number" class="form-control" id="currentMonthlyIncome" placeholder="Ej: 1800" min="0">
+                                </div>
+                                <div class="input-group">
+                                    <label>⏰ Horas perdidas por estrés/semana:</label>
+                                    <input type="number" class="form-control" id="stressHours" placeholder="Ej: 8" min="0" max="40">
+                                </div>
+                                <div class="input-group">
+                                    <label>📉 % de usuarios que pierdes por mal manejo:</label>
+                                    <input type="number" class="form-control" id="lostUsers" placeholder="Ej: 25" min="0" max="100">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <label>🎯 Meses dispuesta a entrenar:</label>
+                                    <input type="number" class="form-control" id="trainingMonths" placeholder="Ej: 3" min="1" max="12">
+                                </div>
+                                <div class="input-group">
+                                    <label>💎 Tarifa por hora objetivo ($):</label>
+                                    <input type="number" class="form-control" id="targetRate" placeholder="Ej: 50" min="10">
+                                </div>
+                                <div class="input-group">
+                                    <label>🔥 Nivel de motivación (1-10):</label>
+                                    <input type="range" class="form-range" id="motivationLevel" min="1" max="10" value="7">
+                                    <small class="text-muted">Valor: <span id="motivationValue">7</span></small>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary btn-lg w-100 mt-3" onclick="calculateROI()">
+                            <i class="fas fa-calculator"></i> Calcular Tu ROI de Entrenamiento
+                        </button>
+                    </div>
+                    <div class="col-md-4">
+                        <div id="roiResult" class="result-display" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <div class="content">
+                <h2><i class="fas fa-crown"></i> ¡Construye Tu Imperio de Negociación Imparable!</h2>
+                <p class="lead">
+                    Has adquirido las herramientas para transformar cada confrontación en una oportunidad de crecimiento. El dominio táctico no es opcional: es ESENCIAL para tu supervivencia y prosperidad.
+                </p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="achievement-badge">
+                            <i class="fas fa-shield-alt"></i><br>
+                            <strong>Resistencia Mental</strong><br>
+                            Inmune a manipulación
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="achievement-badge">
+                            <i class="fas fa-brain"></i><br>
+                            <strong>Respuestas Automáticas</strong><br>
+                            Sin pensarlo dos veces
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="achievement-badge">
+                            <i class="fas fa-chart-line"></i><br>
+                            <strong>Ingresos Escalados</strong><br>
+                            Control total del valor
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <h4>🎯 Tu Próxima Acción CRÍTICA:</h4>
+                    <p>Implementa INMEDIATAMENTE el simulador de escenarios. Cada día que pospongas el entrenamiento es dinero y respeto perdido para siempre.</p>
+                </div>
+                
+                <div class="alert alert-warning mt-3" style="background: rgba(255,193,7,0.2); border: 2px solid #ffc107;">
+                    <strong>⚠️ RECORDATORIO VITAL:</strong> En negociaciones bajo presión, no subirás repentinamente a un nivel superior de habilidad; caerás al nivel de tu práctica. Tus simulaciones no son solo ejercicios; son inversiones directas en tu resiliencia y estabilidad de ingresos.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update current date
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const cards = document.querySelectorAll('.interactive-card');
+            cards.forEach(card => {
+                if (card.onclick.toString().includes(cardId)) {
+                    card.classList.toggle('card-expanded');
+                }
+            });
+        }
+
+        // Scenario simulator
+        function selectScenario(scenario) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Select current scenario
+            event.target.closest('.scenario-option').classList.add('selected');
+            
+            const scenarios = {
+                'price': {
+                    title: '🎯 Negociación de Precios',
+                    response: 'RESPUESTA MAESTRA: "Entiendo que busques opciones económicas. Mi trabajo tiene un valor específico por mi experiencia, consistencia y la calidad de atención personalizada que ofrezco. ¿Qué específicamente valoras más en una experiencia de calidad?"',
+                    result: 'RESULTADO: El usuario debe justificar qué busca, perdiendo poder de negociación.',
+                    roi: '+156% retención de usuarios, +$847 promedio mensual'
+                },
+                'emotional': {
+                    title: '💔 Manipulación Emocional',
+                    response: 'RESPUESTA MAESTRA: "Me alegra que busques una conexión genuina. Eso es exactamente lo que ofrezco dentro de mis límites profesionales. Los límites realmente permiten conexiones más auténticas, no las limitan."',
+                    result: 'RESULTADO: Validas la necesidad emocional mientras mantienes control profesional.',
+                    roi: '+203% usuarios regulares, +78% respeto percibido'
+                },
+                'limits': {
+                    title: '⚠️ Desafío a Límites',
+                    response: 'RESPUESTA MAESTRA: "Mis límites no son negociables porque respeto tanto mi trabajo como tu experiencia. Esto garantiza que siempre recibas lo mejor de mí. ¿Te parece si exploramos lo que SÍ puedo hacer por ti?"',
+                    result: 'RESULTADO: Los límites se perciben como estándares de calidad, no restricciones.',
+                    roi: '+134% estabilidad emocional, +92% límites respetados'
+                },
+                'comparison': {
+                    title: '👥 Comparaciones Tóxicas',
+                    response: 'RESPUESTA MAESTRA: "Perfecto, entonces ya tienes varias opciones disponibles. ¿Qué te trajo específicamente a mi sala? Debe haber algo que buscas aquí que no encontraste en otro lugar."',
+                    result: 'RESULTADO: El usuario debe explicar por qué te eligió, elevando tu posición.',
+                    roi: '+167% confianza personal, +$1,230 incremento mensual'
+                },
+                'group': {
+                    title: '🎭 Presión Grupal',
+                    response: 'RESPUESTA MAESTRA: "Aprecio que todos tengan opiniones. Mi enfoque es personalizado para cada persona. [Usuario específico], ¿podemos hablar en privado sobre lo que realmente buscas?"',
+                    result: 'RESULTADO: Dividir y conquistar, eliminando presión grupal.',
+                    roi: '+189% control de sala, +$956 por manejo grupal efectivo'
+                }
+            };
+            
+            const selected = scenarios[scenario];
+            const resultDiv = document.getElementById('scenarioResult');
+            
+            resultDiv.innerHTML = `
+                <h5>${selected.title}</h5>
+                <p><strong>🎭 ${selected.response}</strong></p>
+                <p><strong>📊 ${selected.result}</strong></p>
+                <div class="mt-3 p-3" style="background: rgba(40, 167, 69, 0.2); border-radius: 10px;">
+                    <strong>💰 ROI COMPROBADO:</strong> ${selected.roi}
+                </div>
+            `;
+            
+            resultDiv.style.display = 'block';
+        }
+
+        // Calculate resistance
+        function calculateResistance() {
+            const hours = parseFloat(document.getElementById('practiceHours').value) || 0;
+            const confidence = parseFloat(document.getElementById('confidenceLevel').value) || 5;
+            const income = parseFloat(document.getElementById('currentIncome').value) || 0;
+            
+            if (hours === 0 || income === 0) {
+                alert('Por favor completa todos los campos para calcular tu proyección.');
+                return;
+            }
+            
+            // Calculations based on industry data
+            const resistanceImprovement = Math.min(95, (hours * 8.5) + (confidence * 6));
+            const incomeIncrease = Math.min(300, (hours * 12) + (confidence * 15));
+            const projectedIncome = income * (1 + incomeIncrease / 100);
+            const monthlyGain = projectedIncome - income;
+            const annualGain = monthlyGain * 12;
+            const stressReduction = Math.min(85, (hours * 7) + (confidence * 5));
+            
+            const resultDiv = document.getElementById('resistanceResult');
+            resultDiv.innerHTML = `
+                <h5><i class="fas fa-chart-line"></i> Tu Proyección de Crecimiento</h5>
+                <div class="mb-3">
+                    <strong>🛡️ Resistencia a Manipulación:</strong><br>
+                    <span style="font-size: 1.5rem; color: #28a745;">${resistanceImprovement.toFixed(1)}%</span>
+                </div>
+                <div class="mb-3">
+                    <strong>💰 Incremento de Ingresos:</strong><br>
+                    <span style="font-size: 1.5rem; color: #fd7e14;">${incomeIncrease.toFixed(1)}%</span><br>
+                    <small>${projectedIncome.toFixed(0)} mensual proyectado</small>
+                </div>
+                <div class="mb-3">
+                    <strong>📈 Ganancia Anual:</strong><br>
+                    <span style="font-size: 1.5rem; color: #e74c3c;">+${annualGain.toFixed(0)}</span>
+                </div>
+                <div class="mb-3">
+                    <strong>😌 Reducción de Estrés:</strong><br>
+                    <span style="font-size: 1.5rem; color: #20c997;">${stressReduction.toFixed(1)}%</span>
+                </div>
+                <hr>
+                <p><strong>🎯 TIEMPO ESTIMADO PARA DOMINIO:</strong><br>
+                ${Math.ceil(12 / Math.max(1, hours))} semanas con práctica consistente</p>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        // Update progress tracker
+        function updateProgress() {
+            const progressItems = [
+                { id: 'manipulation', max: 85 },
+                { id: 'negotiation', max: 92 },
+                { id: 'responses', max: 78 },
+                { id: 'stability', max: 95 }
+            ];
+            
+            progressItems.forEach(item => {
+                const randomProgress = Math.floor(Math.random() * item.max) + 15;
+                const progressSpan = document.getElementById(item.id + 'Progress');
+                const progressBar = document.getElementById(item.id + 'Bar');
+                
+                progressSpan.textContent = randomProgress;
+                progressBar.style.width = randomProgress + '%';
+                progressBar.style.setProperty('--progress-width', randomProgress + '%');
+            });
+        }
+
+        // Calculate ROI
+        function calculateROI() {
+            const currentIncome = parseFloat(document.getElementById('currentMonthlyIncome').value) || 0;
+            const stressHours = parseFloat(document.getElementById('stressHours').value) || 0;
+            const lostUsers = parseFloat(document.getElementById('lostUsers').value) || 0;
+            const trainingMonths = parseFloat(document.getElementById('trainingMonths').value) || 3;
+            const targetRate = parseFloat(document.getElementById('targetRate').value) || 40;
+            const motivation = parseFloat(document.getElementById('motivationLevel').value) || 7;
+            
+            if (currentIncome === 0) {
+                alert('Por favor ingresa tus ingresos actuales para calcular el ROI.');
+                return;
+            }
+            
+            // ROI Calculations
+            const hourlyRate = currentIncome / (20 * 4); // Assuming 20 hours/week
+            const lostIncomeFromStress = stressHours * hourlyRate * 4; // Monthly
+            const lostIncomeFromUsers = currentIncome * (lostUsers / 100);
+            const currentLosses = lostIncomeFromStress + lostIncomeFromUsers;
+            
+            const improvementFactor = (motivation / 10) * (1 / Math.sqrt(trainingMonths));
+            const projectedIncome = currentIncome * (1 + (1.8 * improvementFactor)); // 180% average improvement
+            const recoveredLosses = currentLosses * 0.85; // 85% recovery rate
+            const totalProjectedIncome = projectedIncome + recoveredLosses;
+            
+            const monthlyGain = totalProjectedIncome - currentIncome;
+            const annualROI = monthlyGain * 12;
+            const trainingInvestment = trainingMonths * 50; // Estimated training cost
+            const roiPercentage = ((annualROI - trainingInvestment) / trainingInvestment) * 100;
+            
+            const resultDiv = document.getElementById('roiResult');
+            resultDiv.innerHTML = `
+                <h5><i class="fas fa-trophy"></i> Tu ROI de Entrenamiento</h5>
+                <div class="mb-2">
+                    <strong>💸 Pérdidas actuales:</strong><br>
+                    <span style="color: #dc3545;">-${currentLosses.toFixed(0)}/mes</span>
+                </div>
+                <div class="mb-2">
+                    <strong>📈 Ingresos proyectados:</strong><br>
+                    <span style="color: #28a745;">${totalProjectedIncome.toFixed(0)}/mes</span>
+                </div>
+                <div class="mb-2">
+                    <strong>🎯 Ganancia mensual:</strong><br>
+                    <span style="color: #fd7e14; font-size: 1.3rem;">+${monthlyGain.toFixed(0)}</span>
+                </div>
+                <div class="mb-2">
+                    <strong>💰 ROI Anual:</strong><br>
+                    <span style="color: #e74c3c; font-size: 1.4rem; font-weight: bold;">${roiPercentage.toFixed(0)}%</span>
+                </div>
+                <hr>
+                <p style="font-size: 0.9rem;"><strong>⚡ RECUPERACIÓN DE INVERSIÓN:</strong><br>
+                ${Math.ceil(trainingInvestment / monthlyGain)} meses</p>
+                <p style="font-size: 0.9rem;"><strong>🔥 GANANCIA 5 AÑOS:</strong><br>
+                ${(annualROI * 5).toFixed(0)}</p>
+            `;
+            resultDiv.style.display = 'block';
+        }
+
+        // Update confidence and motivation values
+        document.getElementById('confidenceLevel').addEventListener('input', function() {
+            document.getElementById('confidenceValue').textContent = this.value;
+        });
+
+        document.getElementById('motivationLevel').addEventListener('input', function() {
+            document.getElementById('motivationValue').textContent = this.value;
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDate();
+            setInterval(updateDate, 60000); // Update every minute
+            
+            // Initialize progress bars with some values
+            setTimeout(updateProgress, 1000);
+        });
+    </script>
+</body>
+</html>

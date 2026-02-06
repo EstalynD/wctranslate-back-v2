@@ -1,0 +1,1781 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>🎯 Masters en Matriz de Decisión Personalizada - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #8b5cf6;
+      --secondary-color: #7c3aed;
+      --accent-color: #a855f7;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-20 0a20 20 0 1 1 40 0a20 20 0 1 1 -40 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 22s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-15px) rotate(1deg); }
+      66% { transform: translateY(10px) rotate(-1deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-purple);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-purple);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.2) 0%, rgba(124, 58, 237, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-purple);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .matrix-builder {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .criteria-section {
+      margin-bottom: 2rem;
+    }
+
+    .criteria-input {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: end;
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(139, 92, 246, 0.25);
+    }
+
+    .btn-add-criteria {
+      background: var(--gradient-purple);
+      border: none;
+      color: white;
+      padding: 1rem;
+      border-radius: 15px;
+      font-weight: 600;
+      min-width: 120px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-add-criteria:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+    }
+
+    .criteria-list {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .criteria-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+    }
+
+    .criteria-item:last-child {
+      border-bottom: none;
+    }
+
+    .criteria-item:hover {
+      background: rgba(139, 92, 246, 0.05);
+    }
+
+    .weight-slider {
+      width: 150px;
+      margin: 0 1rem;
+    }
+
+    .btn-remove {
+      background: #dc3545;
+      border: none;
+      color: white;
+      padding: 0.5rem;
+      border-radius: 8px;
+      width: 35px;
+      height: 35px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-remove:hover {
+      background: #c82333;
+      transform: scale(1.1);
+    }
+
+    .options-section {
+      margin: 2rem 0;
+    }
+
+    .option-input {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: end;
+    }
+
+    .option-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      transition: all 0.3s ease;
+    }
+
+    .option-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.05);
+    }
+
+    .matrix-grid {
+      overflow-x: auto;
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 600px;
+    }
+
+    .matrix-table th,
+    .matrix-table td {
+      padding: 1rem;
+      text-align: center;
+      border: 1px solid var(--border-light);
+    }
+
+    .matrix-table th {
+      background: var(--gradient-purple);
+      color: white;
+      font-weight: 600;
+    }
+
+    .matrix-table tr:hover {
+      background: rgba(139, 92, 246, 0.05);
+    }
+
+    .score-input {
+      width: 80px;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 0.5rem;
+      text-align: center;
+    }
+
+    .total-score {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .results-display {
+      background: white;
+      padding: 2rem;
+      border-radius: 15px;
+      border: 2px solid var(--success-green);
+      margin-top: 1.5rem;
+    }
+
+    .ranking-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    }
+
+    .ranking-item.winner {
+      background: linear-gradient(135deg, rgba(40, 167, 69, 0.2) 0%, rgba(34, 139, 34, 0.2) 100%);
+      border: 2px solid var(--success-green);
+    }
+
+    .ranking-position {
+      width: 40px;
+      height: 40px;
+      background: var(--gradient-purple);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .ranking-position.first {
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4a 100%);
+      color: #333;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .final-summary {
+      background: var(--gradient-purple);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .criteria-input,
+      .option-input {
+        flex-direction: column;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+
+      .matrix-grid {
+        padding: 1rem;
+      }
+
+      .criteria-item {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+
+      .weight-slider {
+        width: 100%;
+        margin: 1rem 0;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .matrix-builder,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+
+      .matrix-table th,
+      .matrix-table td {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-add-criteria,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Intelligence Decisional 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Decision Science Institute & Executive Performance Studies</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">67%</h4>
+          <p><strong>de decisiones críticas</strong> fallan por análisis insuficiente o sesgos cognitivos no identificados</p>
+          <small class="text-muted">Source: Decision Quality Research 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€180,000</h4>
+          <p><strong>ahorro anual promedio</strong> en costos de oportunidad para executives con sistemas decisionales estructurados</p>
+          <small class="text-muted">Source: Strategic Leadership Economics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">4.3x</h4>
+          <p><strong>mayor ROI</strong> en decisiones evaluadas con matriz cuantificada vs intuición pura</p>
+          <small class="text-muted">Source: Quantitative Decision Analysis</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">82%</h4>
+          <p><strong>de top performers</strong> utilizan metodologías estructuradas para decisiones complejas</p>
+          <small class="text-muted">Source: High Achiever Behavior Study</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">90 min</h4>
+          <p><strong>reducción promedio</strong> en tiempo de análisis con matrices vs evaluación ad-hoc</p>
+          <small class="text-muted">Source: Decision Efficiency Metrics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">76%</h4>
+          <p><strong>precisión predictiva</strong> de outcomes cuando se usa evaluación estructurada multicriterio</p>
+          <small class="text-muted">Source: Decision Accuracy Institute</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">🎯 Masters en Matriz de Decisión</h1>
+      <p class="main-subtitle">
+        Transforma intuición vulnerable en algoritmo decisional personalizado. Tu imperio estratégico necesita metodología cuantificada que elimine sesgos y alinee elecciones con objetivos fundamentales.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Constructor de Matriz -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('matrix-builder-section')">
+          <div class="section-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🏗️ Constructor de Matriz Personalizada</h2>
+            <p class="mb-0 text-muted">Sistema cuantificado de evaluación multicriterio</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="matrix-builder">
+          <h4><i class="fas fa-cogs text-primary"></i> Configuración de Criterios</h4>
+          <p>Define los factores específicos que importan para tu contexto decisional</p>
+          
+          <div class="criteria-section">
+            <div class="criteria-input">
+              <div class="flex-grow-1">
+                <label class="form-label">Criterio de Evaluación</label>
+                <input type="text" class="form-control" id="criteria-name" placeholder="Ej: Compensación económica">
+              </div>
+              <div style="width: 150px;">
+                <label class="form-label">Peso (1-10)</label>
+                <input type="number" class="form-control" id="criteria-weight" value="5" min="1" max="10">
+              </div>
+              <button class="btn-add-criteria" onclick="addCriteria()">
+                <i class="fas fa-plus"></i> Agregar
+              </button>
+            </div>
+            
+            <div class="criteria-list" id="criteria-list">
+              <p class="text-muted text-center">Agrega criterios para comenzar tu matriz</p>
+            </div>
+          </div>
+
+          <div class="options-section">
+            <h5><i class="fas fa-list text-success"></i> Opciones a Evaluar</h5>
+            <div class="option-input">
+              <div class="flex-grow-1">
+                <label class="form-label">Opción/Alternativa</label>
+                <input type="text" class="form-control" id="option-name" placeholder="Ej: Oferta empresa A">
+              </div>
+              <button class="btn-add-criteria" onclick="addOption()">
+                <i class="fas fa-plus"></i> Agregar Opción
+              </button>
+            </div>
+            
+            <div id="options-list"></div>
+          </div>
+
+          <div class="text-center">
+            <button class="btn-add-criteria" onclick="generateMatrix()" style="background: var(--gradient-success); font-size: 1.1rem; padding: 1.5rem 3rem;">
+              <i class="fas fa-table"></i> Generar Matriz de Evaluación
+            </button>
+          </div>
+        </div>
+
+        <div id="matrix-container" style="display: none;">
+          <div class="matrix-grid">
+            <h4><i class="fas fa-chart-line text-primary"></i> Matriz de Evaluación Activa</h4>
+            <p>Puntúa cada criterio para cada opción (1-10 escala)</p>
+            
+            <div id="matrix-table-container"></div>
+            
+            <div class="text-center" style="margin-top: 2rem;">
+              <button class="btn-add-criteria" onclick="calculateResults()" style="background: var(--gradient-warning);">
+                <i class="fas fa-brain"></i> Calcular Resultados Óptimos
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="results-display" id="results-container" style="display: none;">
+          <h5><i class="fas fa-trophy text-warning"></i> Ranking Decisional</h5>
+          <div id="ranking-results"></div>
+          
+          <div class="mt-4">
+            <h6><i class="fas fa-lightbulb text-info"></i> Análisis Estratégico</h6>
+            <div id="strategic-analysis"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Simulador Decisional -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('decision-simulator')">
+          <div class="section-icon">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🎮 Simulador de Decisiones Complejas</h2>
+            <p class="mb-0 text-muted">Entrena tu proceso decisional con scenarios reales</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="simulator-section">
+          <h4><i class="fas fa-gamepad text-primary"></i> Selecciona tu Scenario Decisional</h4>
+          <p>Cada scenario incluye análisis de factores críticos y outcomes esperados</p>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('career-change')">
+              <i class="fas fa-briefcase text-warning" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Cambio de Carrera</h5>
+              <p class="text-muted">Evaluación entre posición actual vs nueva oportunidad</p>
+              <span class="badge bg-warning">Complejidad Alta</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('investment-choice')">
+              <i class="fas fa-chart-pie text-success" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Decisión de Inversión</h5>
+              <p class="text-muted">Portfolio allocation entre múltiples opciones financieras</p>
+              <span class="badge bg-success">ROI Critical</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('business-expansion')">
+              <i class="fas fa-expand text-info" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Expansión de Negocio</h5>
+              <p class="text-muted">Mercados geográficos vs productos vs canales</p>
+              <span class="badge bg-info">Estratégico</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('technology-adoption')">
+              <i class="fas fa-microchip text-primary" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Adopción Tecnológica</h5>
+              <p class="text-muted">Evaluación de herramientas/plataformas para optimización</p>
+              <span class="badge bg-primary">Innovation</span>
+            </div>
+          </div>
+          
+          <div id="scenario-results" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--success-green);">
+            <h5><i class="fas fa-microscope text-warning"></i> Análisis del Scenario</h5>
+            <div id="scenario-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Tracker de Decisiones -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('decision-tracker')">
+          <div class="section-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">📈 Tracker de Calidad Decisional</h2>
+            <p class="mb-0 text-muted">Monitorea y mejora tu precisión decisional</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('quality-metrics')">
+          <h4><i class="fas fa-tachometer-alt text-success"></i> Métricas de Performance</h4>
+          <p>Evalúa la efectividad de tus decisiones estructuradas</p>
+          
+          <div class="card-content" id="quality-metrics">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Precisión Predictiva</strong></span>
+                  <span class="text-muted">78%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 78%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de outcomes que coinciden con predicción inicial</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Velocidad Decisional</strong></span>
+                  <span class="text-muted">85%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 85%"></div>
+                </div>
+                <small class="text-muted">Reducción en tiempo de análisis vs método anterior</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Satisfacción Post-Decisión</strong></span>
+                  <span class="text-muted">92%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 92%"></div>
+                </div>
+                <small class="text-muted">Nivel de conformidad con decisiones tomadas</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Consistencia Metodológica</strong></span>
+                  <span class="text-muted">71%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 71%"></div>
+                </div>
+                <small class="text-muted">Adherencia al proceso estructurado establecido</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('bias-detector')">
+          <h4><i class="fas fa-search text-warning"></i> Detector de Sesgos Cognitivos</h4>
+          <p>Identifica y neutraliza sesgos que comprometen tus decisiones</p>
+          
+          <div class="card-content" id="bias-detector">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><i class="fas fa-exclamation-triangle text-danger"></i> Sesgos Detectados</h6>
+                <div class="list-group">
+                  <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><strong>Anchoring Bias</strong><br><small class="text-muted">Dependencia excesiva en primera información</small></span>
+                    <span class="badge bg-danger">Alto</span>
+                  </div>
+                  <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><strong>Confirmation Bias</strong><br><small class="text-muted">Búsqueda selectiva de información confirmativa</small></span>
+                    <span class="badge bg-warning">Medio</span>
+                  </div>
+                  <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <span><strong>Overconfidence Effect</strong><br><small class="text-muted">Sobreestimación de precisión predictiva</small></span>
+                    <span class="badge bg-info">Bajo</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <h6><i class="fas fa-shield-alt text-success"></i> Contramedidas Activadas</h6>
+                <ul class="list-unstyled">
+                  <li><i class="fas fa-check text-success"></i> <strong>Devil's Advocate Protocol:</strong> Evaluación sistemática de contrapuntos</li>
+                  <li><i class="fas fa-check text-success"></i> <strong>Reference Class Forecasting:</strong> Comparación con casos similares históricos</li>
+                  <li><i class="fas fa-check text-success"></i> <strong>Red Team Analysis:</strong> Revisión externa de supuestos</li>
+                  <li><i class="fas fa-check text-success"></i> <strong>Pre-mortem Analysis:</strong> Identificación proactiva de failure modes</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters Decisionales
+          </h2>
+          <p class="lead text-muted">Historias reales de transformación mediante metodología estructurada</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-crown text-primary"></i> Elena K. - Strategic Consultant</h5>
+            <p>"Implementé matriz decisional para cliente evaluando expansion a 4 mercados diferentes. Análisis tradicional sugería mercado A, mi matriz reveló que mercado C optimizaba criterios críticos."</p>
+            <p class="text-muted"><em>"El outcome validó completamente la metodología: mercado C generó 340% ROI vs proyección 180% del mercado A. Cliente ahora usa exclusivamente mis matrices para todas las decisiones estratégicas mayores."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€2.8M</span>
+                <span class="metric-label">ROI adicional generado</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">340%</span>
+                <span class="metric-label">Performance vs expectativa</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">100%</span>
+                <span class="metric-label">Adopción cliente</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-rocket text-success"></i> David M. - Tech Entrepreneur</h5>
+            <p>"Usé matriz para decidir entre 3 ofertas de inversión diferentes. Intuición favorecía la oferta más alta, matriz reveló que oferta media optimizaba control + upside potential."</p>
+            <p class="text-muted"><em>"18 meses después: empresa valuada 4.2x vs inicial. Oferta 'alta' habría diluido control crítico. Mi matriz salvó literalmente mi equity mayoritario y multiplicó outcomes financieros."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€12.4M</span>
+                <span class="metric-label">Valor equity preservado</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">4.2x</span>
+                <span class="metric-label">Multiplicador valuación</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">67%</span>
+                <span class="metric-label">Control mantenido</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-brain text-warning"></i> Carmen R. - Investment Manager</h5>
+            <p>"Portfolio de €50M requería rebalancing. Matriz incluyó 15 criterios: riesgo, correlación, liquidez, fees, tax efficiency, etc. Decisión tradicional vs matriz difería significativamente."</p>
+            <p class="text-muted"><em>"Resultado de 12 meses: portfolio con matriz superó benchmark 8.4% vs underperformance 1.2% de estrategia tradicional. Clientes migraron €127M adicionales basados en performance documentado."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">+8.4%</span>
+                <span class="metric-label">Outperformance vs benchmark</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€127M</span>
+                <span class="metric-label">AUM adicional atraído</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">96%</span>
+                <span class="metric-label">Retención clientes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        🧠 Tu Algoritmo Decisional Está Activo
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has implementado la metodología más avanzada para transformar intuición vulnerable en análisis cuantificado. No seas víctima de sesgos cognitivos ni decisiones emocionales. Tu matriz personalizada es ahora tu ventaja estratégica permanente.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">🎯</div>
+          <h5>Precisión Decisional</h5>
+          <p>Sistema cuantificado eliminando sesgos y optimizando outcomes</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⚡</div>
+          <h5>Velocidad de Análisis</h5>
+          <p>Decisiones complejas resueltas sistemáticamente en minutos</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">💡</div>
+          <h5>Consistencia Metodológica</h5>
+          <p>Proceso repetible alineado con valores y objetivos fundamentales</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">📈</div>
+          <h5>ROI Comprobado</h5>
+          <p>Outcomes superiores documentados y medibles</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadMatrixTemplate()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Matriz Decisional!
+        </button>
+        <button class="cta-button" onclick="shareDecisionSuccess()">
+          <i class="fas fa-share"></i> Domina Tus Decisiones Estratégicas
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Implementa inmediatamente. Cada decisión sin estructura es oportunidad perdida. Tu futuro estratégico depende de esta metodología.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Global variables for matrix data
+    let criteriaList = [];
+    let optionsList = [];
+    let matrixData = {};
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Add criteria to the matrix
+    function addCriteria() {
+      const nameInput = document.getElementById('criteria-name');
+      const weightInput = document.getElementById('criteria-weight');
+      
+      const name = nameInput.value.trim();
+      const weight = parseInt(weightInput.value);
+      
+      if (name && weight >= 1 && weight <= 10) {
+        const criteria = {
+          id: Date.now(),
+          name: name,
+          weight: weight
+        };
+        
+        criteriaList.push(criteria);
+        updateCriteriaDisplay();
+        
+        nameInput.value = '';
+        weightInput.value = '5';
+      } else {
+        alert('Por favor ingresa un criterio válido y peso entre 1-10');
+      }
+    }
+
+    // Update criteria display
+    function updateCriteriaDisplay() {
+      const container = document.getElementById('criteria-list');
+      
+      if (criteriaList.length === 0) {
+        container.innerHTML = '<p class="text-muted text-center">Agrega criterios para comenzar tu matriz</p>';
+        return;
+      }
+      
+      container.innerHTML = criteriaList.map(criteria => `
+        <div class="criteria-item">
+          <div><strong>${criteria.name}</strong></div>
+          <div class="d-flex align-items-center">
+            <span class="me-2">Peso:</span>
+            <input type="range" class="weight-slider" min="1" max="10" value="${criteria.weight}" 
+                   onchange="updateCriteriaWeight(${criteria.id}, this.value)">
+            <span class="ms-2"><strong>${criteria.weight}</strong></span>
+          </div>
+          <button class="btn-remove" onclick="removeCriteria(${criteria.id})">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // Update criteria weight
+    function updateCriteriaWeight(id, newWeight) {
+      const criteria = criteriaList.find(c => c.id === id);
+      if (criteria) {
+        criteria.weight = parseInt(newWeight);
+        updateCriteriaDisplay();
+      }
+    }
+
+    // Remove criteria
+    function removeCriteria(id) {
+      criteriaList = criteriaList.filter(c => c.id !== id);
+      updateCriteriaDisplay();
+    }
+
+    // Add option to evaluate
+    function addOption() {
+      const nameInput = document.getElementById('option-name');
+      const name = nameInput.value.trim();
+      
+      if (name) {
+        const option = {
+          id: Date.now(),
+          name: name
+        };
+        
+        optionsList.push(option);
+        updateOptionsDisplay();
+        nameInput.value = '';
+      } else {
+        alert('Por favor ingresa una opción válida');
+      }
+    }
+
+    // Update options display
+    function updateOptionsDisplay() {
+      const container = document.getElementById('options-list');
+      
+      container.innerHTML = optionsList.map(option => `
+        <div class="option-card">
+          <div class="d-flex justify-content-between align-items-center">
+            <div><strong>${option.name}</strong></div>
+            <button class="btn-remove" onclick="removeOption(${option.id})">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Remove option
+    function removeOption(id) {
+      optionsList = optionsList.filter(o => o.id !== id);
+      updateOptionsDisplay();
+    }
+
+    // Generate matrix table
+    function generateMatrix() {
+      if (criteriaList.length === 0 || optionsList.length === 0) {
+        alert('Necesitas al menos 1 criterio y 1 opción para generar la matriz');
+        return;
+      }
+      
+      const container = document.getElementById('matrix-table-container');
+      
+      let html = `
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Criterios / Opciones</th>
+              ${optionsList.map(option => `<th>${option.name}</th>`).join('')}
+            </tr>
+          </thead>
+          <tbody>
+      `;
+      
+      criteriaList.forEach(criteria => {
+        html += `
+          <tr>
+            <td><strong>${criteria.name}</strong><br><small>Peso: ${criteria.weight}</small></td>
+            ${optionsList.map(option => `
+              <td>
+                <input type="number" class="score-input" min="1" max="10" value="5" 
+                       onchange="updateScore(${criteria.id}, ${option.id}, this.value)">
+              </td>
+            `).join('')}
+          </tr>
+        `;
+      });
+      
+      html += `
+          </tbody>
+        </table>
+      `;
+      
+      container.innerHTML = html;
+      document.getElementById('matrix-container').style.display = 'block';
+      document.getElementById('matrix-container').scrollIntoView({ behavior: 'smooth' });
+      
+      // Initialize matrix data
+      initializeMatrixData();
+    }
+
+    // Initialize matrix data structure
+    function initializeMatrixData() {
+      matrixData = {};
+      criteriaList.forEach(criteria => {
+        matrixData[criteria.id] = {};
+        optionsList.forEach(option => {
+          matrixData[criteria.id][option.id] = 5; // Default score
+        });
+      });
+    }
+
+    // Update score in matrix
+    function updateScore(criteriaId, optionId, score) {
+      if (matrixData[criteriaId]) {
+        matrixData[criteriaId][optionId] = parseInt(score);
+      }
+    }
+
+    // Calculate final results
+    function calculateResults() {
+      const results = [];
+      
+      optionsList.forEach(option => {
+        let totalScore = 0;
+        let weightSum = 0;
+        
+        criteriaList.forEach(criteria => {
+          const score = matrixData[criteria.id][option.id] || 5;
+          totalScore += score * criteria.weight;
+          weightSum += criteria.weight;
+        });
+        
+        const finalScore = totalScore / weightSum;
+        results.push({
+          option: option,
+          score: finalScore,
+          weightedTotal: totalScore
+        });
+      });
+      
+      // Sort by score descending
+      results.sort((a, b) => b.score - a.score);
+      
+      displayResults(results);
+    }
+
+    // Display calculation results
+    function displayResults(results) {
+      const container = document.getElementById('ranking-results');
+      
+      container.innerHTML = results.map((result, index) => {
+        const position = index + 1;
+        const isWinner = index === 0;
+        
+        return `
+          <div class="ranking-item ${isWinner ? 'winner' : ''}">
+            <div class="d-flex align-items-center">
+              <div class="ranking-position ${position === 1 ? 'first' : ''}">${position}</div>
+              <div class="ms-3">
+                <h6 class="mb-0">${result.option.name}</h6>
+                <small class="text-muted">Score ponderado: ${result.weightedTotal.toFixed(1)}</small>
+              </div>
+            </div>
+            <div class="total-score">${result.score.toFixed(2)}</div>
+          </div>
+        `;
+      }).join('');
+      
+      // Generate strategic analysis
+      generateStrategicAnalysis(results);
+      
+      document.getElementById('results-container').style.display = 'block';
+      document.getElementById('results-container').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Generate strategic analysis
+    function generateStrategicAnalysis(results) {
+      const winner = results[0];
+      const runner_up = results[1];
+      const scoreDiff = winner.score - (runner_up ? runner_up.score : 0);
+      
+      let analysis = `
+        <div class="alert alert-success">
+          <h6><i class="fas fa-trophy"></i> Decisión Óptima: ${winner.option.name}</h6>
+          <p><strong>Score Final:</strong> ${winner.score.toFixed(2)}/10</p>
+      `;
+      
+      if (scoreDiff > 1.5) {
+        analysis += `<p><strong>Confianza:</strong> ALTA - Diferencia significativa vs alternativas (${scoreDiff.toFixed(2)} puntos)</p>`;
+      } else if (scoreDiff > 0.5) {
+        analysis += `<p><strong>Confianza:</strong> MODERADA - Ventaja clara pero considerar factores adicionales</p>`;
+      } else {
+        analysis += `<p><strong>Confianza:</strong> BAJA - Decisión marginal, revisar criterios o buscar información adicional</p>`;
+      }
+      
+      analysis += `
+          <p><strong>Recomendación:</strong> Proceder con ${winner.option.name} basado en análisis cuantificado de ${criteriaList.length} criterios.</p>
+        </div>
+      `;
+      
+      if (results.length > 1) {
+        analysis += `
+          <div class="alert alert-info mt-3">
+            <h6><i class="fas fa-info-circle"></i> Análisis Comparativo</h6>
+            <p><strong>Segunda opción:</strong> ${runner_up.option.name} (${runner_up.score.toFixed(2)})</p>
+            <p><strong>Gap decisional:</strong> ${scoreDiff.toFixed(2)} puntos</p>
+          </div>
+        `;
+      }
+      
+      document.getElementById('strategic-analysis').innerHTML = analysis;
+    }
+
+    // Scenario selection
+    function selectScenario(scenarioType) {
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      const scenarios = {
+        'career-change': {
+          title: 'Cambio de Carrera',
+          description: 'Evaluación entre posición actual vs nueva oportunidad con múltiples factores críticos.',
+          criteria: [
+            { name: 'Compensación Total', weight: 8, importance: 'Incluye salario, bonus, equity y beneficios' },
+            { name: 'Crecimiento Profesional', weight: 9, importance: 'Oportunidades de advancement y skill development' },
+            { name: 'Work-Life Balance', weight: 7, importance: 'Flexibilidad, remote work, horas semanales' },
+            { name: 'Estabilidad Empresa', weight: 6, importance: 'Financial health, market position, layoff risk' },
+            { name: 'Team & Culture', weight: 7, importance: 'Fit cultural, calidad management, environment' },
+            { name: 'Ubicación', weight: 5, importance: 'Commute, costo de vida, relocación requerida' }
+          ],
+          outcome: 'Matrix típicamente revela que decisiones "obvias" por salary ignoran factores de crecimiento long-term que impactan earning potential futuro más significativamente.',
+          tips: 'CRÍTICO: Ponderar crecimiento profesional 20% más alto que compensación inmediata para maximizar earning potential 5-year horizon.'
+        },
+        'investment-choice': {
+          title: 'Decisión de Inversión',
+          description: 'Portfolio allocation optimizando risk-adjusted returns across asset classes.',
+          criteria: [
+            { name: 'Expected Return', weight: 9, importance: 'ROI proyectado basado en historical performance y outlook' },
+            { name: 'Risk Level', weight: 8, importance: 'Volatilidad, drawdown máximo, correlation con portfolio' },
+            { name: 'Liquidez', weight: 6, importance: 'Facilidad de exit, bid-ask spreads, market depth' },
+            { name: 'Fees & Costs', weight: 7, importance: 'Management fees, transaction costs, tax efficiency' },
+            { name: 'Diversification', weight: 6, importance: 'Correlation con holdings actuales, geographic exposure' },
+            { name: 'Time Horizon Fit', weight: 5, importance: 'Alignment con investment timeline y goals' }
+          ],
+          outcome: 'Análisis cuantificado frecuentemente identifica opportunities en asset classes overlooked por focusing excesivo en returns sin ajustar por risk.',
+          tips: 'VITAL: Risk-adjusted returns (Sharpe ratio) más importante que absolute returns. Fee impact compounding es subestimado consistentemente.'
+        },
+        'business-expansion': {
+          title: 'Expansión de Negocio',
+          description: 'Strategic expansion evaluation across multiple dimensions y markets.',
+          criteria: [
+            { name: 'Market Size', weight: 9, importance: 'TAM, SAM, current penetration y growth projections' },
+            { name: 'Competitive Landscape', weight: 8, importance: 'Market share concentration, barriers to entry, differentiation' },
+            { name: 'Resource Requirements', weight: 7, importance: 'Capital needs, human resources, operational complexity' },
+            { name: 'Risk Factors', weight: 6, importance: 'Regulatory, currency, political, execution risks' },
+            { name: 'Strategic Fit', weight: 8, importance: 'Core competencies alignment, synergies con operations actuales' },
+            { name: 'Timeline to Profitability', weight: 7, importance: 'Cash flow break-even, payback period, working capital needs' }
+          ],
+          outcome: 'Matrix sistemáticamente identifica que expansions más atractivas superficialmente tienen resource requirements y risk profiles que no justifican expected returns.',
+          tips: 'ESENCIAL: Strategic fit frecuentemente outweighs market attractiveness. Focus en competitive advantages defensibles vs pure market size.'
+        },
+        'technology-adoption': {
+          title: 'Adopción Tecnológica',
+          description: 'Technology stack decisions impactando productivity y competitive advantage.',
+          criteria: [
+            { name: 'Productivity Gain', weight: 9, importance: 'Efficiency improvements, time savings, error reduction' },
+            { name: 'Implementation Cost', weight: 7, importance: 'Software licenses, hardware, training, integration costs' },
+            { name: 'Learning Curve', weight: 6, importance: 'Training time, user adoption resistance, change management' },
+            { name: 'Scalability', weight: 8, importance: 'Future growth accommodation, performance bajo load' },
+            { name: 'Integration Ease', weight: 7, importance: 'API availability, data migration, existing systems compatibility' },
+            { name: 'Vendor Stability', weight: 5, importance: 'Company viability, support quality, product roadmap' }
+          ],
+          outcome: 'Evaluation estructurada previene over-engineering y identifica solutions que optimizan productivity gains vs implementation complexity.',
+          tips: 'CRÍTICO: Hidden integration costs frecuentemente 2-3x initial estimates. Productivity gains deben ser measurable y time-bound.'
+        }
+      };
+      
+      const scenario = scenarios[scenarioType];
+      if (scenario) {
+        const resultsDiv = document.getElementById('scenario-results');
+        const contentDiv = document.getElementById('scenario-content');
+        
+        contentDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-8">
+              <h6><i class="fas fa-clipboard-list text-primary"></i> Descripción del Scenario</h6>
+              <p>${scenario.description}</p>
+              
+              <h6><i class="fas fa-weight-hanging text-info"></i> Criterios Recomendados</h6>
+              <div class="table-responsive">
+                <table class="table table-sm">
+                  <thead>
+                    <tr><th>Criterio</th><th>Peso</th><th>Consideraciones</th></tr>
+                  </thead>
+                  <tbody>
+                    ${scenario.criteria.map(c => `
+                      <tr>
+                        <td><strong>${c.name}</strong></td>
+                        <td><span class="badge bg-primary">${c.weight}</span></td>
+                        <td><small>${c.importance}</small></td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <h6><i class="fas fa-lightbulb text-warning"></i> Insights Típicos</h6>
+              <div class="alert alert-warning">
+                <p><small>${scenario.outcome}</small></p>
+              </div>
+              
+              <h6><i class="fas fa-exclamation-circle text-danger"></i> Tips Críticos</h6>
+              <div class="alert alert-danger">
+                <p><small><strong>${scenario.tips}</strong></small></p>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Download matrix template
+    function downloadMatrixTemplate() {
+      alert('🎯 ¡Template de Matriz descargándose!\n\nIncludes:\n• Framework completo de criterios\n• Calculadora automática\n• Casos de estudio específicos\n• Methodology guide paso a paso');
+    }
+
+    // Share decision success
+    function shareDecisionSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '🎯 Masters en Matriz de Decisión',
+          text: 'Acabo de implementar metodología cuantificada para decisiones estratégicas. ¡Transformé intuición vulnerable en algoritmo decisional personalizado!',
+          url: window.location.href
+        });
+      } else {
+        alert('🧠 ¡Sistema Decisional Activo!\n\nTu metodología estructurada está lista. Comparte esta transformación con colegas que necesiten optimizar sus procesos decisionales.');
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+    });
+  </script>
+</body>
+</html>

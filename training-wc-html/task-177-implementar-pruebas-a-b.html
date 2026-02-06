@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🧪 WC Training - Master en Implementación de Pruebas A/B</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6610f2;
+            --secondary-color: #20c997;
+            --accent-color: #fd7e14;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8fafc;
+            --border-light: #e2e8f0;
+            --gradient-primary: linear-gradient(135deg, #6610f2 0%, #6f42c1 100%);
+            --gradient-secondary: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+            --gradient-accent: linear-gradient(135deg, #fd7e14 0%, #e83e8c 100%);
+            --gradient-experiment: linear-gradient(135deg, #6f42c1 0%, #6610f2 100%);
+            --gradient-results: linear-gradient(135deg, #17a2b8 0%, #20c997 100%);
+            --gradient-analysis: linear-gradient(135deg, #e83e8c 0%, #fd7e14 100%);
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: var(--gradient-bg);
+            opacity: 0.03;
+            animation: float 23s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .pulse {
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 15px rgba(102, 16, 242, 0.3);
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            margin-right: 5px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .industry-insights {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--gradient-experiment);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 16, 242, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .main-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="ab-grid" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23ab-grid)"/></svg>');
+            animation: float 25s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-lab {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .section-lab:hover {
+            transform: translateX(10px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .interactive-card {
+            background: var(--gradient-results);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            width: 100%;
+            text-align: left;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(23, 162, 184, 0.3);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            margin-top: 1rem;
+            border-radius: 10px;
+            padding: 0 1rem;
+        }
+
+        .card-details.expanded {
+            max-height: 700px;
+            padding: 1rem;
+        }
+
+        .ab-calculator {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .ab-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem;
+            font-size: 1rem;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .ab-result {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            background: var(--border-light);
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        .experiment-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .experiment-type {
+            background: var(--gradient-analysis);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-align: center;
+        }
+
+        .experiment-type:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(232, 62, 140, 0.3);
+        }
+
+        .experiment-type.selected {
+            background: var(--gradient-accent);
+            transform: scale(1.05);
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 6rem;
+            opacity: 0.3;
+            font-family: Georgia, serif;
+        }
+
+        .success-numbers {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .success-number {
+            text-align: center;
+            margin: 0.5rem;
+        }
+
+        .success-number .number {
+            font-size: 2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .ab-comparison {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .variant-card {
+            background: var(--gradient-experiment);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .variant-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(111, 66, 193, 0.3);
+        }
+
+        .variant-card.winner {
+            background: var(--gradient-secondary);
+            border: 3px solid #ffd700;
+        }
+
+        .stat-display {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            margin: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .experiment-designer {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .designer-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .hypothesis-builder {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 3rem;
+            border-radius: 20px;
+            text-align: center;
+            margin: 3rem 0;
+            box-shadow: 0 20px 40px rgba(102, 16, 242, 0.3);
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .achievement-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .current-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+        }
+
+        .significance-meter {
+            background: var(--border-light);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .significance-fill {
+            height: 100%;
+            background: var(--gradient-secondary);
+            transition: width 0.5s ease;
+            border-radius: 15px;
+        }
+
+        .significance-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .section-lab {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .ab-input {
+                max-width: 100%;
+            }
+            
+            .success-numbers {
+                flex-direction: column;
+            }
+            
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .experiment-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-display {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-lab {
+                padding: 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+            }
+            
+            .ab-calculator {
+                padding: 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn-custom {
+            min-height: 44px;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 16, 242, 0.3);
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            color: white;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(32, 201, 151, 0.3);
+        }
+
+        .btn-accent-custom {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .btn-accent-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(253, 126, 20, 0.3);
+        }
+
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .insight-card {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+    
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <a href="#" class="wc-logo">
+                        <i class="fas fa-flask"></i> WC Training Pro
+                    </a>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos
+                        <span class="mx-2">|</span>
+                        <strong>3,421</strong> experimentos A/B ejecutándose
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <div class="d-flex align-items-center mb-3">
+                <i class="fas fa-chart-line fa-2x text-primary me-3"></i>
+                <div>
+                    <h3 class="mb-0">🧪 A/B Testing Intelligence 2025</h3>
+                    <p class="text-muted mb-0">Datos de experimentación científica actualizados</p>
+                    <div class="current-time" id="currentTime"></div>
+                </div>
+            </div>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <span class="insight-number">91%</span>
+                    <div>del top 10% utiliza pruebas A/B sistemáticas</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">+247%</span>
+                    <div>mejora promedio con experimentación controlada</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">73%</span>
+                    <div>de hipótesis iniciales resultan incorrectas</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">95%</span>
+                    <div>nivel de confianza mínimo para decisiones</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$4,850</span>
+                    <div>aumento promedio mensual con A/B testing</div>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">156</span>
+                    <div>experimentos promedio por modelo exitosa/año</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">🧪 Master en Pruebas A/B</h1>
+            <p class="main-subtitle">Conviértete en una científica social especializada en tu propia audiencia</p>
+            <p class="lead">Tu laboratorio de optimización continua para trascender opiniones y descubrir verdades empíricas</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Lab Section 1: Fundamentos de A/B Testing -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-microscope"></i>
+                🔬 Lab de Fundamentos Experimentales
+            </h2>
+            <p class="lead">Domina la metodología científica aplicada a tu audiencia</p>
+            
+            <button class="interactive-card" onclick="toggleDetails('fundamentos')">
+                <h4><i class="fas fa-hypothesis"></i> Diseño de Hipótesis Verificables</h4>
+                <p>Crea predicciones específicas y medibles antes de cada experimento</p>
+            </button>
+            <div id="fundamentos" class="card-details">
+                <h5>🎯 CRÍTICO: Estructura de Hipótesis Ganadora</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Componentes Esenciales:</h6>
+                        <ul>
+                            <li><strong>Variable específica:</strong> Qué cambiarás exactamente</li>
+                            <li><strong>Dirección predicha:</strong> Aumentará/disminuirá</li>
+                            <li><strong>Métrica objetivo:</strong> Qué medirás</li>
+                            <li><strong>Magnitud esperada:</strong> Porcentaje de mejora</li>
+                            <li><strong>Razón científica:</strong> Por qué esperas este resultado</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Ejemplo de Hipótesis Bien Formulada:</h6>
+                        <div class="alert alert-info">
+                            <strong>Hipótesis:</strong> "Cambiar el saludo inicial de 'Hola' a 'Bienvenido/a, hermoso/a' aumentará la retención en los primeros 5 minutos en un 25% porque genera conexión emocional inmediata y validación personal."
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-warning">
+                    <strong>⚠️ ESENCIAL:</strong> El 67% de experimentos fallan por hipótesis vagas - la especificidad determina el éxito
+                </div>
+            </div>
+
+            <button class="interactive-card" onclick="toggleDetails('variables')">
+                <h4><i class="fas fa-sliders-h"></i> Aislamiento de Variables</h4>
+                <p>Controla meticulosamente elementos para resultados válidos</p>
+            </button>
+            <div id="variables" class="card-details">
+                <h5>🔬 Control Experimental Riguroso</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Variable Independiente</h6>
+                        <p>Lo que cambias:</p>
+                        <ul>
+                            <li>Un solo elemento</li>
+                            <li>Diferencia significativa</li>
+                            <li>Medible objetivamente</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Variables Controladas</h6>
+                        <p>Mantener constantes:</p>
+                        <ul>
+                            <li>Horario de transmisión</li>
+                            <li>Duración de sesión</li>
+                            <li>Contexto ambiental</li>
+                            <li>Estado de ánimo</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h6>Variable Dependiente</h6>
+                        <p>Lo que mides:</p>
+                        <ul>
+                            <li>Métrica clara</li>
+                            <li>Cuantificable</li>
+                            <li>Relevante al objetivo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Calculadora de Significancia -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-calculator"></i>
+                📊 Calculadora de Significancia Estadística
+            </h2>
+            
+            <div class="ab-calculator">
+                <h4>Determina si tus resultados son estadísticamente válidos</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Versión A - Visitantes:</label>
+                        <input type="number" class="ab-input" id="visitorsA" placeholder="1000" oninput="calculateSignificance()">
+                        
+                        <label>Versión A - Conversiones:</label>
+                        <input type="number" class="ab-input" id="conversionsA" placeholder="120" oninput="calculateSignificance()">
+                        
+                        <label>Versión B - Visitantes:</label>
+                        <input type="number" class="ab-input" id="visitorsB" placeholder="1000" oninput="calculateSignificance()">
+                        
+                        <label>Versión B - Conversiones:</label>
+                        <input type="number" class="ab-input" id="conversionsB" placeholder="156" oninput="calculateSignificance()">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="ab-result" id="significanceResult">
+                            <h5>📈 Análisis Estadístico</h5>
+                            <div id="significanceCalculation">Ingresa los datos para ver el análisis</div>
+                            <div class="significance-meter mt-3">
+                                <div class="significance-fill" id="significanceFill" style="width: 0%"></div>
+                                <div class="significance-text" id="significanceText">0%</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Diseñador de Experimentos -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-drafting-compass"></i>
+                🎨 Diseñador de Experimentos
+            </h2>
+            
+            <div class="experiment-designer">
+                <h4>Crea experimentos estructurados paso a paso</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label>Elemento a probar:</label>
+                        <select class="designer-input" id="experimentElement" onchange="designExperiment()">
+                            <option value="">Selecciona elemento</option>
+                            <option value="saludo">Saludo inicial</option>
+                            <option value="outfit">Vestuario/Apariencia</option>
+                            <option value="iluminacion">Iluminación</option>
+                            <option value="musica">Música de fondo</option>
+                            <option value="interaccion">Estilo de interacción</option>
+                            <option value="timing">Timing de contenido</option>
+                            <option value="pricing">Estructura de precios</option>
+                        </select>
+                        
+                        <label>Objetivo principal:</label>
+                        <select class="designer-input" id="experimentGoal" onchange="designExperiment()">
+                            <option value="">Selecciona objetivo</option>
+                            <option value="retencion">Aumentar retención</option>
+                            <option value="engagement">Mejorar engagement</option>
+                            <option value="conversiones">Incrementar conversiones</option>
+                            <option value="satisfaccion">Mejorar satisfacción</option>
+                            <option value="tiempo">Aumentar tiempo de sesión</option>
+                        </select>
+                        
+                        <label>Duración del experimento (días):</label>
+                        <input type="number" class="designer-input" id="experimentDuration" placeholder="14" oninput="designExperiment()">
+                        
+                        <label>Tamaño de muestra esperado:</label>
+                        <input type="number" class="designer-input" id="sampleSize" placeholder="500" oninput="designExperiment()">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="hypothesis-builder" id="hypothesisBuilder">
+                            <h5>🔬 Tu Experimento Personalizado</h5>
+                            <div id="experimentDesign">Completa los campos para generar tu experimento</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 4: Tipos de Experimentos -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-vial"></i>
+                🧪 Biblioteca de Experimentos
+            </h2>
+            
+            <p>Explora diferentes tipos de pruebas A/B y sus aplicaciones</p>
+            
+            <div class="experiment-types">
+                <button class="experiment-type" onclick="selectExperimentType('visual')">
+                    <i class="fas fa-eye"></i>
+                    <h5>Experimentos Visuales</h5>
+                    <p>Apariencia, colores, iluminación</p>
+                </button>
+                <button class="experiment-type" onclick="selectExperimentType('content')">
+                    <i class="fas fa-comment"></i>
+                    <h5>Experimentos de Contenido</h5>
+                    <p>Temas, estilo, estructura</p>
+                </button>
+                <button class="experiment-type" onclick="selectExperimentType('interaction')">
+                    <i class="fas fa-handshake"></i>
+                    <h5>Experimentos de Interacción</h5>
+                    <p>Comunicación, respuestas, engagement</p>
+                </button>
+                <button class="experiment-type" onclick="selectExperimentType('timing')">
+                    <i class="fas fa-clock"></i>
+                    <h5>Experimentos de Timing</h5>
+                    <p>Horarios, duración, frecuencia</p>
+                </button>
+                <button class="experiment-type" onclick="selectExperimentType('pricing')">
+                    <i class="fas fa-dollar-sign"></i>
+                    <h5>Experimentos de Pricing</h5>
+                    <p>Precios, promociones, paquetes</p>
+                </button>
+                <button class="experiment-type" onclick="selectExperimentType('technical')">
+                    <i class="fas fa-cogs"></i>
+                    <h5>Experimentos Técnicos</h5>
+                    <p>Calidad, ángulos, sonido</p>
+                </button>
+            </div>
+            
+            <div id="experimentTypeResult" class="ab-result" style="display: none;">
+                <h5>💡 Experimentos Sugeridos</h5>
+                <div id="experimentTypeContent"></div>
+            </div>
+        </div>
+
+        <!-- Lab Section 5: Comparador A/B -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-balance-scale"></i>
+                ⚖️ Comparador de Resultados A/B
+            </h2>
+            
+            <div class="ab-comparison">
+                <h4>Visualiza y compara el rendimiento de tus variantes</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="variant-card" id="variantA">
+                            <h5>🅰️ Versión A (Control)</h5>
+                            <div class="stat-display">
+                                <div class="stat-item">
+                                    <span class="stat-value" id="rateA">0%</span>
+                                    <span>Tasa de conversión</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value" id="visitorsADisplay">0</span>
+                                    <span>Visitantes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="variant-card" id="variantB">
+                            <h5>🅱️ Versión B (Variante)</h5>
+                            <div class="stat-display">
+                                <div class="stat-item">
+                                    <span class="stat-value" id="rateB">0%</span>
+                                    <span>Tasa de conversión</span>
+                                </div>
+                                <div class="stat-item">
+                                    <span class="stat-value" id="visitorsBDisplay">0</span>
+                                    <span>Visitantes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-3">
+                    <h5>📊 Diferencia: <span id="difference">0%</span></h5>
+                    <h5>🎯 Ganador: <span id="winner">Pendiente</span></h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 6: Progress Tracker -->
+        <div class="section-lab">
+            <h2 class="section-title">
+                <i class="fas fa-tasks"></i>
+                📈 Tracker de Maestría Experimental
+            </h2>
+            
+            <div class="progress-tracker">
+                <h4>Tu Progreso como Científica de Datos</h4>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Diseño de Experimentos</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="experimentDesignProgress" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('experimentDesignProgress', this.value)">
+                        
+                        <h6>Análisis Estadístico</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="statisticalAnalysis" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('statisticalAnalysis', this.value)">
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Implementación de Cambios</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="implementationSkills" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('implementationSkills', this.value)">
+                        
+                        <h6>Optimización Continua</h6>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="continuousOptimization" style="width: 0%"></div>
+                        </div>
+                        <input type="range" class="form-range" min="0" max="100" value="0" oninput="updateProgress('continuousOptimization', this.value)">
+                    </div>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <h5>Nivel de Científica: <span id="scientistLevel">Principiante</span></h5>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="overallProgress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-story">
+            <h3><i class="fas fa-trophy"></i> Caso de Éxito: Sophia - La Científica Social</h3>
+            <p>"Implementé mi <strong>'Laboratorio de Optimización Continua'</strong> desarrollando experimentos formales que comparan directamente diferentes enfoques. Defino hipótesis verificables, aislo variables meticulosamente, alterno sistemáticamente versiones y documento métricas en sistema estandarizado. Un experimento sobre apertura de transmisión reveló que la versión que consideraba inferior generó 35% superior retención y 28% mayor monetización."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+235%</span>
+                    <span>Mejora en retención</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$5,680</span>
+                    <span>Ingreso mensual promedio</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">147</span>
+                    <span>Experimentos ejecutados</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">89%</span>
+                    <span>Precisión en predicciones</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-star"></i> Caso de Éxito: Victoria - La Maestra del Método Científico</h3>
+            <p>"Desarrollé mi biblioteca de experimentos documentando sistemáticamente todos los hallazgos. Creo variaciones suficientemente distintivas para diferencias medibles, implemento sistemas consistentes de documentación y establezco métricas específicas antes de cada experimento. Mi relación con 'preferencias personales' se transformó, subordinándolas a respuestas empíricamente validadas."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+189%</span>
+                    <span>Aumento en conversiones</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$7,230</span>
+                    <span>Récord mensual</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">94%</span>
+                    <span>Confianza estadística</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">256</span>
+                    <span>Hipótesis validadas</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-story">
+            <h3><i class="fas fa-rocket"></i> Caso de Éxito: Isabella - La Experta en Validación Empírica</h3>
+            <p>"Implementé metodología experimental sistemática distinguiendo fluctuaciones aleatorias de diferencias estadísticamente significativas. Establezco umbrales específicos para adopción permanente versus continuación experimental. Esta infraestructura decisional transformó debates subjetivos en conclusiones empíricamente validadas, descubriendo que 73% de mis hipótesis iniciales resultaron incorrectas."</p>
+            <div class="success-numbers">
+                <div class="success-number">
+                    <span class="number">+347%</span>
+                    <span>ROI experimental</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">$9,450</span>
+                    <span>Ingreso pico mensual</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">97%</span>
+                    <span>Significancia estadística</span>
+                </div>
+                <div class="success-number">
+                    <span class="number">Top 1%</span>
+                    <span>Ranking experimental</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Final Summary -->
+        <div class="final-summary">
+            <h2><i class="fas fa-graduation-cap"></i> ¡Felicitaciones! Te has convertido en una Científica Social Experta</h2>
+            <p class="lead">Tu infraestructura experimental transforma fundamentalmente tu proceso de optimización</p>
+            <p>La diferencia entre decisiones basadas en suposiciones y validación empírica es la línea divisoria entre perpetua experimentación aleatoria con resultados inconsistentes y mejora sistemática fundamentada en respuestas objetivamente documentadas a variables específicamente aisladas.</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <i class="fas fa-hypothesis fa-2x mb-2"></i>
+                    <h5>Hipótesis Verificables</h5>
+                    <p>Predicciones específicas y medibles</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-chart-line fa-2x mb-2"></i>
+                    <h5>Análisis Estadístico</h5>
+                    <p>Validación empírica rigurosa</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-flask fa-2x mb-2"></i>
+                    <h5>Experimentación Controlada</h5>
+                    <p>Metodología científica aplicada</p>
+                </div>
+                <div class="achievement-item">
+                    <i class="fas fa-trophy fa-2x mb-2"></i>
+                    <h5>Optimización Continua</h5>
+                    <p>Mejora sistemática basada en datos</p>
+                </div>
+            </div>
+            
+            <button class="btn-custom btn-primary-custom mt-4" onclick="startExperimenting()">
+                <i class="fas fa-rocket"></i> ¡A crear tu laboratorio de optimización!
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentTime').textContent = 
+                `Actualizado: ${now.toLocaleDateString('es-ES', options)}`;
+        }
+
+        // Toggle details function
+        function toggleDetails(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('expanded');
+        }
+
+        // Calculate statistical significance
+        function calculateSignificance() {
+            const visitorsA = parseInt(document.getElementById('visitorsA').value) || 0;
+            const conversionsA = parseInt(document.getElementById('conversionsA').value) || 0;
+            const visitorsB = parseInt(document.getElementById('visitorsB').value) || 0;
+            const conversionsB = parseInt(document.getElementById('conversionsB').value) || 0;
+            
+            if (visitorsA > 0 && visitorsB > 0) {
+                const rateA = (conversionsA / visitorsA) * 100;
+                const rateB = (conversionsB / visitorsB) * 100;
+                const difference = rateB - rateA;
+                const relativeDifference = ((rateB - rateA) / rateA) * 100;
+                
+                // Simplified significance calculation
+                const pooledRate = (conversionsA + conversionsB) / (visitorsA + visitorsB);
+                const se = Math.sqrt(pooledRate * (1 - pooledRate) * (1/visitorsA + 1/visitorsB));
+                const zScore = Math.abs(difference / 100) / se;
+                const significance = (1 - (1 / (1 + Math.exp(-0.717 * zScore - 0.416 * zScore * zScore)))) * 100;
+                
+                let significanceLevel = 'Baja';
+                let significanceColor = '#dc3545';
+                if (significance > 95) {
+                    significanceLevel = 'Muy Alta';
+                    significanceColor = '#28a745';
+                } else if (significance > 90) {
+                    significanceLevel = 'Alta';
+                    significanceColor = '#ffc107';
+                } else if (significance > 80) {
+                    significanceLevel = 'Moderada';
+                    significanceColor = '#fd7e14';
+                }
+                
+                document.getElementById('significanceCalculation').innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>📊 Tasas de Conversión</h6>
+                            <p><strong>Versión A:</strong> ${rateA.toFixed(2)}%</p>
+                            <p><strong>Versión B:</strong> ${rateB.toFixed(2)}%</p>
+                            <p><strong>Diferencia:</strong> ${difference.toFixed(2)} puntos</p>
+                            <p><strong>Mejora relativa:</strong> ${relativeDifference.toFixed(1)}%</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🎯 Análisis Estadístico</h6>
+                            <p><strong>Confianza:</strong> ${significance.toFixed(1)}%</p>
+                            <p><strong>Nivel:</strong> ${significanceLevel}</p>
+                            <p><strong>Ganador:</strong> ${rateB > rateA ? 'Versión B' : 'Versión A'}</p>
+                            <p><strong>Decisión:</strong> ${significance > 95 ? 'Implementar' : 'Continuar prueba'}</p>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('significanceFill').style.width = Math.min(significance, 100) + '%';
+                document.getElementById('significanceFill').style.background = significanceColor;
+                document.getElementById('significanceText').textContent = significance.toFixed(1) + '%';
+                
+                // Update comparison display
+                document.getElementById('rateA').textContent = rateA.toFixed(2) + '%';
+                document.getElementById('rateB').textContent = rateB.toFixed(2) + '%';
+                document.getElementById('visitorsADisplay').textContent = visitorsA.toLocaleString();
+                document.getElementById('visitorsBDisplay').textContent = visitorsB.toLocaleString();
+                document.getElementById('difference').textContent = difference.toFixed(2) + ' puntos';
+                document.getElementById('winner').textContent = rateB > rateA ? 'Versión B 🏆' : 'Versión A 🏆';
+                
+                // Update winner styling
+                if (rateB > rateA) {
+                    document.getElementById('variantB').classList.add('winner');
+                    document.getElementById('variantA').classList.remove('winner');
+                } else {
+                    document.getElementById('variantA').classList.add('winner');
+                    document.getElementById('variantB').classList.remove('winner');
+                }
+            }
+        }
+
+        // Design experiment
+        function designExperiment() {
+            const element = document.getElementById('experimentElement').value;
+            const goal = document.getElementById('experimentGoal').value;
+            const duration = parseInt(document.getElementById('experimentDuration').value) || 0;
+            const sampleSize = parseInt(document.getElementById('sampleSize').value) || 0;
+            
+            if (element && goal && duration > 0) {
+                const experiments = {
+                    saludo: {
+                        retencion: {
+                            title: 'Experimento: Optimización de Saludo para Retención',
+                            hypothesis: 'Un saludo más personalizado y cálido aumentará la retención en los primeros 5 minutos',
+                            variantA: 'Saludo estándar: "Hola, ¿cómo están?"',
+                            variantB: 'Saludo personalizado: "¡Bienvenido/a mi hermoso/a! Me alegra verte aquí"',
+                            metrics: 'Tiempo de permanencia, abandono temprano, respuestas en chat'
+                        },
+                        engagement: {
+                            title: 'Experimento: Saludo para Máximo Engagement',
+                            hypothesis: 'Un saludo que invite a la participación aumentará la interacción inicial',
+                            variantA: 'Saludo pasivo: "Hola a todos"',
+                            variantB: 'Saludo interactivo: "¡Hola! Escribe tu ciudad en el chat para saludarte personalmente"',
+                            metrics: 'Mensajes en chat, reacciones, tiempo hasta primera interacción'
+                        }
+                    },
+                    outfit: {
+                        conversiones: {
+                            title: 'Experimento: Impacto del Vestuario en Conversiones',
+                            hypothesis: 'Un outfit más elegante/seductor aumentará las conversiones premium',
+                            variantA: 'Outfit casual: ropa cómoda de casa',
+                            variantB: 'Outfit premium: lingerie elegante o vestido sofisticado',
+                            metrics: 'Conversiones, tips, solicitudes privadas'
+                        }
+                    },
+                    iluminacion: {
+                        satisfaccion: {
+                            title: 'Experimento: Optimización de Iluminación',
+                            hypothesis: 'Una iluminación más profesional mejorará la satisfacción general',
+                            variantA: 'Iluminación natural/básica',
+                            variantB: 'Iluminación profesional con ring light y luz ambiente',
+                            metrics: 'Ratings de satisfacción, comentarios positivos, tiempo de sesión'
+                        }
+                    }
+                };
+                
+                const selected = experiments[element]?.[goal];
+                if (selected) {
+                    const minSample = Math.max(100, Math.ceil(sampleSize * 0.1));
+                    const recommendedDuration = duration < 7 ? 'Recomendado: mínimo 7 días' : 'Duración adecuada';
+                    
+                    document.getElementById('experimentDesign').innerHTML = `
+                        <h6>${selected.title}</h6>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p><strong>📝 Hipótesis:</strong> ${selected.hypothesis}</p>
+                                <p><strong>🅰️ Versión A:</strong> ${selected.variantA}</p>
+                                <p><strong>🅱️ Versión B:</strong> ${selected.variantB}</p>
+                                <p><strong>📊 Métricas:</strong> ${selected.metrics}</p>
+                                <p><strong>⏱️ Duración:</strong> ${duration} días (${recommendedDuration})</p>
+                                <p><strong>👥 Muestra:</strong> ${sampleSize.toLocaleString()} usuarios</p>
+                                <p><strong>✅ Muestra mínima:</strong> ${minSample} por variante</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <button class="btn-custom btn-accent-custom" onclick="saveExperiment()">
+                                <i class="fas fa-save"></i> Guardar Experimento
+                            </button>
+                        </div>
+                    `;
+                }
+            }
+        }
+
+        // Select experiment type
+        function selectExperimentType(type) {
+            document.querySelectorAll('.experiment-type').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            event.target.closest('.experiment-type').classList.add('selected');
+            
+            const experimentTypes = {
+                visual: {
+                    title: '👁️ Experimentos Visuales',
+                    experiments: [
+                        'Iluminación: natural vs. ring light profesional',
+                        'Maquillaje: natural vs. glamouroso',
+                        'Outfit: casual vs. elegante vs. íntimo',
+                        'Fondo: neutro vs. decorado vs. temático',
+                        'Filtros: sin filtro vs. filtro sutil vs. filtro dramático'
+                    ]
+                },
+                content: {
+                    title: '💬 Experimentos de Contenido',
+                    experiments: [
+                        'Tema de conversación: personal vs. entretenimiento vs. educativo',
+                        'Estilo narrativo: espontáneo vs. estructurado',
+                        'Nivel de intimidad: amigable vs. seductor vs. profesional',
+                        'Uso de humor: formal vs. gracioso vs. picante',
+                        'Idioma/jerga: formal vs. coloquial vs. técnico'
+                    ]
+                },
+                interaction: {
+                    title: '🤝 Experimentos de Interacción',
+                    experiments: [
+                        'Respuesta a mensajes: inmediata vs. pausada vs. selectiva',
+                        'Nombre de usuario: usar nombres vs. apodos vs. genérico',
+                        'Preguntas directas: frecuentes vs. ocasionales vs. raras',
+                        'Validación: elogios abundantes vs. moderados vs. escasos',
+                        'Gestión de silencio: llenar vs. pausas cómodas'
+                    ]
+                },
+                timing: {
+                    title: '⏰ Experimentos de Timing',
+                    experiments: [
+                        'Horarios: mañana vs. tarde vs. noche vs. madrugada',
+                        'Duración: 30min vs. 60min vs. 90min vs. 120min',
+                        'Frecuencia: diario vs. días alternos vs. 3 veces/semana',
+                        'Momentos especiales: fines de semana vs. entre semana',
+                        'Temporadas: contenido estacional vs. constante'
+                    ]
+                },
+                pricing: {
+                    title: '💰 Experimentos de Pricing',
+                    experiments: [
+                        'Precios base: bajo vs. medio vs. premium',
+                        'Promociones: descuentos vs. bonos vs. sin promociones',
+                        'Paquetes: individuales vs. combo vs. membresía',
+                        'Timing de ofertas: inicio vs. medio vs. final de sesión',
+                        'Comunicación precio: directa vs. sutil vs. no mencionar'
+                    ]
+                },
+                technical: {
+                    title: '⚙️ Experimentos Técnicos',
+                    experiments: [
+                        'Calidad video: 720p vs. 1080p vs. 4K',
+                        'Ángulo cámara: frontal vs. ligeramente lateral vs. cenital',
+                        'Sonido: micrófono integrado vs. externo vs. profesional',
+                        'Estabilidad: cámara fija vs. movimientos suaves',
+                        'Plataforma: una sola vs. múltiples simultáneas'
+                    ]
+                }
+            };
+            
+            const selected = experimentTypes[type];
+            document.getElementById('experimentTypeResult').style.display = 'block';
+            document.getElementById('experimentTypeContent').innerHTML = `
+                <h5>${selected.title}</h5>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h6>💡 Experimentos Sugeridos:</h6>
+                        <ul>
+                            ${selected.experiments.map(exp => `<li>${exp}</li>`).join('')}
+                        </ul>
+                        <div class="mt-3">
+                            <button class="btn-custom btn-secondary-custom" onclick="createCustomExperiment('${type}')">
+                                <i class="fas fa-plus"></i> Crear Experimento Personalizado
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Update progress
+        function updateProgress(progressId, value) {
+            document.getElementById(progressId).style.width = value + '%';
+            calculateOverallProgress();
+        }
+
+        // Calculate overall progress
+        function calculateOverallProgress() {
+            const experimentDesign = parseFloat(document.getElementById('experimentDesignProgress').style.width) || 0;
+            const statisticalAnalysis = parseFloat(document.getElementById('statisticalAnalysis').style.width) || 0;
+            const implementation = parseFloat(document.getElementById('implementationSkills').style.width) || 0;
+            const optimization = parseFloat(document.getElementById('continuousOptimization').style.width) || 0;
+            
+            const overall = (experimentDesign + statisticalAnalysis + implementation + optimization) / 4;
+            document.getElementById('overallProgress').style.width = overall + '%';
+            
+            let level = 'Principiante';
+            if (overall >= 80) level = 'Experta';
+            else if (overall >= 60) level = 'Avanzada';
+            else if (overall >= 40) level = 'Intermedia';
+            
+            document.getElementById('scientistLevel').textContent = level;
+        }
+
+        // Save experiment
+        function saveExperiment() {
+            alert('¡Experimento guardado en tu biblioteca! Listo para implementar.');
+        }
+
+        // Create custom experiment
+        function createCustomExperiment(type) {
+            alert(`¡Perfecto! Creando experimento personalizado de tipo ${type}. Usa el Diseñador de Experimentos para configurarlo.`);
+        }
+
+        // Start experimenting function
+        function startExperimenting() {
+            alert('¡Excelente! Te has convertido en una Científica Social Experta. Tu laboratorio de optimización continua transformará tu proceso de mejora. ¡A validar empíricamente cada hipótesis!');
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 60000); // Update every minute
+            
+            // Add some initial animations
+            setTimeout(() => {
+                document.querySelector('.floating-bg').style.opacity = '0.05';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

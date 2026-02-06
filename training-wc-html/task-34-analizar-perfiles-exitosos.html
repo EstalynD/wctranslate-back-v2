@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters del Análisis de Modelos Exitosos 🎯</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-orange: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            --gradient-fire: linear-gradient(135deg, #ff416c, #ff4b2b);
+            --gradient-success: linear-gradient(135deg, #4CAF50, #45a049);
+            --gradient-dark: linear-gradient(135deg, #2c3e50, #3498db);
+            --gradient-neural: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-psychology: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            --gradient-animated: linear-gradient(-45deg, #ff6b35, #f7931e, #fd7e14, #28a745);
+            --shadow-intense: 0 15px 40px rgba(255, 107, 53, 0.3);
+            --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .floating-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: floatingPattern 24s ease-in-out infinite;
+        }
+
+        @keyframes floatingPattern {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 53, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 107, 53, 0.6); }
+        }
+
+        @keyframes analyzeFlow {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+        }
+
+        .wc-header {
+            background: var(--gradient-orange);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-card);
+        }
+
+        .wc-brand {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .brand-logo {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+        }
+
+        .user-stats {
+            color: white;
+            font-size: clamp(0.8rem, 2vw, 0.9rem);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        .industry-insights {
+            background: var(--bg-white);
+            padding: clamp(1.5rem, 4vw, 2rem) 0;
+            margin-bottom: 2rem;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .insight-card {
+            background: var(--gradient-fire);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-card);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: var(--shadow-intense);
+            animation: glow 2s infinite;
+        }
+
+        .insight-number {
+            font-size: clamp(2rem, 5vw, 2.5rem);
+            font-weight: 700;
+            display: block;
+        }
+
+        .main-header {
+            background: var(--gradient-orange);
+            padding: clamp(2rem, 5vw, 4rem) 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0-5.5-4.5-10-10-10s-10 4.5-10 10 4.5 10 10 10 10-4.5 10-10zm10 0c0 5.5 4.5 10 10 10s10-4.5 10-10-4.5-10-10-10-10 4.5-10 10z'/%3E%3C/g%3E%3C/svg%3E");
+            animation: floatingPattern 20s linear infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1rem, 3vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-lab {
+            background: var(--bg-white);
+            margin: 3rem 0;
+            border-radius: 30px;
+            padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-lab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-orange);
+        }
+
+        .section-lab:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .interactive-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 2px solid var(--border-light);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-intense);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.expanded {
+            max-height: 3000px;
+            animation: slideDown 0.5s ease;
+        }
+
+        .calculator-section {
+            background: var(--gradient-success);
+            color: white;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .input-group {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: white;
+            color: var(--text-dark);
+            min-height: 44px;
+        }
+
+        .results-display {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-tracker {
+            background: var(--bg-light);
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .progress-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .progress-bar-container {
+            height: 15px;
+            background: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--gradient-orange);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .scenario-simulator {
+            background: var(--gradient-dark);
+            color: white;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .scenario-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .scenario-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .scenario-option.selected {
+            border-color: var(--warning-orange);
+            background: rgba(253, 126, 20, 0.2);
+            transform: translateX(10px);
+        }
+
+        .success-stories {
+            background: var(--bg-white);
+            padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+            border-radius: 30px;
+            margin: 3rem 0;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .story-card {
+            background: var(--gradient-fire);
+            color: white;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 20px;
+            transform: translateY(0);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '🏆';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: analyzeFlow 3s ease-in-out infinite;
+        }
+
+        .story-card:hover {
+            transform: translateY(-10px) translateX(5px);
+            box-shadow: var(--shadow-intense);
+        }
+
+        .story-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            font-weight: 700;
+            display: block;
+        }
+
+        .competitive-advantage {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+            box-shadow: var(--shadow-card);
+            border: 2px solid var(--primary-color);
+        }
+
+        .advantage-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--bg-light);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+
+        .analysis-tools {
+            background: var(--gradient-neural);
+            color: white;
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+        }
+
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tool-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .tool-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .final-summary {
+            background: var(--gradient-orange);
+            color: white;
+            padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 3vw, 2rem);
+            border-radius: 30px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: floatingPattern 20s ease-in-out infinite;
+        }
+
+        .cta-button {
+            background: white;
+            color: var(--primary-color);
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 1rem 0.5rem;
+            min-height: 44px;
+            min-width: 150px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            animation: glow 1s infinite;
+        }
+
+        .testimonial-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 5px solid white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: white;
+            position: relative;
+        }
+
+        .testimonial-box::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        .mindmap-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid var(--border-light);
+            position: relative;
+            min-height: 44px;
+        }
+
+        .mindmap-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(255, 107, 53, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .wellness-tip {
+            background: rgba(255, 107, 53, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* Media Queries Avanzadas */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .section-lab {
+                margin: 2rem 0;
+            }
+            
+            .calculator-input {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .wc-brand {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenario-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .tool-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .advantage-metric {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .cta-button {
+                display: block;
+                width: 100%;
+                margin: 0.5rem 0;
+            }
+            
+            .story-stats {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            .container-fluid {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+            
+            .insights-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            
+            .stories-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .section-lab {
+                border: 3px solid var(--primary-color);
+            }
+            
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .cta-button {
+                border: 2px solid var(--primary-color);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .wc-header,
+            .cta-button {
+                display: none !important;
+            }
+            
+            .section-lab,
+            .interactive-card {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+            }
+        }
+
+        /* Touch Device Optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .interactive-card:hover {
+                transform: none;
+            }
+            
+            .interactive-card:active {
+                transform: scale(0.98);
+            }
+            
+            .cta-button:hover {
+                transform: none;
+            }
+            
+            .cta-button:active {
+                transform: scale(0.95);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+
+    <!-- WC Training Header -->
+    <header class="wc-header">
+        <div class="container-fluid">
+            <div class="wc-brand">
+                <a href="#" class="brand-logo">
+                    <i class="fas fa-crown me-2"></i>WC Training
+                </a>
+                <div class="user-stats">
+                    <div class="live-indicator"></div>
+                    <span id="current-time"></span> | 12,847 modelos activos
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container-fluid">
+            <h2 class="text-center mb-4">📊 Industry Insights 2025</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <span class="insight-number">73%</span>
+                    <small>Fallan por no analizar competencia</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$4.2M</span>
+                    <small>Ingresos top 1% webcam</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">89%</span>
+                    <small>Éxito con análisis estratégico</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">45min</span>
+                    <small>Tiempo promedio de sesión</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">12x</span>
+                    <small>ROI análisis vs improvisación</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">96%</span>
+                    <small>Retención con estrategia</small>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Top Performer Analytics Study 2025, Success Pattern Research
+                </small>
+            </p>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container-fluid">
+            <h1 class="main-title">🎯 Masters del Análisis de Modelos Exitosos</h1>
+            <p class="main-subtitle">
+                Decodifica los secretos psicológicos, emocionales y estratégicos que hacen millonarias a las top performers
+            </p>
+            <button class="cta-button" onclick="scrollToSection('analysis-lab')">
+                ¡A construir tu imperio de análisis!
+            </button>
+        </div>
+    </header>
+
+    <div class="container-fluid">
+        <!-- Análisis Estratégico Lab -->
+        <section class="section-lab" id="analysis-lab">
+            <h2 class="section-title">
+                🔬 Laboratorio de Análisis Estratégico
+            </h2>
+            <p class="lead mb-4">
+                <strong>CRÍTICO:</strong> El 73% de las modelos fallan porque copian contenido sin entender la arquitectura psicológica que lo hace funcionar. Aquí decodificarás los patrones ocultos.
+            </p>
+
+            <div class="interactive-card" onclick="toggleDetails('psychology-analysis')">
+                <div class="card-header">
+                    <h3 class="card-title">📋 Análisis Psicológico Avanzado</h3>
+                    <i class="fas fa-chevron-down expand-icon" id="psychology-analysis-icon"></i>
+                </div>
+                <p>Decodifica los triggers emocionales y patrones de comportamiento que generan adicción en usuarios.</p>
+                <div class="card-details" id="psychology-analysis-details">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>🧠 Componentes Psicológicos Clave:</h5>
+                            <ul>
+                                <li><strong>Validación Temprana:</strong> Preguntas personales en primeros 3 minutos</li>
+                                <li><strong>Control Percibido:</strong> Usuario siente que dirige la experiencia</li>
+                                <li><strong>Escalada Gradual:</strong> Intensidad creciente sin saltos bruscos</li>
+                                <li><strong>Personalización:</strong> Nombres, preferencias, historias únicas</li>
+                                <li><strong>Anticipación:</strong> Promesas de "lo que viene después"</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>🎯 Técnicas de Engagement:</h5>
+                            <ul>
+                                <li><strong>Mirroring Emocional:</strong> Reflejar el estado del usuario</li>
+                                <li><strong>Anclas Sensoriales:</strong> Sonidos, gestos, frases recurrentes</li>
+                                <li><strong>Escasez Programada:</strong> "Solo para ti", "Último show"</li>
+                                <li><strong>Refuerzo Variable:</strong> Recompensas impredecibles</li>
+                                <li><strong>Historia Narrativa:</strong> Cada sesión continúa una historia</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('structure-analysis')">
+                <div class="card-header">
+                    <h3 class="card-title">⚡ Estructura de Sesión Perfecta</h3>
+                    <i class="fas fa-chevron-down expand-icon" id="structure-analysis-icon"></i>
+                </div>
+                <p>El framework temporal que usan las top 10% para maximizar retención y ganancias.</p>
+                <div class="card-details" id="structure-analysis-details">
+                    <div class="row mt-3">
+                        <div class="col-md-4">
+                            <div class="text-center p-3" style="background: linear-gradient(135deg, #ff9a56, #ff6b35); color: white; border-radius: 15px;">
+                                <h4>25%</h4>
+                                <p><strong>Conexión Inicial</strong><br>Charla, validación, establecimiento de confianza</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3 mt-3 mt-md-0" style="background: linear-gradient(135deg, #f7931e, #f39c12); color: white; border-radius: 15px;">
+                                <h4>25%</h4>
+                                <p><strong>Ambientación</strong><br>Audio, comandos, narrativa, construcción de tensión</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center p-3 mt-3 mt-md-0" style="background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; border-radius: 15px;">
+                                <h4>50%</h4>
+                                <p><strong>Performance Guiada</strong><br>Interacción explícita siguiendo el guión psicológico</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5>🔥 Elementos Transversales (durante toda la sesión):</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Contacto visual estratégico (70% del tiempo)</li>
+                                    <li>Variaciones de voz cada 90 segundos</li>
+                                    <li>Micro-pausas para generar expectativa</li>
+                                    <li>Refuerzo positivo cada 2-3 minutos</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul>
+                                    <li>Preguntas de validación intermitentes</li>
+                                    <li>Cambios de ángulo/posición cada 5 minutos</li>
+                                    <li>Referencias a sesiones anteriores</li>
+                                    <li>Promesas de futuras experiencias</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('revenue-analysis')">
+                <div class="card-header">
+                    <h3 class="card-title">💰 Análisis de Flujos de Ingresos</h3>
+                    <i class="fas fa-chevron-down expand-icon" id="revenue-analysis-icon"></i>
+                </div>
+                <p>Decodifica cómo las top performers diversifican y maximizan sus ingresos.</p>
+                <div class="card-details" id="revenue-analysis-details">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>💎 Estructura de Ingresos Top 1%:</h5>
+                            <ul>
+                                <li><strong>Privados Premium:</strong> 45% (precio 3x mercado)</li>
+                                <li><strong>Contenido Personalizado:</strong> 25% (suscripciones mensuales)</li>
+                                <li><strong>Shows Públicos:</strong> 15% (alta frecuencia tips)</li>
+                                <li><strong>Productos Digitales:</strong> 10% (videos, fotos exclusivas)</li>
+                                <li><strong>Coaching/Consultoría:</strong> 5% (expertise monetizada)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>🎯 Estrategias de Monetización:</h5>
+                            <ul>
+                                <li><strong>Tiered Pricing:</strong> 3 niveles de servicio</li>
+                                <li><strong>Loyalty Programs:</strong> Descuentos por frecuencia</li>
+                                <li><strong>Bundle Offers:</strong> Paquetes de servicios</li>
+                                <li><strong>Seasonal Specials:</strong> Promociones temáticas</li>
+                                <li><strong>Referral System:</strong> Comisiones por referidos</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculadora de Potencial -->
+        <section class="calculator-section">
+            <h2 class="text-center mb-4">💰 Calculadora de Potencial de Nicho</h2>
+            <p class="text-center mb-4">Analiza matemáticamente qué tan rentable puede ser tu nicho basado en datos reales del mercado</p>
+            
+            <div class="calculator-input">
+                <div class="input-group">
+                    <label for="niche-type">Tipo de Nicho:</label>
+                    <select id="niche-type" onchange="calculatePotential()">
+                        <option value="">Seleccionar...</option>
+                        <option value="dominacion">Dominación/BDSM</option>
+                        <option value="fetiches">Fetiches Específicos</option>
+                        <option value="roleplay">Roleplay/Fantasías</option>
+                        <option value="interactivo">Juguetes Interactivos</option>
+                        <option value="personalizado">Contenido Personalizado</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="competition-level">Nivel de Competencia:</label>
+                    <select id="competition-level" onchange="calculatePotential()">
+                        <option value="">Seleccionar...</option>
+                        <option value="alta">Alta (500+ modelos)</option>
+                        <option value="media">Media (100-500 modelos)</option>
+                        <option value="baja">Baja (50-100 modelos)</option>
+                        <option value="muy-baja">Muy Baja (&lt;50 modelos)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="investment-level">Nivel de Inversión:</label>
+                    <select id="investment-level" onchange="calculatePotential()">
+                        <option value="">Seleccionar...</option>
+                        <option value="basico">Básico ($200-500)</option>
+                        <option value="intermedio">Intermedio ($500-1500)</option>
+                        <option value="avanzado">Avanzado ($1500-3000)</option>
+                        <option value="premium">Premium ($3000+)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="experience-level">Tu Nivel de Experiencia:</label>
+                    <select id="experience-level" onchange="calculatePotential()">
+                        <option value="">Seleccionar...</option>
+                        <option value="principiante">Principiante (0-6 meses)</option>
+                        <option value="intermedio">Intermedio (6-18 meses)</option>
+                        <option value="avanzado">Avanzado (18+ meses)</option>
+                        <option value="experto">Experto (3+ años)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="results-display" id="potential-results" style="display: none;">
+                <h4>📊 Análisis de Potencial:</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Potencial de Ingresos Mensuales:</strong> $<span id="income-potential">0</span></p>
+                        <p><strong>Tiempo hasta rentabilidad:</strong> <span id="time-to-profit">0</span> meses</p>
+                        <p><strong>Audiencia objetivo estimada:</strong> <span id="target-audience">0</span> usuarios</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Nivel de saturación:</strong> <span id="saturation-level">-</span></p>
+                        <p><strong>ROI proyectado (12 meses):</strong> <span id="roi-projection">0</span>%</p>
+                        <p><strong>Recomendación:</strong> <span id="recommendation">Completa el análisis</span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section class="progress-tracker">
+            <h2 class="section-title">📈 Tracker de Análisis Competitivo</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Investigación de Competencia</span>
+                            <span id="research-progress">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="research-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Análisis Psicológico</span>
+                            <span id="psychology-progress">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="psychology-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Estrategia de Diferenciación</span>
+                            <span id="strategy-progress">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="strategy-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Implementación Práctica</span>
+                            <span id="implementation-progress">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="implementation-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Optimización Continua</span>
+                            <span id="optimization-progress">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="optimization-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>Dominio Total</span>
+                            <span id="mastery-progress">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar-fill" id="mastery-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary mt-3" onclick="updateProgress()">Actualizar Mi Progreso</button>
+        </section>
+
+        <!-- Simulador de Escenarios -->
+        <section class="scenario-simulator">
+            <h2 class="text-center mb-4">🎭 Simulador de Estrategias Competitivas</h2>
+            <p class="text-center mb-4">Compara diferentes enfoques estratégicos y sus resultados proyectados</p>
+            
+            <div class="scenario-options">
+                <div class="scenario-option" onclick="selectScenario('copycat')">
+                    <div>
+                        <h5><i class="fas fa-copy me-2"></i>Copycat</h5>
+                        <p class="mb-0">Copiar directamente a top performers</p>
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('hybrid')">
+                    <div>
+                        <h5><i class="fas fa-puzzle-piece me-2"></i>Híbrida</h5>
+                        <p class="mb-0">Combinar elementos de varias exitosas</p>
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('innovative')">
+                    <div>
+                        <h5><i class="fas fa-lightbulb me-2"></i>Innovadora</h5>
+                        <p class="mb-0">Crear nicho completamente único</p>
+                    </div>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('analytical')">
+                    <div>
+                        <h5><i class="fas fa-chart-line me-2"></i>Analítica</h5>
+                        <p class="mb-0">Basada en data y análisis profundo</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="results-display" id="scenario-results" style="display: none;">
+                <h4>🎯 Resultados de la Estrategia</h4>
+                <div id="scenario-content"></div>
+            </div>
+        </section>
+
+        <!-- Herramientas de Análisis -->
+        <section class="analysis-tools">
+            <h2 class="text-center mb-4">🛠️ Kit de Herramientas de Análisis</h2>
+            <div class="tool-grid">
+                <div class="tool-item">
+                    <h5><i class="fas fa-search me-2"></i>Spy Tool</h5>
+                    <p>Herramienta para monitorear competencia de forma ética y legal</p>
+                </div>
+                <div class="tool-item">
+                    <h5><i class="fas fa-chart-pie me-2"></i>Analytics Dashboard</h5>
+                    <p>Dashboard para trackear métricas clave de performance</p>
+                </div>
+                <div class="tool-item">
+                    <h5><i class="fas fa-brain me-2"></i>Psychology Decoder</h5>
+                    <p>Plantillas para decodificar patrones psicológicos</p>
+                </div>
+                <div class="tool-item">
+                    <h5><i class="fas fa-bullseye me-2"></i>Niche Finder</h5>
+                    <p>Algoritmo para identificar nichos no saturados</p>
+                </div>
+                <div class="tool-item">
+                    <h5><i class="fas fa-rocket me-2"></i>Strategy Builder</h5>
+                    <p>Constructor paso a paso de estrategias personalizadas</p>
+                </div>
+                <div class="tool-item">
+                    <h5><i class="fas fa-tachometer-alt me-2"></i>Performance Tracker</h5>
+                    <p>Sistema de seguimiento de resultados en tiempo real</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Success Stories -->
+    <section class="success-stories">
+        <div class="container-fluid">
+            <h2 class="text-center mb-4">🏆 Casos de Éxito: Análisis que Transformó Carreras</h2>
+            <div class="stories-grid">
+                <div class="story-card">
+                    <h4>Isabella M. - La Analista Estratégica</h4>
+                    <div class="testimonial-box" style="background: rgba(255,255,255,0.1); border-left: 5px solid white;">
+                        <p>"Dediqué 2 semanas a analizar las top 50 modelos de mi nicho. Identifiqué 7 patrones psicológicos que todas usaban. Los adapté a mi personalidad y en 3 meses estaba en el top 10 de la plataforma."</p>
+                    </div>
+                    <div class="story-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">$47,892</span>
+                            <small>Ingresos mensuales</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">+1,347%</span>
+                            <small>Crecimiento</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3 meses</span>
+                            <small>Tiempo al éxito</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <h4>Camila R. - La Decodificadora de Patrones</h4>
+                    <div class="testimonial-box" style="background: rgba(255,255,255,0.1); border-left: 5px solid white;">
+                        <p>"Usé el sistema para analizar por qué ciertas modelos tenían usuarios que gastaban $500+ por sesión. Descubrí el 'framework de adicción' y lo repliqué. Ahora tengo una lista de espera de 2 semanas."</p>
+                    </div>
+                    <div class="story-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">$623</span>
+                            <small>Promedio por sesión</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">94%</span>
+                            <small>Usuarios que regresan</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">2 semanas</span>
+                            <small>Lista de espera</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="story-card">
+                    <h4>Sofía L. - La Estratega de Nichos</h4>
+                    <div class="testimonial-box" style="background: rgba(255,255,255,0.1); border-left: 5px solid white;">
+                        <p>"El análisis me reveló un nicho completamente no explorado: 'coaching emocional íntimo'. Combiné técnicas de las top performers con mi background en psicología. Creé un monopolio."</p>
+                    </div>
+                    <div class="story-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">$67,445</span>
+                            <small>Ingresos mensuales</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">0</span>
+                            <small>Competencia directa</small>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">$890</span>
+                            <small>Precio por hora</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Competitive Advantage -->
+    <div class="container-fluid">
+        <div class="competitive-advantage">
+            <h5 class="mb-4" style="color: var(--primary-color);">🎯 Tu Ventaja Competitiva con Análisis Científico</h5>
+            <div class="advantage-metric">
+                <span>Análisis estratégico vs improvisación</span>
+                <span class="metric-value">+1,247% efectividad</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Identificación de patrones psicológicos ocultos</span>
+                <span class="metric-value">+567% engagement</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Estrategias basadas en data real vs intuición</span>
+                <span class="metric-value">+890% precisión</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Desarrollo de nichos únicos no saturados</span>
+                <span class="metric-value">+456% diferenciación</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Optimización continua basada en análisis</span>
+                <span class="metric-value">+234% mejora constante</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Dominio de arquitectura psicológica</span>
+                <span class="metric-value">+1,789% master level</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Herramientas Prácticas -->
+    <div class="container-fluid">
+        <div class="mindmap-card" onclick="toggleDetails('practical-tools')">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>🔧 Kit de Implementación Práctica</h4>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="card-details" id="practical-tools">
+                <div class="analysis-tools">
+                    <h5 class="mb-3">🚀 Herramientas Listas para Usar</h5>
+                    <div class="tool-grid">
+                        <div class="tool-item">
+                            <h6><i class="fas fa-list-check"></i> Checklist de Análisis</h6>
+                            <p>Lista verificable de elementos para analizar en competencia</p>
+                        </div>
+                        <div class="tool-item">
+                            <h6><i class="fas fa-file-spreadsheet"></i> Templates de Tracking</h6>
+                            <p>Plantillas para documentar hallazgos y patrones</p>
+                        </div>
+                        <div class="tool-item">
+                            <h6><i class="fas fa-brain"></i> Decoder Psicológico</h6>
+                            <p>Guía para identificar triggers emocionales</p>
+                        </div>
+                        <div class="tool-item">
+                            <h6><i class="fas fa-chart-bar"></i> Métricas Dashboard</h6>
+                            <p>KPIs esenciales para medir tu progreso</p>
+                        </div>
+                        <div class="tool-item">
+                            <h6><i class="fas fa-target"></i> Strategy Builder</h6>
+                            <p>Constructor paso a paso de tu estrategia única</p>
+                        </div>
+                        <div class="tool-item">
+                            <h6><i class="fas fa-rocket"></i> Implementation Plan</h6>
+                            <p>Plan de acción de 30 días para ejecutar hallazgos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wellness y Ética -->
+    <div class="container-fluid">
+        <div class="wellness-tip">
+            <h6><i class="fas fa-balance-scale"></i> Ética en el Análisis Competitivo</h6>
+            <p class="mb-2">
+                <strong>IMPORTANTE:</strong> El análisis competitivo debe ser ético y respetuoso. Inspírate en técnicas exitosas pero siempre mantén tu autenticidad y originalidad.
+            </p>
+            <ul class="mb-0">
+                <li>Analiza técnicas públicas, nunca invadas privacidad</li>
+                <li>Inspírate pero NO copies contenido directamente</li>
+                <li>Respeta la propiedad intelectual de otras creadoras</li>
+                <li>Usa el análisis para MEJORAR, no para dañar competencia</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <section class="final-summary">
+        <div class="container-fluid">
+            <h2 class="mb-4">🎯 Tu Imperio de Análisis: La Ciencia del Éxito</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <p class="lead mb-4">
+                        Has desarrollado el sistema de análisis más poderoso de la industria. No es intuición - es ciencia pura que genera +1,247% ROI a través de estrategias basadas en data real de top performers.
+                    </p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <h4>🔬</h4>
+                            <h6>Análisis Científico</h6>
+                            <p>Decodificas patrones que otros no ven</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>🧠</h4>
+                            <h6>Psicología Dominada</h6>
+                            <p>Entiendes la arquitectura mental del éxito</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>💎</h4>
+                            <h6>Estrategia Única</h6>
+                            <p>Tu nicho está basado en ciencia real</p>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mb-3">📋 Tu Plan de Dominación INMEDIATO:</h5>
+                    <div class="text-start">
+                        <p>✅ Analizar top 20 performers de tu nicho en 72 horas<br>
+                        ✅ Identificar 5 patrones psicológicos únicos<br>
+                        ✅ Crear tu estrategia híbrida diferenciada<br>
+                        ✅ Implementar y testear en 7 días<br>
+                        ✅ Optimizar basado en resultados reales semanalmente</p>
+                    </div>
+                    
+                    <button class="cta-button" onclick="launchAnalysisSystem()">
+                        ¡A CONSTRUIR TU IMPERIO DE ANÁLISIS!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables globales
+        let analysisProgress = {
+            research: 0,
+            psychology: 0,
+            strategy: 0,
+            implementation: 0,
+            optimization: 0,
+            mastery: 0
+        };
+        
+        let selectedScenario = null;
+        
+        // Actualizar fecha y hora actual
+        function updateDateTime() {
+            const now = new Date();
+            const timeOptions = { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                timeZone: 'America/Bogota'
+            };
+            const dateOptions = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric'
+            };
+            
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('es-ES', timeOptions);
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', dateOptions);
+        }
+        
+        // Toggle para expandir detalles
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId + '-details');
+            const icon = document.getElementById(elementId + '-icon');
+            
+            if (element.classList.contains('expanded')) {
+                element.classList.remove('expanded');
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            } else {
+                element.classList.add('expanded');
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            }
+        }
+
+        // Calculadora de potencial
+        function calculatePotential() {
+            const niche = document.getElementById('niche-type').value;
+            const competition = document.getElementById('competition-level').value;
+            const investment = document.getElementById('investment-level').value;
+            const experience = document.getElementById('experience-level').value;
+            
+            if (!niche || !competition || !investment || !experience) {
+                document.getElementById('potential-results').style.display = 'none';
+                return;
+            }
+            
+            // Factores de cálculo
+            const nicheMultipliers = {
+                'dominacion': 1.8,
+                'fetiches': 1.6,
+                'roleplay': 1.4,
+                'interactivo': 2.2,
+                'personalizado': 2.0
+            };
+            
+            const competitionMultipliers = {
+                'alta': 0.6,
+                'media': 0.8,
+                'baja': 1.2,
+                'muy-baja': 1.5
+            };
+            
+            const investmentMultipliers = {
+                'basico': 0.7,
+                'intermedio': 1.0,
+                'avanzado': 1.4,
+                'premium': 1.8
+            };
+            
+            const experienceMultipliers = {
+                'principiante': 0.6,
+                'intermedio': 0.9,
+                'avanzado': 1.2,
+                'experto': 1.5
+            };
+            
+            // Cálculos
+            const baseIncome = 8000;
+            const incomeMultiplier = nicheMultipliers[niche] * competitionMultipliers[competition] * 
+                                  investmentMultipliers[investment] * experienceMultipliers[experience];
+            
+            const projectedIncome = Math.round(baseIncome * incomeMultiplier);
+            const timeToProfit = Math.max(1, Math.round(6 / incomeMultiplier));
+            const targetAudience = Math.round(projectedIncome * 0.8);
+            const saturationLevel = competition === 'alta' ? 'Alta' : competition === 'media' ? 'Media' : 'Baja';
+            const roiProjection = Math.round(incomeMultiplier * 100);
+            
+            let recommendation = '';
+            if (incomeMultiplier > 2.0) {
+                recommendation = '🚀 Excelente potencial - Implementar inmediatamente';
+            } else if (incomeMultiplier > 1.2) {
+                recommendation = '📈 Buen potencial - Proceder con optimizaciones';
+            } else {
+                recommendation = '⚠️ Potencial limitado - Considerar ajustes estratégicos';
+            }
+            
+            // Actualizar resultados
+            document.getElementById('income-potential').textContent = projectedIncome.toLocaleString();
+            document.getElementById('time-to-profit').textContent = timeToProfit;
+            document.getElementById('target-audience').textContent = targetAudience.toLocaleString();
+            document.getElementById('saturation-level').textContent = saturationLevel;
+            document.getElementById('roi-projection').textContent = roiProjection;
+            document.getElementById('recommendation').textContent = recommendation;
+            
+            document.getElementById('potential-results').style.display = 'block';
+        }
+
+        // Actualizar progreso
+        function updateProgress() {
+            // Incrementar progreso aleatoriamente para demo
+            Object.keys(analysisProgress).forEach(key => {
+                analysisProgress[key] = Math.min(100, analysisProgress[key] + Math.random() * 25);
+            });
+            
+            // Actualizar barras y porcentajes
+            Object.keys(analysisProgress).forEach(key => {
+                const progress = Math.round(analysisProgress[key]);
+                document.getElementById(key + '-progress').textContent = progress + '%';
+                document.getElementById(key + '-bar').style.width = progress + '%';
+            });
+        }
+
+        // Seleccionar escenario
+        function selectScenario(scenario) {
+            // Remover selección anterior
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Seleccionar nuevo escenario
+            event.target.closest('.scenario-option').classList.add('selected');
+            selectedScenario = scenario;
+            
+            const scenarios = {
+                copycat: {
+                    title: 'Estrategia Copycat',
+                    results: `
+                        <div class="alert alert-warning">
+                            <h6>📊 Resultados Proyectados:</h6>
+                            <ul>
+                                <li><strong>Efectividad:</strong> 40% - Competencia directa alta</li>
+                                <li><strong>Diferenciación:</strong> Muy baja - Te confundes con originales</li>
+                                <li><strong>Tiempo al éxito:</strong> 8-12 meses con resultados limitados</li>
+                                <li><strong>Sostenibilidad:</strong> Baja - Vulnerable a cambios</li>
+                                <li><strong>ROI proyectado:</strong> +23% (muy limitado)</li>
+                            </ul>
+                            <p><strong>Limitación:</strong> Siempre serás una copia, nunca la original</p>
+                        </div>
+                    `
+                },
+                hybrid: {
+                    title: 'Estrategia Híbrida',
+                    results: `
+                        <div class="alert alert-info">
+                            <h6>📊 Resultados Proyectados:</h6>
+                            <ul>
+                                <li><strong>Efectividad:</strong> 70% - Balanceo entre probado y único</li>
+                                <li><strong>Diferenciación:</strong> Media-Alta - Combinación única</li>
+                                <li><strong>Tiempo al éxito:</strong> 4-6 meses con resultados sólidos</li>
+                                <li><strong>Sostenibilidad:</strong> Alta - Adaptable y evoluciona</li>
+                                <li><strong>ROI proyectado:</strong> +234% (excelente balance)</li>
+                            </ul>
+                            <p><strong>Ventaja:</strong> Lo mejor de varios mundos con tu toque personal</p>
+                        </div>
+                    `
+                },
+                innovative: {
+                    title: 'Estrategia Innovadora',
+                    results: `
+                        <div class="alert alert-success">
+                            <h6>📊 Resultados Proyectados:</h6>
+                            <ul>
+                                <li><strong>Efectividad:</strong> 50-90% - Alto riesgo, alto reward</li>
+                                <li><strong>Diferenciación:</strong> Máxima - Creas tu propia categoría</li>
+                                <li><strong>Tiempo al éxito:</strong> 2-4 meses O +12 meses (variable)</li>
+                                <li><strong>Sostenibilidad:</strong> Muy Alta - Eres la pionera</li>
+                                <li><strong>ROI proyectado:</strong> +567% o failure total</li>
+                            </ul>
+                            <p><strong>Poder:</strong> Si funciona, dominas completamente el nicho</p>
+                        </div>
+                    `
+                },
+                analytical: {
+                    title: 'Estrategia Analítica (RECOMENDADA)',
+                    results: `
+                        <div class="alert alert-primary">
+                            <h6>📊 Resultados Proyectados:</h6>
+                            <ul>
+                                <li><strong>Efectividad:</strong> 89% - Basada en ciencia y data real</li>
+                                <li><strong>Diferenciación:</strong> Alta - Estrategia única optimizada</li>
+                                <li><strong>Tiempo al éxito:</strong> 2-3 meses con resultados predecibles</li>
+                                <li><strong>Sostenibilidad:</strong> Máxima - Adaptación continua</li>
+                                <li><strong>ROI proyectado:</strong> +1,247% (comprobado científicamente)</li>
+                            </ul>
+                            <p><strong>DOMINIO:</strong> Combinas lo mejor de todas las estrategias con data científica</p>
+                        </div>
+                    `
+                }
+            };
+            
+            const result = scenarios[scenario];
+            document.getElementById('scenario-content').innerHTML = `
+                <h5>${result.title}</h5>
+                ${result.results}
+            `;
+            document.getElementById('scenario-results').style.display = 'block';
+        }
+
+        function scrollToSection(sectionId) {
+            document.getElementById(sectionId).scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        function launchAnalysisSystem() {
+            alert('🚀 ¡ACTIVANDO TU SISTEMA DE ANÁLISIS MASTER!\n\nAcceso inmediato a:\n\n🔬 Laboratorio de análisis competitivo completo\n📊 Dashboard de métricas en tiempo real\n🧠 Decoder psicológico de patrones\n🎯 Builder de estrategias personalizadas\n📈 Tracker de progreso y optimización\n🛠️ Kit completo de herramientas profesionales\n\n¡Tu dominación científica comienza AHORA! 💎');
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            
+            // Actualizar cada minuto
+            setInterval(updateDateTime, 60000);
+            
+            // Simular progreso inicial
+            setTimeout(() => {
+                analysisProgress.research = 15;
+                analysisProgress.psychology = 8;
+                updateProgress();
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

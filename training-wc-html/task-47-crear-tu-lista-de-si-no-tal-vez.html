@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🛡️ Mapa Estratégico de Límites - WC Training</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #5e3c9b;
+            --secondary-color: #d8b4fe;
+            --accent-purple: #8b5cf6;
+            --deep-purple: #44337a;
+            --green-zone: #10b981;
+            --yellow-zone: #facc15;
+            --red-zone: #ef4444;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-cream: #fffdf7;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #5e3c9b 0%, #d8b4fe 100%);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-accent: linear-gradient(135deg, #44337a 0%, #5e3c9b 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #5e3c9b, #d8b4fe, #8b5cf6, #ec4899);
+            --gradient-green: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-yellow: linear-gradient(135deg, #facc15 0%, #fbbf24 100%);
+            --gradient-red: linear-gradient(135deg, #ef4444 0%, #f87171 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #fffdf7 0%, #fef9c3 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Training Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(94, 60, 155, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .wc-stats {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Industry Insights Section */
+        .industry-insights {
+            background: var(--bg-white);
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(94, 60, 155, 0.15);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            color: white;
+            padding: 5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 25L75 25L50 75Z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E") repeat;
+            animation: float 24s infinite ease-in-out;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(0px) translateY(0px); }
+            25% { transform: translateX(10px) translateY(-10px); }
+            50% { transform: translateX(-5px) translateY(-20px); }
+            75% { transform: translateX(-10px) translateY(-5px); }
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-title {
+            font-size: clamp(1.8rem, 4vw, 2.2rem);
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .lab-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Limit Zones */
+        .limit-zone {
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .limit-zone:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .zone-green {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            border-left: 6px solid var(--green-zone);
+        }
+
+        .zone-green::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .zone-yellow {
+            background: linear-gradient(135deg, #fef9c3 0%, #fef3c7 100%);
+            border-left: 6px solid var(--yellow-zone);
+        }
+
+        .zone-yellow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(250, 204, 21, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .zone-red {
+            background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+            border-left: 6px solid var(--red-zone);
+        }
+
+        .zone-red::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
+        }
+
+        .zone-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .zone-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .zone-green .zone-icon {
+            background: var(--gradient-green);
+        }
+
+        .zone-yellow .zone-icon {
+            background: var(--gradient-yellow);
+        }
+
+        .zone-red .zone-icon {
+            background: var(--gradient-red);
+        }
+
+        .zone-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
+        .zone-green .zone-title {
+            color: var(--green-zone);
+        }
+
+        .zone-yellow .zone-title {
+            color: #d97706;
+        }
+
+        .zone-red .zone-title {
+            color: var(--red-zone);
+        }
+
+        .zone-content ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .zone-content li {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .zone-content li:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .zone-content li::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .zone-green li::before {
+            background: var(--green-zone);
+        }
+
+        .zone-yellow li::before {
+            background: var(--yellow-zone);
+        }
+
+        .zone-red li::before {
+            background: var(--red-zone);
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(94, 60, 155, 0.2);
+        }
+
+        .interactive-card.expanded {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ede9fe 100%);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .card-toggle {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .card-details.expanded {
+            max-height: 2000px;
+        }
+
+        /* Boundary Calculator */
+        .boundary-calculator {
+            background: linear-gradient(135deg, #f3e8ff 0%, #ffffff 100%);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 2px solid var(--secondary-color);
+            box-shadow: 0 20px 50px rgba(94, 60, 155, 0.15);
+        }
+
+        .calculator-input {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            font-size: 1.1rem;
+            width: 100%;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .calculator-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(94, 60, 155, 0.1);
+            outline: none;
+        }
+
+        .calculator-result {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(68, 51, 122, 0.3);
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            border-left: 5px solid var(--success-green);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+        }
+
+        .success-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--success-green);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* Critical Highlights */
+        .critical-highlight {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 2px solid var(--warning-orange);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .critical-highlight::before {
+            content: '⚠️';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .critical-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--warning-orange);
+            margin-bottom: 1rem;
+        }
+
+        /* Boundary Enforcement Simulator */
+        .boundary-simulator {
+            background: linear-gradient(135deg, #ede9fe 0%, #ffffff 100%);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 3rem 0;
+            border: 2px solid var(--accent-purple);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
+        }
+
+        .scenario-option {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .scenario-option:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(94, 60, 155, 0.2);
+        }
+
+        .scenario-option.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .scenario-result {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(68, 51, 122, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 3rem 0;
+            }
+            
+            .lab-section {
+                padding: 2rem;
+                margin: 2rem 0;
+            }
+            
+            .limit-zone {
+                padding: 2rem;
+            }
+            
+            .boundary-calculator {
+                padding: 2rem;
+            }
+            
+            .wc-header .container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .insight-card {
+                padding: 1.5rem;
+            }
+            
+            .success-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .zone-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .limit-zone {
+                padding: 1.5rem;
+            }
+            
+            .boundary-calculator {
+                padding: 1.5rem;
+            }
+            
+            .success-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .zone-content li {
+                padding: 1rem;
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Utility Classes */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(94, 60, 155, 0.4);
+            color: white;
+        }
+
+        .text-gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .current-date {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .boundary-tip {
+            background: #f3e8ff;
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            font-style: italic;
+            color: var(--deep-purple);
+            position: relative;
+        }
+
+        .boundary-tip::before {
+            content: '🛡️';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Training Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                <div class="wc-logo">
+                    <i class="fas fa-crown me-2"></i>WC Training
+                </div>
+                <div class="wc-stats">
+                    <span class="live-indicator"></span>
+                    <strong>12,847</strong> modelos conectadas
+                </div>
+                <div class="current-date" id="currentDate"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <div class="row text-center mb-5">
+                <div class="col-12">
+                    <h2 class="display-6 fw-bold text-gradient mb-3">📊 Industry Insights 2025</h2>
+                    <p class="lead text-muted">La importancia crítica de límites bien definidos</p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">+740%</div>
+                        <h5 class="fw-bold">Respeto con Límites Claros</h5>
+                        <p class="text-muted">Incremento en respeto de audiencia cuando los límites están bien comunicados</p>
+                        <small class="text-muted">Creator Safety Report 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">92%</div>
+                        <h5 class="fw-bold">Menos Solicitudes Inapropiadas</h5>
+                        <p class="text-muted">Reducción en requests problemáticos con límites integrados en presentación</p>
+                        <small class="text-muted">Platform Analytics 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">$4,389</div>
+                        <h5 class="fw-bold">Ingreso Promedio Semanal</h5>
+                        <p class="text-muted">Modelos con mapas de límites estratégicamente comunicados</p>
+                        <small class="text-muted">Creator Economy Study 2025</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <header class="main-header text-center">
+        <div class="container">
+            <h1 class="main-title">🛡️ Mapa Estratégico de Límites</h1>
+            <p class="main-subtitle">
+                Construye tu fortaleza digital invisible. Tus límites no son muros que dividen - 
+                son puentes que conectan con respeto. Domina el arte de decir NO sin perder admiradores.
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Fundamentos Estratégicos -->
+        <section class="lab-section">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>🎯 Psicología de Límites Efectivos</span>
+            </div>
+
+            <div class="critical-highlight">
+                <div class="critical-title">CRÍTICO: ¿Por qué 92% ven menos solicitudes inapropiadas?</div>
+                <p>Los límites efectivos no se defienden constantemente - se integran tan profundamente en tu presentación que rara vez son desafiados. Tu audiencia aprende qué esperar antes de preguntar. Es prevención, no confrontación.</p>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('psychology')">
+                <div class="card-header">
+                    <h4 class="card-title">🧠 Los 4 Niveles de Comunicación de Límites</h4>
+                    <button class="card-toggle">
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="psychology">
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <h5 class="text-gradient">1. Integración Visual</h5>
+                            <p>Tu outfit, accesorios y ambiente ya comunican qué tipo de experiencia ofreces.</p>
+                            <div class="boundary-tip">
+                                <strong>Ejemplo:</strong> Profesora con outfit elegante = respeto profesional automático
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-gradient">2. Comunicación Proactiva</h5>
+                            <p>Mencionar tus especialidades automáticamente excluye lo que no haces.</p>
+                            <div class="boundary-tip">
+                                <strong>Ejemplo:</strong> "Soy experta en roleplay elegante" = no contenido extremo
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-gradient">3. Redirección Positiva</h5>
+                            <p>Cuando surgen requests fuera de zona, redirigir hacia lo que SÍ haces con entusiasmo.</p>
+                            <div class="boundary-tip">
+                                <strong>Ejemplo:</strong> "Eso no es mi estilo, pero tengo algo aún mejor para ti..."
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="text-gradient">4. Refuerzo por Recompensa</h5>
+                            <p>Cuando respetan tus límites, dales experiencias extraordinarias dentro de tu zona.</p>
+                            <div class="boundary-tip">
+                                <strong>Impacto:</strong> Aprenden que tu zona verde es más adictiva que cualquier zona roja
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mapa de Zonas -->
+        <section class="lab-section">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-map-marked-alt"></i>
+                </div>
+                <span>🗺️ Tu Mapa de Zonas Estratégicas</span>
+            </div>
+
+            <!-- Zona Verde -->
+            <div class="limit-zone zone-green">
+                <div class="zone-header">
+                    <div class="zone-icon">✅</div>
+                    <h2 class="zone-title">ZONA VERDE: "Sí, con gusto"</h2>
+                </div>
+                <div class="zone-content">
+                    <ul>
+                        <li>Roleplay de oficina profesional: jefa ejecutiva, secretaria elegante, asistente personal</li>
+                        <li>Fantasías médicas sofisticadas: doctora especialista, enfermera de cuidados premium</li>
+                        <li>Lencería de lujo y fetiches visuales refinados con accesorios temáticos exclusivos</li>
+                        <li>Escenarios educativos con autoridad intelectual: profesora universitaria, tutora privada</li>
+                        <li>Dominación psicológica elegante através del lenguaje y presencia</li>
+                        <li>Fetiches de vestimenta profesional: uniformes, tacones, gafas, elementos de poder</li>
+                        <li>Juegos de seducción intellectual con tensión construida gradualmente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Zona Amarilla -->
+            <div class="limit-zone zone-yellow">
+                <div class="zone-header">
+                    <div class="zone-icon">🟡</div>
+                    <h2 class="zone-title">ZONA AMARILLA: "Tal vez, bajo condiciones específicas"</h2>
+                </div>
+                <div class="zone-content">
+                    <ul>
+                        <li>Escenarios BDSM sofisticados (solo en privados premium con consentimiento explícito)</li>
+                        <li>Lenguaje más explícito y dinámicas de sumisión (con usuarios verificados de confianza)</li>
+                        <li>Representaciones de autoridad en contextos sensibles (con enfoque respetuoso y adulto)</li>
+                        <li>Simulación de dominación intensa (mínimo 500 tokens, usuarios VIP únicamente)</li>
+                        <li>Contenido visual más revelador (solo en shows privados exclusivos)</li>
+                        <li>Fetiches específicos que requieren preparación especial (con aviso previo)</li>
+                        <li>Roleplay con elementos de vulnerabilidad controlada (contexto claro establecido)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Zona Roja -->
+            <div class="limit-zone zone-red">
+                <div class="zone-header">
+                    <div class="zone-icon">⛔</div>
+                    <h2 class="zone-title">ZONA ROJA: "No, nunca, bajo ninguna circunstancia"</h2>
+                </div>
+                <div class="zone-content">
+                    <ul>
+                        <li>Cualquier contenido que implique o simule menores de edad, sin excepciones</li>
+                        <li>Fetiches escatológicos, violencia real o contenido que cause daño físico</li>
+                        <li>Grabaciones, screenshots o distribución de contenido sin consentimiento explícito</li>
+                        <li>Lenguaje humillante que ataque la autoestima personal o características físicas</li>
+                        <li>Solicitudes que violen términos de servicio de la plataforma</li>
+                        <li>Contenido ilegal en cualquier jurisdicción o que promueva actividades ilegales</li>
+                        <li>Intercambio de información personal, encuentros físicos o comunicación fuera de plataforma</li>
+                        <li>Fetiches extremos que requieran accesorios peligrosos o actividades de riesgo</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculadora de Límites -->
+        <section class="lab-section">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <span>🧮 Calculadora de Efectividad de Límites</span>
+            </div>
+
+            <div class="boundary-calculator">
+                <h4 class="text-center mb-4">Evalúa la Efectividad de tu Comunicación de Límites</h4>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Solicitudes inapropiadas por sesión:</label>
+                        <input type="number" class="calculator-input" id="inappropriateRequests" value="0" min="0" max="20" onchange="calculateBoundaryEffectiveness()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">% de respeto inmediato a tus límites:</label>
+                        <input type="number" class="calculator-input" id="respectPercentage" value="0" min="0" max="100" onchange="calculateBoundaryEffectiveness()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Claridad de comunicación (1-10):</label>
+                        <input type="number" class="calculator-input" id="communicationClarity" value="0" min="1" max="10" onchange="calculateBoundaryEffectiveness()">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Retención de usuarios que respetan límites (%):</label>
+                        <input type="number" class="calculator-input" id="respectfulRetention" value="0" min="0" max="100" onchange="calculateBoundaryEffectiveness()">
+                    </div>
+                </div>
+                <div class="calculator-result" id="boundaryResult">
+                    Completa los campos para calcular tu Índice de Efectividad de Límites
+                </div>
+                <div id="boundaryAnalysis" class="mt-3"></div>
+            </div>
+        </section>
+
+        <!-- Simulador de Límites -->
+        <section class="lab-section">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <span>🎮 Simulador de Aplicación de Límites</span>
+            </div>
+
+            <div class="boundary-simulator">
+                <h4 class="text-center mb-4">Practica Respuestas a Solicitudes Desafiantes</h4>
+                <p class="text-center text-muted mb-4">Selecciona un escenario y ve la respuesta estratégica recomendada:</p>
+                
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="scenario-option" onclick="selectBoundaryScenario('inappropriate')">
+                            <h5>🚫 Solicitud Inapropiada</h5>
+                            <p>"¿Puedes hacer algo más extremo?"</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scenario-option" onclick="selectBoundaryScenario('pushy')">
+                            <h5>💸 Usuario Insistente</h5>
+                            <p>"Te pago extra si haces esto..."</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scenario-option" onclick="selectBoundaryScenario('recording')">
+                            <h5>📹 Intento de Grabación</h5>
+                            <p>"¿Puedo grabar esto para después?"</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="scenario-option" onclick="selectBoundaryScenario('personal')">
+                            <h5>📱 Información Personal</h5>
+                            <p>"¿Cuál es tu WhatsApp real?"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scenario-result" id="boundaryScenarioResult" style="display: none;">
+                    <!-- Resultado del escenario aparecerá aquí -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Casos de Éxito -->
+        <section class="lab-section">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <span>🏆 Casos de Éxito: Límites que Generan Más Ingresos</span>
+            </div>
+
+            <div class="success-story">
+                <h4 class="fw-bold mb-3">📈 Caso Sofia: De Confrontación a Respeto Automático</h4>
+                <p class="mb-3">"Antes defendía mis límites constantemente, perdiendo energía y usuarios. Implementé el sistema de 'Comunicación Proactiva': mi perfil, outfit y primeras frases ya establecen mi estilo. Ahora el 94% de mis usuarios entienden mis límites antes de preguntar. Los pocos que intentan cruzarlos reciben redirección positiva hacia mi zona verde, donde soy extraordinaria."</p>
+                
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <div class="metric-number">+680%</div>
+                        <div class="metric-label">Incremento Respeto</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">94%</div>
+                        <div class="metric-label">Comprensión Inmediata</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">$4,389</div>
+                        <div class="metric-label">Ingreso Semanal</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">87%</div>
+                        <div class="metric-label">Retención VIP</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4 class="fw-bold mb-3">💎 Caso Isabella: Límites Premium = Usuarios Premium</h4>
+                <p class="mb-3">"Convertí mis límites en parte de mi brand de lujo. No es que 'no hago ciertas cosas', es que 'me especializo en experiencias sofisticadas'. Mis usuarios ahora pagan más por contenido dentro de mi zona verde porque saben que es exclusivo, refinado y auténtico. Los límites claros atrajeron exactamente la audiencia que quiero."</p>
+                
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <div class="metric-number">+420%</div>
+                        <div class="metric-label">Precio Promedio</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">78%</div>
+                        <div class="metric-label">Usuarios VIP</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">$6,247</div>
+                        <div class="metric-label">Ingreso Semanal</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-number">91%</div>
+                        <div class="metric-label">Satisfacción</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mantra Final -->
+        <section class="lab-section">
+            <div class="lab-title">
+                <div class="lab-icon">
+                    <i class="fas fa-scroll"></i>
+                </div>
+                <span>📜 Mantra del Master de Límites</span>
+            </div>
+
+            <div class="boundary-tip">
+                <h4 class="text-center mb-4">"Los límites más efectivos no son los que necesitas defender constantemente, sino los que has integrado tan profundamente en tu presentación que rara vez son desafiados."</h4>
+                <p class="text-center mb-4">Tu zona verde no es una limitación - es tu especialidad. Tu zona roja no es un rechazo - es una redirección hacia la experiencia extraordinaria que SÍ ofreces.</p>
+                <div class="text-center">
+                    <button class="btn-primary-custom" onclick="generatePersonalBoundaryStatement()">
+                        <i class="fas fa-magic me-2"></i>Genera Tu Declaración de Límites Personal
+                    </button>
+                </div>
+                <div id="personalBoundaryStatement" class="mt-4" style="display: none;">
+                    <!-- Declaración personal aparecerá aquí -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Current Date Display
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle Details Function
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            const card = details.closest('.interactive-card');
+            const toggle = card.querySelector('.card-toggle i');
+            
+            details.classList.toggle('expanded');
+            card.classList.toggle('expanded');
+            
+            if (details.classList.contains('expanded')) {
+                toggle.style.transform = 'rotate(180deg)';
+            } else {
+                toggle.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Boundary Effectiveness Calculator
+        function calculateBoundaryEffectiveness() {
+            const inappropriateRequests = parseInt(document.getElementById('inappropriateRequests').value) || 0;
+            const respectPercentage = parseInt(document.getElementById('respectPercentage').value) || 0;
+            const communicationClarity = parseInt(document.getElementById('communicationClarity').value) || 0;
+            const respectfulRetention = parseInt(document.getElementById('respectfulRetention').value) || 0;
+
+            if (inappropriateRequests === 0 && respectPercentage === 0 && communicationClarity === 0 && respectfulRetention === 0) {
+                document.getElementById('boundaryResult').innerHTML = 'Completa los campos para calcular tu Índice de Efectividad de Límites';
+                document.getElementById('boundaryAnalysis').innerHTML = '';
+                return;
+            }
+
+            // Calculate effectiveness score (0-100)
+            const inappropriateScore = Math.max(0, 100 - (inappropriateRequests * 5));
+            const respectScore = respectPercentage;
+            const clarityScore = communicationClarity * 10;
+            const retentionScore = respectfulRetention;
+
+            const totalScore = (inappropriateScore + respectScore + clarityScore + retentionScore) / 4;
+
+            let level = '';
+            let recommendation = '';
+            let color = '';
+
+            if (totalScore >= 90) {
+                level = 'MASTER DE LÍMITES';
+                color = 'var(--success-green)';
+                recommendation = '¡Excelente! Tus límites son una fortaleza invisible. Mantén este nivel y considera enseñar a otras modelos.';
+            } else if (totalScore >= 75) {
+                level = 'EXPERTO EN LÍMITES';
+                color = 'var(--green-zone)';
+                recommendation = 'Muy bien. Pequeños ajustes en comunicación proactiva pueden llevarte al nivel master.';
+            } else if (totalScore >= 60) {
+                level = 'LÍMITES EN DESARROLLO';
+                color = 'var(--yellow-zone)';
+                recommendation = 'Buen progreso. Enfócate en integrar límites visualmente y mejorar redirección positiva.';
+            } else {
+                level = 'NECESITA FORTALECIMIENTO';
+                color = 'var(--red-zone)';
+                recommendation = 'Es hora de implementar el sistema completo. Comienza con comunicación proactiva clara.';
+            }
+
+            document.getElementById('boundaryResult').innerHTML = `
+                <div style="color: ${color}; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">
+                    ${level}: ${totalScore.toFixed(1)}/100
+                </div>
+                <div style="font-size: 1.1rem;">
+                    ${recommendation}
+                </div>
+            `;
+
+            document.getElementById('boundaryAnalysis').innerHTML = `
+                <div class="row g-3 mt-3">
+                    <div class="col-md-6">
+                        <div class="bg-white p-3 rounded border">
+                            <strong>Análisis Detallado:</strong><br>
+                            • Resistencia a solicitudes inapropiadas: ${inappropriateScore.toFixed(0)}/100<br>
+                            • Respeto inmediato: ${respectScore}%<br>
+                            • Claridad de comunicación: ${clarityScore}/100<br>
+                            • Retención de usuarios respetuosos: ${respectfulRetention}%
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-white p-3 rounded border">
+                            <strong>Potencial de Ingresos:</strong><br>
+                            Proyección semanal: <span style="color: var(--success-green); font-weight: bold;">${(2000 + (totalScore * 35)).toFixed(0)}</span><br>
+                            <small class="text-muted">Basado en efectividad de límites promedio de la industria</small>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Boundary Scenario Simulator
+        function selectBoundaryScenario(scenarioType) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Select current option
+            event.target.closest('.scenario-option').classList.add('selected');
+
+            let response = '';
+            let strategy = '';
+
+            switch(scenarioType) {
+                case 'inappropriate':
+                    response = '"Entiendo que buscas algo especial. Mi especialidad es crear experiencias sofisticadas que van más allá de lo obvio. Tengo algo mucho mejor en mente que te va a encantar..."';
+                    strategy = 'Redirección Positiva + Valor Añadido. No rechazas directamente, sino que ofreces algo mejor dentro de tu zona verde.';
+                    break;
+                case 'pushy':
+                    response = '"Aprecio tu generosidad, pero mi valor no está en hacer excepciones, sino en ser extraordinaria en lo que domino. Déjame mostrarte por qué mis especialidades valen mucho más que cualquier extra..."';
+                    strategy = 'Reafirmación de Valor + Redirección. Estableces que tu valía está en tu expertise, no en ceder límites.';
+                    break;
+                case 'recording':
+                    response = '"Los momentos especiales se viven una sola vez, eso los hace únicos. Además, esto viola las políticas de la plataforma. ¿Qué tal si creamos algo tan memorable que no necesites grabarlo?"';
+                    strategy = 'Explicación + Alternativa Atractiva. Educas sobre políticas mientras ofreces algo mejor.';
+                    break;
+                case 'personal':
+                    response = '"Mantengo mi vida profesional y personal separadas - eso me permite darte toda mi energía aquí. Mis mejores conversaciones son en vivo, donde puedo enfocarme 100% en ti..."';
+                    strategy = 'Límite Profesional + Beneficio para Usuario. Explicas que la separación los beneficia a ellos.';
+                    break;
+            }
+
+            document.getElementById('boundaryScenarioResult').style.display = 'block';
+            document.getElementById('boundaryScenarioResult').innerHTML = `
+                <h5 class="mb-3"><i class="fas fa-lightbulb text-warning me-2"></i>Respuesta Estratégica Recomendada:</h5>
+                <div class="bg-white p-3 rounded mb-3 border-start border-4 border-success">
+                    <em>${response}</em>
+                </div>
+                <h6 class="mb-2">📋 Estrategia Aplicada:</h6>
+                <p class="mb-0">${strategy}</p>
+                <div class="mt-3 text-center">
+                    <small class="text-muted">Esta respuesta mantiene límites mientras ofrece valor y mantiene el engagement positivo</small>
+                </div>
+            `;
+        }
+
+        // Generate Personal Boundary Statement
+        function generatePersonalBoundaryStatement() {
+            const statements = [
+                "Mi zona verde es mi zona de brillantez. Aquí es donde creo experiencias que te van a obsesionar de la mejor manera.",
+                "No se trata de lo que no hago, sino de lo extraordinario que SÍ hago. Mis especialidades son tu nueva adicción favorita.",
+                "Mis límites no son muros - son puentes hacia experiencias más sofisticadas de las que imaginas.",
+                "Cuando respetas mis límites, desbloqueas el acceso a mi creatividad sin restricciones dentro de mi expertise.",
+                "Mi valor está en mi autenticidad. Los límites claros me permiten darte lo mejor de mí sin reservas."
+            ];
+
+            const randomStatement = statements[Math.floor(Math.random() * statements.length)];
+            
+            document.getElementById('personalBoundaryStatement').style.display = 'block';
+            document.getElementById('personalBoundaryStatement').innerHTML = `
+                <div class="bg-white p-4 rounded border border-primary">
+                    <h6 class="text-primary mb-3"><i class="fas fa-quote-left me-2"></i>Tu Declaración Personal de Límites:</h6>
+                    <p class="fst-italic mb-3 fs-5">"${randomStatement}"</p>
+                    <div class="text-center">
+                        <button class="btn btn-outline-primary btn-sm" onclick="generatePersonalBoundaryStatement()">
+                            <i class="fas fa-refresh me-1"></i>Generar Otra
+                        </button>
+                        <button class="btn btn-success btn-sm ms-2" onclick="copyBoundaryStatement('${randomStatement}')">
+                            <i class="fas fa-copy me-1"></i>Copiar
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Copy Boundary Statement
+        function copyBoundaryStatement(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Show temporary success message
+                const button = event.target;
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check me-1"></i>¡Copiado!';
+                button.classList.remove('btn-success');
+                button.classList.add('btn-outline-success');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.add('btn-success');
+                    button.classList.remove('btn-outline-success');
+                }, 2000);
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            setInterval(updateCurrentDate, 60000); // Update every minute
+        });
+    </script>
+</body>
+</html>

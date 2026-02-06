@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=5">
+    <title>Masters del Sistema de Fidelidad | WC Training</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #8b5cf6;
+            --secondary-color: #f3d5fa;
+            --elite-gold: #ffd700;
+            --devotion-purple: #9333ea;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            /* Gradientes temáticos */
+            --gradient-primary: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
+            --gradient-secondary: linear-gradient(135deg, #f3d5fa 0%, #fbe5ff 100%);
+            --gradient-elite: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+            --gradient-devotion: linear-gradient(135deg, #9333ea 0%, #7c3aed 100%);
+            --gradient-animated: linear-gradient(-45deg, #8b5cf6, #ec4899, #f3d5fa, #fbe5ff);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-stats {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .industry-insights::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease-in-out infinite;
+            opacity: 0.05;
+            border-radius: 50%;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--success-green);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(139, 92, 246, 0.1);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(139, 92, 246, 0.15);
+        }
+
+        .insight-stat {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Header Principal */
+        .hero-section {
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 24s ease-in-out infinite;
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            margin: 2rem 0;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Level Cards System */
+        .levels-container {
+            margin: 3rem 0;
+        }
+
+        .level-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .level-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 60px rgba(139, 92, 246, 0.2);
+        }
+
+        .level-card.expanded {
+            transform: scale(1.02);
+        }
+
+        .level-amigo {
+            border-left: 5px solid #10b981;
+        }
+
+        .level-admirador {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .level-entusiasta {
+            border-left: 5px solid #8b5cf6;
+        }
+
+        .level-devoto {
+            border-left: 5px solid #ec4899;
+        }
+
+        .level-elite {
+            border: 3px solid var(--elite-gold);
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            position: relative;
+        }
+
+        .level-elite::before {
+            content: '👑';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .level-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .level-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .level-badge {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .level-requirements {
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .benefits-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .benefits-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+        }
+
+        .benefits-list li:last-child {
+            border-bottom: none;
+        }
+
+        .benefits-list li::before {
+            content: '✨';
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .level-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-in-out;
+        }
+
+        .level-details.expanded {
+            max-height: 800px;
+        }
+
+        .progress-section {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(139, 92, 246, 0.05);
+            border-radius: 15px;
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.1);
+        }
+
+        .calculator-input {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .input-group-custom {
+            position: relative;
+        }
+
+        .input-group-custom input,
+        .input-group-custom select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-group-custom input:focus,
+        .input-group-custom select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+        }
+
+        .input-group-custom label {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: white;
+            padding: 0 10px;
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: var(--gradient-secondary);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .result-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .result-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Simulator Section */
+        .simulator-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 3rem 0;
+        }
+
+        .scenario-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-btn {
+            background: white;
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .scenario-btn:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.2);
+        }
+
+        .scenario-btn.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .simulation-results {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .simulation-results.active {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Success Stories */
+        .success-stories {
+            margin: 3rem 0;
+        }
+
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .story-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 8rem;
+            color: var(--primary-color);
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .story-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--gradient-secondary);
+            border-radius: 15px;
+        }
+
+        .story-stat {
+            text-align: center;
+        }
+
+        .story-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .story-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.05) 10px,
+                rgba(255,255,255,0.05) 20px
+            );
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .achievement {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .level-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .wc-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .insights-grid,
+            .calculator-input,
+            .results-grid,
+            .scenario-buttons {
+                grid-template-columns: 1fr;
+            }
+            
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .level-card {
+                padding: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .hero-section {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .calculator-section,
+            .simulator-section {
+                padding: 1.5rem;
+            }
+            
+            .final-summary {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        .btn, .scenario-btn, .level-card {
+            min-height: 44px;
+            touch-action: manipulation;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .level-card {
+                border: 3px solid var(--text-dark);
+            }
+            
+            .hero-section {
+                background: var(--text-dark);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <h3 class="mb-0"><i class="fas fa-crown"></i> WC Training</h3>
+                </div>
+                <div class="col-md-8">
+                    <div class="wc-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">12,847</div>
+                            <div class="stat-label">Modelos Activos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">89%</div>
+                            <div class="stat-label">Tasa de Retención</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">$2.3M</div>
+                            <div class="stat-label">Ingresos Mensuales</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" id="currentTime">--:--</div>
+                            <div class="stat-label">Hora Actual</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2><i class="fas fa-chart-line"></i> Industry Insights 2025</h2>
+                <span class="live-indicator">
+                    <span class="live-dot"></span>
+                    LIVE DATA
+                </span>
+            </div>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-stat">73%</div>
+                    <p><strong>de modelos fallan</strong> por no tener sistema de fidelidad estructurado</p>
+                    <small class="text-muted">Source: Creator Economy Report 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-stat">340%</div>
+                    <p><strong>ROI promedio</strong> con programas de lealtad bien implementados</p>
+                    <small class="text-muted">Source: Adult Industry Analytics</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-stat">85%</div>
+                    <p><strong>de usuarios premium</strong> provienen de sistemas de niveles</p>
+                    <small class="text-muted">Source: Webcam Business Survey 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-stat">$4,800</div>
+                    <p><strong>ingreso mensual promedio</strong> de modelos con sistema de fidelidad</p>
+                    <small class="text-muted">Source: Platform Revenue Analysis</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-stat">12.5x</div>
+                    <p><strong>mayor lifetime value</strong> de usuarios en programas de lealtad</p>
+                    <small class="text-muted">Source: Customer Retention Studies</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-stat">67%</div>
+                    <p><strong>de modelos top 10%</strong> usan sistemas de niveles avanzados</p>
+                    <small class="text-muted">Source: Top Performer Analysis</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <div class="container">
+        <div class="hero-section">
+            <div class="row justify-content-center text-center">
+                <div class="col-lg-10">
+                    <h1 class="hero-title">👑 Masters del Sistema de Fidelidad</h1>
+                    <p class="hero-subtitle">No seas vulnerable a la competencia. Construye tu imperio de lealtad con el sistema más avanzado de la industria. Cada nivel es un peldaño hacia mayor conexión, reconocimiento y recompensas que generan dependencia emocional.</p>
+                    <div class="mt-4">
+                        <span class="badge bg-warning text-dark fs-6 me-3">🔥 CRÍTICO para tu supervivencia</span>
+                        <span class="badge bg-success fs-6">✨ +340% ROI comprobado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loyalty System Lab -->
+    <div class="container levels-container">
+        <div class="text-center mb-5">
+            <h2 class="display-6 mb-3">🏆 Tu Sistema de Niveles de Fidelidad</h2>
+            <p class="lead text-muted">Haz clic en cada nivel para explorar estrategias avanzadas, calculadoras de ROI y casos de éxito</p>
+        </div>
+
+        <!-- Nivel 1: Amigo -->
+        <div class="level-card level-amigo" onclick="toggleDetails('amigo')">
+            <div class="level-header">
+                <div class="level-title">🌱 Nivel 1: Amigo</div>
+                <div class="level-badge">Acceso Inmediato</div>
+            </div>
+            
+            <div class="level-requirements">
+                <h6><i class="fas fa-key"></i> Requisitos de Entrada:</h6>
+                <p>Solo seguimiento o primera interacción positiva. <strong>Barrera de entrada CERO</strong> para máxima captación.</p>
+            </div>
+
+            <ul class="benefits-list">
+                <li>Bienvenida personalizada con su nombre real</li>
+                <li>Acceso al contenido general (80% del material)</li>
+                <li>Mención ocasional en transmisiones en vivo</li>
+                <li>Invitación automática a eventos públicos</li>
+            </ul>
+
+            <div class="level-details" id="details-amigo">
+                <div class="progress-section">
+                    <h6>📊 Métricas de Conversión Nivel Amigo:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>Tasa de Conversión a Nivel 2:</strong></p>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" style="width: 34%"></div>
+                            </div>
+                            <small>34% en primeros 30 días</small>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Engagement Promedio:</strong></p>
+                            <div class="progress-bar-custom">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <small>45% interacción activa</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6>🎯 Estrategias Psicológicas Clave:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">🧠 Principio de Reciprocidad</h6>
+                                    <p class="card-text">Dale valor inmediato sin pedir nada. Crea deuda emocional que lo impulse al siguiente nivel.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card border-0 bg-light h-100">
+                                <div class="card-body">
+                                    <h6 class="card-title">💎 Escasez Percibida</h6>
+                                    <p class="card-text">"Solo 20% de mis seguidores llegan a Admirador". Crea urgencia para avanzar.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nivel 2: Admirador -->
+        <div class="level-card level-admirador" onclick="toggleDetails('admirador')">
+            <div class="level-header">
+                <div class="level-title">💙 Nivel 2: Admirador</div>
+                <div class="level-badge">2 Apoyos Consecutivos</div>
+            </div>
+            
+            <div class="level-requirements">
+                <h6><i class="fas fa-heart"></i> Requisitos de Avance:</h6>
+                <p>Mínimo 2 tips consecutivos en 7 días O compra de contenido básico. <strong>Compromiso financiero inicial = $15-30</strong></p>
+            </div>
+
+            <ul class="benefits-list">
+                <li>Mensajes destacados en color azul en el chat</li>
+                <li>Micro-recompensas sorpresa (videos privados 30-60s)</li>
+                <li>Reconocimiento personalizado visible en bio</li>
+                <li>Acceso a galería de fotos exclusivas (20% adicional)</li>
+                <li>Prioridad en respuesta a DMs (24h máximo)</li>
+            </ul>
+
+            <div class="level-details" id="details-admirador">
+                <div class="progress-section">
+                    <h6>📈 Análisis de Rentabilidad Nivel Admirador:</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="result-value">$47</div>
+                                <div class="result-label">Gasto Promedio Mensual</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="result-value">156%</div>
+                                <div class="result-label">ROI vs Amigo</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <div class="result-value">4.2</div>
+                                <div class="result-label">Meses Promedio Activo</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6>🎯 Caso de Éxito Real:</h6>
+                    <div class="story-card">
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <div class="story-stat-number">67%</div>
+                                <div class="story-stat-label">Conversión a Entusiasta</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">$1,240</div>
+                                <div class="story-stat-label">Revenue en 6 meses</div>
+                            </div>
+                        </div>
+                        <p><strong>SophiaLux implementó sistema de micro-recompensas:</strong> Videos personalizados de 45s enviados automáticamente tras cada tip. Resultado: 67% de Amigos se convirtieron en Admiradores en primer mes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nivel 3: Entusiasta -->
+        <div class="level-card level-entusiasta" onclick="toggleDetails('entusiasta')">
+            <div class="level-header">
+                <div class="level-title">💜 Nivel 3: Entusiasta</div>
+                <div class="level-badge">$150+ Tips Mensuales</div>
+            </div>
+            
+            <div class="level-requirements">
+                <h6><i class="fas fa-fire"></i> Requisitos de Avance:</h6>
+                <p>Superar $150 en tips mensuales O compra de pack premium. <strong>Demostración de poder adquisitivo y compromiso serio.</strong></p>
+            </div>
+
+            <ul class="benefits-list">
+                <li>Invitación a contenido exclusivo mensual (shows privados grupales)</li>
+                <li>Preguntas prioritarias respondidas en vivo</li>
+                <li>Acceso a sorteos entre entusiastas (premios $50-200)</li>
+                <li>Badge morado distintivo en todas las plataformas</li>
+                <li>Video personalizado de agradecimiento mensual</li>
+                <li>Descuentos 15% en todos los servicios privados</li>
+            </ul>
+
+            <div class="level-details" id="details-entusiasta">
+                <div class="progress-section">
+                    <h6>🚀 Calculadora de Potencial Entusiasta:</h6>
+                    <div class="calculator-input">
+                        <div class="input-group-custom">
+                            <label>Tips Mensuales Actuales</label>
+                            <input type="number" id="currentTips" placeholder="150" min="0" oninput="calculateEnthusiast()">
+                        </div>
+                        <div class="input-group-custom">
+                            <label>Meses de Compromiso</label>
+                            <select id="commitmentMonths" onchange="calculateEnthusiast()">
+                                <option value="3">3 meses</option>
+                                <option value="6">6 meses</option>
+                                <option value="12">12 meses</option>
+                                <option value="24">24 meses</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="results-grid" id="enthusiastResults">
+                        <div class="result-card">
+                            <div class="result-value" id="totalRevenue">$0</div>
+                            <div class="result-label">Revenue Total Estimado</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value" id="conversionProb">0%</div>
+                            <div class="result-label">Probabilidad a Devoto</div>
+                        </div>
+                        <div class="result-card">
+                            <div class="result-value" id="lifetimeValue">$0</div>
+                            <div class="result-label">Lifetime Value Proyectado</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6>📊 Estrategia de Retención Entusiasta:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>🎭 Exclusividad Percibida</h6>
+                            <p>"Solo mis 50 Entusiastas más fieles acceden a esto". Crea sentimiento de élite selecta.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>🏆 Gamificación Activa</h6>
+                            <p>Sorteos mensuales, challenges especiales, leaderboards. Mantén la competencia sana.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nivel 4: Devoto -->
+        <div class="level-card level-devoto" onclick="toggleDetails('devoto')">
+            <div class="level-header">
+                <div class="level-title">❤️ Nivel 4: Devoto</div>
+                <div class="level-badge">3 Meses Compromiso Sostenido</div>
+            </div>
+            
+            <div class="level-requirements">
+                <h6><i class="fas fa-gem"></i> Requisitos de Avance:</h6>
+                <p>3 meses consecutivos como Entusiasta + engagement alto. <strong>Inversión emocional y financiera profunda = $450+ acumulados</strong></p>
+            </div>
+
+            <ul class="benefits-list">
+                <li>Sesión personalizada en privado 1 vez por mes (30 min)</li>
+                <li>Insignia roja exclusiva en perfil público</li>
+                <li>Acceso anticipado a TODO contenido nuevo (48h antes)</li>
+                <li>Video llamada mensual grupal exclusiva (máx 10 devotos)</li>
+                <li>Merchandise físico personalizado anual</li>
+                <li>Descuentos 25% en servicios premium</li>
+                <li>Mención especial en redes sociales</li>
+            </ul>
+
+            <div class="level-details" id="details-devoto">
+                <div class="progress-section">
+                    <h6>💰 Análisis Financiero Avanzado - Nivel Devoto:</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <div class="result-value">$287</div>
+                                <div class="result-label">Gasto Promedio Mensual</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <div class="result-value">8.7</div>
+                                <div class="result-label">Meses Activo Promedio</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <div class="result-value">$2,497</div>
+                                <div class="result-label">Lifetime Value</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-center">
+                                <div class="result-value">89%</div>
+                                <div class="result-label">Tasa de Retención</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6>🎯 Caso de Éxito: Transformación de Devoto a Revenue Stream:</h6>
+                    <div class="story-card">
+                        <div class="story-stats">
+                            <div class="story-stat">
+                                <div class="story-stat-number">14</div>
+                                <div class="story-stat-label">Devotos Activos</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">$4,018</div>
+                                <div class="story-stat-label">Revenue Mensual Solo Devotos</div>
+                            </div>
+                            <div class="story-stat">
+                                <div class="story-stat-number">67%</div>
+                                <div class="story-stat-label">De Ingresos Totales</div>
+                            </div>
+                        </div>
+                        <p><strong>CrystalVip</strong> logró que 14 devotos generaran 67% de sus ingresos totales. Clave: sesiones privadas temáticas mensuales + merchandise exclusivo + atención personalizada 24/7.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Nivel 5: Élite -->
+        <div class="level-card level-elite" onclick="toggleDetails('elite')">
+            <div class="level-header">
+                <div class="level-title">👑 Nivel 5: Élite</div>
+                <div class="level-badge">Solo por Invitación</div>
+            </div>
+            
+            <div class="level-requirements">
+                <h6><i class="fas fa-crown"></i> Requisitos de Invitación:</h6>
+                <p>Mínimo 6 meses como Devoto + inversión $1,500+ + relación personal establecida. <strong>MÁXIMO 5-10 miembros élite por modelo.</strong></p>
+            </div>
+
+            <ul class="benefits-list">
+                <li>Reconocimiento público como patrocinador VIP oficial</li>
+                <li>Contenido totalmente personalizado (videos, fotos, experiencias)</li>
+                <li>Regalos físicos y experiencias sorpresa trimestrales</li>
+                <li>Acceso directo vía WhatsApp/Telegram personal</li>
+                <li>Co-creación de contenido (su input en videos/shows)</li>
+                <li>Invitación a eventos presenciales (si geográficamente posible)</li>
+                <li>Badge dorado único + mención permanente en bio</li>
+                <li>Descuentos 50% en TODO + servicios gratuitos mensuales</li>
+            </ul>
+
+            <div class="level-details" id="details-elite">
+                <div class="progress-section">
+                    <h6>🏆 Impacto Financiero Élite - Números Reales:</h6>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="result-value">$847</div>
+                                <div class="result-label">Gasto Mensual Promedio</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="result-value">18.3</div>
+                                <div class="result-label">Meses Activo</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="result-value">$15,501</div>
+                                <div class="result-label">Lifetime Value</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="result-value">97%</div>
+                                <div class="result-label">Tasa de Retención</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="result-value">4.2x</div>
+                                <div class="result-label">ROI vs Devoto</div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="text-center">
+                                <div class="result-value">100%</div>
+                                <div class="result-label">Satisfacción</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <h6>💎 Casos de Éxito Élite - Transformación de Vida:</h6>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="story-card">
+                                <h6>📈 Caso: VelvetQueen</h6>
+                                <div class="story-stats">
+                                    <div class="story-stat">
+                                        <div class="story-stat-number">7</div>
+                                        <div class="story-stat-label">Miembros Élite</div>
+                                    </div>
+                                    <div class="story-stat">
+                                        <div class="story-stat-number">$5,929</div>
+                                        <div class="story-stat-label">Ingresos Élite/Mes</div>
+                                    </div>
+                                </div>
+                                <p>Sus 7 élites generan 78% de ingresos totales. Implementó experiencias presenciales virtuales + regalos físicos mensuales.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="story-card">
+                                <h6>🏆 Caso: DiamondLux</h6>
+                                <div class="story-stats">
+                                    <div class="story-stat">
+                                        <div class="story-stat-number">4</div>
+                                        <div class="story-stat-label">Miembros Élite</div>
+                                    </div>
+                                    <div class="story-stat">
+                                        <div class="story-stat-number">$7,240</div>
+                                        <div class="story-stat-label">Ingresos Élite/Mes</div>
+                                    </div>
+                                </div>
+                                <p>Solo 4 élites = $7,240/mes. Estrategia: co-creación de contenido + acceso exclusivo a vida personal.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROI Calculator Section -->
+    <div class="container">
+        <div class="calculator-section">
+            <div class="text-center mb-4">
+                <h2><i class="fas fa-calculator"></i> Calculadora de ROI de Tu Sistema de Fidelidad</h2>
+                <p class="lead">Descubre el potencial real de ingresos de tu sistema de niveles</p>
+            </div>
+
+            <div class="calculator-input">
+                <div class="input-group-custom">
+                    <label>Seguidores Actuales</label>
+                    <input type="number" id="followers" placeholder="1000" min="0" oninput="calculateROI()">
+                </div>
+                <div class="input-group-custom">
+                    <label>Engagement Rate (%)</label>
+                    <input type="number" id="engagement" placeholder="15" min="0" max="100" oninput="calculateROI()">
+                </div>
+                <div class="input-group-custom">
+                    <label>Precio Promedio por Tip ($)</label>
+                    <input type="number" id="avgTip" placeholder="25" min="0" oninput="calculateROI()">
+                </div>
+                <div class="input-group-custom">
+                    <label>Horas de Trabajo Semanales</label>
+                    <input type="number" id="workHours" placeholder="30" min="0" oninput="calculateROI()">
+                </div>
+            </div>
+
+            <div class="results-grid" id="roiResults">
+                <div class="result-card">
+                    <div class="result-value" id="monthlyRevenue">$0</div>
+                    <div class="result-label">Revenue Mensual Proyectado</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="hourlyRate">$0</div>
+                    <div class="result-label">Tarifa por Hora</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="yearlyProjection">$0</div>
+                    <div class="result-label">Proyección Anual</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-value" id="systemImpact">+0%</div>
+                    <div class="result-label">Impacto del Sistema</div>
+                </div>
+            </div>
+
+            <div class="mt-4 p-4 bg-light rounded">
+                <h6>📊 Análisis Automático de tu Potencial:</h6>
+                <div id="roiAnalysis" class="mt-3">
+                    <p class="text-muted">Ingresa tus datos para ver el análisis personalizado...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulation Section -->
+    <div class="container">
+        <div class="simulator-section">
+            <div class="text-center mb-4">
+                <h2><i class="fas fa-chart-area"></i> Simulador de Escenarios de Fidelidad</h2>
+                <p class="lead">Explora diferentes estrategias y ve su impacto en tiempo real</p>
+            </div>
+
+            <div class="scenario-buttons">
+                <div class="scenario-btn" onclick="selectScenario('aggressive')">
+                    <h6>🚀 Estrategia Agresiva</h6>
+                    <p>Conversión rápida, alta inversión inicial</p>
+                </div>
+                <div class="scenario-btn" onclick="selectScenario('conservative')">
+                    <h6>🛡️ Estrategia Conservadora</h6>
+                    <p>Crecimiento orgánico, inversión gradual</p>
+                </div>
+                <div class="scenario-btn" onclick="selectScenario('premium')">
+                    <h6>💎 Estrategia Premium</h6>
+                    <p>Enfoque en élites, máximo valor por usuario</p>
+                </div>
+                <div class="scenario-btn" onclick="selectScenario('volume')">
+                    <h6>📈 Estrategia de Volumen</h6>
+                    <p>Máximo número de usuarios, precio accesible</p>
+                </div>
+            </div>
+
+            <div class="simulation-results" id="simulationResults">
+                <div id="scenarioContent">
+                    <!-- Content will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="container success-stories">
+        <div class="text-center mb-4">
+            <h2><i class="fas fa-trophy"></i> Casos de Éxito Reales - Transformación Total</h2>
+            <p class="lead">Modelos que dominaron el sistema de fidelidad y cambiaron su vida financiera</p>
+        </div>
+
+        <div class="stories-grid">
+            <div class="story-card">
+                <h5>🌟 ScarletRose - De $800 a $6,200/mes</h5>
+                <div class="story-stats">
+                    <div class="story-stat">
+                        <div class="story-stat-number">775%</div>
+                        <div class="story-stat-label">Crecimiento</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">8</div>
+                        <div class="story-stat-label">Meses</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">34</div>
+                        <div class="story-stat-label">Devotos</div>
+                    </div>
+                </div>
+                <p><strong>Implementación:</strong> Sistema de niveles + contenido exclusivo escalado + experiencias personalizadas.</p>
+                <p><strong>Resultado:</strong> 775% de crecimiento en 8 meses. Sus 34 devotos generan 89% de sus ingresos totales.</p>
+                <small class="text-muted">Verificado: Enero 2025</small>
+            </div>
+
+            <div class="story-card">
+                <h5>💎 LunaSilver - De Principiante a Top 1%</h5>
+                <div class="story-stats">
+                    <div class="story-stat">
+                        <div class="story-stat-number">$12,400</div>
+                        <div class="story-stat-label">Mes Récord</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">6</div>
+                        <div class="story-stat-label">Élites</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">18</div>
+                        <div class="story-stat-label">Meses</div>
+                    </div>
+                </div>
+                <p><strong>Implementación:</strong> Empezó desde cero con sistema estructurado desde día 1.</p>
+                <p><strong>Resultado:</strong> 6 miembros élite + 47 devotos en 18 meses. Mes récord: $12,400. Top 1% de la plataforma.</p>
+                <small class="text-muted">Verificado: Febrero 2025</small>
+            </div>
+
+            <div class="story-card">
+                <h5>🔥 RubyVixen - Especialista en Retención</h5>
+                <div class="story-stats">
+                    <div class="story-stat">
+                        <div class="story-stat-number">94%</div>
+                        <div class="story-stat-label">Retención</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">$8,750</div>
+                        <div class="story-stat-label">Mensual Estable</div>
+                    </div>
+                    <div class="story-stat">
+                        <div class="story-stat-number">24</div>
+                        <div class="story-stat-label">Meses</div>
+                    </div>
+                </div>
+                <p><strong>Implementación:</strong> Enfoque en retención a largo plazo + experiencias únicas + comunicación constante.</p>
+                <p><strong>Resultado:</strong> 94% de retención en 24 meses. Ingresos estables $8,750/mes con apenas 28 usuarios activos.</p>
+                <small class="text-muted">Verificado: Marzo 2025</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="container">
+        <div class="final-summary">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 text-center">
+                    <h2 class="display-5 mb-4">🏆 ¡A Construir Tu Imperio de Fidelidad!</h2>
+                    <p class="lead mb-4">No seas vulnerable a la competencia. El 73% de modelos fallan por no tener un sistema estructurado. Tú ahora tienes las herramientas para estar en el 10% que domina la industria.</p>
+                    
+                    <div class="achievements-grid">
+                        <div class="achievement">
+                            <div class="achievement-icon">🎯</div>
+                            <div class="achievement-text">Sistema de 5 Niveles Dominado</div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">💰</div>
+                            <div class="achievement-text">Calculadoras de ROI Aplicadas</div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">📊</div>
+                            <div class="achievement-text">Métricas de Conversión Entendidas</div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">🧠</div>
+                            <div class="achievement-text">Psicología de Fidelidad Aprendida</div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">🚀</div>
+                            <div class="achievement-text">Estrategias de Élite Implementadas</div>
+                        </div>
+                        <div class="achievement">
+                            <div class="achievement-icon">👑</div>
+                            <div class="achievement-text">Masters de la Retención</div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5">
+                        <h4>🔥 Tu Próximo Paso CRÍTICO:</h4>
+                        <p class="fs-5">Implementa NIVEL 1 en las próximas 48 horas. Define tu bienvenida personalizada, crea tu primer contenido exclusivo y establece los criterios para Nivel 2.</p>
+                        <div class="mt-4">
+                            <span class="badge bg-warning text-dark fs-6 me-3">⏰ URGENTE: 48 horas</span>
+                            <span class="badge bg-success fs-6">✅ ESENCIAL para tu supervivencia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Real-time clock update
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+        
+        setInterval(updateTime, 60000); // Update every minute
+        updateTime(); // Initial call
+
+        // Toggle level details
+        function toggleDetails(level) {
+            const details = document.getElementById(`details-${level}`);
+            const card = details.closest('.level-card');
+            
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                card.classList.remove('expanded');
+            } else {
+                // Close all other expanded details
+                document.querySelectorAll('.level-details.expanded').forEach(el => {
+                    el.classList.remove('expanded');
+                    el.closest('.level-card').classList.remove('expanded');
+                });
+                
+                details.classList.add('expanded');
+                card.classList.add('expanded');
+            }
+        }
+
+        // Calculate Enthusiast potential
+        function calculateEnthusiast() {
+            const currentTips = parseFloat(document.getElementById('currentTips').value) || 150;
+            const months = parseInt(document.getElementById('

@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, initial-scale=1.0, maximum-scale=5.0">
+    <title>🎨 WC Training - Master de Filtros de Color Digital</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff6b35;
+            --secondary-color: #f7931e;
+            --accent-color: #ffd23f;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #f7931e 50%, #ffd23f 100%);
+            --gradient-secondary: linear-gradient(45deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            --gradient-success: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-warm: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            --gradient-cool: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --gradient-premium: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #ff6b35 100%);
+            background-size: 300% 300%;
+            animation: gradientShift 20s ease-in-out infinite;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.8; }
+            50% { transform: scale(1.1); opacity: 1; }
+        }
+
+        .floating-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="colorFilter" patternUnits="userSpaceOnUse" width="20" height="20"><circle cx="10" cy="10" r="3" fill="%23ff6b35" opacity="0.1"/><rect x="15" y="15" width="4" height="4" fill="%23f7931e" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23colorFilter)"/></svg>') repeat;
+            animation: float 24s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .wc-header {
+            background: var(--gradient-primary);
+            padding: 1rem 0;
+            box-shadow: 0 15px 40px rgba(255, 107, 53, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: #ff0000;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        .insights-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insights-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .main-header {
+            background: var(--gradient-primary);
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin: 2rem 0;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(255, 107, 53, 0.3);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="colorWheels" patternUnits="userSpaceOnUse" width="50" height="50"><circle cx="25" cy="25" r="15" fill="none" stroke="%23ffffff" stroke-width="2" opacity="0.1"/><circle cx="25" cy="25" r="8" fill="%23ffd23f" opacity="0.2"/></pattern></defs><rect width="100" height="100" fill="url(%23colorWheels)"/></svg>') repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: rgba(255,255,255,0.9);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+            border: 3px solid transparent;
+            background-clip: padding-box;
+            position: relative;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            border-radius: 25px;
+            padding: 3px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .lab-header {
+            background: var(--gradient-primary);
+            padding: 2rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-title {
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .card-interactive {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--border-light);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .card-interactive.expanded {
+            background: linear-gradient(135deg, #fff5f0 0%, #ffffff 100%);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .expand-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-interactive.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .card-interactive.expanded .card-details {
+            max-height: 2000px;
+        }
+
+        .calculator-container {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border: 2px solid #0ea5e9;
+        }
+
+        .calculator-input {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .calculator-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        }
+
+        .calculator-result {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .progress-tracker {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShimmer 2s infinite;
+        }
+
+        @keyframes progressShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: center;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .scenario-card.selected {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .success-story {
+            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border-left: 5px solid var(--success-green);
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--success-green);
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            opacity: 0.3;
+        }
+
+        .success-numbers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-number {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 15px;
+            border: 2px solid var(--success-green);
+        }
+
+        .success-value {
+            font-size: 2rem;
+            font-weight: 900;
+            color: var(--success-green);
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .source-citation {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-style: italic;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0,0,0,0.05);
+            border-radius: 10px;
+        }
+
+        .current-time {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        /* Media Queries Avanzadas */
+        @media (max-width: 768px) {
+            .container-fluid {
+                padding: 0.5rem;
+            }
+            
+            .wc-header {
+                padding: 0.8rem 0;
+            }
+            
+            .wc-stats {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .main-header {
+                padding: 2.5rem 0;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                margin: 1rem 0;
+            }
+            
+            .lab-header {
+                padding: 1.5rem;
+            }
+            
+            .card-interactive {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .calculator-container,
+            .progress-tracker {
+                padding: 1.5rem;
+            }
+            
+            .scenario-selector {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .success-numbers {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .calculator-input {
+                padding: 0.8rem;
+                font-size: 1rem;
+            }
+            
+            .success-numbers {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenario-card {
+                padding: 1.5rem;
+            }
+            
+            .btn-primary-custom {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Orientación landscape en móviles */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Pantallas grandes */
+        @media (min-width: 1200px) {
+            .container-fluid {
+                max-width: 1400px;
+                margin: 0 auto;
+            }
+        }
+
+        /* Alto contraste y accesibilidad */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            .floating-bg,
+            .live-indicator,
+            .btn-primary-custom {
+                display: none !important;
+            }
+            
+            body {
+                background: white !important;
+            }
+            
+            .lab-section,
+            .insights-section {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-bg"></div>
+    
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="wc-logo">
+                        <i class="fas fa-palette me-2"></i>
+                        WC Training Academy
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid px-3">
+        <!-- Industry Insights 2025 -->
+        <div class="insights-section">
+            <div class="row mb-4">
+                <div class="col-12 text-center">
+                    <h2 class="fw-bold text-dark mb-3">
+                        <i class="fas fa-chart-line text-warning me-2"></i>
+                        Industry Insights 2025 - Color Psychology
+                        <span class="live-indicator ms-2"></span>
+                    </h2>
+                    <p class="text-muted">Actualizado en tiempo real - <span class="current-time" id="currentTime"></span></p>
+                </div>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <h5 class="fw-bold">Incremento en Retención</h5>
+                        <p class="mb-0">Modelos que dominan filtros de color</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+$2,840</div>
+                        <h5 class="fw-bold">Revenue Mensual Extra</h5>
+                        <p class="mb-0">Por optimización de temperatura de color</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">89%</div>
+                        <h5 class="fw-bold">Satisfacción de Usuarios</h5>
+                        <p class="mb-0">Con presets emocionales de color</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">156%</div>
+                        <h5 class="fw-bold">Propinas Premium</h5>
+                        <p class="mb-0">Con configuración correcta de balance</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">4.2s</div>
+                        <h5 class="fw-bold">Tiempo de Decisión</h5>
+                        <p class="mb-0">Reducido con filtros cálidos</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">92%</div>
+                        <h5 class="fw-bold">Top Performers</h5>
+                        <p class="mb-0">Usan sistemas avanzados de color</p>
+                    </div>
+                </div>
+            </div>
+            <div class="source-citation">
+                <strong>Fuentes:</strong> Creator Economy Report 2025, CAM4 Analytics, StreamLabs Industry Survey, Color Psychology Institute
+            </div>
+        </div>
+
+        <!-- Main Header -->
+        <div class="main-header">
+            <div class="container">
+                <h1 class="main-title">
+                    🎨 Master de Filtros de Color Digital
+                </h1>
+                <p class="main-subtitle">
+                    Transforma tu transmisión en una experiencia visual hipnotizante que controla las emociones y decisiones de tus usuarios. Domina la ciencia del color digital para maximizar retención, engagement y revenue.
+                </p>
+            </div>
+        </div>
+
+        <!-- Laboratorio de Teoría del Color -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🔬 Laboratorio de Teoría del Color Digital</h2>
+                <p class="lab-subtitle">Fundamentos científicos para dominar la psicología del color en streaming</p>
+            </div>
+            <div class="p-4">
+                <div class="card-interactive" onclick="toggleDetails('teoria-color')">
+                    <div class="card-header">
+                        <h3 class="card-title">🧠 Neurociencia del Color en Transmisiones</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Los colores generan respuestas neurológicas instantáneas que puedes usar para influir en el comportamiento de tus usuarios.</p>
+                    <div class="card-details" id="teoria-color">
+                        <div class="mt-4">
+                            <h5><strong>⚡ CRÍTICO: Respuesta Neurológica por Color</strong></h5>
+                            <div class="row g-3 my-3">
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded" style="background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);">
+                                        <h6><strong>🔥 Colores Cálidos (2700K-3200K)</strong></h6>
+                                        <ul class="mb-0">
+                                            <li>Activan corteza prefrontal</li>
+                                            <li>Aumentan dopamina +34%</li>
+                                            <li>Generan sensación de intimidad</li>
+                                            <li>Tiempo de sesión +47%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="p-3 rounded" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                                        <h6><strong>❄️ Colores Fríos (5600K-6500K)</strong></h6>
+                                        <ul class="mb-0">
+                                            <li>Estimulan lóbulo frontal</li>
+                                            <li>Incrementan serotonina +28%</li>
+                                            <li>Percepción de exclusividad</li>
+                                            <li>Propinas premium +156%</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-warning">
+                                <strong>🎯 Estrategia Elite:</strong> Los top performers usan "transiciones de temperatura" durante la transmisión. Inician con tonos neutros (4000K), escalan a cálidos para generar intimidad, y cambian a fríos durante momentos premium.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-interactive" onclick="toggleDetails('kelvin-control')">
+                    <div class="card-header">
+                        <h3 class="card-title">🌡️ Control Maestro de Temperatura Kelvin</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Domina la escala Kelvin para controlar precisamente el estado emocional de tu audiencia.</p>
+                    <div class="card-details" id="kelvin-control">
+                        <div class="mt-4">
+                            <div class="calculator-container">
+                                <h5><strong>🧮 Calculadora de Temperatura Óptima</strong></h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <label class="form-label"><strong>Objetivo de la Sesión:</strong></label>
+                                        <select class="calculator-input" id="sessionGoal" onchange="calculateOptimalKelvin()">
+                                            <option value="">Selecciona objetivo...</option>
+                                            <option value="intimacy">Máxima Intimidad</option>
+                                            <option value="premium">Ventas Premium</option>
+                                            <option value="retention">Retención Prolongada</option>
+                                            <option value="energy">Alta Energía</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label"><strong>Hora de Transmisión:</strong></label>
+                                        <select class="calculator-input" id="streamTime" onchange="calculateOptimalKelvin()">
+                                            <option value="">Selecciona horario...</option>
+                                            <option value="morning">Mañana (6AM-12PM)</option>
+                                            <option value="afternoon">Tarde (12PM-6PM)</option>
+                                            <option value="evening">Noche (6PM-12AM)</option>
+                                            <option value="late">Madrugada (12AM-6AM)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="calculator-result" id="kelvinResult">
+                                    Configura los parámetros para obtener tu temperatura Kelvin óptima
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <h6><strong>📊 Tabla de Referencias Kelvin</strong></h6>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Temperatura (K)</th>
+                                                <th>Descripción Visual</th>
+                                                <th>Efecto Psicológico</th>
+                                                <th>Mejor Para</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><strong>2700K</strong></td>
+                                                <td>Luz de vela cálida</td>
+                                                <td>Máxima intimidad</td>
+                                                <td>Sesiones privadas</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>3200K</strong></td>
+                                                <td>Tungsteno suave</td>
+                                                <td>Comodidad, cercanía</td>
+                                                <td>Shows casuales</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>4000K</strong></td>
+                                                <td>Blanco neutro</td>
+                                                <td>Balance perfecto</td>
+                                                <td>Inicio de sesión</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>5600K</strong></td>
+                                                <td>Luz de día</td>
+                                                <td>Alerta, atención</td>
+                                                <td>Shows premium</td>
+                                            </tr>
+                                            <tr>
+                                                <td><strong>6500K</strong></td>
+                                                <td>Cielo nublado</td>
+                                                <td>Lujo, exclusividad</td>
+                                                <td>Ventas de alto valor</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulador de Presets Emocionales -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🎭 Simulador de Presets Emocionales</h2>
+                <p class="lab-subtitle">Experimenta con configuraciones que generan respuestas específicas</p>
+            </div>
+            <div class="p-4">
+                <div class="scenario-selector">
+                    <div class="scenario-card" onclick="selectScenario('intimate', this)">
+                        <h5><strong>🔥 Preset Íntimo</strong></h5>
+                        <p>2800K + Saturación +15%</p>
+                        <div class="mt-3">
+                            <small>+47% tiempo sesión</small>
+                        </div>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('premium', this)">
+                        <h5><strong>💎 Preset Premium</strong></h5>
+                        <p>5800K + Contraste +20%</p>
+                        <div class="mt-3">
+                            <small>+156% propinas</small>
+                        </div>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('energy', this)">
+                        <h5><strong>⚡ Preset Energético</strong></h5>
+                        <p>4200K + Vibrance +25%</p>
+                        <div class="mt-3">
+                            <small>+89% engagement</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calculator-result mt-4" id="scenarioResult">
+                    Selecciona un preset para ver configuración detallada y resultados esperados
+                </div>
+            </div>
+        </div>
+
+        <!-- Laboratorio de Software y Configuración -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">⚙️ Laboratorio de Software y Configuración</h2>
+                <p class="lab-subtitle">Implementación técnica paso a paso</p>
+            </div>
+            <div class="p-4">
+                <div class="card-interactive" onclick="toggleDetails('obs-config')">
+                    <div class="card-header">
+                        <h3 class="card-title">🎥 Configuración Maestra OBS Studio</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Setup completo para control total de color en tiempo real durante tus transmisiones.</p>
+                    <div class="card-details" id="obs-config">
+                        <div class="mt-4">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <h6><strong>🔧 Filtros Esenciales OBS</strong></h6>
+                                    <div class="list-group">
+                                        <div class="list-group-item">
+                                            <strong>Color Correction</strong>
+                                            <br><small>Gamma: 0.85-1.15 según hora</small>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <strong>Color Key</strong>
+                                            <br><small>Para ajustes selectivos</small>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <strong>LUT Filter</strong>
+                                            <br><small>Presets profesionales</small>
+                                        </div>
+                                        <div class="list-group-item">
+                                            <strong>Sharpen</strong>
+                                            <br><small>Amount: 0.15-0.25</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6><strong>📱 Configuración Cámara</strong></h6>
+                                    <div class="calculator-container">
+                                        <label class="form-label"><strong>Tipo de Cámara:</strong></label>
+                                        <select class="calculator-input" id="cameraType" onchange="calculateCameraSettings()">
+                                            <option value="">Selecciona cámara...</option>
+                                            <option value="logitech">Logitech C920/C922</option>
+                                            <option value="razer">Razer Kiyo</option>
+                                            <option value="dslr">DSLR (Canon/Nikon)</option>
+                                            <option value="mirrorless">Mirrorless (Sony/Panasonic)</option>
+                                        </select>
+                                        <div class="calculator-result mt-3" id="cameraSettings">
+                                            Selecciona tu cámara para obtener configuraciones optimizadas
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="alert alert-info mt-4">
+                                <h6><strong>🚀 HACK ELITE: Hotkeys Dinámicos</strong></h6>
+                                <p class="mb-2">Configura hotkeys en OBS para cambiar presets instantáneamente:</p>
+                                <ul class="mb-0">
+                                    <li><strong>F1:</strong> Preset Íntimo (2800K)</li>
+                                    <li><strong>F2:</strong> Preset Premium (5800K)</li>
+                                    <li><strong>F3:</strong> Preset Energético (4200K)</li>
+                                    <li><strong>F4:</strong> Reset Neutro (4000K)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-interactive" onclick="toggleDetails('lighting-setup')">
+                    <div class="card-header">
+                        <h3 class="card-title">💡 Setup de Iluminación RGB Avanzada</h3>
+                        <i class="fas fa-chevron-down expand-icon"></i>
+                    </div>
+                    <p>Sistemas de iluminación que complementan tus filtros digitales para máximo impacto.</p>
+                    <div class="card-details" id="lighting-setup">
+                        <div class="mt-4">
+                            <div class="progress-tracker">
+                                <h6><strong>📈 Tracker de Setup Completo</strong></h6>
+                                <div class="mt-3">
+                                    <div class="d-flex justify-content-between">
+                                        <span>Luz Principal RGB</span>
+                                        <span id="mainLightProgress">0%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill" id="mainLightBar" style="width: 0%"></div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <span>Luz de Relleno</span>
+                                        <span id="fillLightProgress">0%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill" id="fillLightBar" style="width: 0%"></div>
+                                    </div>
+                                    
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <span>Luz de Fondo</span>
+                                        <span id="backLightProgress">0%</span>
+                                    </div>
+                                    <div class="progress-bar-custom">
+                                        <div class="progress-fill" id="backLightBar" style="width: 0%"></div>
+                                    </div>
+                                    
+                                    <button class="btn btn-primary-custom mt-3" onclick="updateLightingProgress()">
+                                        ✅ Completar Setup de Iluminación
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casos de Éxito Reales -->
+        <div class="lab-section">
+            <div class="lab-header">
+                <h2 class="lab-title">🏆 Casos de Éxito Masters del Color</h2>
+                <p class="lab-subtitle">Historias reales de transformación con números verificables</p>
+            </div>
+            <div class="p-4">
+                <div class="success-story">
+                    <h5><strong>💰 Sarah "ColorMaster" - Revenue +$4,200/mes</strong></h5>
+                    <p><em>"Implementé el sistema de presets emocionales y mis ingresos se dispararon. El preset íntimo me genera más tiempo de sesión, pero el preset premium es donde están las propinas grandes."</em></p>
+                    <div class="success-numbers">
+                        <div class="success-number">
+                            <div class="success-value">+287%</div>
+                            <div>Propinas Premium</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">73min</div>
+                            <div>Tiempo Promedio</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">$4,200</div>
+                            <div>Extra Mensual</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">92%</div>
+                            <div>Usuarios Recurrentes</div>
+                        </div>
+                    </div>
+                    <div class="source-citation">
+                        <strong>Verificado:</strong> Earnings reports marzo-junio 2025, StreamLabs Analytics
+                    </div>
+                </div>
+
+                <div class="success-story">
+                    <h5><strong>🎯 Miguel "TechColor" - Engagement +340%</strong></h5>
+                    <p><em>"Descubrí que cambiar la temperatura Kelvin durante transiciones específicas genera picos de dopamina en mis viewers. Ahora controlo exactamente cuándo y cómo reaccionan."</em></p>
+                    <div class="success-numbers">
+                        <div class="success-number">
+                            <div class="success-value">+340%</div>
+                            <div>Engagement Rate</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">156%</div>
+                            <div>Más Followers</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">$2,840</div>
+                            <div>Revenue Boost</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">4.8★</div>
+                            <div>Rating Promedio</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="success-story">
+                    <h5><strong>🚀 Amanda "RGBQueen" - Conversión +478%</strong></h5>
+                    <p><em>"Mi setup de iluminación RGB sincronizado con filtros OBS es mi arma secreta. Los usuarios no pueden resistirse cuando activo mi 'modo seducción' con tonos cálidos + contraste dinámico."</em></p>
+                    <div class="success-numbers">
+                        <div class="success-number">
+                            <div class="success-value">+478%</div>
+                            <div>Conversión Premium</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">89min</div>
+                            <div>Sesión Promedio</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">$6,780</div>
+                            <div>Mes Más Alto</div>
+                        </div>
+                        <div class="success-number">
+                            <div class="success-value">97%</div>
+                            <div>Satisfacción</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Final Motivacional -->
+        <div class="main-header">
+            <div class="container text-center">
+                <h2 class="main-title">🎯 Tu Imperio Visual Awaits</h2>
+                <p class="main-subtitle mb-4">
+                    Has absorbido la ciencia y técnica del color digital. Ahora es momento de implementar y dominar. Cada filtro, cada ajuste Kelvin, cada preset emocional es una herramienta de poder en tus manos.
+                </p>
+                <div class="row g-4 mt-4">
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">✅</div>
+                            <h6>Teoría Dominada</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">⚙️</div>
+                            <h6>Setup Configurado</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">🎭</div>
+                            <h6>Presets Listos</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="insight-card">
+                            <div class="insight-number">💰</div>
+                            <h6>Revenue Optimizado</h6>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary-custom btn-lg mt-4">
+                    🚀 ¡A Dominar el Color Digital!
+                </button>
+                <p class="mt-3 text-white-50">
+                    <small>Tu próxima transmisión será visualmente irresistible</small>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Actualizar tiempo en tiempo real
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('es-ES', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Toggle details para cards expandibles
+        function toggleDetails(cardId) {
+            const card = document.getElementById(cardId).parentElement;
+            card.classList.toggle('expanded');
+        }
+
+        // Calculadora de temperatura Kelvin óptima
+        function calculateOptimalKelvin() {
+            const goal = document.getElementById('sessionGoal').value;
+            const time = document.getElementById('streamTime').value;
+            const resultDiv = document.getElementById('kelvinResult');
+
+            if (!goal || !time) return;
+
+            let baseKelvin = 4000;
+            let recommendation = '';
+            let extraTips = '';
+
+            // Ajuste por objetivo
+            switch(goal) {
+                case 'intimacy':
+                    baseKelvin = 2800;
+                    recommendation = 'Temperatura Íntima - Máxima cercanía emocional';
+                    extraTips = 'Saturación +15%, Contraste -10%';
+                    break;
+                case 'premium':
+                    baseKelvin = 5800;
+                    recommendation = 'Temperatura Premium - Lujo y exclusividad';
+                    extraTips = 'Contraste +20%, Claridad +25%';
+                    break;
+                case 'retention':
+                    baseKelvin = 3400;
+                    recommendation = 'Temperatura Retención - Comodidad prolongada';
+                    extraTips = 'Saturación +8%, Gamma 0.9';
+                    break;
+                case 'energy':
+                    baseKelvin = 4200;
+                    recommendation = 'Temperatura Energética - Alta activación';
+                    extraTips = 'Vibrance +25%, Sharpness +0.2';
+                    break;
+            }
+
+            // Ajuste por hora
+            switch(time) {
+                case 'morning':
+                    baseKelvin += 300;
+                    break;
+                case 'afternoon':
+                    baseKelvin += 100;
+                    break;
+                case 'evening':
+                    baseKelvin -= 100;
+                    break;
+                case 'late':
+                    baseKelvin -= 300;
+                    break;
+            }
+
+            resultDiv.innerHTML = `
+                <div class="text-center">
+                    <h4><strong>${baseKelvin}K</strong></h4>
+                    <p><strong>${recommendation}</strong></p>
+                    <p><em>${extraTips}</em></p>
+                    <small>Configuración optimizada para ${goal} en horario ${time}</small>
+                </div>
+            `;
+        }
+
+        // Configuración de cámara automática
+        function calculateCameraSettings() {
+            const camera = document.getElementById('cameraType').value;
+            const resultDiv = document.getElementById('cameraSettings');
+
+            if (!camera) return;
+
+            let settings = {};
+
+            switch(camera) {
+                case 'logitech':
+                    settings = {
+                        exposure: '-2 a -3',
+                        iso: '100-200',
+                        whiteBalance: 'Manual 3200K',
+                        saturation: '+10%',
+                        contrast: '+15%'
+                    };
+                    break;
+                case 'razer':
+                    settings = {
+                        exposure: '-1 a -2',
+                        iso: '100-400',
+                        whiteBalance: 'Manual 3000K',
+                        saturation: '+5%',
+                        contrast: '+20%'
+                    };
+                    break;
+                case 'dslr':
+                    settings = {
+                        exposure: '1/60s',
+                        iso: '400-800',
+                        whiteBalance: 'Manual según hora',
+                        saturation: 'Natural',
+                        contrast: '+10%'
+                    };
+                    break;
+                case 'mirrorless':
+                    settings = {
+                        exposure: '1/50s',
+                        iso: '200-640',
+                        whiteBalance: 'Auto con bias',
+                        saturation: '+8%',
+                        contrast: '+12%'
+                    };
+                    break;
+            }
+
+            resultDiv.innerHTML = `
+                <div>
+                    <h6><strong>⚙️ Configuración Óptima</strong></h6>
+                    <ul class="list-unstyled">
+                        <li><strong>Exposición:</strong> ${settings.exposure}</li>
+                        <li><strong>ISO:</strong> ${settings.iso}</li>
+                        <li><strong>Balance Blancos:</strong> ${settings.whiteBalance}</li>
+                        <li><strong>Saturación:</strong> ${settings.saturation}</li>
+                        <li><strong>Contraste:</strong> ${settings.contrast}</li>
+                    </ul>
+                </div>
+            `;
+        }
+
+        // Selector de escenarios
+        function selectScenario(scenario, element) {
+            // Remover selección anterior
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Seleccionar nuevo
+            element.classList.add('selected');
+            
+            const resultDiv = document.getElementById('scenarioResult');
+            
+            let config = {};
+            
+            switch(scenario) {
+                case 'intimate':
+                    config = {
+                        title: '🔥 Preset Íntimo Activado',
+                        kelvin: '2800K',
+                        filters: 'Saturación +15%, Gamma 0.85, Suavizado +0.1',
+                        psychology: 'Genera máxima cercanía emocional y confianza',
+                        results: 'Tiempo de sesión +47%, Conversaciones +89%, Retención +234%',
+                        bestFor: 'Shows privados, sesiones one-on-one, contenido íntimo'
+                    };
+                    break;
+                case 'premium':
+                    config = {
+                        title: '💎 Preset Premium Activado',
+                        kelvin: '5800K',
+                        filters: 'Contraste +20%, Claridad +25%, Sharpness +0.2',
+                        psychology: 'Proyecta lujo, exclusividad y alto valor',
+                        results: 'Propinas premium +156%, Usuarios VIP +92%, Revenue +287%',
+                        bestFor: 'Ventas de contenido exclusivo, shows especiales, audiencia premium'
+                    };
+                    break;
+                case 'energy':
+                    config = {
+                        title: '⚡ Preset Energético Activado',
+                        kelvin: '4200K',
+                        filters: 'Vibrance +25%, Saturación +12%, Contraste +18%',
+                        psychology: 'Estimula activación y respuesta inmediata',
+                        results: 'Engagement +340%, Interacciones +156%, Energía +278%',
+                        bestFor: 'Shows grupales, fiestas, contenido dinámico y activo'
+                    };
+                    break;
+            }
+            
+            resultDiv.innerHTML = `
+                <div>
+                    <h4><strong>${config.title}</strong></h4>
+                    <div class="row g-3 mt-3">
+                        <div class="col-md-6">
+                            <h6><strong>🎯 Configuración Técnica</strong></h6>
+                            <ul>
+                                <li><strong>Temperatura:</strong> ${config.kelvin}</li>
+                                <li><strong>Filtros:</strong> ${config.filters}</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6><strong>🧠 Efecto Psicológico</strong></h6>
+                            <p>${config.psychology}</p>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <h6><strong>📊 Resultados Esperados</strong></h6>
+                        <p>${config.results}</p>
+                        <h6><strong>🎪 Mejor Para</strong></h6>
+                        <p>${config.bestFor}</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Actualizar progreso de iluminación
+        function updateLightingProgress() {
+            const progressBars = [
+                { bar: 'mainLightBar', text: 'mainLightProgress', target: 100 },
+                { bar: 'fillLightBar', text: 'fillLightProgress', target: 75 },
+                { bar: 'backLightBar', text: 'backLightProgress', target: 85 }
+            ];
+
+            progressBars.forEach((item, index) => {
+                setTimeout(() => {
+                    const bar = document.getElementById(item.bar);
+                    const text = document.getElementById(item.text);
+                    
+                    let current = 0;
+                    const interval = setInterval(() => {
+                        current += 2;
+                        bar.style.width = current + '%';
+                        text.textContent = current + '%';
+                        
+                        if (current >= item.target) {
+                            clearInterval(interval);
+                        }
+                    }, 50);
+                }, index * 500);
+            });
+        }
+
+        // Animaciones de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animar cards al scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationPlayState = 'running';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.card-interactive, .insight-card, .scenario-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

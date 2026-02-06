@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📈 Tarea 4.2: Estrategias de Visibilidad y Ranking</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --wc-primary: #E91E63;
+      --wc-secondary: #9C27B0;
+      --wc-accent: #FF5722;
+      --wc-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #FF5722 100%);
+      --wc-gradient-light: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 50%, rgba(255, 87, 34, 0.1) 100%);
+      --ranking-green: #00C853;
+      --ranking-dark: #00701A;
+      --seo-orange: #FF6F00;
+      --seo-light: #FFB74D;
+      --algorithm-blue: #0D47A1;
+      --algorithm-light: #42A5F5;
+      --visibility-purple: #6A1B9A;
+      --visibility-light: #BA68C8;
+      --performance-red: #D32F2F;
+      --performance-light: #EF5350;
+      --success-green: #4CAF50;
+      --warning-orange: #FF9800;
+      --info-blue: #2196F3;
+      --text-dark: #1F2937;
+      --text-muted: #6B7280;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8F9FA;
+      --bg-dark: #263238;
+      --border-light: #E0E0E0;
+      --shadow-ranking: rgba(0, 200, 83, 0.2);
+      --shadow-seo: rgba(255, 111, 0, 0.2);
+      --shadow-algorithm: rgba(13, 71, 161, 0.2);
+      --ranking-gradient: linear-gradient(135deg, #00C853 0%, #FF6F00 50%, #0D47A1 100%);
+      --seo-gradient: linear-gradient(135deg, #FF6F00 0%, #FFB74D 100%);
+      --algorithm-gradient: linear-gradient(135deg, #0D47A1 0%, #42A5F5 100%);
+      --performance-gradient: linear-gradient(135deg, #D32F2F 0%, #EF5350 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #E8F5E8 0%, #FFF3E0 25%, #E3F2FD 50%, #F3E5F5 75%, #FFEBEE 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .dashboard-header {
+      background: var(--ranking-gradient);
+      color: white;
+      padding: 50px 30px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px var(--shadow-ranking);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .dashboard-header::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" patternUnits="userSpaceOnUse" width="10" height="10"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+      animation: slideGrid 15s infinite linear;
+    }
+
+    @keyframes slideGrid {
+      0% { transform: translateX(0) translateY(0); }
+      100% { transform: translateX(-10px) translateY(-10px); }
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--ranking-green);
+      border-radius: 15px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 5px 20px var(--shadow-ranking);
+    }
+
+    .wc-logo {
+      background: var(--ranking-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .module-breadcrumb {
+      background: var(--bg-white);
+      border: 2px solid var(--ranking-green);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 3px 15px var(--shadow-ranking);
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--ranking-green);
+      font-weight: bold;
+    }
+
+    .optimization-panel {
+      background: var(--bg-white);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--border-light);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .optimization-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 30px;
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid var(--border-light);
+    }
+
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: var(--ranking-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.8rem;
+      text-align: center;
+    }
+
+    .metrics-card {
+      padding: 2rem;
+      border-radius: 15px;
+      margin: 1.5rem 0;
+      position: relative;
+      border: 2px solid;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .ranking-metric {
+      background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(255, 255, 255, 0.9));
+      border-color: var(--ranking-green);
+    }
+
+    .seo-metric {
+      background: linear-gradient(135deg, rgba(255, 111, 0, 0.1), rgba(255, 255, 255, 0.9));
+      border-color: var(--seo-orange);
+    }
+
+    .algorithm-metric {
+      background: linear-gradient(135deg, rgba(13, 71, 161, 0.1), rgba(255, 255, 255, 0.9));
+      border-color: var(--algorithm-blue);
+    }
+
+    .performance-metric {
+      background: linear-gradient(135deg, rgba(211, 47, 47, 0.1), rgba(255, 255, 255, 0.9));
+      border-color: var(--performance-red);
+    }
+
+    .visibility-metric {
+      background: linear-gradient(135deg, rgba(106, 27, 154, 0.1), rgba(255, 255, 255, 0.9));
+      border-color: var(--visibility-purple);
+    }
+
+    .algorithm-decoder {
+      background: var(--algorithm-gradient);
+      color: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .algorithm-decoder::before {
+      content: '🤖';
+      position: absolute;
+      top: -20px;
+      left: 25px;
+      background: var(--bg-white);
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--algorithm-blue);
+    }
+
+    .algorithm-factors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .factor-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      position: relative;
+    }
+
+    .factor-importance {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--text-dark);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: bold;
+    }
+
+    .factor-card h6 {
+      color: white;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .factor-card p {
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+
+    .factor-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .factor-card ul li {
+      color: rgba(255, 255, 255, 0.8);
+      margin: 0.3rem 0;
+      padding-left: 1.2rem;
+      position: relative;
+      font-size: 0.85rem;
+    }
+
+    .factor-card ul li::before {
+      content: '▶';
+      position: absolute;
+      left: 0;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .optimization-simulator {
+      background: var(--bg-white);
+      border: 3px solid var(--seo-orange);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .optimization-simulator::before {
+      content: '⚡';
+      position: absolute;
+      top: -20px;
+      left: 25px;
+      background: var(--bg-white);
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--seo-orange);
+    }
+
+    .simulator-controls {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .control-panel {
+      background: var(--bg-light);
+      border-radius: 12px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-light);
+      text-align: center;
+    }
+
+    .control-panel h6 {
+      color: var(--seo-orange);
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .optimization-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: #ddd;
+      outline: none;
+      margin: 1rem 0;
+    }
+
+    .optimization-slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--seo-orange);
+      cursor: pointer;
+    }
+
+    .optimization-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--seo-orange);
+      cursor: pointer;
+      border: none;
+    }
+
+    .ranking-results {
+      background: var(--bg-white);
+      border: 3px solid var(--ranking-green);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      display: none;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .result-box {
+      text-align: center;
+      background: var(--bg-light);
+      border-radius: 10px;
+      padding: 1.5rem;
+      border: 2px solid var(--border-light);
+    }
+
+    .result-number {
+      font-size: 2rem;
+      font-weight: bold;
+      color: var(--ranking-green);
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .platform-optimizer {
+      background: var(--bg-white);
+      border: 3px solid var(--visibility-purple);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .platform-optimizer::before {
+      content: '🎯';
+      position: absolute;
+      top: -20px;
+      left: 25px;
+      background: var(--bg-white);
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--visibility-purple);
+    }
+
+    .platform-tabs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .platform-tab {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .platform-tab:hover, .platform-tab.active {
+      border-color: var(--visibility-purple);
+      background: linear-gradient(135deg, rgba(106, 27, 154, 0.1), rgba(255, 255, 255, 0.9));
+      transform: translateY(-2px);
+    }
+
+    .platform-tab i {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+      color: var(--visibility-purple);
+    }
+
+    .platform-content {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      border: 2px solid var(--border-light);
+      display: none;
+    }
+
+    .platform-content.active {
+      display: block;
+    }
+
+    .optimization-checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+
+    .optimization-checklist li {
+      background: var(--bg-white);
+      margin: 0.8rem 0;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      border: 2px solid var(--border-light);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .optimization-checklist li:hover {
+      border-color: var(--ranking-green);
+      background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(255, 255, 255, 0.9));
+    }
+
+    .optimization-checklist li.completed {
+      border-color: var(--ranking-green);
+      background: linear-gradient(135deg, rgba(0, 200, 83, 0.1), rgba(255, 255, 255, 0.9));
+    }
+
+    .optimization-checkbox {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--ranking-green);
+      border-radius: 6px;
+      margin-right: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ranking-green);
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .optimization-checklist li.completed .optimization-checkbox {
+      background: var(--ranking-green);
+      color: white;
+    }
+
+    .timing-analyzer {
+      background: var(--performance-gradient);
+      color: white;
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .timing-analyzer::before {
+      content: '⏰';
+      position: absolute;
+      top: -20px;
+      left: 25px;
+      background: var(--bg-white);
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--performance-red);
+    }
+
+    .timing-heatmap {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .heatmap-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      margin: 1rem 0;
+    }
+
+    .heatmap-cell {
+      aspect-ratio: 1;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .heatmap-cell:hover {
+      transform: scale(1.1);
+    }
+
+    .time-slot {
+      background: rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .peak-time {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .good-time {
+      background: #FF9800;
+      color: white;
+    }
+
+    .slow-time {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .advanced-seo {
+      background: var(--bg-white);
+      border: 3px solid var(--info-blue);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .advanced-seo::before {
+      content: '🔍';
+      position: absolute;
+      top: -20px;
+      left: 25px;
+      background: var(--bg-white);
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      border: 2px solid var(--info-blue);
+    }
+
+    .seo-techniques {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .technique-card {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 2rem;
+      border: 2px solid var(--border-light);
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .technique-card:hover {
+      border-color: var(--info-blue);
+      background: var(--bg-white);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px var(--shadow-algorithm);
+    }
+
+    .technique-icon {
+      font-size: 3rem;
+      color: var(--info-blue);
+      margin-bottom: 1rem;
+    }
+
+    .technique-title {
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 1rem;
+    }
+
+    .technique-description {
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+
+    .technique-impact {
+      background: var(--info-blue);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: bold;
+    }
+
+    .btn {
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-ranking {
+      background: var(--ranking-gradient) !important;
+      color: white !important;
+    }
+
+    .btn-seo {
+      background: var(--seo-gradient) !important;
+      color: white !important;
+    }
+
+    .btn-algorithm {
+      background: var(--algorithm-gradient) !important;
+      color: white !important;
+    }
+
+    .btn-performance {
+      background: var(--performance-gradient) !important;
+      color: white !important;
+    }
+
+    @media (max-width: 768px) {
+      .algorithm-factors {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .optimization-panel {
+        padding: 2rem;
+      }
+      
+      .dashboard-header {
+        padding: 40px 20px;
+      }
+
+      .simulator-controls {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .results-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .platform-tabs {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.8rem;
+      }
+
+      .seo-techniques {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+
+      .heatmap-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 3px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .optimization-panel {
+        padding: 1.5rem;
+      }
+
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .platform-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+
+      .heatmap-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Domina los algoritmos y aparece en primeras páginas de todas las plataformas</p>
+  </div>
+
+  <div class="module-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🌟 Industria Webcam General</a></li>
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">📈 Marketing y Posicionamiento</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tarea 4.2: Estrategias de Visibilidad y Ranking</li>
+      </ol>
+    </nav>
+  </div>
+
+  <header class="dashboard-header">
+    <h1 class="mb-4" style="position: relative; z-index: 1; font-size: 2.8rem;">
+      <i class="fas fa-chart-line"></i>
+      Estrategias de Visibilidad y Ranking
+      <i class="fas fa-search"></i>
+    </h1>
+    <p class="fs-4 mb-0" style="position: relative; z-index: 1;">
+      Hackea los algoritmos para aparecer en primeras páginas y multiplicar tus viewers
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Sección: La Realidad del Ranking -->
+    <section class="optimization-panel">
+      <h2 class="section-title">🎯 ¿Por Qué Solo el 10% de las Modelos Son Visibles?</h2>
+      
+      <div class="ranking-metric metrics-card">
+        <h5><i class="fas fa-chart-bar"></i> La Brutal Matemática de la Visibilidad</h5>
+        <p>En Chaturbate hay 3,000+ modelos online simultáneamente. Los usuarios solo ven las primeras 2-3 páginas. <strong>Eso significa que solo 60-90 modelos son realmente visibles.</strong> El resto podría no existir.</p>
+        <p>En MyFreeCams la situación es peor: los usuarios casi nunca pasan de la primera página. <strong>Solo las top 20 modelos reciben tráfico consistente.</strong></p>
+      </div>
+
+      <div class="algorithm-metric metrics-card">
+        <h5><i class="fas fa-robot"></i> Los Algoritmos No Son Misterio</h5>
+        <p>Cada plataforma usa algoritmos específicos para decidir quién aparece primero. <strong>NO es casualidad ni suerte.</strong> Son fórmulas matemáticas que puedes hackear si entiendes las reglas.</p>
+        <p>Las modelos que ganan $5,000+ mensuales no son necesariamente las más bonitas. Son las que mejor entienden estos algoritmos y los optimizan diariamente.</p>
+      </div>
+
+      <div class="seo-metric metrics-card">
+        <h5><i class="fas fa-lightbulb"></i> Lo Que Vas a Dominar Aquí</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>🤖 Algoritmos Específicos:</h6>
+            <ul>
+              <li>Factores exactos de ranking en cada plataforma</li>
+              <li>Pesos relativos de cada factor</li>
+              <li>Cómo optimizar cada elemento</li>
+              <li>Errores que destruyen tu ranking</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>⚡ Herramientas Prácticas:</h6>
+            <ul>
+              <li>Simulador de ranking en tiempo real</li>
+              <li>Analizador de timing óptimo</li>
+              <li>Optimizador por plataforma</li>
+              <li>Checklist de optimización diaria</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Decodificador de Algoritmos -->
+    <section class="optimization-panel">
+      <h2 class="section-title">🤖 Decodificador de Algoritmos</h2>
+      
+      <div class="algorithm-decoder">
+        <h5><i class="fas fa-code"></i> Los 8 Factores Que Controlan Tu Posición</h5>
+        <p style="color: rgba(255,255,255,0.9);">Cada plataforma usa estos factores con diferentes pesos. Optimiza los correctos para tu plataforma principal:</p>
+        
+        <div class="algorithm-factors">
+          
+          <div class="factor-card">
+            <div class="factor-importance">CRÍTICO</div>
+            <h6>1. Tiempo Online Consistente</h6>
+            <p>Los algoritmos premian modelos confiables que están online en horarios predecibles.</p>
+            <ul>
+              <li>Mínimo 4 horas consecutivas</li>
+              <li>Mismos días de la semana</li>
+              <li>Misma hora de inicio</li>
+              <li>No desconexiones frecuentes</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">CRÍTICO</div>
+            <h6>2. Engagement Rate</h6>
+            <p>Número de viewers que interactúan vs total de viewers en tu room.</p>
+            <ul>
+              <li>Mensajes en chat por minuto</li>
+              <li>Propinas por viewer activo</li>
+              <li>Tiempo promedio en tu room</li>
+              <li>Porcentaje que regresa</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">ALTO</div>
+            <h6>3. Viewers Únicos Diarios</h6>
+            <p>Número de personas diferentes que te visitan cada día.</p>
+            <ul>
+              <li>Nuevos viewers por sesión</li>
+              <li>Crecimiento día a día</li>
+              <li>Diversidad geográfica</li>
+              <li>Retención de viewers nuevos</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">ALTO</div>
+            <h6>4. Tokens por Hora Promedio</h6>
+            <p>Ingresos generados por hora online. Indica valor al sitio.</p>
+            <ul>
+              <li>Propinas públicas y privadas</li>
+              <li>Consistencia de ingresos</li>
+              <li>Picos vs valles</li>
+              <li>Tendencia creciente</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">MEDIO</div>
+            <h6>5. Calidad de Transmisión</h6>
+            <p>Aspectos técnicos que afectan experiencia del usuario.</p>
+            <ul>
+              <li>Resolución HD consistente</li>
+              <li>Audio claro sin cortes</li>
+              <li>Buena iluminación</li>
+              <li>Conexión estable</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">MEDIO</div>
+            <h6>6. Interactividad</h6>
+            <p>Qué tan activamente respondes y generas conversación.</p>
+            <ul>
+              <li>Tiempo de respuesta a mensajes</li>
+              <li>Preguntas que generas</li>
+              <li>Actividades interactivas</li>
+              <li>Shows temáticos</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">BAJO</div>
+            <h6>7. Perfil Optimizado</h6>
+            <p>Información completa y atractiva en tu perfil.</p>
+            <ul>
+              <li>Bio detallada y actualizada</li>
+              <li>Fotos de calidad</li>
+              <li>Tags relevantes</li>
+              <li>Información de contacto</li>
+            </ul>
+          </div>
+
+          <div class="factor-card">
+            <div class="factor-importance">BAJO</div>
+            <h6>8. Ratings y Reviews</h6>
+            <p>Calificaciones dejadas por usuarios satisfechos.</p>
+            <ul>
+              <li>Promedio de estrellas</li>
+              <li>Número de reviews</li>
+              <li>Comentarios positivos</li>
+              <li>Favoritos y follows</li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Simulador de Ranking -->
+    <section class="optimization-panel">
+      <h2 class="section-title">⚡ Simulador de Ranking en Tiempo Real</h2>
+      
+      <div class="optimization-simulator">
+        <h5><i class="fas fa-sliders-h"></i> Optimiza Tu Posición Paso a Paso</h5>
+        <p style="color: var(--text-muted);">Mueve los sliders para ver cómo cada factor afecta tu ranking:</p>
+        
+        <div class="simulator-controls">
+          
+          <div class="control-panel">
+            <h6><i class="fas fa-clock"></i> Horas Online/Día</h6>
+            <input type="range" class="optimization-slider" id="hoursOnline" min="1" max="12" value="4" onchange="calculateRanking()">
+            <div id="hoursValue">4 horas</div>
+          </div>
+
+          <div class="control-panel">
+            <h6><i class="fas fa-comments"></i> Engagement Rate</h6>
+            <input type="range" class="optimization-slider" id="engagement" min="5" max="50" value="15" onchange="calculateRanking()">
+            <div id="engagementValue">15%</div>
+          </div>
+
+          <div class="control-panel">
+            <h6><i class="fas fa-users"></i> Viewers Únicos</h6>
+            <input type="range" class="optimization-slider" id="uniqueViewers" min="20" max="500" value="100" onchange="calculateRanking()">
+            <div id="viewersValue">100 únicos</div>
+          </div>
+
+          <div class="control-panel">
+            <h6><i class="fas fa-coins"></i> Tokens/Hora</h6>
+            <input type="range" class="optimization-slider" id="tokensPerHour" min="50" max="1000" value="200" onchange="calculateRanking()">
+            <div id="tokensValue">200 tokens/h</div>
+          </div>
+
+          <div class="control-panel">
+            <h6><i class="fas fa-video"></i> Calidad Técnica</h6>
+            <input type="range" class="optimization-slider" id="techQuality" min="3" max="10" value="7" onchange="calculateRanking()">
+            <div id="qualityValue">7/10</div>
+          </div>
+
+          <div class="control-panel">
+            <h6><i class="fas fa-heart"></i> Interactividad</h6>
+            <input type="range" class="optimization-slider" id="interactivity" min="3" max="10" value="6" onchange="calculateRanking()">
+            <div id="interactivityValue">6/10</div>
+          </div>
+
+        </div>
+
+        <button class="btn btn-seo btn-lg" onclick="calculateRanking()" style="margin-top: 1.5rem;">
+          <i class="fas fa-calculator"></i> Calcular Mi Ranking Actual
+        </button>
+
+        <div class="ranking-results" id="rankingResults">
+          <h6><strong>📊 Tu Posición Estimada en el Ranking:</strong></h6>
+          
+          <div class="results-grid">
+            <div class="result-box">
+              <span class="result-number" id="overallRank">#0</span>
+              <div class="result-label">Posición General</div>
+            </div>
+            <div class="result-box">
+              <span class="result-number" id="pageNumber">0</span>
+              <div class="result-label">Página</div>
+            </div>
+            <div class="result-box">
+              <span class="result-number" id="visibilityScore">0%</span>
+              <div class="result-label">Visibilidad</div>
+            </div>
+            <div class="result-box">
+              <span class="result-number" id="trafficEstimate">0</span>
+              <div class="result-label">Viewers/Día</div>
+            </div>
+          </div>
+
+          <div id="rankingAdvice" style="background: var(--bg-light); padding: 1.5rem; border-radius: 10px; margin-top: 1rem;">
+            <!-- Consejo específico basado en ranking -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Optimizador por Plataforma -->
+    <section class="optimization-panel">
+      <h2 class="section-title">🎯 Optimizador Específico por Plataforma</h2>
+      
+      <div class="platform-optimizer">
+        <h5><i class="fas fa-bullseye"></i> Cada Plataforma Tiene Reglas Diferentes</h5>
+        <p style="color: var(--text-muted);">Los algoritmos varían entre sitios. Selecciona tu plataforma principal:</p>
+        
+        <div class="platform-tabs">
+          <div class="platform-tab active" onclick="showPlatform(this, 'chaturbate')">
+            <i class="fas fa-video"></i>
+            <strong>Chaturbate</strong>
+          </div>
+          <div class="platform-tab" onclick="showPlatform(this, 'myfreecams')">
+            <i class="fas fa-star"></i>
+            <strong>MyFreeCams</strong>
+          </div>
+          <div class="platform-tab" onclick="showPlatform(this, 'stripchat')">
+            <i class="fas fa-fire"></i>
+            <strong>StripChat</strong>
+          </div>
+          <div class="platform-tab" onclick="showPlatform(this, 'livejasmin')">
+            <i class="fas fa-gem"></i>
+            <strong>LiveJasmin</strong>
+          </div>
+        </div>
+
+        <div class="platform-content active" id="chaturbate">
+          <h6><strong>Chaturbate - Optimización Específica</strong></h6>
+          <p><strong>Algoritmo principal:</strong> Basado en viewers actuales + tokens recientes + tiempo online</p>
+          
+          <ul class="optimization-checklist">
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Mantén mínimo 50 viewers constantes</strong> - El algoritmo prioriza rooms activos</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Recibe propinas cada 10 minutos</strong> - Las propinas recientes suben tu posición</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Usa apps y bots interactivos</strong> - Genera más actividad en el chat</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Responde a TODOS los mensajes</strong> - Los mensajes sin respuesta bajan tu ranking</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Haz goals alcanzables cada 30-45 min</strong> - Los goals completados mejoran visibilidad</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Usa hashtags populares pero específicos</strong> - #latina #anal #young funcionan mejor</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="platform-content" id="myfreecams">
+          <h6><strong>MyFreeCams - Optimización Específica</strong></h6>
+          <p><strong>Algoritmo principal:</strong> Basado en CamScore (tokens/tiempo online) + modelo de scoring complejo</p>
+          
+          <ul class="optimization-checklist">
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Maximiza tokens en primeras 2 horas</strong> - CamScore se calcula en tiempo real</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Nunca estés online sin hacer tokens</strong> - Tiempo sin ingresos daña tu CamScore</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Enfócate en privados y groups</strong> - Generan más tokens por minuto</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Sé consistente con horarios</strong> - MFC premia la regularidad</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Interactúa constantemente</strong> - Rooms activos suben en el ranking</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Usa el sistema de Admirers</strong> - Más admirers = mejor posición</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="platform-content" id="stripchat">
+          <h6><strong>StripChat - Optimización Específica</strong></h6>
+          <p><strong>Algoritmo principal:</strong> Basado en viewers + interacciones + diversidad geográfica</p>
+          
+          <ul class="optimization-checklist">
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Atrae viewers de diferentes países</strong> - El algoritmo premia diversidad</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Usa juguetes interactivos</strong> - Lovense y similares mejoran ranking</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Haz shows de ticket</strong> - Generan mucha actividad rápida</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Participa en concursos</strong> - StripChat premia participación</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Sube contenido a tu perfil</strong> - Fotos y videos mejoran posición</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Responde mensajes privados rápido</strong> - Tiempo de respuesta afecta ranking</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="platform-content" id="livejasmin">
+          <h6><strong>LiveJasmin - Optimización Específica</strong></h6>
+          <p><strong>Algoritmo principal:</strong> Basado en tiempo en privados + ratings + calidad técnica</p>
+          
+          <ul class="optimization-checklist">
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Maximiza tiempo en shows privados</strong> - Es el factor más importante</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Mantén calidad HD siempre</strong> - Calidad técnica es crítica</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Pide ratings positivos</strong> - Ratings altos = mejor posición</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Completa tu perfil 100%</strong> - Perfiles incompletos son penalizados</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Usa outfits y fondos profesionales</strong> - La presentación importa mucho</span>
+            </li>
+            <li onclick="toggleOptimization(this)">
+              <div class="optimization-checkbox"></div>
+              <span><strong>Sé puntual con tu horario</strong> - Consistencia es clave en LJ</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Analizador de Timing -->
+    <section class="optimization-panel">
+      <h2 class="section-title">⏰ Analizador de Timing Óptimo</h2>
+      
+      <div class="timing-analyzer">
+        <h5><i class="fas fa-clock"></i> El Timing Lo Es Todo</h5>
+        <p style="color: rgba(255,255,255,0.9);">Estar online en las horas correctas puede duplicar tu tráfico. Aquí está el heatmap de actividad por horas:</p>
+        
+        <div class="timing-heatmap">
+          <h6 style="color: white; margin-bottom: 1rem;"><strong>🔥 Horas PICO (más tráfico)</strong></h6>
+          <div class="heatmap-grid">
+            <div class="heatmap-cell time-slot">Dom</div>
+            <div class="heatmap-cell time-slot">Lun</div>
+            <div class="heatmap-cell time-slot">Mar</div>
+            <div class="heatmap-cell time-slot">Mié</div>
+            <div class="heatmap-cell time-slot">Jue</div>
+            <div class="heatmap-cell time-slot">Vie</div>
+            <div class="heatmap-cell time-slot">Sáb</div>
+            
+            <div class="heatmap-cell slow-time">6AM</div>
+            <div class="heatmap-cell slow-time">6AM</div>
+            <div class="heatmap-cell slow-time">6AM</div>
+            <div class="heatmap-cell slow-time">6AM</div>
+            <div class="heatmap-cell slow-time">6AM</div>
+            <div class="heatmap-cell good-time">6AM</div>
+            <div class="heatmap-cell good-time">6AM</div>
+            
+            <div class="heatmap-cell good-time">12PM</div>
+            <div class="heatmap-cell good-time">12PM</div>
+            <div class="heatmap-cell good-time">12PM</div>
+            <div class="heatmap-cell good-time">12PM</div>
+            <div class="heatmap-cell good-time">12PM</div>
+            <div class="heatmap-cell peak-time">12PM</div>
+            <div class="heatmap-cell peak-time">12PM</div>
+            
+            <div class="heatmap-cell good-time">6PM</div>
+            <div class="heatmap-cell peak-time">6PM</div>
+            <div class="heatmap-cell peak-time">6PM</div>
+            <div class="heatmap-cell peak-time">6PM</div>
+            <div class="heatmap-cell peak-time">6PM</div>
+            <div class="heatmap-cell peak-time">6PM</div>
+            <div class="heatmap-cell peak-time">6PM</div>
+            
+            <div class="heatmap-cell peak-time">12AM</div>
+            <div class="heatmap-cell good-time">12AM</div>
+            <div class="heatmap-cell good-time">12AM</div>
+            <div class="heatmap-cell good-time">12AM</div>
+            <div class="heatmap-cell good-time">12AM</div>
+            <div class="heatmap-cell peak-time">12AM</div>
+            <div class="heatmap-cell peak-time">12AM</div>
+          </div>
+          
+          <div class="row g-3 mt-3">
+            <div class="col-md-4">
+              <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
+                <h6 style="color: white;"><strong>🔥 PICO (Verde)</strong></h6>
+                <p style="color: rgba(255,255,255,0.8); margin: 0;">Lun-Vie 6PM-12AM<br>Fin de semana todo el día</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
+                <h6 style="color: white;"><strong>⚡ BUENO (Naranja)</strong></h6>
+                <p style="color: rgba(255,255,255,0.8); margin: 0;">Tardes de semana<br>Mañanas de fin de semana</p>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 8px;">
+                <h6 style="color: white;"><strong>😴 LENTO (Gris)</strong></h6>
+                <p style="color: rgba(255,255,255,0.8); margin: 0;">Madrugadas de semana<br>Muy temprano cualquier día</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 12px; margin-top: 2rem;">
+          <h6 style="color: white;"><strong>💡 Estrategia de Timing Inteligente:</strong></h6>
+          <ul style="color: rgba(255,255,255,0.9); margin: 0;">
+            <li><strong>Regla 80/20:</strong> Enfoca 80% de tu tiempo en horas PICO, 20% experimentando</li>
+            <li><strong>Consistencia:</strong> Es mejor 4 horas en horario PICO que 8 horas dispersas</li>
+            <li><strong>Competencia:</strong> Horas PICO tienen más tráfico pero más competencia</li>
+            <li><strong>Nicho:</strong> Si tienes audiencia específica, las horas lentas pueden funcionar</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: SEO Avanzado -->
+    <section class="optimization-panel">
+      <h2 class="section-title">🔍 SEO Avanzado para Modelos</h2>
+      
+      <div class="advanced-seo">
+        <h5><i class="fas fa-search"></i> Técnicas de Optimización Específicas</h5>
+        <p style="color: var(--text-muted);">Más allá del algoritmo básico, estas técnicas pueden darte ventaja competitiva:</p>
+        
+        <div class="seo-techniques">
+          
+          <div class="technique-card" onclick="showTechniqueDetail(this, 'keywords')">
+            <i class="fas fa-tags technique-icon"></i>
+            <h6 class="technique-title">Optimización de Keywords</h6>
+            <p class="technique-description">Usa las palabras clave exactas que buscan tus clientes ideales en bio, tags y room topic.</p>
+            <div class="technique-impact">Impacto: +40% tráfico orgánico</div>
+          </div>
+
+          <div class="technique-card" onclick="showTechniqueDetail(this, 'thumbnails')">
+            <i class="fas fa-image technique-icon"></i>
+            <h6 class="technique-title">Thumbnail Psychology</h6>
+            <p class="technique-description">Tu foto de perfil es lo primero que ven. Optimízala para generar clicks psicológicos.</p>
+            <div class="technique-impact">Impacto: +60% click-through rate</div>
+          </div>
+
+          <div class="technique-card" onclick="showTechniqueDetail(this, 'cross-platform')">
+            <i class="fas fa-share-alt technique-icon"></i>
+            <h6 class="technique-title">Cross-Platform SEO</h6>
+            <p class="technique-description">Usa otros sitios para generar tráfico hacia tu plataforma principal.</p>
+            <div class="technique-impact">Impacto: +25% viewers nuevos</div>
+          </div>
+
+          <div class="technique-card" onclick="showTechniqueDetail(this, 'social-proof')">
+            <i class="fas fa-users technique-icon"></i>
+            <h6 class="technique-title">Social Proof Hacking</h6>
+            <p class="technique-description">Crea la percepción de popularidad para atraer más viewers por efecto psicológico.</p>
+            <div class="technique-impact">Impacto: +35% retención viewers</div>
+          </div>
+
+          <div class="technique-card" onclick="showTechniqueDetail(this, 'content-seo')">
+            <i class="fas fa-video technique-icon"></i>
+            <h6 class="technique-title">Content SEO</h6>
+            <p class="technique-description">Optimiza tu contenido grabado para que aparezca en búsquedas específicas.</p>
+            <div class="technique-impact">Impacto: +50% ventas contenido</div>
+          </div>
+
+          <div class="technique-card" onclick="showTechniqueDetail(this, 'local-seo')">
+            <i class="fas fa-map-marker-alt technique-icon"></i>
+            <h6 class="technique-title">Geo-Targeting</h6>
+            <p class="technique-description">Atrae tráfico específico de países con mayor poder adquisitivo.</p>
+            <div class="technique-impact">Impacto: +80% ingresos por viewer</div>
+          </div>
+
+        </div>
+
+        <div id="techniqueDetail" style="display: none; background: var(--bg-light); padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--info-blue);">
+          <!-- Detalles específicos de la técnica seleccionada -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Checklist de Optimización Diaria -->
+    <section class="optimization-panel">
+      <h2 class="section-title">✅ Checklist de Optimización Diaria</h2>
+      
+      <div class="performance-metric metrics-card">
+        <h5><i class="fas fa-tasks"></i> Rutina Diaria para Mantener Alto Ranking</h5>
+        <p>Los algoritmos cambian constantemente. Esta rutina diaria te mantiene siempre optimizada:</p>
+        
+        <ul class="optimization-checklist" style="margin-top: 2rem;">
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Revisé mi posición en el ranking</strong> - Primera página o necesito optimizar</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Actualicé room topic con keywords relevantes</strong> - Palabras que busca mi audiencia</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Verifiqué calidad técnica</strong> - HD, audio claro, buena iluminación</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Planifiqué goals alcanzables</strong> - Metas que puedo completar para mantener actividad</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Respondí mensajes pendientes</strong> - PMs y fan mail para mantener engagement</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Analicé horarios de mayor tráfico</strong> - Ajusté mi horario según datos reales</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Interactué proactivamente en chat</strong> - Generar conversación, no solo esperar</span>
+          </li>
+          <li onclick="toggleOptimization(this)">
+            <div class="optimization-checkbox"></div>
+            <span><strong>Promocioné en redes sociales</strong> - Tráfico externo ayuda al ranking</span>
+          </li>
+        </ul>
+
+        <div id="dailyProgress" style="display: none; margin-top: 2rem;">
+          <!-- Progreso diario -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Plan de Acción Final -->
+    <section class="optimization-panel">
+      <h2 class="section-title">🚀 Tu Plan de Optimización</h2>
+      
+      <div class="ranking-metric metrics-card">
+        <h5><i class="fas fa-trophy"></i> ¡Ya Entiendes los Algoritmos!</h5>
+        <p>Ahora tienes el conocimiento que usan las modelos top para aparecer consistentemente en primeras páginas. Ya no dependes de suerte o casualidad. <strong>Tienes el control total de tu visibilidad.</strong></p>
+      </div>
+
+      <div class="seo-metric metrics-card">
+        <h5><i class="fas fa-arrow-right"></i> Próximos Pasos en Tu Formación</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="algorithm-metric metrics-card" style="padding: 1.5rem;">
+              <h6><i class="fas fa-share-alt"></i> Tarea 4.3: Redes Sociales</h6>
+              <p>Multiplica tu alcance usando <strong>Instagram, Twitter y TikTok</strong> para crear tráfico externo hacia tus plataformas.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="visibility-metric metrics-card" style="padding: 1.5rem;">
+              <h6><i class="fas fa-heart"></i> Tema 5: Conexión Emocional</h6>
+              <p>Ahora que tienes visibilidad, aprende a <strong>convertir viewers en fans leales</strong> que regresen contigo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="performance-metric metrics-card">
+        <h5><i class="fas fa-lightbulb"></i> Insight Clave Para el Éxito</h5>
+        <p><strong>La optimización es un proceso continuo, no un evento único.</strong> Los algoritmos cambian, la competencia crece, tu audiencia evoluciona. Las modelos que ganan consistentemente $3,000+ mensuales dedican 15-30 minutos diarios a optimización. Es la diferencia entre aparecer en página 1 o página 10.</p>
+        <p>No optimices todo a la vez. Enfócate en 2-3 factores por semana hasta dominarlos, después agrega más.</p>
+      </div>
+
+      <div class="algorithm-metric metrics-card">
+        <h5><i class="fas fa-graduation-cap"></i> Resumen de Tu Nuevo Superpoder</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>🤖 Conocimiento de Algoritmos:</h6>
+            <ul>
+              <li>8 factores específicos que controlan ranking</li>
+              <li>Optimización específica por plataforma</li>
+              <li>Técnicas SEO avanzadas para modelos</li>
+              <li>Timing óptimo basado en datos reales</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>⚡ Herramientas Implementadas:</h6>
+            <ul>
+              <li>Simulador de ranking en tiempo real</li>
+              <li>Checklists de optimización específicos</li>
+              <li>Analizador de timing y heatmaps</li>
+              <li>Rutina diaria de mantenimiento</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let optimizedTasks = 0;
+    let selectedPlatform = 'chaturbate';
+    
+    function calculateRanking() {
+      const hours = parseInt(document.getElementById('hoursOnline').value);
+      const engagement = parseInt(document.getElementById('engagement').value);
+      const viewers = parseInt(document.getElementById('uniqueViewers').value);
+      const tokens = parseInt(document.getElementById('tokensPerHour').value);
+      const quality = parseInt(document.getElementById('techQuality').value);
+      const interactivity = parseInt(document.getElementById('interactivity').value);
+      
+      // Update display values
+      document.getElementById('hoursValue').textContent = `${hours} horas`;
+      document.getElementById('engagementValue').textContent = `${engagement}%`;
+      document.getElementById('viewersValue').textContent = `${viewers} únicos`;
+      document.getElementById('tokensValue').textContent = `${tokens} tokens/h`;
+      document.getElementById('qualityValue').textContent = `${quality}/10`;
+      document.getElementById('interactivityValue').textContent = `${interactivity}/10`;
+      
+      // Calculate ranking score (weighted)
+      let score = 0;
+      score += (hours / 12) * 25; // 25% weight for hours online
+      score += (engagement / 50) * 30; // 30% weight for engagement
+      score += (viewers / 500) * 20; // 20% weight for unique viewers
+      score += (tokens / 1000) * 15; // 15% weight for tokens
+      score += (quality / 10) * 5; // 5% weight for quality
+      score += (interactivity / 10) * 5; // 5% weight for interactivity
+      
+      // Estimate ranking position (out of 3000 models)
+      const position = Math.max(1, Math.round(3000 - (score / 100) * 2900));
+      const page = Math.ceil(position / 20);
+      const visibility = Math.max(5, Math.round((3000 - position) / 3000 * 100));
+      const traffic = Math.round(Math.max(10, (100 - score) * -10 + 1000));
+      
+      // Update results
+      document.getElementById('overallRank').textContent = `#${position}`;
+      document.getElementById('pageNumber').textContent = page;
+      document.getElementById('visibilityScore').textContent = `${visibility}%`;
+      document.getElementById('trafficEstimate').textContent = traffic;
+      
+      // Generate advice
+      let advice = '';
+      if (position <= 20) {
+        advice = '🏆 ¡EXCELENTE! Estás en primera página. Mantén estos niveles consistentemente.';
+      } else if (position <= 100) {
+        advice = '🎯 MUY BIEN. Estás visible pero puedes mejorar. Enfócate en aumentar engagement y tokens/hora.';
+      } else if (position <= 500) {
+        advice = '📈 PROGRESO VISIBLE. Necesitas optimizar más factores. Prioriza: más horas online y mejor engagement.';
+      } else {
+        advice = '🚀 MUCHO POTENCIAL. Empieza optimizando horarios consistentes y generando más interacción en tu room.';
+      }
+      
+      document.getElementById('rankingAdvice').innerHTML = `<strong>${advice}</strong>`;
+      document.getElementById('rankingResults').style.display = 'block';
+    }
+
+    function showPlatform(element, platform) {
+      // Update active tab
+      document.querySelectorAll('.platform-tab').forEach(tab => tab.classList.remove('active'));
+      element.classList.add('active');
+      
+      // Update active content
+      document.querySelectorAll('.platform-content').forEach(content => content.classList.remove('active'));
+      document.getElementById(platform).classList.add('active');
+      
+      selectedPlatform = platform;
+    }
+
+    function toggleOptimization(element) {
+      element.classList.toggle('completed');
+      
+      // Count completed optimizations in current platform
+      const currentPlatform = document.querySelector('.platform-content.active');
+      const totalOptimizations = currentPlatform.querySelectorAll('.optimization-checklist li').length;
+      const completedOptimizations = currentPlatform.querySelectorAll('.optimization-checklist li.completed').length;
+      
+      if (completedOptimizations === totalOptimizations && totalOptimizations > 0) {
+        // Show platform completion message
+        setTimeout(() => {
+          alert(`🎉 ¡${selectedPlatform.toUpperCase()} OPTIMIZADO! Has completado todas las optimizaciones para esta plataforma.`);
+        }, 500);
+      }
+      
+      // Update daily progress if in daily checklist
+      if (element.closest('.performance-metric')) {
+        updateDailyProgress();
+      }
+    }
+
+    function updateDailyProgress() {
+      const dailyTasks = document.querySelectorAll('.performance-metric .optimization-checklist li');
+      const completedDaily = document.querySelectorAll('.performance-metric .optimization-checklist li.completed');
+      const percentage = Math.round((completedDaily.length / dailyTasks.length) * 100);
+      
+      if (completedDaily.length > 0) {
+        const resultDiv = document.getElementById('dailyProgress');
+        let resultText = `<strong>OPTIMIZACIÓN DIARIA: ${completedDaily.length}/${dailyTasks.length} tareas (${percentage}%)</strong><br>`;
+        
+        if (percentage >= 100) {
+          resultText += `<div style="color: var(--ranking-green); font-weight: bold;">🏆 ¡DÍA PERFECTAMENTE OPTIMIZADO! Tu ranking mejorará consistentemente.</div>`;
+        } else if (percentage >= 75) {
+          resultText += `<div style="color: var(--seo-orange); font-weight: bold;">⚡ EXCELENTE DÍA. Solo faltan algunos detalles para optimización completa.</div>`;
+        } else if (percentage >= 50) {
+          resultText += `<div style="color: var(--algorithm-blue); font-weight: bold;">📈 BUEN PROGRESO. Continúa completando tareas para mantener ranking alto.</div>`;
+        } else {
+          resultText += `<div style="color: var(--performance-red); font-weight: bold;">🚀 EMPEZANDO. Cada tarea completada mejora tu posición en el ranking.</div>`;
+        }
+        
+        resultDiv.innerHTML = resultText;
+        resultDiv.style.background = percentage >= 100 ? 'var(--ranking-green)' : 
+                                   percentage >= 75 ? 'var(--seo-orange)' : 
+                                   percentage >= 50 ? 'var(--algorithm-blue)' : 'var(--performance-red)';
+        resultDiv.style.color = 'white';
+        resultDiv.style.borderRadius = '10px';
+        resultDiv.style.padding = '1rem';
+        resultDiv.style.fontWeight = 'bold';
+        resultDiv.style.display = 'block';
+      }
+    }
+
+    function showTechniqueDetail(element, technique) {
+      const techniques = {
+        'keywords': {
+          title: '🏷️ Optimización de Keywords - Guía Completa',
+          content: `
+            <h6><strong>Keywords más efectivos por nicho:</strong></h6>
+            <ul>
+              <li><strong>Latinas:</strong> #latina #spanish #caliente #morena #teen</li>
+              <li><strong>Teens:</strong> #teen #young #cute #petite #schoolgirl</li>
+              <li><strong>MILF:</strong> #milf #mature #mommy #cougar #experienced</li>
+              <li><strong>Fetish:</strong> #feet #anal #bdsm #roleplay #dominant</li>
+            </ul>
+            <h6><strong>Dónde usar keywords:</strong></h6>
+            <p>Bio de perfil, room topic, hashtags, títulos de videos, descripciones de fotos</p>
+            <h6><strong>Herramienta:</strong></h6>
+            <p>Usa Google Trends y ve qué buscan en modo incógnito para encontrar keywords populares</p>
+          `
+        },
+        'thumbnails': {
+          title: '📸 Thumbnail Psychology - Optimización Visual',
+          content: `
+            <h6><strong>Elementos que aumentan clicks:</strong></h6>
+            <ul>
+              <li><strong>Contacto visual directo:</strong> Mira a la cámara, no a otro lado</li>
+              <li><strong>Expresión facial:</strong> Sonrisa seductora o expresión de sorpresa</li>
+              <li><strong>Colores que destacan:</strong> Rosa, rojo, amarillo llaman más atención</li>
+              <li><strong>Contraste alto:</strong> Tu piel debe destacar del fondo</li>
+            </ul>
+            <h6><strong>Qué evitar:</strong></h6>
+            <p>Fondos muy ocupados, poca iluminación, ropa que se confunda con el fondo, múltiples personas en frame</p>
+            <h6><strong>Test A/B:</strong></h6>
+            <p>Cambia tu foto principal cada semana y mide cuál genera más clicks</p>
+          `
+        },
+        'cross-platform': {
+          title: '🔗 Cross-Platform SEO - Tráfico Multiplataforma',
+          content: `
+            <h6><strong>Estrategia de embudo:</strong></h6>
+            <ul>
+              <li><strong>TikTok/Instagram:</strong> Contenido viral que dirija a tu link tree</li>
+              <li><strong>Twitter:</strong> Interacción diaria + promoción sutil de shows</li>
+              <li><strong>Reddit:</strong> Participa en subreddits relevantes (r/gonewild, etc)</li>
+              <li><strong>OnlyFans:</strong> Como puente hacia tu plataforma de shows</li>
+            </ul>
+            <h6><strong>Táctica específica:</strong></h6>
+            <p>Crea contenido "teaser" en redes gratuitas que solo se completa en tu show de pago</p>
+            <h6><strong>Medición:</strong></h6>
+            <p>Usa UTM links diferentes para cada plataforma y mide qué trae más tráfico de calidad</p>
+          `
+        }
+      };
+      
+      if (techniques[technique]) {
+        document.getElementById('techniqueDetail').innerHTML = `
+          <h6><strong>${techniques[technique].title}</strong></h6>
+          ${techniques[technique].content}
+        `;
+        document.getElementById('techniqueDetail').style.display = 'block';
+      }
+    }
+
+    // Auto-calculate ranking on page load
+    window.onload = function() {
+      calculateRanking();
+    };
+  </script>
+</body>
+</html>

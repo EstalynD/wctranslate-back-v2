@@ -1,0 +1,1650 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔔 Alerts Academy - Ecosistema de Reconocimiento Profesional</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #d63384;
+            --secondary-color: #e83e8c;
+            --accent-color: #fd7e14;
+            --success-green: #28a745;
+            --warning-orange: #ffc107;
+            --info-blue: #17a2b8;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-gradient: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --border-light: #e0e0e0;
+            --alert-gradient: linear-gradient(135deg, #d63384 0%, #fd7e14 50%, #ffc107 100%);
+            --notification-gradient: linear-gradient(45deg, #ff9a9e, #fecfef, #fd7e14, #d63384);
+            --engagement-gradient: linear-gradient(135deg, #ff6b6b 0%, #feca57 50%, #48dbfb 100%);
+            --recognition-gradient: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            --system-gradient: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .wc-logo {
+            font-size: 2rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .live-indicator {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: linear-gradient(135deg, #d63384 0%, #fd7e14 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            text-align: center;
+            transform: perspective(1000px) rotateY(0deg);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .insight-card:hover {
+            transform: perspective(1000px) rotateY(5deg) translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 0.5rem;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--alert-gradient);
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30m-8 0a8 8 0 1 1 16 0a8 8 0 1 1 -16 0M30 15m-4 0a4 4 0 1 1 8 0a4 4 0 1 1 -8 0M30 45m-4 0a4 4 0 1 1 8 0a4 4 0 1 1 -8 0'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: white;
+            margin: 2rem 0;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--notification-gradient);
+            border-radius: 25px 25px 0 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--alert-gradient);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 40px rgba(214, 51, 132, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .card-toggle {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 0;
+        }
+
+        .card-details.active {
+            max-height: 700px;
+            margin-top: 1rem;
+        }
+
+        /* Alert Preview */
+        .alert-preview {
+            background: #000;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            min-height: 150px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-alert {
+            background: var(--alert-gradient);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 10px;
+            text-align: center;
+            animation: alertPop 0.5s ease-out;
+            position: relative;
+            transform: scale(0);
+        }
+
+        .preview-alert.active {
+            transform: scale(1);
+            animation: alertPop 0.8s ease-out;
+        }
+
+        /* Calculators */
+        .calculator {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1.1rem;
+            color: var(--text-dark);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .result-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Alert Configurator */
+        .alert-configurator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .config-option {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .config-option:hover,
+        .config-option.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .skill-progress {
+            margin: 1rem 0;
+        }
+
+        .skill-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--alert-gradient);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            font-family: serif;
+            color: var(--primary-color);
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Simulators */
+        .simulator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            color: white;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scenario-card:hover,
+        .scenario-card.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: white;
+            transform: scale(1.05);
+        }
+
+        .scenario-result {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .scenario-result.active {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        /* Sound Test */
+        .sound-test {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sound-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .sound-button:hover {
+            transform: scale(1.1);
+            background: var(--accent-color);
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--recognition-gradient);
+            border-radius: 25px;
+            padding: 3rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(1deg); }
+            66% { transform: translateY(-15px) rotate(-1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes alertPop {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 0.8; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(214, 51, 132, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(214, 51, 132, 0.8); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .main-subtitle {
+                font-size: 1.1rem;
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .insight-number {
+                font-size: 2rem;
+            }
+
+            .lab-section {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+
+            .interactive-card:hover {
+                transform: translateY(-5px);
+            }
+
+            .scenario-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .achievement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .config-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .wc-header {
+                padding: 0.5rem 0;
+            }
+
+            .wc-logo {
+                font-size: 1.5rem;
+            }
+
+            .lab-section {
+                padding: 1rem;
+            }
+
+            .calculator,
+            .simulator,
+            .success-story {
+                padding: 1.5rem;
+            }
+
+            .insight-card {
+                padding: 1rem;
+            }
+
+            .insight-number {
+                font-size: 1.8rem;
+            }
+
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch-friendly elements */
+        .interactive-card,
+        .scenario-card,
+        .card-toggle {
+            min-height: 44px;
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            :root {
+                --primary-color: #000;
+                --secondary-color: #333;
+                --text-muted: #666;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="#" class="wc-logo text-decoration-none">
+                    <i class="fas fa-video me-2"></i>WC Training
+                </a>
+                <div class="wc-stats">
+                    <div class="live-indicator"></div>
+                    <span><strong>12,847</strong> modelos activos</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-4 text-dark">📊 Insights de Engagement 2025</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">340%</div>
+                        <div class="insight-label">Incremento en engagement con alertas personalizadas</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">$4.1K</div>
+                        <div class="insight-label">Aumento promedio mensual en donaciones</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">73%</div>
+                        <div class="insight-label">Usuarios repiten comportamientos con reconocimiento</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-4 mt-3">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">89%</div>
+                        <div class="insight-label">Streamers top usan sistemas de reconocimiento</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">2.8x</div>
+                        <div class="insight-label">Mayor retención con alertas estratégicas</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">156%</div>
+                        <div class="insight-label">Incremento en follows con alerts optimizadas</div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 text-muted"><em>Fuente: Engagement Psychology Report 2025, Streaming Analytics Survey</em></p>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🔔 Alerts Academy</h1>
+            <p class="main-subtitle">
+                Construye tu ecosistema de reconocimiento que transforma interacciones transaccionales en experiencias emocionalmente resonantes. Domina la psicología del reforzamiento positivo que genera culturas de participación activa y lealtad comunitaria.
+            </p>
+        </div>
+    </section>
+
+    <div class="container py-5">
+        <!-- Tipos de Alertas Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+                🔔 LAB de Tipos de Alertas: Jerarquía de Reconocimiento
+            </div>
+            <p class="mb-4">Cada tipo de alerta debe generar respuesta psicológica específica. La jerarquía visual y sonora comunica valor relativo y fomenta comportamientos deseados.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('alert-hierarchy')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🏆 Jerarquía de Alertas por Impacto</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="alert-hierarchy">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>NIVEL 1 - RECONOCIMIENTO BÁSICO:</h6>
+                            <ul>
+                                <li><strong>Follow:</strong> Animación 2-3s, sonido sutil</li>
+                                <li><strong>Like/Heart:</strong> Efecto visual pequeño</li>
+                                <li><strong>Chat Message:</strong> Highlight temporal</li>
+                                <li><strong>Viewer Join:</strong> Bienvenida discreta</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>NIVEL 2 - RECONOCIMIENTO MEDIO:</h6>
+                            <ul>
+                                <li><strong>Subscription:</strong> Animación 5-7s, sonido distintivo</li>
+                                <li><strong>Gift Sub:</strong> Celebración con nombre</li>
+                                <li><strong>Raid:</strong> Bienvenida grupal energética</li>
+                                <li><strong>Host:</strong> Agradecimiento prominente</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h6>NIVEL 3 - RECONOCIMIENTO PREMIUM:</h6>
+                            <ul>
+                                <li><strong>Donations $10-50:</strong> Animación 8-12s</li>
+                                <li><strong>Bit Cheers:</strong> Efectos escalados por cantidad</li>
+                                <li><strong>Milestone Achievements:</strong> Celebración especial</li>
+                                <li><strong>VIP/Mod Actions:</strong> Reconocimiento distintivo</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>NIVEL 4 - RECONOCIMIENTO ÉPICO:</h6>
+                            <ul>
+                                <li><strong>Large Donations $50+:</strong> 15-20s, efectos únicos</li>
+                                <li><strong>First-Time Big Supporter:</strong> Bienvenida especial</li>
+                                <li><strong>Community Milestones:</strong> Celebración grupal</li>
+                                <li><strong>Anniversary/Special:</strong> Eventos únicos</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert-preview mt-4">
+                        <div class="preview-alert" id="demoAlert">
+                            🎉 ¡Gracias por el follow, @Usuario! 🎉
+                        </div>
+                    </div>
+                    <div class="text-center mt-3">
+                        <button class="btn btn-primary" onclick="triggerDemoAlert()" style="background: var(--alert-gradient); border: none; border-radius: 15px;">
+                            🎬 Preview de Alerta
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('psychology-alerts')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🧠 Psicología del Reconocimiento Efectivo</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="psychology-alerts">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>PRINCIPIOS PSICOLÓGICOS:</h6>
+                            <ul>
+                                <li><strong>Reforzamiento Variable:</strong> No todas las acciones generan mismo reconocimiento</li>
+                                <li><strong>Reconocimiento Inmediato:</strong> Máximo 2-3 segundos de delay</li>
+                                <li><strong>Personalización:</strong> Usar nombre del usuario sempre</li>
+                                <li><strong>Escala Progresiva:</strong> Contribuciones mayores = reconocimiento mayor</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>ELEMENTOS CRÍTICOS:</h6>
+                            <ul>
+                                <li><strong>Visual:</strong> Colores que evocan celebración y gratitud</li>
+                                <li><strong>Audio:</strong> Sonidos que generan satisfacción (campanillas, aplausos)</li>
+                                <li><strong>Duración:</strong> Suficiente para ser notado, no tan largo que interrumpa</li>
+                                <li><strong>Frecuencia:</strong> Balanceada para mantener impacto</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ CRÍTICO:</strong> Alertas mal calibradas pueden generar fatiga sensorial y disminuir su efectividad. Test y ajusta constantemente.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configurador de Alertas -->
+        <section class="alert-configurator">
+            <h3 class="text-center mb-4">🎨 Configurador de Alertas Personalizado</h3>
+            <p class="text-center mb-4">Diseña y prueba tu sistema de alertas optimizado:</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Tipo de Alerta:</h5>
+                    <div class="config-grid">
+                        <div class="config-option" onclick="selectAlertType('follow')">
+                            <i class="fas fa-user-plus fa-2x mb-2"></i>
+                            <div>Follow</div>
+                        </div>
+                        <div class="config-option" onclick="selectAlertType('donation')">
+                            <i class="fas fa-dollar-sign fa-2x mb-2"></i>
+                            <div>Donation</div>
+                        </div>
+                        <div class="config-option" onclick="selectAlertType('subscription')">
+                            <i class="fas fa-star fa-2x mb-2"></i>
+                            <div>Subscription</div>
+                        </div>
+                        <div class="config-option" onclick="selectAlertType('raid')">
+                            <i class="fas fa-users fa-2x mb-2"></i>
+                            <div>Raid</div>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-4">Estilo Visual:</h5>
+                    <div class="config-grid">
+                        <div class="config-option" onclick="selectStyle('minimal')">
+                            <i class="fas fa-minus fa-2x mb-2"></i>
+                            <div>Minimal</div>
+                        </div>
+                        <div class="config-option" onclick="selectStyle('animated')">
+                            <i class="fas fa-magic fa-2x mb-2"></i>
+                            <div>Animado</div>
+                        </div>
+                        <div class="config-option" onclick="selectStyle('epic')">
+                            <i class="fas fa-crown fa-2x mb-2"></i>
+                            <div>Épico</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>Preview en Tiempo Real:</h5>
+                    <div class="alert-preview">
+                        <div class="preview-alert" id="customAlert">
+                            Configura tu alerta →
+                        </div>
+                    </div>
+                    
+                    <h5 class="mt-3">Test de Sonidos:</h5>
+                    <div class="sound-test">
+                        <span>Campanilla Suave</span>
+                        <button class="sound-button" onclick="playSound('bell')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="sound-test">
+                        <span>Fanfare Celebración</span>
+                        <button class="sound-button" onclick="playSound('fanfare')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="sound-test">
+                        <span>Applause Épico</span>
+                        <button class="sound-button" onclick="playSound('applause')">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calculadora de Engagement -->
+        <section class="calculator">
+            <h3 class="text-center mb-4">💎 Calculadora de ROI de Engagement</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="form-label">Viewers Promedio Actuales:</label>
+                    <input type="number" class="calc-input" id="currentViewers" placeholder="ej: 180" oninput="calculateEngagement()">
+                    
+                    <label class="form-label">Interacciones por Hora:</label>
+                    <input type="number" class="calc-input" id="interactions" placeholder="ej: 45" oninput="calculateEngagement()">
+                    
+                    <label class="form-label">Donación Promedio ($):</label>
+                    <input type="number" class="calc-input" id="avgDonation" placeholder="ej: 8.50" oninput="calculateEngagement()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result">
+                        <div class="result-value" id="engagementROI">0%</div>
+                        <div>Incremento Proyectado en Engagement</div>
+                        <div class="mt-2">
+                            <small id="engagementAnalysis">Ingresa tus datos para proyección</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Configuración Técnica Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                ⚙️ LAB de Configuración Técnica: Implementación Profesional
+            </div>
+            <p class="mb-4">La configuración técnica correcta asegura que tus alertas funcionen flawlessly y generen el impacto psicológico deseado.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('technical-setup')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🛠️ Plataformas y Herramientas Esenciales</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="technical-setup">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>PLATAFORMAS GRATUITAS:</h6>
+                            <ul>
+                                <li><strong>Streamlabs:</strong> Sistema completo de alertas</li>
+                                <li><strong>StreamElements:</strong> Alternativa robusta</li>
+                                <li><strong>OBS Browser Source:</strong> Integración directa</li>
+                                <li><strong>Twitch Dashboard:</strong> Alertas básicas nativas</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>HERRAMIENTAS PROFESIONALES:</h6>
+                            <ul>
+                                <li><strong>TipeeeStream:</strong> Monetización avanzada</li>
+                                <li><strong>StreamFX:</strong> Efectos visuales premium</li>
+                                <li><strong>Mix It Up:</strong> Automatización completa</li>
+                                <li><strong>Custom HTML/CSS:</strong> Máximo control</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-info mt-3">
+                        <strong>💡 Setup Óptimo:</strong> Combina Streamlabs para facilidad + Custom CSS para personalización + Browser Source para integración seamless.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('alert-timing')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>⏱️ Timing y Frecuencia Optimizados</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="alert-timing">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>DURACIONES RECOMENDADAS:</h6>
+                            <ul>
+                                <li><strong>Follow:</strong> 2-3 segundos</li>
+                                <li><strong>Small Donation ($1-10):</strong> 3-5 segundos</li>
+                                <li><strong>Subscription:</strong> 5-7 segundos</li>
+                                <li><strong>Large Donation ($50+):</strong> 8-12 segundos</li>
+                                <li><strong>Raid/Host:</strong> 6-10 segundos</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>CONFIGURACIONES CRÍTICAS:</h6>
+                            <ul>
+                                <li><strong>Cooldown:</strong> 1-2s entre alertas para evitar spam</li>
+                                <li><strong>Queue System:</strong> Máximo 5 alertas en cola</li>
+                                <li><strong>Volume Balance:</strong> 60-70% del audio principal</li>
+                                <li><strong>Priority System:</strong> Donations > Subs > Follows</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-warning mt-3">
+                        <strong>⚡ ESENCIAL:</strong> Test todas las alertas antes de ir live. Una alerta mal configurada puede arruinar momentos importantes.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Simulador de Escenarios -->
+        <section class="simulator">
+            <h3 class="text-center mb-4">🎭 Simulador de Escenarios de Alerta</h3>
+            <p class="text-center mb-4">Experimenta diferentes configuraciones para momentos específicos:</p>
+            
+            <div class="scenario-grid">
+                <div class="scenario-card" onclick="selectScenario('calm')">
+                    <i class="fas fa-leaf fa-2x mb-2"></i>
+                    <h6>Stream Tranquilo</h6>
+                    <p>Alertas sutiles y relajadas</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('hype')">
+                    <i class="fas fa-fire fa-2x mb-2"></i>
+                    <h6>Momento Hype</h6>
+                    <p>Celebración energética</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('focus')">
+                    <i class="fas fa-crosshairs fa-2x mb-2"></i>
+                    <h6>Gameplay Intenso</h6>
+                    <p>Alertas mínimas</p>
+                </div>
+                <div class="scenario-card" onclick="selectScenario('social')">
+                    <i class="fas fa-comments fa-2x mb-2"></i>
+                    <h6>Just Chatting</h6>
+                    <p>Máxima interactividad</p>
+                </div>
+            </div>
+
+            <div class="scenario-result" id="scenario-result">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section class="progress-tracker">
+            <h3 class="text-center mb-4">📈 Tracker de Dominio de Alertas</h3>
+            <p class="text-center mb-4">Tu progreso hacia el ecosistema de reconocimiento perfecto:</p>
+            
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Configuración de Alertas</span>
+                    <span id="alerts-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="alerts-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Diseño Visual</span>
+                    <span id="visual-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="visual-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Psicología del Engagement</span>
+                    <span id="psychology-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="psychology-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="skill-progress">
+                <div class="skill-label">
+                    <span>Implementación Técnica</span>
+                    <span id="technical-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="technical-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg" onclick="updateAlertsProgress()" style="background: var(--alert-gradient); border: none; border-radius: 15px; padding: 1rem 2rem;">
+                    🚀 Actualizar Progreso de Alertas
+                </button>
+            </div>
+        </section>
+
+        <!-- Casos de Éxito -->
+        <section class="success-story">
+            <h3 class="text-center mb-4">🏆 Casos de Éxito en Ecosistemas de Reconocimiento</h3>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">340%</div>
+                            <div class="metric-label">Incremento en Donaciones</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">$5.2K</div>
+                            <div class="metric-label">Ingresos Mensuales</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Alex, Gaming Streamer:</strong> "Mi 'Ecosistema de Reconocimiento' transformó completamente mi engagement. Implementé jerarquía visual clara y sonidos distintivos. Los viewers ahora activamente buscan activar las alertas especiales - incrementé donaciones 340% en 4 meses."</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">156%</div>
+                            <div class="metric-label">Aumento en Follows</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">287%</div>
+                            <div class="metric-label">Incremento en Interacciones</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Maya, Art Streamer:</strong> "El sistema de reconocimiento acumulativo fue game-changer. Usuarios regulares ahora tienen alertas personalizadas que celebran su lealtad. Mi comunidad se volvió mucho más activa y participativa desde la implementación."</p>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="story-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">$18K</div>
+                            <div class="metric-label">Donación Más Grande</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">89%</div>
+                            <div class="metric-label">Retención de Viewers</div>
+                        </div>
+                    </div>
+                    <p class="mt-3"><strong>Carlos, Variety Streamer:</strong> "Las alertas épicas calibradas para donaciones grandes crearon momentos memorables únicos. Un viewer regular donó $18K durante una celebración especial. El reconocimiento ritualized genera eventos legendarios."</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Automatización Lab -->
+        <section class="lab-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                🤖 LAB de Automatización: Sistemas Inteligentes
+            </div>
+            <p class="mb-4">La automatización inteligente permite reconocimiento consistente y escalado. Sistemas que aprenden y se adaptan a patrones de tu comunidad.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('automation-rules')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🔧 Reglas de Automatización Avanzada</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="automation-rules">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>AUTOMATIZACIÓN BÁSICA:</h6>
+                            <ul>
+                                <li><strong>Time-Based:</strong> Diferentes alertas según hora del día</li>
+                                <li><strong>Viewer Count:</strong> Ajusta intensidad según audiencia</li>
+                                <li><strong>Game Category:</strong> Alertas temáticas por juego</li>
+                                <li><strong>User Recognition:</strong> Alertas especiales para regulars</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>AUTOMATIZACIÓN INTELIGENTE:</h6>
+                            <ul>
+                                <li><strong>Mood Detection:</strong> Ajusta energía según contexto</li>
+                                <li><strong>Engagement Patterns:</strong> Aprende horarios óptimos</li>
+                                <li><strong>User Behavior:</strong> Personaliza según historial</li>
+                                <li><strong>A/B Testing:</strong> Optimiza automáticamente efectividad</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="alert alert-success mt-3">
+                        <strong>🎯 Objetivo:</strong> Sistema que requiere mínima intervención manual pero maximiza impacto psicológico personalizado.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('advanced-features')">
+                <div class="card-header d-flex justify-content-between">
+                    <span><strong>🚀 Features Avanzados de Reconocimiento</strong></span>
+                    <button class="card-toggle">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="card-details" id="advanced-features">
+                    <h6>INNOVACIONES EN ALERTAS:</h6>
+                    <ul>
+                        <li><strong>Combo Recognition:</strong> Alertas especiales para acciones secuenciales</li>
+                        <li><strong>Community Milestones:</strong> Celebraciones grupales automáticas</li>
+                        <li><strong>Seasonal Variations:</strong> Alertas temáticas según época</li>
+                        <li><strong>Achievement Unlock:</strong> Sistema de logros visible</li>
+                        <li><strong>Social Proof Display:</strong> "X personas donaron hoy"</li>
+                        <li><strong>Momentum Indicators:</strong> Visualización de "hot streak"</li>
+                    </ul>
+                    <div class="alert alert-info mt-3">
+                        <strong>💡 Innovación Constante:</strong> El futuro está en alertas que generan narrativas emergentes y experiencias únicas irrepetibles.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="final-summary">
+            <h2 class="mb-4">🔔 Tu Ecosistema de Reconocimiento Completo</h2>
+            <p class="lead mb-4">
+                Has dominado la ciencia y arte del reconocimiento automatizado. Este sistema psicológicamente calibrado es tu infraestructura de engagement que transforma interacciones casuales en rituales comunitarios que fortalecen lealtad y generan crecimiento sostenible.
+            </p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h5>Psicólogo del Engagement</h5>
+                    <p>Comprendes y aplicas principios de reforzamiento positivo para moldear comportamientos deseados.</p>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h5>Arquitecto de Sistemas</h5>
+                    <p>Diseñas ecosistemas automatizados que funcionan 24/7 generando reconocimiento consistente.</p>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h5>Master de Reconocimiento</h5>
+                    <p>Tus alertas son rituales digitales que tu comunidad activamente busca activar y experimentar.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <h4 class="text-primary mb-3">🚀 ¡A construir tu ecosistema de reconocimiento!</h4>
+                <p class="text-muted">Fecha de dominio: <span id="current-date"></span></p>
+            </div>
+        </section>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let selectedAlertType = 'follow';
+        let selectedStyle = 'animated';
+
+        // Toggle card details
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            const button = details.previousElementSibling.querySelector('.card-toggle i');
+            
+            if (details.classList.contains('active')) {
+                details.classList.remove('active');
+                button.className = 'fas fa-plus';
+            } else {
+                details.classList.add('active');
+                button.className = 'fas fa-minus';
+            }
+        }
+
+        // Demo alert trigger
+        function triggerDemoAlert() {
+            const alert = document.getElementById('demoAlert');
+            alert.classList.remove('active');
+            setTimeout(() => {
+                alert.classList.add('active');
+            }, 100);
+        }
+
+        // Alert type selector
+        function selectAlertType(type) {
+            selectedAlertType = type;
+            
+            // Remove active class from all options
+            document.querySelectorAll('.config-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            
+            // Add active class to selected type
+            event.currentTarget.classList.add('active');
+            
+            updateCustomAlert();
+        }
+
+        // Style selector
+        function selectStyle(style) {
+            selectedStyle = style;
+            
+            // Remove active class from style options
+            document.querySelectorAll('.config-option').forEach(option => {
+                if (option.textContent.includes('Minimal') || 
+                    option.textContent.includes('Animado') || 
+                    option.textContent.includes('Épico')) {
+                    option.classList.remove('active');
+                }
+            });
+            
+            // Add active class to selected style
+            event.currentTarget.classList.add('active');
+            
+            updateCustomAlert();
+        }
+
+        // Update custom alert preview
+        function updateCustomAlert() {
+            const alert = document.getElementById('customAlert');
+            const alertTexts = {
+                follow: '🎉 ¡Nuevo seguidor: @Usuario! 🎉',
+                donation: '💰 ¡Donación de $25 de @Generoso! 💰',
+                subscription: '⭐ ¡@Usuario se suscribió! ⭐',
+                raid: '🚀 ¡Raid de 50 viewers de @Streamer! 🚀'
+            };
+            
+            alert.textContent = alertTexts[selectedAlertType] || 'Configura tu alerta →';
+            
+            // Apply style effects
+            alert.classList.remove('active');
+            setTimeout(() => {
+                alert.classList.add('active');
+                
+                // Add style-specific effects
+                if (selectedStyle === 'epic') {
+                    alert.style.animation = 'alertPop 1.2s ease-out, glow 2s infinite';
+                } else if (selectedStyle === 'animated') {
+                    alert.style.animation = 'alertPop 0.8s ease-out';
+                } else {
+                    alert.style.animation = 'alertPop 0.4s ease-out';
+                }
+            }, 100);
+        }
+
+        // Sound test (placeholder function)
+        function playSound(soundType) {
+            console.log(`Playing ${soundType} sound`);
+            // In real implementation, would play actual sound files
+            const button = event.currentTarget;
+            button.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                button.style.transform = 'scale(1)';
+            }, 200);
+        }
+
+        // Engagement calculator
+        function calculateEngagement() {
+            const viewers = parseFloat(document.getElementById('currentViewers').value) || 0;
+            const interactions = parseFloat(document.getElementById('interactions').value) || 0;
+            const donation = parseFloat(document.getElementById('avgDonation').value) || 0;
+            
+            if (viewers === 0) {
+                document.getElementById('engagementROI').textContent = '0%';
+                document.getElementById('engagementAnalysis').textContent = 'Ingresa datos para calcular proyección';
+                return;
+            }
+            
+            // Simplified engagement calculation
+            const baseEngagement = (interactions / viewers) * 100;
+            const alertBonus = 40; // Expected boost from optimized alerts
+            const projectedIncrease = Math.min(alertBonus, baseEngagement * 2);
+            
+            document.getElementById('engagementROI').textContent = `+${projectedIncrease.toFixed(0)}%`;
+            
+            let analysis = '';
+            if (projectedIncrease > 60) {
+                analysis = '🔥 ¡Potencial EXCEPCIONAL! Tu engagement puede explotar con alertas optimizadas.';
+            } else if (projectedIncrease > 40) {
+                analysis = '⭐ Excelente oportunidad. Las alertas pueden duplicar tu engagement actual.';
+            } else if (projectedIncrease > 25) {
+                analysis = '📈 Buen potencial. Alertas estratégicas generarán crecimiento notable.';
+            } else if (projectedIncrease > 15) {
+                analysis = '🌱 Oportunidad sólida. Cada alerta optimizada suma a tu growth.';
+            } else {
+                analysis = '💡 Enfócate en aumentar interacciones base antes de optimizar alertas.';
+            }
+            
+            document.getElementById('engagementAnalysis').textContent = analysis;
+        }
+
+        // Scenario simulator
+        function selectScenario(scenario) {
+            // Remove active class from all cards
+            document.querySelectorAll('.scenario-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected card
+            event.currentTarget.classList.add('active');
+            
+            const resultDiv = document.getElementById('scenario-result');
+            let content = '';
+            
+            switch(scenario) {
+                case 'calm':
+                    content = `
+                        <h5>🍃 Configuración: Stream Tranquilo</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Alertas Recomendadas:</h6>
+                                <ul>
+                                    <li><strong>Follow:</strong> Suave campanilla, texto sutil</li>
+                                    <li><strong>Donation:</strong> Agradecimiento cálido, 3-4s</li>
+                                    <li><strong>Sub:</strong> Melodía gentil, celebración moderada</li>
+                                    <li><strong>Chat:</strong> Highlights sutiles, sin sonido</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Configuración Óptima:</h6>
+                                <ul>
+                                    <li><strong>Volumen:</strong> 40-50% del audio principal</li>
+                                    <li><strong>Duración:</strong> 2-5 segundos máximo</li>
+                                    <li><strong>Colores:</strong> Pasteles y tonos earth</li>
+                                    <li><strong>Animaciones:</strong> Fade in/out suaves</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                            <strong>🎯 Objetivo:</strong> Reconocer sin interrumpir la atmósfera relajada y contemplativa.
+                        </div>
+                    `;
+                    break;
+                case 'hype':
+                    content = `
+                        <h5>🔥 Configuración: Momento Hype</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Alertas Energéticas:</h6>
+                                <ul>
+                                    <li><strong>Follow:</strong> Fanfare corto, efectos visuales</li>
+                                    <li><strong>Donation:</strong> Celebración épica, 6-8s</li>
+                                    <li><strong>Sub:</strong> Fuegos artificiales, múltiples sonidos</li>
+                                    <li><strong>Raid:</strong> Bienvenida masiva, 10-12s</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Máximo Impacto:</h6>
+                                <ul>
+                                    <li><strong>Volumen:</strong> 80-90% del audio principal</li>
+                                    <li><strong>Duración:</strong> 5-12 segundos</li>
+                                    <li><strong>Colores:</strong> Vibrantes, neones, gradientes</li>
+                                    <li><strong>Animaciones:</strong> Explosiones, zoom, rotaciones</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning mt-3">
+                            <strong>⚡ Importante:</strong> Solo usa en momentos específicos de celebración para mantener impacto.
+                        </div>
+                    `;
+                    break;
+                case 'focus':
+                    content = `
+                        <h5>🎯 Configuración: Gameplay Intenso</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Alertas Mínimas:</h6>
+                                <ul>
+                                    <li><strong>Follow:</strong> Solo texto, sin sonido</li>
+                                    <li><strong>Donation:</strong> Agradecimiento post-game</li>
+                                    <li><strong>Sub:</strong> Queue para momento apropiado</li>
+                                    <li><strong>Chat:</strong> Sin destacados durante gameplay</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>No Interrupciones:</h6>
+                                <ul>
+                                    <li><strong>Volumen:</strong> 20-30% o completamente muted</li>
+                                    <li><strong>Posición:</strong> Esquinas, no centro de pantalla</li>
+                                    <li><strong>Timing:</strong> Delayed hasta pausa o fin de round</li>
+                                    <li><strong>Queue System:</strong> Acumula alertas para momentos apropiados</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>🎮 Pro Tip:</strong> Configura hotkey para enable/disable alertas instantáneamente durante gameplay crítico.
+                        </div>
+                    `;
+                    break;
+                case 'social':
+                    content = `
+                        <h5>💬 Configuración: Just Chatting</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Máxima Interactividad:</h6>
+                                <ul>
+                                    <li><strong>Follow:</strong> Bienvenida personal, 4-5s</li>
+                                    <li><strong>Donation:</strong> Lectura automática de mensaje</li>
+                                    <li><strong>Sub:</strong> Celebración interactiva</li>
+                                    <li><strong>Chat:</strong> Highlights para mensajes largos</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Engagement Máximo:</h6>
+                                <ul>
+                                    <li><strong>TTS:</strong> Text-to-speech para donaciones</li>
+                                    <li><strong>Chat Integration:</strong> Mensajes destacados</li>
+                                    <li><strong>Polls/Questions:</strong> Alertas para decisiones</li>
+                                    <li><strong>Social Media:</strong> Notificaciones de nuevos follows</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-info mt-3">
+                            <strong>💡 Focus:</strong> En just chatting, las alertas son protagonistas que facilitan conversación y conexión.
+                        </div>
+                    `;
+                    break;
+            }
+            
+            resultDiv.innerHTML = content;
+            resultDiv.classList.add('active');
+        }
+
+        // Progress tracker for alerts
+        function updateAlertsProgress() {
+            const progressBars = [
+                { id: 'alerts', max: 91 },
+                { id: 'visual', max: 86 },
+                { id: 'psychology', max: 94 },
+                { id: 'technical', max: 88 }
+            ];
+            
+            progressBars.forEach(bar => {
+                const progress = Math.min(bar.max, Math.floor(Math.random() * bar.max) + 30);
+                const progressElement = document.getElementById(`${bar.id}-progress`);
+                const percentElement = document.getElementById(`${bar.id}-percent`);
+                
+                setTimeout(() => {
+                    progressElement.style.width = `${progress}%`;
+                    percentElement.textContent = `${progress}%`;
+                }, Math.random() * 1000);
+            });
+        }
+
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            
+            // Update date every minute
+            setInterval(updateCurrentDate, 60000);
+            
+            // Initialize progress with some random values
+            setTimeout(updateAlertsProgress, 1000);
+            
+            // Initialize custom alert
+            updateCustomAlert();
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

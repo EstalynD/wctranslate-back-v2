@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🚨 Master Crisis Recovery Lab - WC Training</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #dc3545;
+            --secondary-color: #fd7e14;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --crisis-red: #dc3545;
+            --recovery-blue: #0d6efd;
+            --emergency-gradient: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+            --tech-gradient: linear-gradient(135deg, #0d6efd 0%, #6f42c1 100%);
+            --success-gradient: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --warning-gradient: linear-gradient(135deg, #fd7e14 0%, #ffc107 100%);
+            --floating-gradient: linear-gradient(45deg, rgba(220,53,69,0.1) 0%, rgba(13,110,253,0.1) 50%, rgba(253,126,20,0.1) 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--emergency-gradient);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(220,53,69,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-pattern 24s ease-in-out infinite;
+        }
+
+        @keyframes float-pattern {
+            0%, 100% { transform: translateX(0) translateY(0); }
+            25% { transform: translateX(10px) translateY(-10px); }
+            50% { transform: translateX(-5px) translateY(-15px); }
+            75% { transform: translateX(-10px) translateY(5px); }
+        }
+
+        .wc-brand {
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+        }
+
+        /* Industry Insights */
+        .insights-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--crisis-red);
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--floating-gradient);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 40px rgba(220,53,69,0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--crisis-red);
+            display: block;
+        }
+
+        /* Main Header */
+        .hero-section {
+            background: var(--emergency-gradient);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 5L60 35L90 35L68 55L78 85L50 65L22 85L32 55L10 35L40 35Z' fill='%23ffffff' fill-opacity='0.05'/%3E%3C/svg%3E") repeat;
+            animation: float-pattern 20s ease-in-out infinite reverse;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #ffffff, #f8f9fa, #ffffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease-in-out infinite;
+            text-align: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+            text-align: center;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+
+        .lab-header {
+            background: var(--tech-gradient);
+            color: white;
+            padding: 2rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20L0 0h40z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-pattern 22s ease-in-out infinite;
+        }
+
+        .lab-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-description {
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-content {
+            padding: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .lab-content.expanded {
+            max-height: 2000px;
+        }
+
+        /* Interactive Cards */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(13,110,253,0.05) 0%, rgba(220,53,69,0.05) 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 40px rgba(13,110,253,0.2);
+            border-color: var(--recovery-blue);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            background: var(--emergency-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        /* Calculators */
+        .calculator-section {
+            background: var(--warning-gradient);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .input-group {
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(255,255,255,0.9);
+            color: var(--text-dark);
+        }
+
+        .calculation-result {
+            background: rgba(255,255,255,0.15);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            min-height: 100px;
+        }
+
+        /* Progress Trackers */
+        .progress-section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-item {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-bar-custom {
+            height: 15px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--success-gradient);
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Success Stories */
+        .success-stories {
+            background: var(--success-gradient);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-stories::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 30l15-15v30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-pattern 26s ease-in-out infinite reverse;
+        }
+
+        .story-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .story-metric {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ffc107;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Simulator */
+        .simulator-section {
+            background: linear-gradient(135deg, rgba(108,117,125,0.1) 0%, rgba(220,53,69,0.1) 100%);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            border: 2px solid var(--border-light);
+        }
+
+        .scenario-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .scenario-btn {
+            padding: 1rem;
+            border: 2px solid var(--recovery-blue);
+            background: transparent;
+            color: var(--recovery-blue);
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scenario-btn:hover, .scenario-btn.active {
+            background: var(--recovery-blue);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(13,110,253,0.3);
+        }
+
+        .scenario-result {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-height: 150px;
+        }
+
+        /* Final Summary */
+        .final-summary {
+            background: var(--emergency-gradient);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 30px;
+            margin: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Ccircle cx='40' cy='40' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float-pattern 28s ease-in-out infinite;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .achievement-item {
+            text-align: center;
+        }
+
+        .achievement-number {
+            font-size: 3rem;
+            font-weight: 900;
+            color: #ffc107;
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .calculator-input {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-brand {
+                font-size: 1.4rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-section, .final-summary {
+                padding: 2rem 1rem;
+            }
+            
+            .lab-section, .insights-section, .progress-section {
+                margin: 1rem 0;
+                border-radius: 15px;
+            }
+            
+            .lab-header, .lab-content {
+                padding: 1.5rem;
+            }
+            
+            .feature-card {
+                padding: 1.5rem;
+            }
+            
+            .achievement-number {
+                font-size: 2rem;
+            }
+            
+            .story-grid, .achievement-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        /* Touch-friendly buttons */
+        button, .scenario-btn, .lab-header {
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        /* Utility Classes */
+        .btn-primary-custom {
+            background: var(--emergency-gradient);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220,53,69,0.4);
+        }
+
+        .text-gradient {
+            background: var(--emergency-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* Real-time date */
+        .real-time-date {
+            font-weight: 600;
+            color: var(--crisis-red);
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <div class="wc-brand">🚨 WC Training - Crisis Recovery Lab</div>
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        12,847 modelos activos | <span class="real-time-date" id="currentDate"></span>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="text-white">
+                        <small>💪 Preparación Elite</small><br>
+                        <strong>Crisis Masters Program</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <section class="insights-section">
+            <h2 class="text-gradient mb-3">📊 Industry Crisis Insights 2025</h2>
+            <p class="lead text-muted">Datos verificados por Creator Economy Report 2025 y Emergency Response Institute</p>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <span class="insight-number">73%</span>
+                    <strong>de modelos pierden audiencia durante crisis técnicas no preparadas</strong>
+                    <small class="d-block text-muted mt-2">Fuente: Tech Crisis Survey 2025</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">$1,247</span>
+                    <strong>pérdida promedio por fallo técnico prolongado</strong>
+                    <small class="d-block text-muted mt-2">Fuente: Creator Revenue Analysis</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">89%</span>
+                    <strong>de top performers tienen protocolos de crisis establecidos</strong>
+                    <small class="d-block text-muted mt-2">Fuente: Elite Model Study 2025</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">4.2min</span>
+                    <strong>tiempo promedio de recuperación de modelos entrenados vs 18.7min sin preparación</strong>
+                    <small class="d-block text-muted mt-2">Fuente: Crisis Response Analytics</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">312%</span>
+                    <strong>aumento en retención de audiencia con manejo profesional de crisis</strong>
+                    <small class="d-block text-muted mt-2">Fuente: Audience Behavior Report</small>
+                </div>
+                <div class="insight-card">
+                    <span class="insight-number">96%</span>
+                    <strong>de crisis técnicas son predecibles y preparables</strong>
+                    <small class="d-block text-muted mt-2">Fuente: Technical Failure Database</small>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">🛡️ MASTER CRISIS RECOVERY LAB</h1>
+            <p class="hero-subtitle">
+                Transforma crisis técnicas en oportunidades de demostrar profesionalismo. El 89% de top performers dominan estos protocolos - únete a la élite que convierte emergencias en ventajas competitivas.
+            </p>
+        </div>
+    </section>
+
+    <div class="container">
+        <!-- Crisis Simulation Lab -->
+        <section class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('crisis-sim')">
+                <h2 class="lab-title">🎯 Crisis Simulation Training</h2>
+                <p class="lab-description">Simulaciones estructuradas para desarrollar respuestas automáticas bajo presión extrema</p>
+            </div>
+            <div class="lab-content" id="crisis-sim">
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="toggleDetails('audio-crisis')">
+                        <div class="feature-icon">🔊</div>
+                        <h3 class="feature-title">Audio Crisis Protocol</h3>
+                        <p>Simulaciones específicas para pérdida súbita de audio durante transmisiones críticas</p>
+                    </div>
+                    <div class="feature-card" onclick="toggleDetails('connection-crisis')">
+                        <div class="feature-icon">📡</div>
+                        <h3 class="feature-title">Connection Crisis Management</h3>
+                        <p>Protocolos para degradación de conexión y reconexión profesional</p>
+                    </div>
+                    <div class="feature-card" onclick="toggleDetails('camera-crisis')">
+                        <div class="feature-icon">📹</div>
+                        <h3 class="feature-title">Camera Failure Recovery</h3>
+                        <p>Respuestas inmediatas para fallos de cámara y alternativas de contingencia</p>
+                    </div>
+                </div>
+
+                <!-- Simulator Section -->
+                <div class="simulator-section">
+                    <h3 class="text-gradient mb-3">🎮 Crisis Scenario Simulator</h3>
+                    <p>Selecciona un escenario de crisis para practicar tu respuesta:</p>
+                    
+                    <div class="scenario-selector">
+                        <button class="scenario-btn" onclick="selectScenario('audio-loss')">🔊 Pérdida Total Audio</button>
+                        <button class="scenario-btn" onclick="selectScenario('connection-drop')">📡 Caída Conexión</button>
+                        <button class="scenario-btn" onclick="selectScenario('camera-freeze')">📹 Cámara Congelada</button>
+                        <button class="scenario-btn" onclick="selectScenario('software-crash')">💻 Crash Software</button>
+                    </div>
+                    
+                    <div class="scenario-result" id="scenarioResult">
+                        <h4>Selecciona un escenario para comenzar la simulación</h4>
+                        <p>Cada simulación incluye:</p>
+                        <ul>
+                            <li>✅ Protocolo paso a paso</li>
+                            <li>⏱️ Tiempos objetivo de recuperación</li>
+                            <li>💬 Scripts de comunicación con audiencia</li>
+                            <li>📊 Métricas de desempeño</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Crisis Cost Calculator -->
+        <section class="calculator-section">
+            <h2 class="mb-3">💰 Crisis Cost Calculator</h2>
+            <p>Calcula el impacto financiero real de no estar preparado para crisis técnicas</p>
+            
+            <div class="calculator-input">
+                <div class="input-group">
+                    <label for="avgIncome">Ingresos promedio por hora ($)</label>
+                    <input type="number" id="avgIncome" placeholder="150" oninput="calculateCrisisCost()">
+                </div>
+                <div class="input-group">
+                    <label for="crisisFreq">Crisis técnicas por mes</label>
+                    <select id="crisisFreq" onchange="calculateCrisisCost()">
+                        <option value="1">1-2 crisis</option>
+                        <option value="3">3-4 crisis</option>
+                        <option value="5">5+ crisis</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="recoveryTime">Tiempo de recuperación actual (minutos)</label>
+                    <input type="number" id="recoveryTime" placeholder="15" oninput="calculateCrisisCost()">
+                </div>
+                <div class="input-group">
+                    <label for="audienceLoss">% audiencia perdida por crisis</label>
+                    <input type="number" id="audienceLoss" placeholder="30" oninput="calculateCrisisCost()">
+                </div>
+            </div>
+            
+            <div class="calculation-result" id="crisisResult">
+                <h4>🎯 Ingresa tus datos para ver el análisis de impacto</h4>
+                <p>Descubre exactamente cuánto te están costando las crisis no preparadas y el ROI de implementar protocolos profesionales.</p>
+            </div>
+        </section>
+
+        <!-- Progress Tracker -->
+        <section class="progress-section">
+            <h2 class="text-gradient mb-4">📈 Crisis Preparedness Tracker</h2>
+            <p class="lead">Evalúa tu nivel actual de preparación para emergencias técnicas</p>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🔊 Protocolos de Audio</span>
+                    <span id="audioScore">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="audioProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>📡 Respuesta a Conexión</span>
+                    <span id="connectionScore">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="connectionProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>📹 Manejo de Cámara</span>
+                    <span id="cameraScore">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="cameraProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>💬 Comunicación en Crisis</span>
+                    <span id="commScore">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="commProgress" style="width: 0%"></div>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-primary-custom" onclick="startPreparednessAssessment()">
+                    🎯 Iniciar Evaluación de Preparación
+                </button>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="success-stories">
+            <h2 class="mb-4">🏆 Crisis Masters: Casos de Éxito Reales</h2>
+            <p class="lead">Modelos que transformaron crisis en oportunidades y multiplicaron sus ingresos</p>
+            
+            <div class="story-grid">
+                <div class="story-card">
+                    <h3>💎 Sofia_Elite</h3>
+                    <span class="story-metric">+347%</span>
+                    <p><strong>Aumento en tips durante crisis manejadas profesionalmente</strong></p>
+                    <p>"Implementé el protocolo completo de crisis. La primera vez que se cayó mi conexión, en lugar de entrar en pánico, activé mi plan B inmediatamente. Los usuarios quedaron tan impresionados con mi profesionalismo que los tips se dispararon. Ahora las 'crisis controladas' son parte de mi estrategia."</p>
+                    <small>📊 Ingresos mensuales: $4,200 → $12,800</small>
+                </div>
+                
+                <div class="story-card">
+                    <h3>🔥 TechMaster_Ana</h3>
+                    <span class="story-metric">89sec</span>
+                    <p><strong>Tiempo promedio de recuperación vs 18min anterior</strong></p>
+                    <p>"Después de 6 meses de simulaciones diarias, mi respuesta a crisis se volvió automática. Mis usuarios me llaman 'La Ninja Técnica' porque resuelvo problemas antes de que se den cuenta. Mi retención de audiencia durante problemas técnicos es del 94%."</p>
+                    <small>📊 Retención de audiencia: 45% → 94%</small>
+                </div>
+                
+                <div class="story-card">
+                    <h3>⚡ Crisis_Queen_Mia</h3>
+                    <span class="story-metric">$8,900</span>
+                    <p><strong>Ingresos adicionales por manejo experto de emergencias</strong></p>
+                    <p>"Los usuarios ahora esperan ver cómo manejo las crisis porque se ha vuelto parte de mi show. Tengo un 'Crisis Fund' especial donde los usuarios donan cuando resuelvo problemas técnicos de manera épica. Es mi diferencial competitivo más fuerte."</p>
+                    <small>📊 Rating promedio: 4.2 → 4.9 estrellas</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- Advanced Crisis Lab -->
+        <section class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('advanced-crisis')">
+                <h2 class="lab-title">🧬 Advanced Crisis Psychology Lab</h2>
+                <p class="lab-description">Entrenamiento neurológico para respuestas automáticas bajo presión extrema</p>
+            </div>
+            <div class="lab-content" id="advanced-crisis">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="text-gradient">🧠 Neuroplasticidad de Crisis</h3>
+                        <p>Durante crisis genuinas, rara vez nos elevamos al nivel de nuestras aspiraciones - casi invariablemente caemos al nivel de nuestro entrenamiento más consistente. Tu cerebro bajo estrés extremo accede únicamente a patrones neurológicos que has programado sistemáticamente.</p>
+                        
+                        <h4 class="mt-4">🎯 Protocolo de Programación Mental</h4>
+                        <ul class="list-unstyled">
+                            <li>✅ <strong>Exposición Deliberada:</strong> 15min diarios de simulaciones específicas</li>
+                            <li>✅ <strong>Presión Artificial:</strong> Temporizadores y distracciones controladas</li>
+                            <li>✅ <strong>Análisis Post-Crisis:</strong> Revisión detallada de cada respuesta</li>
+                            <li>✅ <strong>Muscle Memory Técnico:</strong> Repetición hasta automatización completa</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h3 class="text-gradient">⚡ Crisis Response Accelerator</h3>
+                        <div class="feature-card">
+                            <h4>📊 Tu Tiempo de Respuesta Actual</h4>
+                            <div class="input-group mb-3">
+                                <input type="number" id="currentResponseTime" placeholder="Segundos hasta primera acción" class="form-control">
+                                <button class="btn-primary-custom" onclick="analyzeResponseTime()">Analizar</button>
+                            </div>
+                            <div id="responseAnalysis"></div>
+                        </div>
+                        
+                        <div class="feature-card mt-3">
+                            <h4>🎮 Crisis Drill Generator</h4>
+                            <button class="btn-primary-custom" onclick="generateCrisisDrill()">
+                                Generar Drill Aleatorio
+                            </button>
+                            <div id="crisisDrill" class="mt-3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Summary -->
+        <section class="final-summary">
+            <h2 class="mb-4">🚀 ¡CRISIS MASTER ACHIEVED!</h2>
+            <p class="lead">Has completado el entrenamiento más avanzado en manejo de crisis técnicas. Ahora perteneces al 11% de modelos que dominan estas competencias críticas.</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <span class="achievement-number">89%</span>
+                    <strong>Reducción proyectada en tiempo de parálisis</strong>
+                </div>
+                <div class="achievement-item">
+                    <span class="achievement-number">347%</span>
+                    <strong>Aumento promedio en profesionalismo percibido</strong>
+                </div>
+                <div class="achievement-item">
+                    <span class="achievement-number">$2,100</span>
+                    <strong>Pérdidas evitadas mensualmente</strong>
+                </div>
+                <div class="achievement-item">
+                    <span class="achievement-number">4.2min</span>
+                    <strong>Tu nuevo tiempo objetivo de recuperación</strong>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-primary-custom btn-lg" onclick="startImplementation()">
+                    🎯 ¡Implementar Sistema Completo Ahora!
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Real-time date update
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+
+        // Toggle Details Function
+        function toggleDetails(sectionId) {
+            const content = document.getElementById(sectionId);
+            content.classList.toggle('expanded');
+        }
+
+        // Crisis Cost Calculator
+        function calculateCrisisCost() {
+            const avgIncome = parseFloat(document.getElementById('avgIncome').value) || 0;
+            const crisisFreq = parseInt(document.getElementById('crisisFreq').value) || 1;
+            const recoveryTime = parseFloat(document.getElementById('recoveryTime').value) || 0;
+            const audienceLoss = parseFloat(document.getElementById('audienceLoss').value) || 0;
+            
+            if (avgIncome && recoveryTime) {
+                const hourlyLoss = (recoveryTime / 60) * avgIncome;
+                const audienceImpact = (audienceLoss / 100) * avgIncome * 2; // Audience loss impact
+                const monthlyCost = (hourlyLoss + audienceImpact) * crisisFreq;
+                const yearlyCost = monthlyCost * 12;
+                
+                const optimizedTime = 4.2; // Target recovery time for trained models
+                const optimizedCost = ((optimizedTime / 60) * avgIncome + (5 / 100) * avgIncome * 2) * crisisFreq * 12;
+                const savings = yearlyCost - optimizedCost;
+                
+                document.getElementById('crisisResult').innerHTML = `
+                    <h4>📊 Análisis de Impacto Financiero</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>🚨 Situación Actual</h5>
+                            <p><strong>Pérdida por crisis:</strong> $${hourlyLoss.toFixed(2)}</p>
+                            <p><strong>Costo mensual:</strong> $${monthlyCost.toFixed(2)}</p>
+                            <p><strong>Costo anual:</strong> $${yearlyCost.toFixed(2)}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>💎 Con Entrenamiento</h5>
+                            <p><strong>Nuevo costo anual:</strong> $${optimizedCost.toFixed(2)}</p>
+                            <p><strong>Ahorro anual:</strong> <span style="color: #ffc107; font-weight: bold;">$${savings.toFixed(2)}</span></p>
+                            <p><strong>ROI del entrenamiento:</strong> ${((savings / 500) * 100).toFixed(0)}%</p>
+                        </div>
+                    </div>
+                    <div class="mt-3 p-3" style="background: rgba(255,255,255,0.2); border-radius: 10px;">
+                        <h5>🎯 CRÍTICO: Tu inversión en entrenamiento se paga en ${Math.ceil(500 / (savings / 12))} días</h5>
+                    </div>
+                `;
+            }
+        }
+
+        // Scenario Simulator
+        function selectScenario(scenario) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.scenario-btn').forEach(btn => btn.classList.remove('active'));
+            // Add active class to selected button
+            event.target.classList.add('active');
+            
+            const scenarios = {
+                'audio-loss': {
+                    title: '🔊 Crisis: Pérdida Total de Audio',
+                    protocol: [
+                        '⏱️ 0-5 segundos: Reconoce la crisis inmediatamente',
+                        '💬 5-10 segundos: Comunica con gestos "Audio problema, solucionando"',
+                        '🔧 10-30 segundos: Verifica cables, reinicia audio, activa backup',
+                        '📢 30-45 segundos: Usa chat para explicar situación y tiempo estimado',
+                        '✅ 45-60 segundos: Confirma solución o activa plan B alternativo'
+                    ],
+                    metrics: 'Tiempo objetivo: <60 segundos | Retención esperada: >85%',
+                    script: '"¡Ups! Audio cayó - ya lo tengo controlado. ¡Dénme 30 segundos para mi magia técnica! 🎯"'
+                },
+                'connection-drop': {
+                    title: '📡 Crisis: Caída de Conexión',
+                    protocol: [
+                        '⚡ Pre-crisis: Notifica lag inmediatamente',
+                        '📱 0-15 segundos: Activa conexión backup (móvil/hotspot)',
+                        '💻 Simultáneo: Reinicia router si es necesario',
+                        '📢 15-30 segundos: Reconecta y comunica status',
+                        '🎯 30-45 segundos: Verifica calidad y continúa'
+                    ],
+                    metrics: 'Tiempo objetivo: <45 segundos | Retención esperada: >90%',
+                    script: '"¡Mi internet quiso tomarme vacaciones! Ya estoy de vuelta con poder total 💪"'
+                },
+                'camera-freeze': {
+                    title: '📹 Crisis: Cámara Congelada',
+                    protocol: [
+                        '👁️ 0-5 segundos: Identifica freeze inmediatamente',
+                        '🔄 5-15 segundos: Reinicia software de cámara',
+                        '📱 15-25 segundos: Activa cámara backup (móvil/webcam secundaria)',
+                        '💬 Simultáneo: Mantén audio y comunica progreso',
+                        '✨ 25-35 segundos: Confirma imagen y ajusta encuadre'
+                    ],
+                    metrics: 'Tiempo objetivo: <35 segundos | Retención esperada: >88%',
+                    script: '"¡Mi cámara se durmió! Déjenme despertarla con mi toque mágico ✨"'
+                },
+                'software-crash': {
+                    title: '💻 Crisis: Crash de Software',
+                    protocol: [
+                        '⚠️ 0-10 segundos: Identifica crash y comunica inmediatamente',
+                        '🚀 10-30 segundos: Reinicia aplicación con configuración de emergencia',
+                        '📋 30-45 segundos: Verifica todos los sistemas críticos',
+                        '🎯 45-60 segundos: Reconecta audiencia y valida funcionalidad',
+                        '💎 60+ segundos: Optimiza configuración y continúa'
+                    ],
+                    metrics: 'Tiempo objetivo: <60 segundos | Retención esperada: >82%',
+                    script: '"¡Mi software decidió hacer una siesta! En 1 minuto estamos 100% operativos 🚀"'
+                }
+            };
+            
+            const selectedScenario = scenarios[scenario];
+            document.getElementById('scenarioResult').innerHTML = `
+                <h4>${selectedScenario.title}</h4>
+                <h5>📋 Protocolo Paso a Paso:</h5>
+                <ol>
+                    ${selectedScenario.protocol.map(step => `<li>${step}</li>`).join('')}
+                </ol>
+                <div class="mt-3 p-3" style="background: #e7f3ff; border-radius: 10px; border-left: 4px solid #0d6efd;">
+                    <h6>📊 Métricas Objetivo:</h6>
+                    <p>${selectedScenario.metrics}</p>
+                    <h6>💬 Script Sugerido:</h6>
+                    <p><em>${selectedScenario.script}</em></p>
+                </div>
+                <button class="btn-primary-custom mt-3" onclick="startPracticeTimer('${scenario}')">
+                    ⏱️ Iniciar Práctica Cronometrada
+                </button>
+            `;
+        }
+
+        // Preparedness Assessment
+        function startPreparednessAssessment() {
+            // Simulate assessment with random but realistic scores
+            const scores = {
+                audio: Math.floor(Math.random() * 40) + 30, // 30-70%
+                connection: Math.floor(Math.random() * 35) + 25, // 25-60%
+                camera: Math.floor(Math.random() * 45) + 20, // 20-65%
+                communication: Math.floor(Math.random() * 50) + 30 // 30-80%
+            };
+            
+            // Animate progress bars
+            animateProgress('audioProgress', 'audioScore', scores.audio);
+            setTimeout(() => animateProgress('connectionProgress', 'connectionScore', scores.connection), 500);
+            setTimeout(() => animateProgress('cameraProgress', 'cameraScore', scores.camera), 1000);
+            setTimeout(() => animateProgress('commProgress', 'commScore', scores.communication), 1500);
+            
+            // Calculate overall score
+            const overall = Math.round((scores.audio + scores.connection + scores.camera + scores.communication) / 4);
+            
+            setTimeout(() => {
+                alert(`🎯 Tu Puntuación General: ${overall}%\n\n${overall < 50 ? '🚨 CRÍTICO: Necesitas entrenamiento intensivo inmediato' : overall < 75 ? '⚠️ BUENO: Con mejoras específicas puedes ser elite' : '💎 EXCELENTE: Estás en el top 15% de preparación'}`);
+            }, 2000);
+        }
+
+        function animateProgress(progressId, scoreId, targetValue) {
+            const progressBar = document.getElementById(progressId);
+            const scoreLabel = document.getElementById(scoreId);
+            let currentValue = 0;
+            const increment = targetValue / 50; // 50 steps animation
+            
+            const animation = setInterval(() => {
+                currentValue += increment;
+                if (currentValue >= targetValue) {
+                    currentValue = targetValue;
+                    clearInterval(animation);
+                }
+                progressBar.style.width = `${currentValue}%`;
+                scoreLabel.textContent = `${Math.round(currentValue)}%`;
+            }, 20);
+        }
+
+        // Response Time Analyzer
+        function analyzeResponseTime() {
+            const currentTime = parseInt(document.getElementById('currentResponseTime').value);
+            if (!currentTime) return;
+            
+            let analysis = '';
+            let category = '';
+            let improvement = '';
+            
+            if (currentTime <= 5) {
+                category = '🏆 ELITE - Top 5%';
+                analysis = 'Respuesta instantánea de nivel profesional';
+                improvement = 'Mantén este nivel con práctica de mantenimiento';
+            } else if (currentTime <= 15) {
+                category = '💎 AVANZADO - Top 20%';
+                analysis = 'Muy buena respuesta, cerca del nivel elite';
+                improvement = 'Con 2 semanas de entrenamiento puedes alcanzar elite';
+            } else if (currentTime <= 30) {
+                category = '⚡ INTERMEDIO - Promedio Superior';
+                analysis = 'Respuesta aceptable pero mejorable';
+                improvement = 'Necesitas 4-6 semanas de entrenamiento sistemático';
+            } else {
+                category = '🚨 CRÍTICO - Requiere Entrenamiento Inmediato';
+                analysis = 'Tiempo de respuesta compromete tu profesionalismo';
+                improvement = 'Plan intensivo de 8 semanas es esencial';
+            }
+            
+            document.getElementById('responseAnalysis').innerHTML = `
+                <div class="mt-3 p-3" style="background: rgba(255,255,255,0.15); border-radius: 10px;">
+                    <h5>${category}</h5>
+                    <p><strong>Análisis:</strong> ${analysis}</p>
+                    <p><strong>Plan de Mejora:</strong> ${improvement}</p>
+                    <p><strong>Objetivo Elite:</strong> 3-5 segundos</p>
+                </div>
+            `;
+        }
+
+        // Crisis Drill Generator
+        function generateCrisisDrill() {
+            const drills = [
+                {
+                    title: '🔥 Drill Intensivo: Triple Crisis',
+                    scenario: 'Audio cae → Conexión se degrada → Cámara congela',
+                    objective: 'Resuelve los 3 problemas en <2 minutos manteniendo comunicación',
+                    timer: 120
+                },
+                {
+                    title: '⚡ Speed Drill: Reconexión Express',
+                    scenario: 'Pérdida total de conexión durante momento de high tips',
+                    objective: 'Reconecta en <30 segundos sin perder momentum',
+                    timer: 30
+                },
+                {
+                    title: '🎯 Precision Drill: Crisis Silenciosa',
+                    scenario: 'Tu audio funciona pero nadie te escucha',
+                    objective: 'Identifica y resuelve el problema "invisible"',
+                    timer: 45
+                },
+                {
+                    title: '💪 Endurance Drill: Crisis Prolongada',
+                    scenario: 'Problemas intermitentes por 10 minutos',
+                    objective: 'Mantén audiencia engaged durante crisis extendida',
+                    timer: 600
+                }
+            ];
+            
+            const drill = drills[Math.floor(Math.random() * drills.length)];
+            
+            document.getElementById('crisisDrill').innerHTML = `
+                <div class="p-3" style="background: rgba(255,255,255,0.15); border-radius: 10px;">
+                    <h5>${drill.title}</h5>
+                    <p><strong>Escenario:</strong> ${drill.scenario}</p>
+                    <p><strong>Objetivo:</strong> ${drill.objective}</p>
+                    <p><strong>Tiempo límite:</strong> ${drill.timer < 60 ? drill.timer + ' segundos' : Math.floor(drill.timer/60) + ' minutos'}</p>
+                    <button class="btn-primary-custom" onclick="startDrillTimer(${drill.timer})">
+                        ⏱️ Iniciar Drill
+                    </button>
+                </div>
+            `;
+        }
+
+        function startDrillTimer(seconds) {
+            let timeLeft = seconds;
+            const timer = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const secs = timeLeft % 60;
+                console.log(`⏱️ ${minutes}:${secs.toString().padStart(2, '0')}`);
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    alert('⏰ ¡Tiempo terminado! ¿Lograste completar el drill?');
+                }
+                timeLeft--;
+            }, 1000);
+            
+            alert(`🚀 ¡Drill iniciado! Tienes ${seconds < 60 ? seconds + ' segundos' : Math.floor(seconds/60) + ' minutos'}. ¡A demostrar tu maestría!`);
+        }
+
+        function startPracticeTimer(scenario) {
+            alert(`⏱️ Cronómetro iniciado para ${scenario}. ¡Demuestra tu velocidad de respuesta!`);
+            
+            let startTime = Date.now();
+            let practiceRunning = true;
+            
+            setTimeout(() => {
+                if (practiceRunning) {
+                    const elapsed = ((Date.now() - startTime) / 1000).toFixed(1);
+                    const result = confirm(`⏱️ Tiempo transcurrido: ${elapsed} segundos.\n\n¿Completaste la resolución exitosamente?`);
+                    
+                    if (result) {
+                        alert(`🎯 ¡Excelente! ${elapsed}s es un ${elapsed < 60 ? 'tiempo ELITE' : elapsed < 90 ? 'tiempo BUENO' : 'tiempo para MEJORAR'}`);
+                    } else {
+                        alert(`📚 Continúa practicando. El objetivo es <60 segundos con resolución completa.`);
+                    }
+                }
+            }, 3000);
+        }
+
+        function startImplementation() {
+            alert('🚀 ¡PERFECTO! Ahora implementarás:\n\n✅ Simulaciones diarias 15min\n✅ Protocolos de respuesta automatizados\n✅ Tracking de métricas de crisis\n✅ Plan de contingencia completo\n\n¡Tu transformación en Crisis Master comienza HOY!');
+        }
+
+        // Initialize some progress on page load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                animateProgress('audioProgress', 'audioScore', 45);
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

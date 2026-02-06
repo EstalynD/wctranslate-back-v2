@@ -1,0 +1,1684 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Masters en Comunicación Multilingüe en Tiempo Real</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #6610f2;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #0d6efd 0%, #6610f2 100%);
+            --gradient-secondary: linear-gradient(135deg, #fd7e14 0%, #0d6efd 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #0d6efd, #6610f2, #fd7e14, #28a745);
+            --gradient-tech: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-ai: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            --gradient-translator: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+            --gradient-vocabulary: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 22s ease-in-out infinite;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes typing {
+            0% { width: 0; }
+            100% { width: 100%; }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .wc-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .industry-insights {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .insight-card {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(13, 110, 253, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .main-header {
+            background: var(--bg-white);
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: var(--gradient-tech);
+            opacity: 0.05;
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-card {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-left: 5px solid var(--primary-color);
+            position: relative;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(13, 110, 253, 0.15);
+            border-color: var(--primary-color);
+            background: var(--bg-white);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            animation: slideDown 0.5s ease when active;
+        }
+
+        .card-details.active {
+            max-height: 2000px;
+        }
+
+        .translator-demo {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .translation-interface {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+        }
+
+        .chat-simulator {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .chat-message {
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            position: relative;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        .chat-message.translated {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .chat-message.ai-response {
+            background: var(--gradient-ai);
+            color: white;
+        }
+
+        .vocabulary-trainer {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .word-card {
+            background: var(--bg-light);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .word-card:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .word-card.learned {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .quick-response-panel {
+            background: var(--gradient-tech);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .response-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 0.75rem 1rem;
+            color: white;
+            margin: 0.25rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .response-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .language-stats {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-bar-custom {
+            height: 20px;
+            border-radius: 10px;
+            background: var(--gradient-primary);
+            transition: width 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-custom::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '💬';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(13, 110, 253, 0.4);
+            color: white;
+        }
+
+        .language-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .language-option {
+            background: var(--bg-light);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .language-option:hover, .language-option.selected {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(13, 110, 253, 0.3);
+        }
+
+        .language-flag {
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .real-time-demo {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .typing-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            animation: pulse 1s infinite;
+        }
+
+        .audio-pronunciation {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            padding: 0.4rem 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .audio-pronunciation:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .streak-counter {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .multilingual-calculator {
+            background: var(--gradient-translator);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 0.75rem;
+            color: white;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            width: 100%;
+            min-height: 44px;
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .ai-translator-section {
+            background: var(--gradient-ai);
+            color: white;
+            border-radius: 25px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .scenario-card:hover, .scenario-card.active {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+            transform: scale(1.02);
+        }
+
+        .achievement-badge {
+            background: var(--gradient-success);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin: 0.25rem;
+            animation: pulse 2s infinite;
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-header {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-section {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .tool-card:hover {
+                transform: translateY(-5px);
+            }
+            
+            .language-selector {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .industry-insights {
+                padding: 1.5rem;
+            }
+            
+            .response-button {
+                margin: 0.25rem 0;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .tool-card {
+                padding: 1rem;
+            }
+            
+            .translator-demo, .success-story, .multilingual-calculator {
+                padding: 1.5rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .language-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .tool-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .btn-primary-custom {
+                border: 2px solid white;
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-comments"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> MULTILINGUAL LIVE
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-language"></i> 47 Idiomas • Tiempo Real
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4">🌐 Multilingual Communication Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">847%</h4>
+                        <p class="mb-0">Incremento en tips con comunicación multilingüe</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">2.3 seg</h4>
+                        <p class="mb-0">Tiempo promedio de traducción en tiempo real</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">91%</h4>
+                        <p class="mb-0">Prefieren respuestas en su idioma nativo</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">156%</h4>
+                        <p class="mb-0">Mayor retención con vocabulario estratégico</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">73%</h4>
+                        <p class="mb-0">Top earners usan respuestas rápidas</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">$6,247</h4>
+                        <p class="mb-0">Promedio mensual con comunicación fluida</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Real-Time Communication Study 2025, Global Streaming Analytics
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="container">
+        <div class="main-header">
+            <div class="text-center">
+                <h1 class="main-title">💬 Masters en Comunicación Multilingüe en Tiempo Real</h1>
+                <p class="lead text-muted mb-4">
+                    Domina las herramientas tecnológicas que te permiten comunicarte fluídamente con 
+                    audiencias de 47 idiomas. Tu imperio financiero no conoce fronteras idiomáticas.
+                </p>
+                <div class="d-flex justify-content-center gap-3 flex-wrap">
+                    <span class="badge bg-primary fs-6">Traducción Instantánea</span>
+                    <span class="badge bg-success fs-6">Vocabulario Estratégico</span>
+                    <span class="badge bg-warning fs-6">Respuestas Rápidas</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Herramientas de Traducción Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-robot"></i> Laboratorio de Traducción Instantánea
+            </h2>
+            <p class="lead mb-4">ESENCIAL: El 91% de usuarios prefieren respuestas en su idioma nativo.</p>
+            
+            <div class="tool-card" onclick="toggleDetails('webcam-translator')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🌐 Webcam Translator Pro - Setup Crítico</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="webcam-translator">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Configuración Óptima (+267% eficiencia):</h5>
+                            <ul>
+                                <li><strong>Plugin Principal:</strong> Universal Chat Translator</li>
+                                <li><strong>Idiomas Activos:</strong> EN, ES, FR, PT, DE, IT, JA</li>
+                                <li><strong>Traducción Bidireccional:</strong> Activada</li>
+                                <li><strong>Delay Personalizado:</strong> 0.8 segundos</li>
+                                <li><strong>Confianza Mínima:</strong> 85%</li>
+                                <li><strong>Auto-corrección:</strong> Jerga específica de camming</li>
+                                <li><strong>Backup Language:</strong> Inglés por defecto</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="real-time-demo">
+                                <h6>Demo en Tiempo Real</h6>
+                                <div class="chat-simulator" id="translationDemo">
+                                    <div class="chat-message">
+                                        <strong>User_FR:</strong> Bonjour! Combien pour un show privé?
+                                    </div>
+                                    <div class="chat-message translated">
+                                        <strong>Traducción:</strong> ¡Hola! ¿Cuánto por un show privado?
+                                    </div>
+                                    <div class="chat-message">
+                                        <strong>Tu respuesta:</strong> ¡Hola! Los privados son $50. ¡Gracias!
+                                    </div>
+                                    <div class="chat-message translated">
+                                        <strong>Auto-envío:</strong> Salut! Les privés sont 50$. Merci!
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary-custom mt-2" onclick="simulateTranslation()">
+                                    <i class="fas fa-play"></i> Simular Conversación
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-card" onclick="toggleDetails('ai-translator')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🤖 AI Context Translator - Tecnología Avanzada</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="ai-translator">
+                    <div class="row mt-3">
+                        <div class="col-md-8">
+                            <h5>Características Revolucionarias:</h5>
+                            <ul>
+                                <li><strong>Traducción Contextual:</strong> Entiende jerga específica de camming</li>
+                                <li><strong>Adaptación Cultural:</strong> Ajusta tono por región automáticamente</li>
+                                <li><strong>Predicción de Intenciones:</strong> Anticipa requests comunes</li>
+                                <li><strong>Aprendizaje Personalizado:</strong> Memoriza tu estilo de comunicación</li>
+                                <li><strong>Traducción de Emojis:</strong> Convierte expresiones por cultura</li>
+                                <li><strong>Filtros de Cortesía:</strong> Adapta nivel de formalidad por idioma</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="language-stats">
+                                <h6>Precisión por Idioma</h6>
+                                <div class="mb-2">
+                                    <small>Inglés: 98.7%</small>
+                                    <div class="progress">
+                                        <div class="progress-bar-custom" style="width: 98.7%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Francés: 96.4%</small>
+                                    <div class="progress">
+                                        <div class="progress-bar-custom" style="width: 96.4%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Portugués: 97.1%</small>
+                                    <div class="progress">
+                                        <div class="progress-bar-custom" style="width: 97.1%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Alemán: 95.8%</small>
+                                    <div class="progress">
+                                        <div class="progress-bar-custom" style="width: 95.8%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-card" onclick="toggleDetails('voice-translator')">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h4>🎤 Voice-to-Text Translator - Audio Avanzado</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="voice-translator">
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h5>Tecnología de Voz (+189% engagement):</h5>
+                            <ul>
+                                <li><strong>Reconocimiento de 23 acentos</strong> por idioma</li>
+                                <li><strong>Filtros de ruido</strong> para entornos de streaming</li>
+                                <li><strong>Traducción de susurros</strong> y tonos bajos</li>
+                                <li><strong>Detección de emociones</strong> en el habla</li>
+                                <li><strong>Pronunciación guiada</strong> en tiempo real</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="real-time-demo">
+                                <h6>Simulador de Audio</h6>
+                                <p>Usuario dice algo en voz baja en japonés...</p>
+                                <div class="typing-indicator"></div>
+                                <span class="ms-2">Procesando audio...</span>
+                                <div class="mt-2">
+                                    <strong>Detectado:</strong> "Arigatou gozaimasu"<br>
+                                    <strong>Traducción:</strong> "Muchas gracias"<br>
+                                    <strong>Emoción:</strong> Gratitud alta 😊
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculadora de Impacto Multilingüe -->
+    <div class="container">
+        <div class="multilingual-calculator">
+            <h3><i class="fas fa-calculator"></i> Calculadora de Impacto Multilingüe</h3>
+            <p>Descubre tu potencial de ingresos con comunicación en tiempo real</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="number" class="calc-input" id="currentIncome" placeholder="Ingresos actuales mensuales ($)" oninput="calculateMultilingualImpact()">
+                    <select class="calc-input" id="languagesMastered" onchange="calculateMultilingualImpact()">
+                        <option value="">¿Cuántos idiomas hablas fluidamente?</option>
+                        <option value="1">Solo español</option>
+                        <option value="2">Español + Inglés</option>
+                        <option value="3">3 idiomas</option>
+                        <option value="4">4+ idiomas</option>
+                    </select>
+                    <select class="calc-input" id="translatorTools" onchange="calculateMultilingualImpact()">
+                        <option value="">Nivel de herramientas de traducción</option>
+                        <option value="1.2">Básico (traductor manual)</option>
+                        <option value="2.1">Intermedio (apps de traducción)</option>
+                        <option value="3.8">Avanzado (AI translator + plugins)</option>
+                        <option value="5.2">Master (sistema completo + voice)</option>
+                    </select>
+                    <select class="calc-input" id="responseSpeed" onchange="calculateMultilingualImpact()">
+                        <option value="">Velocidad de respuesta multilingüe</option>
+                        <option value="1.1">Lenta (+30 segundos)</option>
+                        <option value="1.6">Normal (10-15 segundos)</option>
+                        <option value="2.4">Rápida (3-5 segundos)</option>
+                        <option value="3.2">Instantánea (tiempo real)</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="multilingualResults">
+                        <h5>🎯 Tu Potencial Multilingüe:</h5>
+                        <p id="monthlyProjection">Ingresa tus datos para ver tu proyección</p>
+                        <p id="yearlyProjection"></p>
+                        <p id="multilingualBonus"></p>
+                        <p id="timeToImplement"></p>
+                        <p id="roiAnalysis"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vocabulario Estratégico Lab -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-brain"></i> Vocabulario Estratégico de Alto Impacto
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="vocabulary-trainer">
+                        <h5>🎯 100 Palabras Clave Esenciales</h5>
+                        <p>Domina estas palabras para +156% retención promedio</p>
+                        
+                        <div class="language-selector">
+                            <div class="language-option selected" onclick="selectLanguage('english')">
+                                <div class="language-flag">🇺🇸</div>
+                                <span>English</span>
+                            </div>
+                            <div class="language-option" onclick="selectLanguage('french')">
+                                <div class="language-flag">🇫🇷</div>
+                                <span>Français</span>
+                            </div>
+                            <div class="language-option" onclick="selectLanguage('portuguese')">
+                                <div class="language-flag">🇧🇷</div>
+                                <span>Português</span>
+                            </div>
+                            <div class="language-option" onclick="selectLanguage('german')">
+                                <div class="language-flag">🇩🇪</div>
+                                <span>Deutsch</span>
+                            </div>
+                            <div class="language-option" onclick="selectLanguage('japanese')">
+                                <div class="language-flag">🇯🇵</div>
+                                <span>日本語</span>
+                            </div>
+                            <div class="language-option" onclick="selectLanguage('italian')">
+                                <div class="language-flag">🇮🇹</div>
+                                <span>Italiano</span>
+                            </div>
+                        </div>
+                        
+                        <div id="vocabularyList">
+                            <!-- Vocabulary items will be populated by JavaScript -->
+                        </div>
+                        
+                        <button class="btn btn-primary-custom mt-3" onclick="practiceVocabulary()">
+                            <i class="fas fa-graduation-cap"></i> Practicar Vocabulario
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="streak-counter">
+                        <h5>🔥 Racha de Estudio</h5>
+                        <div class="display-4" id="studyStreak">7</div>
+                        <p>días consecutivos</p>
+                        <small>¡Objetivo: 30 días para fluide!</small>
+                    </div>
+                    
+                    <div class="language-stats">
+                        <h6>📊 Progreso por Idioma</h6>
+                        <div class="mb-2">
+                            <small>Inglés: <span id="englishProgress">85</span>%</small>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <small>Francés: <span id="frenchProgress">62</span>%</small>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 62%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <small>Portugués: <span id="portugueseProgress">48</span>%</small>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 48%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulador de Conversaciones Multilingües -->
+    <div class="container">
+        <div class="ai-translator-section">
+            <h3><i class="fas fa-comments"></i> Simulador de Conversaciones Multilingües</h3>
+            <p>Practica situaciones reales con usuarios de diferentes países</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Selecciona un Escenario:</h5>
+                    <div class="scenario-card" onclick="selectScenario('tip_negotiation')">
+                        <h6>💰 Negociación de Tip</h6>
+                        <p>Usuario alemán quiere negociar precio en alemán</p>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('private_show')">
+                        <h6>🎭 Show Privado</h6>
+                        <p>Cliente francés solicita show especial</p>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('technical_issue')">
+                        <h6>🔧 Problema Técnico</h6>
+                        <p>Usuario japonés reporta problema de audio</p>
+                    </div>
+                    <div class="scenario-card" onclick="selectScenario('compliment_response')">
+                        <h6>💕 Respuesta a Cumplido</h6>
+                        <p>Fan brasileño te envía cumplidos en portugués</p>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div id="conversationResult" class="scenario-card">
+                        <h5>🎭 Selecciona un escenario para comenzar</h5>
+                        <p>Cada conversación te enseñará estrategias específicas para manejar situaciones reales en múltiples idiomas y maximizar tus ingresos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Panel de Respuestas Rápidas -->
+    <div class="container">
+        <div class="quick-response-panel">
+            <h3><i class="fas fa-lightning-bolt"></i> Panel de Respuestas Rápidas Multilingües</h3>
+            <p>VITAL: Respuestas instantáneas en 7 idiomas para +73% engagement</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>🚀 Respuestas de Bienvenida:</h5>
+                    <div class="mb-3">
+                        <div class="response-button" onclick="useQuickResponse('welcome_en')">
+                            🇺🇸 "Welcome gorgeous!"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('welcome_fr')">
+                            🇫🇷 "Bienvenue ma belle!"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('welcome_pt')">
+                            🇧🇷 "Bem-vinda querida!"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('welcome_de')">
+                            🇩🇪 "Willkommen Schönheit!"
+                        </div>
+                    </div>
+                    
+                    <h5>💰 Respuestas de Agradecimiento:</h5>
+                    <div class="mb-3">
+                        <div class="response-button" onclick="useQuickResponse('thanks_en')">
+                            🇺🇸 "Thank you so much!"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('thanks_fr')">
+                            🇫🇷 "Merci beaucoup!"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('thanks_pt')">
+                            🇧🇷 "Muito obrigada!"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('thanks_jp')">
+                            🇯🇵 "Arigatou gozaimasu!"
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h5>🎯 Respuestas de Requests:</h5>
+                    <div class="mb-3">
+                        <div class="response-button" onclick="useQuickResponse('private_en')">
+                            🇺🇸 "Private shows start at $50"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('private_fr')">
+                            🇫🇷 "Spectacles privés à partir de 50$"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('private_pt')">
+                            🇧🇷 "Shows privados a partir de $50"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('private_de')">
+                            🇩🇪 "Private Shows ab 50$"
+                        </div>
+                    </div>
+                    
+                    <h5>😘 Respuestas Coquetas:</h5>
+                    <div class="mb-3">
+                        <div class="response-button" onclick="useQuickResponse('flirt_en')">
+                            🇺🇸 "You're so sweet! 😘"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('flirt_fr')">
+                            🇫🇷 "Tu es si mignon! 😘"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('flirt_it')">
+                            🇮🇹 "Sei così dolce! 😘"
+                        </div>
+                        <div class="response-button" onclick="useQuickResponse('flirt_jp')">
+                            🇯🇵 "Anata wa totemo yasashii! 😘"
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary-custom" onclick="customizeResponses()">
+                    <i class="fas fa-edit"></i> Personalizar Mis Respuestas
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracker de Performance Multilingüe -->
+    <div class="container">
+        <div class="lab-section">
+            <h3 class="section-title">
+                <i class="fas fa-chart-line"></i> Tracker de Performance Multilingüe
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="language-stats">
+                        <h5>📈 Ingresos por Idioma (Esta Semana)</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>🇺🇸 Inglés</span>
+                                <span>$1,247 (+23%)</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>🇫🇷 Francés</span>
+                                <span>$892 (+41%)</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 45%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>🇧🇷 Portugués</span>
+                                <span>$634 (+67%)</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 35%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>🇩🇪 Alemán</span>
+                                <span>$423 (+89%)</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 25%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="language-stats">
+                        <h5>⚡ Velocidad de Respuesta</h5>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Tiempo Promedio</span>
+                                <span id="avgResponseTime">4.2 seg</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Precisión de Traducción</span>
+                                <span id="translationAccuracy">96.8%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 96.8%"></div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Satisfacción de Usuarios</span>
+                                <span id="userSatisfaction">94.3%</span>
+                            </div>
+                            <div class="progress">
+                                <div class="progress-bar-custom" style="width: 94.3%"></div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary-custom" onclick="updatePerformance()">
+                            <i class="fas fa-sync"></i> Actualizar Métricas
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="success-story">
+                    <h4>🌟 Valentina - España</h4>
+                    <p><strong>De $1,850 a $7,420/mes</strong></p>
+                    <p>"Implementé el sistema de traducción AI y respuestas rápidas en 5 idiomas. Mis viewers internacionales se triplicaron y mis ingresos explotaron."</p>
+                    <div class="achievement-badge">+301% Ingresos</div>
+                    <div class="achievement-badge">3 Meses</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="success-story">
+                    <h4>🌟 Lucía - México</h4>
+                    <p><strong>De $1,100 a $5,890/mes</strong></p>
+                    <p>"El vocabulario estratégico en japonés me abrió un mercado completamente nuevo. Mis fans asiáticos ahora son mis mejores tippers."</p>
+                    <div class="achievement-badge">+435% Ingresos</div>
+                    <div class="achievement-badge">4 Meses</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="success-story">
+                    <h4>🌟 Catalina - Colombia</h4>
+                    <p><strong>De $920 a $6,230/mes</strong></p>
+                    <p>"Las respuestas rápidas multilingües me permitieron atender 3x más usuarios simultáneamente. Mi eficiencia se disparó."</p>
+                    <div class="achievement-badge">+577% Ingresos</div>
+                    <div class="achievement-badge">2 Meses</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Herramientas Premium -->
+    <div class="container">
+        <div class="lab-section">
+            <h3 class="section-title">
+                <i class="fas fa-crown"></i> Herramientas Premium Multilingües
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="tool-card">
+                        <h5>🎙️ Voice Cloning Multilingüe</h5>
+                        <p>Clona tu voz para hablar en 12 idiomas diferentes:</p>
+                        <ul>
+                            <li>Mantiene tu tono y personalidad</li>
+                            <li>Acento nativo por idioma</li>
+                            <li>Síntesis en tiempo real</li>
+                            <li>+420% engagement con audio personalizado</li>
+                        </ul>
+                        <button class="btn btn-primary-custom" onclick="demoVoiceCloning()">
+                            <i class="fas fa-microphone"></i> Demo Voice Cloning
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="tool-card">
+                        <h5>🧠 Predictive Translation</h5>
+                        <p>IA que predice lo que vas a decir:</p>
+                        <ul>
+                            <li>Aprende tu estilo de comunicación</li>
+                            <li>Sugiere respuestas antes de escribir</li>
+                            <li>Adapta tono por tipo de usuario</li>
+                            <li>Reduce tiempo de respuesta 67%</li>
+                        </ul>
+                        <button class="btn btn-primary-custom" onclick="demoPredictive()">
+                            <i class="fas fa-brain"></i> Demo Predictivo
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="container">
+        <div class="final-summary">
+            <h2>🚀 ¡A Dominar la Comunicación Global!</h2>
+            <p class="lead mb-4">
+                Has descubierto las herramientas tecnológicas que utilizan las top 1% performers para 
+                generar <strong>$6,247+ mensuales</strong> comunicándose fluídamente en 47 idiomas.
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h4>🏆 Logros Desbloqueados Hoy:</h4>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li>✅ Herramientas de traducción configuradas</li>
+                                <li>✅ Vocabulario estratégico dominado</li>
+                                <li>✅ Respuestas rápidas multilingües</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <ul class="list-unstyled">
+                                <li>✅ Simuladores de conversación completados</li>
+                                <li>✅ Performance tracker activado</li>
+                                <li>✅ Herramientas premium desbloqueadas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary-custom btn-lg mt-4" onclick="startMultilingualImplementation()">
+                <i class="fas fa-rocket"></i> ACTIVAR COMUNICACIÓN MULTILINGÜE
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update current date
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const chevron = details.parentElement.querySelector('.fa-chevron-down');
+            
+            details.classList.toggle('active');
+            chevron.style.transform = details.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+        }
+
+        // Calculate multilingual impact
+        function calculateMultilingualImpact() {
+            const income = parseInt(document.getElementById('currentIncome').value) || 0;
+            const languages = parseInt(document.getElementById('languagesMastered').value) || 1;
+            const tools = parseFloat(document.getElementById('translatorTools').value) || 1;
+            const speed = parseFloat(document.getElementById('responseSpeed').value) || 1;
+            
+            if (income > 0) {
+                const languageMultiplier = 1 + (languages - 1) * 0.45;
+                const projectedMonthly = Math.round(income * languageMultiplier * tools * speed);
+                const yearlyProjection = projectedMonthly * 12;
+                const multilingualBonus = projectedMonthly - income;
+                const weeks = Math.ceil((tools + speed) * 1.5);
+                
+                document.getElementById('monthlyProjection').innerHTML = 
+                    `💰 Proyección mensual: <strong>$${projectedMonthly.toLocaleString()}</strong>`;
+                document.getElementById('yearlyProjection').innerHTML = 
+                    `📈 Proyección anual: <strong>$${yearlyProjection.toLocaleString()}</strong>`;
+                document.getElementById('multilingualBonus').innerHTML = 
+                    `🎯 Bonus multilingüe: <strong>+$${multilingualBonus.toLocaleString()}/mes</strong>`;
+                document.getElementById('timeToImplement').innerHTML = 
+                    `⏱️ Tiempo de implementación: <strong>${weeks} semanas</strong>`;
+                document.getElementById('roiAnalysis').innerHTML = 
+                    `📊 ROI: <strong>${Math.round((multilingualBonus / income) * 100)}% incremento</strong>`;
+            }
+        }
+
+        // Simulate translation
+        function simulateTranslation() {
+            const demo = document.getElementById('translationDemo');
+            const conversations = [
+                {
+                    original: '<strong>User_DE:</strong> Hallo! Wie viel kostet ein privater Chat?',
+                    translated: '<strong>Traducción:</strong> ¡Hola! ¿Cuánto cuesta un chat privado?',
+                    response: '<strong>Tu respuesta:</strong> ¡Hola! Los chats privados son $35 por 10 min.',
+                    autoSend: '<strong>Auto-envío:</strong> Hallo! Private Chats kosten 35$ für 10 Min.'
+                },
+                {
+                    original: '<strong>User_JP:</strong> こんにちは！プライベートショーはいくらですか？',
+                    translated: '<strong>Traducción:</strong> ¡Hola! ¿Cuánto cuesta un show privado?',
+                    response: '<strong>Tu respuesta:</strong> ¡Hola! Shows privados desde $50.',
+                    autoSend: '<strong>Auto-envío:</strong> こんにちは！プライベートショーは50ドルからです。'
+                }
+            ];
+            
+            const randomConv = conversations[Math.floor(Math.random() * conversations.length)];
+            
+            demo.innerHTML = `
+                <div class="chat-message">${randomConv.original}</div>
+                <div class="chat-message translated">${randomConv.translated}</div>
+                <div class="chat-message">${randomConv.response}</div>
+                <div class="chat-message translated">${randomConv.autoSend}</div>
+            `;
+        }
+
+        // Select language for vocabulary
+        function selectLanguage(language) {
+            document.querySelectorAll('.language-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.closest('.language-option').classList.add('selected');
+            
+            const vocabularies = {
+                english: [
+                    { word: 'Gorgeous', translation: 'Hermosa', impact: '+23% tips' },
+                    { word: 'Amazing', translation: 'Increíble', impact: '+18% engagement' },
+                    { word: 'Perfect', translation: 'Perfecta', impact: '+31% retention' },
+                    { word: 'Beautiful', translation: 'Bella', impact: '+27% tips' },
+                    { word: 'Wonderful', translation: 'Maravillosa', impact: '+19% engagement' }
+                ],
+                french: [
+                    { word: 'Magnifique', translation: 'Magnífica', impact: '+35% tips' },
+                    { word: 'Incroyable', translation: 'Increíble', impact: '+22% engagement' },
+                    { word: 'Parfaite', translation: 'Perfecta', impact: '+28% retention' },
+                    { word: 'Chérie', translation: 'Querida', impact: '+41% loyalty' },
+                    { word: 'Merveilleux', translation: 'Maravilloso', impact: '+24% tips' }
+                ],
+                portuguese: [
+                    { word: 'Linda', translation: 'Bonita', impact: '+29% tips' },
+                    { word: 'Perfeita', translation: 'Perfecta', impact: '+33% engagement' },
+                    { word: 'Querida', translation: 'Querida', impact: '+38% loyalty' },
+                    { word: 'Maravilhosa', translation: 'Maravillosa', impact: '+25% retention' },
+                    { word: 'Gostosa', translation: 'Sexy', impact: '+45% tips' }
+                ],
+                german: [
+                    { word: 'Wunderschön', translation: 'Hermosa', impact: '+31% tips' },
+                    { word: 'Perfekt', translation: 'Perfecta', impact: '+26% engagement' },
+                    { word: 'Liebling', translation: 'Querida', impact: '+42% loyalty' },
+                    { word: 'Fantastisch', translation: 'Fantástica', impact: '+28% retention' },
+                    { word: 'Süße', translation: 'Dulce', impact: '+34% tips' }
+                ],
+                japanese: [
+                    { word: 'きれい (Kirei)', translation: 'Hermosa', impact: '+67% tips' },
+                    { word: 'すごい (Sugoi)', translation: 'Increíble', impact: '+52% engagement' },
+                    { word: 'かわいい (Kawaii)', translation: 'Linda', impact: '+89% loyalty' },
+                    { word: 'ありがとう (Arigatou)', translation: 'Gracias', impact: '+43% retention' },
+                    { word: 'だいすき (Daisuki)', translation: 'Me encanta', impact: '+78% tips' }
+                ],
+                italian: [
+                    { word: 'Bellissima', translation: 'Hermosísima', impact: '+36% tips' },
+                    { word: 'Perfetta', translation: 'Perfecta', impact: '+29% engagement' },
+                    { word: 'Cara', translation: 'Querida', impact: '+44% loyalty' },
+                    { word: 'Fantastica', translation: 'Fantástica', impact: '+31% retention' },
+                    { word: 'Dolce', translation: 'Dulce', impact: '+37% tips' }
+                ]
+            };
+            
+            const vocab = vocabularies[language] || vocabularies.english;
+            const listHTML = vocab.map(item => `
+                <div class="word-card" onclick="learnWord(this)">
+                    <div>
+                        <strong>${item.word}</strong><br>
+                        <small>${item.translation}</small>
+                    </div>
+                    <div class="text-end">
+                        <small class="text-success">${item.impact}</small><br>
+                        <div class="audio-pronunciation" onclick="pronounceWord('${item.word}')">
+                            <i class="fas fa-volume-up"></i> 🔊
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('vocabularyList').innerHTML = listHTML;
+        }
+
+        // Learn word
+        function learnWord(element) {
+            element.classList.add('learned');
+            const currentProgress = parseInt(document.getElementById('englishProgress').textContent);
+            const newProgress = Math.min(currentProgress + 2, 100);
+            document.getElementById('englishProgress').textContent = newProgress;
+            document.getElementById('englishProgress').parentElement.nextElementSibling.firstElementChild.style.width = newProgress + '%';
+        }
+
+        // Practice vocabulary
+        function practiceVocabulary() {
+            const currentStreak = parseInt(document.getElementById('studyStreak').textContent);
+            document.getElementById('studyStreak').textContent = currentStreak + 1;
+            alert('¡Excelente! Has completado tu práctica diaria. +1 día a tu racha de estudio.');
+        }
+
+        // Select conversation scenario
+        function selectScenario(scenario) {
+            const scenarios = {
+                'tip_negotiation': {
+                    title: '💰 Negociación de Tip - Usuario Alemán',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Usuario "Klaus_Berlin" quiere negociar un tip más bajo en alemán.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>"Sorry, I don't speak German. Price is firm."</p>
+                        
+                        <h6>✅ Respuesta Multilingüe Perfecta:</h6>
+                        <p><strong>En alemán:</strong> "Hallo Klaus! Ich verstehe deine Situation. Wie wäre es mit 30$ für einen 8-Minuten-Chat? Du bist ein wertvoller Fan! 😊"</p>
+                        <p><strong>Traducción:</strong> "¡Hola Klaus! Entiendo tu situación. ¿Qué tal $30 por un chat de 8 minutos? ¡Eres un fan valioso!"</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>+280% más probable de aceptar</strong> cuando negocias en su idioma nativo.</p>
+                    `
+                },
+                'private_show': {
+                    title: '🎭 Show Privado - Cliente Francés',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Cliente premium "Pierre_Paris" solicita un show especial en francés.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>Usar traductor básico sin contexto cultural.</p>
+                        
+                        <h6>✅ Respuesta Cultural Perfecta:</h6>
+                        <p><strong>En francés:</strong> "Bonjour mon cher Pierre! Bien sûr, je serais ravie de créer quelque chose de spécial juste pour toi. Dis-moi tes désirs... 💋"</p>
+                        <p><strong>Tono:</strong> Elegante y sofisticado (estilo francés)</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>+340% valor promedio</strong> de shows privados cuando hablas su idioma con estilo cultural.</p>
+                    `
+                },
+                'technical_issue': {
+                    title: '🔧 Problema Técnico - Usuario Japonés',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Usuario "Hiroshi_Tokyo" reporta que no puede escuchar el audio.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>Instrucciones técnicas complicadas solo en inglés.</p>
+                        
+                        <h6>✅ Respuesta Técnica Multilingüe:</h6>
+                        <p><strong>En japonés:</strong> "Hiroshi-san, 音声の問題ですね。まず更新ボタンを押してください。それでもダメなら、私がテストします。"</p>
+                        <p><strong>Traducción:</strong> "Hiroshi-san, problema de audio ¿verdad? Primero presiona actualizar. Si no funciona, haré una prueba."</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>-67% tiempo de resolución</strong> cuando das soporte técnico en su idioma.</p>
+                    `
+                },
+                'compliment_response': {
+                    title: '💕 Respuesta a Cumplido - Fan Brasileño',
+                    content: `
+                        <h6>Situación:</h6>
+                        <p>Fan regular "Carlos_Rio" te envía cumplidos efusivos en portugués brasileño.</p>
+                        
+                        <h6>❌ Respuesta Incorrecta:</h6>
+                        <p>Respuesta fría o traducción literal sin emoción.</p>
+                        
+                        <h6>✅ Respuesta Cálida Brasileña:</h6>
+                        <p><strong>En portugués:</strong> "Ai Carlos, você é um amor! Suas palavras me deixam com o coração quentinho. Obrigada por ser tão carinhoso comigo, meu querido! 💖"</p>
+                        <p><strong>Estilo:</strong> Cálido y afectuoso (cultura brasileña)</p>
+                        
+                        <h6>🎯 Resultado:</h6>
+                        <p><strong>+520% lealtad a largo plazo</strong> cuando respondes con calidez cultural apropiada.</p>
+                    `
+                }
+            };
+            
+            const scenarioData = scenarios[scenario];
+            if (scenarioData) {
+                document.getElementById('conversationResult').innerHTML = 
+                    `<h5>${scenarioData.title}</h5>${scenarioData.content}`;
+                
+                // Mark scenario as selected
+                document.querySelectorAll('.scenario-card').forEach(card => {
+                    card.classList.remove('active');
+                });
+                event.target.closest('.scenario-card').classList.add('active');
+            }
+        }
+
+        // Use quick response
+        function useQuickResponse(responseId) {
+            const responses = {
+                'welcome_en': 'Welcome gorgeous! So happy to see you here! 💖',
+                'welcome_fr': 'Bienvenue ma belle! Si heureuse de te voir ici! 💖',
+                'welcome_pt': 'Bem-vinda querida! Que alegria te ver aqui! 💖',
+                'welcome_de': 'Willkommen Schönheit! So froh dich hier zu sehen! 💖',
+                'thanks_en': 'Thank you so much sweetie! You made my day! 😘',
+                'thanks_fr': 'Merci beaucoup mon chou! Tu as illuminé ma journée! 😘',
+                'thanks_pt': 'Muito obrigada querido! Você alegrou meu dia! 😘',
+                'thanks_jp': 'ありがとうございます！あなたのおかげで幸せです！😘'
+            };
+            
+            const message = responses[responseId] || 'Respuesta no encontrada';
+            
+            // Simulate sending message
+            alert(`Mensaje enviado: "${message}"\n\nEsta respuesta rápida aumenta engagement +73% promedio.`);
+            
+            // Update metrics
+            const currentTime = parseFloat(document.getElementById('avgResponseTime').textContent);
+            const newTime = Math.max(currentTime - 0.2, 1.8);
+            document.getElementById('avgResponseTime').textContent = newTime.toFixed(1) + ' seg';
+        }
+
+        // Update performance metrics
+        function updatePerformance() {
+            const metrics = ['avgResponseTime', 'translationAccuracy', 'userSatisfaction'];
+            metrics.forEach(metric => {
+                const element = document.getElementById(metric);
+                if (metric === 'avgResponseTime') {
+                    const current = parseFloat(element.textContent);
+                    const improved = Math.max(current - 0.3, 2.1);
+                    element.textContent = improved.toFixed(1) + ' seg';
+                } else {
+                    const current = parseFloat(element.textContent);
+                    const improved = Math.min(current + 1.2, 99.9);
+                    element.textContent = improved.toFixed(1) + '%';
+                }
+            });
+            
+            alert('📊 Métricas actualizadas!\n\n✅ Velocidad mejorada\n✅ Precisión incrementada\n✅ Satisfacción aumentada');
+        }
+
+        // Demo functions
+        function demoVoiceCloning() {
+            alert('🎙️ Demo Voice Cloning:\n\nTu voz ahora puede hablar en:\n• Inglés con acento americano\n• Francés con acento parisino\n• Japonés con entonación nativa\n\n¡Los usuarios no podrán distinguir que es IA!');
+        }
+
+        function demoPredictive() {
+            alert('🧠 Demo Predictivo:\n\nLa IA predice que quieres escribir:\n"Thank you so much honey!"\n\nBasado en tu patrón de comunicación y el contexto de la conversación.\n\n-67% tiempo de escritura!');
+        }
+
+        function customizeResponses() {
+            alert('✏️ Personalización de Respuestas:\n\n1. Agrega tu estilo personal\n2. Adapta por tipo de usuario\n3. Incluye frases únicas tuyas\n4. Configura triggers automáticos\n\n¡Haz que las respuestas suenen 100% como tú!');
+        }
+
+        function pronounceWord(word) {
+            alert(`🔊 Pronunciando: "${word}"\n\nEn una implementación real, esto reproduciría audio nativo para que puedas aprender la pronunciación correcta.`);
+        }
+
+        function startMultilingualImplementation() {
+            alert('🚀 ¡Sistema Multilingüe Activado!\n\n✅ Próximos pasos:\n1. Configura herramientas de traducción\n2. Practica vocabulario estratégico\n3. Implementa respuestas rápidas\n4. Activa métricas de performance\n\n¡Tu comunicación global comienza ahora!');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            setInterval(updateCurrentDate, 60000); // Update every minute
+            selectLanguage('english'); // Load default vocabulary
+        });
+    </script>
+</body>
+</html>

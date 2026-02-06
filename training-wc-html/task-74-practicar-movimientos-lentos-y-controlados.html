@@ -1,0 +1,1538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=0.5, maximum-scale=3.0">
+    <title>WC Training: Master de Movimientos Controlados - Elegancia Digital</title>
+    
+    <!-- Bootstrap 5.3.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6.0.0 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ce93d8;
+            --secondary-color: #ba68c8;
+            --accent-color: #ab47bc;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #fff8f5;
+            --border-light: #e0e0e0;
+            --gradient-primary: linear-gradient(135deg, #ce93d8 0%, #ba68c8 50%, #ab47bc 100%);
+            --gradient-secondary: linear-gradient(45deg, #ab47bc, #e1bee7);
+            --gradient-success: linear-gradient(135deg, #28a745, #20c997);
+            --gradient-header: linear-gradient(135deg, #ce93d8, #ba68c8, #ab47bc, #e1bee7);
+            --shadow-light: 0 4px 15px rgba(206, 147, 216, 0.1);
+            --shadow-medium: 0 8px 25px rgba(206, 147, 216, 0.15);
+            --shadow-heavy: 0 15px 40px rgba(206, 147, 216, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* WC BRANDING HEADER */
+        .wc-header {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M30 0c8.3 0 15 6.7 15 15 0 8.3-6.7 15-15 15s-15-6.7-15-15c0-8.3 6.7-15 15-15z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: floatPattern 24s infinite linear;
+        }
+
+        @keyframes floatPattern {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-60px) translateY(-60px); }
+        }
+
+        .wc-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .wc-stats {
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #00ff00;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* INDUSTRY INSIGHTS */
+        .insights-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .insight-card:hover::before {
+            animation: shimmer 1.5s ease-in-out;
+            opacity: 1;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        /* MAIN HEADER */
+        .main-header {
+            background: var(--gradient-header);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M40 0c3 0 6 1 8 3l24 24c2 2 3 5 3 8s-1 6-3 8L48 67c-2 2-5 3-8 3s-6-1-8-3L8 43c-2-2-3-5-3-8s1-6 3-8L32 3c2-2 5-3 8-3z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: floatGems 22s infinite ease-in-out;
+        }
+
+        @keyframes floatGems {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(45deg); }
+        }
+
+        .main-title {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1rem, 3vw, 1.5rem);
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* SECTION LABS */
+        .lab-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border-left: 5px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .lab-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* INTERACTIVE CARDS */
+        .interactive-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-light);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: var(--shadow-heavy);
+            border-color: var(--primary-color);
+        }
+
+        .interactive-card.expanded {
+            background: linear-gradient(135deg, #f3e5f5, #ffffff);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .card-details.show {
+            max-height: 1200px;
+        }
+
+        /* MOVEMENT CONTROLLER */
+        .movement-controller {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-medium);
+            border: 2px solid var(--accent-color);
+        }
+
+        .speed-slider-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .speed-slider {
+            width: 100%;
+            height: 12px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #e1bee7, #ab47bc);
+            outline: none;
+            -webkit-appearance: none;
+            margin: 1rem 0;
+        }
+
+        .speed-slider::-webkit-slider-thumb {
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(206, 147, 216, 0.4);
+            border: 3px solid white;
+        }
+
+        .speed-slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 4px 12px rgba(206, 147, 216, 0.4);
+        }
+
+        .movement-practice-area {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            min-height: 200px;
+            border: 2px dashed var(--accent-color);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .practice-avatar {
+            font-size: 4rem;
+            transition: all 0.5s ease;
+            display: inline-block;
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .movement-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .movement-type {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .movement-type:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .movement-type.active {
+            background: var(--gradient-primary);
+            border: 3px solid white;
+            transform: scale(1.1);
+        }
+
+        .movement-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* CALCULATORS */
+        .calculator-section {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 10px;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .calculator-result {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        /* PROGRESS BARS */
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .progress-custom {
+            height: 12px;
+            border-radius: 10px;
+            background: var(--border-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-custom {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 10px;
+            transition: width 1s ease-in-out;
+            position: relative;
+        }
+
+        .progress-bar-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressShine 2s infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* FLOW SIMULATOR */
+        .flow-simulator {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .flow-demonstration {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            min-height: 150px;
+        }
+
+        .flow-avatar {
+            font-size: 3rem;
+            display: inline-block;
+            margin: 0 1rem;
+        }
+
+        .slow-flow {
+            animation: slowGlide 4s ease-in-out infinite;
+        }
+
+        .medium-flow {
+            animation: mediumGlide 2s ease-in-out infinite;
+        }
+
+        .fast-flow {
+            animation: fastGlide 1s ease-in-out infinite;
+        }
+
+        @keyframes slowGlide {
+            0%, 100% { transform: translateX(-30px) scale(1); }
+            50% { transform: translateX(30px) scale(1.1); }
+        }
+
+        @keyframes mediumGlide {
+            0%, 100% { transform: translateX(-20px) scale(1); }
+            50% { transform: translateX(20px) scale(1.05); }
+        }
+
+        @keyframes fastGlide {
+            0%, 100% { transform: translateX(-10px) scale(1); }
+            50% { transform: translateX(10px) scale(1.02); }
+        }
+
+        /* SUCCESS STORIES */
+        .success-story {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 8rem;
+            position: absolute;
+            top: -2rem;
+            left: 1rem;
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .success-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .metric-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-number {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        /* BUTTONS */
+        .btn-primary-custom {
+            background: var(--gradient-primary);
+            border: none;
+            border-radius: 25px;
+            padding: 0.8rem 2rem;
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 44px;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+            color: white;
+        }
+
+        .btn-primary-custom::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary-custom:hover::before {
+            left: 100%;
+        }
+
+        .btn-secondary-custom {
+            background: var(--gradient-secondary);
+            border: none;
+            border-radius: 20px;
+            padding: 0.6rem 1.5rem;
+            color: white;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            min-height: 44px;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            color: white;
+        }
+
+        /* TIMER DISPLAY */
+        .practice-timer {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            border: 2px solid var(--accent-color);
+        }
+
+        .timer-display {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .timer-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .lab-section, .insights-section, .calculator-section, .flow-simulator {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .success-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-brand {
+                font-size: 1.4rem;
+            }
+            
+            .movement-types {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 0.5rem;
+            }
+            
+            .timer-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 1.8rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.4rem;
+            }
+            
+            .interactive-card {
+                padding: 0.8rem;
+            }
+            
+            .calculator-section, .flow-simulator, .success-story {
+                padding: 1rem;
+            }
+            
+            .movement-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .practice-avatar {
+                font-size: 3rem;
+            }
+            
+            .flow-avatar {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* ANIMATIONS */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* EMOJI STYLES */
+        .emoji {
+            font-style: normal;
+            font-size: 1.2em;
+            margin-right: 0.5rem;
+        }
+
+        /* ELEGANCE METER */
+        .elegance-meter {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            border: 2px solid var(--accent-color);
+        }
+
+        .elegance-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .elegance-description {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <!-- WC BRANDING HEADER -->
+    <header class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-brand">
+                        <i class="fas fa-crown me-2"></i>WC Training Academy
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos activos | 
+                        <span id="currentDateTime"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- INDUSTRY INSIGHTS -->
+    <section class="container mt-4">
+        <div class="insights-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">📊</span>Industry Insights 2025: Impacto de Movimientos Controlados
+            </h2>
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">+194%</div>
+                        <div>Retención con movimientos lentos vs rápidos</div>
+                        <small>Digital Elegance Study 2025</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">78%</div>
+                        <div>Modelos se mueven demasiado rápido</div>
+                        <small>Movement Analysis Report</small>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">3.8x</div>
+                        <div>Más tips con elegancia controlada</div>
+                        <small>Revenue Flow Analytics</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN HEADER -->
+    <header class="main-header">
+        <div class="container">
+            <h1 class="main-title">
+                <span class="emoji">🌊</span>Master de Movimientos Controlados
+            </h1>
+            <p class="main-subtitle">
+                Domina la elegancia digital que hipnotiza y convierte
+            </p>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- LAB SECTION: FLOW FOUNDATION -->
+        <section class="lab-section fade-in">
+            <h2 class="lab-title">
+                <span class="emoji">🧬</span>Lab Fundacional: Ciencia del Movimiento Digital
+            </h2>
+            <p>CRÍTICO: En el entorno digital, los movimientos rápidos se ven caóticos. Los desplazamientos lentos y controlados crean una presencia hipnótica que maximiza tu impacto visual y retención de audiencia.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('foundation1')">
+                <div class="card-header">
+                    <span><i class="fas fa-wave-square"></i> Física del Movimiento en Cámara</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="foundation1">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>PRINCIPIOS TÉCNICOS:</h6>
+                            <ul>
+                                <li><strong>Frame Rate Impact:</strong> 30fps estándar requiere movimientos 40% más lentos</li>
+                                <li><strong>Compression Artifacts:</strong> Movimientos rápidos crean pixelación</li>
+                                <li><strong>Bandwidth Optimization:</strong> Fluidez reduce buffering</li>
+                                <li><strong>Eye Tracking:</strong> Cerebro procesa movimientos lentos como elegantes</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>VELOCIDADES ÓPTIMAS:</h6>
+                            <ul>
+                                <li><strong>Transiciones corporales:</strong> 70% velocidad natural</li>
+                                <li><strong>Movimientos de brazos:</strong> 60% velocidad natural</li>
+                                <li><strong>Giros y rotaciones:</strong> 50% velocidad natural</li>
+                                <li><strong>Gestos faciales:</strong> 80% velocidad natural</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('foundation2')">
+                <div class="card-header">
+                    <span><i class="fas fa-brain"></i> Psicología del Movimiento Hipnótico</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="card-details" id="foundation2">
+                    <h6>EFECTOS PSICOLÓGICOS DE LA FLUIDEZ CONTROLADA:</h6>
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <h6 style="color: var(--primary-color);">ESTADO HIPNÓTICO</h6>
+                            <ul>
+                                <li>Movimientos predecibles relajan</li>
+                                <li>Fluidez constante induce trance leve</li>
+                                <li>Velocidad controlada genera confianza</li>
+                                <li>Elegancia percibida como clase superior</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 style="color: var(--secondary-color);">RETENCIÓN VISUAL</h6>
+                            <ul>
+                                <li>Ojos siguen patrones fluidos</li>
+                                <li>Movimientos suaves no fatigan</li>
+                                <li>Continuidad visual mantiene atención</li>
+                                <li>Elegancia crea addiction visual</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 style="color: var(--accent-color);">PERCEPCIÓN DE VALOR</h6>
+                            <ul>
+                                <li>Lentitud = control profesional</li>
+                                <li>Fluidez = entrenamiento experto</li>
+                                <li>Elegancia = estatus premium</li>
+                                <li>Gracia = experiencia superior</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 style="color: var(--warning-orange);">CONVERSIÓN EMOCIONAL</h6>
+                            <ul>
+                                <li>Calma reduce defensas</li>
+                                <li>Elegancia inspira generosidad</li>
+                                <li>Control proyecta confiabilidad</li>
+                                <li>Gracia despierta protección</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOVEMENT CONTROLLER -->
+        <section class="movement-controller fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🎛️</span>Controlador de Elegancia: Práctica Interactiva
+            </h2>
+            <p class="text-center mb-4">Experimenta con diferentes velocidades de movimiento y observa el impacto visual.</p>
+            
+            <div class="speed-slider-container">
+                <label for="speedSlider"><strong>Velocidad de Movimiento</strong></label>
+                <input type="range" min="30" max="100" value="70" class="speed-slider" id="speedSlider" oninput="updateMovementSpeed(this.value)">
+                <div class="mt-2">
+                    <span id="speedValue">70%</span> de velocidad natural
+                    <div id="speedLabel" class="text-muted">Elegancia Óptima</div>
+                </div>
+            </div>
+
+            <div class="movement-practice-area">
+                <div class="practice-avatar" id="practiceAvatar">🧘‍♀️</div>
+                <div class="mt-3">
+                    <div id="movementFeedback">Encuentra tu velocidad de elegancia perfecta</div>
+                </div>
+            </div>
+
+            <div class="movement-types">
+                <div class="movement-type" onclick="selectMovementType(this, 'transition')">
+                    <div class="movement-icon">🔄</div>
+                    <div>Transiciones</div>
+                    <div>Corporales</div>
+                </div>
+
+                <div class="movement-type" onclick="selectMovementType(this, 'gestures')">
+                    <div class="movement-icon">👋</div>
+                    <div>Gestos</div>
+                    <div>de Brazos</div>
+                </div>
+
+                <div class="movement-type" onclick="selectMovementType(this, 'rotations')">
+                    <div class="movement-icon">🌀</div>
+                    <div>Giros y</div>
+                    <div>Rotaciones</div>
+                </div>
+
+                <div class="movement-type" onclick="selectMovementType(this, 'facial')">
+                    <div class="movement-icon">😊</div>
+                    <div>Expresiones</div>
+                    <div>Faciales</div>
+                </div>
+            </div>
+
+            <div class="elegance-meter">
+                <div class="elegance-score" id="eleganceScore">7.5</div>
+                <div>Puntuación de Elegancia</div>
+                <div class="elegance-description" id="eleganceDescription">Movimiento controlado profesional</div>
+            </div>
+        </section>
+
+        <!-- CALCULATOR SECTION -->
+        <section class="calculator-section fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">💰</span>Calculadora de ROI por Elegancia Digital
+            </h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Velocidad promedio actual (%)</label>
+                    <input type="number" class="calculator-input" id="currentSpeed" placeholder="85" min="30" max="100" oninput="calculateEleganceROI()">
+                    
+                    <label>Horas de práctica semanal</label>
+                    <input type="number" class="calculator-input" id="practiceHours" placeholder="6" oninput="calculateEleganceROI()">
+                    
+                    <label>Tipos de movimiento dominados (#)</label>
+                    <input type="number" class="calculator-input" id="movementTypes" placeholder="2" oninput="calculateEleganceROI()">
+                    
+                    <label>Ingresos mensuales actuales ($)</label>
+                    <input type="number" class="calculator-input" id="monthlyIncome" placeholder="6200" oninput="calculateEleganceROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calculator-result">
+                        <h4>Proyección de Elegancia Digital:</h4>
+                        <div id="eleganceROIResults">
+                            <p><strong>Mejora en percepción:</strong> <span id="perceptionIncrease">+0%</span></p>
+                            <p><strong>Ingresos proyectados:</strong> <span id="projectedIncome">$0</span></p>
+                            <p><strong>ROI por entrenamiento:</strong> <span id="trainingROI">0%</span></p>
+                            <p><strong>Tiempo de dominio:</strong> <span id="masteryTime">0 semanas</span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="practice-timer">
+                        <div class="timer-display" id="practiceTimer">00:00</div>
+                        <div>Timer de Práctica Diaria</div>
+                        <div class="timer-controls">
+                            <button class="btn btn-primary-custom" onclick="startPracticeTimer()">
+                                <i class="fas fa-play"></i> Iniciar
+                            </button>
+                            <button class="btn btn-secondary-custom" onclick="pausePracticeTimer()">
+                                <i class="fas fa-pause"></i> Pausar
+                            </button>
+                            <button class="btn btn-secondary-custom" onclick="stopPracticeTimer()">
+                                <i class="fas fa-stop"></i> Finalizar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FLOW SIMULATOR -->
+        <section class="flow-simulator fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">🌊</span>Simulador de Fluidez: Comparación Visual
+            </h2>
+            <p class="text-center mb-4">Observa cómo diferentes velocidades de movimiento afectan la percepción visual.</p>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="flow-demonstration">
+                        <h5>Movimiento Lento</h5>
+                        <div class="flow-avatar slow-flow">🧘‍♀️</div>
+                        <p class="mt-3"><strong>50-70% velocidad</strong></p>
+                        <p>Elegancia hipnótica</p>
+                        <p>Retención: +85%</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flow-demonstration">
+                        <h5>Movimiento Medio</h5>
+                        <div class="flow-avatar medium-flow">💃</div>
+                        <p class="mt-3"><strong>70-85% velocidad</strong></p>
+                        <p>Balance natural</p>
+                        <p>Retención: +40%</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="flow-demonstration">
+                        <h5>Movimiento Rápido</h5>
+                        <div class="flow-avatar fast-flow">🏃‍♀️</div>
+                        <p class="mt-3"><strong>85-100% velocidad</strong></p>
+                        <p>Energía caótica</p>
+                        <p>Retención: -20%</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-primary-custom btn-lg" onclick="demonstrateFlow()">
+                    <i class="fas fa-play"></i> Demostración Comparativa
+                </button>
+            </div>
+        </section>
+
+        <!-- SUCCESS STORIES -->
+        <section class="fade-in">
+            <h2 class="text-center mb-4">
+                <span class="emoji">👑</span>Casos de Éxito: Masters de la Elegancia Digital
+            </h2>
+
+            <div class="success-story">
+                <h4>Sofía - "La Emperatriz de la Fluidez Hipnótica"</h4>
+                <p>"Implementé la técnica de 'Movimiento Consciente Digital' reduciendo mi velocidad un 30% y enfocándome en fluidez. Incluso con conexión deficiente, mis movimientos se ven elegantes y estables. Mi duración promedio de visita subió 37% en el primer mes."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">-30%</span>
+                        <span>Reducción de velocidad</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">+37%</span>
+                        <span>Duración de visita</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$8,900</span>
+                        <span>Ingresos mensuales</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>Valentina - "Master de la Técnica Acuática"</h4>
+                <p>"La 'fluidez acuática' cambió completamente mi presencia digital. Elimiené paradas bruscas y creé continuidad entre posturas. Mis usuarios dicen que verme es como meditación activa. Un fotógrafo profesional me contrató para enseñar su técnica a modelos comerciales."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">100%</span>
+                        <span>Fluidez entre posturas</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">92%</span>
+                        <span>Calificación de elegancia</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">+280%</span>
+                        <span>Tips por sesión</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-story">
+                <h4>Isabella - "La Arquitecta del Control Corporal"</h4>
+                <p>"Desarrollé conciencia total de extremidades durante movimientos. Sé exactamente dónde está cada parte de mi cuerpo en todo momento. Creé 15 transiciones específicas entre mis posiciones frecuentes que fluyen como danza profesional."</p>
+                <div class="success-metrics">
+                    <div class="metric-item">
+                        <span class="metric-number">15</span>
+                        <span>Transiciones dominadas</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">$12,400</span>
+                        <span>Mes récord</span>
+                    </div>
+                    <div class="metric-item">
+                        <span class="metric-number">95%</span>
+                        <span>Control corporal</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACKING SECTION -->
+        <section class="lab-section fade-in">
+            <h2 class="lab-title">
+                <span class="emoji">📈</span>Tracker de Progreso: Dominio de Elegancia
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <label>Control de Velocidad (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="speedControlProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('speedControlProgress', 20)">
+                            Actualizar Control
+                        </button>
+                    </div>
+
+                    <div class="progress-container">
+                        <label>Fluidez de Transiciones (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="fluidityProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('fluidityProgress', 20)">
+                            Actualizar Fluidez
+                        </button>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="progress-container">
+                        <label>Conciencia Corporal (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="awarenessProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('awarenessProgress', 20)">
+                            Actualizar Conciencia
+                        </button>
+                    </div>
+
+                    <div class="progress-container">
+                        <label>Elegancia Digital Global (0-100%)</label>
+                        <div class="progress-custom">
+                            <div class="progress-bar-custom" id="eleganceProgress" style="width: 0%"></div>
+                        </div>
+                        <button class="btn btn-primary-custom mt-2" onclick="updateProgress('eleganceProgress', 20)">
+                            Actualizar Elegancia
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL SUMMARY -->
+        <section class="lab-section fade-in text-center">
+            <h2 class="lab-title justify-content-center">
+                <span class="emoji">🏆</span>Tu Imperio de Elegancia: Resumen de Maestría
+            </h2>
+            <p class="lead">Has masterizado la ciencia del movimiento controlado. Tu elegancia digital ahora es un imán visual que retiene audiencias y maximiza conversiones.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">70%</div>
+                        <div>Velocidad óptima dominada</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">100%</div>
+                        <div>Control corporal consciente</div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="insight-card">
+                        <div class="insight-number">∞</div>
+                        <div>Potencial hipnótico</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <button class="btn btn-primary-custom btn-lg" onclick="celebrateEleganceCompletion()">
+                    <i class="fas fa-crown me-2"></i>¡A Construir Tu Imperio de Elegancia!
+                </button>
+            </div>
+
+            <p class="mt-4 text-muted">
+                <strong>Mantra del Master de Elegancia:</strong> "La velocidad que se siente natural al realizarla raramente se traduce como natural al verla. Tus movimientos lentos no son lentitud, son estrategia visual hipnótica."
+            </p>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="wc-header mt-5">
+        <div class="container text-center">
+            <p>&copy; 2025 WC Training Academy - Formando Masters de Movimientos Controlados</p>
+            <p><small>Fuentes: Digital Elegance Study 2025, Movement Analysis Report, Revenue Flow Analytics</small></p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Global variables
+        let practiceTimerInterval = null;
+        let practiceSeconds = 0;
+        let isPaused = false;
+        let currentMovementType = 'transition';
+        let currentSpeed = 70;
+
+        // Update current date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit',
+                hour12: false
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const details = document.getElementById(cardId);
+            const card = details.parentElement;
+            const icon = card.querySelector('.fa-chevron-down');
+            
+            if (details.classList.contains('show')) {
+                details.classList.remove('show');
+                card.classList.remove('expanded');
+                icon.style.transform = 'rotate(0deg)';
+            } else {
+                details.classList.add('show');
+                card.classList.add('expanded');
+                icon.style.transform = 'rotate(180deg)';
+            }
+        }
+
+        // Update movement speed
+        function updateMovementSpeed(speed) {
+            currentSpeed = parseInt(speed);
+            document.getElementById('speedValue').textContent = speed + '%';
+            
+            // Update speed label
+            let label, description;
+            if (speed <= 50) {
+                label = 'Ultra Lento - Hipnótico';
+                description = 'Elegancia máxima, retención superior';
+            } else if (speed <= 70) {
+                label = 'Elegancia Óptima';
+                description = 'Velocidad perfecta para presencia digital';
+            } else if (speed <= 85) {
+                label = 'Natural Controlado';
+                description = 'Balance entre fluidez y naturalidad';
+            } else {
+                label = 'Demasiado Rápido';
+                description = 'Riesgo de verse caótico en cámara';
+            }
+            
+            document.getElementById('speedLabel').textContent = label;
+            document.getElementById('movementFeedback').textContent = description;
+            
+            // Update elegance score
+            updateEleganceScore(speed);
+            
+            // Update practice avatar animation
+            updateAvatarAnimation(speed);
+        }
+
+        // Update elegance score
+        function updateEleganceScore(speed) {
+            let score;
+            if (speed <= 50) score = 9.5;
+            else if (speed <= 60) score = 9.0;
+            else if (speed <= 70) score = 8.5;
+            else if (speed <= 80) score = 7.0;
+            else if (speed <= 90) score = 5.5;
+            else score = 3.0;
+            
+            document.getElementById('eleganceScore').textContent = score.toFixed(1);
+            
+            let description;
+            if (score >= 9) description = 'Elegancia hipnótica profesional';
+            else if (score >= 8) description = 'Movimiento controlado excelente';
+            else if (score >= 7) description = 'Fluidez digital buena';
+            else if (score >= 5) description = 'Velocidad moderada aceptable';
+            else description = 'Demasiado rápido para elegancia';
+            
+            document.getElementById('eleganceDescription').textContent = description;
+        }
+
+        // Update avatar animation
+        function updateAvatarAnimation(speed) {
+            const avatar = document.getElementById('practiceAvatar');
+            const duration = Math.max(1, 6 - (speed / 20)); // Slower = longer duration
+            avatar.style.animationDuration = duration + 's';
+        }
+
+        // Select movement type
+        function selectMovementType(typeElement, type) {
+            // Remove previous selections
+            document.querySelectorAll('.movement-type').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Select current
+            typeElement.classList.add('active');
+            currentMovementType = type;
+            
+            // Update avatar based on type
+            const avatars = {
+                'transition': '🧘‍♀️',
+                'gestures': '🙋‍♀️',
+                'rotations': '💃',
+                'facial': '😊'
+            };
+            
+            document.getElementById('practiceAvatar').textContent = avatars[type] || '🧘‍♀️';
+            
+            // Update feedback
+            const feedback = {
+                'transition': 'Practica transiciones corporales suaves',
+                'gestures': 'Enfócate en gestos de brazos fluidos',
+                'rotations': 'Domina giros elegantes y controlados',
+                'facial': 'Perfecciona expresiones faciales graduales'
+            };
+            
+            document.getElementById('movementFeedback').textContent = feedback[type];
+            showAchievement(`Tipo de movimiento seleccionado: ${typeElement.textContent.trim()} ✨`);
+        }
+
+        // Calculate elegance ROI
+        function calculateEleganceROI() {
+            const speed = parseFloat(document.getElementById('currentSpeed').value) || 0;
+            const practice = parseFloat(document.getElementById('practiceHours').value) || 0;
+            const types = parseFloat(document.getElementById('movementTypes').value) || 0;
+            const income = parseFloat(document.getElementById('monthlyIncome').value) || 0;
+
+            if (speed > 0 && income > 0) {
+                const eleganceBonus = Math.max(0, (85 - speed) * 2); // Bonus for slower speeds
+                const perceptionBoost = eleganceBonus + (practice * 5) + (types * 10);
+                const maxBoost = Math.min(perceptionBoost, 80);
+                
+                const incomeMultiplier = 1 + (maxBoost / 100) * 2.1;
+                const projectedIncome = income * incomeMultiplier;
+                const roi = ((projectedIncome - income) / income) * 100;
+                const masteryWeeks = Math.max(8 - practice - types, 2);
+
+                document.getElementById('perceptionIncrease').textContent = `+${maxBoost.toFixed(1)}%`;
+                document.getElementById('projectedIncome').textContent = `$${projectedIncome.toFixed(0)}`;
+                document.getElementById('trainingROI').textContent = `${roi.toFixed(0)}%`;
+                document.getElementById('masteryTime').textContent = `${masteryWeeks} semanas`;
+            }
+        }
+
+        // Practice timer functions
+        function startPracticeTimer() {
+            if (practiceTimerInterval && !isPaused) return;
+            
+            isPaused = false;
+            practiceTimerInterval = setInterval(() => {
+                practiceSeconds++;
+                updateTimerDisplay();
+            }, 1000);
+            
+            showAchievement('¡Práctica de elegancia iniciada! 🌊');
+        }
+
+        function pausePracticeTimer() {
+            if (practiceTimerInterval) {
+                clearInterval(practiceTimerInterval);
+                practiceTimerInterval = null;
+                isPaused = true;
+                showAchievement('Práctica pausada ⏸️');
+            }
+        }
+
+        function stopPracticeTimer() {
+            if (practiceTimerInterval) {
+                clearInterval(practiceTimerInterval);
+                practiceTimerInterval = null;
+            }
+            
+            const minutes = Math.floor(practiceSeconds / 60);
+            practiceSeconds = 0;
+            isPaused = false;
+            updateTimerDisplay();
+            showAchievement(`¡Sesión completada! ${minutes} minutos de elegancia registrados 🏆`);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(practiceSeconds / 60);
+            const seconds = practiceSeconds % 60;
+            document.getElementById('practiceTimer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Demonstrate flow comparison
+        function demonstrateFlow() {
+            showAchievement('¡Demostración de fluidez iniciada! Observa las diferencias 🌊');
+            
+            // Animate all flow avatars with emphasis
+            const avatars = document.querySelectorAll('.flow-avatar');
+            avatars.forEach(avatar => {
+                avatar.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    avatar.style.transform = 'scale(1)';
+                }, 2000);
+            });
+        }
+
+        // Update progress bars
+        function updateProgress(progressId, increment) {
+            const progressBar = document.getElementById(progressId);
+            const currentWidth = parseInt(progressBar.style.width) || 0;
+            const newWidth = Math.min(currentWidth + increment, 100);
+            progressBar.style.width = newWidth + '%';
+            
+            if (newWidth === 100) {
+                progressBar.style.background = 'var(--gradient-success)';
+                setTimeout(() => {
+                    showAchievement('¡Habilidad de Elegancia Perfeccionada! 🌊');
+                }, 500);
+            }
+        }
+
+        // Show achievement notification
+        function showAchievement(message) {
+            const achievement = document.createElement('div');
+            achievement.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--gradient-success);
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 15px;
+                box-shadow: var(--shadow-heavy);
+                z-index: 9999;
+                animation: slideInRight 0.5s ease;
+                max-width: 320px;
+            `;
+            achievement.textContent = message;
+            document.body.appendChild(achievement);
+            
+            setTimeout(() => {
+                achievement.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => achievement.remove(), 500);
+            }, 3000);
+        }
+
+        // Celebrate completion
+        function celebrateEleganceCompletion() {
+            showAchievement('¡Felicidades! Eres un Master de Movimientos Controlados 🌊🏆');
+            
+            // Create celebration effect
+            for (let i = 0; i < 25; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 80);
+            }
+        }
+
+        // Create confetti effect
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                top: -10px;
+                left: ${Math.random() * 100}%;
+                width: 12px;
+                height: 12px;
+                background: ${['#ce93d8', '#ba68c8', '#ab47bc', '#28a745'][Math.floor(Math.random() * 4)]};
+                border-radius: 50%;
+                transform: rotate(${Math.random() * 360}deg);
+                animation: fall 3s linear infinite;
+                z-index: 9999;
+            `;
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => confetti.remove(), 3000);
+        }
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Add CSS for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideInRight {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOutRight {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+            @keyframes fall {
+                to { transform: translateY(100vh) rotate(720deg); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDateTime();
+            setInterval(updateDateTime, 60000); // Update every minute
+            
+            // Observe all fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+            
+            // Initialize movement speed
+            updateMovementSpeed(70);
+            
+            // Auto-populate initial values
+            setTimeout(() => {
+                document.getElementById('currentSpeed').value = '85';
+                document.getElementById('practiceHours').value = '6';
+                document.getElementById('movementTypes').value = '2';
+                document.getElementById('monthlyIncome').value = '6200';
+                calculateEleganceROI();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

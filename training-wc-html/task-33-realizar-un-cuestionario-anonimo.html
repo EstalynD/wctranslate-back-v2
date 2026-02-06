@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>WC Training - Cuestionario Anónimo de Preferencias y Motivaciones</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #f7c942;
+            --secondary-color: #d9aa24;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f1f1f;
+            --text-light: #f0f0f0;
+            --text-muted: #cccccc;
+            --bg-dark: #1f1f1f;
+            --bg-card: #2b2b2b;
+            --bg-input: #3a3a3a;
+            --border-light: #4a4a4a;
+            --gradient-primary: linear-gradient(135deg, #f7c942 0%, #d9aa24 100%);
+            --gradient-secondary: linear-gradient(135deg, #fd7e14 0%, #f7c942 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-animated: linear-gradient(-45deg, #f7c942, #d9aa24, #fd7e14, #28a745);
+            --gradient-dark: linear-gradient(135deg, #1f1f1f 0%, #2b2b2b 100%);
+            --gradient-neural: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-psychology: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientShift 25s ease-in-out infinite;
+            opacity: 0.1;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(247, 201, 66, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(247, 201, 66, 0.6); }
+        }
+
+        @keyframes typewriter {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes dataFlow {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.7; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+        }
+
+        .wc-header {
+            background: rgba(43, 43, 43, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .wc-logo {
+            font-size: clamp(1.3rem, 3vw, 1.8rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            background: var(--success-green);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+            min-height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stats-badge {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(247, 201, 66, 0.3);
+            font-size: clamp(0.7rem, 2vw, 0.9rem);
+            min-height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .industry-insights {
+            background: rgba(43, 43, 43, 0.95);
+            backdrop-filter: blur(15px);
+            padding: clamp(1.5rem, 4vw, 2rem);
+            border-radius: 25px;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border-light);
+        }
+
+        .insight-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(247, 201, 66, 0.2);
+            border-color: var(--primary-color);
+            animation: glow 2s infinite;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .questionnaire-container {
+            background: var(--bg-card);
+            border-radius: 25px;
+            padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.7);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+            margin-bottom: 2rem;
+        }
+
+        .questionnaire-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .questionnaire-container::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(247, 201, 66, 0.05) 0%, transparent 70%);
+            animation: float 30s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        .main-title {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .description {
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            font-style: italic;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            text-align: center;
+            background: rgba(247, 201, 66, 0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .lab-section {
+            background: var(--bg-card);
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border-light);
+        }
+
+        .lab-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .question-group {
+            background: rgba(58, 58, 58, 0.5);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-light);
+            position: relative;
+        }
+
+        .question-group:hover {
+            background: rgba(58, 58, 58, 0.8);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .question-number {
+            background: var(--gradient-primary);
+            color: var(--text-dark);
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            font-size: 0.9rem;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--text-light);
+            display: block;
+            margin-bottom: 1rem;
+            padding-left: 45px;
+            font-size: clamp(0.9rem, 2.5vw, 1rem);
+        }
+
+        .form-control {
+            background-color: var(--bg-input);
+            border: 2px solid var(--border-light);
+            border-radius: 12px;
+            color: var(--text-light);
+            padding: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-control:focus {
+            background-color: var(--bg-input);
+            border-color: var(--primary-color);
+            color: var(--text-light);
+            box-shadow: 0 0 20px rgba(247, 201, 66, 0.3);
+        }
+
+        .form-control::placeholder {
+            color: #888;
+        }
+
+        .btn-submit {
+            background: var(--gradient-primary);
+            border: none;
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: clamp(1rem, 2.5vw, 1.1rem);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            min-height: 60px;
+            box-shadow: 0 10px 30px rgba(247, 201, 66, 0.3);
+        }
+
+        .btn-submit:hover {
+            background: var(--gradient-secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(247, 201, 66, 0.4);
+            color: var(--text-dark);
+            animation: glow 1s infinite;
+        }
+
+        .progress-indicator {
+            background: var(--bg-input);
+            height: 8px;
+            border-radius: 4px;
+            margin: 2rem 0;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: var(--gradient-primary);
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+            width: 0%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.3) 50%, transparent 60%);
+            animation: shimmer 2s infinite;
+        }
+
+        .privacy-notice {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--success-green);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .privacy-icon {
+            font-size: 2rem;
+            color: var(--success-green);
+            margin-bottom: 1rem;
+            animation: pulse 2s infinite;
+        }
+
+        .question-counter {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            background: var(--bg-card);
+            border: 2px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+
+        .analytics-section {
+            background: var(--gradient-primary);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .analytics-item {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .analytics-item:hover {
+            background: rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+
+        .completion-message {
+            background: var(--gradient-success);
+            color: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .character-counter {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+
+        .question-category {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .data-visualization {
+            background: var(--gradient-neural);
+            color: white;
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+        }
+
+        .viz-item {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .viz-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .calculator-tool {
+            background: var(--gradient-psychology);
+            color: var(--text-dark);
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            font-size: 1rem;
+            min-height: 44px;
+        }
+
+        .calculator-result {
+            background: var(--gradient-primary);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .simulator-tool {
+            background: var(--gradient-dark);
+            color: var(--text-light);
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .scenario-option:hover, .scenario-option.selected {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: var(--primary-color);
+            transform: translateX(10px);
+        }
+
+        .success-story {
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: 25px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-story::before {
+            content: '📊';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            animation: dataFlow 3s ease-in-out infinite;
+        }
+
+        .testimonial-box {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 5px solid white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: white;
+            position: relative;
+        }
+
+        .testimonial-box::before {
+            content: '"';
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            position: absolute;
+            top: -10px;
+            left: 10px;
+            opacity: 0.3;
+        }
+
+        .competitive-advantage {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: clamp(1.5rem, 4vw, 2rem);
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            border: 2px solid var(--primary-color);
+        }
+
+        .advantage-metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .metric-value {
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: clamp(1rem, 3vw, 1.2rem);
+        }
+
+        .final-summary {
+            background: var(--gradient-primary);
+            color: var(--text-dark);
+            border-radius: 30px;
+            padding: clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem);
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .mindmap-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid var(--border-light);
+            position: relative;
+            min-height: 44px;
+        }
+
+        .mindmap-card:hover {
+            transform: translateY(-8px) translateX(10px);
+            box-shadow: 0 20px 50px rgba(247, 201, 66, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.active {
+            max-height: 3000px;
+            animation: slideDown 0.5s ease;
+        }
+
+        .wellness-tip {
+            background: rgba(247, 201, 66, 0.1);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        /* Responsive Design - Mobile First */
+        @media (max-width: 768px) {
+            .main-container {
+                margin: 1rem auto;
+                padding: 0 0.5rem;
+            }
+            
+            .questionnaire-container {
+                margin: 1rem 0;
+            }
+            
+            .question-counter {
+                position: static;
+                transform: none;
+                margin: 1rem 0;
+                right: auto;
+            }
+            
+            .analytics-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .advantage-metric {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .question-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+            }
+            
+            label {
+                padding-left: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .form-control {
+                min-height: 100px;
+                padding: 0.8rem;
+            }
+            
+            .stats-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        /* High contrast mode support */
+        @media (prefers-contrast: high) {
+            .questionnaire-container {
+                border: 3px solid var(--primary-color);
+            }
+            
+            .form-control {
+                border: 2px solid var(--text-light);
+            }
+            
+            .insight-card {
+                border: 2px solid var(--primary-color);
+            }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            
+            .wc-header,
+            .live-indicator,
+            .btn-submit {
+                display: none !important;
+            }
+            
+            .questionnaire-container,
+            .lab-section,
+            .mindmap-card {
+                border: 1px solid #ccc !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <div class="wc-logo">
+                        <i class="fas fa-clipboard-list"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <span class="live-indicator">
+                        <i class="fas fa-circle"></i> RESEARCH LIVE
+                    </span>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="stats-badge">
+                        <i class="fas fa-users"></i> 12,847 Modelos
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="container">
+        <div class="industry-insights">
+            <h3 class="text-center mb-4" style="color: var(--primary-color);">📊 User Research Insights 2025</h3>
+            <div class="row g-3">
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">89%</h4>
+                        <p class="mb-0">Usuarios valoran personalización basada en preferencias</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">+347%</h4>
+                        <p class="mb-0">Mayor lealtad con experiencias que "los entienden"</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-info">76%</h4>
+                        <p class="mb-0">Prefieren anonimato para expresar preferencias reales</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-warning">+234%</h4>
+                        <p class="mb-0">ROI con contenido basado en research psicológico</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-primary">92%</h4>
+                        <p class="mb-0">Regresan a modelos que recuerdan sus preferencias</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6">
+                    <div class="insight-card">
+                        <h4 class="text-success">$18,947</h4>
+                        <p class="mb-0">Promedio mensual con estrategia personalizada</p>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mt-3 mb-0">
+                <small style="color: var(--text-muted);">
+                    <i class="fas fa-clock"></i> Actualizado: <span id="currentDate"></span> | 
+                    Fuente: Digital Intimacy Analytics Study 2025, User Behavior Research Institute
+                </small>
+            </p>
+        </div>
+    </div>
+
+    <!-- Question Counter -->
+    <div class="question-counter d-none d-md-block">
+        <div style="color: var(--primary-color); font-weight: 700;">Progreso</div>
+        <div style="font-size: 1.5rem; font-weight: 800;" id="questionProgress">0/10</div>
+        <div class="progress-indicator">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="questionnaire-container">
+            <h1 class="main-title">🔍 Cuestionario Anónimo de Preferencias y Motivaciones</h1>
+            
+            <div class="privacy-notice">
+                <div class="privacy-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <p class="mb-0">
+                    <strong>100% Anónimo y Confidencial</strong><br>
+                    Este formulario es totalmente anónimo y confidencial. Tus respuestas nos ayudarán a ofrecer experiencias más significativas y personalizadas. Gracias por tu honestidad.
+                </p>
+            </div>
+
+            <div class="analytics-section">
+                <h4 class="mb-3">📈 Impacto de la Investigación de Usuario</h4>
+                <div class="analytics-grid">
+                    <div class="analytics-item">
+                        <h5>+89% Satisfacción</h5>
+                        <p class="mb-0">Con experiencias personalizadas</p>
+                    </div>
+                    <div class="analytics-item">
+                        <h5>+347% Retención</h5>
+                        <p class="mb-0">Usuarios que se sienten comprendidos</p>
+                    </div>
+                    <div class="analytics-item">
+                        <h5>+234% ROI</h5>
+                        <p class="mb-0">Con contenido basado en data real</p>
+                    </div>
+                </div>
+            </div>
+
+            <form id="preferencesForm" onsubmit="submitForm(event)">
+                <div class="question-group" data-question="1">
+                    <div class="question-number">1</div>
+                    <div class="question-category">Preferencias Básicas</div>
+                    <label for="q1">¿Qué tipo de fetiches te atraen más? Describe lo que más te gusta de ellos.</label>
+                    <textarea class="form-control" id="q1" name="q1" placeholder="Comparte tus preferencias de manera honesta y detallada..." required oninput="updateProgress(); countCharacters(this, 'count1'); analyzeResponse(1, this.value)"></textarea>
+                    <div class="character-counter" id="count1">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="2">
+                    <div class="question-number">2</div>
+                    <div class="question-category">Motivaciones Psicológicas</div>
+                    <label for="q2">¿Qué emociones o sensaciones buscas experimentar al interactuar con estos fetiches?</label>
+                    <textarea class="form-control" id="q2" name="q2" placeholder="Describe las emociones, sensaciones y estados mentales que buscas..." required oninput="updateProgress(); countCharacters(this, 'count2'); analyzeResponse(2, this.value)"></textarea>
+                    <div class="character-counter" id="count2">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="3">
+                    <div class="question-number">3</div>
+                    <div class="question-category">Experiencias Formativas</div>
+                    <label for="q3">¿Recuerdas alguna experiencia pasada (personal, visual o imaginaria) que haya influido en tus preferencias?</label>
+                    <textarea class="form-control" id="q3" name="q3" placeholder="Comparte solo lo que te sientas cómodo compartiendo..." oninput="updateProgress(); countCharacters(this, 'count3'); analyzeResponse(3, this.value)"></textarea>
+                    <div class="character-counter" id="count3">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="4">
+                    <div class="question-number">4</div>
+                    <div class="question-category">Aspectos Clave</div>
+                    <label for="q4">¿Qué aspectos te resultan más importantes: la parte visual, la interacción emocional o el contexto psicológico?</label>
+                    <textarea class="form-control" id="q4" name="q4" placeholder="Explica qué elementos son más importantes para ti y por qué..." oninput="updateProgress(); countCharacters(this, 'count4'); analyzeResponse(4, this.value)"></textarea>
+                    <div class="character-counter" id="count4">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="5">
+                    <div class="question-number">5</div>
+                    <div class="question-category">Experiencia Ideal</div>
+                    <label for="q5">¿Cómo describirías una experiencia perfecta para ti en una sala privada?</label>
+                    <textarea class="form-control" id="q5" name="q5" placeholder="Describe tu experiencia ideal de manera detallada..." required oninput="updateProgress(); countCharacters(this, 'count5'); analyzeResponse(5, this.value)"></textarea>
+                    <div class="character-counter" id="count5">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="6">
+                    <div class="question-number">6</div>
+                    <div class="question-category">Narrativa y Roleplay</div>
+                    <label for="q6">¿Te sientes más cómodo/a cuando hay una narrativa (rol, guión, historia) durante la sesión? ¿Por qué?</label>
+                    <textarea class="form-control" id="q6" name="q6" placeholder="Explica tu relación con las narrativas y los roles..." oninput="updateProgress(); countCharacters(this, 'count6'); analyzeResponse(6, this.value)"></textarea>
+                    <div class="character-counter" id="count6">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="7">
+                    <div class="question-number">7</div>
+                    <div class="question-category">Atención Personalizada</div>
+                    <label for="q7">¿Qué tipo de atención personalizada valoras más (mirada directa, uso de tu nombre, tono de voz, control/sumisión, etc)?</label>
+                    <textarea class="form-control" id="q7" name="q7" placeholder="Describe qué formas de atención personalizada más valoras..." oninput="updateProgress(); countCharacters(this, 'count7'); analyzeResponse(7, this.value)"></textarea>
+                    <div class="character-counter" id="count7">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="8">
+                    <div class="question-number">8</div>
+                    <div class="question-category">Exploración Futura</div>
+                    <label for="q8">¿Hay algún fetiche que te gustaría explorar más pero que aún no te has atrevido?</label>
+                    <textarea class="form-control" id="q8" name="q8" placeholder="Comparte tus curiosidades e intereses por explorar..." oninput="updateProgress(); countCharacters(this, 'count8'); analyzeResponse(8, this.value)"></textarea>
+                    <div class="character-counter" id="count8">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="9">
+                    <div class="question-number">9</div>
+                    <div class="question-category">Factores de Lealtad</div>
+                    <label for="q9">¿Cuáles son los factores que hacen que regreses a una modelo específica?</label>
+                    <textarea class="form-control" id="q9" name="q9" placeholder="Explica qué te hace leal a una modelo en particular..." required oninput="updateProgress(); countCharacters(this, 'count9'); analyzeResponse(9, this.value)"></textarea>
+                    <div class="character-counter" id="count9">0 caracteres</div>
+                </div>
+
+                <div class="question-group" data-question="10">
+                    <div class="question-number">10</div>
+                    <div class="question-category">Innovación y Futuro</div>
+                    <label for="q10">¿Te gustaría que existiera una categoría o dinámica nueva en los shows? ¿Cuál sería?</label>
+                    <textarea class="form-control" id="q10" name="q10" placeholder="Comparte tus ideas para nuevas experiencias o dinámicas..." oninput="updateProgress(); countCharacters(this, 'count10'); analyzeResponse(10, this.value)"></textarea>
+                    <div class="character-counter" id="count10">0 caracteres</div>
+                </div>
+
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fas fa-paper-plane"></i> Enviar Respuestas Anónimas
+                    </button>
+                </div>
+            </form>
+
+            <div class="completion-message" id="completionMessage">
+                <h3><i class="fas fa-check-circle"></i> ¡Gracias por tu participación!</h3>
+                <p>Tus respuestas anónimas han sido recibidas y nos ayudarán a crear experiencias más personalizadas y significativas.</p>
+                <p><strong>Tu privacidad está 100% protegida.</strong> Esta información será utilizada únicamente para mejorar nuestros servicios.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Análisis en Tiempo Real -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-chart-line"></i> Análisis de Datos en Tiempo Real
+            </h2>
+            
+            <div class="data-visualization">
+                <h5 class="mb-3">📊 Insights de Respuestas Actuales</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="viz-item">
+                            <h6>🔥 Categorías Más Mencionadas</h6>
+                            <div id="categoryAnalysis">
+                                <p class="text-muted">Completa las preguntas para ver análisis en vivo</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="viz-item">
+                            <h6>🧠 Perfil Psicológico Detectado</h6>
+                            <div id="psychProfile">
+                                <p class="text-muted">El perfil se genera automáticamente</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Calculadora ROI Research -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-calculator"></i> Calculadora de ROI por Personalización
+            </h2>
+            
+            <div class="calculator-tool">
+                <h5 class="mb-3">💰 Impacto Financiero de Conocer a tus Usuarios</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="form-label">Usuarios actuales únicos/mes:</label>
+                        <input type="number" class="calculator-input" id="monthlyUsers" value="50" onchange="calculatePersonalizationROI()">
+                        
+                        <label class="form-label">Gasto promedio por usuario ($):</label>
+                        <input type="number" class="calculator-input" id="avgSpending" value="120" onchange="calculatePersonalizationROI()">
+                        
+                        <label class="form-label">Nivel de personalización (1-10):</label>
+                        <input type="range" class="form-range" id="personalizationLevel" min="1" max="10" value="5" onchange="calculatePersonalizationROI()">
+                        <div class="text-center"><span id="personalizationValue">5</span>/10 - Conocimiento de preferencias</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="calculator-result">
+                            <h6>📊 Proyección con Personalización</h6>
+                            <div id="roiPersonalizationResults">
+                                <p><strong>Gasto proyectado por usuario:</strong> $<span id="projectedSpending">156</span></p>
+                                <p><strong>Retención proyectada:</strong> <span id="projectedRetention">68</span>%</p>
+                                <p><strong>Ingresos mensuales:</strong> $<span id="monthlyRevenue">7,800</span></p>
+                                <p><strong>Incremento ROI:</strong> +<span id="roiIncrease">30</span>%</p>
+                            </div>
+                        </div>
+                        
+                        <div class="progress-tracker mt-3" style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px;">
+                            <h6>📈 Nivel de Personalización</h6>
+                            <div class="mb-2">
+                                <small>Conocimiento de Usuario Completado</small>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 50%" id="personalizationProgressBar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simulador de Estrategias -->
+    <div class="container">
+        <div class="lab-section">
+            <h2 class="section-title">
+                <i class="fas fa-theater-masks"></i> Simulador de Estrategias de Personalización
+            </h2>
+            
+            <div class="simulator-tool">
+                <h5 class="mb-3">🎯 Prueba Diferentes Enfoques</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6>Selecciona tu Estrategia:</h6>
+                        <div class="scenario-option" onclick="selectStrategy('generic')">
+                            <i class="fas fa-users me-2"></i>
+                            Genérica: Mismo contenido para todos
+                        </div>
+                        <div class="scenario-option" onclick="selectStrategy('segmented')">
+                            <i class="fas fa-layer-group me-2"></i>
+                            Segmentada: Por categorías básicas
+                        </div>
+                        <div class="scenario-option" onclick="selectStrategy('personalized')">
+                            <i class="fas fa-user-cog me-2"></i>
+                            Personalizada: Basada en preferencias
+                        </div>
+                        <div class="scenario-option" onclick="selectStrategy('adaptive')">
+                            <i class="fas fa-brain me-2"></i>
+                            Adaptativa: ML + análisis psicológico
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div id="strategyResult" class="mt-3">
+                            <h6>🎯 Resultados de la Estrategia</h6>
+                            <p style="color: var(--text-muted);">Selecciona una estrategia para ver los resultados</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Herramientas de Implementación -->
+    <div class="container">
+        <div class="mindmap-card" onclick="toggleDetails('implementation-tools')">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>🛠️ Kit de Herramientas de Implementación</h4>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="card-details" id="implementation-tools">
+                <div class="analytics-section">
+                    <h5 class="mb-3">🔧 Herramientas Prácticas para Aplicar los Insights</h5>
+                    <div class="analytics-grid">
+                        <div class="analytics-item">
+                            <h6><i class="fas fa-database"></i> Sistema de Tracking</h6>
+                            <p>Plantillas para registrar preferencias de usuarios</p>
+                        </div>
+                        <div class="analytics-item">
+                            <h6><i class="fas fa-tags"></i> Sistema de Tags</h6>
+                            <p>Etiquetas para categorizar preferencias únicas</p>
+                        </div>
+                        <div class="analytics-item">
+                            <h6><i class="fas fa-comments"></i> Scripts Personalizados</h6>
+                            <p>Frases clave basadas en perfiles psicológicos</p>
+                        </div>
+                        <div class="analytics-item">
+                            <h6><i class="fas fa-chart-pie"></i> Dashboard de Analytics</h6>
+                            <p>Métricas de personalización y engagement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Casos de Éxito -->
+    <div class="container">
+        <div class="success-story">
+            <h2 class="section-title text-white">
+                <i class="fas fa-trophy"></i> Casos de Éxito con Research de Usuarios
+            </h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="testimonial-box">
+                        <h6>Carmen L. - Especialista en Data-Driven Content</h6>
+                        <p>"Implementé un sistema de cuestionarios anónimos y análisis de preferencias. En 3 meses identifiqué 12 nichos únicos. Ahora cada usuario siente que las sesiones están hechas específicamente para él."</p>
+                        <div class="competitive-advantage" style="background: rgba(255,255,255,0.1); border: 2px solid white;">
+                            <div class="advantage-metric">
+                                <span>Ingresos mensuales:</span>
+                                <span class="metric-value" style="color: white;">$29,347</span>
+                            </div>
+                            <div class="advantage-metric">
+                                <span>Retención de usuarios:</span>
+                                <span class="metric-value" style="color: white;">+478%</span>
+                            </div>
+                            <div class="advantage-metric">
+                                <span>Sesiones privadas:</span>
+                                <span class="metric-value" style="color: white;">87% conversión</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-box">
+                        <h6>Diana R. - Experta en Personalización Psicológica</h6>
+                        <p>"Uso cuestionarios para mapear motivaciones profundas. Creo 'perfiles de deseo' únicos para cada usuario regular. Mis shows privados tienen lista de espera de 2 semanas."</p>
+                        <div class="competitive-advantage" style="background: rgba(255,255,255,0.1); border: 2px solid white;">
+                            <div class="advantage-metric">
+                                <span>Ingresos mensuales:</span>
+                                <span class="metric-value" style="color: white;">$34,892</span>
+                            </div>
+                            <div class="advantage-metric">
+                                <span>Precio premium:</span>
+                                <span class="metric-value" style="color: white;">+290% vs mercado</span>
+                            </div>
+                            <div class="advantage-metric">
+                                <span>Usuarios fieles:</span>
+                                <span class="metric-value" style="color: white;">94% loyalty rate</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="testimonial-box">
+                        <h6>Valeria M. - Arquitecta de Experiencias Únicas</h6>
+                        <p>"Mi research reveló que 73% de mis usuarios buscaban 'escape emocional'. Diseñé experiencias terapéuticas personalizadas. Ahora soy consultora para otras modelos."</p>
+                        <div class="competitive-advantage" style="background: rgba(255,255,255,0.1); border: 2px solid white;">
+                            <div class="advantage-metric">
+                                <span>Ingresos mensuales:</span>
+                                <span class="metric-value" style="color: white;">$41,567</span>
+                            </div>
+                            <div class="advantage-metric">
+                                <span>Consultoría adicional:</span>
+                                <span class="metric-value" style="color: white;">$8,900/mes extra</span>
+                            </div>
+                            <div class="advantage-metric">
+                                <span>Impacto industria:</span>
+                                <span class="metric-value" style="color: white;">+1,200% influencia</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ventaja Competitiva -->
+    <div class="container">
+        <div class="competitive-advantage">
+            <h5 class="mb-4" style="color: var(--primary-color);">🎯 Tu Ventaja Competitiva con Research</h5>
+            <div class="advantage-metric">
+                <span>Conocimiento profundo vs intuición básica</span>
+                <span class="metric-value">+347% efectividad</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Personalización basada en data real</span>
+                <span class="metric-value">+234% satisfacción</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Predicción de preferencias futuras</span>
+                <span class="metric-value">+189% retención</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Desarrollo de nichos únicos</span>
+                <span class="metric-value">+456% diferenciación</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Optimización continua basada en feedback</span>
+                <span class="metric-value">+567% mejora constante</span>
+            </div>
+            <div class="advantage-metric">
+                <span>Creación de experiencias irresistibles</span>
+                <span class="metric-value">+789% addiction factor</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wellness y Ética -->
+    <div class="container">
+        <div class="wellness-tip">
+            <h6><i class="fas fa-heart"></i> Ética y Responsabilidad en Research</h6>
+            <p class="mb-2">
+                <strong>IMPORTANTE:</strong> El research de usuarios requiere responsabilidad ética. Usa esta información para crear experiencias positivas, nunca para manipular o dañar.
+            </p>
+            <ul class="mb-0">
+                <li>Mantén siempre el anonimato y confidencialidad</li>
+                <li>Usa los insights para MEJORAR experiencias, no explotarlas</li>
+                <li>Respeta límites y preferencias expresadas</li>
+                <li>Promueve bienestar emocional de tus usuarios</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Resumen Final -->
+    <div class="container">
+        <div class="final-summary">
+            <h2 class="mb-4">📊 Tu Empire de Data: El Research que Genera Millones</h2>
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <p class="lead mb-4">
+                        Has desarrollado el sistema de research más poderoso de la industria. No es solo un cuestionario - es tu motor de inteligencia de usuario que genera +347% ROI a través de personalización extrema.
+                    </p>
+                    
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <h4>📊</h4>
+                            <h6>Data Científica</h6>
+                            <p>Conoces a tus usuarios mejor que ellos mismos</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>🎯</h4>
+                            <h6>Personalización Extrema</h6>
+                            <p>Cada experiencia es única e irresistible</p>
+                        </div>
+                        <div class="col-md-4">
+                            <h4>💰</h4>
+                            <h6>ROI Comprobado</h6>
+                            <p>+347% retención documentada</p>
+                        </div>
+                    </div>
+                    
+                    <h5 class="mb-3">📋 Tu Plan de Acción INMEDIATO:</h5>
+                    <div class="text-start">
+                        <p>✅ Implementar sistema de cuestionarios en 24 horas<br>
+                        ✅ Crear perfiles psicológicos de usuarios actuales<br>
+                        ✅ Desarrollar 5 experiencias personalizadas únicas<br>
+                        ✅ Testear y medir incremento en engagement<br>
+                        ✅ Escalar exitosamente tu modelo data-driven</p>
+                    </div>
+                    
+                    <button class="btn btn-primary-custom btn-lg mt-4" onclick="launchResearchStrategy()">
+                        ¡A CONSTRUIR TU EMPIRE DE DATA!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Variables globales
+        let responses = {};
+        let analysisData = {
+            categories: {},
+            psychProfile: [],
+            sentiment: 'neutral'
+        };
+        
+        // Actualizar fecha actual
+        function updateCurrentDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-ES', options);
+        }
+
+        // Toggle para expandir detalles
+        function toggleDetails(elementId) {
+            const element = document.getElementById(elementId);
+            const icon = element.previousElementSibling.querySelector('i');
+            
+            if (element.classList.contains('active')) {
+                element.classList.remove('active');
+                icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+            } else {
+                element.classList.add('active');
+                icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+            }
+        }
+
+        function updateProgress() {
+            const form = document.getElementById('preferencesForm');
+            const requiredFields = form.querySelectorAll('textarea[required]');
+            const totalRequired = requiredFields.length;
+            let completedRequired = 0;
+
+            requiredFields.forEach(field => {
+                if (field.value.trim().length > 0) {
+                    completedRequired++;
+                }
+            });
+
+            const progressPercentage = (completedRequired / totalRequired) * 100;
+            const progressBar = document.getElementById('progressBar');
+            const questionProgress = document.getElementById('questionProgress');
+            
+            if (progressBar) {
+                progressBar.style.width = progressPercentage + '%';
+            }
+            
+            if (questionProgress) {
+                questionProgress.textContent = `${completedRequired}/${totalRequired}`;
+            }
+        }
+
+        function countCharacters(element, counterId) {
+            const counter = document.getElementById(counterId);
+            if (counter) {
+                counter.textContent = `${element.value.length} caracteres`;
+            }
+        }
+
+        function analyzeResponse(questionNum, text) {
+            responses[questionNum] = text;
+            
+            // Análisis simple de categorías mencionadas
+            const categories = ['dominación', 'sumisión', 'fetiche', 'roleplay', 'visual', 'emocional', 'control', 'cuidado'];
+            const mentions = {};
+            
+            categories.forEach(cat => {
+                const count = (text.toLowerCase().match(new RegExp(cat, 'g')) || []).length;
+                if (count > 0) {
+                    mentions[cat] = (mentions[cat] || 0) + count;
+                }
+            });
+            
+            // Actualizar análisis global
+            Object.keys(mentions).forEach(cat => {
+                analysisData.categories[cat] = (analysisData.categories[cat] || 0) + mentions[cat];
+            });
+            
+            // Actualizar visualización
+            updateCategoryAnalysis();
+            updatePsychProfile();
+        }
+
+        function updateCategoryAnalysis() {
+            const categoryAnalysis = document.getElementById('categoryAnalysis');
+            const sortedCategories = Object.entries(analysisData.categories)
+                .sort(([,a], [,b]) => b - a)
+                .slice(0, 3);
+            
+            if (sortedCategories.length > 0) {
+                categoryAnalysis.innerHTML = sortedCategories.map(([cat, count], index) => 
+                    `<div class="mb-2">
+                        <span class="badge bg-${index === 0 ? 'warning' : index === 1 ? 'info' : 'secondary'}">${index + 1}</span>
+                        <strong>${cat.charAt(0).toUpperCase() + cat.slice(1)}</strong> (${count} menciones)
+                    </div>`
+                ).join('');
+            }
+        }
+
+        function updatePsychProfile() {
+            const psychProfile = document.getElementById('psychProfile');
+            const totalResponses = Object.keys(responses).length;
+            
+            if (totalResponses > 0) {
+                let profile = [];
+                
+                if (analysisData.categories['control'] > 0 || analysisData.categories['dominación'] > 0) {
+                    profile.push('🎯 Perfil de Control');
+                }
+                if (analysisData.categories['emocional'] > 0 || analysisData.categories['cuidado'] > 0) {
+                    profile.push('💝 Perfil Emocional');
+                }
+                if (analysisData.categories['visual'] > 0) {
+                    profile.push('👁️ Perfil Visual');
+                }
+                if (analysisData.categories['roleplay'] > 0) {
+                    profile.push('🎭 Perfil Narrativo');
+                }
+                
+                if (profile.length === 0) {
+                    profile.push('🔍 Perfil en Análisis...');
+                }
+                
+                psychProfile.innerHTML = profile.map(p => 
+                    `<div class="mb-1">${p}</div>`
+                ).join('');
+            }
+        }
+
+        function calculatePersonalizationROI() {
+            const monthlyUsers = parseInt(document.getElementById('monthlyUsers').value) || 0;
+            const avgSpending = parseInt(document.getElementById('avgSpending').value) || 0;
+            const personalizationLevel = parseInt(document.getElementById('personalizationLevel').value) || 1;
+            
+            // Actualizar valor del slider
+            document.getElementById('personalizationValue').textContent = personalizationLevel;
+            
+            // Calcular proyecciones
+            const spendingMultiplier = 1 + (personalizationLevel * 0.12);
+            const retentionMultiplier = 1 + (personalizationLevel * 0.08);
+            
+            const projectedSpending = Math.floor(avgSpending * spendingMultiplier);
+            const projectedRetention = Math.floor(50 + (personalizationLevel * 4.8));
+            const monthlyRevenue = Math.floor(monthlyUsers * projectedSpending * (retentionMultiplier));
+            const roiIncrease = Math.floor((spendingMultiplier * retentionMultiplier - 1) * 100);
+            
+            // Actualizar resultados
+            document.getElementById('projectedSpending').textContent = projectedSpending;
+            document.getElementById('projectedRetention').textContent = projectedRetention;
+            document.getElementById('monthlyRevenue').textContent = monthlyRevenue.toLocaleString();
+            document.getElementById('roiIncrease').textContent = roiIncrease;
+            
+            // Actualizar barra de progreso
+            const progressBar = document.getElementById('personalizationProgressBar');
+            const progress = personalizationLevel * 10;
+            progressBar.style.width = progress + '%';
+        }
+
+        function selectStrategy(strategy) {
+            // Remover selección anterior
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Seleccionar nueva estrategia
+            event.target.classList.add('selected');
+            
+            const strategies = {
+                generic: {
+                    title: 'Estrategia Genérica',
+                    results: `
+                        <div class="alert alert-danger">
+                            <h6>📊 Resultados Básicos:</h6>
+                            <ul>
+                                <li>Engagement: 23% promedio</li>
+                                <li>Retención: 12% a 6 meses</li>
+                                <li>Diferenciación: Nula</li>
+                                <li>Conversión privados: 8%</li>
+                                <li>Lealtad: Muy baja</li>
+                            </ul>
+                            <p><strong>Limitación:</strong> Te confundes con miles de modelos idénticas</p>
+                        </div>
+                    `
+                },
+                segmented: {
+                    title: 'Estrategia Segmentada',
+                    results: `
+                        <div class="alert alert-warning">
+                            <h6>📊 Resultados Mejorados:</h6>
+                            <ul>
+                                <li>Engagement: 45% promedio</li>
+                                <li>Retención: 34% a 6 meses</li>
+                                <li>Diferenciación: Baja-Media</li>
+                                <li>Conversión privados: 23%</li>
+                                <li>Lealtad: Media</li>
+                            </ul>
+                            <p><strong>Ventaja:</strong> Atraes usuarios por categorías pero sin conexión profunda</p>
+                        </div>
+                    `
+                },
+                personalized: {
+                    title: 'Estrategia Personalizada',
+                    results: `
+                        <div class="alert alert-info">
+                            <h6>📊 Resultados Superiores:</h6>
+                            <ul>
+                                <li>Engagement: 78% promedio</li>
+                                <li>Retención: 67% a 6 meses</li>
+                                <li>Diferenciación: Alta</li>
+                                <li>Conversión privados: 56%</li>
+                                <li>Lealtad: Alta</li>
+                            </ul>
+                            <p><strong>Ventaja:</strong> Cada usuario se siente especial y comprendido</p>
+                        </div>
+                    `
+                },
+                adaptive: {
+                    title: 'Estrategia Adaptativa (ML + Psicología)',
+                    results: `
+                        <div class="alert alert-success">
+                            <h6>📊 Resultados ELITE:</h6>
+                            <ul>
+                                <li>Engagement: 94% promedio</li>
+                                <li>Retención: 89% a 6 meses</li>
+                                <li>Diferenciación: ÚNICA</li>
+                                <li>Conversión privados: 87%</li>
+                                <li>Lealtad: Fanáticos devotos</li>
+                            </ul>
+                            <p><strong>DOMINIO:</strong> Predices y satisfaces deseos antes de que los expresen</p>
+                        </div>
+                    `
+                }
+            };
+            
+            const result = strategies[strategy];
+            document.getElementById('strategyResult').innerHTML = `
+                <h6>${result.title}</h6>
+                ${result.results}
+            `;
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // Mostrar mensaje de éxito
+            document.getElementById('preferencesForm').style.display = 'none';
+            document.getElementById('completionMessage').style.display = 'block';
+            
+            // Scroll al mensaje
+            document.getElementById('completionMessage').scrollIntoView({ behavior: 'smooth' });
+            
+            // Simular envío de datos (en producción aquí irían al servidor)
+            console.log('Respuestas enviadas:', responses);
+            console.log('Análisis generado:', analysisData);
+        }
+
+        function launchResearchStrategy() {
+            alert('🚀 ¡ACTIVANDO TU SISTEMA DE RESEARCH!\n\nAcceso inmediato a:\n\n📊 Plantillas de cuestionarios avanzados\n🎯 Sistema de perfiles psicológicos automatizado\n💻 Dashboard de analytics en tiempo real\n📈 Herramientas de segmentación inteligente\n🛠️ Kit completo de implementación\n\n¡Tu empire de data comienza AHORA! 🔥');
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCurrentDate();
+            calculatePersonalizationROI();
+            
+            // Actualizar fecha cada minuto
+            setInterval(updateCurrentDate, 60000);
+        });
+    </script>
+</body>
+</html>

@@ -29,7 +29,7 @@ export class ProgressController {
 
   @Get('my')
   async getMyProgress(@CurrentUser() user: any) {
-    return this.progressService.findByUser(user.userId);
+    return this.progressService.findByUser(user._id.toString());
   }
 
   @Get('my/course/:courseId')
@@ -37,7 +37,7 @@ export class ProgressController {
     @CurrentUser() user: any,
     @Param('courseId') courseId: string,
   ) {
-    return this.progressService.getCourseProgress(user.userId, courseId);
+    return this.progressService.getCourseProgress(user._id.toString(), courseId);
   }
 
   @Get('my/lesson/:lessonId')
@@ -45,12 +45,12 @@ export class ProgressController {
     @CurrentUser() user: any,
     @Param('lessonId') lessonId: string,
   ) {
-    return this.progressService.getLessonProgress(user.userId, lessonId);
+    return this.progressService.getLessonProgress(user._id.toString(), lessonId);
   }
 
   @Get('my/stats')
   async getMyStats(@CurrentUser() user: any) {
-    return this.progressService.getUserStats(user.userId);
+    return this.progressService.getUserStats(user._id.toString());
   }
 
   @Get('my/recent-activity')
@@ -59,9 +59,26 @@ export class ProgressController {
     @Query('limit') limit?: string,
   ) {
     return this.progressService.getRecentActivity(
-      user.userId,
+      user._id.toString(),
       limit ? parseInt(limit) : 10,
     );
+  }
+
+  // ==================== DAILY STATUS ====================
+
+  @Get('my/daily-status')
+  async getMyDailyStatus(@CurrentUser() user: any) {
+    return this.progressService.getDailyStatus(user._id.toString());
+  }
+
+  // ==================== STARTING POINT ====================
+
+  @Get('my/starting-point')
+  async getMyStartingPoint(
+    @CurrentUser() user: any,
+    @Query('courseId') courseId?: string,
+  ) {
+    return this.progressService.getStartingPoint(user._id.toString(), courseId);
   }
 
   // ==================== ENROLLMENT ====================
@@ -71,7 +88,42 @@ export class ProgressController {
     @CurrentUser() user: any,
     @Param('courseId') courseId: string,
   ) {
-    return this.progressService.enrollInCourse(user.userId, courseId);
+    return this.progressService.enrollInCourse(user._id.toString(), courseId);
+  }
+
+  // ==================== ACCESS CHECKS ====================
+
+  @Get('lesson/:lessonId/access')
+  async checkLessonAccess(
+    @CurrentUser() user: any,
+    @Param('lessonId') lessonId: string,
+  ) {
+    return this.progressService.canAccessLesson(user._id.toString(), lessonId);
+  }
+
+  @Get('lesson/:lessonId/full-status')
+  async getLessonFullStatus(
+    @CurrentUser() user: any,
+    @Param('lessonId') lessonId: string,
+  ) {
+    return this.progressService.getFullLessonStatus(user._id.toString(), lessonId);
+  }
+
+  @Get('lesson/:lessonId/content-status')
+  async getLessonContentStatus(
+    @CurrentUser() user: any,
+    @Param('lessonId') lessonId: string,
+  ) {
+    return this.progressService.canViewLessonContent(user._id.toString(), lessonId);
+  }
+
+  @Get('theme/:themeId/access')
+  async checkThemeAccess(
+    @CurrentUser() user: any,
+    @Param('themeId') themeId: string,
+    @Query('courseId') courseId: string,
+  ) {
+    return this.progressService.canAccessTheme(user._id.toString(), themeId, courseId);
   }
 
   // ==================== LESSON COMPLETION ====================
@@ -82,9 +134,10 @@ export class ProgressController {
     @Param('lessonId') lessonId: string,
     @Body() dto: MarkLessonCompleteDto,
   ) {
-    // Incluir el lessonId en el DTO
-    const completeDto = { ...dto, lessonId };
-    return this.progressService.markLessonComplete(user.userId, completeDto);
+    return this.progressService.markLessonComplete(user._id.toString(), {
+      ...dto,
+      lessonId,
+    });
   }
 
   @Put('lesson/:lessonId/time')
@@ -94,7 +147,7 @@ export class ProgressController {
     @Body() body: { seconds: number },
   ) {
     return this.progressService.updateTimeSpent(
-      user.userId,
+      user._id.toString(),
       lessonId,
       body.seconds,
     );
@@ -109,7 +162,7 @@ export class ProgressController {
     @Body() dto: SubmitExerciseDto,
   ) {
     const exerciseDto = { ...dto, lessonId };
-    return this.progressService.submitExercise(user.userId, exerciseDto);
+    return this.progressService.submitExercise(user._id.toString(), exerciseDto);
   }
 
   @Post('lesson/:lessonId/quiz')
@@ -119,7 +172,7 @@ export class ProgressController {
     @Body() dto: SubmitQuizDto,
   ) {
     const quizDto = { ...dto, lessonId };
-    return this.progressService.submitQuiz(user.userId, quizDto);
+    return this.progressService.submitQuiz(user._id.toString(), quizDto);
   }
 
   @Get('lesson/:lessonId/submissions')
@@ -127,7 +180,7 @@ export class ProgressController {
     @CurrentUser() user: any,
     @Param('lessonId') lessonId: string,
   ) {
-    return this.progressService.getSubmissions(user.userId, lessonId);
+    return this.progressService.getSubmissions(user._id.toString(), lessonId);
   }
 
   // ==================== ADMIN ENDPOINTS ====================
@@ -172,7 +225,7 @@ export class ProgressController {
 
   @Get('my/streak')
   async getMyStreak(@CurrentUser() user: any) {
-    return this.progressService.getStreak(user.userId);
+    return this.progressService.getStreak(user._id.toString());
   }
 
   @Get('leaderboard')

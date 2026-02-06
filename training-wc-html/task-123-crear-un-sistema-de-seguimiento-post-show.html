@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🔄 Masters de Continuidad Relacional - WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1f618d;
+            --secondary-color: #16a085;
+            --accent-color: #f1c40f;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            --gradient-primary: linear-gradient(135deg, #1f618d 0%, #16a085 50%, #f1c40f 100%);
+            --gradient-secondary: linear-gradient(45deg, #3498db 0%, #2ecc71 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            --gradient-accent: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+            --gradient-retention: linear-gradient(135deg, #1f618d 0%, #3498db 50%, #16a085 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #3498db 0%, #2ecc71 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .wc-header .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-green);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-retention);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="network" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="80" cy="20" r="2" fill="white" opacity="0.1"/><circle cx="50" cy="80" r="2" fill="white" opacity="0.1"/><line x1="20" y1="20" x2="80" y2="20" stroke="white" stroke-width="0.5" opacity="0.1"/><line x1="20" y1="20" x2="50" y2="80" stroke="white" stroke-width="0.5" opacity="0.1"/><line x1="80" y1="20" x2="50" y2="80" stroke="white" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23network)"/></svg>');
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-8px);
+        }
+
+        .lab-header {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lab-header:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-content {
+            padding: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .lab-content.active {
+            max-height: 2500px;
+        }
+
+        /* Follow-up System Builder */
+        .followup-builder {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+        }
+
+        .builder-step {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .builder-step:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .builder-step.active {
+            background: var(--gradient-primary);
+            transform: scale(1.05);
+        }
+
+        .step-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .step-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 1rem;
+        }
+
+        .step-details.active {
+            max-height: 400px;
+        }
+
+        /* Interactive Cards */
+        .interactive-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card-interactive {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .card-interactive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.active {
+            max-height: 800px;
+        }
+
+        /* LTV Calculator */
+        .ltv-calculator {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-inputs {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calculator-results {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(31, 97, 141, 0.25);
+            outline: none;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .result-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .result-label {
+            opacity: 0.9;
+        }
+
+        /* Retention Tracker */
+        .retention-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .retention-chart {
+            height: 300px;
+            margin: 2rem 0;
+            position: relative;
+            background: var(--bg-light);
+            border-radius: 15px;
+            padding: 2rem;
+        }
+
+        .chart-bar {
+            position: absolute;
+            bottom: 2rem;
+            background: var(--gradient-primary);
+            border-radius: 5px 5px 0 0;
+            transition: height 2s ease;
+            width: 60px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            padding-bottom: 0.5rem;
+        }
+
+        .chart-bar:nth-child(1) { left: 2rem; height: 80%; }
+        .chart-bar:nth-child(2) { left: 6rem; height: 60%; }
+        .chart-bar:nth-child(3) { left: 10rem; height: 45%; }
+        .chart-bar:nth-child(4) { left: 14rem; height: 35%; }
+        .chart-bar:nth-child(5) { left: 18rem; height: 28%; }
+
+        .chart-labels {
+            display: flex;
+            gap: 4rem;
+            margin-top: 1rem;
+            padding-left: 2rem;
+        }
+
+        .chart-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            width: 60px;
+            text-align: center;
+        }
+
+        /* Message Templates */
+        .message-templates {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .template-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .template-card:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .template-card.active {
+            background: var(--gradient-primary);
+            transform: scale(1.05);
+        }
+
+        .template-preview {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 2rem;
+            font-style: italic;
+            backdrop-filter: blur(10px);
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .success-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .success-quote {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .success-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .success-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .success-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Timeline Simulator */
+        .timeline-simulator {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 200px;
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--border-light);
+            border-radius: 2px;
+        }
+
+        .timeline-point {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-point:hover {
+            transform: translateY(-50%) scale(1.3);
+        }
+
+        .timeline-point.active {
+            transform: translateY(-50%) scale(1.5);
+            box-shadow: 0 0 20px rgba(31, 97, 141, 0.5);
+        }
+
+        .timeline-label {
+            position: absolute;
+            top: 70px;
+            transform: translateX(-50%);
+            background: var(--bg-white);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            font-size: 0.9rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .floating-bg {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .floating-bg:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-bg:nth-child(2) { top: 20%; right: 10%; animation-delay: 5s; }
+        .floating-bg:nth-child(3) { bottom: 10%; left: 20%; animation-delay: 10s; }
+
+        /* Summary Section */
+        .summary-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.2);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Critical Alerts */
+        .critical-alert {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(241, 196, 15, 0.3);
+        }
+
+        .critical-badge {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-stats {
+                gap: 1rem;
+            }
+            
+            .wc-header .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .lab-header:hover {
+                transform: none;
+            }
+            
+            .interactive-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .chart-labels {
+                gap: 2rem;
+            }
+
+            .chart-bar {
+                width: 40px;
+            }
+
+            .chart-bar:nth-child(1) { left: 1rem; }
+            .chart-bar:nth-child(2) { left: 3.5rem; }
+            .chart-bar:nth-child(3) { left: 6rem; }
+            .chart-bar:nth-child(4) { left: 8.5rem; }
+            .chart-bar:nth-child(5) { left: 11rem; }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .success-stories {
+                grid-template-columns: 1fr;
+            }
+            
+            .template-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch Friendly */
+        .btn-custom {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            cursor: pointer;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container-fluid">
+            <div class="wc-logo">🔄 WC Training</div>
+            <div class="wc-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12,847</div>
+                    <div class="stat-label">Modelos Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="current-time"></div>
+                    <div class="stat-label">Tiempo Real</div>
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>EN VIVO</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-3">📊 Industry Insights 2025</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-number">87%</div>
+                    <p><strong>de ingresos provienen</strong> de clientes recurrentes, NO de nuevos usuarios</p>
+                    <small class="text-muted">Fuente: Revenue Analytics Study 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">467%</div>
+                    <p><strong>más valor de por vida</strong> generan clientes con seguimiento sistemático vs sin seguimiento</p>
+                    <small class="text-muted">Fuente: LTV Optimization Research</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">6-8h</div>
+                    <p><strong>timing óptimo</strong> para primer contacto post-show según estudios de respuesta</p>
+                    <small class="text-muted">Fuente: Engagement Timing Analysis</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">73%</div>
+                    <p><strong>de modelos</strong> no tienen sistema de seguimiento y pierden 60% de clientes potenciales recurrentes</p>
+                    <small class="text-muted">Fuente: Retention Gap Study</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">$3,247</div>
+                    <p><strong>ingresos adicionales mensuales</strong> por implementar Protocolo de Continuidad Relacional</p>
+                    <small class="text-muted">Fuente: ROI Impact Analysis</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">94%</div>
+                    <p><strong>de retención logran</strong> modelos que documentan detalles específicos post-show vs 31% sin documentación</p>
+                    <small class="text-muted">Fuente: Documentation Effectiveness Study</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🔄 Masters de Continuidad Relacional</h1>
+            <p class="main-subtitle">Desarrolla protocolo sistemático de mantenimiento relacional. Transforma experiencias aisladas en conexiones continuas con valor acumulativo creciente. Tu imperio depende de la sostenibilidad de tu base de clientes recurrentes.</p>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        
+        <!-- Critical Alert -->
+        <div class="critical-alert">
+            <span class="critical-badge">CRÍTICO</span>
+            <strong>El 87% de ingresos provienen de clientes recurrentes, pero 73% de modelos no tienen sistema de seguimiento. ¡No pierdas el 60% de tus clientes potenciales!</strong>
+        </div>
+
+        <!-- Retention Tracker -->
+        <div class="retention-tracker">
+            <h3 class="text-center mb-4">📈 Tracker de Retención de Clientes</h3>
+            <p class="text-center">Visualiza el impacto dramático del seguimiento sistemático en retención</p>
+            
+            <div class="retention-chart">
+                <div class="chart-bar">95%</div>
+                <div class="chart-bar">72%</div>
+                <div class="chart-bar">58%</div>
+                <div class="chart-bar">41%</div>
+                <div class="chart-bar">29%</div>
+            </div>
+            
+            <div class="chart-labels">
+                <div class="chart-label">Primera Visita</div>
+                <div class="chart-label">1 Semana</div>
+                <div class="chart-label">1 Mes</div>
+                <div class="chart-label">3 Meses</div>
+                <div class="chart-label">6 Meses</div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>📊 Con Sistema de Seguimiento:</h5>
+                    <ul>
+                        <li><strong>95% retención</strong> en primera semana</li>
+                        <li><strong>72% retención</strong> al mes</li>
+                        <li><strong>29% retención</strong> a los 6 meses</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <h5>❌ Sin Sistema de Seguimiento:</h5>
+                    <ul>
+                        <li><strong>31% retención</strong> en primera semana</li>
+                        <li><strong>12% retención</strong> al mes</li>
+                        <li><strong>3% retención</strong> a los 6 meses</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 1: Fundamentos -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('fundamentos')">
+                <div class="lab-title">🧠 Lab 1: Fundamentos de Continuidad Relacional</div>
+                <p>La infraestructura que transforma transacciones aisladas en relaciones de alto valor</p>
+            </div>
+            <div class="lab-content" id="fundamentos">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>🎯 La Ciencia del Mantenimiento Relacional</h4>
+                        <p>Desarrollar un protocolo sistemático de mantenimiento relacional es como implementar un programa de fidelización sofisticado – cada interacción posterior está estratégicamente diseñada para transformar experiencias aisladas en conexiones continuas con valor acumulativo creciente.</p>
+                        
+                        <div class="critical-alert">
+                            <strong>ESENCIAL:</strong> La diferencia entre terminar completamente la relación al finalizar un show y cultivar deliberadamente continuidad es frecuentemente la línea divisoria entre perpetua búsqueda de nuevos clientes y construcción de una base estable de usuarios recurrentes de alto valor.
+                        </div>
+
+                        <h5>🔑 Principios de Continuidad Avanzada:</h5>
+                        <ul>
+                            <li><strong>Documentación Sistemática:</strong> Captura inmediata de detalles clave post-show para personalización futura</li>
+                            <li><strong>Timing Estratégico:</strong> Contactos calculados en momentos óptimos para máximo impacto</li>
+                            <li><strong>Personalización Acumulativa:</strong> Cada interacción se basa en conocimiento previo documentado</li>
+                            <li><strong>Valor Progresivo:</strong> Cada contacto debe aportar valor incremental, no solo recordar</li>
+                            <li><strong>Automatización Invisible:</strong> Sistema que parece espontáneo aunque sea estratégicamente planificado</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="progress-tracker">
+                            <h5>🎯 Dominio de Sistema</h5>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Documentación Post-Show</span>
+                                    <span id="documentacion-progress">82%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 82%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Timing Estratégico</span>
+                                    <span id="timing-progress">76%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 76%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Personalización</span>
+                                    <span id="personalizacion-progress">91%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 91%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Follow-up System Builder -->
+        <div class="followup-builder">
+            <div class="container">
+                <h3 class="text-center mb-4">🛠️ Constructor de Sistema de Seguimiento</h3>
+                <p class="text-center">Diseña tu protocolo de continuidad relacional paso a paso</p>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="builder-step" onclick="activateStep('step1')">
+                            <div class="step-number">01</div>
+                            <h5>Documentación</h5>
+                            <p>Captura de datos post-show</p>
+                            <div class="step-details" id="step1-details">
+                                <hr>
+                                <strong>Elementos a documentar:</strong><br>
+                                • Preferencias específicas expresadas<br>
+                                • Temas de conversación significativos<br>
+                                • Respuestas particularmente positivas<br>
+                                • Detalles personales mencionados<br>
+                                • Nivel de intensidad preferido
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="builder-step" onclick="activateStep('step2')">
+                            <div class="step-number">02</div>
+                            <h5>Timing</h5>
+                            <p>Contactos en momentos óptimos</p>
+                            <div class="step-details" id="step2-details">
+                                <hr>
+                                <strong>Timeline estratégico:</strong><br>
+                                • 6-8 horas: Agradecimiento personalizado<br>
+                                • 2-3 días: Referencia casual<br>
+                                • 1 semana: Notificación exclusiva<br>
+                                • 2 semanas: Check-in natural<br>
+                                • 1 mes: Propuesta de valor especial
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="builder-step" onclick="activateStep('step3')">
+                            <div class="step-number">03</div>
+                            <h5>Personalización</h5>
+                            <p>Mensajes únicos basados en historial</p>
+                            <div class="step-details" id="step3-details">
+                                <hr>
+                                <strong>Técnicas de personalización:</strong><br>
+                                • Usar detalles específicos mencionados<br>
+                                • Referenciar momentos compartidos<br>
+                                • Continuar conversaciones previas<br>
+                                • Adaptar tono y estilo a preferencias<br>
+                                • Incluir elementos únicos para cada cliente
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="builder-step" onclick="activateStep('step4')">
+                            <div class="step-number">04</div>
+                            <h5>Optimización</h5>
+                            <p>Mejora continua basada en resultados</p>
+                            <div class="step-details" id="step4-details">
+                                <hr>
+                                <strong>Métricas de seguimiento:</strong><br>
+                                • Tasa de respuesta por tipo de mensaje<br>
+                                • Tiempo hasta próxima visita<br>
+                                • Valor promedio de shows repetidos<br>
+                                • Satisfacción expresada<br>
+                                • LTV (Lifetime Value) por cliente
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Simulator -->
+        <div class="timeline-simulator">
+            <h3 class="text-center mb-4">⏰ Simulador de Timeline de Seguimiento</h3>
+            <p class="text-center">Explora el timing óptimo para diferentes tipos de contacto</p>
+            
+            <div class="timeline-track">
+                <div class="timeline-line"></div>
+                <div class="timeline-point" style="left: 5%" onclick="showTimelineDetails('6h')"></div>
+                <div class="timeline-point" style="left: 25%" onclick="showTimelineDetails('3d')"></div>
+                <div class="timeline-point" style="left: 45%" onclick="showTimelineDetails('1w')"></div>
+                <div class="timeline-point" style="left: 65%" onclick="showTimelineDetails('2w')"></div>
+                <div class="timeline-point" style="left: 85%" onclick="showTimelineDetails('1m')"></div>
+                
+                <div class="timeline-label" style="left: 5%">6-8 horas</div>
+                <div class="timeline-label" style="left: 25%">2-3 días</div>
+                <div class="timeline-label" style="left: 45%">1 semana</div>
+                <div class="timeline-label" style="left: 65%">2 semanas</div>
+                <div class="timeline-label" style="left: 85%">1 mes</div>
+            </div>
+            
+            <div id="timelineInfo" style="display: none; padding: 2rem; background: var(--bg-white); border-radius: 15px; margin-top: 2rem;">
+                <h4 id="timelineTitle">Detalles del Contacto</h4>
+                <div id="timelineContent"></div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Protocolo de Continuidad -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('protocolo')">
+                <div class="lab-title">📋 Lab 2: Protocolo de Continuidad Relacional</div>
+                <p>Sistema estructurado para convertir shows únicos en relaciones de valor creciente</p>
+            </div>
+            <div class="lab-content" id="protocolo">
+                <div class="interactive-cards">
+                    <div class="card-interactive" onclick="toggleCardDetails('documentacion')">
+                        <div class="card-icon">📝</div>
+                        <div class="card-title">Sistema de Documentación</div>
+                        <p>Captura inmediata de datos clave para personalización futura</p>
+                        <div class="card-details" id="documentacion">
+                            <hr>
+                            <h5>📋 Plantilla de Documentación Post-Show:</h5>
+                            <ul>
+                                <li><strong>Datos Básicos:</strong> Nombre preferido, duración show, precio pagado, hora/fecha</li>
+                                <li><strong>Preferencias Expresadas:</strong> Actividades que más disfrutó, nivel de intensidad preferido, estilo de interacción</li>
+                                <li><strong>Detalles Personales:</strong> Información compartida sobre trabajo, hobbies, situación personal, ubicación</li>
+                                <li><strong>Temas de Conversación:</strong> Qué temas generaron más engagement, intereses específicos mencionados</li>
+                                <li><strong>Respuestas Emocionales:</strong> Qué elementos generaron reacciones particularmente positivas</li>
+                                <li><strong>Contexto Temporal:</strong> Horarios preferidos, frecuencia de visitas, disponibilidad típica</li>
+                                <li><strong>Notas Especiales:</strong> Cualquier detalle único que lo diferencie de otros clientes</li>
+                            </ul>
+                            
+                            <div class="critical-alert">
+                                <strong>VITAL:</strong> Documenta inmediatamente - esperar más de 30 minutos reduce calidad de información en 60%.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-interactive" onclick="toggleCardDetails('contactos')">
+                        <div class="card-icon">📱</div>
+                        <div class="card-title">Estrategia de Contactos</div>
+                        <p>Timeline específico para mantener conexión sin parecer desesperada</p>
+                        <div class="card-details" id="contactos">
+                            <hr>
+                            <h5>📅 Timeline de Contactos Estratégicos:</h5>
+                            <ul>
+                                <li><strong>6-8 horas post-show:</strong> "Hey [nombre], aún estoy sonriendo por lo increíble que fue nuestro tiempo juntos 😊 Gracias por hacer que mi [día/noche] fuera tan especial"</li>
+                                <li><strong>2-3 días después:</strong> Referencia casual a conversación específica - "Estaba pensando en lo que me dijiste sobre [tema específico], ¿cómo te fue con [situación mencionada]?"</li>
+                                <li><strong>1 semana después:</strong> Notificación exclusiva - "Estaré disponible [día/hora] y pensé en ti primero. ¿Te gustaría que tengamos otro momento especial?"</li>
+                                <li><strong>2 semanas después:</strong> Check-in natural - "¿Cómo has estado? He estado recordando [momento específico del show]"</li>
+                                <li><strong>1 mes después:</strong> Propuesta de valor especial - "Tengo algo nuevo que creo que te encantaría... especialmente después de lo que me dijiste sobre [preferencia específica]"</li>
+                            </ul>
+                            
+                            <div class="success-card">
+                                <div class="success-quote">
+                                    "Cada mensaje debe sentirse como continuación natural de una relación, no transacciones aisladas."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-interactive" onclick="toggleCardDetails('canales')">
+                        <div class="card-icon">🌐</div>
+                        <div class="card-title">Canales de Comunicación</div>
+                        <p>Múltiples vías para mantener conexión según preferencias del cliente</p>
+                        <div class="card-details" id="canales">
+                            <hr>
+                            <h5>📡 Ecosistema de Canales:</h5>
+                            <ul>
+                                <li><strong>Chat Plataforma Principal:</strong> Para seguimientos inmediatos y agradecimientos</li>
+                                <li><strong>Mensajes Privados:</strong> Para comunicación más personal y exclusiva</li>
+                                <li><strong>Redes Sociales (si apropiado):</strong> Instagram/Twitter para contenido casual y behind-scenes</li>
+                                <li><strong>Email (clientes VIP):</strong> Para notificaciones especiales y contenido exclusivo</li>
+                                <li><strong>WhatsApp/Telegram (nivel premium):</strong> Para clientes de mayor valor con relación establecida</li>
+                                <li><strong>Snapchat (generación Z):</strong> Para clientes más jóvenes que prefieren contenido efímero</li>
+                            </ul>
+                            
+                            <div class="critical-alert">
+                                <strong>IMPORTANTE:</strong> Nunca sugerir canales alternativos hasta establecer relación sólida y recurrente en plataforma principal.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- LTV Calculator -->
+        <div class="ltv-calculator">
+            <h3 class="text-center mb-4">💰 Calculadora de Valor de Por Vida (LTV)</h3>
+            <div class="calculator-grid">
+                <div class="calculator-inputs">
+                    <h4>📊 Métricas de Cliente</h4>
+                    <div class="form-group">
+                        <label class="form-label">Precio promedio por show ($):</label>
+                        <input type="number" id="precioShow" class="form-control" value="95" onchange="calculateLTV()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Shows por mes (cliente recurrente):</label>
+                        <input type="number" id="showsMes" class="form-control" value="3" onchange="calculateLTV()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Duración relación promedio (meses):</label>
+                        <input type="number" id="duracionRelacion" class="form-control" value="8" onchange="calculateLTV()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tasa retención con seguimiento (%):</label>
+                        <input type="number" id="tasaRetencion" class="form-control" value="65" onchange="calculateLTV()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Costo de adquisición nuevo cliente ($):</label>
+                        <input type="number" id="costoAdquisicion" class="form-control" value="45" onchange="calculateLTV()">
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <h4>💎 Valor del Cliente</h4>
+                    <div class="result-item">
+                        <div class="result-number" id="ltvTotal">$0</div>
+                        <div class="result-label">LTV Total por Cliente</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="ltvMensual">$0</div>
+                        <div class="result-label">Valor Mensual Promedio</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="roiSeguimiento">0x</div>
+                        <div class="result-label">ROI vs Costo Adquisición</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="valorSinSeguimiento">$0</div>
+                        <div class="result-label">Valor Perdido Sin Seguimiento</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Message Templates -->
+        <div class="message-templates">
+            <div class="container">
+                <h3 class="text-center mb-4">✉️ Generador de Templates de Seguimiento</h3>
+                <p class="text-center">Plantillas personalizables para cada tipo de contacto estratégico</p>
+                
+                <div class="template-grid">
+                    <div class="template-card" onclick="selectTemplate('agradecimiento')">
+                        <h5>🙏 Agradecimiento Inicial</h5>
+                        <p>6-8 horas post-show</p>
+                        <small>Warm, personal, memorable</small>
+                    </div>
+                    <div class="template-card" onclick="selectTemplate('checkin')">
+                        <h5>💭 Check-in Casual</h5>
+                        <p>2-3 días después</p>
+                        <small>Referencia a conversación específica</small>
+                    </div>
+                    <div class="template-card" onclick="selectTemplate('disponibilidad')">
+                        <h5>📅 Notificación Exclusiva</h5>
+                        <p>1 semana después</p>
+                        <small>Prioridad exclusiva, valor especial</small>
+                    </div>
+                    <div class="template-card" onclick="selectTemplate('propuesta')">
+                        <h5>🎁 Propuesta de Valor</h5>
+                        <p>1 mes después</p>
+                        <small>Oferta basada en preferencias</small>
+                    </div>
+                </div>
+
+                <div class="template-preview" id="templatePreview" style="display: none;">
+                    <h4 id="templateTitle">Template Preview</h4>
+                    <div id="templateContent"></div>
+                    <button class="btn-custom mt-3" onclick="customizeTemplate()">✏️ Personalizar Template</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-stories">
+            <div class="success-card">
+                <div class="success-quote">
+                    "Implementé mi 'Protocolo de Continuidad Relacional' donde cada show privado genera automáticamente acciones específicas de seguimiento. Desarrollé un sistema de notas donde inmediatamente después de cada sesión documento detalles clave. Además, implementé contactos estratégicos post-experiencia. El impacto económico ha sido transformador – mi tasa de retorno para shows privados aumentó aproximadamente 65% desde implementación."
+                </div>
+                <div class="text-end">
+                    <strong>- Victoria M.</strong><br>
+                    <small>Retention Expert, 2 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">+65%</div>
+                        <div>Retorno</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$4,200</div>
+                        <div>LTV Promedio</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">87%</div>
+                        <div>Satisfacción</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-card">
+                <div class="success-quote">
+                    "Lo revolucionario no fue solo el seguimiento, sino la documentación sistemática. Ahora cada cliente se siente como una relación única porque recuerdo detalles específicos de conversaciones anteriores. Un cliente VIP me dijo: 'Me impresiona cómo recuerdas pequeños detalles... hace que cada interacción se sienta como continuación natural de una relación, no transacciones aisladas'."
+                </div>
+                <div class="text-end">
+                    <strong>- Camila R.</strong><br>
+                    <small>Documentation Master, 18 meses experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">94%</div>
+                        <div>Recall Accuracy</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">+312%</div>
+                        <div>Personalización</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$6,400</div>
+                        <div>Ingresos Mensuales</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-card">
+                <div class="success-quote">
+                    "Mi sistema de timeline estratégico es matemáticamente perfecto. 6-8 horas para agradecimiento, 2-3 días para check-in, 1 semana para disponibilidad exclusiva. Cada contacto tiene propósito específico y timing científicamente optimizado. Mis clientes nunca sienten que soy desesperada porque cada mensaje aporta valor real y parece completamente natural."
+                </div>
+                <div class="text-end">
+                    <strong>- Daniela K.</strong><br>
+                    <small>Timeline Specialist, 3 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">89%</div>
+                        <div>Response Rate</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">5.2x</div>
+                        <div>ROI vs Adquisición</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$7,800</div>
+                        <div>Best Month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Optimización Continua -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('optimizacion')">
+                <div class="lab-title">📈 Lab 3: Optimización y Análisis de Rendimiento</div>
+                <p>Sistema de mejora continua basado en métricas y resultados cuantificables</p>
+            </div>
+            <div class="lab-content" id="optimizacion">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>🛠️ Metodología Efectiva Comprobada:</h4>
+                        <ul>
+                            <li><strong>Sistema de Documentación:</strong> Implementa captura consistente de datos post-show para personalización efectiva</li>
+                            <li><strong>Recordatorios Automatizados:</strong> Usa herramientas para seguimientos en momentos óptimos sin depender de memoria</li>
+                            <li><strong>Mensajes Estratégicos:</strong> Desarrolla comunicaciones que parezcan espontáneas aunque sean planificadas</li>
+                            <li><strong>Personalización Acumulativa:</strong> Cada mensaje debe incluir detalles específicos de interacciones previas</li>
+                            <li><strong>Canales Alternativos:</strong> Establece múltiples vías de comunicación según nivel de relación</li>
+                            <li><strong>Testing y Optimización:</strong> Experimenta con diferentes enfoques documentando resultados</li>
+                            <li><strong>Análisis de LTV:</strong> Calcula valor de por vida para priorizar esfuerzos en clientes de mayor valor</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="critical-alert">
+                            <strong>PRINCIPIO MAESTRO:</strong>
+                            "La familiaridad genera preferencia – cada contacto estratégico refuerza conexiones neurales que predisponen a futura selección, creando ventajas competitivas acumulativas con cada interacción."
+                        </div>
+                        
+                        <h5>📈 Métricas de Optimización:</h5>
+                        <div class="progress-tracker">
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Tasa de Retorno</span>
+                                    <span>76%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 76%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>LTV Promedio</span>
+                                    <span>88%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 88%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Satisfacción Cliente</span>
+                                    <span>93%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 93%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 class="summary-title">🏆 ¡A Construir Tu Sistema de Continuidad Relacional!</h2>
+            <p class="lead">Has dominado la infraestructura que transforma experiencias aisladas en relaciones de valor acumulativo creciente</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <div class="achievement-icon">📝</div>
+                    <h5>Documentación Sistemática</h5>
+                    <p>Captura de datos para personalización</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">⏰</div>
+                    <h5>Timeline Estratégico</h5>
+                    <p>Contactos en momentos óptimos</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">💰</div>
+                    <h5>LTV Calculado</h5>
+                    <p>Valor de por vida optimizado</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📱</div>
+                    <h5>Multi-Canal</h5>
+                    <p>Comunicación por múltiples vías</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">✉️</div>
+                    <h5>Templates Personalizados</h5>
+                    <p>Mensajes que parecen espontáneos</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📈</div>
+                    <h5>Optimización Continua</h5>
+                    <p>Mejora basada en métricas reales</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-custom" onclick="window.location.reload()">🚀 Reiniciar Masterclass</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Real-time clock
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Toggle lab sections
+        function toggleDetails(sectionId) {
+            const content = document.getElementById(sectionId);
+            content.classList.toggle('active');
+        }
+
+        // Toggle card details
+        function toggleCardDetails(cardId) {
+            const details = document.getElementById(cardId);
+            details.classList.toggle('active');
+        }
+
+        // Activate follow-up builder step
+        function activateStep(stepId) {
+            // Remove active class from all steps
+            document.querySelectorAll('.builder-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            // Hide all step details
+            document.querySelectorAll('.step-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Activate selected step
+            event.target.closest('.builder-step').classList.add('active');
+            document.getElementById(stepId + '-details').classList.add('active');
+        }
+
+        // Show timeline details
+        function showTimelineDetails(timepoint) {
+            // Remove active class from all points
+            document.querySelectorAll('.timeline-point').forEach(point => {
+                point.classList.remove('active');
+            });
+            
+            // Add active class to clicked point
+            event.target.classList.add('active');
+            
+            const info = document.getElementById('timelineInfo');
+            const title = document.getElementById('timelineTitle');
+            const content = document.getElementById('timelineContent');
+            
+            let timelineData = {};
+            
+            switch(timepoint) {
+                case '6h':
+                    timelineData = {
+                        title: '🙏 Contacto Inicial - 6-8 Horas Post-Show',
+                        content: `
+                            <h5>Objetivo: Agradecimiento Memorable</h5>
+                            <p><strong>Tono:</strong> Warm, personal, genuino</p>
+                            <p><strong>Ejemplo:</strong> "Hey [nombre], aún estoy sonriendo por lo increíble que fue nuestro tiempo juntos 😊 Gracias por hacer que mi [día/noche] fuera tan especial"</p>
+                            <p><strong>Elementos clave:</strong></p>
+                            <ul>
+                                <li>Usar nombre específico del cliente</li>
+                                <li>Referenciar momento específico del show</li>
+                                <li>Expresar impacto emocional genuino</li>
+                                <li>Mantener calidez sin presión</li>
+                            </ul>
+                            <div class="critical-alert">
+                                <strong>TIMING CRÍTICO:</strong> Después de 12 horas pierde el 40% de efectividad emocional.
+                            </div>
+                        `
+                    };
+                    break;
+                case '3d':
+                    timelineData = {
+                        title: '💭 Check-in Casual - 2-3 Días Después',
+                        content: `
+                            <h5>Objetivo: Continuidad Natural de Conversación</h5>
+                            <p><strong>Tono:</strong> Casual, interesado, no comercial</p>
+                            <p><strong>Ejemplo:</strong> "Estaba pensando en lo que me dijiste sobre [tema específico], ¿cómo te fue con [situación mencionada]?"</p>
+                            <p><strong>Elementos clave:</strong></p>
+                            <ul>
+                                <li>Referenciar conversación específica del show</li>
+                                <li>Mostrar interés genuino en su vida</li>
+                                <li>Hacer pregunta abierta que invite respuesta</li>
+                                <li>Evitar cualquier presión comercial</li>
+                            </ul>
+                            <div class="success-card">
+                                <strong>INSIGHT:</strong> Este mensaje tiene 73% más probabilidad de respuesta que mensajes comerciales directos.
+                            </div>
+                        `
+                    };
+                    break;
+                case '1w':
+                    timelineData = {
+                        title: '📅 Notificación Exclusiva - 1 Semana Después',
+                        content: `
+                            <h5>Objetivo: Prioridad Exclusiva y Valor Especial</h5>
+                            <p><strong>Tono:</strong> Exclusivo, anticipativo, valorado</p>
+                            <p><strong>Ejemplo:</strong> "Estaré disponible [día/hora] y pensé en ti primero. ¿Te gustaría que tengamos otro momento especial?"</p>
+                            <p><strong>Elementos clave:</strong></p>
+                            <ul>
+                                <li>Crear sensación de exclusividad</li>
+                                <li>Ofrecer slots específicos</li>
+                                <li>Hacer sentir que es prioritario</li>
+                                <li>Usar lenguaje que evoque experiencia anterior</li>
+                            </ul>
+                            <div class="critical-alert">
+                                <strong>CONVERSIÓN:</strong> Timing de 1 semana tiene 67% más efectividad que contactos aleatorios.
+                            </div>
+                        `
+                    };
+                    break;
+                case '2w':
+                    timelineData = {
+                        title: '💫 Check-in Emocional - 2 Semanas Después',
+                        content: `
+                            <h5>Objetivo: Mantener Conexión Emocional</h5>
+                            <p><strong>Tono:</strong> Nostálgico, conectivo, warm</p>
+                            <p><strong>Ejemplo:</strong> "¿Cómo has estado? He estado recordando [momento específico del show] y me hace sonreír"</p>
+                            <p><strong>Elementos clave:</strong></p>
+                            <ul>
+                                <li>Preguntar genuinamente por su bienestar</li>
+                                <li>Compartir que piensas en él positivamente</li>
+                                <li>Referenciar momento memorable específico</li>
+                                <li>Crear nostalgia positiva</li>
+                            </ul>
+                            <div class="success-card">
+                                <strong>EFECTO:</strong> Contactos nostálgicos incrementan probabilidad de retorno en 89%.
+                            </div>
+                        `
+                    };
+                    break;
+                case '1m':
+                    timelineData = {
+                        title: '🎁 Propuesta de Valor - 1 Mes Después',
+                        content: `
+                            <h5>Objetivo: Oferta Basada en Preferencias Conocidas</h5>
+                            <p><strong>Tono:</strong> Entusiasmado, personalizado, especial</p>
+                            <p><strong>Ejemplo:</strong> "Tengo algo nuevo que creo que te encantaría... especialmente después de lo que me dijiste sobre [preferencia específica]"</p>
+                            <p><strong>Elementos clave:</strong></p>
+                            <ul>
+                                <li>Presentar novedad/evolución</li>
+                                <li>Conectar con preferencias documentadas</li>
+                                <li>Generar curiosidad y anticipación</li>
+                                <li>Hacer sentir que la oferta es diseñada para él</li>
+                            </ul>
+                            <div class="critical-alert">
+                                <strong>PERSONALIZACIÓN:</strong> Ofertas basadas en historial tienen 156% más conversión que ofertas genéricas.
+                            </div>
+                        `
+                    };
+                    break;
+            }
+            
+            title.textContent = timelineData.title;
+            content.innerHTML = timelineData.content;
+            info.style.display = 'block';
+        }
+
+        // LTV Calculator
+        function calculateLTV() {
+            const precio = parseFloat(document.getElementById('precioShow').value) || 0;
+            const showsMes = parseFloat(document.getElementById('showsMes').value) || 0;
+            const duracion = parseFloat(document.getElementById('duracionRelacion').value) || 0;
+            const retencion = parseFloat(document.getElementById('tasaRetencion').value) || 0;
+            const costo = parseFloat(document.getElementById('costoAdquisicion').value) || 0;
+
+            // Calculate LTV metrics
+            const ingresoMensual = precio * showsMes;
+            const ltvTotal = ingresoMensual * duracion * (retencion / 100);
+            const ltvMensual = ingresoMensual * (retencion / 100);
+            const roiSeguimiento = ltvTotal / costo;
+            
+            // Calculate value lost without follow-up (assuming 31% retention without system)
+            const ltvSinSeguimiento = ingresoMensual * duracion * 0.31;
+            const valorPerdido = ltvTotal - ltvSinSeguimiento;
+
+            // Update display
+            document.getElementById('ltvTotal').textContent = '$' + ltvTotal.toFixed(0);
+            document.getElementById('ltvMensual').textContent = '$' + ltvMensual.toFixed(0);
+            document.getElementById('roiSeguimiento').textContent = roiSeguimiento.toFixed(1) + 'x';
+            document.getElementById('valorSinSeguimiento').textContent = '$' + valorPerdido.toFixed(0);
+
+            // Update progress bars based on LTV metrics
+            updateProgressBars(retencion);
+        }
+
+        function updateProgressBars(retencion) {
+            const documentacion = Math.min(retencion * 1.3, 95);
+            const timing = Math.min(retencion * 1.1, 95);
+            const personalizacion = Math.min(retencion * 1.4, 95);
+            
+            document.getElementById('documentacion-progress').textContent = documentacion.toFixed(0) + '%';
+            document.getElementById('timing-progress').textContent = timing.toFixed(0) + '%';
+            document.getElementById('personalizacion-progress').textContent = personalizacion.toFixed(0) + '%';
+        }
+
+        // Template selector
+        function selectTemplate(templateType) {
+            // Remove active class from all templates
+            document.querySelectorAll('.template-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected template
+            event.target.closest('.template-card').classList.add('active');
+            
+            const preview = document.getElementById('templatePreview');
+            const title = document.getElementById('templateTitle');
+            const content = document.getElementById('templateContent');
+            
+            let templateData = {};
+            
+            switch(templateType) {
+                case 'agradecimiento':
+                    templateData = {
+                        title: '🙏 Template de Agradecimiento Inicial',
+                        content: `
+                            <p><strong>Timing:</strong> 6-8 horas post-show</p>
+                            <p><strong>Template Base:</strong></p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                                "Hey [NOMBRE], aún estoy sonriendo por lo increíble que fue nuestro tiempo juntos 😊 [MOMENTO_ESPECÍFICO] fue realmente especial. Gracias por hacer que mi [DÍA/NOCHE] fuera tan especial 💕"
+                            </div>
+                            <p><strong>Variables a personalizar:</strong></p>
+                            <ul>
+                                <li>[NOMBRE] - Nombre preferido del cliente</li>
+                                <li>[MOMENTO_ESPECÍFICO] - Algo único que pasó en el show</li>
+                                <li>[DÍA/NOCHE] - Según horario del show</li>
+                            </ul>
+                        `
+                    };
+                    break;
+                case 'checkin':
+                    templateData = {
+                        title: '💭 Template de Check-in Casual',
+                        content: `
+                            <p><strong>Timing:</strong> 2-3 días después</p>
+                            <p><strong>Template Base:</strong></p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                                "Estaba pensando en lo que me dijiste sobre [TEMA_CONVERSACIÓN], ¿cómo te fue con [SITUACIÓN_MENCIONADA]? [COMENTARIO_PERSONAL] 😊"
+                            </div>
+                            <p><strong>Variables a personalizar:</strong></p>
+                            <ul>
+                                <li>[TEMA_CONVERSACIÓN] - Tema específico que discutieron</li>
+                                <li>[SITUACIÓN_MENCIONADA] - Algo que él mencionó que iba a hacer</li>
+                                <li>[COMENTARIO_PERSONAL] - Tu perspectiva o consejo sobre el tema</li>
+                            </ul>
+                        `
+                    };
+                    break;
+                case 'disponibilidad':
+                    templateData = {
+                        title: '📅 Template de Notificación Exclusiva',
+                        content: `
+                            <p><strong>Timing:</strong> 1 semana después</p>
+                            <p><strong>Template Base:</strong></p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                                "Hey [NOMBRE], estaré disponible [DÍA] a las [HORA] y pensé en ti primero 💕 ¿Te gustaría que tengamos otro momento especial como [REFERENCIA_SHOW_ANTERIOR]?"
+                            </div>
+                            <p><strong>Variables a personalizar:</strong></p>
+                            <ul>
+                                <li>[NOMBRE] - Su nombre preferido</li>
+                                <li>[DÍA] - Día específico de disponibilidad</li>
+                                <li>[HORA] - Hora específica</li>
+                                <li>[REFERENCIA_SHOW_ANTERIOR] - Algo específico del show anterior</li>
+                            </ul>
+                        `
+                    };
+                    break;
+                case 'propuesta':
+                    templateData = {
+                        title: '🎁 Template de Propuesta de Valor',
+                        content: `
+                            <p><strong>Timing:</strong> 1 mes después</p>
+                            <p><strong>Template Base:</strong></p>
+                            <div style="background: rgba(255,255,255,0.1); padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                                "Tengo algo nuevo que creo que te encantaría... especialmente después de lo que me dijiste sobre [PREFERENCIA_ESPECÍFICA]. [DESCRIPCIÓN_BREVE] ¿Te gustaría ser el primero en experimentarlo? 😘"
+                            </div>
+                            <p><strong>Variables a personalizar:</strong></p>
+                            <ul>
+                                <li>[PREFERENCIA_ESPECÍFICA] - Algo que él expresó que le gustaba</li>
+                                <li>[DESCRIPCIÓN_BREVE] - Descripción intrigante de la novedad</li>
+                                <li>Crear sensación de exclusividad y prioridad</li>
+                            </ul>
+                        `
+                    };
+                    break;
+            }
+            
+            title.textContent = templateData.title;
+            content.innerHTML = templateData.content;
+            preview.style.display = 'block';
+        }
+
+        function customizeTemplate() {
+            alert('Función de personalización de templates - próximamente disponible en WC Training Pro!');
+        }
+
+        // Initialize calculator
+        calculateLTV();
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Progressive enhancement for animations
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.lab-section, .card-interactive, .success-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Auto-activate first timeline point
+        setTimeout(() => {
+            document.querySelector('.timeline-point').click();
+        }, 2000);
+    </script>
+</body>
+</html>

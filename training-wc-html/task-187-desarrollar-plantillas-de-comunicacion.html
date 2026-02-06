@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>📧 WC Training - Masters de Comunicación Profesional</title>
+    
+    <!-- Bootstrap 5.3.0 desde CDNJS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 desde CDNJS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #1e40af;
+            --accent-color: #06b6d4;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-dark: #111827;
+            --border-light: #e0e0e0;
+            
+            --gradient-primary: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+            --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-dark: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            --gradient-animated: linear-gradient(-45deg, #3b82f6, #1e40af, #06b6d4, #0ea5e9);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        /* Industry Insights Section */
+        .insights-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientFloat 20s ease-in-out infinite;
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.3'%3E%3Cpolygon points='50 0 60 35 100 35 70 57 80 91 50 70 20 91 30 57 0 35 40 35'/%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Labs */
+        .section-lab {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-lab:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-lab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lab-icon {
+            font-size: 2.5rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-expanded .card-details {
+            max-height: 1000px;
+        }
+
+        /* Template Generator */
+        .template-generator {
+            background: var(--gradient-secondary);
+            border-radius: 25px;
+            padding: 2.5rem;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .template-inputs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .template-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 0.8rem 1rem;
+            color: white;
+            font-size: 1rem;
+            width: 100%;
+            margin: 0.5rem 0;
+            min-height: 44px;
+        }
+
+        .template-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .template-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .template-output {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        /* Template Library */
+        .template-library {
+            background: var(--gradient-success);
+            border-radius: 25px;
+            padding: 2.5rem;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .template-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .category-card {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .category-card:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .category-card.selected {
+            border-color: white;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .template-result {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .template-result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Communication Tracker */
+        .communication-tracker {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .metric-item {
+            margin: 1.5rem 0;
+        }
+
+        .metric-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .metric-bar {
+            height: 12px;
+            border-radius: 20px;
+            background: var(--bg-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .metric-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 20px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .metric-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Email Simulator */
+        .email-simulator {
+            background: var(--gradient-dark);
+            color: white;
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .email-preview {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .email-header {
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .email-field {
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .email-field strong {
+            color: var(--primary-color);
+            min-width: 80px;
+            display: inline-block;
+        }
+
+        .email-body {
+            line-height: 1.8;
+            font-size: 1rem;
+        }
+
+        .email-signature {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(135deg, #e0f2fe 0%, #f3e5f5 100%);
+            border-left: 5px solid var(--primary-color);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-family: serif;
+        }
+
+        .story-content {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-author {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .story-metrics {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            min-width: 120px;
+        }
+
+        .metric-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success-green);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Effectiveness Calculator */
+        .effectiveness-calc {
+            background: linear-gradient(135deg, #4338ca 0%, #3730a3 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 0.8rem 1rem;
+            color: white;
+            font-size: 1rem;
+            width: 100%;
+            margin: 0.5rem 0;
+            min-height: 44px;
+        }
+
+        .calc-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calc-result {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes gradientFloat {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-lab {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .template-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .template-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-metrics {
+                gap: 1rem;
+            }
+            
+            .metric {
+                min-width: 100px;
+                padding: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-lab {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .template-generator,
+            .template-library,
+            .email-simulator {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+            
+            .category-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        .interactive-card,
+        .category-card,
+        .template-input,
+        .calc-input {
+            min-height: 44px;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .section-lab {
+                background: #1f2937;
+                color: #f9fafb;
+                border-color: #374151;
+            }
+            
+            .interactive-card {
+                background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+                border-color: #374151;
+            }
+            
+            .communication-tracker {
+                background: #1f2937;
+                color: #f9fafb;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-crown"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos perfeccionando comunicación | 
+                        <span id="current-time"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="insights-section">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="mb-3"><i class="fas fa-envelope"></i> Professional Communication Study 2025</h2>
+                <p class="lead">Investigación sobre efectividad en comunicación profesional</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">86%</div>
+                        <div class="insight-label">Fallan por comunicación improvisada</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">290%</div>
+                        <div class="insight-label">Más respuestas con plantillas</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">7min</div>
+                        <div class="insight-label">Tiempo promedio respuesta</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">73%</div>
+                        <div class="insight-label">Prefieren comunicación estructurada</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">95%</div>
+                        <div class="insight-label">Éxito con framework establecido</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">4.7x</div>
+                        <div class="insight-label">Más profesionalismo percibido</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="header-pattern"></div>
+        <div class="container text-center">
+            <h1 class="main-title">📧 Masters de Comunicación Profesional</h1>
+            <p class="main-subtitle">
+                El 86% improvisa comunicación profesional y pierde oportunidades CRÍTICAS. 
+                Tu arsenal de plantillas estratégicas para nunca más sonar amateur.
+            </p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <!-- Fundamentos de Comunicación -->
+        <div class="section-lab">
+            <h2 class="lab-title">
+                <i class="fas fa-blueprint lab-icon"></i>
+                📋 Arquitectura Comunicacional VITAL
+            </h2>
+            <p class="lead">El 86% improvisa emails importantes. No seas vulnerable a primera impresiones destructivas.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('fundamentos')">
+                <div class="card-header">
+                    <h4 class="card-title">🏗️ Sistema de Plantillas Estratégicas</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Frameworks probados que proyectan autoridad profesional inmediata.</p>
+                <div class="card-details" id="fundamentos-details">
+                    <hr>
+                    <h5>📐 Elementos arquitectónicos esenciales:</h5>
+                    <ul>
+                        <li><strong>Opening hook:</strong> Primera línea que captura atención inmediata</li>
+                        <li><strong>Context setting:</strong> Marco de referencia profesional claro</li>
+                        <li><strong>Value proposition:</strong> Beneficio mutuo articulado específicamente</li>
+                        <li><strong>Evidence backing:</strong> Credenciales o resultados que respaldan</li>
+                        <li><strong>Clear CTA:</strong> Llamada a acción específica y accionable</li>
+                        <li><strong>Professional close:</strong> Cierre que mantiene la autoridad</li>
+                    </ul>
+                    <div class="alert alert-warning">
+                        <strong>CRÍTICO:</strong> Un email mal estructurado puede arruinar meses de construcción de relación.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('categorias')">
+                <div class="card-header">
+                    <h4 class="card-title">📂 Biblioteca de Categorías Estratégicas</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Plantillas especializadas para cada tipo de comunicación profesional.</p>
+                <div class="card-details" id="categorias-details">
+                    <hr>
+                    <h5>🗂️ Categorías master por función:</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Comunicaciones comerciales:</h6>
+                            <ul>
+                                <li>Propuestas de colaboración</li>
+                                <li>Negociación de contratos</li>
+                                <li>Follow-up post meeting</li>
+                                <li>Solicitudes de partnership</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Gestión de relaciones:</h6>
+                            <ul>
+                                <li>Resolución de problemas</li>
+                                <li>Establecimiento de límites</li>
+                                <li>Feedback constructivo</li>
+                                <li>Maintenance de conexiones</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generador de Plantillas -->
+        <div class="template-generator">
+            <h3 class="text-center mb-4">✍️ Generador de Comunicación Estratégica</h3>
+            <p class="text-center">Crea mensajes profesionales personalizados en segundos:</p>
+            
+            <div class="template-inputs">
+                <div>
+                    <label>Tipo de comunicación:</label>
+                    <select class="template-input" id="communicationType">
+                        <option value="">Selecciona el tipo...</option>
+                        <option value="proposal">Propuesta de colaboración</option>
+                        <option value="follow-up">Seguimiento profesional</option>
+                        <option value="negotiation">Negociación de términos</option>
+                        <option value="introduction">Presentación inicial</option>
+                        <option value="problem-solving">Resolución de problema</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Destinatario (nombre/empresa):</label>
+                    <input type="text" class="template-input" id="recipient" placeholder="Ej: Sarah / Agencia Premium">
+                </div>
+                <div>
+                    <label>Objetivo principal:</label>
+                    <input type="text" class="template-input" id="objective" placeholder="Ej: Establecer partnership a largo plazo">
+                </div>
+                <div>
+                    <label>Contexto/Background:</label>
+                    <input type="text" class="template-input" id="context" placeholder="Ej: Nos conocimos en evento networking">
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-light btn-lg" onclick="generateTemplate()">
+                    🎯 Generar Comunicación Profesional
+                </button>
+            </div>
+            
+            <div class="template-output" id="templateOutput" style="display: none;">
+                <h5>📧 Tu mensaje personalizado:</h5>
+                <div id="generatedTemplate"></div>
+            </div>
+        </div>
+
+        <!-- Biblioteca de Plantillas -->
+        <div class="template-library">
+            <h3 class="text-center mb-4">📚 Biblioteca Master de Plantillas</h3>
+            <p class="text-center">Selecciona una categoría para ver ejemplos profesionales probados:</p>
+            
+            <div class="template-categories">
+                <div class="category-card" onclick="selectCategory('business')">
+                    <div class="category-icon">💼</div>
+                    <h5>Comunicación Comercial</h5>
+                    <p>Propuestas, contratos, partnerships</p>
+                </div>
+                <div class="category-card" onclick="selectCategory('relationship')">
+                    <div class="category-icon">🤝</div>
+                    <h5>Gestión de Relaciones</h5>
+                    <p>Mantenimiento, resolución, networking</p>
+                </div>
+                <div class="category-card" onclick="selectCategory('negotiation')">
+                    <div class="category-icon">⚖️</div>
+                    <h5>Negociación Estratégica</h5>
+                    <p>Tarifas, términos, condiciones</p>
+                </div>
+                <div class="category-card" onclick="selectCategory('follow-up')">
+                    <div class="category-icon">📈</div>
+                    <h5>Follow-up Sistemático</h5>
+                    <p>Seguimientos, recordatorios, check-ins</p>
+                </div>
+            </div>
+            
+            <div class="template-result" id="categoryResult">
+                <h5 id="categoryTitle"></h5>
+                <div id="categoryContent"></div>
+            </div>
+        </div>
+
+        <!-- Tracker de Efectividad -->
+        <div class="communication-tracker">
+            <h3 class="text-center mb-4">📊 Tracker de Efectividad Comunicacional</h3>
+            
+            <div class="metric-item">
+                <div class="metric-label">
+                    <span>📧 Tasa de respuesta</span>
+                    <span id="response-percent">0%</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="response-progress"></div>
+                </div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-label">
+                    <span>⚡ Velocidad de respuesta</span>
+                    <span id="speed-percent">0%</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="speed-progress"></div>
+                </div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-label">
+                    <span>🎯 Conversión a reuniones</span>
+                    <span id="conversion-percent">0%</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="conversion-progress"></div>
+                </div>
+            </div>
+            
+            <div class="metric-item">
+                <div class="metric-label">
+                    <span>💼 Profesionalismo percibido</span>
+                    <span id="professionalism-percent">0%</span>
+                </div>
+                <div class="metric-bar">
+                    <div class="metric-fill" id="professionalism-progress"></div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg" onclick="updateMetrics()">
+                    🚀 Actualizar Métricas
+                </button>
+            </div>
+        </div>
+
+        <!-- Simulador de Email -->
+        <div class="email-simulator">
+            <h3 class="text-center mb-4">📮 Simulador de Email Profesional</h3>
+            <p class="text-center">Ve cómo se ve tu comunicación desde la perspectiva del destinatario:</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Asunto del email:</label>
+                    <input type="text" class="template-input" id="emailSubject" placeholder="Ej: Propuesta de colaboración estratégica" onchange="updateEmailPreview()">
+                    
+                    <label>Tu nombre/marca:</label>
+                    <input type="text" class="template-input" id="senderName" placeholder="Ej: Alexandra | Premium Content Creator" onchange="updateEmailPreview()">
+                    
+                    <label>Mensaje principal:</label>
+                    <textarea class="template-input" id="emailBody" rows="4" placeholder="Escribe tu mensaje aquí..." onchange="updateEmailPreview()"></textarea>
+                </div>
+                <div class="col-md-6">
+                    <div class="email-preview" id="emailPreview">
+                        <div class="email-header">
+                            <div class="email-field">
+                                <strong>De:</strong> <span id="previewSender">Tu Nombre</span>
+                            </div>
+                            <div class="email-field">
+                                <strong>Para:</strong> cliente.potencial@empresa.com
+                            </div>
+                            <div class="email-field">
+                                <strong>Asunto:</strong> <span id="previewSubject">Tu asunto aparecerá aquí</span>
+                            </div>
+                        </div>
+                        <div class="email-body" id="previewBody">
+                            Tu mensaje aparecerá aquí con el formato profesional...
+                        </div>
+                        <div class="email-signature">
+                            <strong id="previewSignature">Tu Nombre</strong><br>
+                            Premium Content Creator<br>
+                            📧 tu.email@profesional.com<br>
+                            📱 +1 (555) 123-4567
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculadora de ROI -->
+        <div class="effectiveness-calc">
+            <h3 class="text-center mb-4">📈 Calculadora de ROI Comunicacional</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Emails profesionales enviados/mes:</label>
+                    <input type="number" class="calc-input" id="monthlyEmails" placeholder="Ej: 25" onchange="calculateCommunicationROI()">
+                    
+                    <label>Tiempo promedio por email sin plantilla (min):</label>
+                    <input type="number" class="calc-input" id="timeWithoutTemplate" placeholder="Ej: 20" onchange="calculateCommunicationROI()">
+                    
+                    <label>Tasa de respuesta actual (%):</label>
+                    <input type="number" class="calc-input" id="currentResponseRate" placeholder="Ej: 35" onchange="calculateCommunicationROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calc-result" id="communicationROI">
+                        <h5>📊 Análisis de Impacto</h5>
+                        <p>Ingresa tus datos para ver cómo las plantillas profesionales transforman tu efectividad comunicacional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Casos de Éxito -->
+        <div class="section-lab">
+            <h2 class="lab-title">
+                <i class="fas fa-trophy lab-icon"></i>
+                🏆 Casos de Éxito Verificables
+            </h2>
+            
+            <div class="success-story">
+                <div class="story-content">
+                    "Implementé el Sistema de Plantillas Estratégicas cuando necesitaba restructurar mi comunicación con agencias. En lugar de emails improvisados, ahora uso frameworks específicos para cada tipo de interacción. Mi tasa de respuesta subió 290% y conseguí 3 partnerships premium en 2 meses."
+                </div>
+                <div class="story-author">- Isabella K., Especialista en partnerships comerciales</div>
+                <div class="story-metrics">
+                    <div class="metric">
+                        <div class="metric-number">290%</div>
+                        <div class="metric-label">Aumento respuestas</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">3</div>
+                        <div class="metric-label">Partnerships premium</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">7min</div>
+                        <div class="metric-label">Tiempo promedio email</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <div class="story-content">
+                    "Antes mis emails sonaban desesperados o demasiado casuales. Con las plantillas profesionales, cada comunicación proyecta autoridad inmediata. Un inversionista me dijo que mi propuesta por email fue la más profesional que había recibido. Resultado: $50K en financiamiento."
+                </div>
+                <div class="story-author">- Camila R., Emprendedora digital</div>
+                <div class="story-metrics">
+                    <div class="metric">
+                        <div class="metric-number">$50K</div>
+                        <div class="metric-label">Financiamiento obtenido</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">95%</div>
+                        <div class="metric-label">Profesionalismo percibido</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">73%</div>
+                        <div class="metric-label">Reducción tiempo escritura</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <div class="story-content">
+                    "La biblioteca de plantillas me permitió mantener consistencia profesional incluso bajo presión. Cuando surgió un problema urgente con un cliente VIP, usé la plantilla de resolución de problemas. No solo solucioné el issue, sino que el cliente aumentó su inversión conmigo 180%."
+                </div>
+                <div class="story-author">- Valentina M., Account manager premium</div>
+                <div class="story-metrics">
+                    <div class="metric">
+                        <div class="metric-number">180%</div>
+                        <div class="metric-label">Aumento inversión cliente</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">100%</div>
+                        <div class="metric-label">Retención clientes VIP</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">5min</div>
+                        <div class="metric-label">Respuesta bajo presión</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Técnicas Avanzadas -->
+        <div class="section-lab">
+            <h2 class="lab-title">
+                <i class="fas fa-rocket lab-icon"></i>
+                🚀 Técnicas de Masters Comunicacionales
+            </h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('psicologia')">
+                <div class="card-header">
+                    <h4 class="card-title">🧠 Psicología del Email Persuasivo</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Principios científicos para optimizar apertura, lectura y respuesta.</p>
+                <div class="card-details" id="psicologia-details">
+                    <hr>
+                    <h5>🔬 Técnicas respaldadas por investigación:</h5>
+                    <ul>
+                        <li><strong>Subject line optimization:</strong> 6-10 palabras con beneficio específico</li>
+                        <li><strong>Opening hook:</strong> Primera línea con conexión personal relevante</li>
+                        <li><strong>Scarcity sutil:</strong> Limitaciones reales sin presión artificial</li>
+                        <li><strong>Social proof específico:</strong> Casos de éxito cuantificados</li>
+                        <li><strong>Autoridad establecida:</strong> Credenciales relevantes sin arrogancia</li>
+                        <li><strong>CTA clara única:</strong> Una acción específica y fácil de ejecutar</li>
+                    </ul>
+                    <div class="alert alert-info">
+                        <strong>PRO TIP:</strong> Emails con estructura profesional tienen 4.7x más probabilidad de generar respuesta positiva.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('personalizacion')">
+                <div class="card-header">
+                    <h4 class="card-title">🎯 Personalización Escalable</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Cómo mantener toque personal en comunicación sistemática.</p>
+                <div class="card-details" id="personalizacion-details">
+                    <hr>
+                    <h5>⚙️ Sistema de personalización eficiente:</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Variables de personalización:</h6>
+                            <ul>
+                                <li>[NOMBRE] - Nombre específico del destinatario</li>
+                                <li>[EMPRESA] - Organización o marca relevante</li>
+                                <li>[CONTEXTO] - Cómo se conocieron o conexión</li>
+                                <li>[LOGRO] - Éxito específico del destinatario</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Puntos de personalización críticos:</h6>
+                            <ul>
+                                <li>Saludo: Siempre con nombre específico</li>
+                                <li>Primera línea: Referencia personal relevante</li>
+                                <li>Value proposition: Beneficio específico para ellos</li>
+                                <li>Cierre: Acorde al nivel de relación</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Final -->
+        <div class="section-lab" style="background: var(--gradient-primary); color: white;">
+            <h2 class="lab-title text-white">
+                <i class="fas fa-crown lab-icon"></i>
+                👑 Tu Arsenal de Comunicación Imparable
+            </h2>
+            <div class="text-center">
+                <h3>¡Nunca más improvises comunicación profesional!</h3>
+                <p class="lead">
+                    El top 10% no tiene mejores ideas - tiene mejor estructura comunicacional. 
+                    Tu biblioteca de plantillas es la diferencia entre sonar amateur y proyectar autoridad profesional inmediata.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-md-4 text-center">
+                        <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; margin: 1rem 0;">
+                            <h4>86% menos</h4>
+                            <p>probabilidad de comunicación improvisada destructiva</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; margin: 1rem 0;">
+                            <h4>290% más</h4>
+                            <p>respuestas con plantillas estructuradas</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; margin: 1rem 0;">
+                            <h4>7 minutos</h4>
+                            <p>para crear comunicación profesional perfecta</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h4>📧 Domina tu comunicación. Domina tu percepción profesional.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS desde CDNJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Real-time clock update
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const card = document.getElementById(cardId + '-details').parentElement;
+            const details = document.getElementById(cardId + '-details');
+            
+            card.classList.toggle('card-expanded');
+            
+            if (card.classList.contains('card-expanded')) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+            } else {
+                details.style.maxHeight = '0';
+            }
+        }
+
+        // Template Generator
+        function generateTemplate() {
+            const type = document.getElementById('communicationType').value;
+            const recipient = document.getElementById('recipient').value;
+            const objective = document.getElementById('objective').value;
+            const context = document.getElementById('context').value;
+            
+            if (!type || !recipient || !objective) {
+                alert('Por favor completa todos los campos obligatorios');
+                return;
+            }
+            
+            const templates = {
+                proposal: {
+                    subject: `Propuesta de colaboración estratégica - ${recipient}`,
+                    body: `Hola ${recipient},
+
+${context ? `Recordando nuestra conexión ${context}, ` : ''}me complace presentarte una propuesta que podría generar valor significativo para ambos.
+
+He estado siguiendo tu trabajo y veo una oportunidad clara para ${objective}. Basándome en mi experiencia en [tu especialidad], creo que podríamos crear algo excepcional juntos.
+
+**Lo que propongo específicamente:**
+• [Beneficio concreto 1 para ellos]
+• [Beneficio concreto 2 para ellos] 
+• [Resultado medible esperado]
+
+**Próximo paso sugerido:**
+¿Te gustaría agendar una conversación de 15 minutos esta semana para explorar los detalles? Tengo disponibilidad [días específicos].
+
+Quedo atenta a tu respuesta.`
+                },
+                'follow-up': {
+                    subject: `Seguimiento - ${objective}`,
+                    body: `Hola ${recipient},
+
+Espero que estés teniendo una excelente semana. ${context ? `Siguiendo nuestra conversación sobre ${context}, ` : ''}quería hacer un seguimiento respecto a ${objective}.
+
+**Actualización relevante:**
+[Progreso específico o nueva información de valor]
+
+**Próximos pasos claros:**
+• [Acción específica 1]
+• [Acción específica 2]
+• [Timeline propuesto]
+
+¿Hay algún aspecto específico que te gustaría que abordemos primero? Estoy disponible para coordinar según tu conveniencia.`
+                },
+                negotiation: {
+                    subject: `Propuesta de términos - ${objective}`,
+                    body: `Hola ${recipient},
+
+Agradezco tu interés en ${objective}. ${context ? `Considerando ${context}, ` : ''}quiero presentarte una propuesta de términos que genere valor para ambas partes.
+
+**Propuesta estructurada:**
+• [Término específico 1 con justificación]
+• [Término específico 2 con beneficio mutuo]
+• [Término específico 3 con flexibilidad]
+
+**Justificación del valor:**
+[Explicación concreta de por qué estos términos son justos y beneficiosos]
+
+¿Te gustaría revisar estos puntos en una llamada breve? Estoy abierta a ajustes que funcionen para ambos.`
+                },
+                introduction: {
+                    subject: `Presentación profesional - ${objective}`,
+                    body: `Hola ${recipient},
+
+${context ? `${context} me sugirió contactarte, ya que ` : ''}creo que hay una conexión natural entre tu trabajo en [su área] y mi experiencia en [tu área].
+
+**Breve contexto sobre mí:**
+• [Logro relevante 1]
+• [Credencial relevante 2]
+• [Resultado específico 3]
+
+**Por qué me dirijo a ti:**
+He notado [observación específica sobre su trabajo] y creo que podríamos ${objective}.
+
+¿Te interesaría una conversación breve para explorar posibles sinergias? Puedo adaptarme a tu agenda.`
+                },
+                'problem-solving': {
+                    subject: `Solución propuesta - ${objective}`,
+                    body: `Hola ${recipient},
+
+${context ? `Respecto a la situación que discutimos sobre ${context}, ` : ''}he analizado la situación cuidadosamente y tengo una propuesta de solución para ${objective}.
+
+**Análisis de la situación:**
+[Resumen objetivo del problema]
+
+**Solución propuesta:**
+• [Acción específica 1 con timeline]
+• [Acción específica 2 con responsable]
+• [Medida de prevención futura]
+
+**Resultado esperado:**
+[Beneficio específico que esta solución generará]
+
+¿Te parece que implementemos esta aproximación? Puedo comenzar inmediatamente con tu autorización.`
+                }
+            };
+            
+            const template = templates[type];
+            if (template) {
+                document.getElementById('generatedTemplate').innerHTML = `
+                    <div style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Asunto:</strong> ${template.subject}
+                    </div>
+                    <div style="background: white; padding: 1.5rem; border-radius: 10px; border-left: 4px solid var(--primary-color); white-space: pre-line; line-height: 1.6;">
+${template.body}
+
+Saludos profesionales,
+[Tu nombre]
+[Tu título/especialidad]
+[Información de contacto]
+                    </div>
+                `;
+                document.getElementById('templateOutput').style.display = 'block';
+            }
+        }
+
+        // Category Selection
+        function selectCategory(category) {
+            // Remove previous selections
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Add selection to clicked card
+            event.target.closest('.category-card').classList.add('selected');
+            
+            const categories = {
+                business: {
+                    title: '💼 Plantillas de Comunicación Comercial',
+                    content: `
+                        <h6>📋 Propuesta de colaboración estratégica:</h6>
+                        <div class="alert alert-info">
+                            <strong>Estructura base:</strong><br>
+                            1. Hook personal relevante<br>
+                            2. Contexto de credibilidad<br>
+                            3. Propuesta de valor específica<br>
+                            4. Beneficios cuantificables<br>
+                            5. CTA clara con timeline
+                        </div>
+                        
+                        <h6>💰 Negociación de contratos:</h6>
+                        <div class="alert alert-success">
+                            <strong>Elementos clave:</strong><br>
+                            • Justificación basada en valor<br>
+                            • Comparación con estándares del mercado<br>
+                            • Flexibilidad en aspectos no críticos<br>
+                            • Timeline realista de implementación<br>
+                            • Win-win explícito para ambas partes
+                        </div>
+                        
+                        <h6>🤝 Solicitud de partnership:</h6>
+                        <div class="alert alert-warning">
+                            <strong>Framework probado:</strong><br>
+                            • Research específico de su empresa/necesidades<br>
+                            • Track record relevante al partnership<br>
+                            • Propuesta de valor mutual claramente articulada<br>
+                            • Métricas esperadas específicas<br>
+                            • Siguiente paso concreto y de bajo compromiso
+                        </div>
+                    `
+                },
+                relationship: {
+                    title: '🤝 Plantillas de Gestión de Relaciones',
+                    content: `
+                        <h6>🔧 Resolución de problemas:</h6>
+                        <div class="alert alert-danger">
+                            <strong>Protocolo SOLVE:</strong><br>
+                            S - Situation acknowledgment<br>
+                            O - Ownership (sin excusas)<br>
+                            L - Listen actively<br>
+                            V - Value-focused solution<br>
+                            E - Execution timeline específico
+                        </div>
+                        
+                        <h6>💫 Mantenimiento de conexiones:</h6>
+                        <div class="alert alert-primary">
+                            <strong>Sistema de touchpoints:</strong><br>
+                            • Quarterly check-ins con value add<br>
+                            • Congratulaciones en logros específicos<br>
+                            • Sharing de oportunidades relevantes<br>
+                            • Invitaciones a eventos/conexiones<br>
+                            • Updates sobre tu progreso profesional
+                        </div>
+                        
+                        <h6>🌱 Networking estratégico:</h6>
+                        <div class="alert alert-info">
+                            <strong>Aproximación CONNECT:</strong><br>
+                            C - Common ground identification<br>
+                            O - Opportunity exploration<br>
+                            N - Network value proposition<br>
+                            N - Next steps clarity<br>
+                            E - Exchange commitment<br>
+                            C - Consistent follow-through<br>
+                            T - Trust building over time
+                        </div>
+                    `
+                },
+                negotiation: {
+                    title: '⚖️ Plantillas de Negociación Estratégica',
+                    content: `
+                        <h6>💵 Negociación de tarifas:</h6>
+                        <div class="alert alert-success">
+                            <strong>Framework VALUE:</strong><br>
+                            V - Value demonstration específica<br>
+                            A - Anchoring con research de mercado<br>
+                            L - Leverage de resultados previos<br>
+                            U - Understanding de sus limitaciones<br>
+                            E - Exploration de alternativas creativas
+                        </div>
+                        
+                        <h6>📋 Términos y condiciones:</h6>
+                        <div class="alert alert-warning">
+                            <strong>Elementos no-negociables vs flexibles:</strong><br>
+                            • Non-negotiable: Calidad standards, timeline razonables<br>
+                            • Flexible: Métodos de pago, formato de entregables<br>
+                            • Creative: Bonuses por performance, escalators<br>
+                            • Protective: Cancellation policies, revision limits
+                        </div>
+                        
+                        <h6>🎯 Cierre de acuerdos:</h6>
+                        <div class="alert alert-primary">
+                            <strong>Técnica CLOSE:</strong><br>
+                            C - Confirm mutual understanding<br>
+                            L - List agreed-upon points<br>
+                            O - Outline next steps specifically<br>
+                            S - Secure commitment timeline<br>
+                            E - Execute documentation immediately
+                        </div>
+                    `
+                },
+                'follow-up': {
+                    title: '📈 Plantillas de Follow-up Sistemático',
+                    content: `
+                        <h6>⏰ Seguimiento post-meeting:</h6>
+                        <div class="alert alert-info">
+                            <strong>Estructura 24-hour rule:</strong><br>
+                            • Resumen de puntos acordados<br>
+                            • Clarificación de action items<br>
+                            • Timeline específico para deliverables<br>
+                            • Próxima comunicación programada<br>
+                            • Attachment de recursos mencionados
+                        </div>
+                        
+                        <h6>🔄 Seguimiento de propuestas:</h6>
+                        <div class="alert alert-warning">
+                            <strong>Secuencia 3-7-14:</strong><br>
+                            Día 3: Soft follow-up con valor adicional<br>
+                            Día 7: Formal follow-up con timeline update<br>
+                            Día 14: Final follow-up con alternativas<br>
+                            + Respectful close si no hay respuesta
+                        </div>
+                        
+                        <h6>📊 Seguimiento de resultados:</h6>
+                        <div class="alert alert-success">
+                            <strong>Reporting sistemático:</strong><br>
+                            • Weekly progress updates<br>
+                            • Milestone achievement notifications<br>
+                            • Problem/solution communications<br>
+                            • Performance metrics sharing<br>
+                            • Continuous improvement suggestions
+                        </div>
+                    `
+                }
+            };
+            
+            const result = categories[category];
+            document.getElementById('categoryTitle').textContent = result.title;
+            document.getElementById('categoryContent').innerHTML = result.content;
+            document.getElementById('categoryResult').classList.add('show');
+        }
+
+        // Email Preview Update
+        function updateEmailPreview() {
+            const subject = document.getElementById('emailSubject').value || 'Tu asunto aparecerá aquí';
+            const sender = document.getElementById('senderName').value || 'Tu Nombre';
+            const body = document.getElementById('emailBody').value || 'Tu mensaje aparecerá aquí con el formato profesional...';
+            
+            document.getElementById('previewSubject').textContent = subject;
+            document.getElementById('previewSender').textContent = sender;
+            document.getElementById('previewSignature').textContent = sender;
+            document.getElementById('previewBody').textContent = body;
+        }
+
+        // Communication ROI Calculator
+        function calculateCommunicationROI() {
+            const monthlyEmails = parseFloat(document.getElementById('monthlyEmails').value) || 0;
+            const timeWithoutTemplate = parseFloat(document.getElementById('timeWithoutTemplate').value) || 0;
+            const currentResponseRate = parseFloat(document.getElementById('currentResponseRate').value) || 0;
+            
+            if (monthlyEmails > 0 && timeWithoutTemplate > 0 && currentResponseRate > 0) {
+                const timeWithTemplate = 7; // 7 minutes average with template
+                const improvedResponseRate = Math.min(currentResponseRate * 2.9, 95); // 190% improvement
+                
+                const timeSavedPerEmail = timeWithoutTemplate - timeWithTemplate;
+                const totalTimeSaved = monthlyEmails * timeSavedPerEmail;
+                const additionalResponses = (monthlyEmails * (improvedResponseRate - currentResponseRate)) / 100;
+                const annualTimeSaved = totalTimeSaved * 12;
+                
+                const resultHTML = `
+                    <h5>📊 Tu Análisis de ROI Comunicacional</h5>
+                    <div style="background: #dc3545; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Sin plantillas:</strong> ${timeWithoutTemplate} min/email | ${currentResponseRate}% respuesta
+                    </div>
+                    <div style="background: #10b981; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Con plantillas:</strong> 7 min/email | ${Math.round(improvedResponseRate)}% respuesta
+                    </div>
+                    <div style="background: #fd7e14; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Ahorro mensual:</strong> ${totalTimeSaved.toFixed(1)} horas | +${additionalResponses.toFixed(1)} respuestas
+                    </div>
+                    <div style="background: #3b82f6; color: white; padding: 1rem; border-radius: 10px; text-align: center;">
+                        <strong>ROI anual: ${annualTimeSaved.toFixed(0)} horas libres</strong><br>
+                        <small>+ ${(additionalResponses * 12).toFixed(0)} respuestas adicionales/año</small>
+                    </div>
+                `;
+                
+                document.getElementById('communicationROI').innerHTML = resultHTML;
+            }
+        }
+
+        // Metrics Tracker
+        let metricsData = {
+            response: 0,
+            speed: 0,
+            conversion: 0,
+            professionalism: 0
+        };
+
+        function updateMetrics() {
+            // Simulate metrics improvement
+            metricsData.response = Math.min(metricsData.response + Math.random() * 25, 100);
+            metricsData.speed = Math.min(metricsData.speed + Math.random() * 20, 100);
+            metricsData.conversion = Math.min(metricsData.conversion + Math.random() * 18, 100);
+            metricsData.professionalism = Math.min(metricsData.professionalism + Math.random() * 30, 100);
+            
+            // Update metric bars
+            updateMetricBar('response', metricsData.response);
+            updateMetricBar('speed', metricsData.speed);
+            updateMetricBar('conversion', metricsData.conversion);
+            updateMetricBar('professionalism', metricsData.professionalism);
+        }
+
+        function updateMetricBar(type, percentage) {
+            const percentageRounded = Math.round(percentage);
+            document.getElementById(type + '-percent').textContent = percentageRounded + '%';
+            document.getElementById(type + '-progress').style.width = percentage + '%';
+        }
+
+        // Initialize metric bars on load
+        window.addEventListener('load', function() {
+            updateMetricBar('response', 0);
+            updateMetricBar('speed', 0);
+            updateMetricBar('conversion', 0);
+            updateMetricBar('professionalism', 0);
+        });
+
+        // Smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideIn 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all section elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.section-lab, .interactive-card, .success-story').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

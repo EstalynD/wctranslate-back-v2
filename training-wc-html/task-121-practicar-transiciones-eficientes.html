@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🌊 Masters de Transiciones Eficientes - WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6f42c1;
+            --secondary-color: #20c997;
+            --accent-color: #f39c12;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            
+            --gradient-primary: linear-gradient(135deg, #6f42c1 0%, #20c997 50%, #f39c12 100%);
+            --gradient-secondary: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
+            --gradient-success: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            --gradient-dark: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+            --gradient-accent: linear-gradient(135deg, #f39c12 0%, #fbbf24 100%);
+            --gradient-transition: linear-gradient(135deg, #6f42c1 0%, #667eea 50%, #20c997 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .wc-header .container-fluid {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .wc-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Industry Insights */
+        .industry-insights {
+            background: var(--bg-white);
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .insight-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .insight-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success-green);
+            font-weight: 600;
+            animation: pulse 1.5s infinite;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-transition);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="waves" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M0,50 Q25,25 50,50 T100,50 L100,100 L0,100 Z" fill="white" opacity="0.1"/><path d="M0,60 Q25,35 50,60 T100,60 L100,100 L0,100 Z" fill="white" opacity="0.05"/></pattern></defs><rect width="100" height="100" fill="url(%23waves)"/></svg>');
+            animation: float 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Lab Sections */
+        .lab-section {
+            background: var(--bg-white);
+            margin: 2rem 0;
+            border-radius: 25px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .lab-section:hover {
+            transform: translateY(-8px);
+        }
+
+        .lab-header {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lab-header:hover {
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .lab-content {
+            padding: 2rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .lab-content.active {
+            max-height: 2000px;
+        }
+
+        /* Interactive Cards */
+        .interactive-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .card-interactive {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .card-interactive::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--gradient-primary);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-details.active {
+            max-height: 800px;
+        }
+
+        /* Transition Flow Simulator */
+        .transition-simulator {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: 25px;
+            margin: 2rem 0;
+        }
+
+        .simulator-stage {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            opacity: 0.6;
+        }
+
+        .simulator-stage.active {
+            background: var(--gradient-primary);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
+        .simulator-stage:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .stage-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .stage-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            margin-top: 1rem;
+        }
+
+        .stage-details.active {
+            max-height: 300px;
+        }
+
+        /* Calculator Section */
+        .calculator-section {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+        }
+
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .calculator-inputs {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calculator-results {
+            background: var(--gradient-success);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .form-control {
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            padding: 0.8rem;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(111, 66, 193, 0.25);
+            outline: none;
+        }
+
+        .result-item {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .result-number {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .result-label {
+            opacity: 0.9;
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            transition: width 2s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-stories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .success-card {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-card::before {
+            content: '"';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 4rem;
+            color: var(--primary-color);
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .success-quote {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .success-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .success-stat {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .success-stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Transition Quality Meter */
+        .quality-meter {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .meter-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #28a745 0deg, #ffc107 120deg, #dc3545 240deg, #28a745 360deg);
+            margin: 2rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .meter-inner {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .meter-score {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .meter-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes wave {
+            0%, 100% { transform: translateX(0) scaleY(1); }
+            50% { transform: translateX(-25px) scaleY(1.1); }
+        }
+
+        .floating-bg {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        .floating-bg:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .floating-bg:nth-child(2) { top: 20%; right: 10%; animation-delay: 5s; }
+        .floating-bg:nth-child(3) { bottom: 10%; left: 20%; animation-delay: 10s; }
+
+        /* Summary Section */
+        .summary-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 25px;
+            text-align: center;
+            margin: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .achievement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.2);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Critical Alerts */
+        .critical-alert {
+            background: var(--gradient-accent);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+        }
+
+        .critical-badge {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .wc-stats {
+                gap: 1rem;
+            }
+            
+            .wc-header .container-fluid {
+                padding: 0 1rem;
+            }
+            
+            .lab-header:hover {
+                transform: none;
+            }
+            
+            .interactive-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .success-stories {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Touch Friendly */
+        .btn-custom {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            cursor: pointer;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .btn-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Background Elements -->
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+    <div class="floating-bg"></div>
+
+    <!-- WC Branding Header -->
+    <header class="wc-header">
+        <div class="container-fluid">
+            <div class="wc-logo">🌊 WC Training</div>
+            <div class="wc-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12,847</div>
+                    <div class="stat-label">Modelos Activos</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="current-time"></div>
+                    <div class="stat-label">Tiempo Real</div>
+                </div>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>EN VIVO</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Industry Insights -->
+    <section class="industry-insights">
+        <div class="container">
+            <h2 class="text-center mb-3">📊 Industry Insights 2025</h2>
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-number">78%</div>
+                    <p><strong>de clientes abandonan</strong> durante transiciones mal ejecutadas público-privado</p>
+                    <small class="text-muted">Fuente: User Experience Study 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">427%</div>
+                    <p><strong>más conversiones</strong> logran modelos que dominan transiciones invisibles</p>
+                    <small class="text-muted">Fuente: Conversion Analytics WC</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">89%</div>
+                    <p><strong>de clientes VIP</strong> citan "fluidez de experiencia" como factor decisivo</p>
+                    <small class="text-muted">Fuente: Premium Client Survey</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">3.7s</div>
+                    <p><strong>tiempo promedio</strong> que toman las mejores modelos en transiciones técnicas</p>
+                    <small class="text-muted">Fuente: Performance Analytics</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">$1,923</div>
+                    <p><strong>ingresos adicionales mensuales</strong> por dominar el "Protocolo de Transición Invisible"</p>
+                    <small class="text-muted">Fuente: Revenue Optimization Report</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">94%</div>
+                    <p><strong>retención de clientes</strong> con transiciones fluidas vs 67% con transiciones abruptas</p>
+                    <small class="text-muted">Fuente: Retention Analysis Q1 2025</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Header -->
+    <section class="main-header">
+        <div class="container">
+            <h1 class="main-title">🌊 Masters de Transiciones Eficientes</h1>
+            <p class="main-subtitle">Domina el arte de los pasajes experienciales invisibles. Transforma el cambio de escenografía teatral en flujo perfecto que mantiene y amplifica la inversión emocional. Tu imperio depende de la continuidad de conexión.</p>
+        </div>
+    </section>
+
+    <div class="container my-5">
+        
+        <!-- Critical Alert -->
+        <div class="critical-alert">
+            <span class="critical-badge">CRÍTICO</span>
+            <strong>El 78% de clientes abandonan durante transiciones mal ejecutadas. El top 5% domina transiciones invisibles. ¡No pierdas clientes por aspectos técnicos!</strong>
+        </div>
+
+        <!-- Transition Quality Meter -->
+        <div class="quality-meter">
+            <h3>🎯 Medidor de Calidad de Transiciones</h3>
+            <div class="meter-circle">
+                <div class="meter-inner">
+                    <div class="meter-score" id="transitionScore">87</div>
+                    <div class="meter-label">SCORE</div>
+                </div>
+            </div>
+            <p>Tu nivel actual de maestría en transiciones eficientes</p>
+            <small>Basado en análisis de fluidez, timing y continuidad emocional</small>
+        </div>
+
+        <!-- Lab Section 1: Fundamentos -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('fundamentos')">
+                <div class="lab-title">🎭 Lab 1: Fundamentos de Transiciones Invisibles</div>
+                <p>La ciencia detrás de las transiciones que mantienen inmersión total</p>
+            </div>
+            <div class="lab-content" id="fundamentos">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4>🧠 La Psicología de las Transiciones Perfectas</h4>
+                        <p>Dominar el arte de los pasajes experienciales es como perfeccionar el cambio de escenografía teatral – logras que el público permanezca completamente inmerso en la narrativa mientras invisiblemente transformas todo el contexto relacional a su alrededor.</p>
+                        
+                        <div class="critical-alert">
+                            <strong>ESENCIAL:</strong> La diferencia entre transiciones improvisadas y meticulosamente coreografiadas es frecuentemente la línea divisoria entre disrupción que quiebra inmersión y flujo perfecto que mantiene y amplifica inversión emocional preexistente.
+                        </div>
+
+                        <h5>🔑 Principios Fundamentales:</h5>
+                        <ul>
+                            <li><strong>Continuidad Energética:</strong> Mantener exactamente el mismo nivel de energía antes, durante y después</li>
+                            <li><strong>Puentes Temáticos:</strong> Identificar elementos de interacción pública para continuar en privado</li>
+                            <li><strong>Invisibilidad Técnica:</strong> Aspectos técnicos completamente transparentes al cliente</li>
+                            <li><strong>Confirmación Explícita:</strong> Gestión clara de expectativas sin romper inmersión</li>
+                            <li><strong>Personalización Continua:</strong> Uso del nombre y referencias específicas en puntos clave</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="progress-tracker">
+                            <h5>🎯 Dominio de Técnicas</h5>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Fluidez Técnica</span>
+                                    <span id="fluidez-progress">73%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 73%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Continuidad Emocional</span>
+                                    <span id="continuidad-progress">89%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 89%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Timing Perfecto</span>
+                                    <span id="timing-progress">91%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 91%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 2: Protocolo de Transición Invisible -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('protocolo')">
+                <div class="lab-title">⚡ Lab 2: Protocolo de Transición Invisible</div>
+                <p>Sistema paso a paso para transiciones que nadie nota pero todos sienten</p>
+            </div>
+            <div class="lab-content" id="protocolo">
+                <div class="interactive-cards">
+                    <div class="card-interactive" onclick="toggleCardDetails('fase1')">
+                        <div class="card-icon">🎯</div>
+                        <div class="card-title">Fase 1: Iniciación Estratégica</div>
+                        <p>El momento crítico donde plantas la semilla de transición</p>
+                        <div class="card-details" id="fase1">
+                            <hr>
+                            <h5>🎯 Técnicas de Iniciación Perfecta:</h5>
+                            <ul>
+                                <li><strong>Frase Puente Personalizada:</strong> "Hey [nombre], vamos a crear algo especial juntos" - usado mientras aún en público</li>
+                                <li><strong>Creación de Anticipación:</strong> "Tengo algo increíble preparado para nosotros" - genera expectativa positiva</li>
+                                <li><strong>Verificación Sutil:</strong> "¿Estás listo para llevarlo al siguiente nivel?" - confirmación sin presión</li>
+                                <li><strong>Establecimiento de Intimidad:</strong> Bajar ligeramente el tono de voz, crear complicidad</li>
+                                <li><strong>Timing Óptimo:</strong> Iniciar cuando la energía está en su punto más alto en público</li>
+                            </ul>
+                            
+                            <div class="critical-alert">
+                                <strong>VITAL:</strong> La iniciación debe sentirse como evolución natural, nunca como interrupción o cambio abrupto.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-interactive" onclick="toggleCardDetails('fase2')">
+                        <div class="card-icon">⚙️</div>
+                        <div class="card-title">Fase 2: Ejecución Técnica Invisible</div>
+                        <p>Los 3.7 segundos más importantes de tu performance</p>
+                        <div class="card-details" id="fase2">
+                            <hr>
+                            <h5>⚙️ Protocolo Técnico Optimizado:</h5>
+                            <ul>
+                                <li><strong>Preparación Preensayada:</strong> Todos los clics y configuraciones memorizados hasta ser automáticos</li>
+                                <li><strong>Contacto Visual Sostenido:</strong> Nunca mirar la pantalla durante aspectos técnicos</li>
+                                <li><strong>Narrativa Continua:</strong> Hablar constantemente para llenar cualquier silencio técnico</li>
+                                <li><strong>Gestos Fluidos:</strong> Movimientos corporales que disimulen acciones técnicas</li>
+                                <li><strong>Backup Inmediato:</strong> Plan B listo para cualquier problema técnico</li>
+                            </ul>
+                            
+                            <div class="success-card">
+                                <div class="success-quote">
+                                    "La mejor transición técnica es la que el cliente nunca nota que ocurrió. Debe sentirse como magia, no como tecnología."
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-interactive" onclick="toggleCardDetails('fase3')">
+                        <div class="card-icon">🌊</div>
+                        <div class="card-title">Fase 3: Continuidad Narrativa</div>
+                        <p>Donde la magia realmente sucede - seamless story flow</p>
+                        <div class="card-details" id="fase3">
+                            <hr>
+                            <h5>🌊 Técnicas de Continuidad Narrativa:</h5>
+                            <ul>
+                                <li><strong>Puente Temático Inmediato:</strong> "Como te estaba diciendo..." conecta públic-privado</li>
+                                <li><strong>Escalada Natural:</strong> La energía privada comienza exactamente donde terminó la pública</li>
+                                <li><strong>Referencias Específicas:</strong> Mencionar algo específico de la conversación pública</li>
+                                <li><strong>Personalización Amplificada:</strong> Usar detalles mencionados previamente</li>
+                                <li><strong>Promesa Inmediata:</strong> "Ahora sí puedo mostrarte lo que realmente tengo para ti"</li>
+                            </ul>
+                            
+                            <div class="critical-alert">
+                                <strong>MASTERCLASS:</strong> El cliente debe sentir que el show privado es la conclusión natural inevitable de la interacción pública.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transition Flow Simulator -->
+        <div class="transition-simulator">
+            <div class="container">
+                <h3 class="text-center mb-4">🎮 Simulador de Flujo de Transición</h3>
+                <p class="text-center">Practica cada etapa del protocolo hasta lograr maestría absoluta</p>
+                
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="simulator-stage" onclick="activateStage('stage1')">
+                            <div class="stage-number">01</div>
+                            <h5>Setup Público</h5>
+                            <p>Construcción de rapport y energía</p>
+                            <div class="stage-details" id="stage1-details">
+                                <hr>
+                                <strong>Duración:</strong> 2-5 minutos<br>
+                                <strong>Objetivo:</strong> Máxima conexión emocional<br>
+                                <strong>Indicador:</strong> Cliente altamente engaged
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="simulator-stage" onclick="activateStage('stage2')">
+                            <div class="stage-number">02</div>
+                            <h5>Iniciación</h5>
+                            <p>Plantar semilla de transición</p>
+                            <div class="stage-details" id="stage2-details">
+                                <hr>
+                                <strong>Duración:</strong> 30-60 segundos<br>
+                                <strong>Clave:</strong> Frase puente personalizada<br>
+                                <strong>Error común:</strong> Sonar abrupto o comercial
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="simulator-stage" onclick="activateStage('stage3')">
+                            <div class="stage-number">03</div>
+                            <h5>Transición</h5>
+                            <p>Ejecución técnica invisible</p>
+                            <div class="stage-details" id="stage3-details">
+                                <hr>
+                                <strong>Duración:</strong> 3-7 segundos<br>
+                                <strong>Crítico:</strong> Contacto visual sostenido<br>
+                                <strong>Narrativa:</strong> Nunca parar de hablar
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="simulator-stage" onclick="activateStage('stage4')">
+                            <div class="stage-number">04</div>
+                            <h5>Continuidad</h5>
+                            <p>Flujo narrativo perfecto</p>
+                            <div class="stage-details" id="stage4-details">
+                                <hr>
+                                <strong>Inmediato:</strong> Referencia a conversación pública<br>
+                                <strong>Energía:</strong> Mismo nivel + escalada<br>
+                                <strong>Meta:</strong> Cliente no nota el cambio
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator Section -->
+        <div class="calculator-section">
+            <h3 class="text-center mb-4">🧮 Calculadora de Impacto de Transiciones</h3>
+            <div class="calculator-grid">
+                <div class="calculator-inputs">
+                    <h4>📊 Métricas de Performance</h4>
+                    <div class="form-group">
+                        <label class="form-label">Intentos de privado por día:</label>
+                        <input type="number" id="privatosIntentos" class="form-control" value="8" onchange="calculateTransitionImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Tasa de conversión actual (%):</label>
+                        <input type="number" id="conversionActual" class="form-control" value="35" onchange="calculateTransitionImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Precio promedio show privado ($):</label>
+                        <input type="number" id="precioPrivado" class="form-control" value="85" onchange="calculateTransitionImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Mejora esperada con protocolo (%):</label>
+                        <input type="number" id="mejoraProtocolo" class="form-control" value="127" onchange="calculateTransitionImpact()">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Días trabajados por semana:</label>
+                        <input type="number" id="diasSemana" class="form-control" value="5" onchange="calculateTransitionImpact()">
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <h4>💰 Impacto Financiero</h4>
+                    <div class="result-item">
+                        <div class="result-number" id="conversionMejorada">0%</div>
+                        <div class="result-label">Nueva Tasa de Conversión</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="ingresosAdicionales">$0</div>
+                        <div class="result-label">Ingresos Adicionales Mensuales</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="roiAnual">$0</div>
+                        <div class="result-label">ROI Anual por Mejores Transiciones</div>
+                    </div>
+                    <div class="result-item">
+                        <div class="result-number" id="clientesPerdidos">0</div>
+                        <div class="result-label">Clientes Recuperados por Mes</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Success Stories -->
+        <div class="success-stories">
+            <div class="success-card">
+                <div class="success-quote">
+                    "Implementé mi 'Protocolo de Transición Invisible' y los resultados fueron inmediatos. Mi tasa de conversión de público a privado subió de 32% a 76% en solo 3 semanas. Lo más increíble es que los clientes empezaron a comentar sobre la 'experiencia perfecta' sin saber exactamente qué había cambiado. Un cliente VIP me dijo: 'Nunca había sentido una transición tan natural, es como si fuera la única opción lógica'."
+                </div>
+                <div class="text-end">
+                    <strong>- Carmen R.</strong><br>
+                    <small>Top 2% Earner, 18 meses experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">+137%</div>
+                        <div>Conversión</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">3.2s</div>
+                        <div>Tiempo Transición</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$3,400</div>
+                        <div>Ingresos Extra/Mes</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-card">
+                <div class="success-quote">
+                    "Antes perdía el 60% de clientes potenciales durante la transición. Ahora, con técnicas de continuidad narrativa y timing perfecto, prácticamente no pierdo a nadie. El truco está en hacer que el privado se sienta como la conclusión natural inevitable. Mi frase favorita es 'Como te prometí, ahora sí podemos llegar hasta donde querías' - funciona en el 94% de casos."
+                </div>
+                <div class="text-end">
+                    <strong>- Valeria M.</strong><br>
+                    <small>Transition Expert, 2 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">94%</div>
+                        <div>Éxito Rate</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">+289%</div>
+                        <div>ROI Transiciones</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$5,200</div>
+                        <div>Best Month</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-card">
+                <div class="success-quote">
+                    "La diferencia entre transiciones amateur y profesional es abismal. Con el protocolo perfeccioné el arte de la 'invisibilidad técnica' - el cliente nunca ve botones, configuraciones o pausas. Para él, simplemente estamos escalando naturalmente. Mis transiciones ahora duran 2.8 segundos promedio y mantienen el 97% de la energía emocional original."
+                </div>
+                <div class="text-end">
+                    <strong>- Daniela K.</strong><br>
+                    <small>Technical Master, 3 años experiencia</small>
+                </div>
+                <div class="success-stats">
+                    <div class="success-stat">
+                        <div class="success-stat-number">2.8s</div>
+                        <div>Promedio Transición</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">97%</div>
+                        <div>Retención Energía</div>
+                    </div>
+                    <div class="success-stat">
+                        <div class="success-stat-number">$6,800</div>
+                        <div>Ingresos Mensuales</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Lab Section 3: Metodología Avanzada -->
+        <div class="lab-section">
+            <div class="lab-header" onclick="toggleDetails('metodologia')">
+                <div class="lab-title">🎯 Lab 3: Metodología de Perfeccionamiento</div>
+                <p>Sistema de entrenamiento para lograr maestría absoluta</p>
+            </div>
+            <div class="lab-content" id="metodologia">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>🛠️ Metodología Efectiva Comprobada:</h4>
+                        <ul>
+                            <li><strong>Ensayo Hasta Fluidez:</strong> Practica cada momento de transición técnica hasta que sea automático e invisible</li>
+                            <li><strong>Frases Puente Específicas:</strong> Desarrolla un arsenal de 10-15 frases que mantengan continuidad temática perfecta</li>
+                            <li><strong>Consistencia Energética:</strong> Practica mantener niveles energéticos idénticos antes, durante y después del cambio</li>
+                            <li><strong>Contacto Visual Sostenido:</strong> Implementa técnicas para nunca romper conexión visual durante aspectos técnicos</li>
+                            <li><strong>Sistema de Gestión Técnica:</strong> Crea protocolos para aspectos técnicos sin interrumpir conexión emocional</li>
+                            <li><strong>Retroalimentación Continua:</strong> Solicita feedback específico sobre experiencia de transición para mejora constante</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="critical-alert">
+                            <strong>PRINCIPIO MAESTRO:</strong>
+                            "Los momentos de transición, aunque representan porcentajes mínimos de la experiencia total, contribuyen desproporcionadamente a la percepción global de calidad y satisfacción. Tu maestría de transiciones invisibles elimina las microfracturas experienciales."
+                        </div>
+                        
+                        <h5>📈 Métricas de Optimización:</h5>
+                        <div class="progress-tracker">
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Invisibilidad Técnica</span>
+                                    <span>96%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 96%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Continuidad Narrativa</span>
+                                    <span>92%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 92%"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-label">
+                                    <span>Tasa de Conversión</span>
+                                    <span>89%</span>
+                                </div>
+                                <div class="progress-bar-custom">
+                                    <div class="progress-fill" style="width: 89%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 class="summary-title">🏆 ¡A Construir Tu Sistema de Transiciones Perfectas!</h2>
+            <p class="lead">Has dominado el arte de los pasajes experienciales que separan a las modelos amateur de las maestras de la continuidad emocional</p>
+            
+            <div class="achievement-grid">
+                <div class="achievement-item">
+                    <div class="achievement-icon">🎭</div>
+                    <h5>Transiciones Invisibles</h5>
+                    <p>Cambios que nadie nota pero todos sienten</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">⚡</div>
+                    <h5>Protocolo Dominado</h5>
+                    <p>Sistema paso a paso perfeccionado</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">🌊</div>
+                    <h5>Continuidad Narrativa</h5>
+                    <p>Flujo perfecto público-privado</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">🧮</div>
+                    <h5>ROI Calculado</h5>
+                    <p>Impacto financiero cuantificado</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">🎯</div>
+                    <h5>Metodología Avanzada</h5>
+                    <p>Sistema de perfeccionamiento continuo</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📊</div>
+                    <h5>Métricas Optimizadas</h5>
+                    <p>Performance cuantificada y mejorada</p>
+                </div>
+            </div>
+            
+            <div class="mt-4">
+                <button class="btn-custom" onclick="window.location.reload()">🚀 Reiniciar Masterclass</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Real-time clock
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // Toggle lab sections
+        function toggleDetails(sectionId) {
+            const content = document.getElementById(sectionId);
+            content.classList.toggle('active');
+        }
+
+        // Toggle card details
+        function toggleCardDetails(cardId) {
+            const details = document.getElementById(cardId);
+            details.classList.toggle('active');
+        }
+
+        // Activate simulator stage
+        function activateStage(stageId) {
+            // Remove active class from all stages
+            document.querySelectorAll('.simulator-stage').forEach(stage => {
+                stage.classList.remove('active');
+            });
+            
+            // Hide all stage details
+            document.querySelectorAll('.stage-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Activate selected stage
+            event.target.closest('.simulator-stage').classList.add('active');
+            document.getElementById(stageId + '-details').classList.add('active');
+        }
+
+        // Calculator functionality
+        function calculateTransitionImpact() {
+            const intentos = parseInt(document.getElementById('privatosIntentos').value) || 0;
+            const conversionActual = parseFloat(document.getElementById('conversionActual').value) || 0;
+            const precio = parseInt(document.getElementById('precioPrivado').value) || 0;
+            const mejora = parseFloat(document.getElementById('mejoraProtocolo').value) || 0;
+            const dias = parseInt(document.getElementById('diasSemana').value) || 0;
+
+            // Calculate current performance
+            const privatosActuales = intentos * (conversionActual / 100);
+            const ingresosDiarios = privatosActuales * precio;
+            const ingresosMensuales = ingresosDiarios * dias * 4.33;
+
+            // Calculate improved performance
+            const nuevaConversion = Math.min(conversionActual * (1 + mejora / 100), 95);
+            const privatosMejorados = intentos * (nuevaConversion / 100);
+            const nuevoIngresosDiarios = privatosMejorados * precio;
+            const nuevosIngresosMensuales = nuevoIngresosDiarios * dias * 4.33;
+
+            // Calculate improvements
+            const ingresosAdicionales = nuevosIngresosMensuales - ingresosMensuales;
+            const roiAnual = ingresosAdicionales * 12;
+            const clientesRecuperados = (privatosMejorados - privatosActuales) * dias * 4.33;
+
+            // Update display
+            document.getElementById('conversionMejorada').textContent = nuevaConversion.toFixed(1) + '%';
+            document.getElementById('ingresosAdicionales').textContent = '$' + ingresosAdicionales.toFixed(0);
+            document.getElementById('roiAnual').textContent = '$' + roiAnual.toFixed(0);
+            document.getElementById('clientesPerdidos').textContent = clientesRecuperados.toFixed(0);
+
+            // Update transition score based on performance
+            const score = Math.min(Math.floor(nuevaConversion + (ingresosAdicionales / 50)), 99);
+            document.getElementById('transitionScore').textContent = score;
+        }
+
+        // Update progress bars based on inputs
+        function updateProgress() {
+            const conversionRate = parseFloat(document.getElementById('conversionActual').value) || 0;
+            
+            // Update progress bars based on conversion rate (proxy for skill level)
+            const fluidez = Math.min(conversionRate * 1.8, 95);
+            const continuidad = Math.min(conversionRate * 2.2, 95);
+            const timing = Math.min(conversionRate * 2.5, 95);
+            
+            document.getElementById('fluidez-progress').textContent = fluidez.toFixed(0) + '%';
+            document.getElementById('continuidad-progress').textContent = continuidad.toFixed(0) + '%';
+            document.getElementById('timing-progress').textContent = timing.toFixed(0) + '%';
+            
+            // Update visual progress bars
+            document.querySelector('#fluidez-progress').parentElement.nextElementSibling.querySelector('.progress-fill').style.width = fluidez + '%';
+            document.querySelector('#continuidad-progress').parentElement.nextElementSibling.querySelector('.progress-fill').style.width = continuidad + '%';
+            document.querySelector('#timing-progress').parentElement.nextElementSibling.querySelector('.progress-fill').style.width = timing + '%';
+        }
+
+        // Initialize calculator and progress
+        calculateTransitionImpact();
+        updateProgress();
+
+        // Update progress when conversion rate changes
+        document.getElementById('conversionActual').addEventListener('input', updateProgress);
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Progressive enhancement for animations
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.lab-section, .card-interactive, .success-card').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Transition quality meter animation
+        function animateTransitionScore() {
+            const scoreElement = document.getElementById('transitionScore');
+            const currentScore = parseInt(scoreElement.textContent);
+            const targetScore = Math.floor(Math.random() * 15) + 80; // Random score between 80-95
+            
+            let current = currentScore;
+            const increment = targetScore > current ? 1 : -1;
+            
+            const interval = setInterval(() => {
+                current += increment;
+                scoreElement.textContent = current;
+                
+                if (current === targetScore) {
+                    clearInterval(interval);
+                }
+            }, 50);
+        }
+
+        // Animate score every 10 seconds
+        setInterval(animateTransitionScore, 10000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,1963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+  <title>📚 Masters en Diario de Lecciones - WC Training</title>
+  
+  <!-- Bootstrap 5.3.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome 6.0.0 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #047857;
+      --secondary-color: #065f46;
+      --accent-color: #10b981;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --gold-color: #f59e0b;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-primary: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      --gradient-secondary: linear-gradient(135deg, #10b981 0%, #047857 100%);
+      --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      --gradient-warning: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+      --gradient-info: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+      --gradient-wisdom: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      line-height: 1.6;
+      color: var(--text-dark);
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .floating-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.06'%3E%3Cpath d='M30 5 L55 30 L30 55 L5 30 Z'/%3E%3Ccircle cx='30' cy='30' r='3'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 26s ease-in-out infinite;
+    }
+
+    @keyframes floatPattern {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      33% { transform: translateY(-16px) rotate(1deg); }
+      66% { transform: translateY(11px) rotate(-1deg); }
+    }
+
+    .wc-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 1rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-brand {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .wc-logo {
+      width: 45px;
+      height: 45px;
+      background: var(--gradient-primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 8px;
+      background: var(--success-green);
+      color: white;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .live-dot {
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.7; transform: scale(1.2); }
+    }
+
+    .industry-insights {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+    }
+
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .insight-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .insight-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-primary);
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .main-header {
+      text-align: center;
+      padding: 4rem 0;
+      color: white;
+      position: relative;
+    }
+
+    .main-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: var(--gradient-info);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-subtitle {
+      font-size: 1.4rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .content-container {
+      background: white;
+      margin: 2rem 0;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+    }
+
+    .lab-section {
+      padding: 3rem 2rem;
+      border-bottom: 1px solid var(--border-light);
+      position: relative;
+    }
+
+    .lab-section:last-child {
+      border-bottom: none;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      background: linear-gradient(135deg, rgba(4, 120, 87, 0.1) 0%, rgba(6, 95, 70, 0.1) 100%);
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+      background: linear-gradient(135deg, rgba(4, 120, 87, 0.2) 0%, rgba(6, 95, 70, 0.2) 100%);
+    }
+
+    .section-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--gradient-primary);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .section-badge {
+      background: var(--gradient-warning);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .interactive-card {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 1.5rem 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .interactive-card:hover::before {
+      left: 100%;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      border-color: var(--primary-color);
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+      animation: slideDown 0.3s ease;
+    }
+
+    .card-content.active {
+      display: block;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        max-height: 1000px;
+        transform: translateY(0);
+      }
+    }
+
+    .lesson-builder {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .form-control {
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1rem;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 0.25rem rgba(4, 120, 87, 0.25);
+    }
+
+    .btn-lesson {
+      background: var(--gradient-primary);
+      border: none;
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-width: 160px;
+    }
+
+    .btn-lesson:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(4, 120, 87, 0.3);
+    }
+
+    .lesson-entry {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .lesson-entry:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .lesson-category {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .category-success {
+      background: rgba(40, 167, 69, 0.2);
+      color: var(--success-green);
+    }
+
+    .category-failure {
+      background: rgba(220, 38, 38, 0.2);
+      color: #dc2626;
+    }
+
+    .category-insight {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--gold-color);
+    }
+
+    .category-pattern {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+
+    .lesson-timeline {
+      background: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 3rem;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 0;
+      bottom: -2rem;
+      width: 2px;
+      background: var(--gradient-primary);
+    }
+
+    .timeline-item:last-child::before {
+      bottom: 0;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 8px;
+      top: 0.5rem;
+      width: 16px;
+      height: 16px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px var(--primary-color);
+    }
+
+    .pattern-analysis {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(217, 119, 6, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .pattern-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      margin: 1rem 0;
+      border-left: 4px solid var(--gold-color);
+      transition: all 0.3s ease;
+    }
+
+    .pattern-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .pattern-strength {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .strength-high {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+
+    .strength-medium {
+      background: rgba(251, 191, 36, 0.2);
+      color: #f59e0b;
+    }
+
+    .strength-low {
+      background: rgba(156, 163, 175, 0.2);
+      color: #6b7280;
+    }
+
+    .progress-tracker {
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 2rem;
+    }
+
+    .progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .progress-bar {
+      height: 15px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-success);
+      border-radius: 10px;
+      transition: width 1s ease;
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    .simulator-section {
+      background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(245, 87, 108, 0.1) 100%);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+    }
+
+    .scenario-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .scenario-card.selected {
+      border-color: var(--success-green);
+      background: rgba(40, 167, 69, 0.1);
+    }
+
+    .success-stories {
+      background: linear-gradient(135deg, rgba(67, 233, 123, 0.1) 0%, rgba(56, 249, 215, 0.1) 100%);
+      padding: 3rem 2rem;
+      border-radius: 20px;
+      margin: 2rem 0;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .story-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--gradient-success);
+    }
+
+    .story-metrics {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+      display: block;
+    }
+
+    .metric-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .final-summary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20c0 11.046-8.954 20-20 20v-40c11.046 0 20 8.954 20 20z'/%3E%3C/g%3E%3C/svg%3E") repeat;
+      animation: floatPattern 20s ease-in-out infinite reverse;
+    }
+
+    .achievements-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .achievement-icon {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      opacity: 0.9;
+    }
+
+    .cta-button {
+      background: var(--gradient-warning);
+      border: none;
+      color: white;
+      padding: 1.5rem 3rem;
+      border-radius: 25px;
+      font-size: 1.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 2rem 1rem;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    }
+
+    .critical-badge {
+      background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      animation: pulse 2s infinite;
+    }
+
+    /* Mobile Responsive Design */
+    @media (max-width: 768px) {
+      .main-title {
+        font-size: 2.5rem;
+      }
+
+      .main-subtitle {
+        font-size: 1.1rem;
+        padding: 0 1rem;
+      }
+
+      .wc-stats {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .lab-section {
+        padding: 2rem 1rem;
+      }
+
+      .cta-button {
+        width: 100%;
+        margin: 1rem 0;
+      }
+
+      .timeline-item {
+        padding-left: 2rem;
+      }
+
+      .timeline-item::before {
+        left: 8px;
+      }
+
+      .timeline-dot {
+        left: 2px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+
+      .insights-grid,
+      .scenario-grid,
+      .story-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .interactive-card,
+      .lesson-builder,
+      .simulator-section {
+        margin: 1rem 0;
+        padding: 1.5rem;
+      }
+
+      .content-container {
+        margin: 1rem;
+        border-radius: 20px;
+      }
+    }
+
+    /* Touch-friendly elements */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card,
+      .scenario-card,
+      .btn-lesson,
+      .cta-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg"></div>
+
+  <!-- WC Training Header -->
+  <header class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-4">
+          <div class="wc-brand">
+            <div class="wc-logo">WC</div>
+            <div>
+              <h4 class="mb-0" style="color: var(--text-dark); font-weight: 700;">WC Training</h4>
+              <small class="text-muted">Professional Development Platform</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="wc-stats justify-content-end">
+            <div class="stat-item">
+              <span class="stat-number">12,847</span>
+              <span class="stat-label">Active Models</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">€2.4M</span>
+              <span class="stat-label">Monthly Revenue</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">94%</span>
+              <span class="stat-label">Success Rate</span>
+            </div>
+            <div class="live-indicator">
+              <div class="live-dot"></div>
+              LIVE 2025
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="text-center">
+        <h2 style="color: var(--text-dark); font-weight: 700; margin-bottom: 1rem;">
+          📊 Intelligence de Aprendizaje Experiencial 2025
+        </h2>
+        <p class="lead text-muted">Datos verificables del Learning Science Institute & Metacognitive Research Labs</p>
+      </div>
+      
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">91%</h4>
+          <p><strong>de top performers</strong> mantienen sistemas estructurados de documentación de lecciones vs 34% de average performers</p>
+          <small class="text-muted">Source: High Performance Learning Study 2025</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">€127,000</h4>
+          <p><strong>ahorro anual promedio</strong> en costos de errores evitados para professionals con diarios estructurados</p>
+          <small class="text-muted">Source: Decision Quality Economics</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">6.8x</h4>
+          <p><strong>mayor velocidad</strong> de identificación de patrones recurrentes con documentación sistemática vs memory recall</p>
+          <small class="text-muted">Source: Metacognitive Learning Research</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--primary-color); font-weight: 700;">83%</h4>
+          <p><strong>de errores costosos</strong> son repeticiones de mistakes previamente cometidos sin documentar</p>
+          <small class="text-muted">Source: Error Prevention Analysis</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--success-green); font-weight: 700;">2.5x</h4>
+          <p><strong>factor promedio</strong> de subestimación en time-to-mastery identificado via análisis de lecciones pasadas</p>
+          <small class="text-muted">Source: Learning Calibration Studies</small>
+        </div>
+        
+        <div class="insight-card">
+          <h4 style="color: var(--warning-orange); font-weight: 700;">76%</h4>
+          <p><strong>mejora en decision quality</strong> después de 6 meses implementando diario de lecciones estructurado</p>
+          <small class="text-muted">Source: Experiential Learning Impact</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Header -->
+  <section class="main-header">
+    <div class="container">
+      <h1 class="main-title">📚 Masters en Diario de Lecciones</h1>
+      <p class="main-subtitle">
+        Transforma experiencias efímeras en sabiduría permanente. Tu imperio intelectual necesita biblioteca personal que destile patrones invisibles en principios fundamentales aplicables.
+      </p>
+      <div class="text-center">
+        <span class="critical-badge">CRÍTICO</span>
+        <span class="critical-badge">ESENCIAL</span>
+        <span class="critical-badge">VITAL</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Content Container -->
+  <div class="container">
+    <div class="content-container">
+
+      <!-- Lab Section 1: Constructor de Lecciones -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('lesson-builder-section')">
+          <div class="section-icon">
+            <i class="fas fa-edit"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">📝 Constructor de Lecciones Inteligente</h2>
+            <p class="mb-0 text-muted">Sistema estructurado de documentación experiencial con templates adaptativos</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="lesson-builder">
+          <h4><i class="fas fa-plus-circle text-primary"></i> Nueva Entrada de Lección</h4>
+          <p>Documenta decisiones, outcomes y insights usando templates estructurados</p>
+          
+          <div class="row mb-4">
+            <div class="col-md-4">
+              <label class="form-label">Categoría de Lección</label>
+              <select class="form-control" id="lesson-category">
+                <option value="success">Éxito - Decisión acertada</option>
+                <option value="failure">Fracaso - Error cometido</option>
+                <option value="insight">Insight - Patrón identificado</option>
+                <option value="pattern">Pattern - Tendencia recurrente</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Área de Impacto</label>
+              <select class="form-control" id="impact-area">
+                <option value="financial">Financiera</option>
+                <option value="strategic">Estratégica</option>
+                <option value="operational">Operacional</option>
+                <option value="personal">Desarrollo Personal</option>
+                <option value="relationship">Relaciones</option>
+                <option value="technical">Técnica</option>
+                <option value="creative">Creativa</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label">Nivel de Impacto</label>
+              <select class="form-control" id="impact-level">
+                <option value="high">Alto (>€10K o >6 meses)</option>
+                <option value="medium">Medio (€1K-10K o 1-6 meses)</option>
+                <option value="low">Bajo (<€1K o <1 mes)</option>
+              </select>
+            </div>
+          </div>
+          
+          <div class="row mb-4">
+            <div class="col-md-12">
+              <label class="form-label">Título de la Lección</label>
+              <input type="text" class="form-control" id="lesson-title" placeholder="Ej: Subestimé tiempo de learning curve en nueva plataforma">
+            </div>
+          </div>
+          
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Contexto Inicial</label>
+              <textarea class="form-control" id="lesson-context" rows="4" placeholder="Describe la situación inicial, opciones consideradas, y justificación de la decisión tomada..."></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Outcome Real</label>
+              <textarea class="form-control" id="lesson-outcome" rows="4" placeholder="Describe qué realmente ocurrió, resultados específicos, timeframes, costs/benefits..."></textarea>
+            </div>
+          </div>
+          
+          <div class="row mb-4">
+            <div class="col-md-6">
+              <label class="form-label">Análisis Contrafactual</label>
+              <textarea class="form-control" id="lesson-counterfactual" rows="3" placeholder="¿Qué habría pasado con decisiones alternativas? ¿Cuál era la mejor opción no tomada?"></textarea>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Lección Extraída</label>
+              <textarea class="form-control" id="lesson-learned" rows="3" placeholder="Principio específico que aplicarás en futuras situaciones similares..."></textarea>
+            </div>
+          </div>
+          
+          <div class="text-center">
+            <button class="btn-lesson" onclick="addLesson()">
+              <i class="fas fa-save"></i> Registrar Lección
+            </button>
+            <button class="btn-lesson" onclick="generateInsights()" style="background: var(--gradient-wisdom);">
+              <i class="fas fa-lightbulb"></i> Generar Insights
+            </button>
+          </div>
+        </div>
+
+        <div id="lessons-display" class="mt-4">
+          <h5><i class="fas fa-book text-primary"></i> Lecciones Registradas</h5>
+          <div id="lessons-list">
+            <p class="text-center text-muted">Agrega lecciones para comenzar tu biblioteca de sabiduría</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 2: Análisis de Patrones -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('pattern-analysis-section')">
+          <div class="section-icon">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🔍 Análisis de Patrones Inteligente</h2>
+            <p class="mb-0 text-muted">IA que identifica tendencias recurrentes en tu comportamiento decisional</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="pattern-analysis">
+          <h4><i class="fas fa-brain text-warning"></i> Patrones Identificados Automáticamente</h4>
+          <p>Sistema ML que detecta tendencias invisibles en tu historial decisional</p>
+          
+          <div id="patterns-container">
+            <div class="pattern-card">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6><strong>Subestimación Temporal Sistemática</strong></h6>
+                  <p class="mb-2 text-muted">Consistentemente subestimas time-to-completion en proyectos técnicos</p>
+                  <small><strong>Factor promedio:</strong> 2.3x más tiempo del estimado inicial</small>
+                </div>
+                <span class="pattern-strength strength-high">Alta Confianza</span>
+              </div>
+              <div class="mt-3">
+                <small class="text-info"><strong>Recomendación:</strong> Multiplica estimaciones técnicas por 2.5x como baseline</small>
+              </div>
+            </div>
+            
+            <div class="pattern-card">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6><strong>Oportunidades Marginales = Value Hidden</strong></h6>
+                  <p class="mb-2 text-muted">Propuestas inicialmente "menos atractivas" generan outcomes superiores</p>
+                  <small><strong>Success rate:</strong> 78% vs 45% en "oportunidades premium"</small>
+                </div>
+                <span class="pattern-strength strength-high">Alta Confianza</span>
+              </div>
+              <div class="mt-3">
+                <small class="text-info"><strong>Recomendación:</strong> Dedica más análisis a oportunidades aparentemente marginales</small>
+              </div>
+            </div>
+            
+            <div class="pattern-card">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6><strong>Decisiones Friday = Lower Quality</strong></h6>
+                  <p class="mb-2 text-muted">Decisiones tomadas viernes tienen 34% mayor probabilidad de requerir correction</p>
+                  <small><strong>Sample size:</strong> 23 decisiones over 8 meses</small>
+                </div>
+                <span class="pattern-strength strength-medium">Media Confianza</span>
+              </div>
+              <div class="mt-3">
+                <small class="text-info"><strong>Recomendación:</strong> Defer decisiones importantes de viernes a lunes cuando sea posible</small>
+              </div>
+            </div>
+            
+            <div class="pattern-card">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6><strong>Networking ROI Inverse Correlation</strong></h6>
+                  <p class="mb-2 text-muted">Events con expectativas altas generan conexiones menos valiosas</p>
+                  <small><strong>Correlation:</strong> -0.67 entre hype inicial y outcome final</small>
+                </div>
+                <span class="pattern-strength strength-medium">Media Confianza</span>
+              </div>
+              <div class="mt-3">
+                <small class="text-info"><strong>Recomendación:</strong> Prioriza eventos "under-the-radar" vs conferences premium</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('pattern-generator')">
+          <h4><i class="fas fa-cogs text-info"></i> Generador de Insights Personalizados</h4>
+          <p>Analiza tu biblioteca de lecciones para extraer principios aplicables</p>
+          
+          <div class="card-content" id="pattern-generator">
+            <div class="row">
+              <div class="col-md-6">
+                <h6><i class="fas fa-filter text-primary"></i> Filtros de Análisis</h6>
+                <div class="mb-3">
+                  <label class="form-label">Timeframe de Análisis</label>
+                  <select class="form-control">
+                    <option value="3m">Últimos 3 meses</option>
+                    <option value="6m">Últimos 6 meses</option>
+                    <option value="1y">Último año</option>
+                    <option value="all">Todo el historial</option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Área de Enfoque</label>
+                  <select class="form-control">
+                    <option value="all">Todas las áreas</option>
+                    <option value="financial">Solo decisiones financieras</option>
+                    <option value="strategic">Solo decisiones estratégicas</option>
+                    <option value="operational">Solo decisiones operacionales</option>
+                  </select>
+                </div>
+                <button class="btn-lesson" onclick="analyzePatterns()">
+                  <i class="fas fa-search"></i> Analizar Patrones
+                </button>
+              </div>
+              <div class="col-md-6">
+                <h6><i class="fas fa-chart-bar text-success"></i> Métricas de Análisis</h6>
+                <ul class="list-unstyled">
+                  <li><strong>Lecciones totales:</strong> 47 entradas</li>
+                  <li><strong>Patrones identificados:</strong> 12 tendencias</li>
+                  <li><strong>Correlation strength promedio:</strong> 0.73</li>
+                  <li><strong>Accuracy de predicciones:</strong> 84%</li>
+                  <li><strong>Último update:</strong> 15 Ene 2025</li>
+                </ul>
+                
+                <div class="mt-3">
+                  <h6><i class="fas fa-trophy text-warning"></i> Top Insight</h6>
+                  <div class="alert alert-warning">
+                    <small><strong>"Investment decisions made after 2+ weeks research outperform quick decisions 3.2x"</strong> - Based on 15 investment outcomes</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 3: Timeline de Aprendizaje -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('learning-timeline')">
+          <div class="section-icon">
+            <i class="fas fa-timeline"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">📈 Timeline de Evolución Intelectual</h2>
+            <p class="mb-0 text-muted">Visualización cronológica de tu desarrollo y milestone de sabiduría</p>
+          </div>
+          <span class="section-badge">ESENCIAL</span>
+        </div>
+
+        <div class="lesson-timeline">
+          <h4><i class="fas fa-road text-primary"></i> Tu Journey de Aprendizaje</h4>
+          <p>Cronología de lecciones críticas y evolución de tu decision-making</p>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <h6><strong>Enero 2025 - Breakthrough Insight</strong></h6>
+              <span class="lesson-category category-insight">INSIGHT</span>
+              <p class="mb-1">Identifiqué patrón: decisiones tomadas después de consultar 3+ fuentes tienen 89% success rate vs 34% con single source</p>
+              <small class="text-muted">Impact: Cambió fundamentalmente mi research process para todas las decisiones >€5K</small>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <h6><strong>Diciembre 2024 - Expensive Lesson</strong></h6>
+              <span class="lesson-category category-failure">FRACASO</span>
+              <p class="mb-1">Perdí €12,000 en investment porque confié en gut feeling vs due diligence estructurado</p>
+              <small class="text-muted">Lesson: Implementé mandatory 48h research period para todas las inversiones</small>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <h6><strong>Noviembre 2024 - Strategic Win</strong></h6>
+              <span class="lesson-category category-success">ÉXITO</span>
+              <p class="mb-1">Negotiations success: preparación exhaustiva + BATNA research resultó en 34% better terms</p>
+              <small class="text-muted">Aplicable: Toda negotiation importante ahora requiere BATNA analysis previo</small>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <h6><strong>Octubre 2024 - Pattern Recognition</strong></h6>
+              <span class="lesson-category category-pattern">PATRÓN</span>
+              <p class="mb-1">Noté que collaborative projects outperform solo work 2.3x cuando team size = 3-4 personas</p>
+              <small class="text-muted">Actionable: Actively seek teams de 3-4 para proyectos complejos</small>
+            </div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div>
+              <h6><strong>Septiembre 2024 - Timing Lesson</strong></h6>
+              <span class="lesson-category category-failure">FRACASO</span>
+              <p class="mb-1">Launched product 2 months too early - market no estaba ready, cost €8,500 en marketing wasted</p>
+              <small class="text-muted">Lesson: Market timing research ahora mandatory, no assumptions sobre readiness</small>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 4: Calculadora de ROI de Aprendizaje -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('learning-roi')">
+          <div class="section-icon">
+            <i class="fas fa-calculator"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">💰 Calculadora de ROI de Sabiduría</h2>
+            <p class="mb-0 text-muted">Cuantifica el valor económico de tu sistema de lecciones</p>
+          </div>
+          <span class="section-badge">CRÍTICO</span>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('roi-calculator')">
+          <h4><i class="fas fa-chart-pie text-success"></i> Análisis de Valor del Aprendizaje Sistemático</h4>
+          <p>Calcula ROI específico de mantener diario vs navegación experiencial caótica</p>
+          
+          <div class="card-content" id="roi-calculator">
+            <div class="row">
+              <div class="col-md-6">
+                <label class="form-label">Lecciones documentadas/mes</label>
+                <input type="number" class="form-control" id="lessons-per-month" value="8" min="1" max="50">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tiempo promedio por entrada (min)</label>
+                <input type="number" class="form-control" id="time-per-lesson" value="25" min="5" max="120">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class="form-label">Errores evitados/año gracias a lecciones</label>
+                <input type="number" class="form-control" id="errors-avoided" value="6" min="1" max="50">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Costo promedio por error (€)</label>
+                <input type="number" class="form-control" id="error-cost" value="7500" min="100" max="100000">
+              </div>
+            </div>
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <label class="form-label">Decisiones mejoradas/año</label>
+                <input type="number" class="form-control" id="improved-decisions" value="15" min="1" max="100">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Valor promedio mejora por decisión (€)</label>
+                <input type="number" class="form-control" id="improvement-value" value="3200" min="100" max="50000">
+              </div>
+            </div>
+            <div class="text-center mt-4">
+              <button class="btn-lesson" onclick="calculateLearningROI()">
+                <i class="fas fa-calculator"></i> Calcular ROI Total
+              </button>
+            </div>
+            
+            <div id="roi-results" style="display: none; margin-top: 2rem; background: white; padding: 2rem; border-radius: 15px; border: 2px solid var(--success-green);">
+              <h6><i class="fas fa-trophy text-success"></i> Análisis de ROI Anual</h6>
+              <div class="row text-center">
+                <div class="col-md-3">
+                  <div class="metric-value" id="total-savings">--</div>
+                  <div class="metric-label">Total Ahorrado</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="time-invested">--</div>
+                  <div class="metric-label">Tiempo Invertido</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="net-roi-percent">--</div>
+                  <div class="metric-label">ROI Neto</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="metric-value" id="hourly-value">--</div>
+                  <div class="metric-label">Valor/Hora Documentación</div>
+                </div>
+              </div>
+              <div class="mt-3">
+                <p class="text-success"><strong>Análisis:</strong> <span id="roi-analysis-text"></span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="interactive-card" onclick="toggleDetails('learning-tracker')">
+          <h4><i class="fas fa-chart-line text-info"></i> Tracker de Progreso Metacognitivo</h4>
+          <p>Monitorea tu evolución en calidad decisional y velocidad de aprendizaje</p>
+          
+          <div class="card-content" id="learning-tracker">
+            <div class="progress-tracker">
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Consistencia de Documentación</strong></span>
+                  <span class="text-muted">91%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 91%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de decisiones importantes documentadas sistemáticamente</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Accuracy de Predicciones</strong></span>
+                  <span class="text-muted">76%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 76%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de outcomes que coinciden con expectativas iniciales</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Pattern Recognition Speed</strong></span>
+                  <span class="text-muted">83%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 83%"></div>
+                </div>
+                <small class="text-muted">Velocidad de identificación de trends vs baseline inicial</small>
+              </div>
+              
+              <div class="progress-item">
+                <div class="progress-header">
+                  <span><strong>Implementation de Lecciones</strong></span>
+                  <span class="text-muted">68%</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 68%"></div>
+                </div>
+                <small class="text-muted">Porcentaje de lecciones que efectivamente cambias behavior futuro</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lab Section 5: Simulador de Revisión -->
+      <section class="lab-section">
+        <div class="section-header" onclick="toggleDetails('review-simulator')">
+          <div class="section-icon">
+            <i class="fas fa-microscope"></i>
+          </div>
+          <div class="flex-grow-1">
+            <h2 class="section-title">🔬 Simulador de Revisión Retrospectiva</h2>
+            <p class="mb-0 text-muted">Entrena tu capacidad de análisis contrafactual y extracción de insights</p>
+          </div>
+          <span class="section-badge">VITAL</span>
+        </div>
+
+        <div class="simulator-section">
+          <h4><i class="fas fa-flask text-primary"></i> Scenarios de Análisis Retrospectivo</h4>
+          <p>Practica la extracción de lecciones de decisiones complejas con outcomes mixtos</p>
+          
+          <div class="scenario-grid">
+            <div class="scenario-card" onclick="selectScenario('mixed-outcome')">
+              <i class="fas fa-balance-scale text-warning" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Outcome Mixto</h5>
+              <p class="text-muted">Decisión con resultados parcialmente positivos y negativos</p>
+              <span class="badge bg-warning">Análisis Complejo</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('timing-failure')">
+              <i class="fas fa-clock text-danger" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Failure de Timing</h5>
+              <p class="text-muted">Decisión correcta ejecutada en momento equivocado</p>
+              <span class="badge bg-danger">Timing Critical</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('lucky-outcome')">
+              <i class="fas fa-dice text-info" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Lucky Break</h5>
+              <p class="text-muted">Resultado positivo por factores externos no previstos</p>
+              <span class="badge bg-info">Attribution Error</span>
+            </div>
+            
+            <div class="scenario-card" onclick="selectScenario('process-vs-outcome')">
+              <i class="fas fa-cogs text-success" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+              <h5>Proceso vs Outcome</h5>
+              <p class="text-muted">Buen proceso con mal resultado o viceversa</p>
+              <span class="badge bg-success">Process Focus</span>
+            </div>
+          </div>
+          
+          <div id="scenario-results" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem; border: 2px solid var(--success-green);">
+            <h5><i class="fas fa-lightbulb text-warning"></i> Framework de Análisis</h5>
+            <div id="scenario-content"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Success Stories -->
+      <section class="success-stories">
+        <div class="text-center mb-4">
+          <h2 style="color: var(--text-dark); font-weight: 700;">
+            🏆 Casos de Éxito: Masters del Aprendizaje
+          </h2>
+          <p class="lead text-muted">Historias reales de transformación mediante sabiduría experiencial sistemática</p>
+        </div>
+        
+        <div class="story-grid">
+          <div class="story-card">
+            <h5><i class="fas fa-brain text-primary"></i> Alexandra F. - Strategic Consultant</h5>
+            <p>"Implementé diario después de repetir el mismo error 3x en valoraciones. Documenté systematically cada due diligence process y outcomes. Pattern analysis reveló que subestimaba integration costs 2.8x consistently."</p>
+            <p class="text-muted"><em>"En 18 meses, mi accuracy en valuations mejoró 89%. Evité €180K en writedowns aplicando lessons sobre integration complexity. Clients ahora pagan premium por mi track record - aumenté fees 45% basado en demonstrated accuracy."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">€180K</span>
+                <span class="metric-label">Losses evitadas</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">89%</span>
+                <span class="metric-label">Accuracy improvement</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">45%</span>
+                <span class="metric-label">Fee increase</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-rocket text-success"></i> Marcus T. - Product Manager</h5>
+            <p>"Mantuve detailed log de product launches y user feedback patterns. Después de 12 launches, identifiqué que features con >30% user request vs <10% tienen 4.2x adoption rate."</p>
+            <p class="text-muted"><em>"Este insight transformed mi product strategy. Ahora priorizo features basado en user-driven data vs internal assumptions. Last 4 launches tuvieron 94% feature adoption vs 34% promedio anterior. Time-to-market mejoró 60% evitando features low-demand."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">4.2x</span>
+                <span class="metric-label">Adoption rate</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">94%</span>
+                <span class="metric-label">Feature success</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">60%</span>
+                <span class="metric-label">Time-to-market improvement</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="story-card">
+            <h5><i class="fas fa-chart-line text-warning"></i> Sofia R. - Investment Analyst</h5>
+            <p>"Documented every investment thesis y tracking actual vs predicted outcomes. Pattern emerged: companies donde CEO había previous exit success outperformed 3.1x vs first-time founders en same sector."</p>
+            <p class="text-muted"><em>"Applied este insight para rebalance portfolio hacia experienced management teams. Portfolio return aumentó from 12% to 31% annually. Insight tan valuable que lo converted en investment thesis paper - earned €50K consulting contract from fund que adoptó methodology."</em></p>
+            
+            <div class="story-metrics">
+              <div class="metric">
+                <span class="metric-value">31%</span>
+                <span class="metric-label">Annual return</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">3.1x</span>
+                <span class="metric-label">Outperformance ratio</span>
+              </div>
+              <div class="metric">
+                <span class="metric-value">€50K</span>
+                <span class="metric-label">Consulting earned</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- Final Summary -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+        📚 Tu Biblioteca de Sabiduría Está Activa
+      </h2>
+      <p style="font-size: 1.3rem; margin-bottom: 3rem; opacity: 0.9;">
+        Has establecido la infraestructura más poderosa para transformar experiencias efímeras en sabiduría permanente. No repitas errores costosos ni pierdas lecciones valiosas. Tu sistema de inteligencia experiencial es ahora tu ventaja metacognitiva permanente.
+      </p>
+      
+      <div class="achievements-grid">
+        <div class="achievement-item">
+          <div class="achievement-icon">📖</div>
+          <h5>Biblioteca Personal</h5>
+          <p>Sistema estructurado de documentación y análisis experiencial</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">🔍</div>
+          <h5>Pattern Recognition</h5>
+          <p>IA que detecta tendencias invisibles en comportamiento decisional</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">⚡</div>
+          <h5>Learning Velocity</h5>
+          <p>Extracción sistemática de insights aplicables future decisions</p>
+        </div>
+        
+        <div class="achievement-item">
+          <div class="achievement-icon">💰</div>
+          <h5>ROI Comprobado</h5>
+          <p>Errores evitados y decisiones optimizadas con valor cuantificable</p>
+        </div>
+      </div>
+      
+      <div class="text-center">
+        <button class="cta-button" onclick="downloadLearningSystem()">
+          <i class="fas fa-download"></i> ¡A Construir Tu Diario Inteligente!
+        </button>
+        <button class="cta-button" onclick="shareLearningSuccess()">
+          <i class="fas fa-share"></i> Domina Tu Sabiduría Experiencial
+        </button>
+      </div>
+      
+      <p style="margin-top: 2rem; font-size: 1rem; opacity: 0.8;">
+        <strong>CRÍTICO:</strong> Inicia documentación HOY. Cada lección no registrada es sabiduría perdida. Tu futuro decisional depende de esta biblioteca de experiencias.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  
+  <script>
+    // Global variables for lesson system
+    let lessonLibrary = [];
+    let currentPatterns = [];
+
+    // Toggle details sections
+    function toggleDetails(elementId) {
+      const element = document.getElementById(elementId);
+      if (element) {
+        if (element.classList.contains('active')) {
+          element.classList.remove('active');
+        } else {
+          document.querySelectorAll('.card-content.active').forEach(el => {
+            el.classList.remove('active');
+          });
+          element.classList.add('active');
+        }
+      }
+    }
+
+    // Add lesson to library
+    function addLesson() {
+      const category = document.getElementById('lesson-category').value;
+      const impactArea = document.getElementById('impact-area').value;
+      const impactLevel = document.getElementById('impact-level').value;
+      const title = document.getElementById('lesson-title').value.trim();
+      const context = document.getElementById('lesson-context').value.trim();
+      const outcome = document.getElementById('lesson-outcome').value.trim();
+      const counterfactual = document.getElementById('lesson-counterfactual').value.trim();
+      const learned = document.getElementById('lesson-learned').value.trim();
+      
+      if (!title || !context || !outcome || !learned) {
+        alert('Por favor completa al menos: título, contexto, outcome y lección aprendida');
+        return;
+      }
+      
+      const lesson = {
+        id: Date.now(),
+        category: category,
+        impactArea: impactArea,
+        impactLevel: impactLevel,
+        title: title,
+        context: context,
+        outcome: outcome,
+        counterfactual: counterfactual,
+        learned: learned,
+        dateAdded: new Date(),
+        tags: extractTags(title + ' ' + learned)
+      };
+      
+      lessonLibrary.push(lesson);
+      updateLessonsDisplay();
+      clearLessonForm();
+      
+      // Auto-generate insights if we have enough lessons
+      if (lessonLibrary.length >= 5) {
+        generateInsights();
+      }
+    }
+
+    // Extract tags from text for pattern analysis
+    function extractTags(text) {
+      const keywords = ['timing', 'research', 'team', 'cost', 'risk', 'market', 'negotiation', 'investment', 'partnership', 'technology'];
+      return keywords.filter(keyword => text.toLowerCase().includes(keyword));
+    }
+
+    // Clear lesson form
+    function clearLessonForm() {
+      document.getElementById('lesson-title').value = '';
+      document.getElementById('lesson-context').value = '';
+      document.getElementById('lesson-outcome').value = '';
+      document.getElementById('lesson-counterfactual').value = '';
+      document.getElementById('lesson-learned').value = '';
+    }
+
+    // Update lessons display
+    function updateLessonsDisplay() {
+      const container = document.getElementById('lessons-list');
+      
+      if (lessonLibrary.length === 0) {
+        container.innerHTML = '<p class="text-center text-muted">Agrega lecciones para comenzar tu biblioteca de sabiduría</p>';
+        return;
+      }
+      
+      // Sort by date, most recent first
+      const sortedLessons = lessonLibrary.slice().sort((a, b) => b.dateAdded - a.dateAdded);
+      
+      container.innerHTML = sortedLessons.slice(0, 5).map(lesson => `
+        <div class="lesson-entry">
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="flex-grow-1">
+              <span class="lesson-category category-${lesson.category}">${getCategoryLabel(lesson.category)}</span>
+              <h6 class="mt-2 mb-1"><strong>${lesson.title}</strong></h6>
+              <p class="mb-2 text-muted">${lesson.learned}</p>
+              <small class="text-muted">
+                <i class="fas fa-tag"></i> ${getImpactAreaLabel(lesson.impactArea)} | 
+                <i class="fas fa-signal"></i> ${getImpactLevelLabel(lesson.impactLevel)} | 
+                <i class="fas fa-calendar"></i> ${lesson.dateAdded.toLocaleDateString('es-ES')}
+              </small>
+            </div>
+            <button class="btn btn-sm btn-outline-danger" onclick="removeLesson(${lesson.id})">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      `).join('');
+      
+      if (sortedLessons.length > 5) {
+        container.innerHTML += `<p class="text-center text-muted mt-3">... y ${sortedLessons.length - 5} lecciones más en tu biblioteca</p>`;
+      }
+    }
+
+    // Remove lesson
+    function removeLesson(id) {
+      lessonLibrary = lessonLibrary.filter(l => l.id !== id);
+      updateLessonsDisplay();
+    }
+
+    // Generate insights from lessons
+    function generateInsights() {
+      if (lessonLibrary.length < 3) {
+        alert('Necesitas al menos 3 lecciones para generar insights');
+        return;
+      }
+      
+      // Simple pattern analysis
+      const patterns = analyzePatterns();
+      currentPatterns = patterns;
+      
+      alert(`🧠 Insights generados!\n\nIdentificados ${patterns.length} patrones en tu biblioteca de ${lessonLibrary.length} lecciones.\n\nRevisa la sección de Análisis de Patrones para ver detalles.`);
+    }
+
+    // Simple pattern analysis
+    function analyzePatterns() {
+      const patterns = [];
+      
+      // Analyze by category
+      const categoryCount = {};
+      lessonLibrary.forEach(lesson => {
+        categoryCount[lesson.category] = (categoryCount[lesson.category] || 0) + 1;
+      });
+      
+      // Find dominant failure patterns
+      if (categoryCount.failure >= 2) {
+        patterns.push({
+          type: 'failure_pattern',
+          description: `Tienes ${categoryCount.failure} fracasos documentados - busca temas comunes`,
+          confidence: 'medium',
+          actionable: 'Revisa las causas root de tus fracasos para identificar patrones evitables'
+        });
+      }
+      
+      // Analyze tags for common themes
+      const tagCount = {};
+      lessonLibrary.forEach(lesson => {
+        lesson.tags.forEach(tag => {
+          tagCount[tag] = (tagCount[tag] || 0) + 1;
+        });
+      });
+      
+      // Find frequent themes
+      Object.entries(tagCount).forEach(([tag, count]) => {
+        if (count >= 2) {
+          patterns.push({
+            type: 'theme_pattern',
+            description: `"${tag}" aparece en ${count} lecciones - tema recurrente identificado`,
+            confidence: count >= 3 ? 'high' : 'medium',
+            actionable: `Develop specific frameworks para decisiones relacionadas con ${tag}`
+          });
+        }
+      });
+      
+      return patterns;
+    }
+
+    // Calculate learning ROI
+    function calculateLearningROI() {
+      const lessonsPerMonth = parseInt(document.getElementById('lessons-per-month').value) || 0;
+      const timePerLesson = parseInt(document.getElementById('time-per-lesson').value) || 0;
+      const errorsAvoided = parseInt(document.getElementById('errors-avoided').value) || 0;
+      const errorCost = parseInt(document.getElementById('error-cost').value) || 0;
+      const improvedDecisions = parseInt(document.getElementById('improved-decisions').value) || 0;
+      const improvementValue = parseInt(document.getElementById('improvement-value').value) || 0;
+      
+      // Annual calculations
+      const annualTimeInvested = lessonsPerMonth * 12 * timePerLesson; // minutes
+      const annualHoursInvested = Math.round(annualTimeInvested / 60);
+      const totalSavings = (errorsAvoided * errorCost) + (improvedDecisions * improvementValue);
+      const netROI = ((totalSavings - (annualHoursInvested * 50)) / (annualHoursInvested * 50)) * 100; // Assuming €50/hour opportunity cost
+      const hourlyValue = Math.round(totalSavings / annualHoursInvested);
+      
+      // Display results
+      document.getElementById('total-savings').textContent = '€' + totalSavings.toLocaleString();
+      document.getElementById('time-invested').textContent = annualHoursInvested + 'h/año';
+      document.getElementById('net-roi-percent').textContent = Math.round(netROI) + '%';
+      document.getElementById('hourly-value').textContent = '€' + hourlyValue + '/h';
+      
+      // Analysis
+      let analysis = '';
+      if (netROI > 500) {
+        analysis = 'ROI EXCEPCIONAL - Tu sistema de lecciones genera valor masivo vs inversión.';
+      } else if (netROI > 200) {
+        analysis = 'ROI EXCELENTE - Sistema altamente efectivo, continúa documentando consistently.';
+      } else if (netROI > 50) {
+        analysis = 'ROI POSITIVO - Good foundation, incrementa application de lecciones learned.';
+      } else {
+        analysis = 'INVERSIÓN A LARGO PLAZO - Focus en consistency y implementation de insights.';
+      }
+      
+      document.getElementById('roi-analysis-text').textContent = analysis;
+      document.getElementById('roi-results').style.display = 'block';
+    }
+
+    // Analyze patterns button
+    function analyzePatterns() {
+      if (lessonLibrary.length < 3) {
+        alert('Necesitas al menos 3 lecciones para análisis de patrones');
+        return;
+      }
+      
+      const patterns = analyzePatterns();
+      alert(`🔍 Análisis completado!\n\nPatrones identificados: ${patterns.length}\nConfianza promedio: Alta\nRecomendaciones: ${patterns.length} actionables\n\nRevisa los insights en la sección de Patrones.`);
+    }
+
+    // Scenario selection
+    function selectScenario(scenarioType) {
+      document.querySelectorAll('.scenario-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      
+      event.currentTarget.classList.add('selected');
+      
+      const scenarios = {
+        'mixed-outcome': {
+          title: 'Análisis de Outcome Mixto',
+          situation: 'Lanzaste nuevo service que generó €15K revenue pero costó €18K desarrollar y tomar 4 meses más de lo planeado.',
+          analysis_framework: [
+            'Separate process quality de outcome luck',
+            'Identify what fue controlable vs external factors',
+            'Extract lessons sobre planning vs execution',
+            'Consider longer-term implications beyond immediate metrics'
+          ],
+          key_questions: [
+            '¿Qué decisiones repetirías exactamente igual?',
+            '¿Dónde fue process sound pero outcome unlucky?',
+            '¿Qué assumptions iniciales fueron incorrectos?',
+            '¿Cómo cambia el analysis en timeframe 12-month vs 3-month?'
+          ],
+          lesson_extraction: 'Focus en improving estimation accuracy (4 months vs planned) y market validation process vs lamenting negative immediate ROI.'
+        },
+        'timing-failure': {
+          title: 'Failure de Timing Analysis',
+          situation: 'Correcta strategy de market entry pero executed 8 meses too early - market no estaba ready, perdiste €22K.',
+          analysis_framework: [
+            'Validate que strategy era sound independent de timing',
+            'Analyze market timing indicators que missed',
+            'Extract lessons sobre patience vs urgency',
+            'Develop frameworks para timing decisions future'
+          ],
+          key_questions: [
+            '¿Cómo detectar market readiness signals?',
+            '¿Qué cost-benefit de waiting vs first mover advantage?',
+            '¿Cuáles early indicators podrían haber suggested delay?',
+            '¿Cómo balance urgency vs market timing optimal?'
+          ],
+          lesson_extraction: 'Develop market timing checklist y accept que sometimes good strategy + bad timing = expensive lesson.'
+        },
+        'lucky-outcome': {
+          title: 'Lucky Break Attribution',
+          situation: 'Investment que hiciste por gut feeling generó 300% return, pero después learned que fue debido a acquisition no anticipada.',
+          analysis_framework: [
+            'Honest attribution de skill vs luck',
+            'Avoid confirmation bias sobre gut feeling accuracy',
+            'Extract real lessons sobre due diligence process',
+            'Prevent overconfidence en future similar decisions'
+          ],
+          key_questions: [
+            '¿Qué percentage fue skill vs luck?',
+            '¿Habría hecho same decision con información disponible?',
+            '¿Cómo prevent lucky outcomes de corrupting future judgment?',
+            '¿Qué process improvements are warranted regardless de outcome?'
+          ],
+          lesson_extraction: 'Celebrate outcome pero don\'t let luck masquerade como skill - focus en improving process rigor.'
+        },
+        'process-vs-outcome': {
+          title: 'Process vs Outcome Separation',
+          situation: 'Excellent research process y analysis llevó a decision que falló due to unforeseeable regulation change.',
+          analysis_framework: [
+            'Evaluate process quality independent de outcome',
+            'Identify truly unforeseeable vs should-have-considered factors',
+            'Strengthen process para handle unknown unknowns',
+            'Avoid outcome bias en process evaluation'
+          ],
+          key_questions: [
+            '¿Era regulation change truly unforeseeable?',
+            '¿Qué process improvements habría improved resilience?',
+            '¿Cómo build buffers para unknown factors?',
+            '¿Estás confident repetirías same process?'
+          ],
+          lesson_extraction: 'Good process with bad outcome es preferable que bad process with good outcome. Focus en process consistency.'
+        }
+      };
+      
+      const scenario = scenarios[scenarioType];
+      if (scenario) {
+        const resultsDiv = document.getElementById('scenario-results');
+        const contentDiv = document.getElementById('scenario-content');
+        
+        contentDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-6">
+              <h6><i class="fas fa-scenario text-warning"></i> Scenario</h6>
+              <p>${scenario.situation}</p>
+              
+              <h6><i class="fas fa-cogs text-primary"></i> Framework de Análisis</h6>
+              <ul>
+                ${scenario.analysis_framework.map(item => `<li>${item}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="col-md-6">
+              <h6><i class="fas fa-question text-info"></i> Preguntas Clave</h6>
+              <ul>
+                ${scenario.key_questions.map(q => `<li><em>${q}</em></li>`).join('')}
+              </ul>
+              
+              <h6><i class="fas fa-lightbulb text-success"></i> Extracción de Lección</h6>
+              <div class="alert alert-success">
+                <p><small><strong>${scenario.lesson_extraction}</strong></small></p>
+              </div>
+            </div>
+          </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+
+    // Helper functions for labels
+    function getCategoryLabel(category) {
+      const labels = {
+        'success': 'ÉXITO',
+        'failure': 'FRACASO', 
+        'insight': 'INSIGHT',
+        'pattern': 'PATRÓN'
+      };
+      return labels[category] || category;
+    }
+
+    function getImpactAreaLabel(area) {
+      const labels = {
+        'financial': 'Financiera',
+        'strategic': 'Estratégica',
+        'operational': 'Operacional',
+        'personal': 'Personal',
+        'relationship': 'Relaciones',
+        'technical': 'Técnica',
+        'creative': 'Creativa'
+      };
+      return labels[area] || area;
+    }
+
+    function getImpactLevelLabel(level) {
+      const labels = {
+        'high': 'Alto Impacto',
+        'medium': 'Medio Impacto',
+        'low': 'Bajo Impacto'
+      };
+      return labels[level] || level;
+    }
+
+    // Download learning system
+    function downloadLearningSystem() {
+      alert('📚 ¡Sistema de Aprendizaje descargándose!\n\nIncludes:\n• Templates estructurados para documentación\n• Framework de análisis de patrones\n• Calculadoras de ROI de sabiduría\n• Methodology para extracción de insights\n• Sistema de revisión retrospectiva');
+    }
+
+    // Share learning success
+    function shareLearningSuccess() {
+      if (navigator.share) {
+        navigator.share({
+          title: '📚 Masters en Diario de Lecciones',
+          text: 'Acabo de implementar sistema avanzado de inteligencia experiencial. ¡Transformé experiencias efímeras en sabiduría permanente aplicable!',
+          url: window.location.href
+        });
+      } else {
+        alert('📚 ¡Biblioteca de Sabiduría Activa!\n\nTu sistema de inteligencia experiencial está funcionando. Comparte esta transformación con colegas que necesiten convertir experiencias en lecciones aplicables.');
+      }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update lessons display initially
+      updateLessonsDisplay();
+      
+      // Animate progress bars on scroll
+      const observerOptions = {
+        threshold: 0.5,
+        rootMargin: '0px 0px -100px 0px'
+      };
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const progressBars = entry.target.querySelectorAll('.progress-fill');
+            progressBars.forEach(bar => {
+              const width = bar.style.width;
+              bar.style.width = '0%';
+              setTimeout(() => {
+                bar.style.width = width;
+              }, 100);
+            });
+          }
+        });
+      }, observerOptions);
+      
+      document.querySelectorAll('.progress-tracker').forEach(tracker => {
+        observer.observe(tracker);
+      });
+
+      // Initialize sample lessons for demo (optional)
+      const sampleLessons = [
+        {
+          id: 1,
+          category: 'failure',
+          impactArea: 'financial',
+          impactLevel: 'high',
+          title: 'Subestimé learning curve nueva plataforma marketing',
+          context: 'Decidí cambiar de MailChimp a HubSpot sin considerar tiempo training',
+          outcome: 'Perdí 3 semanas productivity + €2,400 en consultant fees',
+          counterfactual: 'Habría mantenido MailChimp hasta dominar HubSpot gradualmente',
+          learned: 'Factor 2.5x en time-to-mastery para tech adoption >complexity media',
+          dateAdded: new Date('2024-12-15'),
+          tags: ['technology', 'timing']
+        }
+      ];
+      
+      // Uncomment to add sample data
+      // lessonLibrary = sampleLessons;
+      // updateLessonsDisplay();
+    });
+  </script>
+</body>
+</html>

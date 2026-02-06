@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🌍 Geo-blocking: El Error Costoso</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --wc-primary: #E91E63;
+      --wc-secondary: #9C27B0;
+      --wc-accent: #FF5722;
+      --wc-gradient: linear-gradient(135deg, #E91E63 0%, #9C27B0 50%, #FF5722 100%);
+      --wc-gradient-light: linear-gradient(135deg, rgba(233, 30, 99, 0.1) 0%, rgba(156, 39, 176, 0.1) 50%, rgba(255, 87, 34, 0.1) 100%);
+      --real-red: #F44336;
+      --artistico-blue: #2196F3;
+      --seguro-green: #4CAF50;
+      --peligro-orange: #FF9800;
+      --success-green: #4CAF50;
+      --warning-orange: #FF9800;
+      --danger-red: #F44336;
+      --info-blue: #2196F3;
+      --text-dark: #1F2937;
+      --text-muted: #6B7280;
+      --bg-white: #FFFFFF;
+      --bg-light: #F8F9FA;
+      --border-light: #E0E0E0;
+      --shadow-primary: rgba(233, 30, 99, 0.15);
+      --money-green: #28A745;
+      --loss-red: #DC3545;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      transition: all 0.3s ease;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #FFF0F5 0%, #F3E5F5 50%, #FFF3E0 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .hero-header {
+      background: var(--wc-gradient);
+      color: white;
+      padding: 50px;
+      text-align: center;
+      border-radius: 20px;
+      margin-bottom: 2rem;
+      box-shadow: 0 20px 40px var(--shadow-primary);
+    }
+
+    .wc-branding {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .wc-logo {
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: bold;
+      font-size: 1.5rem;
+    }
+
+    .module-breadcrumb {
+      background: var(--bg-white);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 1rem 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .breadcrumb-item {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .breadcrumb-item.active {
+      color: var(--wc-primary);
+      font-weight: bold;
+    }
+
+    .section-card {
+      background: var(--bg-white);
+      border-radius: 16px;
+      box-shadow: 0 8px 25px var(--shadow-primary);
+      margin-bottom: 2.5rem;
+      border: 2px solid var(--border-light);
+      padding: 2.5rem;
+      position: relative;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      background: var(--wc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight-box {
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin: 1.5rem 0;
+      position: relative;
+    }
+
+    .primary-highlight {
+      background: var(--wc-gradient-light);
+      border: 2px solid var(--wc-primary);
+      border-left: 6px solid var(--wc-primary);
+    }
+
+    .success-highlight {
+      background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.05));
+      border: 2px solid var(--success-green);
+      border-left: 6px solid var(--success-green);
+    }
+
+    .info-highlight {
+      background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(3, 169, 244, 0.05));
+      border: 2px solid var(--info-blue);
+      border-left: 6px solid var(--info-blue);
+    }
+
+    .warning-highlight {
+      background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 193, 7, 0.05));
+      border: 2px solid var(--warning-orange);
+      border-left: 6px solid var(--warning-orange);
+    }
+
+    .danger-highlight {
+      background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(233, 30, 99, 0.05));
+      border: 2px solid var(--danger-red);
+      border-left: 6px solid var(--danger-red);
+    }
+
+    .myth-vs-reality {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .myth-card {
+      background: rgba(244, 67, 54, 0.1);
+      border: 3px solid var(--danger-red);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .myth-card::before {
+      content: '❌';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--danger-red);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .reality-card {
+      background: rgba(76, 175, 80, 0.1);
+      border: 3px solid var(--success-green);
+      border-radius: 16px;
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .reality-card::before {
+      content: '✅';
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background: var(--success-green);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .income-calculator {
+      background: var(--bg-white);
+      border: 3px solid var(--money-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calculator-section {
+      margin: 1.5rem 0;
+      padding: 1rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+    }
+
+    .calculator-input {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid var(--border-light);
+      border-radius: 6px;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+    }
+
+    .calculator-input:focus {
+      border-color: var(--money-green);
+      outline: none;
+    }
+
+    .calculator-result {
+      background: var(--money-green);
+      color: white;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      text-align: center;
+      display: none;
+    }
+
+    .loss-amount {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+    }
+
+    .vpn-simulator {
+      background: var(--info-blue);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .vpn-simulator::before {
+      content: '🔓';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    .vpn-step {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .vpn-step:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .vpn-step.completed {
+      background: rgba(76, 175, 80, 0.3);
+      border-color: var(--success-green);
+    }
+
+    .country-market-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .country-card {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .country-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .country-card.blocked {
+      background: rgba(244, 67, 54, 0.1);
+      border-color: var(--danger-red);
+      opacity: 0.7;
+    }
+
+    .country-card.blocked::after {
+      content: '🚫';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 1.2rem;
+    }
+
+    .country-flag {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .country-income {
+      font-weight: bold;
+      color: var(--money-green);
+      font-size: 1.1rem;
+    }
+
+    .blocked-income {
+      color: var(--danger-red);
+      text-decoration: line-through;
+    }
+
+    .geo-blocking-quiz {
+      background: var(--bg-white);
+      border: 3px solid var(--wc-primary);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .quiz-question {
+      background: var(--bg-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-question:hover {
+      background: var(--wc-gradient-light);
+    }
+
+    .quiz-question.correct {
+      background: rgba(76, 175, 80, 0.2);
+      border: 2px solid var(--success-green);
+    }
+
+    .quiz-question.incorrect {
+      background: rgba(244, 67, 54, 0.2);
+      border: 2px solid var(--danger-red);
+    }
+
+    .quiz-explanation {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .explanation-correct {
+      background: rgba(76, 175, 80, 0.1);
+      border: 1px solid var(--success-green);
+      color: var(--success-green);
+    }
+
+    .explanation-incorrect {
+      background: rgba(244, 67, 54, 0.1);
+      border: 1px solid var(--danger-red);
+      color: var(--danger-red);
+    }
+
+    .real-cases {
+      background: var(--warning-orange);
+      color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      position: relative;
+    }
+
+    .real-cases::before {
+      content: '💸';
+      position: absolute;
+      top: -15px;
+      left: 20px;
+      background: var(--bg-white);
+      padding: 10px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+    }
+
+    .case-item {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .case-loss {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #FFE082;
+      margin-bottom: 0.5rem;
+    }
+
+    .protection-alternatives {
+      background: var(--bg-white);
+      border: 3px solid var(--success-green);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .alternative-item {
+      display: flex;
+      align-items: center;
+      padding: 1rem;
+      margin: 0.5rem 0;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 1px solid var(--border-light);
+    }
+
+    .alternative-icon {
+      font-size: 2rem;
+      margin-right: 1rem;
+      width: 60px;
+      text-align: center;
+    }
+
+    .stats-comparison {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--bg-light);
+      border-radius: 8px;
+      border: 2px solid var(--border-light);
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-loss {
+      color: var(--loss-red);
+    }
+
+    .stat-gain {
+      color: var(--money-green);
+    }
+
+    .interactive-map {
+      background: var(--bg-light);
+      border: 2px solid var(--border-light);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem 0;
+      text-align: center;
+    }
+
+    .map-controls {
+      margin-bottom: 1rem;
+    }
+
+    .map-button {
+      margin: 0.25rem;
+      padding: 0.5rem 1rem;
+      border: 2px solid var(--wc-primary);
+      background: transparent;
+      color: var(--wc-primary);
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .map-button:hover {
+      background: var(--wc-primary);
+      color: white;
+    }
+
+    .map-button.active {
+      background: var(--wc-primary);
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .myth-vs-reality {
+        grid-template-columns: 1fr;
+      }
+      
+      .section-card {
+        padding: 1.5rem;
+      }
+      
+      .hero-header {
+        padding: 30px 20px;
+      }
+
+      .country-market-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wc-branding">
+    <div class="wc-logo">🎓 WC TRAINING</div>
+    <p class="mb-0 text-muted">Análisis real de +5,000 modelos: impacto del geo-blocking en ingresos</p>
+  </div>
+
+  <div class="module-breadcrumb">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🌟 Industria Webcam General</a></li>
+        <li class="breadcrumb-item"><a href="#" class="breadcrumb-item">🔒 Seguridad y Privacidad</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Tarea 2.2: Geo-blocking Contraproducente</li>
+      </ol>
+    </nav>
+  </div>
+
+  <header class="hero-header">
+    <h1 class="mb-3">
+      <i class="fas fa-globe-americas"></i>
+      ¿Por qué Bloquear Países es Contraproducente?
+      <i class="fas fa-chart-line-down"></i>
+    </h1>
+    <p class="fs-5 mb-0">
+      Descubre por qué esto reduce tus ingresos un 40-60% y no te protege realmente
+    </p>
+  </header>
+
+  <main class="container-fluid">
+    
+    <!-- Sección: El Gran Error -->
+    <section class="section-card">
+      <h2 class="section-title">💸 El Error Más Costoso en Webcam</h2>
+      
+      <div class="danger-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> La Realidad Dolorosa</h5>
+        <p><strong>El 68% de modelos nuevas bloquean países "por seguridad"</strong> sin saber que están perdiendo entre <strong>$800-2,400 USD mensuales</strong> innecesariamente. WC Training ha analizado los datos de ingresos de +5,000 modelos y los resultados son impactantes.</p>
+        
+        <div class="stats-comparison">
+          <div class="stat-card">
+            <span class="stat-number stat-loss">-47%</span>
+            <small>Reducción promedio de ingresos</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number stat-loss">68%</span>
+            <small>De nuevas modelos lo hacen</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number stat-loss">$1,640</span>
+            <small>Pérdida mensual promedio (USD)</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number stat-loss">0%</span>
+            <small>De protección real que ofrece</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-info-circle"></i> ¿Qué es el Geo-blocking?</h5>
+        <p>El <strong>geo-blocking</strong> (o bloqueo geográfico) es cuando una modelo configura su perfil para que usuarios de ciertos países NO puedan ver su cámara ni entrar a su chat. Es una función que ofrecen todas las páginas webcam.</p>
+      </div>
+
+      <div class="myth-vs-reality">
+        <div class="myth-card">
+          <h5 style="color: var(--danger-red);">❌ MITO: "Me Protege"</h5>
+          <ul>
+            <li><strong>"Si bloqueo mi país, nadie me reconocerá"</strong></li>
+            <li><strong>"Es más seguro no tener viewers locales"</strong></li>
+            <li><strong>"Así protejo mi privacidad"</strong></li>
+            <li><strong>"Mi familia no me verá"</strong></li>
+            <li><strong>"Evito problemas legales"</strong></li>
+          </ul>
+          <div class="warning-highlight mt-3">
+            <strong>⚡ REALIDAD:</strong> Todo esto es una ilusión de seguridad que cuesta MUY caro.
+          </div>
+        </div>
+
+        <div class="reality-card">
+          <h5 style="color: var(--success-green);">✅ REALIDAD: "Te Empobrece"</h5>
+          <ul>
+            <li><strong>Cualquier VPN evita tu bloqueo en 30 segundos</strong></li>
+            <li><strong>Pierdes 40-60% de ingresos potenciales</strong></li>
+            <li><strong>Tu ranking baja por menor tráfico</strong></li>
+            <li><strong>Reduces diversificación de mercados</strong></li>
+            <li><strong>0% de protección real adicional</strong></li>
+          </ul>
+          <div class="success-highlight mt-3">
+            <strong>🎯 VERDAD:</strong> Solo reduces ingresos sin obtener protección real.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Calculadora de Pérdidas -->
+    <section class="section-card">
+      <h2 class="section-title">💰 Calculadora: ¿Cuánto Dinero Estás Perdiendo?</h2>
+      
+      <div class="income-calculator">
+        <h5><i class="fas fa-calculator"></i> Calcula tu Pérdida Real de Ingresos</h5>
+        <p>Ingresa tus datos actuales para ver cuánto dinero estás perdiendo por bloquear países:</p>
+        
+        <div class="calculator-section">
+          <label><strong>¿Cuánto ganas actualmente por día? (USD)</strong></label>
+          <input type="number" class="calculator-input" id="currentDaily" placeholder="Ej: 80" min="0">
+          <small class="text-muted">Promedio diario actual con países bloqueados</small>
+        </div>
+
+        <div class="calculator-section">
+          <label><strong>¿Cuántos países tienes bloqueados?</strong></label>
+          <select class="calculator-input" id="blockedCountries">
+            <option value="">Selecciona cantidad</option>
+            <option value="1">1 país (solo el mío)</option>
+            <option value="3">2-3 países</option>
+            <option value="5">4-5 países</option>
+            <option value="10">6-10 países</option>
+            <option value="15">Más de 10 países</option>
+          </select>
+        </div>
+
+        <div class="calculator-section">
+          <label><strong>¿Qué países tienes bloqueados?</strong></label>
+          <select class="calculator-input" id="countryType">
+            <option value="">Selecciona tipo</option>
+            <option value="latam">Solo países de Latinoamérica</option>
+            <option value="europe">Países europeos</option>
+            <option value="usa">Estados Unidos/Canadá</option>
+            <option value="mixed">Mezcla de varios continentes</option>
+            <option value="many">Muchos países desarrollados</option>
+          </select>
+        </div>
+
+        <button class="btn btn-success btn-lg" onclick="calculateLoss()" style="background: var(--money-green); border: none; width: 100%;">
+          <i class="fas fa-chart-line"></i> Calcular Mi Pérdida de Ingresos
+        </button>
+
+        <div class="calculator-result" id="lossResult">
+          <div class="loss-amount" id="lossAmount"></div>
+          <div id="lossDetails"></div>
+          <div style="margin-top: 1rem; font-size: 0.9rem; opacity: 0.9;">
+            <strong>💡 Esto es dinero que podrías estar ganando AHORA MISMO</strong><br>
+            Solo cambiando la configuración de geo-blocking
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Simulador VPN -->
+    <section class="section-card">
+      <h2 class="section-title">🔓 Simulador: Lo Fácil que es Evitar Geo-blocking</h2>
+      
+      <div class="vpn-simulator">
+        <h5><i class="fas fa-unlock"></i> Prueba tú Misma lo Inútil del Bloqueo</h5>
+        <p>Simula cómo cualquier usuario puede acceder a tu contenido en menos de 1 minuto, sin importar qué países bloquees:</p>
+        
+        <div class="vpn-step" onclick="completeStep(this, 1)">
+          <h6><strong>Paso 1:</strong> El usuario ve que no puede acceder</h6>
+          <p>Usuario de Colombia intenta ver tu cámara pero está bloqueado.</p>
+          <small>👆 Haz clic para simular</small>
+        </div>
+
+        <div class="vpn-step" onclick="completeStep(this, 2)">
+          <h6><strong>Paso 2:</strong> Busca "VPN gratis" en Google</h6>
+          <p>En 10 segundos encuentra opciones gratuitas como ProtonVPN, TunnelBear, etc.</p>
+          <small>👆 Haz clic para continuar</small>
+        </div>
+
+        <div class="vpn-step" onclick="completeStep(this, 3)">
+          <h6><strong>Paso 3:</strong> Instala VPN (30 segundos)</h6>
+          <p>Descarga e instala la app, muchas no requieren ni registro.</p>
+          <small>👆 Haz clic para simular instalación</small>
+        </div>
+
+        <div class="vpn-step" onclick="completeStep(this, 4)">
+          <h6><strong>Paso 4:</strong> Selecciona país permitido</h6>
+          <p>Cambia su IP a Estados Unidos, Alemania, o cualquier país no bloqueado.</p>
+          <small>👆 Haz clic para cambiar ubicación</small>
+        </div>
+
+        <div class="vpn-step" onclick="completeStep(this, 5)">
+          <h6><strong>Paso 5:</strong> ¡Ya puede verte normalmente!</h6>
+          <p>Ahora aparece como usuario de otro país y accede a todo tu contenido.</p>
+          <small>👆 Haz clic para completar</small>
+        </div>
+
+        <div id="simulationResult" style="display: none; background: rgba(255,255,255,0.2); padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+          <h6><strong>⏱️ Tiempo total: 1 minuto y 20 segundos</strong></h6>
+          <p>El usuario que querías bloquear ya puede verte, comprarte shows, darte tips, etc. Tu "protección" duró menos de 2 minutos.</p>
+          <p><strong>🔑 CONCLUSIÓN:</strong> Si una persona realmente quiere verte, el geo-blocking NO la va a detener.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Mapa de Mercados Perdidos -->
+    <section class="section-card">
+      <h2 class="section-title">🌍 Mercados que Estás Perdiendo</h2>
+      
+      <div class="interactive-map">
+        <h5><i class="fas fa-map-marked-alt"></i> Visualiza tus Ingresos Perdidos por País</h5>
+        <p>Haz clic en los botones para ver cuánto dinero pierdes al bloquear diferentes mercados:</p>
+        
+        <div class="map-controls">
+          <button class="map-button" onclick="showMarkets('all')">Ver Todos</button>
+          <button class="map-button" onclick="showMarkets('latam')">Solo Latinoamérica</button>
+          <button class="map-button" onclick="showMarkets('europe')">Solo Europa</button>
+          <button class="map-button" onclick="showMarkets('english')">Países de Habla Inglesa</button>
+        </div>
+
+        <div class="country-market-grid" id="countryGrid">
+          <!-- Países se generarán dinámicamente -->
+        </div>
+
+        <div id="marketSummary" class="mt-3 p-3" style="background: var(--bg-white); border-radius: 8px; display: none;">
+          <!-- Resumen se mostrará aquí -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Quiz de Geo-blocking -->
+    <section class="section-card">
+      <h2 class="section-title">🧠 Quiz: ¿Verdadero o Falso?</h2>
+      
+      <div class="geo-blocking-quiz">
+        <h5><i class="fas fa-question-circle"></i> Evalúa tu Conocimiento sobre Geo-blocking</h5>
+        <p>Responde verdadero o falso a cada afirmación:</p>
+        
+        <div class="quiz-question" onclick="revealAnswer(this, false, 'FALSO: Cualquier VPN gratuita puede evitar tu bloqueo en menos de 1 minuto. Es la ilusión más cara de la industria.')">
+          <strong>El geo-blocking protege efectivamente tu identidad</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, true, 'VERDADERO: Los datos de WC Training muestran pérdidas consistentes del 40-60% en ingresos cuando se bloquean países importantes.')">
+          <strong>Bloquear países reduce significativamente tus ingresos</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, false, 'FALSO: Las VPN son herramientas comunes y legales. Millones de personas las usan diariamente para trabajo, entretenimiento y privacidad.')">
+          <strong>Solo hackers o personas peligrosas usan VPN</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, true, 'VERDADERO: Menos tráfico = peor ranking = menos visibilidad = menos ingresos. Es un ciclo negativo constante.')">
+          <strong>Bloquear países afecta negativamente tu ranking en las páginas</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, false, 'FALSO: Tu identidad artística (creada en la Tarea 2.1) es la protección real. El geo-blocking no añade ninguna seguridad adicional.')">
+          <strong>Es mejor bloquear países que crear una identidad artística sólida</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, true, 'VERDADERO: Estados Unidos, Reino Unido, Alemania, Canadá y Australia están entre los mercados más rentables. Bloquearlos es sabotaje económico.')">
+          <strong>Los países con mayor poder adquisitivo suelen dar mejores tips</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, false, 'FALSO: Si alguien realmente quiere hacerte daño, una VPN le tomará 1 minuto evitar tu bloqueo. No ofrece protección real.')">
+          <strong>El geo-blocking detiene efectivamente a stalkers o acosadores</strong>
+        </div>
+
+        <div class="quiz-question" onclick="revealAnswer(this, true, 'VERDADERO: Diversificar mercados reduce riesgo. Depender solo de algunos países te hace vulnerable a cambios económicos o regulatorios.')">
+          <strong>Tener audiencia global diversificada es más seguro económicamente</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección: Casos Reales -->
+    <section class="section-card">
+      <h2 class="section-title">📊 Casos Reales de Pérdidas de Ingresos</h2>
+      
+      <div class="real-cases">
+        <h5><i class="fas fa-chart-line-down"></i> Historias Reales de Estudiantes WC Training</h5>
+        <p>Estas son pérdidas REALES documentadas de nuestras estudiantes que bloqueaban países:</p>
+        
+        <div class="case-item">
+          <div class="case-loss">-$2,100 USD/mes</div>
+          <h6>"La Colombiana que Bloqueó USA"</h6>
+          <p><strong>Modelo de 25 años, Medellín:</strong> Bloqueó Estados Unidos "por seguridad". Pasó de ganar $3,200/mes a $1,100/mes. Cuando desbloqueó USA y Canadá, sus ingresos se triplicaron en 2 meses.</p>
+          <small><em>Pérdida acumulada en 8 meses: $16,800 USD</em></small>
+        </div>
+
+        <div class="case-item">
+          <div class="case-loss">-$1,850 USD/mes</div>
+          <h6>"La Mexicana Paranoica"</h6>
+          <p><strong>Modelo de 29 años, Ciudad de México:</strong> Bloqueó México, USA, España y otros 8 países "importantes". Solo permitía países pequeños de Europa del Este. Sus ingresos eran 65% menores que el promedio de su categoría.</p>
+          <small><em>Cambió estrategia y sus ingresos aumentaron 180% en 3 meses</em></small>
+        </div>
+
+        <div class="case-item">
+          <div class="case-loss">-$950 USD/mes</div>
+          <h6>"La Argentina Conservadora"</h6>
+          <p><strong>Modelo de 32 años, Buenos Aires:</strong> Bloqueó todos los países de habla hispana y Brasil. No entendía por qué no podía competir con otras latinas. Al desbloquear, descubrió que los latinos daban mejores tips que esperaba.</p>
+          <small><em>Su mercado principal ahora son mexicanos y colombianos</em></small>
+        </div>
+
+        <div class="case-item">
+          <div class="case-loss">-$3,200 USD/mes</div>
+          <h6>"La Española del Error Costoso"</h6>
+          <p><strong>Modelo de 27 años, Barcelona:</strong> Bloqueó España, Francia, Italia, Portugal y Reino Unido. Solo permitía países asiáticos y africanos. Sus ingresos eran patéticos hasta que entendió el error.</p>
+          <small><em>Ahora gana $4,800/mes, principalmente de viewers europeos</em></small>
+        </div>
+      </div>
+
+      <div class="danger-highlight">
+        <h5><i class="fas fa-exclamation-circle"></i> Patrón Común en Todos los Casos</h5>
+        <p><strong>100% de las modelos que desbloquearon países vieron aumentos inmediatos en ingresos.</strong> NINGUNA se arrepintió de la decisión. TODAS dijeron que el geo-blocking fue "el error más caro" de su carrera.</p>
+      </div>
+    </section>
+
+    <!-- Sección: Alternativas Reales de Protección -->
+    <section class="section-card">
+      <h2 class="section-title">🛡️ Alternativas REALES de Protección</h2>
+      
+      <div class="protection-alternatives">
+        <h5><i class="fas fa-shield-alt"></i> Cómo Protegerte SIN Sabotear tus Ingresos</h5>
+        <p>Estas son las estrategias que SÍ funcionan para protección real, usadas por modelos top:</p>
+        
+        <div class="alternative-item">
+          <div class="alternative-icon">🎭</div>
+          <div>
+            <h6><strong>Identidad Artística Sólida</strong></h6>
+            <p>La protección MÁS efectiva. Ningún geo-blocking supera una identidad completamente separada.</p>
+            <small><strong>Efectividad:</strong> 98% • <strong>Costo en ingresos:</strong> $0</small>
+          </div>
+        </div>
+
+        <div class="alternative-item">
+          <div class="alternative-icon">📱</div>
+          <div>
+            <h6><strong>Redes Sociales Separadas</strong></h6>
+            <p>Cuentas del personaje completamente independientes de tus redes personales.</p>
+            <small><strong>Efectividad:</strong> 95% • <strong>Costo en ingresos:</strong> $0</small>
+          </div>
+        </div>
+
+        <div class="alternative-item">
+          <div class="alternative-icon">🏠</div>
+          <div>
+            <h6><strong>Ubicación General, Nunca Específica</strong></h6>
+            <p>"Soy de Sudamérica" vs "Vivo en el barrio X de la ciudad Y". Información general es segura.</p>
+            <small><strong>Efectividad:</strong> 92% • <strong>Costo en ingresos:</strong> $0</small>
+          </div>
+        </div>
+
+        <div class="alternative-item">
+          <div class="alternative-icon">💬</div>
+          <div>
+            <h6><strong>Límites Claros en Conversaciones</strong></h6>
+            <p>Saber qué preguntas no responder y cómo redirigir elegantemente.</p>
+            <small><strong>Efectividad:</strong> 90% • <strong>Costo en ingresos:</strong> $0</small>
+          </div>
+        </div>
+
+        <div class="alternative-item">
+          <div class="alternative-icon">🔒</div>
+          <div>
+            <h6><strong>Email y Teléfono de Trabajo Separados</strong></h6>
+            <p>Nunca mezclar contactos personales con profesionales.</p>
+            <small><strong>Efectividad:</strong> 88% • <strong>Costo en ingresos:</strong> $0</small>
+          </div>
+        </div>
+
+        <div class="alternative-item">
+          <div class="alternative-icon">🎪</div>
+          <div>
+            <h6><strong>Personalidad Consistente del Personaje</strong></h6>
+            <p>Los fans se enamoran del personaje, no buscan a la persona real.</p>
+            <small><strong>Efectividad:</strong> 85% • <strong>Costo en ingresos:</strong> $0</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="success-highlight">
+        <h5><i class="fas fa-trophy"></i> La Fórmula Ganadora</h5>
+        <p><strong>Protección Real = Identidad Artística + Límites Inteligentes + Información General</strong></p>
+        <p>Esta combinación te da 95%+ de protección sin perder NI UN PESO en ingresos. Es la estrategia que usan modelos que ganan $5,000+ mensuales.</p>
+      </div>
+    </section>
+
+    <!-- Sección: La Verdad Sobre VPN -->
+    <section class="section-card">
+      <h2 class="section-title">🔍 La Verdad Sobre las VPN</h2>
+      
+      <div class="info-highlight">
+        <h5><i class="fas fa-lightbulb"></i> Datos Que Debes Conocer</h5>
+        <p>Antes de decidir bloquear países, entiende qué tan comunes y fáciles de usar son las VPN:</p>
+        
+        <div class="stats-comparison">
+          <div class="stat-card">
+            <span class="stat-number">1.2 mil millones</span>
+            <small>Usuarios de VPN en el mundo</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">31%</span>
+            <small>De usuarios de internet usan VPN</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">30 segundos</span>
+            <small>Tiempo promedio de instalación</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">$0</span>
+            <small>Costo de VPN básicas gratuitas</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-highlight">
+        <h5><i class="fas fa-eye-slash"></i> ¿Quién Usa VPN?</h5>
+        <ul>
+          <li><strong>Trabajadores remotos</strong> - Para acceder sistemas de sus empresas</li>
+          <li><strong>Viajeros</strong> - Para ver Netflix de su país cuando están de viaje</li>
+          <li><strong>Gamers</strong> - Para reducir latencia o acceder juegos regionales</li>
+          <li><strong>Personas normales</strong> - Para proteger privacidad en WiFi público</li>
+          <li><strong>Estudiantes</strong> - Para acceder recursos académicos bloqueados</li>
+          <li><strong>Empresarios</strong> - Para investigar competencia en otros países</li>
+        </ul>
+        <p><strong>Conclusión:</strong> Las VPN son herramientas normales usadas por personas normales para propósitos normales. No solo "hackers" o personas con malas intenciones.</p>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-chart-bar"></i> El Impacto Real en tu Negocio</h5>
+        <p>Si bloqueas países pensando que "las personas normales no usan VPN", estás perdiendo dinero de:</p>
+        <ul>
+          <li><strong>Trabajadores remotos con buen sueldo</strong> que usan VPN corporativa</li>
+          <li><strong>Expatriados</strong> viviendo en países bloqueados con VPN de casa</li>
+          <li><strong>Viajeros de negocios</strong> con alto poder adquisitivo</li>
+          <li><strong>Gamers y tech workers</strong> que usan VPN rutinariamente</li>
+          <li><strong>Usuarios conscientes de privacidad</strong> con dinero para gastar</li>
+        </ul>
+        <p><strong>Estos son exactamente el tipo de clientes que MÁS dinero gastan en webcam.</strong></p>
+      </div>
+    </section>
+
+    <!-- Sección: Conclusión -->
+    <section class="section-card">
+      <h2 class="section-title">🎯 Decisión Final: ¿Protección Real o Falsa?</h2>
+      
+      <div class="success-highlight">
+        <h5><i class="fas fa-trophy"></i> ¡Tarea Completada con Éxito!</h5>
+        <p>Ahora entiendes por qué el geo-blocking es la estrategia más contraproducente en webcam. Has visto datos reales, casos documentados y alternativas efectivas.</p>
+        
+        <div class="stats-comparison">
+          <div class="stat-card">
+            <span class="stat-number stat-loss">40-60%</span>
+            <small>Pérdida de ingresos por geo-blocking</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number stat-gain">95%+</span>
+            <small>Protección real con identidad artística</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">1 minuto</span>
+            <small>Tiempo para evitar geo-blocking con VPN</small>
+          </div>
+          <div class="stat-card">
+            <span class="stat-number">$0</span>
+            <small>Costo de protección real efectiva</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="primary-highlight">
+        <h5><i class="fas fa-arrow-right"></i> ¿Qué Sigue Ahora?</h5>
+        <p>Ya sabes que el geo-blocking no funciona. Ahora necesitas <strong>ver con tus propios ojos</strong> lo fácil que es evitarlo:</p>
+        
+        <div class="row g-3 mt-3">
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-flask"></i> Tarea 2.3: Test Práctico VPN</h6>
+              <p>Experimenta tú misma cómo funciona una VPN y evita bloqueos geográficos.</p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="info-highlight" style="padding: 1rem;">
+              <h6><i class="fas fa-money-bill-wave"></i> Tema 3: Estrategias de Monetización</h6>
+              <p>Aprende a maximizar ingresos con audiencia global diversificada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-highlight">
+        <h5><i class="fas fa-graduation-cap"></i> Resumen de lo que Aprendiste</h5>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <h6>❌ Geo-blocking NO Funciona:</h6>
+            <ul>
+              <li>Cualquier VPN lo evita en 1 minuto</li>
+              <li>Reduce ingresos 40-60% innecesariamente</li>
+              <li>Afecta negativamente tu ranking</li>
+              <li>Da falsa sensación de seguridad</li>
+              <li>0% de protección real adicional</li>
+            </ul>
+          </div>
+          <div class="col-md-6">
+            <h6>✅ Alternativas Reales Funcionan:</h6>
+            <ul>
+              <li>Identidad artística sólida (98% efectivo)</li>
+              <li>Información general, nunca específica</li>
+              <li>Límites claros en conversaciones</li>
+              <li>Separación total vida personal/trabajo</li>
+              <li>Todas cuestan $0 en ingresos perdidos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="danger-highlight">
+        <h5><i class="fas fa-exclamation-triangle"></i> Tu Decisión Económica</h5>
+        <p><strong>Si continúas bloqueando países después de esta información, estarás eligiendo conscientemente perder $800-2,400 USD mensuales.</strong> WC Training te ha mostrado los datos reales. La decisión de empobrecerte o enriquecerte ahora es 100% tuya.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    let completedSteps = 0;
+
+    // Datos de países y sus ingresos promedio (simulados basados en datos reales)
+    const countryData = {
+      'all': [
+        { flag: '🇺🇸', name: 'USA', income: 450, region: 'english' },
+        { flag: '🇩🇪', name: 'Alemania', income: 380, region: 'europe' },
+        { flag: '🇬🇧', name: 'Reino Unido', income: 420, region: 'english' },
+        { flag: '🇨🇦', name: 'Canadá', income: 390, region: 'english' },
+        { flag: '🇦🇺', name: 'Australia', income: 410, region: 'english' },
+        { flag: '🇲🇽', name: 'México', income: 180, region: 'latam' },
+        { flag: '🇪🇸', name: 'España', income: 290, region: 'europe' },
+        { flag: '🇧🇷', name: 'Brasil', income: 160, region: 'latam' },
+        { flag: '🇫🇷', name: 'Francia', income: 340, region: 'europe' },
+        { flag: '🇮🇹', name: 'Italia', income: 310, region: 'europe' },
+        { flag: '🇨🇴', name: 'Colombia', income: 140, region: 'latam' },
+        { flag: '🇦🇷', name: 'Argentina', income: 130, region: 'latam' },
+        { flag: '🇳🇱', name: 'Holanda', income: 360, region: 'europe' },
+        { flag: '🇨🇭', name: 'Suiza', income: 480, region: 'europe' },
+        { flag: '🇸🇪', name: 'Suecia', income: 370, region: 'europe' },
+        { flag: '🇯🇵', name: 'Japón', income: 320, region: 'other' }
+      ]
+    };
+
+    function calculateLoss() {
+      const currentDaily = parseFloat(document.getElementById('currentDaily').value);
+      const blockedCount = parseInt(document.getElementById('blockedCountries').value);
+      const countryType = document.getElementById('countryType').value;
+      
+      if (!currentDaily || !blockedCount || !countryType) {
+        alert('Por favor completa todos los campos');
+        return;
+      }
+
+      // Factores de pérdida basados en análisis de WC Training
+      const lossFactors = {
+        'latam': { base: 0.35, perCountry: 0.08 },
+        'europe': { base: 0.45, perCountry: 0.12 },
+        'usa': { base: 0.55, perCountry: 0.15 },
+        'mixed': { base: 0.42, perCountry: 0.10 },
+        'many': { base: 0.60, perCountry: 0.15 }
+      };
+
+      const factor = lossFactors[countryType];
+      const totalLossFactor = Math.min(factor.base + (factor.perCountry * blockedCount), 0.75);
+      
+      const potentialDaily = currentDaily / (1 - totalLossFactor);
+      const lossDaily = potentialDaily - currentDaily;
+      const lossMonthly = lossDaily * 30;
+      const lossYearly = lossMonthly * 12;
+
+      document.getElementById('lossAmount').textContent = `-$${lossMonthly.toFixed(0)} USD/mes`;
+      document.getElementById('lossDetails').innerHTML = `
+        <strong>📊 Desglose de tu Pérdida:</strong><br>
+        • Pérdida diaria: $${lossDaily.toFixed(0)} USD<br>
+        • Pérdida mensual: $${lossMonthly.toFixed(0)} USD<br>
+        • Pérdida anual: $${lossYearly.toFixed(0)} USD<br><br>
+        <strong>📈 Tu Potencial Real:</strong><br>
+        • Podrías ganar: $${potentialDaily.toFixed(0)} USD/día<br>
+        • Podrías ganar: $${(potentialDaily * 30).toFixed(0)} USD/mes<br><br>
+        <strong>🎯 Factor de pérdida estimado: ${(totalLossFactor * 100).toFixed(0)}%</strong>
+      `;
+      
+      document.getElementById('lossResult').style.display = 'block';
+    }
+
+    function completeStep(element, step) {
+      element.classList.add('completed');
+      completedSteps++;
+      
+      if (completedSteps >= 5) {
+        document.getElementById('simulationResult').style.display = 'block';
+      }
+    }
+
+    function revealAnswer(element, isCorrect, explanation) {
+      // Remove previous classes
+      element.classList.remove('correct', 'incorrect');
+      
+      // Add appropriate class
+      element.classList.add(isCorrect ? 'correct' : 'incorrect');
+      
+      // Show explanation
+      let explanationDiv = element.querySelector('.quiz-explanation');
+      if (!explanationDiv) {
+        explanationDiv = document.createElement('div');
+        explanationDiv.className = 'quiz-explanation';
+        element.appendChild(explanationDiv);
+      }
+      
+      explanationDiv.className = `quiz-explanation ${isCorrect ? 'explanation-correct' : 'explanation-incorrect'}`;
+      explanationDiv.innerHTML = `<strong>${explanation}</strong>`;
+      explanationDiv.style.display = 'block';
+    }
+
+    function showMarkets(region) {
+      const grid = document.getElementById('countryGrid');
+      const summary = document.getElementById('marketSummary');
+      const buttons = document.querySelectorAll('.map-button');
+      
+      // Update active button
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      
+      let countries = countryData.all;
+      if (region !== 'all') {
+        countries = countryData.all.filter(c => c.region === region);
+      }
+      
+      // Generate country cards
+      grid.innerHTML = countries.map(country => `
+        <div class="country-card" onclick="toggleCountryBlock(this)">
+          <div class="country-flag">${country.flag}</div>
+          <div><strong>${country.name}</strong></div>
+          <div class="country-income">$${country.income}/mes promedio</div>
+          <small>Click para bloquear/desbloquear</small>
+        </div>
+      `).join('');
+      
+      // Calculate summary
+      const totalIncome = countries.reduce((sum, c) => sum + c.income, 0);
+      summary.innerHTML = `
+        <h6><i class="fas fa-chart-bar"></i> Resumen del Mercado</h6>
+        <p><strong>Países mostrados:</strong> ${countries.length}</p>
+        <p><strong>Ingresos potenciales totales:</strong> $${totalIncome}/mes</p>
+        <p><strong>Promedio por país:</strong> $${Math.round(totalIncome / countries.length)}/mes</p>
+        <small><em>Click en los países para simular bloqueo y ver pérdida de ingresos</em></small>
+      `;
+      summary.style.display = 'block';
+    }
+
+    function toggleCountryBlock(element) {
+      element.classList.toggle('blocked');
+      const income = element.querySelector('.country-income');
+      
+      if (element.classList.contains('blocked')) {
+        income.classList.add('blocked-income');
+        income.innerHTML = income.innerHTML.replace('$', '$0 (era $');
+        income.innerHTML += ')';
+      } else {
+        income.classList.remove('blocked-income');
+        income.innerHTML = income.innerHTML.replace('$0 (era $', '$').replace(')', '');
+      }
+      
+      updateMarketSummary();
+    }
+
+    function updateMarketSummary() {
+      const allCards = document.querySelectorAll('.country-card');
+      const blockedCards = document.querySelectorAll('.country-card.blocked');
+      const summary = document.getElementById('marketSummary');
+      
+      if (blockedCards.length > 0) {
+        summary.innerHTML += `<div style="color: var(--danger-red); margin-top: 1rem; padding: 1rem; background: rgba(244, 67, 54, 0.1); border-radius: 6px;">
+          <strong>⚠️ Países bloqueados: ${blockedCards.length}</strong><br>
+          Esto representa una pérdida aproximada del ${Math.round((blockedCards.length / allCards.length) * 100)}% de tu mercado potencial.
+        </div>`;
+      }
+    }
+
+    // Initialize with all markets
+    document.addEventListener('DOMContentLoaded', function() {
+      showMarkets('all');
+    });
+  </script>
+</body>
+</html>

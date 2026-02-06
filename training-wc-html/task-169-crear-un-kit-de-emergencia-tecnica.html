@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>🚨 Masters en Emergencias Técnicas - WC Training</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #dc3545;
+            --secondary-color: #fd7e14;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --border-light: #e0e0e0;
+            --emergency-red: linear-gradient(135deg, #dc3545 0%, #8b0000 100%);
+            --tech-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --alert-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --resilience-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* WC BRANDING HEADER */
+        .wc-header {
+            background: var(--emergency-red);
+            padding: 1rem 0;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .wc-brand {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+        }
+
+        .wc-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        /* INDUSTRY INSIGHTS */
+        .industry-insights {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 2rem 0;
+            color: white;
+            position: relative;
+        }
+
+        .live-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            background: #28a745;
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .insight-card {
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* MAIN HEADER */
+        .main-header {
+            background: var(--emergency-red);
+            padding: 4rem 0;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M20 20h40v40H20V20zm20 35a15 15 0 1 1 0-30 15 15 0 0 1 0 30z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 24s ease-in-out infinite reverse;
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #fff, #ffd700, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* LAB SECTIONS */
+        .lab-section {
+            margin: 4rem 0;
+            padding: 3rem 0;
+        }
+
+        .lab-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .lab-title {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--emergency-red);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .lab-description {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* INTERACTIVE CARDS */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .interactive-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--emergency-red);
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px) translateX(5px);
+            box-shadow: 0 20px 50px rgba(220, 53, 69, 0.2);
+            border-color: var(--primary-color);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .card-content {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .card-details.active {
+            max-height: 500px;
+        }
+
+        .card-details-content {
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-light);
+        }
+
+        /* CALCULATORS */
+        .calculator-section {
+            background: var(--bg-light);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            margin-bottom: 1.5rem;
+        }
+
+        .calculator-input label {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .calculator-input input, .calculator-input select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid var(--border-light);
+            border-radius: 10px;
+            transition: border-color 0.3s ease;
+        }
+
+        .calculator-input input:focus, .calculator-input select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        .calculator-results {
+            background: var(--bg-white);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* SIMULATORS */
+        .simulator-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+        }
+
+        .scenario-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .scenario-btn:hover, .scenario-btn.active {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+            transform: translateY(-5px);
+        }
+
+        .scenario-results {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        /* PROGRESS TRACKERS */
+        .tracker-section {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .progress-item {
+            margin-bottom: 2rem;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            background: var(--bg-light);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--emergency-red);
+            border-radius: 10px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* SUCCESS STORIES */
+        .success-stories {
+            margin: 4rem 0;
+        }
+
+        .story-card {
+            background: var(--bg-white);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-left: 5px solid var(--success-green);
+            position: relative;
+        }
+
+        .story-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--emergency-red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .story-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .metric-item {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 10px;
+        }
+
+        .metric-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* FINAL SUMMARY */
+        .final-summary {
+            background: var(--emergency-red);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .final-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0l8 8-8 8V8h-8v8h-2V6h10zM2 2l8 8L2 18V8h8V6H0v10h2V2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+            animation: float 22s ease-in-out infinite;
+        }
+
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .achievement-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .achievement-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .achievement-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .wc-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .insights-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .scenario-buttons {
+                grid-template-columns: 1fr;
+            }
+
+            .story-metrics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-header {
+                padding: 2rem 0;
+            }
+
+            .lab-section {
+                margin: 2rem 0;
+                padding: 2rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container-fluid, .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .interactive-card {
+                padding: 1.5rem;
+            }
+
+            .calculator-section {
+                padding: 1.5rem;
+            }
+
+            .simulator-section {
+                padding: 2rem;
+            }
+
+            .story-metrics {
+                grid-template-columns: 1fr;
+            }
+
+            .result-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        /* BUTTONS AND INTERACTIVE ELEMENTS */
+        .btn-emergency {
+            background: var(--emergency-red);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .btn-emergency:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+            color: white;
+        }
+
+        .critical-badge {
+            background: var(--warning-orange);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-left: 0.5rem;
+        }
+
+        .essential-highlight {
+            background: linear-gradient(120deg, transparent 0%, rgba(220, 53, 69, 0.1) 50%, transparent 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        /* ACCESSIBILITY IMPROVEMENTS */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        button:focus, input:focus, select:focus {
+            outline: 2px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* HIGH CONTRAST MODE SUPPORT */
+        @media (prefers-contrast: high) {
+            .interactive-card {
+                border: 2px solid var(--text-dark);
+            }
+            
+            .insight-card {
+                border: 2px solid white;
+            }
+        }
+
+        /* REDUCED MOTION SUPPORT */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC BRANDING HEADER -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="wc-brand">
+                <a href="#" class="wc-logo">
+                    <i class="fas fa-shield-alt me-2"></i>WC Training
+                </a>
+                <div class="wc-stats">
+                    <div class="stat-item">
+                        <span class="stat-number">12,847</span>
+                        <span class="stat-label">Modelos Activos</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">24/7</span>
+                        <span class="stat-label">Soporte Técnico</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.8%</span>
+                        <span class="stat-label">Uptime Garantizado</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INDUSTRY INSIGHTS -->
+    <div class="industry-insights">
+        <div class="container">
+            <div class="live-indicator">
+                <div class="live-dot"></div>
+                <span>Datos en Tiempo Real - <span id="current-date"></span></span>
+            </div>
+            
+            <h2 class="text-center mb-4">🚨 Industry Emergency Response Insights 2025</h2>
+            
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-number">73%</div>
+                    <p><strong>CRÍTICO:</strong> Modelos que pierden ingresos por fallos técnicos no planeados</p>
+                    <small>Fuente: Creator Economy Crisis Report 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">89%</div>
+                    <p><strong>ESENCIAL:</strong> Reducción de cancelaciones con kit de emergencia implementado</p>
+                    <small>Fuente: WC Technical Resilience Study</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">$2,847</div>
+                    <p><strong>VITAL:</strong> Pérdida promedio mensual por falta de preparación técnica</p>
+                    <small>Fuente: Industry Financial Impact Analysis</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">15 min</div>
+                    <p>Tiempo promedio de recuperación con protocolo de emergencia</p>
+                    <small>Fuente: Emergency Response Benchmark 2025</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">94%</div>
+                    <p>Top performers que mantienen sistemas de redundancia</p>
+                    <small>Fuente: Elite Model Preparedness Survey</small>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-number">3.2x</div>
+                    <p>Multiplicador de ingresos con resiliencia operativa</p>
+                    <small>Fuente: Revenue Stability Analysis 2025</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN HEADER -->
+    <div class="main-header">
+        <div class="container">
+            <h1 class="main-title">🚨 Masters en Kit de Emergencia Técnica</h1>
+            <p class="main-subtitle">Tu imperio financiero NO SERÁ VULNERABLE a fallos técnicos - domina la preparación estratégica que separa a los top 10% de performers de quienes pierden ingresos por interrupciones evitables</p>
+            <button class="btn-emergency mt-3" onclick="scrollToLabs()">
+                <i class="fas fa-rocket me-2"></i>¡A construir tu arsenal técnico!
+            </button>
+        </div>
+    </div>
+
+    <!-- LAB 1: ANÁLISIS DE VULNERABILIDADES -->
+    <div class="lab-section">
+        <div class="container">
+            <div class="lab-header">
+                <h2 class="lab-title">🔍 Lab de Análisis de Vulnerabilidades</h2>
+                <p class="lab-description">Identifica sistemáticamente todos los puntos críticos de fallo en tu configuración técnica antes de que se conviertan en desastres financieros</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3 class="card-title">Análisis de Hardware Crítico <span class="critical-badge">CRÍTICO</span></h3>
+                    <p class="card-content">Evaluación completa de cada componente que puede fallar en momento crítico.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Checklist de Vulnerabilidades de Hardware:</h4>
+                            <ul>
+                                <li><strong>Cámara Principal:</strong> Vida útil, señales de desgaste, calidad de conexión</li>
+                                <li><strong>Micrófono:</strong> Estabilidad de audio, interferencias, degradación</li>
+                                <li><strong>Iluminación:</strong> Bombillas de respaldo, estabilidad eléctrica</li>
+                                <li><strong>Conexiones:</strong> Cables USB, HDMI, estado de puertos</li>
+                                <li><strong>Alimentación:</strong> UPS, estabilidad de voltaje, respaldos</li>
+                            </ul>
+                            <p><strong>Protocolo de Evaluación:</strong> Prueba semanal de todos los componentes bajo carga completa para identificar degradación antes del fallo total.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <h3 class="card-title">Mapeo de Conectividad <span class="critical-badge">ESENCIAL</span></h3>
+                    <p class="card-content">Análisis de redundancia de conexión a internet y puntos de fallo de red.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Arquitectura de Conectividad Resiliente:</h4>
+                            <ul>
+                                <li><strong>Conexión Primaria:</strong> Velocidad, estabilidad, historial de interrupciones</li>
+                                <li><strong>Backup Móvil:</strong> Plan de datos, velocidad 4G/5G, cobertura</li>
+                                <li><strong>Backup Vecinal:</strong> Acuerdos con vecinos, WiFi de emergencia</li>
+                                <li><strong>Hotspot Personal:</strong> Dispositivo dedicado, plan ilimitado</li>
+                                <li><strong>Monitoreo:</strong> Apps de speed test, alertas de degradación</li>
+                            </ul>
+                            <p><strong>Tiempo de Switchover Target:</strong> Menos de 2 minutos para activar backup completo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3 class="card-title">Software y Configuraciones <span class="critical-badge">VITAL</span></h3>
+                    <p class="card-content">Backup completo de configuraciones, drivers y software crítico.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Kit de Software de Emergencia:</h4>
+                            <ul>
+                                <li><strong>Instaladores Offline:</strong> OBS, drivers, navegadores, plataformas</li>
+                                <li><strong>Configuraciones Exportadas:</strong> Scenes de OBS, settings de cámara</li>
+                                <li><strong>Profiles Backup:</strong> Todas las plataformas, configuraciones personalizadas</li>
+                                <li><strong>Recovery Tools:</strong> Sistema operativo, herramientas de diagnóstico</li>
+                                <li><strong>Emergency Browser:</strong> Navegador portable con bookmarks y logins</li>
+                            </ul>
+                            <p><strong>Actualización Mensual:</strong> Refresh completo de todos los backups y verificación de funcionamiento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CALCULADORA DE PÉRDIDAS -->
+    <div class="container">
+        <div class="calculator-section">
+            <h3 class="text-center mb-4">💰 Calculadora de Pérdidas por Fallos Técnicos</h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="calculator-input">
+                        <label for="earnings-per-hour">Ingresos Promedio por Hora ($)</label>
+                        <input type="number" id="earnings-per-hour" value="85" onchange="calculateLosses()">
+                    </div>
+                    <div class="calculator-input">
+                        <label for="daily-hours">Horas de Trabajo Diarias</label>
+                        <input type="number" id="daily-hours" value="6" onchange="calculateLosses()">
+                    </div>
+                    <div class="calculator-input">
+                        <label for="failure-frequency">Fallos Técnicos por Mes</label>
+                        <input type="number" id="failure-frequency" value="4" onchange="calculateLosses()">
+                    </div>
+                    <div class="calculator-input">
+                        <label for="recovery-time">Tiempo de Recuperación (horas)</label>
+                        <input type="number" step="0.5" id="recovery-time" value="2.5" onchange="calculateLosses()">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="calculator-results">
+                        <h4>📊 Análisis de Impacto Financiero</h4>
+                        <div class="result-item">
+                            <span>Pérdida por Fallo Individual:</span>
+                            <span class="result-value" id="loss-per-failure">$212.50</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Pérdida Mensual Total:</span>
+                            <span class="result-value" id="monthly-loss">$850.00</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Pérdida Anual Proyectada:</span>
+                            <span class="result-value" id="annual-loss">$10,200.00</span>
+                        </div>
+                        <div class="result-item">
+                            <span><strong>ROI del Kit de Emergencia:</strong></span>
+                            <span class="result-value" id="kit-roi">1,275%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAB 2: REDUNDANCIA ESTRATÉGICA -->
+    <div class="lab-section">
+        <div class="container">
+            <div class="lab-header">
+                <h2 class="lab-title">🛡️ Lab de Redundancia Estratégica</h2>
+                <p class="lab-description">Construye sistemas de backup que te permitan mantener operaciones sin interrupción ante cualquier fallo individual</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <h3 class="card-title">Sistema de Triple Redundancia</h3>
+                    <p class="card-content">Implementación de backup primario, secundario y terciario para cada componente crítico.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Arquitectura de Redundancia Completa:</h4>
+                            <ul>
+                                <li><strong class="essential-highlight">Cámara Primaria + Backup + Móvil:</strong> Webcam principal, cámara USB secundaria, smartphone con app de cámara IP</li>
+                                <li><strong class="essential-highlight">Audio Triple Layer:</strong> Micrófono principal, headset backup, micrófono de móvil</li>
+                                <li><strong class="essential-highlight">Iluminación Escalonada:</strong> Ring light principal, lámpara LED backup, luz natural optimizada</li>
+                                <li><strong class="essential-highlight">Conectividad Multi-Path:</strong> Internet fijo, hotspot móvil, tethering smartphone</li>
+                                <li><strong class="essential-highlight">Alimentación Asegurada:</strong> UPS principal, power bank móvil, generador portátil</li>
+                            </ul>
+                            <p><strong>Tiempo de Switchover:</strong> Menos de 90 segundos para activar cualquier backup completo.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-toolbox"></i>
+                    </div>
+                    <h3 class="card-title">Kit Físico de Emergencia</h3>
+                    <p class="card-content">Organización física y accesibilidad inmediata de todos los componentes de backup.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Organización del Kit de Emergencia:</h4>
+                            <ul>
+                                <li><strong>Container Principal:</strong> Caja resistente, compartimentos etiquetados, fácil acceso</li>
+                                <li><strong>Cables y Conectores:</strong> USB-A, USB-C, HDMI, audio, extensiones de poder</li>
+                                <li><strong>Herramientas Básicas:</strong> Destornilladores, alicates, cinta, limpiadores</li>
+                                <li><strong>Dispositivos Backup:</strong> Webcam secundaria, micrófono USB, adaptadores</li>
+                                <li><strong>Manual de Emergencia:</strong> Procedimientos impresos, números de contacto, troubleshooting</li>
+                            </ul>
+                            <p><strong>Ubicación Estratégica:</strong> Al alcance inmediato desde tu setup principal, protegido pero accesible.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h3 class="card-title">Backup Digital y Cloud</h3>
+                    <p class="card-content">Respaldo completo de configuraciones, contenido y herramientas en la nube.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Infraestructura de Backup Digital:</h4>
+                            <ul>
+                                <li><strong>Configuraciones de OBS:</strong> Scenes, sources, filters exportados y sincronizados</li>
+                                <li><strong>Perfiles de Plataforma:</strong> Configuraciones, overlays, bios, fotos de perfil</li>
+                                <li><strong>Contenido de Emergencia:</strong> Videos, fotos, shows pregrabados para casos extremos</li>
+                                <li><strong>Software Portable:</strong> Versiones portables de apps críticas en USB</li>
+                                <li><strong>Documentación Crítica:</strong> Passwords, settings, procedimientos, contactos</li>
+                            </ul>
+                            <p><strong>Sincronización Automática:</strong> Backup semanal automatizado con verificación de integridad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIMULADOR DE EMERGENCIAS -->
+    <div class="container">
+        <div class="simulator-section">
+            <h3 class="text-center mb-4">🎯 Simulador de Emergencias Técnicas</h3>
+            <p class="text-center mb-4">Practica tu respuesta ante diferentes escenarios críticos y evalúa tu preparación</p>
+            
+            <div class="scenario-buttons">
+                <button class="scenario-btn" onclick="selectScenario('power')">
+                    <i class="fas fa-bolt mb-2 d-block"></i>
+                    <strong>Fallo de Energía</strong><br>
+                    <small>Corte eléctrico durante show</small>
+                </button>
+                <button class="scenario-btn" onclick="selectScenario('internet')">
+                    <i class="fas fa-wifi mb-2 d-block"></i>
+                    <strong>Pérdida de Internet</strong><br>
+                    <small>Conexión interrumpida</small>
+                </button>
+                <button class="scenario-btn" onclick="selectScenario('camera')">
+                    <i class="fas fa-video mb-2 d-block"></i>
+                    <strong>Fallo de Cámara</strong><br>
+                    <small>Video se congela o corta</small>
+                </button>
+                <button class="scenario-btn" onclick="selectScenario('audio')">
+                    <i class="fas fa-microphone mb-2 d-block"></i>
+                    <strong>Problema de Audio</strong><br>
+                    <small>Micrófono deja de funcionar</small>
+                </button>
+            </div>
+            
+            <div class="scenario-results" id="scenario-results">
+                <h4>Selecciona un escenario para comenzar la simulación</h4>
+                <p>Cada simulación te guiará paso a paso por el proceso de recuperación óptimo y medirá tu preparación actual.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- LAB 3: RESPUESTA RÁPIDA -->
+    <div class="lab-section">
+        <div class="container">
+            <div class="lab-header">
+                <h2 class="lab-title">⚡ Lab de Respuesta Rápida</h2>
+                <p class="lab-description">Desarrolla protocolos de respuesta inmediata que minimicen el tiempo de interrupción y maximicen la recuperación</p>
+            </div>
+
+            <div class="cards-grid">
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-stopwatch"></i>
+                    </div>
+                    <h3 class="card-title">Protocolo de 60 Segundos</h3>
+                    <p class="card-content">Procedimiento estandarizado para diagnóstico y respuesta inicial en el primer minuto crítico.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Secuencia de Respuesta de Emergencia:</h4>
+                            <ol>
+                                <li><strong>0-15 segundos:</strong> Comunicar al chat "Problema técnico, solucionando..."</li>
+                                <li><strong>15-30 segundos:</strong> Diagnóstico rápido - identificar componente fallido</li>
+                                <li><strong>30-45 segundos:</strong> Activar backup más apropiado del kit</li>
+                                <li><strong>45-60 segundos:</strong> Verificar funcionamiento y confirmar al chat</li>
+                            </ol>
+                            <p><strong>Key Success Metric:</strong> Recuperación completa en menos de 2 minutos, manteniendo audiencia engaged.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="card-title">Comunicación de Crisis</h3>
+                    <p class="card-content">Scripts y estrategias para mantener a la audiencia engaged durante interrupciones técnicas.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Scripts de Comunicación de Emergencia:</h4>
+                            <ul>
+                                <li><strong>"Problema Menor":</strong> "¡Un segundo mi amor! Ajustando algo para mejorar tu experiencia..."</li>
+                                <li><strong>"Fallo Técnico":</strong> "Bebé, la tecnología a veces tiene sus momentos. Arreglando en 2 minutos..."</li>
+                                <li><strong>"Backup Activation":</strong> "¡Cambiando a mi setup de emergencia! Esto va a estar incluso mejor..."</li>
+                                <li><strong>"Recovery Complete":</strong> "¡Listo cariño! Ahora sí, 100% para ti sin interrupciones..."</li>
+                            </ul>
+                            <p><strong>Engagement Strategy:</strong> Convertir problemas técnicos en oportunidades de conexión personal con la audiencia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="interactive-card" onclick="toggleDetails(this)">
+                    <div class="card-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <h3 class="card-title">Checklists de Verificación</h3>
+                    <p class="card-content">Listas de verificación post-incidente para asegurar resolución completa y prevenir recurrencia.</p>
+                    <div class="card-details">
+                        <div class="card-details-content">
+                            <h4>Post-Incident Verification Protocol:</h4>
+                            <ul>
+                                <li><strong>Verificación de Audio:</strong> Test de micrófono, niveles, calidad</li>
+                                <li><strong>Verificación de Video:</strong> Frame rate, resolución, estabilidad</li>
+                                <li><strong>Verificación de Conectividad:</strong> Speed test, latencia, estabilidad</li>
+                                <li><strong>Verificación de Software:</strong> OBS funcionando, plataformas conectadas</li>
+                                <li><strong>Documentación:</strong> Anotar causa, solución, tiempo de recuperación</li>
+                            </ul>
+                            <p><strong>Improvement Loop:</strong> Cada incidente es oportunidad de mejorar preparación futura.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROGRESS TRACKER -->
+    <div class="container">
+        <div class="tracker-section">
+            <h3 class="text-center mb-4">📊 Tracker de Preparación de Emergencia</h3>
+            <p class="text-center mb-4">Monitorea tu nivel de preparación en cada área crítica</p>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🔧 Hardware Backup Completo</span>
+                    <span id="hardware-percent">75%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 75%"></div>
+                </div>
+                <small>Cámara backup ✓, Micrófono backup ✓, Iluminación backup ⚠️</small>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🌐 Redundancia de Conectividad</span>
+                    <span id="connectivity-percent">90%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 90%"></div>
+                </div>
+                <small>Internet principal ✓, Hotspot móvil ✓, Plan de datos ilimitado ✓</small>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>💾 Backup Digital</span>
+                    <span id="digital-percent">60%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 60%"></div>
+                </div>
+                <small>Configuraciones OBS ✓, Software portable ⚠️, Documentación ❌</small>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>⚡ Protocolos de Respuesta</span>
+                    <span id="response-percent">45%</span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 45%"></div>
+                </div>
+                <small>Scripts de comunicación ⚠️, Checklists ❌, Práctica regular ❌</small>
+            </div>
+
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🎯 <strong>Preparación General</strong></span>
+                    <span id="overall-percent"><strong>67%</strong></span>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="width: 67%; background: var(--success-green);"></div>
+                </div>
+                <small><strong>Target: 95% para resiliencia óptima</strong></small>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS STORIES -->
+    <div class="success-stories">
+        <div class="container">
+            <div class="lab-header">
+                <h2 class="lab-title">🏆 Casos de Éxito: Masters de la Resiliencia</h2>
+                <p class="lab-description">Historias reales de modelos que transformaron su vulnerabilidad técnica en fortaleza operativa</p>
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-avatar">MR</div>
+                    <div>
+                        <h4><strong>María R.</strong> - Premium Model</h4>
+                        <p class="text-muted">3 años de experiencia, Top 5% performer</p>
+                    </div>
+                </div>
+                <blockquote>
+                    "Antes de implementar mi sistema de emergencia técnica, perdía aproximadamente $800-1,200 mensual por fallos que me obligaban a cancelar shows completos. La implementación del <strong class="essential-highlight">'Sistema de Triple Redundancia'</strong> cambió completamente mi estabilidad operativa. Ahora tengo: cámara backup preconfigurada, hotspot móvil con plan ilimitado, UPS que me da 3 horas de autonomía, y especialmente crucial, protocolos de comunicación que mantienen a mi audiencia engaged durante cualquier transición. El impacto ha sido transformador: eliminé 95% de cancelaciones por causas técnicas, reduje tiempo de recuperación de 20-45 minutos a menos de 3 minutos, y especialmente significativo, convertí problemas técnicos en oportunidades de conexión personal con viewers que ahora aprecian mi profesionalismo. <strong>Resultado financiero:</strong> Incrementé mis ingresos 34% anual eliminando pérdidas por interrupciones y mejorando mi reputación de confiabilidad."
+                </blockquote>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">$14,400</div>
+                        <div class="metric-label">Pérdidas Anuales Evitadas</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">95%</div>
+                        <div class="metric-label">Reducción de Cancelaciones</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">3 min</div>
+                        <div class="metric-label">Tiempo Promedio de Recuperación</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">34%</div>
+                        <div class="metric-label">Incremento de Ingresos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-avatar">CL</div>
+                    <div>
+                        <h4><strong>Carlos L.</strong> - Technical Specialist</h4>
+                        <p class="text-muted">5 años de experiencia, Tech-focused content</p>
+                    </div>
+                </div>
+                <blockquote>
+                    "Mi enfoque técnico me exigía confiabilidad absoluta, pero experimentaba fallos críticos que dañaban mi credibilidad profesional. Desarrollé el <strong class="essential-highlight">'Protocolo de Respuesta de 60 Segundos'</strong> que incluye: diagnóstico sistemático, activación de backup apropiado, comunicación proactiva al chat, y verificación completa de funcionamiento. Lo crucial ha sido la práctica regular - simulo emergencias semanalmente para mantener reflejos afilados. <strong>Transformación operativa:</strong> Pasé de interrupciones de 15-30 minutos a recuperaciones de 60-90 segundos, lo que preservó mi reputation de expertise técnico y eliminó la ansiedad de fallos inesperados que afectaba mi performance."
+                </blockquote>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">90 sec</div>
+                        <div class="metric-label">Tiempo Máximo de Recovery</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Uptime en Últimos 6 Meses</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">$22,000</div>
+                        <div class="metric-label">Ingresos Preservados</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">4.9/5</div>
+                        <div class="metric-label">Rating de Confiabilidad</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="story-card">
+                <div class="story-header">
+                    <div class="story-avatar">AL</div>
+                    <div>
+                        <h4><strong>Ana L.</strong> - International Model</h4>
+                        <p class="text-muted">4 años de experiencia, Multi-platform performer</p>
+                    </div>
+                </div>
+                <blockquote>
+                    "Operando desde una ubicación con infraestructura eléctrica inestable, los cortes de luz eran mi pesadilla recurrente. Implementé el <strong class="essential-highlight">'Sistema de Alimentación Escalonada'</strong>: UPS principal de 2000VA, power bank de alta capacidad para móvil, y generador portátil silencioso para emergencias extendidas. Además, configuré mi smartphone como backup completo con app de streaming, iluminación LED portable, y hotspot dedicado. <strong>Resultado extraordinario:</strong> Durante una tormenta que cortó electricidad por 6 horas, mantuve operaciones completas usando mi sistema móvil, generando $340 durante lo que antes hubiera sido pérdida total. Los viewers quedaron impresionados por mi preparación y muchos se convirtieron en regulars por mi profesionalismo."
+                </blockquote>
+                <div class="story-metrics">
+                    <div class="metric-item">
+                        <div class="metric-value">6 hrs</div>
+                        <div class="metric-label">Autonomía Máxima Probada</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">$340</div>
+                        <div class="metric-label">Ingresos Durante Corte</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">47%</div>
+                        <div class="metric-label">Incremento de Regulars</div>
+                    </div>
+                    <div class="metric-item">
+                        <div class="metric-value">98.7%</div>
+                        <div class="metric-label">Uptime Anual</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FINAL SUMMARY -->
+    <div class="final-summary">
+        <div class="container">
+            <h2 class="mb-4">🎯 Tu Imperio de Resiliencia Técnica Está Listo</h2>
+            <p class="lead mb-4">Has dominado los fundamentos que separan a los performers vulnerables de los profesionales preparados para cualquier emergencia técnica</p>
+            
+            <div class="achievements-grid">
+                <div class="achievement-item">
+                    <div class="achievement-icon">🛡️</div>
+                    <div class="achievement-title">Sistema de Redundancia</div>
+                    <p>Triple backup para cada componente crítico de tu setup</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">⚡</div>
+                    <div class="achievement-title">Respuesta de 60 Segundos</div>
+                    <p>Protocolos para recuperación inmediata ante cualquier fallo</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">💰</div>
+                    <div class="achievement-title">$10K+ Anuales Protegidos</div>
+                    <p>Ingresos preservados eliminando pérdidas por interrupciones</p>
+                </div>
+                <div class="achievement-item">
+                    <div class="achievement-icon">📊</div>
+                    <div class="achievement-title">99%+ Uptime Target</div>
+                    <p>Confiabilidad operativa que fortalece tu reputación profesional</p>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h3 class="mb-3">🚀 Tu Siguiente Acción Crítica:</h3>
+                <p class="lead">
+                    <strong>IMPLEMENTA HOY</strong> el primer nivel de tu kit de emergencia. Comienza con backup de cámara + hotspot móvil. 
+                    <br><strong>Objetivo 30 días:</strong> Sistema de redundancia completo operativo.
+                    <br><strong>Target 90 días:</strong> Protocolos de respuesta perfeccionados y probados bajo presión real.
+                </p>
+                <button class="btn-emergency btn-lg mt-3" onclick="window.scrollTo(0,0)">
+                    <i class="fas fa-rocket me-2"></i>¡Construir Mi Fortaleza Técnica Ahora!
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // REAL-TIME DATE UPDATE
+        function updateDate() {
+            const now = new Date();
+            const options = { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', options);
+        }
+        updateDate();
+        setInterval(updateDate, 60000);
+
+        // TOGGLE DETAILS FUNCTION
+        function toggleDetails(card) {
+            const details = card.querySelector('.card-details');
+            const allDetails = document.querySelectorAll('.card-details');
+            
+            // Close all other details
+            allDetails.forEach(detail => {
+                if (detail !== details) {
+                    detail.classList.remove('active');
+                }
+            });
+            
+            // Toggle current details
+            details.classList.toggle('active');
+            
+            // Scroll to card if opening
+            if (details.classList.contains('active')) {
+                setTimeout(() => {
+                    card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 300);
+            }
+        }
+
+        // CALCULATE LOSSES FUNCTION
+        function calculateLosses() {
+            const earningsPerHour = parseFloat(document.getElementById('earnings-per-hour').value) || 0;
+            const recoveryTime = parseFloat(document.getElementById('recovery-time').value) || 0;
+            const failureFrequency = parseInt(document.getElementById('failure-frequency').value) || 0;
+
+            const lossPerFailure = earningsPerHour * recoveryTime;
+            const monthlyLoss = lossPerFailure * failureFrequency;
+            const annualLoss = monthlyLoss * 12;
+            const kitCost = 800; // Estimated kit cost
+            const kitROI = ((annualLoss - kitCost) / kitCost * 100);
+
+            document.getElementById('loss-per-failure').textContent = `$${lossPerFailure.toFixed(2)}`;
+            document.getElementById('monthly-loss').textContent = `$${monthlyLoss.toFixed(2)}`;
+            document.getElementById('annual-loss').textContent = `$${annualLoss.toFixed(2)}`;
+            document.getElementById('kit-roi').textContent = `${Math.max(0, kitROI).toFixed(0)}%`;
+        }
+
+        // Initialize calculations
+        calculateLosses();
+
+        // SELECT SCENARIO FUNCTION
+        function selectScenario(scenario) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.scenario-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to selected button
+            event.target.closest('.scenario-btn').classList.add('active');
+            
+            const resultsDiv = document.getElementById('scenario-results');
+            
+            const scenarios = {
+                power: {
+                    title: '⚡ Simulación: Fallo de Energía',
+                    situation: 'Estás en medio de un show privado cuando se va la luz completamente.',
+                    steps: [
+                        '1. Comunica inmediatamente: "Un segundo amor, pequeño problema eléctrico"',
+                        '2. Activa UPS o cambia a power bank + móvil (Target: 30 segundos)',
+                        '3. Si UPS no disponible, activa setup móvil completo',
+                        '4. Confirma al chat: "¡Listo! Funcionando perfectamente con backup"',
+                        '5. Continúa show normalmente, menciona tu profesionalismo'
+                    ],
+                    metrics: 'Tiempo objetivo: 90 segundos | Pérdida de audiencia: <10%',
+                    preparedness: 'Tu preparación actual: 75% - Necesitas UPS de mayor capacidad'
+                },
+                internet: {
+                    title: '🌐 Simulación: Pérdida de Internet',
+                    situation: 'Tu conexión principal se corta durante peak hours.',
+                    steps: [
+                        '1. Detecta pérdida inmediatamente por lag en chat',
+                        '2. Comunica: "Bebé, cambiando a conexión premium en un momento"',
+                        '3. Activa hotspot móvil o backup internet (Target: 45 segundos)',
+                        '4. Verifica velocidad y estabilidad antes de continuar',
+                        '5. Retoma show: "¡Ahora sí, 100% estable para ti!"'
+                    ],
+                    metrics: 'Tiempo objetivo: 60 segundos | Uptime target: 99.5%',
+                    preparedness: 'Tu preparación actual: 90% - Hotspot configurado correctamente'
+                },
+                camera: {
+                    title: '📹 Simulación: Fallo de Cámara',
+                    situation: 'Tu webcam principal se congela o muestra pantalla negra.',
+                    steps: [
+                        '1. Identifica fallo: video no actualiza o error en OBS',
+                        '2. Comunica: "Un segundito mi amor, optimizando tu experiencia"',
+                        '3. Cambia a fuente de cámara backup en OBS (Target: 20 segundos)',
+                        '4. Si no funciona, activa cámara móvil vía IP webcam',
+                        '5. Ajusta encuadre y continúa: "¡Perfecto! ¿Se ve mejor ahora?"'
+                    ],
+                    metrics: 'Tiempo objetivo: 45 segundos | Calidad mantenida: 1080p',
+                    preparedness: 'Tu preparación actual: 65% - Falta configurar cámara móvil como backup'
+                },
+                audio: {
+                    title: '🎤 Simulación: Problema de Audio',
+                    situation: 'Tu micrófono deja de funcionar o produce ruido extraño.',
+                    steps: [
+                        '1. Detecta por falta de respuesta en chat a preguntas',
+                        '2. Usa chat: "¿Me escuchan bien? Checking audio..." ',
+                        '3. Cambia a micrófono backup o headset (Target: 30 segundos)',
+                        '4. Prueba con "Testing 1-2-3" hasta confirmar calidad',
+                        '5. Continúa: "¡Listo amor! Ahora mi voz suena perfecta para ti"'
+                    ],
+                    metrics: 'Tiempo objetivo: 30 segundos | Calidad de audio: Cristalina',
+                    preparedness: 'Tu preparación actual: 80% - Tienes backup pero falta práctica de switching'
+                }
+            };
+            
+            const selected = scenarios[scenario];
+            resultsDiv.innerHTML = `
+                <h4>${selected.title}</h4>
+                <div class="mb-3">
+                    <strong>Situación:</strong> ${selected.situation}
+                </div>
+                <div class="mb-3">
+                    <strong>Protocolo de Respuesta:</strong>
+                    <ol class="mt-2">
+                        ${selected.steps.map(step => `<li>${step}</li>`).join('')}
+                    </ol>
+                </div>
+                <div class="mb-3">
+                    <strong>Métricas de Éxito:</strong> ${selected.metrics}
+                </div>
+                <div class="alert alert-info mb-0">
+                    <strong>Evaluación:</strong> ${selected.preparedness}
+                </div>
+            `;
+        }
+
+        // SCROLL TO LABS FUNCTION
+        function scrollToLabs() {
+            document.querySelector('.lab-section').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // PROGRESS BAR ANIMATIONS
+        function animateProgressBars() {
+            const progressBars = document.querySelectorAll('.progress-bar');
+            progressBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                }, index * 200);
+            });
+        }
+
+        // Initialize animations when page loads
+        window.addEventListener('load', () => {
+            setTimeout(animateProgressBars, 1000);
+        });
+
+        // INTERSECTION OBSERVER FOR ANIMATIONS
+        if ('IntersectionObserver' in window) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.interactive-card, .story-card, .achievement-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        }
+
+        // ACCESSIBILITY IMPROVEMENTS
+        document.addEventListener('keydown', (e) => {
+            // Escape key closes open details
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.card-details.active').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+            }
+        });
+
+        // Make cards keyboard accessible
+        document.querySelectorAll('.interactive-card').forEach(card => {
+            card.setAttribute('tabindex', '0');
+            card.setAttribute('role', 'button');
+            card.setAttribute('aria-expanded', 'false');
+            
+            card.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleDetails(card);
+                    const isExpanded = card.querySelector('.card-details').classList.contains('active');
+                    card.setAttribute('aria-expanded', isExpanded.toString());
+                }
+            });
+        });
+
+        // Update progress tracking based on user interaction
+        function updateProgress() {
+            // This would typically connect to a backend or localStorage
+            // For demo purposes, we'll simulate progress updates
+            console.log('Progress tracking updated');
+        }
+
+        // Add event listeners for progress tracking
+        document.querySelectorAll('input, select, button').forEach(element => {
+            element.addEventListener('change', updateProgress);
+        });
+    </script>
+</body>
+</html>

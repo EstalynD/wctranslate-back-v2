@@ -8,7 +8,13 @@ import {
   Param,
   Query,
   UseGuards,
+  UseInterceptors,
+  UploadedFile,
+  ParseFilePipe,
+  MaxFileSizeValidator,
+  FileTypeValidator,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CoursesService } from './courses.service';
 import {
   CreateCourseDto,
@@ -20,6 +26,8 @@ import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../users/schemas/user.schema';
+import { CurrentUser } from '../auth/decorators/current-user.decorator';
+import type { UserDocument } from '../users/schemas/user.schema';
 
 @Controller('courses')
 @UseGuards(AuthGuard)
@@ -31,6 +39,11 @@ export class CoursesController {
   @Get()
   async findAll(@Query() query: QueryCoursesDto) {
     return this.coursesService.findAll(query);
+  }
+
+  @Get('my')
+  async findMyCourses(@CurrentUser() user: UserDocument) {
+    return this.coursesService.getMyCoursesForUser(user);
   }
 
   @Get(':id')
@@ -53,18 +66,42 @@ export class CoursesController {
   @Post()
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN)
-  async create(@Body() createCourseDto: CreateCourseDto) {
-    return this.coursesService.create(createCourseDto);
+  @UseInterceptors(FileInterceptor('thumbnail'))
+  async create(
+    @Body() createCourseDto: CreateCourseDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // 5MB
+          new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp|gif)$/ }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file?: Express.Multer.File,
+  ) {
+    return this.coursesService.create(createCourseDto, file);
   }
 
   @Put(':id')
   @UseGuards(RolesGuard)
   @Roles(UserRole.ADMIN)
+  @UseInterceptors(FileInterceptor('thumbnail'))
   async update(
     @Param('id') id: string,
     @Body() updateCourseDto: UpdateCourseDto,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          new MaxFileSizeValidator({ maxSize: 5 * 1024 * 1024 }), // 5MB
+          new FileTypeValidator({ fileType: /^image\/(jpeg|png|webp|gif)$/ }),
+        ],
+        fileIsRequired: false,
+      }),
+    )
+    file?: Express.Multer.File,
   ) {
-    return this.coursesService.update(id, updateCourseDto);
+    return this.coursesService.update(id, updateCourseDto, file);
   }
 
   @Delete(':id')

@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎭 Laboratorio de Shows Colaborativos - WC Training</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #ff6b9d;
+      --secondary-color: #4ecdc4;
+      --accent-color: #ffa500;
+      --success-green: #28a745;
+      --warning-orange: #fd7e14;
+      --text-dark: #1f2937;
+      --text-muted: #6b7280;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #e0e0e0;
+      --gradient-1: linear-gradient(135deg, #ff6b9d 0%, #4ecdc4 100%);
+      --gradient-2: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-3: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-4: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    .animated-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: var(--gradient-2);
+      opacity: 0.1;
+    }
+
+    .floating-shapes {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .floating-shapes::before,
+    .floating-shapes::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 107, 157, 0.3);
+      animation: float 20s infinite ease-in-out;
+    }
+
+    .floating-shapes::before {
+      width: 300px;
+      height: 300px;
+      top: -150px;
+      left: -150px;
+      animation-delay: -10s;
+    }
+
+    .floating-shapes::after {
+      width: 200px;
+      height: 200px;
+      bottom: -100px;
+      right: -100px;
+      background: rgba(78, 205, 196, 0.3);
+      animation-delay: -5s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-20px) rotate(120deg); }
+      66% { transform: translateY(20px) rotate(240deg); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .wc-header {
+      background: var(--bg-white);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: var(--gradient-1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .live-stats {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .live-indicator {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: var(--success-green);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    .industry-insights {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .insight-card {
+      background: var(--gradient-1);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      color: white;
+      transition: transform 0.3s ease;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .main-header {
+      background: var(--gradient-1);
+      padding: 4rem 0;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .main-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/><circle cx="25" cy="25" r="1.5" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/></svg>');
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .main-title {
+      font-size: clamp(2rem, 5vw, 4rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .main-subtitle {
+      font-size: clamp(1rem, 3vw, 1.5rem);
+      opacity: 0.9;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .lab-section {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lab-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--gradient-1);
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .section-header:hover {
+      transform: translateX(10px);
+    }
+
+    .section-icon {
+      background: var(--gradient-1);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .interactive-card {
+      background: var(--bg-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+      border-color: var(--primary-color);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary-color);
+    }
+
+    .expand-icon {
+      color: var(--primary-color);
+      transition: transform 0.3s ease;
+    }
+
+    .expanded .expand-icon {
+      transform: rotate(180deg);
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .expanded .card-details {
+      max-height: 500px;
+    }
+
+    .calculator-section {
+      background: var(--gradient-3);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      color: white;
+      margin: 0.5rem 0;
+      width: 100%;
+    }
+
+    .calculator-input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+
+    .calculator-result {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      backdrop-filter: blur(10px);
+    }
+
+    .simulator-section {
+      background: var(--gradient-4);
+      color: white;
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin: 1rem 0;
+    }
+
+    .scenario-card {
+      background: rgba(255,255,255,0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .scenario-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.3);
+    }
+
+    .scenario-card.selected {
+      border-color: white;
+      background: rgba(255,255,255,0.4);
+    }
+
+    .progress-tracker {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .progress-bar {
+      height: 30px;
+      background: var(--bg-light);
+      border-radius: 15px;
+      overflow: hidden;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-1);
+      transition: width 0.5s ease;
+      border-radius: 15px;
+    }
+
+    .progress-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-weight: 600;
+      color: var(--text-dark);
+    }
+
+    .success-stories {
+      background: var(--bg-white);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .story-card {
+      background: var(--gradient-2);
+      color: white;
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 1rem 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .story-quote {
+      font-size: 1.2rem;
+      font-style: italic;
+      margin-bottom: 1rem;
+    }
+
+    .story-author {
+      font-weight: 600;
+      opacity: 0.9;
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-color);
+    }
+
+    .final-summary {
+      background: var(--gradient-1);
+      color: white;
+      border-radius: 20px;
+      padding: 3rem;
+      margin: 3rem 0;
+      text-align: center;
+    }
+
+    .cta-button {
+      background: white;
+      color: var(--primary-color);
+      border: none;
+      border-radius: 15px;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin: 1rem 0.5rem;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .current-time {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+      }
+      
+      .main-header {
+        padding: 2rem 0;
+      }
+      
+      .lab-section {
+        padding: 1.5rem;
+        margin: 1rem 0;
+      }
+      
+      .insight-number {
+        font-size: 2rem;
+      }
+      
+      .story-stats {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .scenario-selector {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .main-title {
+        font-size: 2rem;
+      }
+      
+      .main-subtitle {
+        font-size: 1rem;
+      }
+      
+      .section-title {
+        font-size: 1.5rem;
+      }
+      
+      .card-title {
+        font-size: 1.1rem;
+      }
+      
+      .cta-button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-background">
+    <div class="floating-shapes"></div>
+  </div>
+
+  <!-- WC Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-crown"></i> WC Training
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="live-stats justify-content-md-end">
+            <span class="live-indicator"></span>
+            <span>12,847 modelos activos</span>
+            <span>|</span>
+            <span>+2,341 esta semana</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <div class="container">
+    <div class="industry-insights">
+      <h3 class="text-center mb-4">📊 Industry Insights 2025</h3>
+      <div class="row">
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">87%</div>
+            <div>Shows colaborativos generan 3x más engagement</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">+250%</div>
+            <div>Incremento en retención con contenido dual</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">$12.4K</div>
+            <div>Promedio mensual partnerships exitosos</div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">73%</div>
+            <div>Usuarios prefieren experiencias únicas</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">92%</div>
+            <div>Satisfacción con shows conceptuales</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-3">
+          <div class="insight-card">
+            <div class="insight-number">45 min</div>
+            <div>Tiempo promedio shows colaborativos</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <div class="main-header">
+    <div class="container">
+      <h1 class="main-title">🎭 Laboratorio de Shows Colaborativos</h1>
+      <p class="main-subtitle">Domina el arte de crear experiencias sinérgicas que trascienden la suma de partes individuales</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Current Time -->
+    <div class="current-time" id="currentTime"></div>
+
+    <!-- Concept Development Lab -->
+    <div class="lab-section">
+      <div class="section-header" onclick="toggleDetails('conceptLab')">
+        <div class="section-icon">
+          <i class="fas fa-lightbulb"></i>
+        </div>
+        <div>
+          <h2 class="section-title">💡 Laboratorio de Conceptos</h2>
+          <p class="text-muted">Desarrolla ideas revolucionarias que amplificarán tu alcance</p>
+        </div>
+        <i class="fas fa-chevron-down expand-icon"></i>
+      </div>
+      <div class="card-details" id="conceptLab">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="interactive-card" onclick="selectConcept('cultural')">
+              <div class="card-header">
+                <h4 class="card-title">🌍 Convergencia Cultural</h4>
+              </div>
+              <p>Fusiona tradiciones y elementos estéticos de diferentes orígenes para crear narrativas visuales únicas que conecten con audiencias globales.</p>
+              <div class="mt-3">
+                <span class="badge" style="background: var(--gradient-1); color: white;">Alcance +340%</span>
+                <span class="badge" style="background: var(--gradient-2); color: white;">Engagement +180%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="interactive-card" onclick="selectConcept('harmony')">
+              <div class="card-header">
+                <h4 class="card-title">⚖️ Dualidad Armónica</h4>
+              </div>
+              <p>Diseña contrastes perfectos entre estilos opuestos creando tensión artística que capture y mantenga la atención del espectador.</p>
+              <div class="mt-3">
+                <span class="badge" style="background: var(--gradient-3); color: white;">Retención +290%</span>
+                <span class="badge" style="background: var(--gradient-4); color: white;">Tips +150%</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="interactive-card" onclick="selectConcept('narrative')">
+              <div class="card-header">
+                <h4 class="card-title">📖 Narrativas Entrelazadas</h4>
+              </div>
+              <p>Construye historias interactivas que se desarrollan simultáneamente invitando al público a participar activamente en la experiencia.</p>
+              <div class="mt-3">
+                <span class="badge" style="background: var(--gradient-1); color: white;">Interacción +420%</span>
+                <span class="badge" style="background: var(--gradient-2); color: white;">Fidelidad +200%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Synergy Calculator -->
+    <div class="calculator-section">
+      <h3><i class="fas fa-calculator"></i> Calculadora de Sinergia Colaborativa</h3>
+      <p>Calcula el potencial de ingresos y engagement de tu próximo show colaborativo</p>
+      <div class="row">
+        <div class="col-md-6">
+          <input type="number" class="calculator-input" id="currentFollowers" placeholder="Tus seguidores actuales" oninput="calculateSynergy()">
+          <input type="number" class="calculator-input" id="partnerFollowers" placeholder="Seguidores del colaborador" oninput="calculateSynergy()">
+          <input type="number" class="calculator-input" id="averageShow" placeholder="Ingresos promedio por show ($)" oninput="calculateSynergy()">
+          <select class="calculator-input" id="conceptType" onchange="calculateSynergy()">
+            <option value="">Selecciona tipo de concepto</option>
+            <option value="cultural">Convergencia Cultural</option>
+            <option value="harmony">Dualidad Armónica</option>
+            <option value="narrative">Narrativas Entrelazadas</option>
+          </select>
+        </div>
+        <div class="col-md-6">
+          <div class="calculator-result" id="synergyResult">
+            <h4>📈 Proyección de Resultados</h4>
+            <p>Ingresa tus datos para ver el potencial de tu colaboración</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scenario Simulator -->
+    <div class="simulator-section">
+      <h3><i class="fas fa-gamepad"></i> Simulador de Escenarios</h3>
+      <p>Experimenta con diferentes combinaciones y ve los resultados proyectados</p>
+      <div class="scenario-selector">
+        <div class="scenario-card" onclick="selectScenario('beginner')">
+          <i class="fas fa-seedling fa-2x mb-2"></i>
+          <h5>Principiante</h5>
+          <p>Primera colaboración</p>
+        </div>
+        <div class="scenario-card" onclick="selectScenario('experienced')">
+          <i class="fas fa-star fa-2x mb-2"></i>
+          <h5>Experimentada</h5>
+          <p>Ya tienes experiencia</p>
+        </div>
+        <div class="scenario-card" onclick="selectScenario('expert')">
+          <i class="fas fa-crown fa-2x mb-2"></i>
+          <h5>Experta</h5>
+          <p>Master de colaboraciones</p>
+        </div>
+      </div>
+      <div id="scenarioResult" class="mt-3"></div>
+    </div>
+
+    <!-- Progress Tracker -->
+    <div class="progress-tracker">
+      <h3><i class="fas fa-chart-line"></i> Tu Progreso en Shows Colaborativos</h3>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <span>Desarrollo Conceptual</span>
+          <span id="conceptProgress">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="conceptBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <span>Planificación Estratégica</span>
+          <span id="planningProgress">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="planningBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <div class="mb-3">
+        <div class="d-flex justify-content-between">
+          <span>Ejecución y Optimización</span>
+          <span id="executionProgress">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="executionBar" style="width: 0%"></div>
+        </div>
+      </div>
+      <button class="cta-button" onclick="updateProgress()">Actualizar Mi Progreso</button>
+    </div>
+
+    <!-- Success Stories -->
+    <div class="success-stories">
+      <h3><i class="fas fa-trophy"></i> Casos de Éxito Reales</h3>
+      <div class="story-card">
+        <div class="story-quote">
+          "Implementamos el concepto de Convergencia Cultural combinando mi herencia latina con el background asiático de mi partner. El resultado fue extraordinario: nuestros shows temáticos generaron 340% más engagement y expandimos nuestras audiencias mutuamente."
+        </div>
+        <div class="story-author">- María Rodriguez, Top 3% WC Training</div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number">$18.2K</div>
+            <div>Ingresos primer mes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">+15K</div>
+            <div>Nuevos seguidores</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">87%</div>
+            <div>Retención usuarios</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-quote">
+          "El concepto de Dualidad Armónica transformó completamente nuestra propuesta. Yo soy más intensa, ella más suave - esta tensión controlada creó una experiencia hipnótica que nuestros usuarios literalmente no podían dejar de ver."
+        </div>
+        <div class="story-author">- Alexandra Kim, Elite Performer</div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number">2.3h</div>
+            <div>Tiempo promedio show</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">$24.8K</div>
+            <div>Mejor mes colaborativo</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">94%</div>
+            <div>Satisfacción usuarios</div>
+          </div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-quote">
+          "Las Narrativas Entrelazadas nos permitieron crear episodios seriados donde los usuarios votaban por el desarrollo de la historia. Cada show era único y los fans regresaban religiosamente para ver cómo continuaba nuestra saga."
+        </div>
+        <div class="story-author">- Jenny & Sophie, Duo Sensación</div>
+        <div class="story-stats">
+          <div class="stat-item">
+            <div class="stat-number">95%</div>
+            <div>Usuarios recurrentes</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">$31.5K</div>
+            <div>Ingresos mensuales</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">450%</div>
+            <div>Incremento tips</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Final Summary -->
+    <div class="final-summary">
+      <h2>🎯 Tu Imperio de Shows Colaborativos Te Espera</h2>
+      <p class="mb-4">Has descubierto las estrategias que separan a las performers promedio de las que dominan el mercado colaborativo. El 73% de modelos que no implementan conceptos estructurados siguen dependiendo de shows individuales básicos, mientras que el Top 10% que domina estas técnicas construye imperios colaborativos sostenibles.</p>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="stat-number">3X</div>
+          <div>Más ingresos que shows tradicionales</div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-number">250%</div>
+          <div>Incremento en retención de usuarios</div>
+        </div>
+        <div class="col-md-4">
+          <div class="stat-number">87%</div>
+          <div>Satisfacción superior con experiencias únicas</div>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button class="cta-button" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+          <i class="fas fa-rocket"></i> ¡Construir Mi Laboratorio Colaborativo!
+        </button>
+        <button class="cta-button" onclick="calculateSynergy()">
+          <i class="fas fa-calculator"></i> Calcular Mi Potencial
+        </button>
+      </div>
+      <p class="mt-3"><strong>CRÍTICO:</strong> La diferencia entre experimentar ocasionalmente y dominar sistemáticamente estos conceptos determina si construyes un negocio colaborativo excepcional o permaneces en la mediocridad de shows convencionales.</p>
+    </div>
+  </div>
+
+  <script>
+    // Update current time
+    function updateTime() {
+      const now = new Date();
+      const timeString = now.toLocaleString('es-ES', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      document.getElementById('currentTime').innerHTML = `📅 ${timeString} - Laboratorio Activo`;
+    }
+
+    // Toggle section details
+    function toggleDetails(sectionId) {
+      const section = document.getElementById(sectionId);
+      const header = section.previousElementSibling;
+      
+      if (section.style.maxHeight && section.style.maxHeight !== '0px') {
+        section.style.maxHeight = '0px';
+        header.classList.remove('expanded');
+      } else {
+        section.style.maxHeight = section.scrollHeight + 'px';
+        header.classList.add('expanded');
+      }
+    }
+
+    // Select concept
+    function selectConcept(type) {
+      const cards = document.querySelectorAll('.interactive-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      event.target.closest('.interactive-card').classList.add('selected');
+      
+      const conceptSelect = document.getElementById('conceptType');
+      conceptSelect.value = type;
+      calculateSynergy();
+    }
+
+    // Calculate synergy results
+    function calculateSynergy() {
+      const followers = parseInt(document.getElementById('currentFollowers').value) || 0;
+      const partnerFollowers = parseInt(document.getElementById('partnerFollowers').value) || 0;
+      const averageShow = parseInt(document.getElementById('averageShow').value) || 0;
+      const conceptType = document.getElementById('conceptType').value;
+      
+      if (followers > 0 && partnerFollowers > 0 && averageShow > 0 && conceptType) {
+        const totalAudience = followers + partnerFollowers;
+        const crossover = Math.floor(totalAudience * 0.15);
+        const newAudience = totalAudience + crossover;
+        
+        let multiplier = 1;
+        let engagementBoost = 1;
+        let conceptName = '';
+        
+        switch(conceptType) {
+          case 'cultural':
+            multiplier = 3.4;
+            engagementBoost = 1.8;
+            conceptName = 'Convergencia Cultural';
+            break;
+          case 'harmony':
+            multiplier = 2.9;
+            engagementBoost = 2.1;
+            conceptName = 'Dualidad Armónica';
+            break;
+          case 'narrative':
+            multiplier = 4.2;
+            engagementBoost = 2.5;
+            conceptName = 'Narrativas Entrelazadas';
+            break;
+        }
+        
+        const projectedIncome = Math.floor(averageShow * multiplier);
+        const monthlyProjection = Math.floor(projectedIncome * 8 * engagementBoost);
+        const yearlyProjection = monthlyProjection * 12;
+        
+        const resultHtml = `
+          <h4>🎯 Proyección: ${conceptName}</h4>
+          <div class="row text-center">
+            <div class="col-6">
+              <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-color);">${projectedIncome.toLocaleString()}</div>
+              <div>Por show colaborativo</div>
+            </div>
+            <div class="col-6">
+              <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-color);">${monthlyProjection.toLocaleString()}</div>
+              <div>Proyección mensual</div>
+            </div>
+          </div>
+          <hr style="border-color: rgba(255,255,255,0.3);">
+          <div class="text-center">
+            <div style="font-size: 1.8rem; font-weight: 700; color: white;">${yearlyProjection.toLocaleString()}</div>
+            <div>Potencial anual con 8 shows/mes</div>
+          </div>
+          <div class="mt-3">
+            <small>📊 Audiencia combinada: ${newAudience.toLocaleString()} | Crossover: +${crossover.toLocaleString()}</small>
+          </div>
+        `;
+        
+        document.getElementById('synergyResult').innerHTML = resultHtml;
+        
+        // Update progress bars based on calculation
+        updateProgressBars(25, 35, 15);
+      }
+    }
+
+    // Select scenario
+    function selectScenario(level) {
+      const cards = document.querySelectorAll('.scenario-card');
+      cards.forEach(card => card.classList.remove('selected'));
+      event.target.closest('.scenario-card').classList.add('selected');
+      
+      let resultHtml = '';
+      
+      switch(level) {
+        case 'beginner':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>🌱 Ruta Principiante</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Primeros Pasos:</h6>
+                  <ul>
+                    <li>Encuentra partner complementaria</li>
+                    <li>Define concepto simple (Convergencia Cultural)</li>
+                    <li>Planifica 3 shows de prueba</li>
+                    <li>Establece división equitativa</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>Expectativas Realistas:</h6>
+                  <ul>
+                    <li>Ingresos: +150% vs shows individuales</li>
+                    <li>Timeframe: 2-3 semanas preparación</li>
+                    <li>Engagement: +80% promedio</li>
+                    <li>Retención: +120% usuarios nuevos</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'experienced':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>⭐ Ruta Experimentada</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Optimización Avanzada:</h6>
+                  <ul>
+                    <li>Implementa Dualidad Armónica</li>
+                    <li>Crea series temáticas mensuales</li>
+                    <li>Desarrolla fanbase cruzada</li>
+                    <li>Monetiza contenido exclusivo</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>Resultados Esperados:</h6>
+                  <ul>
+                    <li>Ingresos: +250% vs baseline</li>
+                    <li>Colaboraciones: 2-3 partners simultáneas</li>
+                    <li>Shows premium: $500+ promedio</li>
+                    <li>Retención: 85%+ usuarios recurrentes</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+        case 'expert':
+          resultHtml = `
+            <div style="background: rgba(255,255,255,0.2); border-radius: 15px; padding: 1.5rem;">
+              <h5>👑 Ruta Master</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <h6>Dominación Total:</h6>
+                  <ul>
+                    <li>Lidera red de colaboradoras</li>
+                    <li>Crea franquicia de conceptos</li>
+                    <li>Narrativas Entrelazadas complejas</li>
+                    <li>Eventos exclusivos multi-modelo</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h6>Imperio Colaborativo:</h6>
+                  <ul>
+                    <li>Ingresos: +400% vs mercado estándar</li>
+                    <li>Network: 5+ partners estratégicas</li>
+                    <li>Shows VIP: $1,000+ garantizados</li>
+                    <li>Marca personal: Reconocimiento global</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          `;
+          break;
+      }
+      
+      document.getElementById('scenarioResult').innerHTML = resultHtml;
+      
+      // Update progress based on scenario
+      const progressValues = {
+        'beginner': [20, 15, 10],
+        'experienced': [60, 55, 40],
+        'expert': [95, 90, 85]
+      };
+      
+      updateProgressBars(...progressValues[level]);
+    }
+
+    // Update progress bars
+    function updateProgressBars(concept, planning, execution) {
+      document.getElementById('conceptBar').style.width = concept + '%';
+      document.getElementById('conceptProgress').textContent = concept + '%';
+      
+      document.getElementById('planningBar').style.width = planning + '%';
+      document.getElementById('planningProgress').textContent = planning + '%';
+      
+      document.getElementById('executionBar').style.width = execution + '%';
+      document.getElementById('executionProgress').textContent = execution + '%';
+    }
+
+    // Manual progress update
+    function updateProgress() {
+      const currentConcept = parseInt(document.getElementById('conceptProgress').textContent);
+      const currentPlanning = parseInt(document.getElementById('planningProgress').textContent);
+      const currentExecution = parseInt(document.getElementById('executionProgress').textContent);
+      
+      const newConcept = Math.min(100, currentConcept + 15);
+      const newPlanning = Math.min(100, currentPlanning + 12);
+      const newExecution = Math.min(100, currentExecution + 10);
+      
+      updateProgressBars(newConcept, newPlanning, newExecution);
+      
+      if (newConcept >= 100 && newPlanning >= 100 && newExecution >= 100) {
+        alert('🎉 ¡Felicitaciones! Has completado tu formación en Shows Colaborativos. ¡Ahora dominas todas las técnicas para construir tu imperio colaborativo!');
+      }
+    }
+
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function() {
+      updateTime();
+      setInterval(updateTime, 60000);
+      
+      // Auto-expand first section
+      toggleDetails('conceptLab');
+    });
+
+    // Add smooth scrolling and animation triggers
+    window.addEventListener('scroll', function() {
+      const cards = document.querySelectorAll('.interactive-card, .lab-section, .insight-card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }
+      });
+    });
+
+    // Initialize card animations
+    document.addEventListener('DOMContentLoaded', function() {
+      const cards = document.querySelectorAll('.interactive-card, .lab-section, .insight-card');
+      cards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'all 0.6s ease';
+        card.style.transitionDelay = (index * 0.1) + 's';
+      });
+    });
+  </script>
+</body>
+</html>

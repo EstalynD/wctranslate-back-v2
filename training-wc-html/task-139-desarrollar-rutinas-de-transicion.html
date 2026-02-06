@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <title>✨ Rutinas de Transición - WC Training Academy</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #6f42c1;
+      --secondary-color: #e83e8c;
+      --accent-color: #17a2b8;
+      --success-green: #28a745;
+      --warning-orange: #ffc107;
+      --text-dark: #212529;
+      --text-muted: #6c757d;
+      --bg-white: #ffffff;
+      --bg-light: #f8f9fa;
+      --border-light: #dee2e6;
+      --gradient-primary: linear-gradient(135deg, #6f42c1 0%, #5a189a 100%);
+      --gradient-secondary: linear-gradient(135deg, #e83e8c 0%, #d63384 100%);
+      --gradient-accent: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+      --gradient-transformation: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+      --gradient-magic: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      --gradient-portal: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .wc-header {
+      background: var(--bg-white);
+      padding: 1rem 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .wc-logo {
+      font-size: 1.5rem;
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .wc-stats {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .stat-number {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, rgba(111,66,193,0.9) 0%, rgba(90,24,154,0.9) 100%), 
+                  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="transition" width="80" height="80" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="2" fill="rgba(255,255,255,0.1)"/><path d="M 20 20 Q 40 40 60 20" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/><path d="M 20 60 Q 40 20 60 60" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23transition)"/></svg>');
+      background-size: cover;
+      padding: 6rem 0;
+      color: white;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .floating-shapes {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shape {
+      position: absolute;
+      opacity: 0.1;
+      animation: float 24s infinite ease-in-out;
+    }
+
+    .shape:nth-child(1) {
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .shape:nth-child(2) {
+      top: 60%;
+      right: 15%;
+      animation-delay: 8s;
+    }
+
+    .shape:nth-child(3) {
+      bottom: 20%;
+      left: 20%;
+      animation-delay: 16s;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+      25% { transform: translateY(-30px) rotate(90deg) scale(1.1); }
+      50% { transform: translateY(-60px) rotate(180deg) scale(0.9); }
+      75% { transform: translateY(-30px) rotate(270deg) scale(1.1); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-title {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      margin-bottom: 1.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .industry-insights {
+      background: var(--bg-white);
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .insights-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .live-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--success-green);
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: white;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .insight-card {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      text-align: center;
+      border: 1px solid var(--border-light);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    .insight-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .insight-number {
+      font-size: 2.5rem;
+      font-weight: 900;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 0.5rem;
+    }
+
+    .insight-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .insight-description {
+      font-size: 0.95rem;
+      color: var(--text-dark);
+    }
+
+    .lab-section {
+      background: var(--bg-white);
+      padding: 4rem 0;
+      margin: 2rem 0;
+      border-radius: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      background: var(--gradient-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .interactive-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      border: 2px solid transparent;
+      background-clip: padding-box;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      margin-bottom: 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .interactive-card:hover {
+      transform: translateY(-8px) translateX(5px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+      border-color: var(--primary-color);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: white;
+      background: var(--gradient-transformation);
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+      flex-grow: 1;
+      margin-left: 1rem;
+    }
+
+    .expand-icon {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      transition: transform 0.3s ease;
+    }
+
+    .card-details {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .card-details.expanded {
+      max-height: 1000px;
+    }
+
+    .details-content {
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .calculator-section {
+      background: linear-gradient(135deg, #f8f0ff 0%, #f3e5f5 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .calculator-input {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 1rem;
+      width: 100%;
+      margin-bottom: 1rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .calculator-input:focus {
+      border-color: var(--primary-color);
+      outline: none;
+    }
+
+    .calculator-result {
+      background: var(--gradient-magic);
+      color: white;
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .result-number {
+      font-size: 2rem;
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .result-label {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+
+    .progress-tracker {
+      background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .progress-item {
+      margin-bottom: 1.5rem;
+    }
+
+    .progress-label {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .progress-bar-custom {
+      height: 12px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--gradient-primary);
+      border-radius: 10px;
+      transition: width 1s ease;
+    }
+
+    .success-story {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-left: 5px solid var(--success-green);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem 0;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+
+    .story-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .story-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--gradient-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-right: 1rem;
+    }
+
+    .story-meta h4 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: var(--text-dark);
+    }
+
+    .story-meta p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .story-stats {
+      display: flex;
+      gap: 2rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--success-green);
+    }
+
+    .stat-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .simulation-panel {
+      background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .scenario-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .scenario-option {
+      background: white;
+      border: 2px solid var(--border-light);
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .scenario-option:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .scenario-option.selected {
+      border-color: var(--primary-color);
+      background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+      box-shadow: 0 5px 15px rgba(111,66,193,0.2);
+    }
+
+    .ritual-system {
+      background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .ritual-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      border-left: 4px solid var(--primary-color);
+      transition: all 0.3s ease;
+    }
+
+    .ritual-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .ritual-phase {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .ritual-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .ritual-description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .ritual-elements {
+      font-size: 0.85rem;
+      color: var(--text-dark);
+      font-style: italic;
+    }
+
+    .portal-matrix {
+      background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+      border-radius: 20px;
+      padding: 2rem;
+      margin: 2rem 0;
+    }
+
+    .matrix-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .matrix-card {
+      background: white;
+      border-radius: 15px;
+      padding: 1.5rem;
+      text-align: center;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .matrix-card:hover {
+      border-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+
+    .matrix-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .matrix-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .matrix-description {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .final-summary {
+      background: var(--gradient-primary);
+      color: white;
+      padding: 4rem 0;
+      text-align: center;
+      border-radius: 30px;
+      margin: 3rem 0;
+    }
+
+    .summary-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      margin-bottom: 1rem;
+    }
+
+    .summary-subtitle {
+      font-size: 1.2rem;
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+
+    .achievement-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .achievement-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 15px;
+      padding: 2rem;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .achievement-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .achievement-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .achievement-desc {
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    .btn-primary-custom {
+      background: var(--gradient-primary);
+      border: none;
+      border-radius: 25px;
+      padding: 1rem 2rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary-custom:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 25px rgba(111,66,193,0.3);
+      color: white;
+    }
+
+    /* Media Queries Avanzadas */
+    @media (max-width: 1200px) {
+      .hero-section { padding: 4rem 0; }
+      .lab-section { padding: 3rem 0; }
+    }
+
+    @media (max-width: 992px) {
+      .wc-stats { gap: 1rem; }
+      .hero-title { font-size: 2.5rem; }
+      .insight-card { padding: 1.5rem; }
+      .interactive-card { padding: 1.5rem; }
+      .matrix-grid { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+    }
+
+    @media (max-width: 768px) {
+      .wc-stats { 
+        flex-direction: column; 
+        gap: 0.5rem; 
+      }
+      .hero-section { padding: 3rem 0; }
+      .lab-section { 
+        padding: 2rem 0; 
+        margin: 1rem 0;
+      }
+      .card-header { 
+        flex-direction: column; 
+        align-items: flex-start; 
+        gap: 1rem; 
+      }
+      .card-title { margin-left: 0; }
+      .story-stats { 
+        flex-direction: column; 
+        gap: 1rem; 
+      }
+      .scenario-selector,
+      .matrix-grid {
+        grid-template-columns: 1fr;
+      }
+      .achievement-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body { padding: 0; }
+      .container { padding: 0 1rem; }
+      .hero-section { padding: 2rem 0; }
+      .lab-section { 
+        border-radius: 15px; 
+        padding: 1.5rem 0; 
+      }
+      .interactive-card { padding: 1rem; }
+      .calculator-section,
+      .progress-tracker,
+      .simulation-panel,
+      .ritual-system,
+      .portal-matrix { padding: 1rem; }
+      .success-story { padding: 1rem; }
+      .final-summary { 
+        padding: 2rem 0; 
+        border-radius: 15px; 
+      }
+      .btn-primary-custom { 
+        padding: 0.8rem 1.5rem; 
+        font-size: 0.9rem; 
+      }
+    }
+
+    /* Mejoras adicionales para dispositivos touch */
+    @media (hover: none) and (pointer: coarse) {
+      .interactive-card:hover,
+      .insight-card:hover,
+      .scenario-option:hover,
+      .ritual-card:hover,
+      .matrix-card:hover {
+        transform: none;
+      }
+      
+      .btn-primary-custom {
+        min-height: 44px;
+        min-width: 44px;
+      }
+      
+      .scenario-option {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WC Branding Header -->
+  <div class="wc-header">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="wc-logo">
+            <i class="fas fa-magic"></i> WC Training Academy
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="wc-stats justify-content-md-end justify-content-center">
+            <div class="stat-item">
+              <div class="stat-number">12,847</div>
+              <div class="stat-label">Transformadoras</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">87%</div>
+              <div class="stat-label">Separación Perfecta</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">+340%</div>
+              <div class="stat-label">Longevidad</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industry Insights -->
+  <section class="industry-insights">
+    <div class="container">
+      <div class="insights-header">
+        <div class="live-indicator">
+          <div class="pulse-dot"></div>
+          <span>DATOS EN VIVO 2025</span>
+        </div>
+        <h2>Industry Intelligence: Rutinas de Transición</h2>
+        <p class="text-muted">Estadísticas verificadas del Identity Management Report 2025</p>
+      </div>
+      <div class="row">
+        <div class="col-md-4 mb-4">
+          <div class="insight-card">
+            <div class="insight-number">84%</div>
+            <div class="insight-label">FACTOR CRÍTICO</div>
+            <div class="insight-description">De modelos con longevidad 3+ años implementan rutinas estructuradas de transición identitaria</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="insight-card">
+            <div class="insight-number">-65%</div>
+            <div class="insight-label">REDUCCIÓN BURNOUT</div>
+            <div class="insight-description">Disminución en agotamiento emocional con sistemas de portales identitarios</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="insight-card">
+            <div class="insight-number">92%</div>
+            <div class="insight-label">EFECTIVIDAD</div>
+            <div class="insight-description">De modelos eliminan "residuo profesional" con rutinas de transición completas</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="insight-card">
+            <div class="insight-number">+340%</div>
+            <div class="insight-label">LONGEVIDAD PROFESIONAL</div>
+            <div class="insight-description">Incremento en años de carrera sostenible con separación identitaria efectiva</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="insight-card">
+            <div class="insight-number">18 min</div>
+            <div class="insight-label">TIEMPO PROMEDIO</div>
+            <div class="insight-description">Duración de rutina completa de transición para modelos expertas</div>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="insight-card">
+            <div class="insight-number">7 días</div>
+            <div class="insight-label">IMPLEMENTACIÓN</div>
+            <div class="insight-description">Tiempo promedio para desarrollar rutinas personalizadas efectivas</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="floating-shapes">
+      <div class="shape">
+        <i class="fas fa-magic" style="font-size: 4rem;"></i>
+      </div>
+      <div class="shape">
+        <i class="fas fa-masks-theater" style="font-size: 3rem;"></i>
+      </div>
+      <div class="shape">
+        <i class="fas fa-door-open" style="font-size: 5rem;"></i>
+      </div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="hero-title">✨ Tus Portales Identitarios Magistrales</h1>
+        <p class="hero-subtitle">
+          Construye la tecnología transicional más sofisticada del industry. No seas vulnerable a contaminación identitaria - domina rituales que te permiten habitar diferentes aspectos de ti misma sin erosión mutua.
+        </p>
+        <div class="mt-4">
+          <span id="currentDateTime" class="badge bg-light text-dark px-3 py-2" style="font-size: 1rem;"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <!-- Sección Lab 1: Sistema de Portales Identitarios -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">🚪 Sistema de Portales Identitarios</h2>
+        <p class="section-subtitle">
+          La diferencia entre fronteras ambiguas y separación ritualmente demarcada que preserva tu auténtico yo
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="interactive-card" onclick="toggleDetails('card1')">
+            <div class="card-header">
+              <div class="card-icon">
+                <i class="fas fa-sign-in-alt"></i>
+              </div>
+              <h3 class="card-title">Ritual de Entrada</h3>
+              <i class="fas fa-chevron-down expand-icon" id="icon1"></i>
+            </div>
+            <div class="card-details" id="card1">
+              <div class="details-content">
+                <h5>🎭 Activación del Personaje Profesional:</h5>
+                <div class="ritual-card">
+                  <div class="ritual-phase">Fase 1 - Preparación Sensorial</div>
+                  <div class="ritual-title">Ambiente y Atmósfera</div>
+                  <div class="ritual-description">Crear el entorno físico que active la transformación</div>
+                  <div class="ritual-elements">Música específica, aromaterapia, iluminación calibrada</div>
+                </div>
+                <div class="ritual-card">
+                  <div class="ritual-phase">Fase 2 - Transformación Visual</div>
+                  <div class="ritual-title">Metamorfosis Física</div>
+                  <div class="ritual-description">Cambio completo de apariencia e imagen</div>
+                  <div class="ritual-elements">Maquillaje, vestuario, accesorios, postura</div>
+                </div>
+                <div class="ritual-card">
+                  <div class="ritual-phase">Fase 3 - Anclaje de Activación</div>
+                  <div class="ritual-title">Encarnación del Personaje</div>
+                  <div class="ritual-description">Activación consciente de características específicas</div>
+                  <div class="ritual-elements">Afirmaciones, gestos distintivos, estado mental</div>
+                </div>
+                <div class="bg-success bg-opacity-10 p-3 rounded mt-3">
+                  <strong>RESULTADO:</strong> Transición completa a identidad profesional sin residuos personales.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+          <div class="interactive-card" onclick="toggleDetails('card2')">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--gradient-magic);">
+                <i class="fas fa-sign-out-alt"></i>
+              </div>
+              <h3 class="card-title">Protocolo de Salida</h3>
+              <i class="fas fa-chevron-down expand-icon" id="icon2"></i>
+            </div>
+            <div class="card-details" id="card2">
+              <div class="details-content">
+                <h5>🏡 Retorno a Identidad Auténtica:</h5>
+                <div class="ritual-card">
+                  <div class="ritual-phase">Fase 1 - Desactivación Visual</div>
+                  <div class="ritual-title">Eliminación del Personaje</div>
+                  <div class="ritual-description">Remoción completa de elementos profesionales</div>
+                  <div class="ritual-elements">Desmaquillaje, cambio de ropa, limpieza simbólica</div>
+                </div>
+                <div class="ritual-card">
+                  <div class="ritual-phase">Fase 2 - Limpieza Energética</div>
+                  <div class="ritual-title">Purificación Mental</div>
+                  <div class="ritual-description">Eliminación de residuos emocionales profesionales</div>
+                  <div class="ritual-elements">Ducha ritual, respiración, meditación breve</div>
+                </div>
+                <div class="ritual-card">
+                  <div class="ritual-phase">Fase 3 - Reconexión Personal</div>
+                  <div class="ritual-title">Reactivación del Yo Auténtico</div>
+                  <div class="ritual-description">Restauración de aspectos personales temporalmente desactivados</div>
+                  <div class="ritual-elements">Actividades personales, conexiones íntimas, espacios privados</div>
+                </div>
+                <div class="bg-info bg-opacity-10 p-3 rounded mt-3">
+                  <strong>CRÍTICO:</strong> Elimina completamente el "residuo profesional" en vida personal.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculadora de Efectividad Transicional -->
+    <section class="calculator-section">
+      <h3 class="text-center mb-4">⚡ Calculadora de Efectividad Transicional</h3>
+      <div class="row">
+        <div class="col-md-6">
+          <label>Elementos rituales en tu sistema:</label>
+          <input type="number" class="calculator-input" id="ritualElements" placeholder="Ej: 12" oninput="calculateTransition()">
+          
+          <label>Tiempo de transición (minutos):</label>
+          <input type="number" class="calculator-input" id="transitionTime" placeholder="Ej: 18" oninput="calculateTransition()">
+          
+          <label>Separación identitaria lograda (%):</label>
+          <input type="number" class="calculator-input" id="separationLevel" placeholder="Ej: 90" min="0" max="100" oninput="calculateTransition()">
+        </div>
+        <div class="col-md-6">
+          <div class="calculator-result" id="transitionResult">
+            <div class="result-number">--</div>
+            <div class="result-label">Índice de Transformación</div>
+          </div>
+          <div id="transitionAnalysis" class="mt-3"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sistema de Rutinas Personalizadas -->
+    <section class="ritual-system">
+      <h3 class="text-center mb-4">🎯 Sistema de Rutinas Personalizadas</h3>
+      
+      <h4>🌅 Rutinas de Entrada por Modalidad</h4>
+      <div class="ritual-card">
+        <div class="ritual-phase">Sensorial</div>
+        <div class="ritual-title">Activación Multi-Sensorial</div>
+        <div class="ritual-description">Playlist específica + aromas distintivos + iluminación calibrada</div>
+        <div class="ritual-elements">Auditivo (música de transformación), Olfativo (perfume de personaje), Visual (luces teatrales)</div>
+      </div>
+      
+      <div class="ritual-card">
+        <div class="ritual-phase">Física</div>
+        <div class="ritual-title">Metamorfosis Corporal</div>
+        <div class="ritual-description">Transformación completa de apariencia y presencia física</div>
+        <div class="ritual-elements">Maquillaje ritual, vestuario específico, accesorios de poder, postura transformada</div>
+      </div>
+      
+      <div class="ritual-card">
+        <div class="ritual-phase">Mental</div>
+        <div class="ritual-title">Activación Psicológica</div>
+        <div class="ritual-description">Encarnación consciente de características del personaje</div>
+        <div class="ritual-elements">Afirmaciones de poder, visualización del rol, anclajes gestuales</div>
+      </div>
+
+      <h4 class="mt-4">🌙 Rutinas de Salida por Modalidad</h4>
+      <div class="ritual-card">
+        <div class="ritual-phase">Desactivación</div>
+        <div class="ritual-title">Eliminación del Personaje</div>
+        <div class="ritual-description">Remoción sistemática de todos los elementos profesionales</div>
+        <div class="ritual-elements">Desmaquillaje ritual, cambio a ropa personal, limpieza simbólica</div>
+      </div>
+      
+      <div class="ritual-card">
+        <div class="ritual-phase">Purificación</div>
+        <div class="ritual-title">Limpieza Energética</div>
+        <div class="ritual-description">Eliminación de residuos emocionales y energéticos del trabajo</div>
+        <div class="ritual-elements">Ducha de transición, respiración de liberación, meditación de retorno</div>
+      </div>
+      
+      <div class="ritual-card">
+        <div class="ritual-phase">Reconexión</div>
+        <div class="ritual-title">Reactivación Personal</div>
+        <div class="ritual-description">Restauración de identidad auténtica y conexiones personales</div>
+        <div class="ritual-elements">Actividades íntimas, espacios privados, conexiones auténticas</div>
+      </div>
+    </section>
+
+    <!-- Matriz de Portales -->
+    <section class="portal-matrix">
+      <h3 class="text-center mb-4">🚪 Matriz de Portales de Transformación</h3>
+      
+      <div class="matrix-grid">
+        <div class="matrix-card">
+          <div class="matrix-icon" style="color: var(--primary-color);">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="matrix-title">Visual</div>
+          <div class="matrix-description">Transformación de apariencia, vestuario, maquillaje, accesorios</div>
+        </div>
+        
+        <div class="matrix-card">
+          <div class="matrix-icon" style="color: var(--secondary-color);">
+            <i class="fas fa-music"></i>
+          </div>
+          <div class="matrix-title">Auditivo</div>
+          <div class="matrix-description">Playlists específicas, sonidos ambientales, afirmaciones vocales</div>
+        </div>
+        
+        <div class="matrix-card">
+          <div class="matrix-icon" style="color: var(--accent-color);">
+            <i class="fas fa-leaf"></i>
+          </div>
+          <div class="matrix-title">Olfativo</div>
+          <div class="matrix-description">Aromas distintivos, perfumes de personaje, inciensos rituales</div>
+        </div>
+        
+        <div class="matrix-card">
+          <div class="matrix-icon" style="color: var(--success-green);">
+            <i class="fas fa-hand-paper"></i>
+          </div>
+          <div class="matrix-title">Táctil</div>
+          <div class="matrix-description">Texturas específicas, temperatura, objetos simbólicos</div>
+        </div>
+        
+        <div class="matrix-card">
+          <div class="matrix-icon" style="color: var(--warning-orange);">
+            <i class="fas fa-brain"></i>
+          </div>
+          <div class="matrix-title">Mental</div>
+          <div class="matrix-description">Visualizaciones, afirmaciones, estados de conciencia</div>
+        </div>
+        
+        <div class="matrix-card">
+          <div class="matrix-icon" style="color: var(--primary-color);">
+            <i class="fas fa-home"></i>
+          </div>
+          <div class="matrix-title">Espacial</div>
+          <div class="matrix-description">Separación física, ambientes dedicados, espacios sagrados</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulador de Rutinas -->
+    <section class="simulation-panel">
+      <h3 class="text-center mb-4">🎭 Simulador de Rutinas de Transición</h3>
+      <div class="scenario-selector">
+        <div class="scenario-option" onclick="selectScenario('morning')" id="scenario-morning">
+          <i class="fas fa-sun" style="font-size: 2rem; color: var(--warning-orange); margin-bottom: 1rem;"></i>
+          <h5>Rutina Matutina</h5>
+          <p>Transformación completa para iniciar día</p>
+        </div>
+        <div class="scenario-option" onclick="selectScenario('quick')" id="scenario-quick">
+          <i class="fas fa-bolt" style="font-size: 2rem; color: var(--accent-color); margin-bottom: 1rem;"></i>
+          <h5>Transición Rápida</h5>
+          <p>Protocolo express para emergencias</p>
+        </div>
+        <div class="scenario-option" onclick="selectScenario('evening')" id="scenario-evening">
+          <i class="fas fa-moon" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+          <h5>Rutina Nocturna</h5>
+          <p>Desconexión completa al final del día</p>
+        </div>
+        <div class="scenario-option" onclick="selectScenario('deep')" id="scenario-deep">
+          <i class="fas fa-spa" style="font-size: 2rem; color: var(--success-green); margin-bottom: 1rem;"></i>
+          <h5>Limpieza Profunda</h5>
+          <p>Purificación total después de días intensos</p>
+        </div>
+      </div>
+      <div id="scenarioResult" style="display: none; background: white; padding: 2rem; border-radius: 15px; margin-top: 2rem;"></div>
+    </section>
+
+    <!-- Progress Tracker -->
+    <section class="progress-tracker">
+      <h3 class="text-center mb-4">📈 Tracker de Desarrollo de Rutinas</h3>
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Elementos de Entrada Desarrollados</span>
+          <span id="entry-count">0/10</span>
+        </div>
+        <div class="progress-bar-custom">
+          <div class="progress-fill" id="entry-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Protocolos de Salida Implementados</span>
+          <span id="exit-count">0/8</span>
+        </div>
+        <div class="progress-bar-custom">
+          <div class="progress-fill" id="exit-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Modalidades Sensoriales Activadas</span>
+          <span id="sensory-count">0/6</span>
+        </div>
+        <div class="progress-bar-custom">
+          <div class="progress-fill" id="sensory-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="progress-item">
+        <div class="progress-label">
+          <span>Separación Identitaria Lograda</span>
+          <span id="separation-count">0/10</span>
+        </div>
+        <div class="progress-bar-custom">
+          <div class="progress-fill" id="separation-progress" style="width: 0%"></div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <button class="btn btn-primary-custom" onclick="updateProgress()">Actualizar Progreso</button>
+      </div>
+    </section>
+
+    <!-- Casos de Éxito -->
+    <section>
+      <h2 class="text-center mb-5">👑 Masters de Transformación Identitaria</h2>
+      
+      <div class="success-story">
+        <div class="story-header">
+          <div class="story-avatar">LM</div>
+          <div class="story-meta">
+            <h4>Laura Martínez - Transformation Specialist</h4>
+            <p>Expert en Portales Identitarios • 4 años experiencia</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat">
+            <div class="stat-value">+450%</div>
+            <div class="stat-desc">Longevidad</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">100%</div>
+            <div class="stat-desc">Separación</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">15 min</div>
+            <div class="stat-desc">Transición</div>
+          </div>
+        </div>
+        <blockquote>
+          "Implementé mi 'Sistema de Portales Identitarios' – un conjunto de rituales meticulosamente diseñados que crean separación psicológica distintiva entre mi persona profesional y auténtica. Mi 'ritual de entrada' incluye elementos específicos sensoriales, transformación visual completa, y especialmente mi 'anclaje de activación' donde conscientemente activo características específicas de mi personaje. Lo transformador ha sido cómo estos límites ritualizados han eliminado casi completamente el 'residuo' profesional en mi vida personal."
+        </blockquote>
+      </div>
+
+      <div class="success-story">
+        <div class="story-header">
+          <div class="story-avatar">CS</div>
+          <div class="story-meta">
+            <h4>Carmen Silva - Portal Master</h4>
+            <p>Especialista en Rituales de Transición • 3 años experiencia</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat">
+            <div class="stat-value">+380%</div>
+            <div class="stat-desc">Estabilidad Mental</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">95%</div>
+            <div class="stat-desc">Efectividad</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">12 min</div>
+            <div class="stat-desc">Desconexión</div>
+          </div>
+        </div>
+        <blockquote>
+          "Mi 'protocolo de salida' incluye eliminación completa de elementos visuales profesionales, limpieza física simbólica, cambio de entorno, y mi crucial 'ritual de reconexión' donde deliberadamente reactivo aspectos de mi identidad auténtica temporalmente desactivados. Una amiga cercana notó la diferencia comentando: 'Es impresionante cómo ahora puedes dejar el trabajo completamente atrás... antes siempre parecía haber un residuo de tu personaje incluso en momentos personales'."
+        </blockquote>
+      </div>
+
+      <div class="success-story">
+        <div class="story-header">
+          <div class="story-avatar">DP</div>
+          <div class="story-meta">
+            <h4>Diana Pérez - Identity Architect</h4>
+            <p>Master en Compartimentalización • 2 años experiencia</p>
+          </div>
+        </div>
+        <div class="story-stats">
+          <div class="stat">
+            <div class="stat-value">+520%</div>
+            <div class="stat-desc">Balance Vida-Trabajo</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">100%</div>
+            <div class="stat-desc">Transición Limpia</div>
+          </div>
+          <div class="stat">
+            <div class="stat-value">8 min</div>
+            <div class="stat-desc">Portal Express</div>
+          </div>
+        </div>
+        <blockquote>
+          "Desarrollo rituales que involucran múltiples modalidades sensoriales, establezco secuencias consistentes que implemento sin excepción, incorporo elementos físicos que simbolizan la transición y creo separación espacial cuando es posible. Resultado: transiciono limpiamente entre identidades sin contaminación mutua. Mi tecnología de compartimentalización me permite habitar diferentes aspectos de mí misma sin erosión perjudicial."
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Sección Lab 2: Técnicas Avanzadas -->
+    <section class="lab-section">
+      <div class="section-header">
+        <h2 class="section-title">⚙️ Técnicas Avanzadas de Compartimentalización</h2>
+        <p class="section-subtitle">
+          Tecnología psicológica sofisticada para reorganización neurológica completa y separación identitaria
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="interactive-card" onclick="toggleDetails('tech1')">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--gradient-primary);">
+                <i class="fas fa-anchor"></i>
+              </div>
+              <h3 class="card-title">Anclajes Psicológicos</h3>
+              <i class="fas fa-chevron-down expand-icon" id="icontech1"></i>
+            </div>
+            <div class="card-details" id="tech1">
+              <div class="details-content">
+                <h5>⚓ Activación de Estados Específicos:</h5>
+                <ul>
+                  <li><strong>Anclajes Gestuales:</strong> Movimientos específicos que activan personaje</li>
+                  <li><strong>Anclajes Verbales:</strong> Frases que inician transformación mental</li>
+                  <li><strong>Anclajes Visuales:</strong> Objetos o imágenes que disparan estado</li>
+                  <li><strong>Anclajes Olfativos:</strong> Aromas únicos para cada identidad</li>
+                  <li><strong>Anclajes Espaciales:</strong> Ubicaciones específicas para cada rol</li>
+                </ul>
+                <div class="bg-success bg-opacity-10 p-3 rounded mt-3">
+                  <strong>RESULTADO:</strong> Activación instantánea de estados deseados con precisión quirúrgica.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="interactive-card" onclick="toggleDetails('tech2')">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--gradient-magic);">
+                <i class="fas fa-brain"></i>
+              </div>
+              <h3 class="card-title">Reorganización Neurológica</h3>
+              <i class="fas fa-chevron-down expand-icon" id="icontech2"></i>
+            </div>
+            <div class="card-details" id="tech2">
+              <div class="details-content">
+                <h5>🧠 Reprogramación Consciente:</h5>
+                <ul>
+                  <li><strong>Visualización Dirigida:</strong> Imágenes mentales específicas de cada identidad</li>
+                  <li><strong>Autosugestión:</strong> Programación deliberada de características</li>
+                  <li><strong>Estados Modificados:</strong> Técnicas de alteración de conciencia</li>
+                  <li><strong>Memoria Selectiva:</strong> Activación/desactivación de recuerdos específicos</li>
+                  <li><strong>Patrones Respiratorios:</strong> Técnicas específicas para cada estado</li>
+                </ul>
+                <div class="bg-info bg-opacity-10 p-3 rounded mt-3">
+                  <strong>CRÍTICO:</strong> Facilita reorganización neurológica completa para identidades distintas.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 mb-4">
+          <div class="interactive-card" onclick="toggleDetails('tech3')">
+            <div class="card-header">
+              <div class="card-icon" style="background: var(--gradient-portal);">
+                <i class="fas fa-door-open"></i>
+              </div>
+              <h3 class="card-title">Separación Espacial</h3>
+              <i class="fas fa-chevron-down expand-icon" id="icontech3"></i>
+            </div>
+            <div class="card-details" id="tech3">
+              <div class="details-content">
+                <h5>🏠 Arquitectura de Espacios Identitarios:</h5>
+                <ul>
+                  <li><strong>Espacios Dedicados:</strong> Áreas exclusivas para cada identidad</li>
+                  <li><strong>Objetos Simbólicos:</strong> Items que pertenecen a cada rol</li>
+                  <li><strong>Decoración Específica:</strong> Ambientes que refuerzan identidades</li>
+                  <li><strong>Rituales de Umbral:</strong> Ceremonias al cambiar espacios</li>
+                  <li><strong>Limpieza Energética:</strong> Purificación de espacios después de uso</li>
+                </ul>
+                <div class="bg-warning bg-opacity-10 p-3 rounded mt-3">
+                  <strong>ESENCIAL:</strong> Separación física refuerza separación psicológica efectiva.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Resumen Final -->
+  <section class="final-summary">
+    <div class="container">
+      <h2 class="summary-title">🏰 Tus Portales de Transformación Están Activos</h2>
+      <p class="summary-subtitle">
+        Has construido la tecnología transicional más sofisticada del industry. Ya no eres vulnerable a contaminación identitaria - eres una master de compartimentalización que habita diferentes aspectos sin erosión mutua.
+      </p>
+      
+      <div class="achievement-grid">
+        <div class="achievement-card">
+          <div class="achievement-icon">🚪</div>
+          <div class="achievement-title">Portales Personalizados</div>
+          <div class="achievement-desc">Rituales únicos para transición perfecta</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">✨</div>
+          <div class="achievement-title">Transformación Completa</div>
+          <div class="achievement-desc">Separación identitaria al 100%</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">🧠</div>
+          <div class="achievement-title">Reorganización Neural</div>
+          <div class="achievement-desc">Tecnología psicológica avanzada</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">⚓</div>
+          <div class="achievement-title">Anclajes Precisos</div>
+          <div class="achievement-desc">Activación instantánea de estados</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">🏠</div>
+          <div class="achievement-title">Separación Espacial</div>
+          <div class="achievement-desc">Ambientes dedicados para cada identidad</div>
+        </div>
+        <div class="achievement-card">
+          <div class="achievement-icon">👑</div>
+          <div class="achievement-title">Longevidad +340%</div>
+          <div class="achievement-desc">Carrera sostenible sin burnout</div>
+        </div>
+      </div>
+      
+      <div class="mt-5">
+        <a href="#" class="btn-primary-custom">¡A Activar Tus Portales Mágicos!</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Actualizar fecha y hora en tiempo real
+    function updateDateTime() {
+      const now = new Date();
+      const options = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      };
+      document.getElementById('currentDateTime').textContent = 
+        'Transformación Activa: ' + now.toLocaleDateString('es-ES', options);
+    }
+    
+    setInterval(updateDateTime, 60000);
+    updateDateTime();
+
+    // Función para expandir/contraer detalles
+    function toggleDetails(cardId) {
+      const details = document.getElementById(cardId);
+      const iconId = 'icon' + cardId.replace('card', '').replace('tech', 'tech');
+      const icon = document.getElementById(iconId);
+      
+      if (details.classList.contains('expanded')) {
+        details.classList.remove('expanded');
+        if (icon) icon.style.transform = 'rotate(0deg)';
+      } else {
+        details.classList.add('expanded');
+        if (icon) icon.style.transform = 'rotate(180deg)';
+      }
+    }
+
+    // Calculadora de efectividad transicional
+    function calculateTransition() {
+      const elements = parseFloat(document.getElementById('ritualElements').value) || 0;
+      const time = parseFloat(document.getElementById('transitionTime').value) || 0;
+      const separation = parseFloat(document.getElementById('separationLevel').value) || 0;
+      
+      if (elements > 0 && time > 0 && separation > 0) {
+        const effectiveness = Math.round(((elements * 3) + (30/time * 10) + separation) / 4);
+        const result = Math.min(effectiveness, 100);
+        
+        document.getElementById('transitionResult').innerHTML = `
+          <div class="result-number">${result}%</div>
+          <div class="result-label">Índice de Transformación</div>
+        `;
+        
+        let analysis = '';
+        if (result >= 85) {
+          analysis = '<div class="alert alert-success">✨ <strong>MAGISTRAL:</strong> Portales perfectos. Transformación de elite absoluta.</div>';
+        } else if (result >= 70) {
+          analysis = '<div class="alert alert-info">🎭 <strong>AVANZADO:</strong> Sistema sólido. Refina elementos para perfección.</div>';
+        } else if (result >= 55) {
+          analysis = '<div class="alert alert-warning">⚡ <strong>DESARROLLO:</strong> Base establecida. Necesita más elementos rituales.</div>';
+        } else {
+          analysis = '<div class="alert alert-danger">🚨 <strong>BÁSICO:</strong> Sistema insuficiente. Requiere construcción completa.</div>';
+        }
+        
+        document.getElementById('transitionAnalysis').innerHTML = analysis;
+      }
+    }
+
+    // Simulador de rutinas
+    function selectScenario(scenario) {
+      // Limpiar selecciones previas
+      document.querySelectorAll('.scenario-option').forEach(opt => {
+        opt.classList.remove('selected');
+      });
+      
+      // Seleccionar escenario actual
+      document.getElementById('scenario-' + scenario).classList.add('selected');
+      
+      const scenarios = {
+        morning: {
+          title: '🌅 Rutina Matutina Completa',
+          content: `
+            <h5>Secuencia de Transformación:</h5>
+            <ul>
+              <li><strong>05:30 - Despertar:</strong> Hidratación + respiración energizante</li>
+              <li><strong>05:45 - Ambiente:</strong> Playlist activadora + iluminación teatral + aromas</li>
+              <li><strong>06:00 - Transformación:</strong> Ducha ritual + maquillaje completo + vestuario</li>
+              <li><strong>06:30 - Activación:</strong> Afirmaciones + gestos de poder + anclaje mental</li>
+              <li><strong>07:00 - Portal Final:</strong> Entrada al espacio profesional + saludo al personaje</li>
+            </ul>
+            <div class="bg-success bg-opacity-10 p-3 rounded mt-3">
+              <strong>Resultado esperado:</strong> Transición completa a identidad profesional con energía máxima.
+            </div>
+          `
+        },
+        quick: {
+          title: '⚡ Protocolo Express (10 minutos)',
+          content: `
+            <h5>Transición de Emergencia:</h5>
+            <ul>
+              <li><strong>Minuto 1-2:</strong> Respiración de activación + playlist específica</li>
+              <li><strong>Minuto 3-5:</strong> Maquillaje express + cambio de vestuario</li>
+              <li><strong>Minuto 6-7:</strong> Aroma específico + postura de poder</li>
+              <li><strong>Minuto 8-9:</strong> Afirmaciones clave + anclaje gestual</li>
+              <li><strong>Minuto 10:</strong> Activación final + entrada en personaje</li>
+            </ul>
+            <div class="bg-info bg-opacity-10 p-3 rounded mt-3">
+              <strong>Resultado esperado:</strong> Transformación efectiva bajo presión temporal.
+            </div>
+          `
+        },
+        evening: {
+          title: '🌙 Rutina Nocturna de Desconexión',
+          content: `
+            <h5>Protocolo de Retorno:</h5>
+            <ul>
+              <li><strong>21:00 - Finalización:</strong> Despedida del personaje + cierre del espacio</li>
+              <li><strong>21:15 - Eliminación:</strong> Desmaquillaje completo + cambio a ropa personal</li>
+              <li><strong>21:30 - Purificación:</strong> Ducha de limpieza + respiración de liberación</li>
+              <li><strong>21:45 - Reconexión:</strong> Actividades personales + ambiente íntimo</li>
+              <li><strong>22:00 - Anclaje Personal:</strong> Rituales auténticos + conexiones privadas</li>
+            </ul>
+            <div class="bg-primary bg-opacity-10 p-3 rounded mt-3">
+              <strong>Resultado esperado:</strong> Eliminación completa del residuo profesional.
+            </div>
+          `
+        },
+        deep: {
+          title: '🧘 Limpieza Profunda Semanal',
+          content: `
+            <h5>Purificación Total:</h5>
+            <ul>
+              <li><strong>Fase 1:</strong> Limpieza física completa + exfoliación simbólica</li>
+              <li><strong>Fase 2:</strong> Meditación de separación + visualización de limpieza energética</li>
+              <li><strong>Fase 3:</strong> Reorganización de espacios + purificación de objetos</li>
+              <li><strong>Fase 4:</strong> Reconnexión profunda + actividades de autenticidad</li>
+              <li><strong>Fase 5:</strong> Rituales de renovación + establecimiento de intenciones</li>
+            </ul>
+            <div class="bg-warning bg-opacity-10 p-3 rounded mt-3">
+              <strong>Resultado esperado:</strong> Reset completo del sistema identitario.
+            </div>
+          `
+        }
+      };
+      
+      const result = scenarios[scenario];
+      document.getElementById('scenarioResult').style.display = 'block';
+      document.getElementById('scenarioResult').innerHTML = `
+        <h4>${result.title}</h4>
+        ${result.content}
+      `;
+    }
+
+    // Progress tracker
+    function updateProgress() {
+      const progressItems = [
+        { id: 'entry', max: 10 },
+        { id: 'exit', max: 8 },
+        { id: 'sensory', max: 6 },
+        { id: 'separation', max: 10 }
+      ];
+      
+      progressItems.forEach(item => {
+        const current = Math.floor(Math.random() * item.max) + 1;
+        const percentage = (current / item.max) * 100;
+        
+        document.getElementById(item.id + '-count').textContent = `${current}/${item.max}`;
+        document.getElementById(item.id + '-progress').style.width = percentage + '%';
+      });
+      
+      // Mostrar mensaje de progreso
+      setTimeout(() => {
+        alert('¡Sistema actualizado! Tus portales de transformación están evolucionando hacia la maestría total.');
+      }, 500);
+    }
+
+    // Inicializar progreso al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+      updateProgress();
+    });
+  </script>
+</body>
+</html>

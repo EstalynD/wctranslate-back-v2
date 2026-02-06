@@ -1057,6 +1057,229 @@ export class QuizService {
     };
   }
 
+  // ==================== VERIFICACIÓN DE QUIZZES PARA PROGRESO ====================
+
+  /**
+   * Verifica si el usuario ha aprobado un quiz de cierto tipo para una lección
+   */
+  async hasUserPassedLessonQuiz(
+    userId: string,
+    lessonId: string,
+    quizType: QuizType,
+  ): Promise<{
+    hasPassed: boolean;
+    quiz: Quiz | null;
+    bestAttempt: QuizAttempt | null;
+    message?: string;
+  }> {
+    // Buscar quiz de ese tipo para la lección
+    const quizzes = await this.findByLesson(lessonId, quizType);
+
+    if (quizzes.length === 0) {
+      return {
+        hasPassed: true, // No hay quiz, se considera aprobado
+        quiz: null,
+        bestAttempt: null,
+        message: 'No existe quiz de este tipo para la lección',
+      };
+    }
+
+    const quiz = quizzes[0]; // Tomamos el primero (debería ser único por tipo)
+
+    // Buscar mejor intento del usuario
+    const bestAttempt = await this.attemptModel
+      .findOne({
+        userId: new Types.ObjectId(userId),
+        quizId: quiz._id,
+        status: AttemptStatus.COMPLETED,
+        passed: true,
+      })
+      .sort({ percentage: -1 })
+      .exec();
+
+    return {
+      hasPassed: !!bestAttempt,
+      quiz,
+      bestAttempt,
+      message: bestAttempt
+        ? `Quiz aprobado con ${bestAttempt.percentage}%`
+        : 'Quiz no aprobado aún',
+    };
+  }
+
+  /**
+   * Obtiene el estado del PRE_QUIZ para una lección
+   * Retorna info sobre si puede ver contenido, si debe hacer quiz primero, etc.
+   */
+  async getPreQuizStatus(
+    userId: string,
+    lessonId: string,
+  ): Promise<{
+    hasPreQuiz: boolean;
+    quizId?: string;
+    canViewContent: boolean;
+    mustTakeQuiz: boolean;
+    canBypass: boolean;
+    hasPassed: boolean;
+    bestScore?: number;
+    message: string;
+  }> {
+    const quizzes = await this.findByLesson(lessonId, QuizType.PRE_QUIZ);
+
+    if (quizzes.length === 0) {
+      return {
+        hasPreQuiz: false,
+        canViewContent: true,
+        mustTakeQuiz: false,
+        canBypass: false,
+        hasPassed: false,
+        message: 'No hay PRE_QUIZ para esta lección',
+      };
+    }
+
+    const quiz = quizzes[0];
+    const bestAttempt = await this.getUserBestAttempt(userId, quiz._id.toString());
+
+    const hasPassed = bestAttempt?.passed ?? false;
+    const showContentOnFail = quiz.settings.preQuizBehavior?.showContentOnFail ?? true;
+    const bypassOnSuccess = quiz.settings.preQuizBehavior?.bypassOnSuccess ?? false;
+
+    // Determinar si puede ver contenido
+    // - Si aprobó y bypassOnSuccess=true, puede saltar el contenido
+    // - Si no aprobó pero showContentOnFail=true, puede ver contenido
+    // - Si no ha intentado, debe hacer el quiz primero
+    const hasAttempted = !!bestAttempt;
+
+    return {
+      hasPreQuiz: true,
+      quizId: quiz._id.toString(),
+      canViewContent: hasAttempted ? (hasPassed || showContentOnFail) : false,
+      mustTakeQuiz: !hasAttempted,
+      canBypass: hasPassed && bypassOnSuccess,
+      hasPassed,
+      bestScore: bestAttempt?.percentage,
+      message: !hasAttempted
+        ? 'Debes completar el quiz de entrada primero'
+        : hasPassed
+          ? (bypassOnSuccess
+              ? '¡Excelente! Ya dominas este tema, puedes saltarlo'
+              : '¡Bien! Puedes continuar con el contenido')
+          : (showContentOnFail
+              ? 'Ahora aprenderás sobre este tema'
+              : 'Debes aprobar el quiz para continuar'),
+    };
+  }
+
+  /**
+   * Obtiene el estado del POST_QUIZ para una lección
+   * Retorna info sobre si la lección puede completarse, si desbloquea siguiente, etc.
+   */
+  async getPostQuizStatus(
+    userId: string,
+    lessonId: string,
+  ): Promise<{
+    hasPostQuiz: boolean;
+    quizId?: string;
+    canComplete: boolean;
+    requiresPass: boolean;
+    unlockNextOnPass: boolean;
+    hasPassed: boolean;
+    bestScore?: number;
+    attemptsCount: number;
+    maxAttempts: number;
+    message: string;
+  }> {
+    const quizzes = await this.findByLesson(lessonId, QuizType.POST_QUIZ);
+
+    if (quizzes.length === 0) {
+      return {
+        hasPostQuiz: false,
+        canComplete: true,
+        requiresPass: false,
+        unlockNextOnPass: false,
+        hasPassed: false,
+        attemptsCount: 0,
+        maxAttempts: 0,
+        message: 'No hay POST_QUIZ para esta lección',
+      };
+    }
+
+    const quiz = quizzes[0];
+    const attempts = await this.attemptModel
+      .find({
+        userId: new Types.ObjectId(userId),
+        quizId: quiz._id,
+        status: AttemptStatus.COMPLETED,
+      })
+      .exec();
+
+    const bestAttempt = attempts.reduce(
+      (best, current) => (!best || current.percentage > best.percentage ? current : best),
+      null as QuizAttempt | null,
+    );
+
+    const hasPassed = bestAttempt?.passed ?? false;
+    const requirePassToComplete = quiz.settings.postQuizBehavior?.requirePassToComplete ?? true;
+    const unlockNextOnPass = quiz.settings.postQuizBehavior?.unlockNextOnPass ?? true;
+
+    return {
+      hasPostQuiz: true,
+      quizId: quiz._id.toString(),
+      canComplete: !requirePassToComplete || hasPassed,
+      requiresPass: requirePassToComplete,
+      unlockNextOnPass,
+      hasPassed,
+      bestScore: bestAttempt?.percentage,
+      attemptsCount: attempts.length,
+      maxAttempts: quiz.settings.maxAttempts,
+      message: hasPassed
+        ? '¡Lección completada exitosamente!'
+        : requirePassToComplete
+          ? quiz.settings.postQuizBehavior?.retryMessageOnFail || 'Debes aprobar el quiz para completar la lección'
+          : 'Puedes completar la lección sin aprobar el quiz',
+    };
+  }
+
+  /**
+   * Verifica si el usuario ha aprobado el POST_QUIZ de la lección anterior
+   * Útil para determinar si puede acceder a la siguiente lección
+   */
+  async hasPassedPreviousLessonPostQuiz(
+    userId: string,
+    previousLessonId: string,
+  ): Promise<{
+    canProceed: boolean;
+    reason?: string;
+  }> {
+    const postQuizStatus = await this.getPostQuizStatus(userId, previousLessonId);
+
+    // Si no hay POST_QUIZ, puede proceder
+    if (!postQuizStatus.hasPostQuiz) {
+      return { canProceed: true };
+    }
+
+    // Si no requiere aprobar, puede proceder
+    if (!postQuizStatus.requiresPass) {
+      return { canProceed: true };
+    }
+
+    // Si aprobó, puede proceder solo si unlockNextOnPass está activo
+    if (postQuizStatus.hasPassed && postQuizStatus.unlockNextOnPass) {
+      return { canProceed: true };
+    }
+
+    // Si aprobó pero unlockNextOnPass está desactivado, aún puede proceder
+    // (esto significa que el quiz no controla el desbloqueo)
+    if (postQuizStatus.hasPassed) {
+      return { canProceed: true };
+    }
+
+    return {
+      canProceed: false,
+      reason: `Debes aprobar el quiz de la lección anterior (${postQuizStatus.bestScore ?? 0}% actual, necesitas ${postQuizStatus.requiresPass ? 'aprobar' : 'completar'})`,
+    };
+  }
+
   private async updateQuizStatistics(quizId: string): Promise<void> {
     const attempts = await this.attemptModel
       .find({

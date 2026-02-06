@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimum-scale=1.0, maximum-scale=5.0">
+    <title>🎯 WC Training - Masters del Portafolio de Habilidades</title>
+    
+    <!-- Bootstrap 5.3.0 desde CDNJS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6.0.0 desde CDNJS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #06b6d4;
+            --success-green: #28a745;
+            --warning-orange: #fd7e14;
+            --danger-red: #dc3545;
+            --text-dark: #1f2937;
+            --text-muted: #6b7280;
+            --bg-white: #ffffff;
+            --bg-light: #f8f9fa;
+            --bg-dark: #111827;
+            --border-light: #e0e0e0;
+            
+            --gradient-primary: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+            --gradient-secondary: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --gradient-dark: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            --gradient-animated: linear-gradient(-45deg, #6366f1, #8b5cf6, #06b6d4, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* WC Branding Header */
+        .wc-header {
+            background: var(--gradient-dark);
+            color: white;
+            padding: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .wc-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .wc-stats {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .live-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--success-green);
+            border-radius: 50%;
+            animation: pulse 1.5s infinite;
+            margin-right: 0.5rem;
+        }
+
+        /* Industry Insights Section */
+        .insights-section {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .insight-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .insight-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .insight-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Main Header */
+        .main-header {
+            background: var(--gradient-animated);
+            background-size: 400% 400%;
+            animation: gradientFloat 20s ease-in-out infinite;
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            animation: patternFloat 24s ease-in-out infinite;
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .main-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Section Labs */
+        .section-lab {
+            background: var(--bg-white);
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-lab:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-lab::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .lab-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lab-icon {
+            font-size: 2.5rem;
+            margin-right: 0.5rem;
+        }
+
+        /* Interactive Cards */
+        .interactive-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            border: 2px solid var(--border-light);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interactive-card:hover {
+            transform: translateX(10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 15px 40px rgba(99, 102, 241, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .expand-icon {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            transition: transform 0.3s ease;
+        }
+
+        .card-expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        .card-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .card-expanded .card-details {
+            max-height: 800px;
+        }
+
+        /* Calculators */
+        .calculator-section {
+            background: var(--gradient-secondary);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            margin: 2rem 0;
+        }
+
+        .calculator-input {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 0.8rem 1rem;
+            color: white;
+            font-size: 1rem;
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+
+        .calculator-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .calculator-input:focus {
+            outline: none;
+            border-color: white;
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .calculator-result {
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-dark);
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-top: 1rem;
+            font-weight: 600;
+        }
+
+        /* Progress Trackers */
+        .progress-tracker {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-item {
+            margin: 1.5rem 0;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .progress-bar-custom {
+            height: 12px;
+            border-radius: 20px;
+            background: var(--bg-light);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-success);
+            border-radius: 20px;
+            transition: width 1s ease;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.3) 50%, 
+                transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+
+        /* Success Stories */
+        .success-story {
+            background: linear-gradient(135deg, #fef3e2 0%, #fef7ed 100%);
+            border-left: 5px solid var(--warning-orange);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .success-story::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--warning-orange);
+            opacity: 0.3;
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-family: serif;
+        }
+
+        .story-content {
+            font-style: italic;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .story-author {
+            font-weight: 600;
+            color: var(--warning-orange);
+        }
+
+        .story-metrics {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .metric {
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: 15px;
+            min-width: 120px;
+        }
+
+        .metric-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--success-green);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        /* Simulators */
+        .simulator-section {
+            background: var(--gradient-dark);
+            color: white;
+            border-radius: 25px;
+            padding: 2.5rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .scenario-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .scenario-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .scenario-option.selected {
+            border-color: var(--accent-color);
+            background: rgba(6, 182, 212, 0.2);
+        }
+
+        .scenario-result {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--text-dark);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .scenario-result.show {
+            display: block;
+            animation: slideIn 0.5s ease;
+        }
+
+        /* Animations */
+        @keyframes gradientFloat {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes patternFloat {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2.5rem;
+            }
+            
+            .main-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .section-lab {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+            
+            .lab-title {
+                font-size: 1.5rem;
+            }
+            
+            .interactive-card {
+                padding: 1.5rem;
+            }
+            
+            .scenario-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .story-metrics {
+                gap: 1rem;
+            }
+            
+            .metric {
+                min-width: 100px;
+                padding: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-header {
+                padding: 2rem 0;
+            }
+            
+            .main-title {
+                font-size: 2rem;
+            }
+            
+            .section-lab {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .interactive-card {
+                padding: 1rem;
+                border-radius: 15px;
+            }
+            
+            .calculator-section,
+            .simulator-section {
+                padding: 1.5rem;
+                border-radius: 15px;
+            }
+            
+            .insight-card {
+                padding: 1rem;
+            }
+            
+            .insight-number {
+                font-size: 2rem;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        .interactive-card,
+        .scenario-option,
+        .calculator-input {
+            min-height: 44px;
+        }
+
+        /* Dark mode support */
+        @media (prefers-color-scheme: dark) {
+            .section-lab {
+                background: #1f2937;
+                color: #f9fafb;
+                border-color: #374151;
+            }
+            
+            .interactive-card {
+                background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+                border-color: #374151;
+            }
+            
+            .progress-tracker {
+                background: #1f2937;
+                color: #f9fafb;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WC Branding Header -->
+    <div class="wc-header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="wc-logo">
+                        <i class="fas fa-crown"></i> WC Training
+                    </div>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="wc-stats">
+                        <span class="live-indicator"></span>
+                        <strong>12,847</strong> modelos construyendo sus portafolios | 
+                        <span id="current-time"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Industry Insights -->
+    <div class="insights-section">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2 class="mb-3"><i class="fas fa-chart-line"></i> Industry Insights 2025</h2>
+                <p class="lead">Datos críticos del Creator Economy Report</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">87%</div>
+                        <div class="insight-label">Modelos sin portafolio FALLAN</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">340%</div>
+                        <div class="insight-label">Más ingresos con portafolio</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">23min</div>
+                        <div class="insight-label">Tiempo promedio verificación</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">156k</div>
+                        <div class="insight-label">Promedio anual TOP 10%</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">73%</div>
+                        <div class="insight-label">Prefieren evidencia visual</div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-4 col-6 mb-3">
+                    <div class="insight-card text-center">
+                        <div class="insight-number">45días</div>
+                        <div class="insight-label">Construcción promedio</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <div class="main-header">
+        <div class="header-pattern"></div>
+        <div class="container text-center">
+            <h1 class="main-title">🎯 Masters del Portafolio de Habilidades</h1>
+            <p class="main-subtitle">
+                Transforma tu talento invisible en activos concretos que NADIE puede ignorar. 
+                Tu imperio financiero empieza con evidencia irrefutable de tu valor.
+            </p>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <!-- Fundamentos Lab -->
+        <div class="section-lab">
+            <h2 class="lab-title">
+                <i class="fas fa-foundation lab-icon"></i>
+                📚 Fundamentos CRÍTICOS
+            </h2>
+            <p class="lead">El 87% de modelos fallan porque no pueden DEMOSTRAR su valor. No seas vulnerable.</p>
+            
+            <div class="interactive-card" onclick="toggleDetails('fundamentos')">
+                <div class="card-header">
+                    <h4 class="card-title">🔥 Sistema de Documentación Profesional</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Infraestructura que convierte habilidades abstractas en credenciales tangibles.</p>
+                <div class="card-details" id="fundamentos-details">
+                    <hr>
+                    <h5>🎯 Elementos ESENCIALES:</h5>
+                    <ul>
+                        <li><strong>Archivo de logros específicos:</strong> Métricas concretas, no sensaciones vagas</li>
+                        <li><strong>Testimonios descriptivos:</strong> Clientes detallando tu impacto real</li>
+                        <li><strong>Muestras categorizadas:</strong> Evidencia visual de capacidades</li>
+                        <li><strong>Estudios de caso:</strong> Problemas complejos + tu solución + resultados</li>
+                        <li><strong>Certificaciones verificables:</strong> Credenciales que otros pueden confirmar</li>
+                        <li><strong>Portfolio visual:</strong> Antes/después de tu trabajo</li>
+                    </ul>
+                    <div class="alert alert-warning">
+                        <strong>CRÍTICO:</strong> Sin evidencia documentada, tu experiencia no existe para potenciales clientes.
+                    </div>
+                </div>
+            </div>
+
+            <div class="interactive-card" onclick="toggleDetails('categorias')">
+                <div class="card-header">
+                    <h4 class="card-title">📂 Sistema de Categorización Inteligente</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Organización que permite recuperación inmediata según oportunidad específica.</p>
+                <div class="card-details" id="categorias-details">
+                    <hr>
+                    <h5>🗂️ Estructura recomendada:</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Por tipo de habilidad:</h6>
+                            <ul>
+                                <li>Técnicas (editing, fotografía, streaming)</li>
+                                <li>Comunicación (idiomas, presentación)</li>
+                                <li>Marketing (social media, branding)</li>
+                                <li>Administración (tiempo, finanzas)</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Por audiencia objetivo:</h6>
+                            <ul>
+                                <li>Clientes premium</li>
+                                <li>Colaboraciones</li>
+                                <li>Plataformas específicas</li>
+                                <li>Aplicaciones laborales</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculadora de ROI -->
+        <div class="calculator-section">
+            <h3 class="text-center mb-4">💰 Calculadora de ROI del Portafolio</h3>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Tarifa actual por hora ($):</label>
+                    <input type="number" class="calculator-input" id="currentRate" placeholder="Ej: 25" onchange="calculatePortfolioROI()">
+                    
+                    <label>Horas trabajadas mensualmente:</label>
+                    <input type="number" class="calculator-input" id="monthlyHours" placeholder="Ej: 160" onchange="calculatePortfolioROI()">
+                    
+                    <label>Tiempo invertido creando portafolio (días):</label>
+                    <input type="number" class="calculator-input" id="portfolioTime" placeholder="Ej: 45" onchange="calculatePortfolioROI()">
+                </div>
+                <div class="col-md-6">
+                    <div class="calculator-result" id="roiResult">
+                        <h5>📊 Proyección de Resultados</h5>
+                        <p>Ingresa tus datos para ver el impacto financiero de tu portafolio profesional.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Tracker -->
+        <div class="progress-tracker">
+            <h3 class="text-center mb-4">🎯 Tracker de Construcción de Portafolio</h3>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>📁 Recopilación de evidencia</span>
+                    <span id="evidence-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="evidence-progress"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🎨 Diseño y organización</span>
+                    <span id="design-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="design-progress"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🔍 Optimización y testing</span>
+                    <span id="optimization-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="optimization-progress"></div>
+                </div>
+            </div>
+            
+            <div class="progress-item">
+                <div class="progress-label">
+                    <span>🚀 Implementación activa</span>
+                    <span id="implementation-percent">0%</span>
+                </div>
+                <div class="progress-bar-custom">
+                    <div class="progress-fill" id="implementation-progress"></div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <button class="btn btn-primary btn-lg" onclick="updateProgress()">
+                    Actualizar Progreso
+                </button>
+            </div>
+        </div>
+
+        <!-- Simulador de Escenarios -->
+        <div class="simulator-section">
+            <h3 class="text-center mb-4">🎮 Simulador de Escenarios Profesionales</h3>
+            <p class="text-center">Selecciona un escenario para ver cómo tu portafolio marca la diferencia:</p>
+            
+            <div class="scenario-options">
+                <div class="scenario-option" onclick="selectScenario('premium')">
+                    <h5>💎 Cliente Premium</h5>
+                    <p>Busca modelo exclusiva para proyectos especiales</p>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('collab')">
+                    <h5>🤝 Colaboración</h5>
+                    <p>Oportunidad de trabajo conjunto con marca</p>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('platform')">
+                    <h5>🌟 Nueva Plataforma</h5>
+                    <p>Aplicación para programa de creadores VIP</p>
+                </div>
+                <div class="scenario-option" onclick="selectScenario('agency')">
+                    <h5>🏢 Agencia</h5>
+                    <p>Representación profesional exclusiva</p>
+                </div>
+            </div>
+            
+            <div class="scenario-result" id="scenarioResult">
+                <h5 id="scenarioTitle"></h5>
+                <div id="scenarioContent"></div>
+            </div>
+        </div>
+
+        <!-- Casos de Éxito -->
+        <div class="section-lab">
+            <h2 class="lab-title">
+                <i class="fas fa-trophy lab-icon"></i>
+                🏆 Casos de Éxito Reales
+            </h2>
+            
+            <div class="success-story">
+                <div class="story-content">
+                    "Implementé mi Sistema de Documentación Profesional y en 3 meses conseguí representación con agencia premium. Mi portafolio mostró evidencia concreta de mis capacidades - no solo afirmaciones. El cambio fue inmediato en las negociaciones."
+                </div>
+                <div class="story-author">- Sarah M., Top 1% en plataforma principal</div>
+                <div class="story-metrics">
+                    <div class="metric">
+                        <div class="metric-number">340%</div>
+                        <div class="metric-label">Aumento ingresos</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">67</div>
+                        <div class="metric-label">Días implementación</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">12</div>
+                        <div class="metric-label">Ofertas premium</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <div class="story-content">
+                    "Mi portafolio categorizado me permitió adaptar presentaciones según cada oportunidad. Cuando llegó la colaboración con marca internacional, tenía exactamente la evidencia que necesitaban ver. $45K en un solo contrato."
+                </div>
+                <div class="story-author">- Alexandra R., Especialista en colaboraciones</div>
+                <div class="story-metrics">
+                    <div class="metric">
+                        <div class="metric-number">$45K</div>
+                        <div class="metric-label">Contrato único</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">23min</div>
+                        <div class="metric-label">Tiempo verificación</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">100%</div>
+                        <div class="metric-label">Tasa aprobación</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="success-story">
+                <div class="story-content">
+                    "Antes de mi portafolio, competía solo con palabras. Ahora compito con hechos. Mi documentación sistemática convirtió mi experiencia en ventaja competitiva verificable. Los clientes me eligen porque pueden VER mi valor."
+                </div>
+                <div class="story-author">- Maria C., Especialista en contenido premium</div>
+                <div class="story-metrics">
+                    <div class="metric">
+                        <div class="metric-number">89%</div>
+                        <div class="metric-label">Tasa conversión</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">156%</div>
+                        <div class="metric-label">Aumento tarifas</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-number">6</div>
+                        <div class="metric-label">Meses ROI</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Técnicas Avanzadas -->
+        <div class="section-lab">
+            <h2 class="lab-title">
+                <i class="fas fa-rocket lab-icon"></i>
+                🚀 Técnicas Avanzadas de Presentación
+            </h2>
+            
+            <div class="interactive-card" onclick="toggleDetails('visuales')">
+                <div class="card-header">
+                    <h4 class="card-title">🎨 Storytelling Visual</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Cómo convertir tu evidencia en narrativas que VENDEN.</p>
+                <div class="card-details" id="visuales-details">
+                    <hr>
+                    <h5>📸 Elementos visuales clave:</h5>
+                    <ul>
+                        <li><strong>Antes/Después:</strong> Transformaciones visibles de tu trabajo</li>
+                        <li><strong>Process shots:</strong> Behind-the-scenes de tu metodología</li>
+                        <li><strong>Result metrics:</strong> Gráficos de impacto cuantificable</li>
+                        <li><strong>Client reactions:</strong> Screenshots de feedback específico</li>
+                        <li><strong>Timeline visual:</strong> Evolución de tu desarrollo profesional</li>
+                    </ul>
+                    <div class="alert alert-info">
+                        <strong>PRO TIP:</strong> Una imagen vale 1000 palabras, pero una imagen con contexto vale 10,000 dólares.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="interactive-card" onclick="toggleDetails('adaptacion')">
+                <div class="card-header">
+                    <h4 class="card-title">🎯 Adaptación por Audiencia</h4>
+                    <i class="fas fa-chevron-down expand-icon"></i>
+                </div>
+                <p>Diferentes versiones para diferentes oportunidades.</p>
+                <div class="card-details" id="adaptacion-details">
+                    <hr>
+                    <h5>🔄 Versiones especializadas:</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h6>Para clientes premium:</h6>
+                            <ul>
+                                <li>Enfoque en exclusividad y discreción</li>
+                                <li>Casos de éxito con números altos</li>
+                                <li>Certificaciones y reconocimientos</li>
+                                <li>Testimonios de otros clientes VIP</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Para colaboraciones:</h6>
+                            <ul>
+                                <li>Ejemplos de trabajo en equipo</li>
+                                <li>Flexibilidad y adaptabilidad</li>
+                                <li>Reach y engagement metrics</li>
+                                <li>Casos de win-win anteriores</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen Final -->
+        <div class="section-lab" style="background: var(--gradient-success); color: white;">
+            <h2 class="lab-title text-white">
+                <i class="fas fa-crown lab-icon"></i>
+                👑 Tu Imperio de Credibilidad
+            </h2>
+            <div class="text-center">
+                <h3>¡A construir tu portafolio imparable!</h3>
+                <p class="lead">
+                    El top 10% no tiene más talento - tiene mejor documentación. Tu portafolio es la diferencia entre ser una más del montón y ser la opción obvia para oportunidades premium.
+                </p>
+                <div class="row mt-4">
+                    <div class="col-md-4 text-center">
+                        <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; margin: 1rem 0;">
+                            <h4>87% menos</h4>
+                            <p>competencia real con portafolio verificable</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; margin: 1rem 0;">
+                            <h4>340% más</h4>
+                            <p>ingresos promedio con evidencia documentada</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div style="background: rgba(255,255,255,0.2); padding: 2rem; border-radius: 20px; margin: 1rem 0;">
+                            <h4>45 días</h4>
+                            <p>para transformar tu posicionamiento profesional</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <h4>🎯 Domina tu documentación. Domina tu futuro.</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS desde CDNJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Real-time clock update
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
+
+        // Toggle card details
+        function toggleDetails(cardId) {
+            const card = document.getElementById(cardId + '-details').parentElement;
+            const details = document.getElementById(cardId + '-details');
+            
+            card.classList.toggle('card-expanded');
+            
+            if (card.classList.contains('card-expanded')) {
+                details.style.maxHeight = details.scrollHeight + 'px';
+            } else {
+                details.style.maxHeight = '0';
+            }
+        }
+
+        // Portfolio ROI Calculator
+        function calculatePortfolioROI() {
+            const currentRate = parseFloat(document.getElementById('currentRate').value) || 0;
+            const monthlyHours = parseFloat(document.getElementById('monthlyHours').value) || 0;
+            const portfolioTime = parseFloat(document.getElementById('portfolioTime').value) || 0;
+            
+            if (currentRate > 0 && monthlyHours > 0) {
+                const currentMonthly = currentRate * monthlyHours;
+                const currentAnnual = currentMonthly * 12;
+                
+                // Projected increases based on industry data
+                const newRate = currentRate * 2.4; // 140% increase average
+                const newMonthly = newRate * monthlyHours;
+                const newAnnual = newMonthly * 12;
+                
+                const monthlyIncrease = newMonthly - currentMonthly;
+                const annualIncrease = newAnnual - currentAnnual;
+                const paybackMonths = Math.ceil((portfolioTime * (currentRate * 8)) / monthlyIncrease);
+                
+                const resultHTML = `
+                    <h5>📊 Tu Proyección Financiera</h5>
+                    <div style="background: white; color: #1f2937; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Actual:</strong> $${currentMonthly.toLocaleString()}/mes - $${currentAnnual.toLocaleString()}/año
+                    </div>
+                    <div style="background: #10b981; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Con portafolio:</strong> $${newMonthly.toLocaleString()}/mes - $${newAnnual.toLocaleString()}/año
+                    </div>
+                    <div style="background: #fd7e14; color: white; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <strong>Aumento:</strong> +$${monthlyIncrease.toLocaleString()}/mes (+$${annualIncrease.toLocaleString()}/año)
+                    </div>
+                    <div style="background: #6366f1; color: white; padding: 1rem; border-radius: 10px; text-align: center;">
+                        <strong>ROI en ${paybackMonths} meses</strong><br>
+                        <small>Tiempo de recuperación de inversión</small>
+                    </div>
+                `;
+                
+                document.getElementById('roiResult').innerHTML = resultHTML;
+            }
+        }
+
+        // Progress Tracker
+        let progressData = {
+            evidence: 0,
+            design: 0,
+            optimization: 0,
+            implementation: 0
+        };
+
+        function updateProgress() {
+            // Simulate progress updates
+            progressData.evidence = Math.min(progressData.evidence + Math.random() * 25, 100);
+            progressData.design = Math.min(progressData.design + Math.random() * 20, 100);
+            progressData.optimization = Math.min(progressData.optimization + Math.random() * 15, 100);
+            progressData.implementation = Math.min(progressData.implementation + Math.random() * 10, 100);
+            
+            // Update progress bars
+            updateProgressBar('evidence', progressData.evidence);
+            updateProgressBar('design', progressData.design);
+            updateProgressBar('optimization', progressData.optimization);
+            updateProgressBar('implementation', progressData.implementation);
+        }
+
+        function updateProgressBar(type, percentage) {
+            const percentageRounded = Math.round(percentage);
+            document.getElementById(type + '-percent').textContent = percentageRounded + '%';
+            document.getElementById(type + '-progress').style.width = percentage + '%';
+        }
+
+        // Scenario Simulator
+        function selectScenario(scenario) {
+            // Remove previous selections
+            document.querySelectorAll('.scenario-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selection to clicked option
+            event.target.closest('.scenario-option').classList.add('selected');
+            
+            const scenarios = {
+                premium: {
+                    title: '💎 Resultado: Cliente Premium',
+                    content: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🚫 Sin portafolio:</h6>
+                                <ul>
+                                    <li>Competencia basada solo en precio</li>
+                                    <li>Cliente incierto sobre tu calidad</li>
+                                    <li>Proceso de selección largo</li>
+                                    <li>Tarifas estándar del mercado</li>
+                                    <li>Probabilidad: <strong style="color: #dc3545;">15%</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>✅ Con portafolio profesional:</h6>
+                                <ul>
+                                    <li>Evidencia inmediata de calidad premium</li>
+                                    <li>Cliente confía en tu expertise</li>
+                                    <li>Decisión rápida a tu favor</li>
+                                    <li>Tarifas 240% superiores</li>
+                                    <li>Probabilidad: <strong style="color: #10b981;">78%</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>Impacto financiero:</strong> +$12,000-$35,000 por contrato premium
+                        </div>
+                    `
+                },
+                collab: {
+                    title: '🤝 Resultado: Colaboración Marca',
+                    content: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🚫 Sin portafolio:</h6>
+                                <ul>
+                                    <li>Marca debe "confiar" en tu palabra</li>
+                                    <li>Proceso de vetting extenso</li>
+                                    <li>Ofertas de prueba de bajo valor</li>
+                                    <li>Contrato de 1-2 meses máximo</li>
+                                    <li>Probabilidad: <strong style="color: #dc3545;">22%</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>✅ Con portafolio profesional:</h6>
+                                <ul>
+                                    <li>Marca ve evidencia de resultados anteriores</li>
+                                    <li>Verificación rápida (23 minutos promedio)</li>
+                                    <li>Ofertas de valor significativo</li>
+                                    <li>Contratos de 6-12 meses</li>
+                                    <li>Probabilidad: <strong style="color: #10b981;">73%</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>Impacto financiero:</strong> Contratos 340% más largos y valiosos
+                        </div>
+                    `
+                },
+                platform: {
+                    title: '🌟 Resultado: Programa VIP Plataforma',
+                    content: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🚫 Sin portafolio:</h6>
+                                <ul>
+                                    <li>Aplicación basada en métricas básicas</li>
+                                    <li>No diferenciación visible</li>
+                                    <li>Lista de espera extensa</li>
+                                    <li>Beneficios estándar si aprueba</li>
+                                    <li>Probabilidad: <strong style="color: #dc3545;">8%</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>✅ Con portafolio profesional:</h6>
+                                <ul>
+                                    <li>Aplicación destacada con evidencia</li>
+                                    <li>Revisión prioritaria automática</li>
+                                    <li>Aceptación en primera ronda</li>
+                                    <li>Beneficios premium adicionales</li>
+                                    <li>Probabilidad: <strong style="color: #10b981;">67%</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>Impacto financiero:</strong> Acceso a herramientas y exposición valoradas en $8,000+ anuales
+                        </div>
+                    `
+                },
+                agency: {
+                    title: '🏢 Resultado: Representación Agencia',
+                    content: `
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🚫 Sin portafolio:</h6>
+                                <ul>
+                                    <li>Agencia debe "construir" tu imagen</li>
+                                    <li>Período de prueba de 6+ meses</li>
+                                    <li>Comisión estándar (30-40%)</li>
+                                    <li>Oportunidades básicas inicialmente</li>
+                                    <li>Probabilidad: <strong style="color: #dc3545;">12%</strong></li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>✅ Con portafolio profesional:</h6>
+                                <ul>
+                                    <li>Agencia ve activo ya desarrollado</li>
+                                    <li>Representación inmediata</li>
+                                    <li>Comisión reducida (15-25%)</li>
+                                    <li>Acceso a oportunidades premium</li>
+                                    <li>Probabilidad: <strong style="color: #10b981;">81%</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>Impacto financiero:</strong> Ahorras 15% en comisiones + acceso a contratos $50K+
+                        </div>
+                    `
+                }
+            };
+            
+            const result = scenarios[scenario];
+            document.getElementById('scenarioTitle').textContent = result.title;
+            document.getElementById('scenarioContent').innerHTML = result.content;
+            document.getElementById('scenarioResult').classList.add('show');
+        }
+
+        // Initialize progress bars on load
+        window.addEventListener('load', function() {
+            updateProgressBar('evidence', 0);
+            updateProgressBar('design', 0);
+            updateProgressBar('optimization', 0);
+            updateProgressBar('implementation', 0);
+        });
+
+        // Smooth animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'slideIn 0.6s ease forwards';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all section elements
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.section-lab, .interactive-card, .success-story').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
